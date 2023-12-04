@@ -15,12 +15,12 @@
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
-	nestOS = lib.nixosSystem {
-	  inherit system;
-	  modules = [
-	    ./configuration.nix
-	  ];
-	};
+        nestOS = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./configuration.nix
+          ];
+        };
       };
     };
   # );

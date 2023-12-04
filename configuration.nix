@@ -74,6 +74,30 @@
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
   programs.dconf.enable = true;
+  fonts.packages = with pkgs; [
+    openmoji-color
+    noto-fonts-emoji
+    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+  ];
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      serif = [ "GoMono Nerd Font Mono" ];
+      sansSerif = [ "FiraCode Nerd Font Mono" ];
+      monospace = [ "FiraCode Nerd Font Mono" ];
+      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
+    };
+  };
+  fonts.fontDir.enable = true;
+  programs.bash.interactiveShellInit = ''
+    eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
+  '';
+  programs.zsh.interactiveShellInit = ''
+    eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
+  '';
+  programs.fish.interactiveShellInit = ''
+    eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
+  '';
 
   # Configure keymap in X11
   services.xserver = {
@@ -184,6 +208,7 @@
     xclip
     xsel
     git
+    oh-my-posh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
