@@ -2,9 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
-{
+{ config, pkgs, ... }:let
+  poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json);
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -89,15 +89,36 @@
     };
   };
   fonts.fontDir.enable = true;
-  programs.bash.interactiveShellInit = ''
-    eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
-  '';
-  programs.zsh.interactiveShellInit = ''
-    eval "$(oh-my-posh init zsh --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
-  '';
-  programs.fish.interactiveShellInit = ''
-    oh-my-posh init fish --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)} | source
-  '';
+  programs.bash = {
+    promptInit = ''
+      eval "$(oh-my-posh init bash --config ${poshTheme})"
+    '';
+  };
+  programs.zsh = {
+    enable = true;
+    autosuggestions = {
+      enable = true;
+      strategy = [ "history" ];
+    };
+    interactiveShellInit = ''
+      . ${builtins.toFile "compinstallOut" (builtins.readFile ./compinstallOut)}
+
+      # Lines configured by zsh-newuser-install
+      HISTFILE=~/.histfile
+      HISTSIZE=1000
+      SAVEHIST=10000
+      # End of lines configured by zsh-newuser-install
+    '';
+    promptInit = ''
+      eval "$(oh-my-posh init zsh --config ${poshTheme})"
+    '';
+  };
+  programs.fish = {
+    enable = true;
+    promptInit = ''
+      oh-my-posh init fish --config ${poshTheme} | source
+    '';
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -131,37 +152,37 @@
   #   driSupport = true;
   #   driSupport32Bit = true;
   # };
-	#
- #  # Load nvidia driver for Xorg and Wayland
- #  services.xserver.videoDrivers = ["nvidia"];
-	#
- #  hardware.nvidia = {
-	#
- #    # Modesetting is required.
- #    modesetting.enable = true;
-	#
- #    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
- #    powerManagement.enable = false;
- #    # Fine-grained power management. Turns off GPU when not in use.
- #    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
- #    powerManagement.finegrained = false;
-	#
- #    # Use the NVidia open source kernel module (not to be confused with the
- #    # independent third-party "nouveau" open source driver).
- #    # Support is limited to the Turing and later architectures. Full list of 
- #    # supported GPUs is at: 
- #    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
- #    # Only available from driver 515.43.04+
- #    # Currently alpha-quality/buggy, so false is currently the recommended setting.
- #    open = false;
-	#
- #    # Enable the Nvidia settings menu,
-	# # accessible via `nvidia-settings`.
- #    nvidiaSettings = true;
-	#
- #    # Optionally, you may need to select the appropriate driver version for your specific GPU.
- #    package = config.boot.kernelPackages.nvidiaPackages.stable;
- #  };
+#
+#  # Load nvidia driver for Xorg and Wayland
+#  services.xserver.videoDrivers = ["nvidia"];
+#
+#  hardware.nvidia = {
+#
+#    # Modesetting is required.
+#    modesetting.enable = true;
+#
+#    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+#    powerManagement.enable = false;
+#    # Fine-grained power management. Turns off GPU when not in use.
+#    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+#    powerManagement.finegrained = false;
+#
+#    # Use the NVidia open source kernel module (not to be confused with the
+#    # independent third-party "nouveau" open source driver).
+#    # Support is limited to the Turing and later architectures. Full list of 
+#    # supported GPUs is at: 
+#    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+#    # Only available from driver 515.43.04+
+#    # Currently alpha-quality/buggy, so false is currently the recommended setting.
+#    open = false;
+#
+#    # Enable the Nvidia settings menu,
+# # accessible via `nvidia-settings`.
+#    nvidiaSettings = true;
+#
+#    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+#    package = config.boot.kernelPackages.nvidiaPackages.stable;
+#  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
