@@ -93,10 +93,10 @@
     eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
   '';
   programs.zsh.interactiveShellInit = ''
-    eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
+    eval "$(oh-my-posh init zsh --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
   '';
   programs.fish.interactiveShellInit = ''
-    eval "$(oh-my-posh init bash --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)})"
+    oh-my-posh init fish --config ${builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json)} | source
   '';
 
   # Configure keymap in X11
