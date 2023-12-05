@@ -4,6 +4,7 @@
 
 { config, pkgs, ... }:let
   poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json);
+  zshcmplcfg = builtins.toFile "compInstallOut" (builtins.readFile ./compinstallOut);
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -101,12 +102,15 @@ in {
       strategy = [ "history" ];
     };
     interactiveShellInit = ''
-      . ${builtins.toFile "compinstallOut" (builtins.readFile ./compinstallOut)}
+      . ${zshcmplcfg}
 
       # Lines configured by zsh-newuser-install
       HISTFILE=~/.histfile
       HISTSIZE=1000
       SAVEHIST=10000
+      setopt extendedglob
+      unsetopt autocd nomatch
+      bindkey -v
       # End of lines configured by zsh-newuser-install
     '';
     promptInit = ''
@@ -187,6 +191,7 @@ in {
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  users.defaultUserShell = pkgs.zsh;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.birdee = {
     isNormalUser = true;
