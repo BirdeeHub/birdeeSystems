@@ -5,6 +5,12 @@
 { config, pkgs, ... }:let
   poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json);
   zshcmplcfg = builtins.toFile "compInstallOut" (builtins.readFile ./compinstallOut);
+  alakittycfg = builtins.toFile "alacritty.yml" (builtins.readFile ./alacritty.yml);
+  alakitty = pkgs.writeScriptBin "alacritty" ''
+    #!/bin/sh
+    exec ${pkgs.alacritty}/bin/alacritty --config-file ${alakittycfg} "$@"
+  '';
+
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -223,10 +229,10 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    bitwarden-cli
     galculator
     qalculate-qt
-    alacritty
+    # alacritty
+    alakitty
     pciutils
     glxinfo
     lshw
