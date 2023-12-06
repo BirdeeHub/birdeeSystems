@@ -199,6 +199,11 @@
         "newline": true,
         "segments": [
           {
+            "style": "plain",
+            "template": "<#E06C75>\u256d\u2500[<#55ff55>{{ .UserName }}</><#ff5555>@</><#61AFEF>{{ .HostName }}</>]\u2500",
+            "type": "session"
+          },
+          {
             "foreground": "#61AFEF",
             "properties": {
               "style": "full"

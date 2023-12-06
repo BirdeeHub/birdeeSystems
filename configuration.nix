@@ -2,14 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:let
-  poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./atomic-emodipt.omp.json);
-  zshcmplcfg = builtins.toFile "compInstallOut" (builtins.readFile ./compinstallOut);
-  alakittycfg = builtins.toFile "alacritty.yml" (builtins.readFile ./alacritty.yml);
-  alakitty = pkgs.writeScriptBin "alacritty" ''
-    #!/bin/sh
-    exec ${pkgs.alacritty}/bin/alacritty --config-file ${alakittycfg} "$@"
-  '';
+{ config, pkgs, ... }: let
 
 in {
   imports =
@@ -54,81 +47,10 @@ in {
   # Allow flakes and new command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  services.xserver = {
-    # Enable the X11 windowing system.
-    enable = true;
-
-    # displayManager.lightdm.enable = true;
-
-    # Enable the i3 Desktop Environment.
-    desktopManager = {
-      xterm.enable = false;
-      xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = false;
-      };
-    };
-    displayManager = {
-      defaultSession = "xfce+i3";
-    };
-    windowManager.i3 = import ./i3 pkgs;
-  };
-  qt.platformTheme = "gtk";
-  # uncomment to fix i3blocks
-  # environment.pathsToLink = [ "/libexec" ];
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
-  programs.dconf.enable = true;
-  fonts.packages = with pkgs; [
-    openmoji-color
-    noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
-  ];
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      serif = [ "GoMono Nerd Font Mono" ];
-      sansSerif = [ "FiraCode Nerd Font Mono" ];
-      monospace = [ "FiraCode Nerd Font Mono" ];
-      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
-    };
-  };
-  fonts.fontDir.enable = true;
-  programs.bash = {
-    promptInit = ''
-      eval "$(oh-my-posh init bash --config ${poshTheme})"
-    '';
-  };
-  programs.zsh = {
-    enable = true;
-    autosuggestions = {
-      enable = true;
-      strategy = [ "history" ];
-    };
-    interactiveShellInit = ''
-      . ${zshcmplcfg}
 
-      # Lines configured by zsh-newuser-install
-      HISTFILE=~/.histfile
-      HISTSIZE=1000
-      SAVEHIST=10000
-      setopt extendedglob
-      unsetopt autocd nomatch
-      bindkey -v
-      # End of lines configured by zsh-newuser-install
-    '';
-    promptInit = ''
-      eval "$(oh-my-posh init zsh --config ${poshTheme})"
-    '';
-  };
-  programs.fish = {
-    enable = true;
-    promptInit = ''
-      oh-my-posh init fish --config ${poshTheme} | source
-    '';
-  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -167,55 +89,139 @@ in {
 
 
   # Enable OpenGL
-  # hardware.opengl = {
-  #   enable = true;
-  #   driSupport = true;
-  #   driSupport32Bit = true;
-  # };
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 # boot.blacklistedKernelModules = ["nouveau"];
-#  # Load nvidia driver for Xorg and Wayland
-# services.xserver.videoDrivers = ["nvidia"];
-
-# hardware.nvidia = {
-
-  # Modesetting is required.
-  # modesetting.enable = true;
-
-  # prime.sync.enable = true;
-
-  # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-  # powerManagement.enable = false;
-  # Fine-grained power management. Turns off GPU when not in use.
-  # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-  # powerManagement.finegrained = false;
-
-  # Use the NVidia open source kernel module (not to be confused with the
-  # independent third-party "nouveau" open source driver).
-  # Support is limited to the Turing and later architectures. Full list of 
-  # supported GPUs is at: 
-  # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-  # Only available from driver 515.43.04+
-  # Currently alpha-quality/buggy, so false is currently the recommended setting.
-  # open = false;
-
-  # Enable the Nvidia settings menu,
-  # accessible via `nvidia-settings`.
-   # nvidiaSettings = true;
-
-   # Optionally, you may need to select the appropriate driver version for your specific GPU.
-   # package = config.boot.kernelPackages.nvidiaPackages.stable;
- # };
 
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
+  fonts.packages = with pkgs; [
+    openmoji-color
+    noto-fonts-emoji
+    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+  ];
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      serif = [ "GoMono Nerd Font Mono" ];
+      sansSerif = [ "FiraCode Nerd Font Mono" ];
+      monospace = [ "FiraCode Nerd Font Mono" ];
+      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
+    };
+  };
+  fonts.fontDir.enable = true;
 
+  services.xserver = {
+    # Enable the X11 windowing system.
+    enable = true;
+
+    # displayManager.lightdm.enable = true;
+
+    # Enable the i3 Desktop Environment.
+    desktopManager = {
+      xterm.enable = false;
+      xfce = {
+        enable = true;
+        noDesktop = true;
+        enableXfwm = false;
+      };
+    };
+    displayManager = {
+      defaultSession = "xfce+i3";
+    };
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      configFile = builtins.toFile "config" (''
+        set $i3barConfigFile ${builtins.toFile "i3bar" (builtins.readFile ./i3/i3bar)}
+        # set $dunstrc ${builtins.toFile "dunstrc" (builtins.readFile ./i3/dunstrc)}
+      '' + builtins.readFile ./i3/config + ''
+      '');
+      extraPackages = let
+        # dunstrc = builtins.toFile "dunstrc" (builtins.readFile ./i3/dunstrc);
+        # dunst = pkgs.writeScriptBin "dunst" ''
+        #   #!/bin/sh
+        #   exec ${pkgs.dunst}/bin/dunst -conf ${dunstrc} "$@"
+        # '';
+        monMover = (pkgs.writeScriptBin "monWkspcCycle.sh"
+          (builtins.readFile ./i3/monWkspcCycle.sh));
+      in
+      with pkgs; [
+        monMover
+        jq
+        dmenu #application launcher most people use
+        i3status # gives you the default i3 status bar
+        # i3lock #default i3 screen locker
+        # dunst
+        pa_applet
+        pavucontrol
+        networkmanagerapplet
+        lxappearance
+        # i3blocks #if you are planning on using i3blocks over i3status
+      ];
+    };
+  };
+  qt.platformTheme = "gtk";
+  # uncomment to fix i3blocks
+  # environment.pathsToLink = [ "/libexec" ];
+
+  programs = let
+    poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./term/atomic-emodipt.omp.json);
+    zshcmplcfg = builtins.toFile "compInstallOut" (builtins.readFile ./term/compinstallOut);
+  in {
+    dconf.enable = true;
+    bash = {
+      promptInit = ''
+        eval "$(oh-my-posh init bash --config ${poshTheme})"
+      '';
+    };
+    zsh = {
+      enable = true;
+      autosuggestions = {
+        enable = true;
+        strategy = [ "history" ];
+      };
+      interactiveShellInit = ''
+        . ${zshcmplcfg}
+
+        # Lines configured by zsh-newuser-install
+        HISTFILE=~/.histfile
+        HISTSIZE=1000
+        SAVEHIST=10000
+        setopt extendedglob
+        unsetopt autocd nomatch
+        bindkey -v
+        # End of lines configured by zsh-newuser-install
+      '';
+      promptInit = ''
+        eval "$(oh-my-posh init zsh --config ${poshTheme})"
+      '';
+    };
+    fish = {
+      enable = true;
+      promptInit = ''
+        oh-my-posh init fish --config ${poshTheme} | source
+      '';
+    };
+  };
   users.defaultUserShell = pkgs.zsh;
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
+  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  # };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.birdee = {
     isNormalUser = true;
     description = "birdee";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
       signal-desktop
@@ -227,12 +233,14 @@ in {
       kotlin
       kotlin-native
       go
+      distrobox
       gimp
       spotify
 
       chromium
       slack
       zoom-us
+      remmina
     #  thunderbird
     ];
   };
@@ -240,7 +248,14 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = let
+    alakittycfg = builtins.toFile "alacritty.yml" (builtins.readFile ./term/alacritty.yml);
+    alakitty = pkgs.writeScriptBin "alacritty" ''
+      #!/bin/sh
+      exec ${pkgs.alacritty}/bin/alacritty --config-file ${alakittycfg} "$@"
+    '';
+  in
+  with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     galculator
     qalculate-qt
@@ -249,6 +264,9 @@ in {
     glxinfo
     lshw
     wget
+    tree
+    zip
+    unzip
     xclip
     xsel
     git
