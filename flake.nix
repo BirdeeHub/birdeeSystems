@@ -67,6 +67,7 @@
           ./configuration.nix
            # Include the results of the hardware scan.
           ./hardwares/aSUSrog.nix
+          ./hardwares/nvdintGraphics.nix
           birdeeVim.nixosModules.${system}.default
         ];
       };

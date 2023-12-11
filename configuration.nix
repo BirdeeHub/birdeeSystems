@@ -81,24 +81,6 @@ in {
     #media-session.enable = true;
   };
 
-  hardware.nvidia.modesetting.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.prime = {
-    sync.enable = true;
-    nvidiaBusId = "PCI:01:00:0";   # Found with lspci | grep VGA
-    intelBusId = "PCI:00:02:0";   # Found with lspci | grep VGA
-  };
-
-
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-# boot.blacklistedKernelModules = ["nouveau"];
-
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
   fonts.packages = with pkgs; [
@@ -172,10 +154,8 @@ in {
   # environment.pathsToLink = [ "/libexec" ];
   programs.dconf.enable = true;
 
-  virtualisation.docker = {
-    enable = true;
-    enableNvidia = true;
-  };
+  virtualisation.docker.enable = true;
+
   # virtualisation.virtualbox.host = {
   #   enable = true;
   #   enableExtensionPack = true;
@@ -232,7 +212,6 @@ in {
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     alakitty
     pciutils
-    glxinfo
     lshw
     wget
     tree
