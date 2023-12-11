@@ -34,11 +34,11 @@
         "rev": "f2d3ed388be7fbf1b4fee41bca3a49ca41af1076",
         "revCount": 422,
         "type": "git",
-        "url": "file:./birdeeVim"
+        "url": "file:./birdeevim"
       },
       "original": {
         "type": "git",
-        "url": "file:./birdeeVim"
+        "url": "file:./birdeevim"
       }
     },
     "codeium": {

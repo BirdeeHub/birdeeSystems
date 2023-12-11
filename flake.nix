@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/nur";
-    birdeeVim.url = "git+file:./birdeeVim";
+    birdeeVim.url = "git+file:./birdeevim";
   };
 
   outputs = { self, nixpkgs, home-manager, birdeeVim, ... }@inputs: let

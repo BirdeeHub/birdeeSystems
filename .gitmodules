@@ -1,0 +1,3 @@
+[submodule "birdeevim"]
+	path = birdeevim
+	url = git@github.com:BirdeeHub/birdeevim
