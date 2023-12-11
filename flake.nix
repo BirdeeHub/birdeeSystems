@@ -8,11 +8,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    birdeeVim.url = "/home/birdee/.config/birdeevim";
     nur.url = "github:nix-community/nur";
+    birdeeVim.url = "git+file:./birdeeVim";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, birdeeVim, ... }@inputs: let
+    # birdeeVim = builtins.fetchurl "${self}/birdeeVim";
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
@@ -37,7 +38,7 @@
         # the path to your home.nix.
         modules = [
           ./home.nix
-          inputs.birdeeVim.homeModule.${system}
+          birdeeVim.homeModule.${system}
         ];
 
         # Optionally use extraSpecialArgs
@@ -62,7 +63,7 @@
           ./configuration.nix
            # Include the results of the hardware scan.
           ./hardwares/aSUSrog.nix
-          inputs.birdeeVim.nixosModules.${system}.default
+          birdeeVim.nixosModules.${system}.default
         ];
       };
     };
