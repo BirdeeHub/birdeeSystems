@@ -122,15 +122,9 @@ in {
       package = pkgs.i3-gaps;
       configFile = builtins.toFile "config" (''
         set $i3barConfigFile ${builtins.toFile "i3bar" (builtins.readFile ./i3/i3bar)}
-        # set $dunstrc ${builtins.toFile "dunstrc" (builtins.readFile ./i3/dunstrc)}
       '' + builtins.readFile ./i3/config + ''
       '');
       extraPackages = let
-        # dunstrc = builtins.toFile "dunstrc" (builtins.readFile ./i3/dunstrc);
-        # dunst = pkgs.writeScriptBin "dunst" ''
-        #   #!/bin/sh
-        #   exec ${pkgs.dunst}/bin/dunst -conf ${dunstrc} "$@"
-        # '';
         monMover = (pkgs.writeScriptBin "monWkspcCycle.sh"
           (builtins.readFile ./i3/monWkspcCycle.sh));
       in
@@ -140,7 +134,6 @@ in {
         dmenu #application launcher most people use
         i3status # gives you the default i3 status bar
         # i3lock #default i3 screen locker
-        # dunst
         pa_applet
         pavucontrol
         networkmanagerapplet

@@ -65,8 +65,9 @@
         };
         modules = [
           ./configuration.nix
-           # Include the results of the hardware scan.
+          # Include the results of the hardware scan.
           ./hardwares/aSUSrog.nix
+          # nvidia + intel graphics module for a-SUS laptop
           ./hardwares/nvdintGraphics.nix
           birdeeVim.nixosModules.${system}.default
         ];
