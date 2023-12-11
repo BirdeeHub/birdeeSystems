@@ -3,6 +3,7 @@
 cd ./birdeevim &&\
 git add . &&\
 nix flake update &&\
+git add . &&\
 cd ..
 
 which home-manager ||\
