@@ -1,5 +1,10 @@
 {
-  description = "Home Manager configuration of birdee";
+  description = ''
+    IDK how to nix but I'm doing ok.
+    It will be cool eventually haha.
+    I will never put a secret on here. Not even an encrypted one.
+    I am ok with signing onto my stuff.
+  '';
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
