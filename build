@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+cd ./birdeevim &&\
+git add . &&\
+nix flake update &&\
+cd ..
+
 which home-manager ||\
 nix shell home-manager
 
