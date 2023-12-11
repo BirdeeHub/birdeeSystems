@@ -2,8 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }: let
-
+{ config, pkgs, self, inputs, stateVersion, username, hostname, ... }: let
+    poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./term/atomic-emodipt.omp.json);
+    zshcmplcfg = builtins.toFile "compinstallOut" (builtins.readFile ./term/compinstallOut);
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -14,7 +15,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nestOS"; # Define your hostname.
+  networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -168,12 +169,27 @@ in {
   qt.platformTheme = "gtk";
   # uncomment to fix i3blocks
   # environment.pathsToLink = [ "/libexec" ];
+  programs.dconf.enable = true;
 
-  programs = let
-    poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./term/atomic-emodipt.omp.json);
-    zshcmplcfg = builtins.toFile "compInstallOut" (builtins.readFile ./term/compinstallOut);
-  in {
-    dconf.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
+  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  # };
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.${username} = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    description = "${username}";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    packages = with pkgs; [ ];
+  };
+
+  programs = {
     bash = {
       promptInit = ''
         eval "$(oh-my-posh init bash --config ${poshTheme})"
@@ -208,43 +224,6 @@ in {
       '';
     };
   };
-  users.defaultUserShell = pkgs.zsh;
-  virtualisation.docker = {
-    enable = true;
-    enableNvidia = true;
-  };
-  # virtualisation.virtualbox.host = {
-  #   enable = true;
-  #   enableExtensionPack = true;
-  # };
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.birdee = {
-    isNormalUser = true;
-    description = "birdee";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      firefox
-      signal-desktop
-      bitwarden
-      bitwarden-cli
-      discord
-      jdk
-      gradle
-      kotlin
-      kotlin-native
-      go
-      distrobox
-      gimp
-      spotify
-
-      chromium
-      slack
-      zoom-us
-      remmina
-    #  thunderbird
-    ];
-  };
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -256,9 +235,7 @@ in {
     '';
   in
   with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    galculator
-    qalculate-qt
+    # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     alakitty
     pciutils
     glxinfo
@@ -298,6 +275,6 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = stateVersion; # Did you read the comment?
 
 }

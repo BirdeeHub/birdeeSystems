@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
+
+which home-manager ||\
+nix shell home-manager
+
+git add . &&\
+nix flake update &&\
+sudo nixos-rebuild switch --flake .#$1 &&\
+home-manager switch --flake .#$2 &&\
 git add .
-nix flake update
-git add .
-sudo nixos-rebuild switch --flake .#$1
