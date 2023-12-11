@@ -13,7 +13,6 @@
   };
 
   outputs = { self, nixpkgs, home-manager, birdeeVim, ... }@inputs: let
-    # birdeeVim = builtins.fetchurl "${self}/birdeeVim";
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
