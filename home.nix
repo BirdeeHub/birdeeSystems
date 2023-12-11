@@ -6,6 +6,8 @@
   home.username = username;
   home.homeDirectory = homeDirectory;
 
+  birdeeVim.enable = true;
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -104,12 +106,12 @@
         eval "$(oh-my-posh init zsh --config ${poshTheme})"
       '';
     };
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        oh-my-posh init fish --config ${poshTheme} | source
-      '';
-    };
+    # fish = {
+    #   enable = true;
+    #   interactiveShellInit = ''
+    #     oh-my-posh init fish --config ${poshTheme} | source
+    #   '';
+    # };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

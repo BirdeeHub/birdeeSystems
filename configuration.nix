@@ -2,14 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, self, inputs, stateVersion, username, hostname, ... }: let
+{ config, pkgs, self, inputs, stateVersion, users, hostname, ... }: let
     poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./term/atomic-emodipt.omp.json);
     zshcmplcfg = builtins.toFile "compinstallOut" (builtins.readFile ./term/compinstallOut);
 in {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ ];
+
+  users.users = users;
+  birdeeVim.enable = true;
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -171,7 +172,6 @@ in {
   # environment.pathsToLink = [ "/libexec" ];
   programs.dconf.enable = true;
 
-  users.defaultUserShell = pkgs.zsh;
   virtualisation.docker = {
     enable = true;
     enableNvidia = true;
@@ -181,14 +181,8 @@ in {
   #   enableExtensionPack = true;
   # };
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    description = "${username}";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [ ];
-  };
 
+  users.defaultUserShell = pkgs.zsh;
   programs = {
     bash = {
       promptInit = ''
@@ -217,12 +211,12 @@ in {
         eval "$(oh-my-posh init zsh --config ${poshTheme})"
       '';
     };
-    fish = {
-      enable = true;
-      promptInit = ''
-        oh-my-posh init fish --config ${poshTheme} | source
-      '';
-    };
+    # fish = {
+    #   enable = true;
+    #   promptInit = ''
+    #     oh-my-posh init fish --config ${poshTheme} | source
+    #   '';
+    # };
   };
 
   # List packages installed in system profile. To search, run:

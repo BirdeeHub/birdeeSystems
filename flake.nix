@@ -8,7 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
+    birdeeVim.url = "/home/birdee/.config/birdeevim";
     nur.url = "github:nix-community/nur";
   };
 
@@ -19,6 +19,15 @@
       inherit system;
       config.allowUnfree = true;
     };
+    users = {
+      birdee = {
+        name = "birdee";
+        shell = pkgs.zsh;
+        isNormalUser = true;
+        description = "";
+        extraGroups = [ "networkmanager" "wheel" "docker" ];
+      };
+    };
   in {
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
@@ -28,7 +37,7 @@
         # the path to your home.nix.
         modules = [
           ./home.nix
-          # inputs.nixCats.homeModule.${system}
+          inputs.birdeeVim.homeModule.${system}
         ];
 
         # Optionally use extraSpecialArgs
@@ -46,13 +55,14 @@
       "nestOS" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit self inputs stateVersion;
-          username = "birdee";
+          inherit self inputs stateVersion users;
           hostname = "nestOS";
         };
         modules = [
           ./configuration.nix
-          # inputs.nixCats.nixosModules.${system}.default
+           # Include the results of the hardware scan.
+          ./hardwares/aSUSrog.nix
+          inputs.birdeeVim.nixosModules.${system}.default
         ];
       };
     };
