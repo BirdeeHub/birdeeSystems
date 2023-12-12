@@ -14,8 +14,8 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-  # boot.blacklistedKernelModules = ["nouveau"];
+  boot.blacklistedKernelModules = [ "i915" "nouveau"];
 
-  environment.systemPackages = [ pkgs.glxinfo ];
+  environment.systemPackages = [ pkgs.glxinfo pkgs.pciutils ];
   virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 }

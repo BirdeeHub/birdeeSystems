@@ -49,6 +49,7 @@
     kotlin
     kotlin-native
     go
+    python3
     distrobox
     wget
     gimp
