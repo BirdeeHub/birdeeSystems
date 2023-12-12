@@ -1,5 +1,4 @@
 { config, pkgs, self, inputs, homeDirectory, username, stateVersion, ...  }: let
-    poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./term/atomic-emodipt.omp.json);
   in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -20,11 +19,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = let
-    alakittycfg = builtins.toFile "alacritty.yml" (builtins.readFile ./term/alacritty.yml);
-    alakitty = pkgs.writeScriptBin "alacritty" ''
-      #!/bin/sh
-      exec ${pkgs.alacritty}/bin/alacritty --config-file ${alakittycfg} "$@"
-    '';
   in
   with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
@@ -40,7 +34,6 @@
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
-    alakitty
     galculator
     qalculate-qt
     oh-my-posh
@@ -81,38 +74,6 @@
   ];
   fonts.fontconfig.enable = true;
   qt.platformTheme = "gtk";
-
-  programs = {
-    bash = {
-      initExtra = ''
-        eval "$(oh-my-posh init bash --config ${poshTheme})"
-      '';
-    };
-    zsh = {
-      shellAliases = {};
-      enable = true;
-      enableAutosuggestions = true;
-      completionInit = (builtins.readFile ./term/compinstallOut);
-      history.ignoreAllDups = true;
-      initExtra = ''
-        # Lines configured by zsh-newuser-install
-        HISTFILE=~/.histfile
-        HISTSIZE=1000
-        SAVEHIST=10000
-        setopt extendedglob
-        unsetopt autocd nomatch
-        bindkey -v
-        # End of lines configured by zsh-newuser-install
-        eval "$(oh-my-posh init zsh --config ${poshTheme})"
-      '';
-    };
-    # fish = {
-    #   enable = true;
-    #   interactiveShellInit = ''
-    #     oh-my-posh init fish --config ${poshTheme} | source
-    #   '';
-    # };
-  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

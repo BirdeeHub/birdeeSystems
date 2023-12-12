@@ -3,8 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, self, inputs, stateVersion, users, hostname, ... }: let
-    poshTheme = builtins.toFile "atomic-emodipt.omp.json" (builtins.readFile ./term/atomic-emodipt.omp.json);
-    zshcmplcfg = builtins.toFile "compinstallOut" (builtins.readFile ./term/compinstallOut);
 in {
   imports = [ ];
 
@@ -156,54 +154,13 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
   users.defaultUserShell = pkgs.zsh;
-  programs = {
-    bash = {
-      promptInit = ''
-        eval "$(oh-my-posh init bash --config ${poshTheme})"
-      '';
-    };
-    zsh = {
-      enable = true;
-      autosuggestions = {
-        enable = true;
-        strategy = [ "history" ];
-      };
-      interactiveShellInit = ''
-        . ${zshcmplcfg}
-
-        # Lines configured by zsh-newuser-install
-        HISTFILE=~/.histfile
-        HISTSIZE=1000
-        SAVEHIST=10000
-        setopt extendedglob
-        unsetopt autocd nomatch
-        bindkey -v
-        # End of lines configured by zsh-newuser-install
-      '';
-      promptInit = ''
-        eval "$(oh-my-posh init zsh --config ${poshTheme})"
-      '';
-    };
-    # fish = {
-    #   enable = true;
-    #   promptInit = ''
-    #     oh-my-posh init fish --config ${poshTheme} | source
-    #   '';
-    # };
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = let
-    alakittycfg = builtins.toFile "alacritty.yml" (builtins.readFile ./term/alacritty.yml);
-    alakitty = pkgs.writeScriptBin "alacritty" ''
-      #!/bin/sh
-      exec ${pkgs.alacritty}/bin/alacritty --config-file ${alakittycfg} "$@"
-    '';
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    alakitty
     pciutils
     lshw
     wget

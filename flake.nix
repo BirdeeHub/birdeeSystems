@@ -42,6 +42,10 @@
         # the path to your home.nix.
         modules = [
           ./home.nix
+          ./shell/home-zsh.nix
+          ./shell/home-fish.nix
+          ./shell/home-bash.nix
+          ./term/alacritty/home-alacritty.nix
           birdeeVim.homeModule.${system}
         ];
 
@@ -68,6 +72,10 @@
           # Include the results of the hardware scan.
           ./hardwares/aSUSrog.nix
           # nvidia + intel graphics module for a-SUS laptop
+          ./shell/system-zsh.nix
+          ./shell/system-fish.nix
+          ./shell/system-bash.nix
+          ./term/alacritty/system-alacritty.nix
           ./hardwares/nvdintGraphics.nix
           birdeeVim.nixosModules.${system}.default
         ];
