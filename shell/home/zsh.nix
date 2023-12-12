@@ -1,13 +1,16 @@
-{config, pkgs, inputs, self, ... }: {
-  programs.zsh = {
+{config, pkgs, self, inputs, ... }:
+{
+  options = {
+    birdeeZsh.enable = pkgs.lib.mkEnableOption "birdeeZsh";
+  };
+  config = {
+    programs.zsh = pkgs.lib.mkIf config.birdeeZsh.enable {
+      shellAliases = {};
       enable = true;
-      autosuggestions = {
-        enable = true;
-        strategy = [ "history" ];
-      };
-      interactiveShellInit = ''
-        . ${self}/shell/compinstallOut
-
+      enableAutosuggestions = true;
+      completionInit = (builtins.readFile ../compinstallOut);
+      history.ignoreAllDups = true;
+      initExtra = ''
         # Lines configured by zsh-newuser-install
         HISTFILE=~/.histfile
         HISTSIZE=1000
@@ -16,9 +19,8 @@
         unsetopt autocd nomatch
         bindkey -v
         # End of lines configured by zsh-newuser-install
-      '';
-      promptInit = ''
         eval "$(oh-my-posh init zsh --config ${self}/shell/atomic-emodipt.omp.json)"
       '';
+    };
   };
 }
