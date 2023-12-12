@@ -2,8 +2,6 @@
   description = ''
     IDK how to nix but I'm doing ok.
     It will be cool eventually haha.
-    I will never put a secret on here. Not even an encrypted one.
-    I am ok with signing onto my stuff.
   '';
 
   inputs = {
@@ -46,6 +44,7 @@
           ./home.nix
           ./shell/home/shellModule.nix
           ./term/alacritty/home-alacritty.nix
+          ./firefox/homeFox.nix
           birdeeVim.homeModule.${system}
         ];
 

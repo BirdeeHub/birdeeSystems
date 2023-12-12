@@ -9,6 +9,7 @@
   birdeeZsh.enable = true;
   birdeeBash.enable = true;
   birdeeFish.enable = true;
+  birdeeFox.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -40,7 +41,6 @@
     galculator
     qalculate-qt
     oh-my-posh
-    firefox
     signal-desktop
     bitwarden-cli
     discord
