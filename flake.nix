@@ -31,6 +31,8 @@
         isNormalUser = true;
         description = "";
         extraGroups = [ "networkmanager" "wheel" "docker" ];
+        # this is packages for nixOS user config.
+        # packages = []; # empty because that is managed by home-manager
       };
     };
   in {
