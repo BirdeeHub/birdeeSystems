@@ -4,9 +4,10 @@
   };
   config = {
     programs.fish = pkgs.lib.mkIf config.birdeeFish.enable {
-        promptInit = ''
-          oh-my-posh init fish --config ${self}/shell/atomic-emodipt.omp.json | source
-        '';
+      enable = true;
+      promptInit = ''
+        oh-my-posh init fish --config ${self}/shell/atomic-emodipt.omp.json | source
+      '';
     };
   };
 }

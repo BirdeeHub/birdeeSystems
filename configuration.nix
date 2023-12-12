@@ -10,7 +10,7 @@ in {
   birdeeVim.enable = true;
   birdeeZsh.enable = true;
   birdeeBash.enable = true;
-  birdeeFish.enable = true;
+  # birdeeFish.enable = true;
 
 
   # Bootloader.

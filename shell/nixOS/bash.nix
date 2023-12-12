@@ -4,9 +4,9 @@
   };
   config = {
     programs.bash = pkgs.lib.mkIf config.birdeeBash.enable {
-        promptInit = ''
-          eval "$(oh-my-posh init bash --config ${self}/shell/atomic-emodipt.omp.json)"
-        '';
+      promptInit = ''
+        eval "$(oh-my-posh init bash --config ${self}/shell/atomic-emodipt.omp.json)"
+      '';
     };
   };
 }
