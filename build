@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-cd ./birdeevim &&\
+cd ./flakes/birdeevim &&\
 git add . &&\
 nix flake update &&\
 git add . &&\
-cd ..
+cd ../..
 
 which home-manager ||\
 nix shell home-manager

@@ -1,3 +1,6 @@
 [submodule "birdeevim"]
 	path = birdeevim
 	url = git@github.com:BirdeeHub/birdeevim
+[submodule "flakes/birdeevim"]
+	path = flakes/birdeevim
+	url = git@github.com:BirdeeHub/birdeevim
