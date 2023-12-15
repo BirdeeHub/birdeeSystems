@@ -64,6 +64,7 @@
     xclip
     xsel
 
+    wireshark
     chromium
     slack
     zoom-us
