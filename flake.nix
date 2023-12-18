@@ -20,6 +20,9 @@
     stateVersion = "23.05";
     pkgs = import nixpkgs {
       inherit system;
+      overlays = [
+        inputs.nur.overlay
+      ];
       config.allowUnfree = true;
     };
     users = {
