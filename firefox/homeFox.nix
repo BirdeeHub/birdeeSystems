@@ -23,7 +23,6 @@
           user-agent-string-switcher
           tampermonkey
           unpaywall
-          one-click-wayback
           mullvad
           ninja-cookie
           ublock-origin
