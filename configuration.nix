@@ -120,6 +120,7 @@ in {
     displayManager = {
       defaultSession = "xfce+i3";
     };
+    # displayManager.lightdm.background = ./misc/CrabWarning.jpg;
     displayManager.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
         Xft.dpi: 100
@@ -135,8 +136,13 @@ in {
       extraPackages = let
         monMover = (pkgs.writeScriptBin "monWkspcCycle.sh"
           (builtins.readFile ./i3/monWkspcCycle.sh));
+        nitrogen = (pkgs.writeScriptBin "nitrogen" ''
+          #!/bin/sh
+          exec ${pkgs.nitrogen}/bin/nitrogen --set-tiled ${./misc/CrabWarning.jpg} "$@"
+        '');
       in
       with pkgs; with pkgs.xfce; [
+        nitrogen
         monMover
         jq
         # dex

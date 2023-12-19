@@ -284,7 +284,7 @@ mode "resize" {
 
 # Autostart applications
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec --no-startup-id nitrogen --restore;
+exec --no-startup-id nitrogen;
 #exec --no-startup-id manjaro-hello
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
