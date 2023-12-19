@@ -44,7 +44,7 @@ exec --no-startup-id pa-applet
 # exec --no-startup-id xfce4-power-manager
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- xflock4 --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -234,7 +234,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e mode "$mode_system"
 set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (f)ast logout, switch (u)ser, (r)eboot, (Shift+s)hutdown, exit i3 (Shift+i)
 mode "$mode_system" {
-    bindsym e exec --no-startup-id loginctl lock-session, mode "default"
+    bindsym e exec --no-startup-id i3lock, mode "default"
     bindsym s exec --no-startup-id xfce4-session-logout --suspend, mode "default"
     bindsym u exec --no-startup-id xfce4-session-logout --switch-user, mode "default"
     bindsym q exec --no-startup-id xfce4-session-logout --logout, mode "default"

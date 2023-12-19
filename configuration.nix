@@ -139,7 +139,11 @@ in {
           (builtins.readFile ./i3/monWkspcCycle.sh));
         nitrogen = (pkgs.writeScriptBin "nitrogen" ''
           #!/bin/sh
-          exec ${pkgs.nitrogen}/bin/nitrogen --set-tiled ${./misc/CrabWarning.jpg} "$@"
+          exec ${pkgs.nitrogen}/bin/nitrogen --set-tiled ${./misc/DogAteHomework.png} "$@"
+        '');
+        i3lock = (pkgs.writeScriptBin "i3lock" ''
+          #!/bin/sh
+          exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/CrabWarning.png} "$@"
         '');
       in
       with pkgs; with pkgs.xfce; [
@@ -150,7 +154,7 @@ in {
         libnotify
         dmenu #application launcher most people use
         i3status # gives you the default i3 status bar
-        # i3lock #default i3 screen locker
+        i3lock #default i3 screen locker
         pa_applet
         pavucontrol
         networkmanagerapplet
