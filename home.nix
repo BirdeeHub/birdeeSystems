@@ -47,6 +47,7 @@
     jdk
     gradle
     kotlin
+    # xfce.thunar
     kotlin-native
     go
     python3

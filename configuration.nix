@@ -104,6 +104,8 @@ in {
     # Enable the X11 windowing system.
     enable = true;
 
+    dpi = 100;
+
     # displayManager.lightdm.enable = true;
 
     # Enable the i3 Desktop Environment.
@@ -118,6 +120,11 @@ in {
     displayManager = {
       defaultSession = "xfce+i3";
     };
+    displayManager.sessionCommands = ''
+      ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
+        Xft.dpi: 100
+      ''}
+    '';
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -129,9 +136,11 @@ in {
         monMover = (pkgs.writeScriptBin "monWkspcCycle.sh"
           (builtins.readFile ./i3/monWkspcCycle.sh));
       in
-      with pkgs; [
+      with pkgs; with pkgs.xfce; [
         monMover
         jq
+        # dex
+        libnotify
         dmenu #application launcher most people use
         i3status # gives you the default i3 status bar
         # i3lock #default i3 screen locker
@@ -140,6 +149,7 @@ in {
         networkmanagerapplet
         lxappearance
         # i3blocks #if you are planning on using i3blocks over i3status
+        # thunar
       ];
     };
   };

@@ -30,15 +30,18 @@ default_floating_border normal
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:FiraMono Nerd Font Mono 10
+font pango:FiraMono Nerd Font Mono 8
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
+# exec --no-startup-id dex --autostart --environment i3
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-
+# exec --no-startup-id nm-applet
+# exec --no-startup-id blueman-applet
+exec --no-startup-id pa-applet
+# exec --no-startup-id xfce4-power-manager
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- xflock4 --nofork
@@ -76,7 +79,8 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # Start Applications
-bindsym $mod+Ctrl+m exec alacritty -T 'alsamixer' -e 'alsamixer'
+# bindsym $mod+Ctrl+m exec alacritty -T 'alsamixer' -e 'alsamixer'
+bindsym $mod+Shift+m exec blueman-manager
 bindsym $mod+m exec pavucontrol
 bindsym $mod+F1 exec bitwarden
 bindsym $mod+F2 exec firefox
@@ -90,7 +94,7 @@ bindsym $mod+Shift+F8 exec qalculate-qt
 bindsym $mod+F9 exec slack
 bindsym $mod+F10 exec chromium
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-bindsym $mod+Shift+d --release exec "dunstctl close-all"
+# bindsym $mod+Shift+d --release exec "dunstctl close-all"
 
 bindsym $mod+minus exec monWkspcCycle.sh
 focus_follows_mouse no
@@ -124,8 +128,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+g split h; exec dunstify -t 1000 "tile horizontally"
-bindsym $mod+v split v; exec dunstify -t 1000 "tile vertically"
+bindsym $mod+g split h; exec notify-send 'tile horizontally'
+bindsym $mod+v split v; exec notify-send 'tile vertically'
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
@@ -159,7 +163,7 @@ bindsym $mod+x scratchpad show
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+c focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -282,18 +286,14 @@ mode "resize" {
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id nitrogen --restore;
 #exec --no-startup-id manjaro-hello
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
-exec --no-startup-id pa-applet
-exec --no-startup-id xfce4-power-manager
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 # exec --no-startup-id xautolock -time 10 -locker i3lock
 # exec_always --no-startup-id ff-theme-util
 # exec_always --no-startup-id fix_xcursor
-exec xrandr --auto
-exec xrandr --output eDP-1-1 --primary
+# exec xrandr --auto
+# exec xrandr --output eDP-1-1 --primary
 # exec xrandr --output HDMI-1-1 --left-of eDP-1-1 --preferred
 # exec /home/birdee/.i3/configXrandrByOutput.sh HDMI-1
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -335,7 +335,7 @@ bar {
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
     tray_output primary
-#	tray_output eDP1
+    # tray_output eDP-1-1
     
     bindsym button4 nop
     bindsym button5 nop
@@ -356,7 +356,7 @@ bar {
     }
 }
 # hide/unhide i3status bar
-bindsym $mod+Shift+m bar mode toggle
+bindsym $mod+Ctrl+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
