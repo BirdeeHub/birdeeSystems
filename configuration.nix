@@ -131,7 +131,6 @@ in {
       enable = true;
       package = pkgs.i3-gaps;
       configFile = builtins.toFile "config" (''
-        set $i3barConfigFile ${builtins.toFile "i3bar" (builtins.readFile ./i3/i3bar)}
       '' + builtins.readFile ./i3/config + ''
       '');
       extraPackages = let
@@ -144,6 +143,10 @@ in {
         i3lock = (pkgs.writeScriptBin "i3lock" ''
           #!/bin/sh
           exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/CrabWarning.png} "$@"
+        '');
+        i3status = (pkgs.writeScriptBin "i3status" ''
+          #!/bin/sh
+          exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ./i3/i3bar)} "$@"
         '');
       in
       with pkgs; with pkgs.xfce; [
