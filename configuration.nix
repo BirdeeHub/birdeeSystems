@@ -129,7 +129,6 @@ in {
     '';
     windowManager.i3 = {
       enable = true;
-      package = pkgs.i3-gaps;
       configFile = builtins.toFile "config" (''
       '' + builtins.readFile ./i3/config + ''
       '');

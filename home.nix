@@ -49,6 +49,7 @@
     kotlin
     # xfce.thunar
     kotlin-native
+    peek
     go
     python3
     distrobox
