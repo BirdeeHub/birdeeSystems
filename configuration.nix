@@ -195,6 +195,7 @@ in {
     xclip
     xsel
     git
+    ntfs3g
     oh-my-posh
   ];
 
