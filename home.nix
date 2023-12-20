@@ -64,7 +64,7 @@
     glxinfo
     xclip
     xsel
-
+    libreoffice
     wireshark
     chromium
     slack
