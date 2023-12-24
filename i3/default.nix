@@ -109,8 +109,8 @@
   services.tumbler.enable = true;
   services.system-config-printer.enable = true;
 
-  # programs.bash.vteIntegration = true;
-  # programs.zsh.vteIntegration = true;
+  programs.bash.vteIntegration = true;
+  programs.zsh.vteIntegration = true;
 
   environment.pathsToLink = [
     "/share/xfce4"
