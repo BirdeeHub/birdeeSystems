@@ -97,6 +97,22 @@
   };
   qt.platformTheme = "gtk";
 
+  # How do I run a script when a monitor is connected/disconnected?
+  # it doesnt even have to be this big script, even just xrandr --auto...
+  # boot.kernelParams = let 
+  #   randrMemory = (pkgs.writeScriptBin "randrMemory.sh" (''
+  #       XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
+  #       XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
+  #     ''+
+  #     (builtins.readFile ./i3xrandrMemory/i3autoXrandrMemory.sh)));
+  #   configXrandrByOutput = (pkgs.writeScriptBin "configXrandrByOutput.sh"
+  #     (builtins.readFile ./i3xrandrMemory/configXrandrByOutput.sh));
+  #   configPrimaryXrandr = (pkgs.writeScriptBin "configPrimaryDisplay.sh"
+  #     (builtins.readFile ./i3xrandrMemory/configPrimaryDisplay.sh));
+  # in [
+  #   ''"udev.rules=SUBSYSTEM==\"drm\", ACTION==\"change\", ENV{HOTPLUG}==\"1\", RUN+=\"${randrMemory}\""''
+  # ];
+
   programs.thunar.enable = true;
 
   services.xserver.updateDbusEnvironment = true;

@@ -285,8 +285,7 @@ mode "resize" {
 
 # Autostart applications
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec xrandr --auto
-exec xrandr --output eDP-1-1 --primary
+exec xrandr --output eDP-1-1 --primary --preferred
 exec xrandr --output HDMI-1-1 --left-of eDP-1-1 --preferred
 exec --no-startup-id fehBG;
 #exec --no-startup-id manjaro-hello
