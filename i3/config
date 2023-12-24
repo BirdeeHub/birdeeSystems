@@ -42,6 +42,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id pa-applet
 exec --no-startup-id xfce4-power-manager
+
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -234,7 +235,6 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e mode "$mode_system"
 set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (f)ast logout, switch (u)ser, (r)eboot, (Shift+s)hutdown, exit i3 (Shift+i)
 mode "$mode_system" {
-    bindsym e exec --no-startup-id i3lock, mode "default"
     # bindsym s exec --no-startup-id xfce4-session-logout --suspend, mode "default"
     # bindsym u exec --no-startup-id xfce4-session-logout --switch-user, mode "default"
     # bindsym q exec --no-startup-id xfce4-session-logout --logout, mode "default"
@@ -243,13 +243,14 @@ mode "$mode_system" {
     # bindsym f exec --no-startup-id xfce4-session-logout --fast, mode "default"
     # bindsym r exec --no-startup-id xfce4-session-logout --reboot, mode "default"
     # bindsym Shift+s exec --no-startup-id xfce4-session-logout -h, mode "default"
-    # bindsym l exec --no-startup-id i3exit lock, mode "default"
-    # bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    # bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    # bindsym e exec --no-startup-id i3exit logout, mode "default"
-    # bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    # bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    # bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym e exec --no-startup-id "loginctl lock-session $XDG_SESSION_ID", mode "default"
+    bindsym b exec --no-startup-id systemctl hybrid-sleep, mode "default"
+    bindsym q exec --no-startup-id "loginctl terminate-session $XDG_SESSION_ID", mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl suspend-then-hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
     # exit i3 (logs you out of your X session)
     bindsym Shift+i exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 

@@ -63,6 +63,7 @@
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         # dex
+        xss-lock
         libnotify
         dmenu #application launcher most people use
         vlc
