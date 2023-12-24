@@ -33,6 +33,7 @@
       enable = true;
       updateSessionEnvironment = true;
       configFile = builtins.toFile "config" (''
+        exec --no-startup-id dbus-launch --exit-with-session i3
       '' + builtins.readFile ./config + ''
       '');
       extraSessionCommands = ''
@@ -74,6 +75,7 @@
         # i3blocks #if you are planning on using i3blocks over i3status
         xfce4-volumed-pulse
         hicolor-icon-theme
+        xdg-desktop-portal
         tango-icon-theme
         xfce4-icon-theme
         glib # for gsettings
@@ -104,17 +106,18 @@
   #       XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
   #       XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
   #     ''+
-  #     (builtins.readFile ./i3xrandrMemory/i3autoXrandrMemory.sh)));
+  #     (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
   #   configXrandrByOutput = (pkgs.writeScriptBin "configXrandrByOutput.sh"
-  #     (builtins.readFile ./i3xrandrMemory/configXrandrByOutput.sh));
+  #     (builtins.readFile ./misc/i3xrandrMemory/configXrandrByOutput.sh));
   #   configPrimaryXrandr = (pkgs.writeScriptBin "configPrimaryDisplay.sh"
-  #     (builtins.readFile ./i3xrandrMemory/configPrimaryDisplay.sh));
+  #     (builtins.readFile ./misc/i3xrandrMemory/configPrimaryDisplay.sh));
   # in [
   #   ''"udev.rules=SUBSYSTEM==\"drm\", ACTION==\"change\", ENV{HOTPLUG}==\"1\", RUN+=\"${randrMemory}\""''
   # ];
 
   programs.thunar.enable = true;
 
+  services.dbus.enable = true;
   services.xserver.updateDbusEnvironment = true;
   services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 

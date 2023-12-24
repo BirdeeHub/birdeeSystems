@@ -51,7 +51,9 @@
     kotlin-native
     peek
     go
-    lutris
+    # lutris
+    # wine
+    # wine64
     python3
     distrobox
     wget
