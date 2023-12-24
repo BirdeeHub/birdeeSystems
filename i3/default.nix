@@ -33,7 +33,7 @@
       enable = true;
       updateSessionEnvironment = true;
       configFile = builtins.toFile "config" (''
-        exec --no-startup-id dbus-launch --exit-with-session i3
+        # exec --no-startup-id dbus-launch --exit-with-session i3
       '' + builtins.readFile ./config + ''
       '');
       extraSessionCommands = ''
