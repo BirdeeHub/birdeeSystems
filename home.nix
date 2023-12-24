@@ -51,6 +51,7 @@
     kotlin-native
     peek
     go
+    lutris
     python3
     distrobox
     wget
@@ -65,6 +66,8 @@
     glxinfo
     xclip
     xsel
+    xorg.xev
+    xorg.xmodmap
     libreoffice
     wireshark
     chromium

@@ -75,6 +75,7 @@
           ./hardwares/aSUSrog.nix
           # nvidia + intel graphics module for a-SUS laptop
           ./hardwares/nvdintGraphics.nix
+          ./i3
 
           ./shell/nixOS/shellModule.nix
           ./term/alacritty/system-alacritty.nix

@@ -38,10 +38,10 @@ font pango:FiraMono Nerd Font Mono 8
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-# exec --no-startup-id nm-applet
-# exec --no-startup-id blueman-applet
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
 exec --no-startup-id pa-applet
-# exec --no-startup-id xfce4-power-manager
+exec --no-startup-id xfce4-power-manager
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -235,14 +235,14 @@ bindsym $mod+Shift+e mode "$mode_system"
 set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (f)ast logout, switch (u)ser, (r)eboot, (Shift+s)hutdown, exit i3 (Shift+i)
 mode "$mode_system" {
     bindsym e exec --no-startup-id i3lock, mode "default"
-    bindsym s exec --no-startup-id xfce4-session-logout --suspend, mode "default"
-    bindsym u exec --no-startup-id xfce4-session-logout --switch-user, mode "default"
-    bindsym q exec --no-startup-id xfce4-session-logout --logout, mode "default"
-    bindsym h exec --no-startup-id xfce4-session-logout --hibernate, mode "default"
-    bindsym b exec --no-startup-id xfce4-session-logout --hybrid-sleep, mode "default"
-    bindsym f exec --no-startup-id xfce4-session-logout --fast, mode "default"
-    bindsym r exec --no-startup-id xfce4-session-logout --reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id xfce4-session-logout -h, mode "default"
+    # bindsym s exec --no-startup-id xfce4-session-logout --suspend, mode "default"
+    # bindsym u exec --no-startup-id xfce4-session-logout --switch-user, mode "default"
+    # bindsym q exec --no-startup-id xfce4-session-logout --logout, mode "default"
+    # bindsym h exec --no-startup-id xfce4-session-logout --hibernate, mode "default"
+    # bindsym b exec --no-startup-id xfce4-session-logout --hybrid-sleep, mode "default"
+    # bindsym f exec --no-startup-id xfce4-session-logout --fast, mode "default"
+    # bindsym r exec --no-startup-id xfce4-session-logout --reboot, mode "default"
+    # bindsym Shift+s exec --no-startup-id xfce4-session-logout -h, mode "default"
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     # bindsym s exec --no-startup-id i3exit suspend, mode "default"
     # bindsym u exec --no-startup-id i3exit switch_user, mode "default"
@@ -284,7 +284,10 @@ mode "resize" {
 
 # Autostart applications
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen;
+exec xrandr --auto
+exec xrandr --output eDP-1-1 --primary
+exec xrandr --output HDMI-1-1 --left-of eDP-1-1 --preferred
+exec --no-startup-id fehBG;
 #exec --no-startup-id manjaro-hello
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
@@ -292,9 +295,6 @@ exec --no-startup-id nitrogen;
 # exec --no-startup-id xautolock -time 10 -locker i3lock
 # exec_always --no-startup-id ff-theme-util
 # exec_always --no-startup-id fix_xcursor
-# exec xrandr --auto
-# exec xrandr --output eDP-1-1 --primary
-# exec xrandr --output HDMI-1-1 --left-of eDP-1-1 --preferred
 # exec /home/birdee/.i3/configXrandrByOutput.sh HDMI-1
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
