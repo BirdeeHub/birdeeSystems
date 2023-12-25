@@ -116,6 +116,7 @@
   # ];
 
   programs.thunar.enable = true;
+  programs.xfconf.enable = true;
 
   services.dbus.enable = true;
   services.xserver.updateDbusEnvironment = true;
