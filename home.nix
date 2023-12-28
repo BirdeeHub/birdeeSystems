@@ -11,6 +11,20 @@
   birdeeFish.enable = true;
   birdeeFox.enable = true;
 
+  xdg.userDirs = {
+    enable = true;
+    desktop = "${config.home.homeDirectory}/Desktop";
+    documents = "${config.home.homeDirectory}/Documents";
+    download = "${config.home.homeDirectory}/Downloads";
+    music = "${config.home.homeDirectory}/Music";
+    pictures = "${config.home.homeDirectory}/Pictures";
+    publicShare = "${config.home.homeDirectory}/Public";
+    templates = "${config.home.homeDirectory}/Templates";
+    videos = "${config.home.homeDirectory}/Videos";
+    extraConfig = {
+      XDG_MISC_DIR = "${config.home.homeDirectory}/Misc";
+    };
+  };
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -38,6 +52,7 @@
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
+    qbittorrent
     galculator
     qalculate-qt
     oh-my-posh
@@ -51,8 +66,11 @@
     kotlin-native
     peek
     go
-    # lutris
-    # wine
+    _7zz
+    # flatpak
+    # gnome.gnome-software
+    lutris
+    wine
     # wine64
     python3
     distrobox
@@ -115,6 +133,7 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
   };
 
   # Let Home Manager install and manage itself.

@@ -13,7 +13,7 @@
         };
         extraConfig = ''
         '';
-        # background = ./misc/CrabWarning.jpg;
+        # background = ./misc/CrabWarning.png;
       };
       defaultSession = "none+i3";
       # sessionCommands = ''
@@ -22,18 +22,10 @@
     desktopManager.xterm.enable = false;
 
     # Enable the i3 Desktop Environment.
-    # desktopManager.xfce = {
-    #     enable = true;
-    #     noDesktop = true;
-    #     enableXfwm = false;
-    #     enableScreensaver = false;
-    #   };
-    # };
     windowManager.i3 = {
       enable = true;
       updateSessionEnvironment = true;
       configFile = builtins.toFile "config" (''
-        # exec --no-startup-id dbus-launch --exit-with-session i3
       '' + builtins.readFile ./config + ''
       '');
       extraSessionCommands = ''
@@ -75,7 +67,6 @@
         # i3blocks #if you are planning on using i3blocks over i3status
         xfce4-volumed-pulse
         hicolor-icon-theme
-        xdg-desktop-portal
         tango-icon-theme
         xfce4-icon-theme
         glib # for gsettings
@@ -85,7 +76,6 @@
         desktop-file-utils
         shared-mime-info # for update-mime-database
         polkit_gnome
-        # Needed by Xfce's xinitrc script
         xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
         garcon
         libxfce4ui
@@ -98,6 +88,10 @@
     };
   };
   qt.platformTheme = "gtk";
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.config.common.default = "*";
 
   # How do I run a script when a monitor is connected/disconnected?
   # it doesnt even have to be this big script, even just xrandr --auto...

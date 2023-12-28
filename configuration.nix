@@ -11,7 +11,11 @@ in {
   birdeeZsh.enable = true;
   birdeeBash.enable = true;
   # birdeeFish.enable = true;
+  services.flatpak.enable = true;
 
+  services.clamav.daemon.enable = true;
+  services.clamav.updater.enable = true;
+  services.clamav.updater.interval = "weekly";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
