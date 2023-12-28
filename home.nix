@@ -69,6 +69,8 @@
     _7zz
     # flatpak
     # gnome.gnome-software
+    steam
+    heroic
     lutris
     wine
     # wine64
