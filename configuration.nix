@@ -124,6 +124,7 @@ in {
     wget
     tree
     zip
+    _7zz
     unzip
     xclip
     xsel

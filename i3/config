@@ -98,6 +98,10 @@ bindsym $mod+F9 exec slack
 bindsym $mod+F10 exec chromium
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 # bindsym $mod+Shift+d --release exec "dunstctl close-all"
+bindsym Print --release exec --no-startup-id xfce4-screenshooter
+bindsym $mod+Print --release exec --no-startup-id xfce4-screenshooter -r
+bindsym $mod+Shift+Print --release exec --no-startup-id peek
+bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
 
 bindsym $mod+minus exec monWkspcCycle.sh
 focus_follows_mouse no
