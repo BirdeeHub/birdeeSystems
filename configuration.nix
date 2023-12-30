@@ -64,6 +64,9 @@ in {
     layout = "us";
     xkbVariant = "";
   };
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "birdee" ];
+  virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -120,6 +123,9 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    virtualbox
+    vagrant
+    linuxKernel.packages.linux_zen.virtualbox
     lshw
     wget
     tree

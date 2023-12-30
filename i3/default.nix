@@ -76,6 +76,7 @@
         desktop-file-utils
         shared-mime-info # for update-mime-database
         polkit_gnome
+        xdg-utils
         # xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
         garcon
         libxfce4ui
