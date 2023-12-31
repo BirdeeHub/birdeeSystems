@@ -13,7 +13,7 @@
         };
         extraConfig = ''
         '';
-        # background = ./misc/CrabWarning.png;
+        # background = ./misc/DogAteHomework.png;
       };
       defaultSession = "none+i3";
       # sessionCommands = ''
@@ -38,11 +38,11 @@
           (builtins.readFile ./monWkspcCycle.sh));
         fehBG = (pkgs.writeScriptBin "fehBG" ''
           #!/bin/sh
-          exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/DogAteHomework.png} "$@"
+          exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
         '');
         i3lock = (pkgs.writeScriptBin "i3lock" ''
           #!/bin/sh
-          exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/CrabWarning.png} "$@"
+          exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/DogAteHomework.png} "$@"
         '');
         i3status = (pkgs.writeScriptBin "i3status" ''
           #!/bin/sh
