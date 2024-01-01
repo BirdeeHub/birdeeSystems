@@ -52,6 +52,8 @@
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
+    vlc
+    ristretto
     qbittorrent
     galculator
     qalculate-qt

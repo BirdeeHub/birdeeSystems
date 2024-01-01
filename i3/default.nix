@@ -1,4 +1,27 @@
 { config, pkgs, self, inputs, ... }: {
+
+  # How do I run a script when a monitor is connected/disconnected?
+  # it doesnt even have to be this big script, even just xrandr --auto...
+  services.udev = {
+    enable = true;
+    extraRules = let 
+      randrMemory = (pkgs.writeScript "randrMemory.sh" (''
+          #!/usr/bin/env bash
+          XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
+          XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
+
+        ''+ (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
+
+      configXrandrByOutput = (pkgs.writeScript "configXrandrByOutput.sh"
+        (builtins.readFile ./configXrandrByOutput.sh));
+      configPrimaryXrandr = (pkgs.writeScript "configPrimaryDisplay.sh"
+        (builtins.readFile ./configPrimaryDisplay.sh));
+    in 
+    ''
+      ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
+    '';
+  };
+
   services.xserver = {
     # Enable the X11 windowing system.
     enable = true;
@@ -59,7 +82,6 @@
         xss-lock
         libnotify
         dmenu #application launcher most people use
-        vlc
         pa_applet
         pavucontrol
         networkmanagerapplet
@@ -80,7 +102,6 @@
         # xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
         garcon
         libxfce4ui
-        ristretto
         xfce4-power-manager
         xfce4-notifyd
         xfce4-screenshooter
@@ -93,22 +114,6 @@
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk ];
   xdg.portal.config.common.default = "*";
-
-  # How do I run a script when a monitor is connected/disconnected?
-  # it doesnt even have to be this big script, even just xrandr --auto...
-  # boot.kernelParams = let 
-  #   randrMemory = (pkgs.writeScriptBin "randrMemory.sh" (''
-  #       XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
-  #       XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
-  #     ''+
-  #     (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
-  #   configXrandrByOutput = (pkgs.writeScriptBin "configXrandrByOutput.sh"
-  #     (builtins.readFile ./misc/i3xrandrMemory/configXrandrByOutput.sh));
-  #   configPrimaryXrandr = (pkgs.writeScriptBin "configPrimaryDisplay.sh"
-  #     (builtins.readFile ./misc/i3xrandrMemory/configPrimaryDisplay.sh));
-  # in [
-  #   ''"udev.rules=SUBSYSTEM==\"drm\", ACTION==\"change\", ENV{HOTPLUG}==\"1\", RUN+=\"${randrMemory}\""''
-  # ];
 
   programs.thunar.enable = true;
   programs.xfconf.enable = true;
