@@ -53,7 +53,7 @@
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
     vlc
-    ristretto
+    xfce.ristretto
     qbittorrent
     galculator
     qalculate-qt

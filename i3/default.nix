@@ -1,23 +1,25 @@
-{ config, pkgs, self, inputs, ... }: {
+{ config, pkgs, self, inputs, ... }: let
+    randrMemory = let
+      configXrandrByOutput = (pkgs.writeScript "configXrandrByOutput.sh"
+        (builtins.readFile ./configXrandrByOutput.sh));
+      configPrimaryXrandr = (pkgs.writeScript "configPrimaryDisplay.sh"
+        (builtins.readFile ./configPrimaryDisplay.sh));
+    in
+    (pkgs.writeScript "randrMemory.sh" (''
+        #!/usr/bin/env bash
+        XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
+        XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
+      ''+ (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
+in {
+  imports = [ 
+    ./i3.nix
+  ];
 
   # How do I run a script when a monitor is connected/disconnected?
   # it doesnt even have to be this big script, even just xrandr --auto...
   services.udev = {
     enable = true;
-    extraRules = let 
-      randrMemory = (pkgs.writeScript "randrMemory.sh" (''
-          #!/usr/bin/env bash
-          XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
-          XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
-
-        ''+ (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
-
-      configXrandrByOutput = (pkgs.writeScript "configXrandrByOutput.sh"
-        (builtins.readFile ./configXrandrByOutput.sh));
-      configPrimaryXrandr = (pkgs.writeScript "configPrimaryDisplay.sh"
-        (builtins.readFile ./configPrimaryDisplay.sh));
-    in 
-    ''
+    extraRules = ''
       ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
     '';
   };
@@ -45,24 +47,28 @@
     desktopManager.xterm.enable = false;
 
     # Enable the i3 Desktop Environment.
-    windowManager.i3 = {
+    windowManager.i3.me = let
+      monMover = (pkgs.writeScript "monWkspcCycle.sh"
+        (builtins.readFile ./monWkspcCycle.sh));
+      fehBG = (pkgs.writeScript "fehBG" ''
+        #!/bin/sh
+        exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
+      '');
+    in {
       enable = true;
       updateSessionEnvironment = true;
-      configFile = builtins.toFile "config" (''
+      configText = ''
+        set $monMover ${monMover}
+        set $fehBG ${fehBG}
+        set $randrMemory ${randrMemory}
       '' + builtins.readFile ./config + ''
-      '');
+      '';
       extraSessionCommands = ''
         ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
           Xft.dpi: 100
         ''}
       '';
       extraPackages = let
-        monMover = (pkgs.writeScriptBin "monWkspcCycle.sh"
-          (builtins.readFile ./monWkspcCycle.sh));
-        fehBG = (pkgs.writeScriptBin "fehBG" ''
-          #!/bin/sh
-          exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
-        '');
         i3lock = (pkgs.writeScriptBin "i3lock" ''
           #!/bin/sh
           exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/DogAteHomework.png} "$@"
@@ -73,8 +79,6 @@
         '');
       in
       with pkgs; with pkgs.xfce; [
-        fehBG
-        monMover
         jq
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker

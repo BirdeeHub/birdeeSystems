@@ -103,7 +103,8 @@ bindsym $mod+Print --release exec --no-startup-id xfce4-screenshooter -r
 bindsym $mod+Shift+Print --release exec --no-startup-id peek
 bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
 
-bindsym $mod+minus exec monWkspcCycle.sh
+bindsym $mod+minus exec $monMover
+bindsym $mod+Shift+minus exec $randrMemory
 focus_follows_mouse no
 # change focus
 bindsym $mod+$left focus left
@@ -293,7 +294,7 @@ mode "resize" {
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec xrandr --output eDP-1-1 --primary --preferred
 exec xrandr --output HDMI-1-1 --left-of eDP-1-1 --preferred
-exec --no-startup-id fehBG;
+exec --no-startup-id $fehBG;
 #exec --no-startup-id manjaro-hello
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
