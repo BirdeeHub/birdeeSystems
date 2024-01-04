@@ -55,16 +55,15 @@ in {
           #!/bin/sh
           exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
         '');
-        configText = pkgs.writeTextFile {
-          name = "config";
-          text = ''
-            set $monMover ${monMover}
-            set $fehBG ${fehBG}
-            set $randrMemory ${randrMemory}
-          '' + builtins.readFile ./config + ''
-          '';
-        };
-      in "${configText}";
+      in "${ pkgs.writeTextFile {
+        name = "config";
+        text = ''
+          set $monMover ${monMover}
+          set $fehBG ${fehBG}
+          set $randrMemory ${randrMemory}
+        '' + builtins.readFile ./config + ''
+        '';
+      } }";
       extraSessionCommands = ''
         ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
           Xft.dpi: 100
