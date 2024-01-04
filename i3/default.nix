@@ -11,9 +11,6 @@
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
       ''+ (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
 in {
-  imports = [ 
-    ./i3.nix
-  ];
 
   # How do I run a script when a monitor is connected/disconnected?
   # it doesnt even have to be this big script, even just xrandr --auto...
@@ -47,22 +44,27 @@ in {
     desktopManager.xterm.enable = false;
 
     # Enable the i3 Desktop Environment.
-    windowManager.i3.me = let
-      monMover = (pkgs.writeScript "monWkspcCycle.sh"
-        (builtins.readFile ./monWkspcCycle.sh));
-      fehBG = (pkgs.writeScript "fehBG" ''
-        #!/bin/sh
-        exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
-      '');
-    in {
+    windowManager.i3 =
+    {
       enable = true;
       updateSessionEnvironment = true;
-      configText = ''
-        set $monMover ${monMover}
-        set $fehBG ${fehBG}
-        set $randrMemory ${randrMemory}
-      '' + builtins.readFile ./config + ''
-      '';
+      configFile = let
+        monMover = (pkgs.writeScript "monWkspcCycle.sh"
+          (builtins.readFile ./monWkspcCycle.sh));
+        fehBG = (pkgs.writeScript "fehBG" ''
+          #!/bin/sh
+          exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
+        '');
+        configText = pkgs.writeTextFile {
+          name = "config";
+          text = ''
+            set $monMover ${monMover}
+            set $fehBG ${fehBG}
+            set $randrMemory ${randrMemory}
+          '' + builtins.readFile ./config + ''
+          '';
+        };
+      in "${configText}";
       extraSessionCommands = ''
         ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
           Xft.dpi: 100

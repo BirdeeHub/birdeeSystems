@@ -25,17 +25,7 @@
       ];
       config.allowUnfree = true;
     };
-    users = {
-      birdee = {
-        name = "birdee";
-        shell = pkgs.zsh;
-        isNormalUser = true;
-        description = "";
-        extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
-        # this is packages for nixOS user config.
-        # packages = []; # empty because that is managed by home-manager
-      };
-    };
+    users = import ./userdata pkgs;
   in {
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
@@ -55,10 +45,8 @@
         # to pass through arguments to home.nix
         extraSpecialArgs = let 
           username = "birdee";
-          homeDirPrefix = if pkgs.stdenv.hostPlatform.isDarwin then "/Users" else "/home";
-          homeDirectory = "/${homeDirPrefix}/${username}";
         in {
-          inherit homeDirectory username self inputs stateVersion;
+          inherit username self inputs users stateVersion;
         };
       };
     };

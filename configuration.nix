@@ -6,7 +6,7 @@
 in {
   imports = [ ];
 
-  users.users = users;
+  users.users = users.users;
   birdeeVim.enable = true;
   birdeeZsh.enable = true;
   birdeeBash.enable = true;

@@ -1,15 +1,17 @@
-{ config, pkgs, self, inputs, homeDirectory, username, stateVersion, ...  }: let
-  in {
+{ config, pkgs, self, inputs, users, username, stateVersion, ...  }@args: let
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
-  home.homeDirectory = homeDirectory;
+  home.homeDirectory = users.homeManager.${username}.homeDirectory;
+  programs.git = users.git.${username};
 
   birdeeVim.enable = true;
   birdeeZsh.enable = true;
   birdeeBash.enable = true;
   birdeeFish.enable = true;
   birdeeFox.enable = true;
+
 
   xdg.userDirs = {
     enable = true;
