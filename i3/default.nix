@@ -1,15 +1,29 @@
 { config, pkgs, self, inputs, ... }: let
+    jq = pkgs.writeScript "jq" (''
+      #!/usr/bin/env bash
+      exec ${pkgs.jq}/bin/jq "$@"
+    '');
+    xrandr = pkgs.writeScript "xrandr" (''
+      #!/usr/bin/env bash
+      exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+    '');
     randrMemory = let
-      configXrandrByOutput = (pkgs.writeScript "configXrandrByOutput.sh"
-        (builtins.readFile ./configXrandrByOutput.sh));
-      configPrimaryXrandr = (pkgs.writeScript "configPrimaryDisplay.sh"
-        (builtins.readFile ./configPrimaryDisplay.sh));
+      configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (''
+        #!/usr/bin/env bash
+        xrandr=${xrandr}
+        '' + (builtins.readFile ./mon/configXrandrByOutput.sh));
+      configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (''
+        #!/usr/bin/env bash
+        xrandr=${xrandr}
+        '' + (builtins.readFile ./mon/configPrimaryDisplay.sh));
     in
     (pkgs.writeScript "randrMemory.sh" (''
         #!/usr/bin/env bash
+        jq=${jq}
+        xrandr=${xrandr}
         XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
-      ''+ (builtins.readFile ./misc/i3xrandrMemory/i3autoXrandrMemory.sh)));
+      ''+ (builtins.readFile ./mon/i3autoXrandrMemory.sh)));
 in {
 
   # How do I run a script when a monitor is connected/disconnected?
@@ -49,21 +63,33 @@ in {
       enable = true;
       updateSessionEnvironment = true;
       configFile = let
-        monMover = (pkgs.writeScript "monWkspcCycle.sh"
-          (builtins.readFile ./monWkspcCycle.sh));
+        monMover = (pkgs.writeScript "monWkspcCycle.sh" (''
+          #!/usr/bin/env bash
+          jq=${jq}
+          xrandr=${xrandr}
+        '' + (builtins.readFile ./mon/monWkspcCycle.sh) + ''
+        ''));
         fehBG = (pkgs.writeScript "fehBG" ''
           #!/bin/sh
           exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
         '');
-      in "${ pkgs.writeTextFile {
-        name = "config";
-        text = ''
+        i3status = (pkgs.writeScript "i3status" ''
+          #!/bin/sh
+          exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ./i3bar)} "$@"
+        '');
+        bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (''
+          #!/usr/bin/env bash
+          xrandr=${xrandr}
+        '' + (builtins.readFile ./mon/bootUpMonitorScript.sh));
+      in "${ pkgs.writeText "config" (''
+          set $i3status ${i3status}
           set $monMover ${monMover}
           set $fehBG ${fehBG}
           set $randrMemory ${randrMemory}
+          set $xrandr ${xrandr}
+          set $bootUpMonScript ${bootUpMonScript}
         '' + builtins.readFile ./config + ''
-        '';
-      } }";
+        '') }";
       extraSessionCommands = ''
         ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
           Xft.dpi: 100
@@ -74,14 +100,9 @@ in {
           #!/bin/sh
           exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/DogAteHomework.png} "$@"
         '');
-        i3status = (pkgs.writeScriptBin "i3status" ''
-          #!/bin/sh
-          exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ./i3bar)} "$@"
-        '');
       in
       with pkgs; with pkgs.xfce; [
-        jq
-        i3status # gives you the default i3 status bar
+        # i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         # dex
         xss-lock
