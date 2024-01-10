@@ -38,10 +38,10 @@
         modules = with home-modules; [
           ./homes/birdee.nix
 
+          term.alacritty
           shell.bash
           shell.zsh
           shell.fish
-          term.alacritty
           firefox
 
           birdeeVim.homeModule.${system}
@@ -65,14 +65,14 @@
         };
         modules = with system-modules; [
           ./systems/aSUS.nix
+          hardwares.aSUSrog
+          hardwares.nvidiaIntelgrated
 
+          i3
+          term.alacritty
           shell.bash
           shell.zsh
           shell.fish
-          term.alacritty
-          i3
-          hardwares.aSUSrog
-          hardwares.nvidiaIntelgrated
 
           birdeeVim.nixosModules.${system}.default
         ];
