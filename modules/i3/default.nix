@@ -55,7 +55,6 @@
           };
           extraConfig = ''
           '';
-          # background = ./misc/DogAteHomework.png;
         };
         defaultSession = "none+i3";
         # sessionCommands = ''
