@@ -22,6 +22,22 @@ in {
   services.clamav.updater.enable = true;
   services.clamav.updater.interval = "weekly";
 
+  environment.variables = {
+  };
+  environment.interactiveShellInit = ''
+  '';
+  environment.shellAliases = {
+    flakeUpAndAddem = ''${pkgs.writeScript "flakeUpAndAddem.sh" (/*bash*/''
+      #!/usr/bin/env bash
+      git add . && nix flake update && nix build --show-trace .#$1 && git add .
+    '')}'';
+    leftMonPrf = /*bash*/ "xrandr --output HDMI-1-1 --left-of eDP-1-1 --preferred";
+    leftMonRated = /*bash*/ "xrandr --output HDMI-1-1 --left-of eDP-1-1 --mode 1920x1080 --rate $@";
+    ls = /*bash*/ "ls --color=tty";
+    ll = /*bash*/ "ls -l";
+    l  = /*bash*/ "ls -alh";
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
