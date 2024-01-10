@@ -1,18 +1,13 @@
-{homeModule ? false, ... }: {
-  firefox = if homeModule
-    then ./firefox/homeFox.nix
-    else builtins.throw "no system module with that name";
+{homeModule ? false, ... }: let
+  homeOnly = path: (if homeModule then path else builtins.throw "no system module with that name");
+  systemOnly = path: (if homeModule then builtins.throw "no home manager module with that name" else path);
+in {
+  firefox = homeOnly ./firefox/homeFox.nix;
   hardwares = {
-    aSUSrog = if homeModule
-      then builtins.throw "no home manager module with that name"
-      else ./hardwares/aSUSrog.nix;
-    nvidiaIntelgrated = if homeModule
-      then builtins.throw "no home manager module with that name"
-      else ./hardwares/nvdintGraphics.nix;
+    aSUSrog = systemOnly ./hardwares/aSUSrog.nix;
+    nvidiaIntelgrated = systemOnly ./hardwares/nvdintGraphics.nix;
   };
-  i3 = if homeModule
-    then builtins.throw "no home manager module with that name"
-    else ./i3;
+  i3 = systemOnly ./i3;
   term = {
     alacritty = if homeModule
       then ./term/alacritty/home-alacritty.nix
