@@ -7,7 +7,7 @@ in {
     home.packages = let
       alakitty = pkgs.writeScriptBin "alacritty" ''
         #!/bin/sh
-        exec ${pkgs.alacritty}/bin/alacritty --config-file ${self}/term/alacritty/alacritty.toml "$@"
+        exec ${pkgs.alacritty}/bin/alacritty --config-file ${./alacritty.toml} "$@"
       '';
     in
     with pkgs; [

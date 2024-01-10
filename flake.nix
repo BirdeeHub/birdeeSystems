@@ -35,14 +35,14 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [
+        modules = with home-modules; [
           ./homes/birdee.nix
 
-          home-modules.shell.bash
-          home-modules.shell.zsh
-          home-modules.shell.fish
-          home-modules.term.alacritty
-          home-modules.firefox
+          shell.bash
+          shell.zsh
+          shell.fish
+          term.alacritty
+          firefox
 
           birdeeVim.homeModule.${system}
         ];
@@ -63,16 +63,16 @@
           inherit self inputs stateVersion users;
           hostname = "nestOS";
         };
-        modules = [
+        modules = with system-modules; [
           ./systems/asus-configuration.nix
 
-          system-modules.shell.bash
-          system-modules.shell.zsh
-          system-modules.shell.fish
-          system-modules.term.alacritty
-          system-modules.i3
-          system-modules.hardwares.aSUSrog
-          system-modules.hardwares.nvidiaIntelgrated
+          shell.bash
+          shell.zsh
+          shell.fish
+          term.alacritty
+          i3
+          hardwares.aSUSrog
+          hardwares.nvidiaIntelgrated
 
           birdeeVim.nixosModules.${system}.default
         ];

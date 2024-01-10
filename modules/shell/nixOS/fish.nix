@@ -6,7 +6,7 @@
     programs.fish = {
       enable = true;
       promptInit = ''
-        oh-my-posh init fish --config ${self}/shell/atomic-emodipt.omp.json | source
+        oh-my-posh init fish --config ${../atomic-emodipt.omp.json} | source
       '';
     };
   };

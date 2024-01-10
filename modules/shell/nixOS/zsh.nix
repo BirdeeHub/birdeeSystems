@@ -10,7 +10,7 @@
           strategy = [ "history" ];
         };
         interactiveShellInit = ''
-          . ${self}/shell/compinstallOut
+          . ${../compinstallOut}
 
           # Lines configured by zsh-newuser-install
           HISTFILE=~/.histfile
@@ -22,7 +22,7 @@
           # End of lines configured by zsh-newuser-install
         '';
         promptInit = ''
-          eval "$(oh-my-posh init zsh --config ${self}/shell/atomic-emodipt.omp.json)"
+          eval "$(oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
         '';
     };
   };
