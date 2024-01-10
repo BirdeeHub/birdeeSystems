@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
 if [[ $1 == "HDMI-1-1" ]]; then
-    # if [[ "$($xrandr --listactivemonitors | grep "HDMI-1" | awk '{print($3)}')" == "3840/697x2160/392+0+0" ]]; then
     if false; then
         # $xrandr --output HDMI-1 --left-of eDP-1 --preferred
         $xrandr --output HDMI-1-1 --left-of eDP-1 --mode "3840x2160"

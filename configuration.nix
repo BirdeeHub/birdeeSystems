@@ -8,9 +8,14 @@ in {
 
   users.users = users.users;
   birdeeVim.enable = true;
-  birdeeZsh.enable = true;
-  birdeeBash.enable = true;
-  # birdeeFish.enable = true;
+  birdeeMods = {
+    i3.enable = true;
+    zsh.enable = true;
+    bash.enable = true;
+    # fish.enable = true;
+    nvidia.enable = true;
+    alacritty.enable = true;
+  };
   services.flatpak.enable = true;
 
   services.clamav.daemon.enable = true;

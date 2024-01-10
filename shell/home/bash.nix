@@ -1,10 +1,10 @@
-{config, pkgs, self, inputs, ... }:
+{config, pkgs, self, inputs, lib, ... }:
 {
   options = {
-    birdeeBash.enable = pkgs.lib.mkEnableOption "birdeeBash";
+    birdeeMods.bash.enable = lib.mkEnableOption "birdeeBash";
   };
-  config = {
-    programs.bash = pkgs.lib.mkIf config.birdeeBash.enable {
+  config = lib.mkIf config.birdeeMods.bash.enable {
+    programs.bash = {
       initExtra = ''
         eval "$(oh-my-posh init bash --config ${self}/shell/atomic-emodipt.omp.json)"
       '';

@@ -1,10 +1,10 @@
-{config, pkgs, self, inputs, ... }:
+{config, pkgs, self, lib, inputs, ... }:
 {
   options = {
-    birdeeFish.enable = pkgs.lib.mkEnableOption "birdeeFish";
+    birdeeMods.fish.enable = lib.mkEnableOption "birdeeFish";
   };
-  config = {
-    programs.fish = pkgs.lib.mkIf config.birdeeFish.enable {
+  config = lib.mkIf config.birdeeMods.fish.enable {
+    programs.fish = {
       enable = true;
       interactiveShellInit = ''
         oh-my-posh init fish --config ${self}/shell/atomic-emodipt.omp.json | source

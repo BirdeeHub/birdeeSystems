@@ -1,10 +1,10 @@
-{config, pkgs, self, inputs, ... }:
+{config, pkgs, self, inputs, lib, ... }:
 {
   options = {
-    birdeeFox.enable = pkgs.lib.mkEnableOption "birdeeFox";
+    birdeeMods.firefox.enable = lib.mkEnableOption "birdeeFox";
   };
-  config = {
-    programs.firefox = pkgs.lib.mkIf config.birdeeFox.enable (let
+  config = lib.mkIf config.birdeeMods.firefox.enable {
+    programs.firefox = (let
     in {
       enable = true;
       profiles.birdee = {

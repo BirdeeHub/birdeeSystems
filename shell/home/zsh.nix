@@ -1,10 +1,10 @@
-{config, pkgs, self, inputs, ... }:
+{config, pkgs, self, lib, inputs, ... }:
 {
   options = {
-    birdeeZsh.enable = pkgs.lib.mkEnableOption "birdeeZsh";
+    birdeeMods.zsh.enable = lib.mkEnableOption "birdeeZsh";
   };
-  config = {
-    programs.zsh = pkgs.lib.mkIf config.birdeeZsh.enable {
+  config = lib.mkIf config.birdeeMods.zsh.enable {
+    programs.zsh = {
       shellAliases = {};
       enable = true;
       enableAutosuggestions = true;

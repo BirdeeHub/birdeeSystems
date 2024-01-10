@@ -7,10 +7,13 @@ in {
   programs.git = users.git.${username};
 
   birdeeVim.enable = true;
-  birdeeZsh.enable = true;
-  birdeeBash.enable = true;
-  birdeeFish.enable = true;
-  birdeeFox.enable = true;
+  birdeeMods = {
+    zsh.enable = true;
+    bash.enable = true;
+    fish.enable = true;
+    alacritty.enable = true;
+    firefox.enable = true;
+  };
 
 
   xdg.userDirs = {
