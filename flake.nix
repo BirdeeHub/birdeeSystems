@@ -36,7 +36,7 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [
-          ./home.nix
+          ./homes/birdee.nix
 
           home-modules.shell.bash
           home-modules.shell.zsh
@@ -64,7 +64,7 @@
           hostname = "nestOS";
         };
         modules = [
-          ./configuration.nix
+          ./systems/asus-configuration.nix
 
           system-modules.shell.bash
           system-modules.shell.zsh
