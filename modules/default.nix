@@ -1,10 +1,18 @@
 {homeModule ? false, ... }: {
-  firefox = if homeModule then ./firefox/homeFox.nix else builtins.throw "no system module with that name";
+  firefox = if homeModule
+    then ./firefox/homeFox.nix
+    else builtins.throw "no system module with that name";
   hardwares = {
-    aSUSrog = if homeModule then builtins.throw "no home manager module with that name" else ./hardwares/aSUSrog.nix;
-    nvidiaIntelgrated = if homeModule then builtins.throw "no home manager module with that name" else ./hardwares/nvdintGraphics.nix;
+    aSUSrog = if homeModule
+      then builtins.throw "no home manager module with that name"
+      else ./hardwares/aSUSrog.nix;
+    nvidiaIntelgrated = if homeModule
+      then builtins.throw "no home manager module with that name"
+      else ./hardwares/nvdintGraphics.nix;
   };
-  i3 = if homeModule then builtins.throw "no home manager module with that name" else ./i3;
+  i3 = if homeModule
+    then builtins.throw "no home manager module with that name"
+    else ./i3;
   term = {
     alacritty = if homeModule
       then ./term/alacritty/home-alacritty.nix
