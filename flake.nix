@@ -26,6 +26,8 @@
       config.allowUnfree = true;
     };
     users = import ./userdata pkgs;
+    home-modules = import ./modules { homeModule = true; };
+    system-modules = import ./modules { homeModule = false; };
   in {
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
@@ -35,9 +37,13 @@
         # the path to your home.nix.
         modules = [
           ./home.nix
-          ./shell/home/shellModule.nix
-          ./term/alacritty/home-alacritty.nix
-          ./firefox/homeFox.nix
+
+          home-modules.shell.bash
+          home-modules.shell.zsh
+          home-modules.shell.fish
+          home-modules.term.alacritty
+          home-modules.firefox
+
           birdeeVim.homeModule.${system}
         ];
 
@@ -59,14 +65,15 @@
         };
         modules = [
           ./configuration.nix
-          # Include the results of the hardware scan.
-          ./hardwares/aSUSrog.nix
-          # nvidia + intel graphics module for a-SUS laptop
-          ./hardwares/nvdintGraphics.nix
-          ./i3
 
-          ./shell/nixOS/shellModule.nix
-          ./term/alacritty/system-alacritty.nix
+          system-modules.shell.bash
+          system-modules.shell.zsh
+          system-modules.shell.fish
+          system-modules.term.alacritty
+          system-modules.i3
+          system-modules.hardwares.aSUSrog
+          system-modules.hardwares.nvidiaIntelgrated
+
           birdeeVim.nixosModules.${system}.default
         ];
       };
