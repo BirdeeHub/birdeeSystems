@@ -11,6 +11,6 @@ nix shell home-manager
 
 git add . &&\
 nix flake update &&\
-sudo nixos-rebuild switch --flake .#$1 &&\
-home-manager switch --flake .#$2 &&\
+sudo nixos-rebuild switch --show-trace --flake .#$1 &&\
+home-manager switch --show-trace --flake .#$2 &&\
 git add .
