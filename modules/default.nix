@@ -6,7 +6,7 @@
     );
   systemOnly = path:
     (if homeModule
-      then builtins.throw "no home manager module with that name"
+      then builtins.throw "no home-manager module with that name"
       else path
     );
 in {

@@ -64,7 +64,7 @@
           hostname = "nestOS";
         };
         modules = with system-modules; [
-          ./systems/asus-configuration.nix
+          ./systems/aSUS.nix
 
           shell.bash
           shell.zsh
