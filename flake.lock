@@ -28,11 +28,11 @@
         "sg-nvim": "sg-nvim"
       },
       "locked": {
-        "lastModified": 1704895947,
-        "narHash": "sha256-MBqOkiPo01/7Eg6orRcs0Fspgv5DCU0q3GmZM0Ww4dY=",
+        "lastModified": 1704896292,
+        "narHash": "sha256-RcZNcFgIkP94LuJmSQReoo496+RpBP1yFPy5/frHsNw=",
         "ref": "refs/heads/main",
-        "rev": "5e4debafe25b62e211a5b9623a6ecc3a94d73d26",
-        "revCount": 457,
+        "rev": "6d70d4d3fa8424f8cc2ba4f7677ab6fb37853e9d",
+        "revCount": 458,
         "type": "git",
         "url": "file:./flakes/birdeevim"
       },
