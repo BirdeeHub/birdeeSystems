@@ -65,6 +65,7 @@
         };
         modules = with system-modules; [
           ./systems/aSUS.nix
+
           hardwares.aSUSrog
           hardwares.nvidiaIntelgrated
 
