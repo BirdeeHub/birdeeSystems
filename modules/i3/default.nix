@@ -32,6 +32,27 @@
         ''+ (builtins.readFile ./mon/i3autoXrandrMemory.sh)));
   in {
 
+    environment.shellAliases = {
+      leftMon = ''${pkgs.writeScript "leftMonFlexible.sh" (/*bash*/''
+        #!/usr/bin/env bash
+        rate=59.95; mode="1920x1080" side="l"
+        [[ $# > 0 ]] && rate=$1
+        [[ $# > 1 ]] && mode=$2
+        [[ $# > 2 ]] && side=$3
+        if [[ $side == "l" ]]; then
+          side="--left-of"
+        elif [[ $side == "r" ]]; then
+          side="--right-of"
+        else
+          side=$3
+        fi
+        rest=()
+        [[ $# > 3 ]] && rest=''${@:4:$(($#-3))}
+        ${xrandr} --output HDMI-1 $side eDP-1 --rate $rate --mode $mode ''${rest[@]}
+      '')}'';
+      leftMonPrf = /*bash*/ "${xrandr} --output HDMI-1 --left-of eDP-1 --preferred";
+    };
+
     # How do I run a script when a monitor is connected/disconnected?
     # it doesnt even have to be this big script, even just xrandr --auto...
     services.udev = {
