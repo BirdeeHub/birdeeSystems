@@ -35,15 +35,8 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = with home-modules; [
+        modules = [
           ./homes/birdee.nix
-
-          term.alacritty
-          shell.bash
-          shell.zsh
-          shell.fish
-          firefox
-
           birdeeVim.homeModule.${system}
         ];
 
@@ -52,7 +45,7 @@
         extraSpecialArgs = let 
           username = "birdee";
         in {
-          inherit username self inputs users stateVersion;
+          inherit username self inputs users stateVersion home-modules;
         };
       };
     };
@@ -60,21 +53,11 @@
       "nestOS" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit self inputs stateVersion users;
+          inherit self inputs stateVersion users system-modules;
           hostname = "nestOS";
         };
-        modules = with system-modules; [
+        modules = [
           ./systems/aSUS.nix
-
-          hardwares.aSUSrog
-          hardwares.nvidiaIntelgrated
-
-          i3
-          term.alacritty
-          shell.bash
-          shell.zsh
-          shell.fish
-
           birdeeVim.nixosModules.${system}.default
         ];
       };

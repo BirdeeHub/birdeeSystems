@@ -1,5 +1,12 @@
-{ config, pkgs, self, inputs, users, username, stateVersion, ...  }@args: let
+{ config, pkgs, self, inputs, users, username, stateVersion, home-modules, ...  }@args: let
 in {
+  imports = with home-modules; [
+    term.alacritty
+    shell.bash
+    shell.zsh
+    shell.fish
+    firefox
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
