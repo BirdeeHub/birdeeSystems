@@ -34,12 +34,12 @@
 
     # How do I run a script when a monitor is connected/disconnected?
     # it doesnt even have to be this big script, even just xrandr --auto...
-    # services.udev = {
-    #   enable = true;
-    #   extraRules = ''
-    #     ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
-    #   '';
-    # };
+    services.udev = {
+      enable = true;
+      extraRules = ''
+        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
+      '';
+    };
 
     services.xserver = {
       # Enable the X11 windowing system.
