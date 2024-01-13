@@ -54,6 +54,7 @@
     home-modules = import ./modules { homeModule = true; inherit inputs pkgs; };
     system-modules = import ./modules { homeModule = false; inherit inputs pkgs; };
   in {
+    packages.${system} = home-modules.birdeeVim.packages;
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
