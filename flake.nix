@@ -57,30 +57,23 @@
     packages.${system} = home-modules.birdeeVim.packages;
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = {
+          username = "birdee";
+          inherit self inputs users stateVersion home-modules;
+        };
         inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
         modules = [
           ./homes/birdee.nix
         ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-        extraSpecialArgs = let 
-          username = "birdee";
-        in {
-          inherit username self inputs users stateVersion home-modules;
-        };
       };
     };
     nixosConfigurations = {
       "nestOS" = nixpkgs.lib.nixosSystem {
-        inherit system;
         specialArgs = {
-          inherit self inputs stateVersion users system-modules;
           hostname = "nestOS";
+          inherit self inputs stateVersion users system-modules;
         };
+        inherit system;
         modules = [
           ./systems/aSUS.nix
         ];
