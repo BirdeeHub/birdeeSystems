@@ -1,5 +1,5 @@
 {homeModule ? false, inputs, pkgs, ... }: let
-  birdeeVim = import ./birdeevim { inherit inputs; };
+  birdeeVim = import ./birdeevim { inherit inputs pkgs; };
   homeOnly = path:
     (if homeModule
       then path
@@ -27,7 +27,6 @@ in {
     dependencyOverlays = birdeeVim.dependencyOverlays;
     categoryDefinitions = birdeeVim.categoryDefinitions;
     packageDefinitions = birdeeVim.packageDefinitions;
-    utils = inputs.nixCats.utils;
   };
   i3 = systemOnly ./i3;
   term = {

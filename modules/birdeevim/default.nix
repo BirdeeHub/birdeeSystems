@@ -1,6 +1,6 @@
 # Copyright (c) 2023 BirdeeHub 
 # Licensed under the MIT license 
-{inputs, ... }:
+{inputs, ... }@attrs:
 inputs.flake-utils.lib.eachDefaultSystem (system: let
   inherit (inputs) nixpkgs nixCats;
   inherit (nixCats) utils;
