@@ -1,7 +1,8 @@
 {
   description = ''
-    IDK how to nix but I'm doing ok.
-    It will be cool eventually haha.
+    birdee's system. modules/default.nix handles passing modules
+    to home-manager and nixos config files in home and system
+    and userdata is passed to them as well.
   '';
 
   inputs = {
