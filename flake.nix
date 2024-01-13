@@ -12,7 +12,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/nur";
-    # birdeeVim.url = "git+file:./flakes/birdeevim";
+
+
+    # neovim
     flake-utils.url = "github:numtide/flake-utils";
     # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
     nixCats.url = "github:BirdeeHub/nixCats-nvim/frankenstein";
@@ -40,7 +42,7 @@
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixCats, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
