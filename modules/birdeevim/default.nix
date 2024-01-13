@@ -4,6 +4,7 @@
 inputs.flake-utils.lib.eachDefaultSystem (system: let
   inherit (inputs) nixpkgs nixCats;
   inherit (nixCats) utils;
+  systemPkgs = attrs.pkgs;
 
   dependencyOverlays = [ (utils.mergeOverlayLists nixCats.dependencyOverlays.${system}
   ((import ./overlays inputs) ++ [
@@ -176,41 +177,6 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
 
   };
 
-  settings = {
-    birdee = {
-      wrapRc = true;
-      # so that it finds my ai auths in ~/.cache/birdeevim
-      configDirName = "birdeevim";
-      viAlias = true;
-      vimAlias = true;
-      withNodeJs = true;
-      withRuby = true;
-      extraName = "";
-      withPython3 = true;
-    };
-    unwrappedLua = {
-      configDirName = "birdeevim";
-      wrapRc = false;
-      withNodeJs = true;
-      viAlias = true;
-      vimAlias = true;
-    };
-    unwrapNOjs = {
-      configDirName = "birdeevim";
-      wrapRc = false;
-      withNodeJs = false;
-      viAlias = true;
-      vimAlias = true;
-    };
-    wrappedNOjs = {
-      configDirName = "birdeevim";
-      wrapRc = true;
-      withNodeJs = false;
-      viAlias = true;
-      vimAlias = true;
-    };
-  };
-
   # just to select the right thing out of bitwarden. 
   # Don't get excited its just a UUID
   bitwardenItemIDs = {
@@ -219,9 +185,19 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
   };
 
   packageDefinitions = {
-    minimal = {settings = settings.unwrapNOjs; categories = {};};
+    minimal = {settings = { wrapRc = false; }; categories = {};};
     birdeeVim = {
-      settings = settings.birdee;
+      settings = {
+        wrapRc = true;
+        # so that it finds my ai auths in ~/.cache/birdeevim
+        configDirName = "birdeevim";
+        viAlias = true;
+        vimAlias = true;
+        withNodeJs = true;
+        withRuby = true;
+        extraName = "";
+        withPython3 = true;
+      };
       categories = {
         inherit bitwardenItemIDs;
         bitwarden = true;
@@ -239,8 +215,14 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
         colorscheme = "onedark";
       };
     };
-    birdeeUnwrapped = {
-      settings = settings.unwrappedLua;
+    notesVim = {
+      settings = {
+        configDirName = "birdeevim";
+        wrapRc = true;
+        withNodeJs = true;
+        viAlias = false;
+        vimAlias = false;
+      };
       categories = {
         inherit bitwardenItemIDs;
         bitwarden = true;
@@ -258,52 +240,14 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
         colorscheme = "onedark";
       };
     };
-    coffeeVim = {
-      settings = settings.birdee;
-      categories = {
-        inherit bitwardenItemIDs;
-        bitwarden = true;
-        generalBuildInputs = true;
-        debug = true;
-        customPlugins = true;
-        general = true;
-        AI = true;
-        java = true;
-        lspDebugMode = false;
-        colorscheme = "catppuccin";
+    noAI = {
+      settings = {
+        configDirName = "birdeevim";
+        wrapRc = true;
+        withNodeJs = false;
+        viAlias = false;
+        vimAlias = true;
       };
-    };
-    kotlinVim = {
-      settings = settings.birdee;
-      categories = {
-        inherit bitwardenItemIDs;
-        bitwarden = true;
-        generalBuildInputs = true;
-        debug = true;
-        customPlugins = true;
-        general = true;
-        AI = true;
-        java = true;
-        kotlin = true;
-        lspDebugMode = false;
-        colorscheme = "catppuccin";
-      };
-    };
-    noAIneodev = {
-      settings = settings.wrappedNOjs;
-      categories = {
-        generalBuildInputs = true;
-        debug = true;
-        customPlugins = true;
-        general = true;
-        neonixdev = true;
-        test = true;
-        lspDebugMode = true;
-        colorscheme = "onedark";
-      };
-    };
-    noAIunwrapped = {
-      settings = settings.unwrapNOjs;
       categories = {
         generalBuildInputs = true;
         bash = true;
