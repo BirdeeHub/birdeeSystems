@@ -9,6 +9,7 @@ in {
     hardwares.nvidiaIntelgrated
 
     i3
+    birdeeVim
     term.alacritty
     shell.bash
     shell.zsh

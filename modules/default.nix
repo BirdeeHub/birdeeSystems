@@ -1,4 +1,5 @@
-{homeModule ? false, ... }: let
+{homeModule ? false, inputs, pkgs, ... }: let
+  birdeeVim = import ./birdeevim { inherit inputs; };
   homeOnly = path:
     (if homeModule
       then path
@@ -15,6 +16,9 @@ in {
     aSUSrog = systemOnly ./hardwares/aSUSrog.nix;
     nvidiaIntelgrated = systemOnly ./hardwares/nvdintGraphics.nix;
   };
+  birdeeVim = if homeModule
+    then birdeeVim.homeModule.${pkgs.system}
+    else birdeeVim.nixosModules.${pkgs.system}.default;
   i3 = systemOnly ./i3;
   term = {
     alacritty = if homeModule

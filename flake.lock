@@ -16,31 +16,6 @@
         "type": "github"
       }
     },
-    "birdeeVim": {
-      "inputs": {
-        "bash-debug-adapter": "bash-debug-adapter",
-        "codeium": "codeium",
-        "flake-utils": "flake-utils_2",
-        "nixCats": "nixCats",
-        "nixpkgs": "nixpkgs_4",
-        "plugins-harpoon": "plugins-harpoon",
-        "plugins-nvim-luaref": "plugins-nvim-luaref",
-        "sg-nvim": "sg-nvim"
-      },
-      "locked": {
-        "lastModified": 1705101474,
-        "narHash": "sha256-dp5mfuKtn9mq8C8HsuFdW3x5T798GhWMSU64p6HsS1M=",
-        "ref": "refs/heads/main",
-        "rev": "fff3c13c32b51a11652de545c01a3957a89b2e43",
-        "revCount": 465,
-        "type": "git",
-        "url": "file:./flakes/birdeevim"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:./flakes/birdeevim"
-      }
-    },
     "codeium": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -80,34 +55,28 @@
     "dream2nix": {
       "inputs": {
         "devshell": [
-          "birdeeVim",
           "sg-nvim",
           "nci"
         ],
         "flake-compat": [
-          "birdeeVim",
           "sg-nvim",
           "nci"
         ],
         "flake-parts": [
-          "birdeeVim",
           "sg-nvim",
           "nci",
           "parts"
         ],
         "nix-unit": [
-          "birdeeVim",
           "sg-nvim",
           "nci"
         ],
         "nixpkgs": [
-          "birdeeVim",
           "sg-nvim",
           "nci",
           "nixpkgs"
         ],
         "pre-commit-hooks": [
-          "birdeeVim",
           "sg-nvim",
           "nci"
         ]
@@ -271,7 +240,6 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "birdeeVim",
           "sg-nvim",
           "pre-commit-nix",
           "nixpkgs"
@@ -298,11 +266,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1704980804,
-        "narHash": "sha256-lPNNKdPqIYcjhhYIVwlajNt/HqVWbMOoSdNnwCvOP04=",
+        "lastModified": 1705104164,
+        "narHash": "sha256-pllCu3Hcm1wP/B0SUxgUXvHeEd4w8s2aVrEQRdIL1yo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "93e804e7f8a1eb88bde6117cd5046501e66aa4bd",
+        "rev": "0912d26b30332ae6a90e1b321ff88e80492127dd",
         "type": "github"
       },
       "original": {
@@ -360,11 +328,10 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
+        "dirtyRev": "b4eb54f3ad0ba333c303b24ab08e5b8a408a47b0-dirty",
+        "dirtyShortRev": "b4eb54f-dirty",
         "lastModified": 1705101134,
-        "narHash": "sha256-ZgDgcY36jhDF8QGYTxCL26tf700rlTtH77O+CKJS5kU=",
-        "ref": "refs/heads/frankenstein",
-        "rev": "b4eb54f3ad0ba333c303b24ab08e5b8a408a47b0",
-        "revCount": 232,
+        "narHash": "sha256-qJSplQVZzm0Xm6IUNuYlOg/vvNcm1/OovJDweXlQ5K0=",
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
@@ -494,16 +461,16 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1704842529,
-        "narHash": "sha256-OTeQA+F8d/Evad33JMfuXC89VMetQbsU4qcaePchGr4=",
+        "lastModified": 1704722960,
+        "narHash": "sha256-mKGJ3sPsT6//s+Knglai5YflJUF2DGj7Ai6Ynopz0kI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "eabe8d3eface69f5bb16c18f8662a702f50c20d5",
+        "rev": "317484b1ead87b9c1b8ac5261a8d2dd748a0492d",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -572,29 +539,13 @@
         "type": "github"
       }
     },
-    "nixpkgs_9": {
-      "locked": {
-        "lastModified": 1704722960,
-        "narHash": "sha256-mKGJ3sPsT6//s+Knglai5YflJUF2DGj7Ai6Ynopz0kI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "317484b1ead87b9c1b8ac5261a8d2dd748a0492d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nur": {
       "locked": {
-        "lastModified": 1705098982,
-        "narHash": "sha256-wS9eX82JJqZAub5eZfbcYBIGhQuXuwN07IDFC3TyG6w=",
+        "lastModified": 1705104748,
+        "narHash": "sha256-rCJb1I0zNsF63fqd98CZ5wxeNZQfiEH78YLir6N710E=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "682ca9a3a48de850abc5877fd2cbcfff084d92bc",
+        "rev": "e6e04e2a461785b7f3fb468cc07b7d60d37febba",
         "type": "github"
       },
       "original": {
@@ -606,7 +557,6 @@
     "parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "birdeeVim",
           "sg-nvim",
           "nci",
           "nixpkgs"
@@ -715,10 +665,16 @@
     },
     "root": {
       "inputs": {
-        "birdeeVim": "birdeeVim",
+        "bash-debug-adapter": "bash-debug-adapter",
+        "codeium": "codeium",
+        "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_9",
-        "nur": "nur"
+        "nixCats": "nixCats",
+        "nixpkgs": "nixpkgs_4",
+        "nur": "nur",
+        "plugins-harpoon": "plugins-harpoon",
+        "plugins-nvim-luaref": "plugins-nvim-luaref",
+        "sg-nvim": "sg-nvim"
       }
     },
     "rust-overlay": {
@@ -856,7 +812,6 @@
     "treefmt": {
       "inputs": {
         "nixpkgs": [
-          "birdeeVim",
           "sg-nvim",
           "nci",
           "nixpkgs"

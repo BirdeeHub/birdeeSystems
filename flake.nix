@@ -12,10 +12,35 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/nur";
-    birdeeVim.url = "git+file:./flakes/birdeevim";
+    # birdeeVim.url = "git+file:./flakes/birdeevim";
+    flake-utils.url = "github:numtide/flake-utils";
+    nixCats.url = "/home/birdee/Projects/nixCats-nvim";
+    # nixCats.url = "github:BirdeeHub/nixCats-nvim/frankenstein";
+    # have not figured out how to download a debug adapter not on nixpkgs
+    # Will be attempting to build this from source in an overlay
+    "bash-debug-adapter" = {
+      url = "github:rogalmic/vscode-bash-debug";
+      flake = false;
+    };
+    # If you want your plugin to be loaded by the standard overlay,
+    # Then you should name it "plugins-something"
+    "plugins-nvim-luaref" = {
+      url = "github:milisims/nvim-luaref";
+      flake = false;
+    };
+    "plugins-harpoon" = {
+      url = "github:ThePrimeagen/harpoon/harpoon2";
+      flake = false;
+    };
+    # I use this for autocomplete filler especially for comments. 
+    codeium.url = "github:Exafunction/codeium.nvim";
+    # I ask this questions I couldnt google the answer to and/or
+    # need things I havent heard of. It has better code context than gpt.
+    # It also occasionally helps with goto definition.
+    sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, birdeeVim, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, nixCats, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
@@ -26,8 +51,8 @@
       config.allowUnfree = true;
     };
     users = import ./userdata pkgs;
-    home-modules = import ./modules { homeModule = true; };
-    system-modules = import ./modules { homeModule = false; };
+    home-modules = import ./modules { homeModule = true; inherit inputs pkgs; };
+    system-modules = import ./modules { homeModule = false; inherit inputs pkgs; };
   in {
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
@@ -37,7 +62,6 @@
         # the path to your home.nix.
         modules = [
           ./homes/birdee.nix
-          birdeeVim.homeModule.${system}
         ];
 
         # Optionally use extraSpecialArgs
@@ -58,7 +82,6 @@
         };
         modules = [
           ./systems/aSUS.nix
-          birdeeVim.nixosModules.${system}.default
         ];
       };
     };
