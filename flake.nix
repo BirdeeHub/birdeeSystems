@@ -14,8 +14,8 @@
     nur.url = "github:nix-community/nur";
     # birdeeVim.url = "git+file:./flakes/birdeevim";
     flake-utils.url = "github:numtide/flake-utils";
-    nixCats.url = "/home/birdee/Projects/nixCats-nvim";
-    # nixCats.url = "github:BirdeeHub/nixCats-nvim/frankenstein";
+    # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim/frankenstein";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay
     "bash-debug-adapter" = {
