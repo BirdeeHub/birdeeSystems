@@ -37,14 +37,10 @@ in {
   environment.interactiveShellInit = ''
   '';
   environment.shellAliases = {
-    flakeUpAndAddem = ''${pkgs.writeScript "flakeUpAndAddem.sh" (/*bash*/''
-      #!/usr/bin/env bash
-      target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
-      git add . && nix flake update && nix build --show-trace $target && git add .; $@
-    '')}'';
-    ls = /*bash*/ "ls --color=tty";
-    ll = /*bash*/ "ls -l";
-    l  = /*bash*/ "ls -alh";
+    ls = "ls --color=tty";
+    la = "ls -a";
+    ll = "ls -l";
+    l  = "ls -alh";
   };
 
   # Bootloader.

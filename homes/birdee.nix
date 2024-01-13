@@ -24,6 +24,22 @@ in {
   };
 
 
+  home.shellAliases = {
+    flakeUpAndAddem = ''${pkgs.writeScript "flakeUpAndAddem.sh" (/*bash*/''
+      #!/usr/bin/env bash
+      target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
+      git add . && nix flake update && nix build --show-trace $target && git add .; $@
+    '')}'';
+    ls = "ls --color=tty";
+    la = "ls -a";
+    ll = "ls -l";
+    l  = "ls -alh";
+  };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+  };
+
   xdg.userDirs = {
     enable = true;
     desktop = "${config.home.homeDirectory}/Desktop";
@@ -148,10 +164,6 @@ in {
   #
   #  /etc/profiles/per-user/birdee/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
