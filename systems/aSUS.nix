@@ -39,7 +39,8 @@ in {
   environment.shellAliases = {
     flakeUpAndAddem = ''${pkgs.writeScript "flakeUpAndAddem.sh" (/*bash*/''
       #!/usr/bin/env bash
-      git add . && nix flake update && nix build --show-trace .#$1 && git add .
+      target=""; [[ $# > 0 ]] && target=$1 && shift 1;
+      git add . && nix flake update && nix $@ --show-trace .#$1 && git add .
     '')}'';
     ls = /*bash*/ "ls --color=tty";
     ll = /*bash*/ "ls -l";

@@ -54,12 +54,12 @@
     home-modules = import ./modules { homeModule = true; inherit inputs pkgs; };
     system-modules = import ./modules { homeModule = false; inherit inputs pkgs; };
   in {
-    packages.${system} = home-modules.birdeeVim.packages;
+    packages = home-modules.birdeeVim.packages;
     homeConfigurations = {
       "birdee" = home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
           username = "birdee";
-          inherit self inputs users stateVersion home-modules;
+          inherit stateVersion self inputs users home-modules;
         };
         inherit pkgs;
         modules = [
@@ -71,7 +71,7 @@
       "nestOS" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "nestOS";
-          inherit self inputs stateVersion users system-modules;
+          inherit stateVersion self inputs users system-modules;
         };
         inherit system;
         modules = [
