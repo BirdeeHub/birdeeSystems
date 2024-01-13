@@ -16,9 +16,19 @@ in {
     aSUSrog = systemOnly ./hardwares/aSUSrog.nix;
     nvidiaIntelgrated = systemOnly ./hardwares/nvdintGraphics.nix;
   };
-  birdeeVim = if homeModule
-    then birdeeVim.homeModule.${pkgs.system}
-    else birdeeVim.nixosModules.${pkgs.system}.default;
+  birdeeVim = {
+    module= if homeModule
+      then birdeeVim.homeModule.${pkgs.system}
+      else birdeeVim.nixosModules.${pkgs.system}.default;
+    packages = birdeeVim.packages.${pkgs.system};
+    overlays = birdeeVim.overlays.${pkgs.system};
+    devShell = birdeeVim.devShell.${pkgs.system};
+    customPackager = birdeeVim.customPackager.${pkgs.system};
+    dependencyOverlays = birdeeVim.dependencyOverlays.${pkgs.system};
+    categoryDefinitions = birdeeVim.categoryDefinitions.${pkgs.system};
+    packageDefinitions = birdeeVim.packageDefinitions.${pkgs.system};
+    utils = inputs.nixCats.utils;
+  };
   i3 = systemOnly ./i3;
   term = {
     alacritty = if homeModule

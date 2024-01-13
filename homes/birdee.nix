@@ -6,7 +6,7 @@ in {
     shell.zsh
     shell.fish
     firefox
-    birdeeVim
+    birdeeVim.module
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

@@ -9,7 +9,7 @@ in {
     hardwares.nvidiaIntelgrated
 
     i3
-    birdeeVim
+    birdeeVim.module
     term.alacritty
     shell.bash
     shell.zsh
