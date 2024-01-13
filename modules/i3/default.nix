@@ -172,7 +172,7 @@
 
     services.dbus.enable = true;
     services.xserver.updateDbusEnvironment = true;
-    services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+    services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg pkgs.gdk-pixbuf ];
 
     programs.dconf.enable = true;
     services.upower.enable = true;
