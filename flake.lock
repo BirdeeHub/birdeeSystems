@@ -328,11 +328,11 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "lastModified": 1705246063,
-        "narHash": "sha256-re7z7oGFzDhdPHKiCpKcRDW7Zl0ci2TsRtn5L/65XCs=",
+        "lastModified": 1705253065,
+        "narHash": "sha256-6nMEjhV+duZuqiglVUqQuL7jcDWJVSjNQyZQLAex+Q0=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "4a648b089bc2e5138af99798d838a09e14c2a38a",
+        "rev": "494b166131a4c98d297bf0696beb8e4ba9f61a80",
         "type": "github"
       },
       "original": {
