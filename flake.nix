@@ -8,6 +8,7 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs_older.url = "github:nixos/nixpkgs/0ee435ca57d1fee90239e914ac41202343c23ada";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,7 +49,7 @@
     stateVersion = "23.05";
     pkgs = import nixpkgs {
       inherit system;
-      overlays = [
+      overlays = (import ./overlays inputs) ++ [
         inputs.nur.overlay
       ];
       config.allowUnfree = true;

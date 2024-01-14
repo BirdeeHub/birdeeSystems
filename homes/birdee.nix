@@ -16,9 +16,9 @@ in {
 
   birdeeVim.enable = true;
   birdeeMods = {
-    zsh.enable = true;
-    bash.enable = true;
-    fish.enable = true;
+    # zsh.enable = true;
+    # bash.enable = true;
+    # fish.enable = true;
     alacritty.enable = true;
     firefox.enable = true;
   };
@@ -86,7 +86,6 @@ in {
     qbittorrent
     galculator
     qalculate-qt
-    oh-my-posh
     signal-desktop
     bitwarden-cli
     discord

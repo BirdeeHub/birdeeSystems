@@ -6,7 +6,7 @@
   config = lib.mkIf config.birdeeMods.bash.enable {
     programs.bash = {
       initExtra = ''
-        eval "$(oh-my-posh init bash --config ${../atomic-emodipt.omp.json})"
+        eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init bash --config ${../atomic-emodipt.omp.json})"
       '';
     };
   };

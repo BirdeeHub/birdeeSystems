@@ -19,7 +19,7 @@
         unsetopt autocd nomatch
         bindkey -v
         # End of lines configured by zsh-newuser-install
-        eval "$(oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
+        eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
       '';
     };
   };
