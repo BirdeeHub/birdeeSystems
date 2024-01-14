@@ -21,7 +21,7 @@
     # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
     nixCats.url = "github:BirdeeHub/nixCats-nvim/nixCats-5.0.0";
     # have not figured out how to download a debug adapter not on nixpkgs
-    # Will be attempting to build this from source in an overlay
+    # Will be attempting to build this from source in an overlay eventually
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
@@ -36,11 +36,7 @@
       url = "github:ThePrimeagen/harpoon/harpoon2";
       flake = false;
     };
-    # I use this for autocomplete filler especially for comments. 
     codeium.url = "github:Exafunction/codeium.nvim";
-    # I ask this questions I couldnt google the answer to and/or
-    # need things I havent heard of. It has better code context than gpt.
-    # It also occasionally helps with goto definition.
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 

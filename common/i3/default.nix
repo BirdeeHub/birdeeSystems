@@ -5,31 +5,31 @@
     };
   };
   config = lib.mkIf config.birdeeMods.i3.enable (let
-      jq = pkgs.writeScript "jq" (''
+    jq = pkgs.writeScript "jq" (''
+      #!/usr/bin/env bash
+      exec ${pkgs.jq}/bin/jq "$@"
+    '');
+    xrandr = pkgs.writeScript "xrandr" (''
+      #!/usr/bin/env bash
+      exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+    '');
+    randrMemory = let
+      configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (''
         #!/usr/bin/env bash
-        exec ${pkgs.jq}/bin/jq "$@"
-      '');
-      xrandr = pkgs.writeScript "xrandr" (''
+        xrandr=${xrandr}
+        '' + (builtins.readFile ./mon/configXrandrByOutput.sh));
+      configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (''
         #!/usr/bin/env bash
-        exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-      '');
-      randrMemory = let
-        configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (''
-          #!/usr/bin/env bash
-          xrandr=${xrandr}
-          '' + (builtins.readFile ./mon/configXrandrByOutput.sh));
-        configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (''
-          #!/usr/bin/env bash
-          xrandr=${xrandr}
-          '' + (builtins.readFile ./mon/configPrimaryDisplay.sh));
-      in
-      (pkgs.writeScript "randrMemory.sh" (''
-          #!/usr/bin/env bash
-          jq=${jq}
-          xrandr=${xrandr}
-          XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
-          XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
-        ''+ (builtins.readFile ./mon/i3autoXrandrMemory.sh)));
+        xrandr=${xrandr}
+        '' + (builtins.readFile ./mon/configPrimaryDisplay.sh));
+    in
+    (pkgs.writeScript "randrMemory.sh" (''
+        #!/usr/bin/env bash
+        jq=${jq}
+        xrandr=${xrandr}
+        XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
+        XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
+      ''+ (builtins.readFile ./mon/i3autoXrandrMemory.sh)));
   in {
 
     environment.shellAliases = {
@@ -51,14 +51,13 @@
       '')}'';
       leftMonPrf = /*bash*/ "${xrandr} --output HDMI-1 --left-of eDP-1 --preferred";
     };
-
     # How do I run a script when a monitor is connected/disconnected?
     # it doesnt even have to be this big script, even just xrandr --auto...
     services.udev = {
       enable = true;
-        # ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
+        # ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm",  RUN+="${pkgs.xorg.xrandr}/bin/xrandr --auto"
       extraRules = ''
-        ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm",  RUN+="${pkgs.xorg.xrandr}/bin/xrandr --auto"
+        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
       '';
     };
 
@@ -111,7 +110,6 @@
             set $i3status ${i3status}
             set $monMover ${monMover}
             set $fehBG ${fehBG}
-            set $randrMemory ${randrMemory}
             set $xrandr ${xrandr}
             set $bootUpMonScript ${bootUpMonScript}
           '' + builtins.readFile ./config + ''

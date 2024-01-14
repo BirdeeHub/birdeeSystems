@@ -20,6 +20,7 @@ overlay
     # the name here will be the name used when importing items from it in your flake.
     # i.e. these items will be accessed as pkgs.nixCatsBuilds.thenameofthepackage
 
+    # except this one which outputs wherever it needs to.
     pinnedVersions = import ./pinnedVersions.nix;
 
   };
