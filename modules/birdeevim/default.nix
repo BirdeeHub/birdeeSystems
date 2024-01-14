@@ -4,7 +4,7 @@
 inputs.flake-utils.lib.eachDefaultSystem (system: let
   inherit (inputs) nixpkgs nixCats;
   inherit (nixCats) utils;
-  systemPkgs = attrs.pkgs;
+  systemPkgs = if (attrs ? pkgs) then attrs.pkgs else null;
 
   dependencyOverlays = [ (utils.mergeOverlayLists nixCats.dependencyOverlays.${system}
   ((import ./overlays inputs) ++ [
