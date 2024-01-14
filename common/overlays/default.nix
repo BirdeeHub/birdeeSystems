@@ -14,7 +14,7 @@ importName: inputs: let
 in
 overlay
 */
-inputs: let 
+{ inputs, ... }: let 
   overlaySet = {
 
     # this is how you would add another overlay file
@@ -26,5 +26,7 @@ inputs: let
     pinnedVersions = import ./pinnedVersions.nix;
 
   };
-in
-builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet)
+  overlayList = builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet);
+in {
+  nixpkgs.overlays = overlayList;
+}

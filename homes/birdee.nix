@@ -7,6 +7,7 @@ in {
     shell.fish
     firefox
     birdeeVim.module
+    overlays
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -16,9 +17,9 @@ in {
 
   birdeeVim.enable = true;
   birdeeMods = {
-    # zsh.enable = true;
-    # bash.enable = true;
-    # fish.enable = true;
+    zsh.enable = true;
+    bash.enable = true;
+    fish.enable = true;
     alacritty.enable = true;
     firefox.enable = true;
   };

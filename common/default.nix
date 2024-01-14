@@ -39,4 +39,5 @@ in {
     zsh = if homeModule then ./shell/home/zsh.nix else ./shell/nixOS/zsh.nix;
     fish = if homeModule then ./shell/home/fish.nix else ./shell/nixOS/fish.nix;
   };
+  overlays = ./overlays;
 }

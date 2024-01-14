@@ -8,7 +8,7 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs_older.url = "github:nixos/nixpkgs/0ee435ca57d1fee90239e914ac41202343c23ada";
+    nixpkgs_older.url = "github:nixos/nixpkgs/6660475dea29309327ee3b2e6824ec0011589017";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,14 +49,14 @@
     stateVersion = "23.05";
     pkgs = import nixpkgs {
       inherit system;
-      overlays = (import ./overlays inputs) ++ [
+      overlays = [
         inputs.nur.overlay
       ];
       config.allowUnfree = true;
     };
     users = import ./userdata pkgs;
-    home-modules = import ./modules { homeModule = true; inherit inputs pkgs; };
-    system-modules = import ./modules { homeModule = false; inherit inputs pkgs; };
+    home-modules = import ./common { homeModule = true; inherit inputs pkgs; };
+    system-modules = import ./common { homeModule = false; inherit inputs pkgs; };
   in {
     packages = home-modules.birdeeVim.packages;
     homeConfigurations = {

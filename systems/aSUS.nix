@@ -14,15 +14,16 @@ in {
     shell.bash
     shell.zsh
     shell.fish
+    overlays
   ];
 
   users.users = users.users;
   birdeeVim.enable = true;
   birdeeMods = {
     i3.enable = true;
-    # zsh.enable = true;
-    # bash.enable = true;
-    # fish.enable = true;
+    zsh.enable = true;
+    bash.enable = true;
+    fish.enable = true;
     nvidia.enable = true;
     alacritty.enable = true;
   };
@@ -140,7 +141,7 @@ in {
   };
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
-  # users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.zsh;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
