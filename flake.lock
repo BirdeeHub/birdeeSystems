@@ -319,22 +319,6 @@
         "type": "github"
       }
     },
-    "neovim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1705335127,
-        "narHash": "sha256-Aco+3/tVqa8LDMPqYQ4OMwjxoakTcs7PriGP6wzi3tQ=",
-        "owner": "neovim",
-        "repo": "neovim",
-        "rev": "7589336120a258cf75134a5243b2f6b1926ac85b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neovim",
-        "repo": "neovim",
-        "type": "github"
-      }
-    },
     "nixCats": {
       "inputs": {
         "flake-utils": "flake-utils_3",
@@ -344,10 +328,11 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "dirtyRev": "d3598d902d6b88ef8171a8416d17ddbc0685b9b9-dirty",
-        "dirtyShortRev": "d3598d9-dirty",
-        "lastModified": 1705332129,
-        "narHash": "sha256-Z01TNIouXCd/35QW2bYAoeMF17kFrpNyP+BXz1SwN24=",
+        "lastModified": 1705337625,
+        "narHash": "sha256-IlY5Vnh/CKEkHmZyJVcCYCdzMZx+pe8t1bYsLDBoMAs=",
+        "ref": "refs/heads/nixCats-5.0.0",
+        "rev": "206e89bccd049e71b2589d1f3accfa6572925ac4",
+        "revCount": 287,
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
@@ -701,7 +686,6 @@
         "codeium": "codeium",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
-        "neovim": "neovim",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs_4_OMP": "nixpkgs_4_OMP",
