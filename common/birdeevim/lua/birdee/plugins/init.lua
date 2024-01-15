@@ -35,6 +35,7 @@ require('eyeliner').setup {
 require('hlargs').setup({
   color = hlargsColor,
 })
+vim.cmd([[hi clear @lsp.type.parameter]])
 vim.cmd([[hi link @lsp.type.parameter Hlargs]])
 require('Comment').setup()
   -- require('fidget').setup()
