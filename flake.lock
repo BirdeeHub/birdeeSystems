@@ -170,11 +170,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1701680307,
-        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
+        "lastModified": 1705309234,
+        "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
+        "rev": "1ef2e671c3b0c19053962c07dbda38332dcebf26",
         "type": "github"
       },
       "original": {
@@ -188,11 +188,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1701680307,
-        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
+        "lastModified": 1705309234,
+        "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
+        "rev": "1ef2e671c3b0c19053962c07dbda38332dcebf26",
         "type": "github"
       },
       "original": {
@@ -266,11 +266,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705169127,
-        "narHash": "sha256-j9OEtNxOIPWZWjbECVMkI1TO17SzlpHMm0LnVWKOR/g=",
+        "lastModified": 1705269478,
+        "narHash": "sha256-j7Rp8Y3ckBHOlIzqe0g2+/BVce9SU/dVtn4Eb0rMuY4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "f2942f3385f1b35cc8a1abb03a45e29c9cb4d3c8",
+        "rev": "846200eb574faa2af808ed02e653c2b8ed51fd71",
         "type": "github"
       },
       "original": {
@@ -319,6 +319,22 @@
         "type": "github"
       }
     },
+    "neovim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1705315244,
+        "narHash": "sha256-0hCjv7zUxxuKZMwcp83kRJB6wqY/6MWy4YItXjUaTX0=",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "7ed69660237bd052d11af454503a986c22c507a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neovim",
+        "repo": "neovim",
+        "type": "github"
+      }
+    },
     "nixCats": {
       "inputs": {
         "flake-utils": "flake-utils_3",
@@ -328,18 +344,17 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "lastModified": 1705253065,
-        "narHash": "sha256-6nMEjhV+duZuqiglVUqQuL7jcDWJVSjNQyZQLAex+Q0=",
-        "owner": "BirdeeHub",
-        "repo": "nixCats-nvim",
-        "rev": "494b166131a4c98d297bf0696beb8e4ba9f61a80",
-        "type": "github"
+        "lastModified": 1705329599,
+        "narHash": "sha256-7T77ObL50ZoIX3DpNRS+odmtwDpiJLmdTangZQCsiCs=",
+        "ref": "refs/heads/nixCats-5.0.0",
+        "rev": "c5b720f5332ae724fae77bab9f3f2c4b954fecd4",
+        "revCount": 284,
+        "type": "git",
+        "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "ref": "nixCats-5.0.0",
-        "repo": "nixCats-nvim",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/birdee/Projects/nixCats-nvim"
       }
     },
     "nixd": {
@@ -447,11 +462,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1705204527,
-        "narHash": "sha256-WVz9WdaFBhAwO/7A+HlW8HPJ4VQ8QnpCD1WZAcAPneo=",
+        "lastModified": 1705242415,
+        "narHash": "sha256-a8DRYrNrzTudvO7XHUPNJD89Wbf1ZZT0VbwCsPnHWaE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "dd5621df6dcb90122b50da5ec31c411a0de3e538",
+        "rev": "ea780f3de2d169f982564128804841500e85e373",
         "type": "github"
       },
       "original": {
@@ -559,11 +574,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705247077,
-        "narHash": "sha256-FQWo+6AEag1RfyWllm6l4lgKoxPY9q5E4ad/TpSCZuw=",
+        "lastModified": 1705328925,
+        "narHash": "sha256-GSuDQlgjiJRLVbODXlC+vlkYACltIUgv/cLrLSGp3wU=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "b066238694b662157e6a0330d2813b1a78ca3aed",
+        "rev": "0ab6855d6a38d57b7094945940de74cadba9b978",
         "type": "github"
       },
       "original": {
@@ -687,6 +702,7 @@
         "codeium": "codeium",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
+        "neovim": "neovim",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs_4_OMP": "nixpkgs_4_OMP",

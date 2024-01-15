@@ -1,27 +1,30 @@
 # Copyright (c) 2023 BirdeeHub 
 # Licensed under the MIT license 
-{inputs, ... }@attrs:
-inputs.flake-utils.lib.eachDefaultSystem (system: let
-  inherit (inputs) nixpkgs nixCats;
-  inherit (nixCats) utils;
-  systemPkgs = if (attrs ? pkgs) then attrs.pkgs else null;
-
-  dependencyOverlays = [ (utils.mergeOverlayLists nixCats.dependencyOverlays.${system}
-  ((import ./overlays inputs) ++ [
-    (utils.standardPluginOverlay inputs)
-    # add any flake overlays here.
-    inputs.codeium.overlays.${system}.default
-  ])) ];
-  pkgs = import nixpkgs {
-    inherit system;
-    overlays = dependencyOverlays;
-    # config.allowUnfree = true;
+{inputs, ... }@attrs: let
+  inherit (inputs.nixCats) utils;
+  luaPath = "${./.}";
+  # the following extra_pkg_config contains any values
+  # which you want to pass to the config set of nixpkgs
+  # import nixpkgs (with config; { })
+  # will not apply to module imports
+  extra_pkg_config = {
+    # allowUnfree = true;
   };
+  system_resolved = inputs.flake-utils.lib.eachDefaultSystem (system: let
+    # see :help nixCats.flake.outputs.overlays
+    # This overlay grabs all the inputs named in the format
+    # `plugins-<pluginName>`
+    # Once we add this overlay to our nixpkgs, we are able to
+    # use `pkgs.neovimPlugins`, which is a set of our plugins.
+    dependencyOverlays = [ (utils.mergeOverlayLists inputs.nixCats.dependencyOverlays.${system}
+    ((import ./overlays inputs) ++ [
+      (utils.standardPluginOverlay inputs)
+      # add any flake overlays here.
+      inputs.codeium.overlays.${system}.default
+    ])) ];
+  in { inherit dependencyOverlays; });
 
-  inherit (utils) baseBuilder;
-  nixCatsBuilder = baseBuilder "${./.}" { inherit pkgs dependencyOverlays; } categoryDefinitions packageDefinitions;
-
-  categoryDefinitions = packageDef: {
+  categoryDefinitions = { pkgs, ... }@packageDef: {
 
     propagatedBuildInputs = {
       generalBuildInputs = with pkgs; [
@@ -185,8 +188,8 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
   };
 
   packageDefinitions = {
-    minimal = {settings = { wrapRc = false; }; categories = {};};
-    birdeeVim = {
+    minimal = { pkgs, ... }@misc: {settings = { wrapRc = false; }; categories = {};};
+    birdeeVim = { pkgs, ... }@misc: {
       settings = {
         wrapRc = true;
         # so that it finds my ai auths in ~/.cache/birdeevim
@@ -215,13 +218,14 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
         colorscheme = "onedark";
       };
     };
-    notesVim = {
+    notesVim = { pkgs, ... }@misc: {
       settings = {
         configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = true;
         viAlias = false;
         vimAlias = false;
+        customAliases = [ "ntvi" ];
       };
       categories = {
         inherit bitwardenItemIDs;
@@ -240,13 +244,14 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
         colorscheme = "onedark";
       };
     };
-    noAI = {
+    noAInvim = { pkgs, ... }@misc: {
       settings = {
         configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = false;
         viAlias = false;
-        vimAlias = true;
+        vimAlias = false;
+        customAliases = [ "noaiBvim" ];
       };
       categories = {
         generalBuildInputs = true;
@@ -264,40 +269,64 @@ inputs.flake-utils.lib.eachDefaultSystem (system: let
     };
   };
 in
-{
-  packages = (builtins.mapAttrs (name: _: nixCatsBuilder name) packageDefinitions);
+  # see :help nixCats.flake.outputs.exports
+  inputs.flake-utils.lib.eachDefaultSystem (system: let
+    inherit (utils) baseBuilder;
+    inherit (system_resolved) dependencyOverlays;
+    customPackager = baseBuilder luaPath {
+      inherit (inputs) nixpkgs;
+      inherit system dependencyOverlays extra_pkg_config;
+    } categoryDefinitions;
+    nixCatsBuilder = customPackager packageDefinitions;
+    # this is just for using utils such as pkgs.mkShell
+    # The one used to build neovim is resolved inside the builder
+    # and is passed to our categoryDefinitions and packageDefinitions
+    pkgs = import inputs.nixpkgs { inherit system; };
+  in {
+    # this will make a package out of each of the packageDefinitions defined above
+    # and set the default package to the one named here.
+    packages = utils.mkPackages nixCatsBuilder packageDefinitions "birdeeVim";
 
-  overlays = utils.mkExtraOverlays nixCatsBuilder packageDefinitions "birdeeVim";
+    # this will make an overlay out of each of the packageDefinitions defined above
+    # and set the default overlay to the one named here.
+    overlays = utils.mkOverlays nixCatsBuilder packageDefinitions "birdeeVim";
 
-  devShell = pkgs.mkShell {
-    name = "birdeeVim";
-    packages = [ (nixCatsBuilder "birdeeVim") ];
-    inputsFrom = [ ];
-    shellHook = ''
-    '';
-  };
+    # choose your package for devShell
+    # and add whatever else you want in it.
+    devShell = pkgs.mkShell {
+      name = "birdeeVim";
+      packages = [ (nixCatsBuilder "birdeeVim") ];
+      inputsFrom = [ ];
+      shellHook = ''
+      '';
+    };
 
-  # To choose settings and categories from the flake that calls this flake.
-  customPackager = baseBuilder "${./.}" { inherit pkgs dependencyOverlays;} categoryDefinitions;
-
-  # and you export this so people dont have to redefine stuff.
-  inherit dependencyOverlays;
-  inherit categoryDefinitions;
-  inherit packageDefinitions;
-
+    # To choose settings and categories from the flake that calls this flake.
+    # and you export overlays so people dont have to redefine stuff.
+    inherit customPackager dependencyOverlays;
+  }
+) // {
   # we also export a nixos module to allow configuration from configuration.nix
   nixosModules.default = utils.mkNixosModules {
     defaultPackageName = "birdeeVim";
-    luaPath = "${./.}";
-    inherit dependencyOverlays
-      categoryDefinitions packageDefinitions;
+    inherit (inputs) nixpkgs;
+    inherit (system_resolved) dependencyOverlays;
+    inherit luaPath categoryDefinitions packageDefinitions;
   };
   # and the same for home manager
   homeModule = utils.mkHomeModules {
     defaultPackageName = "birdeeVim";
-    luaPath = "${./.}";
-    inherit dependencyOverlays
-      categoryDefinitions packageDefinitions;
+    inherit (inputs) nixpkgs;
+    inherit (system_resolved) dependencyOverlays;
+    inherit luaPath categoryDefinitions packageDefinitions;
   };
-})
-
+  # now we can export some things that can be imported in other
+  # flakes, WITHOUT needing to use a system variable to do it.
+  # and update them into the rest of the outputs returned by the
+  # eachDefaultSystem function.
+  inherit utils;
+  inherit (utils) templates baseBuilder;
+  inherit categoryDefinitions;
+  inherit packageDefinitions;
+  keepLuaBuilder = utils.baseBuilder luaPath;
+}

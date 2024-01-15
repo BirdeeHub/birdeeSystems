@@ -15,7 +15,10 @@ in {
   home.homeDirectory = users.homeManager.${username}.homeDirectory;
   programs.git = users.git.${username};
 
-  birdeeVim.enable = true;
+  birdeeVim = {
+    enable = true;
+    packageNames = [ "birdeeVim" "notesVim" ];
+  };
   birdeeMods = {
     zsh.enable = true;
     bash.enable = true;

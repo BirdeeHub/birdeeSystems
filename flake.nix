@@ -18,10 +18,14 @@
 
     # neovim
     flake-utils.url = "github:numtide/flake-utils";
-    # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
-    nixCats.url = "github:BirdeeHub/nixCats-nvim/nixCats-5.0.0";
+    nixCats.url = "/home/birdee/Projects/nixCats-nvim";
+    # nixCats.url = "github:BirdeeHub/nixCats-nvim/nixCats-5.0.0";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay eventually
+    neovim = {
+      url = "github:neovim/neovim";
+      flake = false;
+    };
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
@@ -59,7 +63,7 @@
       "birdee" = home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
           username = "birdee";
-          inherit stateVersion self inputs users home-modules;
+          inherit stateVersion self system inputs users home-modules;
         };
         inherit pkgs;
         modules = [

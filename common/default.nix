@@ -1,5 +1,5 @@
 {homeModule ? false, inputs, pkgs, ... }: let
-  birdeeVim = import ./birdeevim { inherit inputs pkgs; };
+  birdeeVim = import ./birdeevim { inherit inputs; };
   homeOnly = path:
     (if homeModule
       then path
@@ -18,8 +18,8 @@ in {
   };
   birdeeVim = {
     module= if homeModule
-      then birdeeVim.homeModule.${pkgs.system}
-      else birdeeVim.nixosModules.${pkgs.system}.default;
+      then birdeeVim.homeModule
+      else birdeeVim.nixosModules.default;
     packages = birdeeVim.packages;
     overlays = birdeeVim.overlays;
     devShell = birdeeVim.devShell;
