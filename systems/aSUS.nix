@@ -17,8 +17,12 @@ in {
     overlays
   ];
 
+  birdeeVim = {
+    enable = true;
+    packageNames = [ "birdeeVim" "notesVim" ];
+  };
+
   users.users = users.users;
-  birdeeVim.enable = true;
   birdeeMods = {
     i3.enable = true;
     zsh.enable = true;
