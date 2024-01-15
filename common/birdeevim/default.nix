@@ -90,7 +90,7 @@
       ];
       general = with pkgs.vimPlugins; {
         theme = builtins.getAttr packageDef.categories.colorscheme { 
-          "onedark" = onedark-vim;
+          "onedark" = onedark-nvim;
           "catppuccin" = catppuccin-nvim;
           "catppuccin-mocha" = catppuccin-nvim;
           "tokyonight" = tokyonight-nvim;
@@ -195,12 +195,11 @@
         wrapRc = true;
         # so that it finds my ai auths in ~/.cache/birdeevim
         configDirName = "birdeevim";
-        viAlias = true;
-        vimAlias = true;
         withNodeJs = true;
         withRuby = true;
         extraName = "";
         withPython3 = true;
+        aliases = [ "vim" "vi" ];
       };
       categories = {
         inherit bitwardenItemIDs;
@@ -226,7 +225,7 @@
         withNodeJs = true;
         viAlias = false;
         vimAlias = false;
-        customAliases = [ "ntvi" ];
+        aliases = [ "note" ];
       };
       categories = {
         inherit bitwardenItemIDs;
@@ -242,7 +241,7 @@
         kotlin = true;
         test = true;
         lspDebugMode = false;
-        colorscheme = "onedark";
+        colorscheme = "tokyonight";
       };
     };
     noAInvim = { pkgs, ... }@misc: {
@@ -252,7 +251,7 @@
         withNodeJs = false;
         viAlias = false;
         vimAlias = false;
-        customAliases = [ "noaiBvim" ];
+        aliases = [ "noaiBvim" ];
       };
       categories = {
         generalBuildInputs = true;
@@ -265,7 +264,7 @@
         kotlin = true;
         test = true;
         lspDebugMode = false;
-        colorscheme = "onedark";
+        colorscheme = "catppuccin";
       };
     };
   };

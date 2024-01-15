@@ -328,11 +328,11 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "lastModified": 1705337625,
-        "narHash": "sha256-IlY5Vnh/CKEkHmZyJVcCYCdzMZx+pe8t1bYsLDBoMAs=",
+        "lastModified": 1705345508,
+        "narHash": "sha256-UW+AgZ/wfLRoUFVRtwJi9bkUZ8dbhjMdsZcYU1dL+Qs=",
         "ref": "refs/heads/nixCats-5.0.0",
-        "rev": "206e89bccd049e71b2589d1f3accfa6572925ac4",
-        "revCount": 287,
+        "rev": "d8fc9437ecbf49a072b0ad11881e3876581887fd",
+        "revCount": 290,
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
@@ -446,11 +446,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1705273882,
-        "narHash": "sha256-68z5kaLaJ3fMWVwnknEKWypElq6Jzgtc9hddd14LhAo=",
+        "lastModified": 1705303754,
+        "narHash": "sha256-loWkd7lUzSvGBU9xnva37iPB2rr5ulq1qBLT44KjzGA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5614bd58587f1337aca11d7b2bdfcca4ca44fccc",
+        "rev": "e0629618b4b419a47e2c8a3cab223e2a7f3a8f97",
         "type": "github"
       },
       "original": {
@@ -558,11 +558,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705334264,
-        "narHash": "sha256-/0qC3PwhbN8Ti1tf2/HLrjRULe01uiISI+91S7WNj1g=",
+        "lastModified": 1705343545,
+        "narHash": "sha256-d45q6INy/BNHXMWKwIo45nfEirKiV9DgFqJXapaw6LM=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "c13d359df7e56f6733a7d7f55e0acc5ee93ef3f8",
+        "rev": "969dafdaa6f7ebba85630d51b1a833af5481b4ab",
         "type": "github"
       },
       "original": {
