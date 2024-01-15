@@ -24,6 +24,7 @@
       inputs.codeium.overlays.${system}.default
     ])) ];
   in { inherit dependencyOverlays; });
+  inherit (system_resolved) dependencyOverlays;
 
   categoryDefinitions = { pkgs, ... }@packageDef: {
 
@@ -272,7 +273,6 @@ in
   # see :help nixCats.flake.outputs.exports
   inputs.flake-utils.lib.eachDefaultSystem (system: let
     inherit (utils) baseBuilder;
-    inherit (system_resolved) dependencyOverlays;
     customPackager = baseBuilder luaPath {
       inherit (inputs) nixpkgs;
       inherit system dependencyOverlays extra_pkg_config;
@@ -303,30 +303,26 @@ in
 
     # To choose settings and categories from the flake that calls this flake.
     # and you export overlays so people dont have to redefine stuff.
-    inherit customPackager dependencyOverlays;
+    inherit customPackager;
   }
 ) // {
   # we also export a nixos module to allow configuration from configuration.nix
   nixosModules.default = utils.mkNixosModules {
     defaultPackageName = "birdeeVim";
     inherit (inputs) nixpkgs;
-    inherit (system_resolved) dependencyOverlays;
-    inherit luaPath categoryDefinitions packageDefinitions;
+    inherit dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
   # and the same for home manager
   homeModule = utils.mkHomeModules {
     defaultPackageName = "birdeeVim";
     inherit (inputs) nixpkgs;
-    inherit (system_resolved) dependencyOverlays;
-    inherit luaPath categoryDefinitions packageDefinitions;
+    inherit dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
   # now we can export some things that can be imported in other
   # flakes, WITHOUT needing to use a system variable to do it.
   # and update them into the rest of the outputs returned by the
   # eachDefaultSystem function.
-  inherit utils;
+  inherit utils dependencyOverlays categoryDefinitions packageDefinitions;
   inherit (utils) templates baseBuilder;
-  inherit categoryDefinitions;
-  inherit packageDefinitions;
   keepLuaBuilder = utils.baseBuilder luaPath;
 }
