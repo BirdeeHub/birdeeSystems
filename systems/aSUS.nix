@@ -19,7 +19,7 @@ in {
 
   birdeeVim = {
     enable = true;
-    packageNames = [ "birdeeVim" "notesVim" ];
+    # packageNames = [ "birdeeVim" "notesVim" ];
   };
 
   users.users = users.users;
