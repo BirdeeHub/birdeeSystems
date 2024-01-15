@@ -5,8 +5,9 @@
   luaPath = "${./.}";
   # the following extra_pkg_config contains any values
   # which you want to pass to the config set of nixpkgs
-  # import nixpkgs (with config; { })
+  # import nixpkgs { config = extra_pkg_config; inherit system; }
   # will not apply to module imports
+  # as that will have your system values
   extra_pkg_config = {
     # allowUnfree = true;
   };

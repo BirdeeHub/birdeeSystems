@@ -344,11 +344,10 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
+        "dirtyRev": "c5b720f5332ae724fae77bab9f3f2c4b954fecd4-dirty",
+        "dirtyShortRev": "c5b720f-dirty",
         "lastModified": 1705329599,
-        "narHash": "sha256-7T77ObL50ZoIX3DpNRS+odmtwDpiJLmdTangZQCsiCs=",
-        "ref": "refs/heads/nixCats-5.0.0",
-        "rev": "c5b720f5332ae724fae77bab9f3f2c4b954fecd4",
-        "revCount": 284,
+        "narHash": "sha256-+2yUiCdRHhkByXOQu66OPa3o4q0Wd2f9iY9YmIhQdsw=",
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
@@ -574,11 +573,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705328925,
-        "narHash": "sha256-GSuDQlgjiJRLVbODXlC+vlkYACltIUgv/cLrLSGp3wU=",
+        "lastModified": 1705331769,
+        "narHash": "sha256-HSiJr7BSMtxtv8u+HCW83ZvQm/4U3EZ/cI8raX9kNgc=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "0ab6855d6a38d57b7094945940de74cadba9b978",
+        "rev": "c7d66a4510ab346b0c08fd78bdffc6440b857886",
         "type": "github"
       },
       "original": {
@@ -756,11 +755,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1705085092,
-        "narHash": "sha256-maseTcgKISXRmM88t6RAf9pCpjT/+lo29eLzCLciAMg=",
+        "lastModified": 1705331179,
+        "narHash": "sha256-+ER66V8P5m2S1aZIBmuxhT63DrNBtpnBd+70yTrz+WE=",
         "owner": "sourcegraph",
         "repo": "sg.nvim",
-        "rev": "2e8f39bc17aee7574a1dae09dc26e3d340c2bd4b",
+        "rev": "691e138a86ccb4083c46ff62ab5eb53f9148696d",
         "type": "github"
       },
       "original": {
