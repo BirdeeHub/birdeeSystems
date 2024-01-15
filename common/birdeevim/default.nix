@@ -252,7 +252,7 @@
         withNodeJs = false;
         viAlias = false;
         vimAlias = false;
-        aliases = [ "noaiBvim" ];
+        aliases = [ "vi" "vim" ];
       };
       categories = {
         generalBuildInputs = true;
