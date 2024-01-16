@@ -328,11 +328,11 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "lastModified": 1705355981,
-        "narHash": "sha256-wyBMtT8OVxjutFVA0sQzWR+qsqhKdfGGNxFQk+0E2uI=",
+        "lastModified": 1705384466,
+        "narHash": "sha256-6pZasaZHrLvLvnOvU81nClbztAdzGAKgnN0IaagGQh8=",
         "ref": "refs/heads/nixCats-5.0.0",
-        "rev": "e52595e61a4346a378e72684db97d56b6fbafe2b",
-        "revCount": 297,
+        "rev": "b44eb8554fb397f023464e116521e3ec3868a275",
+        "revCount": 311,
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
@@ -357,6 +357,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixd",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1705312285,
+        "narHash": "sha256-rd+dY+v61Y8w3u9bukO/hB55Xl4wXv4/yC8rCGVnK5U=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "bee2202bec57e521e3bd8acd526884b9767d7fa0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -558,11 +574,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705353982,
-        "narHash": "sha256-rLiQldW6i9Lb/QkMl5Bik/t0juitVjhLyt0O9kvT7Ok=",
+        "lastModified": 1705382482,
+        "narHash": "sha256-1CRoJezE4/COkbMvRyth66f8T409YfTYEZ/vwROffVg=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "e6ef43d07669e28147ce5b502031c16fd6ef48b6",
+        "rev": "b77039d4490f9fce6114d32f7c8e771cf3365cf7",
         "type": "github"
       },
       "original": {
@@ -687,6 +703,7 @@
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "nixCats": "nixCats",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs_4_OMP": "nixpkgs_4_OMP",
         "nur": "nur",

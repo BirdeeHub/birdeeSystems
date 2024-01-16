@@ -14,6 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/nur";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
 
     # neovim
@@ -44,7 +45,7 @@
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
@@ -80,6 +81,7 @@
         inherit system;
         modules = [
           ./systems/aSUS.nix
+          nixos-hardware.outputs.nixosModules.asus-fx504gd
         ];
       };
     };
