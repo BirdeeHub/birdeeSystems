@@ -23,14 +23,14 @@
     # nixCats.url = "github:BirdeeHub/nixCats-nvim/nixCats-5.0.0";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay eventually
-    # neovim = {
-    #   url = "github:neovim/neovim";
-    #   flake = false;
-    # };
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
     };
+    # neovim = {
+    #   url = "github:neovim/neovim";
+    #   flake = false;
+    # };
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     "plugins-nvim-luaref" = {
