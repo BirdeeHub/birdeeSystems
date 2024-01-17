@@ -328,11 +328,11 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "lastModified": 1705480160,
-        "narHash": "sha256-GX/782+vKifyLfzu2MxupPeE7fpYIJ/Tj1zFNqDUJHw=",
+        "lastModified": 1705484930,
+        "narHash": "sha256-xrbrmbMJ81MiKx8c+5yxbITWlUvfZD4uXCL9MT4EVKw=",
         "ref": "refs/heads/nixCats-5.0.0",
-        "rev": "66c806690dfa4fadc15bd9bbe9c7a17da62be941",
-        "revCount": 325,
+        "rev": "367160b67d50906d7cdadf9fe117277ecf968a2e",
+        "revCount": 326,
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
