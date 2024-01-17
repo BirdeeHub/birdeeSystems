@@ -26,7 +26,7 @@
   in { inherit dependencyOverlays; });
   inherit (system_resolved) dependencyOverlays;
 
-  categoryDefinitions = { pkgs, ... }@packageDef: {
+  categoryDefinitions = { pkgs, settings, categories, name, ... }@packageDef: {
 
     propagatedBuildInputs = {
       generalBuildInputs = with pkgs; [
@@ -90,7 +90,7 @@
         nvim-dap-virtual-text
       ];
       general = with pkgs.vimPlugins; {
-        theme = builtins.getAttr packageDef.categories.colorscheme { 
+        theme = builtins.getAttr categories.colorscheme { 
           "onedark" = onedark-nvim;
           "catppuccin" = catppuccin-nvim;
           "catppuccin-mocha" = catppuccin-nvim;
@@ -190,7 +190,7 @@
   };
 
   packageDefinitions = {
-    minimal = { pkgs, ... }@misc: {settings = { wrapRc = false; }; categories = {};};
+    minimal = { pkgs, ... }: {settings = { wrapRc = false; }; categories = {};};
     birdeeVim = { pkgs, ... }@misc: {
       settings = {
         wrapRc = true;
