@@ -141,6 +141,7 @@
           hicolor-icon-theme
           tango-icon-theme
           xfce4-icon-theme
+          lm_sensors
           glib # for gsettings
           gtk3.out # gtk-update-icon-cache
           gnome.gnome-themes-extra
