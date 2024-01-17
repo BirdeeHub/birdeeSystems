@@ -328,11 +328,11 @@
         "plugins-lazy-nvim": "plugins-lazy-nvim"
       },
       "locked": {
-        "lastModified": 1705488394,
-        "narHash": "sha256-7m+o9RI0xSNl3+rv5PY8U+cqSdpALorarePz+W5vufQ=",
+        "lastModified": 1705524582,
+        "narHash": "sha256-cOCZGd5tdPqwNmF4xwyr3gNoo9VJmLO0ynZnG18939I=",
         "ref": "refs/heads/nixCats-5.0.0",
-        "rev": "d350694eb9c04608c04ee99ec475a4e03f703315",
-        "revCount": 327,
+        "rev": "30339d6b3021e0da59ff457aad4843d2788a79d8",
+        "revCount": 329,
         "type": "git",
         "url": "file:///home/birdee/Projects/nixCats-nvim"
       },
@@ -503,8 +503,8 @@
       },
       "original": {
         "owner": "nixos",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
-        "rev": "757637581797f148c50977b6127147c5d298f9e9",
         "type": "github"
       }
     },
@@ -574,11 +574,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705490880,
-        "narHash": "sha256-JfC6ZMF/BWWIzzqYNswF/WTtIbjaF8MKkpdhl1YPyN8=",
+        "lastModified": 1705521332,
+        "narHash": "sha256-8sv4GzO4XmJgVRn2XDIhFNytZByqLzbWUdS1gzzGDp8=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "8d1c62baf47e465e0732ebf7336d2443add7e3ec",
+        "rev": "6bb00660bdcce465f1d83346dec6d12b20c60477",
         "type": "github"
       },
       "original": {
@@ -645,11 +645,11 @@
     "plugins-lazy-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1705479856,
-        "narHash": "sha256-AgEBekNlM0bdXCj4lwicv/AcQDHDc6YEOyE9StRVJRs=",
+        "lastModified": 1705524357,
+        "narHash": "sha256-rDYGHKZ570ArbywGobQDyhhSUuXw4ZBjGk9wPebuyrw=",
         "owner": "BirdeeHub",
         "repo": "lazy.nvim",
-        "rev": "daed200df116a2d371a04760ed7e799fac576234",
+        "rev": "2471d00d6b4b1adc039f676f7f4b335c553849a5",
         "type": "github"
       },
       "original": {
