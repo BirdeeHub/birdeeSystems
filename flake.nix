@@ -81,7 +81,6 @@
         inherit system;
         modules = [
           ./systems/aSUS.nix
-          nixos-hardware.outputs.nixosModules.asus-fx504gd
         ];
       };
     };

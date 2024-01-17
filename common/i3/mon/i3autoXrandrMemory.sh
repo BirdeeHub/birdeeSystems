@@ -1,5 +1,5 @@
 #the script makes and uses this .json file. set it to an appropriate dir
-JSON_CACHE_PATH=/root/.i3/monwkspc.json
+JSON_CACHE_PATH=/tmp/monwkspc.json
 
 #Helper functions for getting and parsing info
 check_conflict() {
