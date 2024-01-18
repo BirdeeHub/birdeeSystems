@@ -110,6 +110,7 @@ in {
     # wine64
     python3
     distrobox
+    nix-search-cli
     wget
     gimp
     spotify
