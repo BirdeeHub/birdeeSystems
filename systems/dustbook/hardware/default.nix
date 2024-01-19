@@ -4,7 +4,7 @@ in {
     ./hardware-configuration.nix
   ];
   config = {
-    nixpkgs.config.allowUnfree = true;
+    nvidia.acceptLicense = true;
     hardware.nvidia.modesetting.enable = true;
     services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
     hardware.nvidia.prime = {
