@@ -11,6 +11,11 @@ in {
 
   birdeeMods = {
     i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
+    i3.extraSessionCommands = ''
+      ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
+        Xft.dpi: 100
+      ''}
+    '';
     # xrandrMemoryi3.enable = true;
     # xrandrMemoryi3.xrandrScriptByOutput = ./mon/configXrandrByOutput.sh;
     # xrandrMemoryi3.primaryXrandrScript = ./mon/configPrimaryDisplay.sh;

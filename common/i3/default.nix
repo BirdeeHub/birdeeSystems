@@ -6,6 +6,14 @@
         default = null;
         type = nullOr path;
       };
+      extraSessionCommands = lib.mkOption {
+        default = ''
+          ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
+            Xft.dpi: 100
+          ''}
+        '';
+        type = str;
+      };
     };
   };
   config = lib.mkIf config.birdeeMods.i3.enable (let
@@ -24,7 +32,7 @@
       # Enable the X11 windowing system.
       enable = true;
 
-      dpi = 100;
+      # dpi = 100;
 
       displayManager = {
         lightdm = {
@@ -77,11 +85,7 @@
             set $bootUpMonScript ${bootUpMonScript}
           '' + builtins.readFile ./config + ''
           '') }";
-        extraSessionCommands = ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
-            Xft.dpi: 100
-          ''}
-        '';
+        extraSessionCommands = cfg.extraSessionCommands;
         extraPackages = let
           i3lock = (pkgs.writeScriptBin "i3lock" ''
             #!/bin/sh
