@@ -2,7 +2,6 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    ./nvdintGraphics.nix
   ];
   config = {
     hardware.nvidia.modesetting.enable = true;
