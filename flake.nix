@@ -79,6 +79,18 @@
         inherit system;
         modules = [
           ./systems/aSUS.nix
+          ./systems/PCs.nix
+        ];
+      };
+      "dustbook" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          hostname = "dustbook";
+          inherit stateVersion self inputs users system-modules;
+        };
+        inherit system;
+        modules = [
+          ./systems/dustbook.nix
+          ./systems/PCs.nix
         ];
       };
     };

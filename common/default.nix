@@ -15,6 +15,7 @@ in {
   hardwares = {
     aSUSrog = systemOnly ./hardwares/aSUSrog.nix;
     nvidiaIntelgrated = systemOnly ./hardwares/nvdintGraphics.nix;
+    dustbook = systemOnly ./hardwares/dustbook.nix;
   };
   birdeeVim = {
     module= if homeModule

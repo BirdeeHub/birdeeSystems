@@ -5,22 +5,15 @@
 { config, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
-    inputs.nixos-hardware.outputs.nixosModules.asus-fx504gd
-    hardwares.aSUSrog
-    hardwares.nvidiaIntelgrated
+    hardwares.dustbook
   ];
 
   birdeeMods = {
-    nvidia.enable = true;
   };
-
-  services.asusd.enable = true;
-  services.asusd.enableUserService = true;
 
   environment.systemPackages = let
   in
   with pkgs; [
-    ntfs3g
   ];
 
 }

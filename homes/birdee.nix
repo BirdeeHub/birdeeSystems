@@ -120,7 +120,6 @@ in {
     unzip
     git
     pciutils
-    glxinfo
     xclip
     xsel
     xorg.xev
