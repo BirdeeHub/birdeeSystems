@@ -13,7 +13,7 @@ in {
     i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
     i3.extraSessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
-        Xft.dpi: 100
+        Xft.dpi: 80
       ''}
     '';
     # xrandrMemoryi3.enable = true;
