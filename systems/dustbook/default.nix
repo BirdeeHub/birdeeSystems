@@ -5,7 +5,7 @@
 { config, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
-    hardwares.dustbook
+    ./hardware
     ../PCs.nix
   ];
 

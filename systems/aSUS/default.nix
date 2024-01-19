@@ -5,15 +5,12 @@
 { config, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
-    inputs.nixos-hardware.outputs.nixosModules.asus-fx504gd
-    hardwares.aSUSrog
-    hardwares.nvidiaIntelgrated
+    ./hardware
     xrandrMemoryi3
     ../PCs.nix
   ];
 
   birdeeMods = {
-    nvidia.enable = true;
     i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
     xrandrMemoryi3.enable = true;
     xrandrMemoryi3.xrandrScriptByOutput = ./mon/configXrandrByOutput.sh;
@@ -39,9 +36,6 @@ in {
     '')}'';
     leftMonPrf = /*bash*/ "xrandr --output HDMI-1 --left-of eDP-1 --preferred";
   };
-
-  services.asusd.enable = true;
-  services.asusd.enableUserService = true;
 
   environment.systemPackages = let
   in

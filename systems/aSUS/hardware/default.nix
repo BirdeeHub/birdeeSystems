@@ -1,9 +1,13 @@
-{config, pkgs, lib, ...}: {
-  options = { birdeeMods.nvidia = {
-      enable = lib.mkEnableOption "nvidia";
-    };
-  };
-  config = lib.mkIf config.birdeeMods.nvidia.enable {
+{ config, pkgs, self, inputs, stateVersion, users, hostname, ... }: let
+in {
+  imports = [
+    inputs.nixos-hardware.outputs.nixosModules.asus-fx504gd
+    ./hardware-configuration.nix
+  ];
+  config = {
+    services.asusd.enable = true;
+    services.asusd.enableUserService = true;
+
     hardware.nvidia.modesetting.enable = true;
     services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
     hardware.nvidia.prime = {
