@@ -78,8 +78,7 @@
         };
         inherit system;
         modules = [
-          ./systems/aSUS.nix
-          ./systems/PCs.nix
+          ./systems/aSUS
         ];
       };
       "dustbook" = nixpkgs.lib.nixosSystem {
@@ -89,8 +88,7 @@
         };
         inherit system;
         modules = [
-          ./systems/dustbook.nix
-          ./systems/PCs.nix
+          ./systems/dustbook
         ];
       };
     };

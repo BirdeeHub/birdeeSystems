@@ -6,9 +6,14 @@
 in {
   imports = with system-modules; [
     hardwares.dustbook
+    ../PCs.nix
   ];
 
   birdeeMods = {
+    i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
+    # xrandrMemoryi3.enable = true;
+    # xrandrMemoryi3.xrandrScriptByOutput = ./mon/configXrandrByOutput.sh;
+    # xrandrMemoryi3.primaryXrandrScript = ./mon/configPrimaryDisplay.sh;
   };
 
   environment.systemPackages = let

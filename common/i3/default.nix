@@ -1,65 +1,24 @@
 { config, pkgs, self, inputs, lib, ... }: {
   options = {
-    birdeeMods.i3 = {
+    birdeeMods.i3 = with lib.types; {
       enable = lib.mkEnableOption "birdee's i3 configuration";
+      bootUpMonScript = lib.mkOption {
+        default = null;
+        type = nullOr path;
+      };
     };
   };
   config = lib.mkIf config.birdeeMods.i3.enable (let
+    cfg = config.birdeeMods.i3;
     jq = pkgs.writeScript "jq" (''
       #!/usr/bin/env bash
-      exec ${pkgs.jq}/bin/jq "$@"
+      exec ${pkgs.jq}/bin/jq $@
     '');
     xrandr = pkgs.writeScript "xrandr" (''
       #!/usr/bin/env bash
-      exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+      exec ${pkgs.xorg.xrandr}/bin/xrandr $@
     '');
-    randrMemory = let
-      configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (''
-        #!/usr/bin/env bash
-        xrandr=${xrandr}
-        '' + (builtins.readFile ./mon/configXrandrByOutput.sh));
-      configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (''
-        #!/usr/bin/env bash
-        xrandr=${xrandr}
-        '' + (builtins.readFile ./mon/configPrimaryDisplay.sh));
-    in
-    (pkgs.writeScript "randrMemory.sh" (''
-        #!/usr/bin/env bash
-        jq=${jq}
-        xrandr=${xrandr}
-        XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
-        XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
-      ''+ (builtins.readFile ./mon/i3autoXrandrMemory.sh)));
   in {
-
-    environment.shellAliases = {
-      leftMon = ''${pkgs.writeScript "leftMonFlexible.sh" (/*bash*/''
-        #!/usr/bin/env bash
-        rate=59.95; mode="1920x1080"; side="l";
-        current="HDMI-1"; primary="eDP-1";
-        [[ $# > 0 ]] && rate=$1 && shift 1
-        [[ $# > 0 ]] && mode=$1 && shift 1
-        [[ $# > 0 ]] && side=$1 && shift 1
-        [[ $# > 0 ]] && current=$1 && shift 1
-        [[ $# > 0 ]] && primary=$1 && shift 1
-        if [[ $side == "l" ]]; then
-          side="--left-of"
-        elif [[ $side == "r" ]]; then
-          side="--right-of"
-        fi
-        ${xrandr} --output $current $side $primary --rate $rate --mode $mode $@
-      '')}'';
-      leftMonPrf = /*bash*/ "${xrandr} --output HDMI-1 --left-of eDP-1 --preferred";
-    };
-    # How do I run a script when a monitor is connected/disconnected?
-    # it doesnt even have to be this big script, even just xrandr --auto...
-    services.udev = {
-      enable = true;
-        # ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm",  RUN+="${pkgs.xorg.xrandr}/bin/xrandr --auto"
-      extraRules = ''
-        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
-      '';
-    };
 
     services.xserver = {
       # Enable the X11 windowing system.
@@ -92,7 +51,7 @@
             #!/usr/bin/env bash
             jq=${jq}
             xrandr=${xrandr}
-          '' + (builtins.readFile ./mon/monWkspcCycle.sh) + ''
+          '' + (builtins.readFile ./monWkspcCycle.sh) + ''
           ''));
           fehBG = (pkgs.writeScript "fehBG" ''
             #!/bin/sh
@@ -102,10 +61,14 @@
             #!/bin/sh
             exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ./i3bar)} "$@"
           '');
-          bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (''
+          bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (if cfg.bootUpMonScript != null then ''
             #!/usr/bin/env bash
             xrandr=${xrandr}
-          '' + (builtins.readFile ./mon/bootUpMonitorScript.sh));
+          '' + (builtins.readFile cfg.bootUpMonScript)
+          else ''
+            #!/usr/bin/env bash
+            ${xrandr} --auto
+          '');
         in "${ pkgs.writeText "config" (''
             set $i3status ${i3status}
             set $monMover ${monMover}
