@@ -62,15 +62,15 @@
             #!/usr/bin/env bash
             jq=${jq}
             xrandr=${xrandr}
-          '' + (builtins.readFile ./monWkspcCycle.sh) + ''
+          '' + (builtins.readFile ../monWkspcCycle.sh) + ''
           ''));
           fehBG = (pkgs.writeScript "fehBG" ''
             #!/bin/sh
-            exec ${pkgs.feh}/bin/feh --bg-scale ${./misc/rooftophang.png} "$@"
+            exec ${pkgs.feh}/bin/feh --bg-scale ${../misc/rooftophang.png} "$@"
           '');
           i3status = (pkgs.writeScript "i3status" ''
             #!/bin/sh
-            exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ./i3bar)} "$@"
+            exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ../i3bar)} "$@"
           '');
           bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (if cfg.bootUpMonScript != null then ''
             #!/usr/bin/env bash
@@ -86,13 +86,13 @@
             set $fehBG ${fehBG}
             set $xrandr ${xrandr}
             set $bootUpMonScript ${bootUpMonScript}
-          '' + builtins.readFile ./config + ''
+          '' + builtins.readFile ../config + ''
           '') }";
         extraSessionCommands = cfg.extraSessionCommands;
         extraPackages = let
           i3lock = (pkgs.writeScriptBin "i3lock" ''
             #!/bin/sh
-            exec ${pkgs.i3lock}/bin/i3lock -t -i ${./misc/DogAteHomework.png} "$@"
+            exec ${pkgs.i3lock}/bin/i3lock -t -i ${../misc/DogAteHomework.png} "$@"
           '');
         in
         with pkgs; with pkgs.xfce; [
