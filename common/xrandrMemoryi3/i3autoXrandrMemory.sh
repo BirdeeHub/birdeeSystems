@@ -91,7 +91,7 @@ for finmon in "${final_mons[@]}"; do
 done
 #re-format info to appropriate json for turning into commands when needed
 for mon in "${gonemon[@]}"; do
-    filtered_data=$(echo "$i3msgOUT" | $jq -M "map(select(.output == \"$mon\"))")
+    filtered_data=$(echo "$i3msgOUT" | $jq -M "map(select(.output==\"$mon\"))")
     nums=$(echo "$filtered_data" | $jq -r '[.[].num]')
     result+='{ "mon": "'$mon'", "nums": '"$nums"' }'
 done
@@ -111,7 +111,7 @@ if [[ -e $JSON_CACHE_PATH && -s $JSON_CACHE_PATH ]]; then
             for mon in "${mons_array[@]}"; do
                 #also, if the workspace was moved to a different monitor, and then you unplug it, 
                 #remove the workspace from the lists for other windows to avoid conflicts
-                readarray -t cachenums_array <<< "$(echo "$cacheresult" | $jq -r ".[] | select(.mon == \"$mon\") | .nums[]")"
+                readarray -t cachenums_array <<< "$(echo "$cacheresult" | $jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
                 readarray -t nums_array <<< "$(echo "$result" | $jq -r '.[].nums[]')"
                 if [[ "${#nums_array[@]}" -gt 0 && "${nums_array[0]}" != "" && \
                     "${#cachenums_array[@]}" -gt 0 && "${cachenums_array[0]}" != "" && \
@@ -143,7 +143,7 @@ workspaceChecked="false"
 for mon in "${newmon[@]}"; do
     [[ -e $XRANDR_NEWMON_CONFIG && -s $XRANDR_NEWMON_CONFIG ]] && \
         bash -c "$XRANDR_NEWMON_CONFIG \"$mon\""
-    readarray -t nums_array <<< "$(echo "$result" | $jq -r ".[] | select(.mon == \"$mon\") | .nums[]")"
+    readarray -t nums_array <<< "$(echo "$result" | $jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
     for num in "${nums_array[@]}"; do
         if [[ "$workspaceChecked" == "false" && "$currentWkspc" == "${nums_array[0]}" ]]; then
             #I do this check to ensure that it can still move the first one if you have it focused
