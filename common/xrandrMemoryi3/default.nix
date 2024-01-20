@@ -43,7 +43,9 @@
         XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
       ''+ (builtins.readFile ./i3autoXrandrMemory.sh)));
+    xrandrMemory = pkgs.writeScriptBin "xrandrMemory" (builtins.readFile randrMemory);
   in {
+    environment.systemPackages = [ xrandrMemory ];
     # How do I run a script when a monitor is connected/disconnected?
     # it doesnt even have to be this big script, even just xrandr --auto...
     services.udev = {
