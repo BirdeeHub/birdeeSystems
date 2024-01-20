@@ -16,21 +16,21 @@
     cfg = config.birdeeMods.xrandrMemoryi3;
     jq = pkgs.writeScript "jq" (''
       #!/usr/bin/env bash
-      exec ${pkgs.jq}/bin/jq $@
+      exec ${pkgs.jq}/bin/jq "$@"
     '');
     xrandr = pkgs.writeScript "xrandr" (''
       #!/usr/bin/env bash
-      exec ${pkgs.xorg.xrandr}/bin/xrandr $@
+      exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
     '');
     randrMemory = let
       configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (
-      if cfg.xrandrScriptByOutput == null then ''
+      if cfg.xrandrScriptByOutput != null then ''
         #!/usr/bin/env bash
         xrandr=${xrandr}
         '' + (builtins.readFile cfg.xrandrScriptByOutput)
       else "");
       configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (
-      if cfg.xrandrScriptByOutput == null then ''
+      if cfg.xrandrScriptByOutput != null then ''
         #!/usr/bin/env bash
         xrandr=${xrandr}
         '' + (builtins.readFile cfg.primaryXrandrScript)
