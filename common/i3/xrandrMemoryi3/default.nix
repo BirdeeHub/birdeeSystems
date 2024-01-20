@@ -48,11 +48,15 @@
     environment.systemPackages = [ xrandrMemory ];
     # How do I run a script when a monitor is connected/disconnected?
     # it doesnt even have to be this big script, even just xrandr --auto...
+    # The script works when I run it from command line or i3 hotkey....
+    # I cant even get these rules to echo to a file in /tmp
     services.udev = {
       enable = true;
-        # ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm",  RUN+="${pkgs.xorg.xrandr}/bin/xrandr --auto"
+        # ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm",  RUN+="${randrMemory}"
+        # KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/birdee/.Xauthority", RUN+="${randrMemory}"
+        # ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
       extraRules = ''
-        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
+        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/birdee/.Xauthority", RUN+="${randrMemory}"
       '';
     };
   });
