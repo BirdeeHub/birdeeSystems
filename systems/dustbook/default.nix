@@ -7,7 +7,6 @@ in {
   imports = with system-modules; [
     ./hardware
     ../PCs.nix
-    xrandrMemoryi3
   ];
 
   birdeeMods = {
@@ -17,9 +16,9 @@ in {
         Xft.dpi: 80
       ''}
     '';
-    xrandrMemoryi3.enable = true;
-    # xrandrMemoryi3.xrandrScriptByOutput = ./mon/configXrandrByOutput.sh;
-    # xrandrMemoryi3.primaryXrandrScript = ./mon/configPrimaryDisplay.sh;
+    i3.xrandrMemoryi3.enable = true;
+    # i3.xrandrMemoryi3.xrandrScriptByOutput = ./mon/configXrandrByOutput.sh;
+    # i3.xrandrMemoryi3.primaryXrandrScript = ./mon/configPrimaryDisplay.sh;
   };
 
   environment.systemPackages = let

@@ -36,5 +36,4 @@ in {
     fish = if homeModule then ./shell/home/fish.nix else ./shell/nixOS/fish.nix;
   };
   overlays = ./overlays;
-  xrandrMemoryi3 = systemOnly ./xrandrMemoryi3;
 }

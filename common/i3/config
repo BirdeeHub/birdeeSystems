@@ -104,7 +104,7 @@ bindsym $mod+Shift+Print --release exec --no-startup-id peek
 bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
 
 bindsym $mod+minus exec $monMover
-bindsym $mod+Shift+minus exec $randrMemory
+bindsym $mod+Shift+minus exec xrandrMemory
 focus_follows_mouse no
 # change focus
 bindsym $mod+$left focus left

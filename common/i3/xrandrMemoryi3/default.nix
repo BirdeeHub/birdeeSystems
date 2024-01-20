@@ -1,6 +1,6 @@
 { config, pkgs, self, inputs, lib, ... }: {
   options = {
-    birdeeMods.xrandrMemoryi3 = with lib.types; {
+    birdeeMods.i3.xrandrMemoryi3 = with lib.types; {
       enable = lib.mkEnableOption "an auto-run workspace switcher on monitor hotplug";
       xrandrScriptByOutput = lib.mkOption {
         default = null;
@@ -12,8 +12,8 @@
       };
     };
   };
-  config = lib.mkIf config.birdeeMods.xrandrMemoryi3.enable (let
-    cfg = config.birdeeMods.xrandrMemoryi3;
+  config = lib.mkIf config.birdeeMods.i3.xrandrMemoryi3.enable (let
+    cfg = config.birdeeMods.i3.xrandrMemoryi3;
     jq = pkgs.writeScript "jq" (''
       #!/usr/bin/env bash
       exec ${pkgs.jq}/bin/jq "$@"

@@ -1,4 +1,7 @@
 { config, pkgs, self, inputs, lib, ... }: {
+  imports = [
+    ./xrandrMemoryi3
+  ];
   options = {
     birdeeMods.i3 = with lib.types; {
       enable = lib.mkEnableOption "birdee's i3 configuration";
