@@ -327,11 +327,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1705847988,
-        "narHash": "sha256-ItuwR4hux+1uHuGNoRGrB1DWg6/sB0BcbxF4fnG9P0k=",
+        "lastModified": 1705850921,
+        "narHash": "sha256-l9eBiJvV95IIlULqUf0JM/TFuyJqJUXCVgcTJOTuCMs=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "dc8ba1cd15adb504f141879e1a4f8e74c3fe4911",
+        "rev": "4a8eac37efd0d7651bb4925508a4cfea9aa64eac",
         "type": "github"
       },
       "original": {
@@ -478,16 +478,16 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1705677747,
-        "narHash": "sha256-eyM3okYtMgYDgmYukoUzrmuoY4xl4FUujnsv/P6I/zI=",
+        "lastModified": 1705697961,
+        "narHash": "sha256-XepT3WS516evSFYkme3GrcI3+7uwXHqtHbip+t24J7E=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bbe7d8f876fbbe7c959c90ba2ae2852220573261",
+        "rev": "e5d1c87f5813afde2dda384ac807c57a105721cc",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }

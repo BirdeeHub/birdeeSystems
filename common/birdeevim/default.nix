@@ -98,7 +98,7 @@
           "tokyonight-day" = tokyonight-nvim;
         };
         markdown = with pkgs.vimPlugins; [
-          pkgs.nixCatsBuilds.markdown-preview-nvim
+          markdown-preview-nvim
         ];
         StdPlugOver = with pkgs.neovimPlugins; [
           harpoon
