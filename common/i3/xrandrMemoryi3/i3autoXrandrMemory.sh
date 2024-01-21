@@ -142,14 +142,14 @@ currentWkspc="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).n
 workspaceChecked="false"
 for mon in "${newmon[@]}"; do
     [[ -e $XRANDR_NEWMON_CONFIG && -s $XRANDR_NEWMON_CONFIG ]] && \
-        sh -c "$XRANDR_NEWMON_CONFIG \"$mon\""
+        bash -c "$XRANDR_NEWMON_CONFIG \"$mon\""
     readarray -t nums_array <<< "$(echo "$result" | jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
     for num in "${nums_array[@]}"; do
         if [[ "$workspaceChecked" == "false" && "$currentWkspc" == "${nums_array[0]}" ]]; then
             #I do this check to ensure that it can still move the first one if you have it focused
-            workspaceChecked="$(echo "i3-msg \"workspace number $num, move workspace to output $mon\";")"
+            workspaceChecked="$(echo "$i3msgpath \"workspace number $num, move workspace to output $mon\";")"
         else
-            workspace_commands+=("$(echo "i3-msg \"workspace number $num, move workspace to output $mon\";")")
+            workspace_commands+=("$(echo "$i3msgpath \"workspace number $num, move workspace to output $mon\";")")
         fi
         [[ "$workspaceChecked" == "false" ]] && workspaceChecked="true"
     done
@@ -157,7 +157,7 @@ done
 [[ "$workspaceChecked" != "true" && "$workspaceChecked" != "false" ]] && \
     workspace_commands+=( "$workspaceChecked" )
 for cmd in "${workspace_commands[@]}"; do
-    sh -c "$cmd"
+    bash -c "$cmd"
 done
 [[ -e $XRANDR_ALWAYSRUN_CONFIG && -s $XRANDR_ALWAYSRUN_CONFIG ]] && \
     exec $XRANDR_ALWAYSRUN_CONFIG ${final_mons[@]}

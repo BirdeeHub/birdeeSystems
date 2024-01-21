@@ -20,22 +20,38 @@
       configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (
       if cfg.xrandrScriptByOutput != null then ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
+        xrandr() {
+          ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+        }
         '' + (builtins.readFile cfg.xrandrScriptByOutput)
       else "");
       configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (
       if cfg.xrandrScriptByOutput != null then ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
+        xrandr() {
+          ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+        }
         '' + (builtins.readFile cfg.primaryXrandrScript)
       else "");
     in
     (pkgs.writeScript "randrMemory.sh" (''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        alias jq='${pkgs.jq}/bin/jq'
-        alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
-        alias awk='${pkgs.gawk}/bin/awk'
-        alias i3-msg='${pkgs.i3}/bin/i3-msg'
+        bash() {
+          ${pkgs.bash}/bin/bash "$@"
+        }
+        jq() {
+          ${pkgs.jq}/bin/jq "$@"
+        }
+        xrandr() {
+          ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+        }
+        awk() {
+          ${pkgs.gawk}/bin/awk "$@"
+        }
+        i3-msg() {
+          ${pkgs.i3}/bin/i3-msg "$@"
+        }
+        i3msgpath=${pkgs.i3}/bin/i3-msg
         XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
       ''+ (builtins.readFile ./i3autoXrandrMemory.sh)));

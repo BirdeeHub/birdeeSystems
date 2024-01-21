@@ -52,8 +52,12 @@
         configFile = let
           monMover = (pkgs.writeScript "monWkspcCycle.sh" (''
             #!/usr/bin/env bash
-            alias jq='${pkgs.jq}/bin/jq'
-            alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
+            jq() {
+              ${pkgs.jq}/bin/jq "$@"
+            }
+            xrandr() {
+              ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+            }
           '' + (builtins.readFile ../monWkspcCycle.sh) + ''
           ''));
           fehBG = (pkgs.writeScript "fehBG" ''
@@ -66,7 +70,9 @@
           '');
           bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (if cfg.bootUpMonScript != null then ''
             #!/usr/bin/env bash
-            alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
+            xrandr() {
+              ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+            }
           '' + (builtins.readFile cfg.bootUpMonScript)
           else ''
             #!/usr/bin/env bash
