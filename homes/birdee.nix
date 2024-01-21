@@ -119,6 +119,8 @@ in {
     python3
     distrobox
     nix-search-cli
+    fastfetch
+    lolcat
     wget
     gimp
     spotify
