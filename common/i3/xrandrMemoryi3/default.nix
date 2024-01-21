@@ -1,5 +1,5 @@
 { home-manager ? false, ... }:
-{ config, pkgs, self, inputs, lib, ... }: {
+{ config, pkgs, self, inputs, lib, users, ... }: {
   options = {
     birdeeMods.i3.xrandrMemoryi3 = with lib.types; {
       enable = lib.mkEnableOption "an auto-run workspace switcher on monitor hotplug";
@@ -56,6 +56,9 @@
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
       ''+ (builtins.readFile ./i3autoXrandrMemory.sh)));
     xrandrMemory = pkgs.writeScriptBin "xrandrMemory" (builtins.readFile randrMemory);
+    ruleLines = builtins.concatStringsSep "\n" (builtins.map (name: ''
+        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${name}/.Xauthority", RUN+="${randrMemory}"
+    '') (builtins.attrNames users.users));
   in {
     environment.systemPackages = [ xrandrMemory ];
     # How do I run a script when a monitor is connected/disconnected?
@@ -67,9 +70,11 @@
         # ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm",  RUN+="${randrMemory}"
         # KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/birdee/.Xauthority", RUN+="${randrMemory}"
         # ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${randrMemory}"
-      extraRules = ''
-        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/birdee/.Xauthority", RUN+="${randrMemory}"
-      '';
+        # ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", RUN+="${randrMemory}"
+      extraRules = ruleLines;
+      # extraRules = ''
+      #   ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="$HOME/.Xauthority", RUN+="${randrMemory}"
+      # '';
     };
   });
 }
