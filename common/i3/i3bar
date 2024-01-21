@@ -1,6 +1,6 @@
 order += "load"
 order += "cpu_usage"
-order += "cpu_temperature 0"
+#order += "cpu_temperature 0"
 order += "memory"
 order += "disk /"
 order += "disk /mnt/win-sdb"

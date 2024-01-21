@@ -18,7 +18,7 @@ remove_by_mon() {
     local input="$1"
     local mon="$2"
     local result
-    result="$(echo "$input" | $jq --arg mon "$mon" -e 'map(select(.mon != $mon))')"
+    result="$(echo "$input" | jq --arg mon "$mon" -e 'map(select(.mon != $mon))')"
     if [ $? -eq 0 ]; then
         echo "$result"
         return 0  # Return success (0) since jq command succeeded
@@ -34,7 +34,7 @@ replace_json_nums() {
     local new_nums_json=$(printf '%s,' "${new_nums[@]}")
     new_nums_json="[${new_nums_json%,}]"
     # Use jq to replace the "nums" array for the specified "mon"
-    updated_json=$($jq --arg mon "$mon" --argjson new_nums "$new_nums_json" '
+    updated_json=$(jq --arg mon "$mon" --argjson new_nums "$new_nums_json" '
         map(if .mon == $mon then .nums = $new_nums else . end)
     ' <<< "$json")
     echo "$updated_json"
@@ -60,9 +60,9 @@ remove_elements() { # remove_elements in _______ from _________
 
 #gather info before and after xrandr --auto
 i3msgOUT="$(i3-msg -t get_workspaces)"
-readarray -t initial_mons <<< "$($xrandr --listactivemonitors | awk '{print($4)}' | tail -n +2)"
-$xrandr --auto
-readarray -t final_mons <<< "$($xrandr --listactivemonitors | awk '{print($4)}' | tail -n +2)"
+readarray -t initial_mons <<< "$(xrandr --listactivemonitors | awk '{print($4)}' | tail -n +2)"
+xrandr --auto
+readarray -t final_mons <<< "$(xrandr --listactivemonitors | awk '{print($4)}' | tail -n +2)"
 gonemon=()
 for initmon in "${initial_mons[@]}"; do
     found=false
@@ -91,11 +91,11 @@ for finmon in "${final_mons[@]}"; do
 done
 #re-format info to appropriate json for turning into commands when needed
 for mon in "${gonemon[@]}"; do
-    filtered_data=$(echo "$i3msgOUT" | $jq -M "map(select(.output==\"$mon\"))")
-    nums=$(echo "$filtered_data" | $jq -r '[.[].num]')
+    filtered_data=$(echo "$i3msgOUT" | jq -M "map(select(.output==\"$mon\"))")
+    nums=$(echo "$filtered_data" | jq -r '[.[].num]')
     result+='{ "mon": "'$mon'", "nums": '"$nums"' }'
 done
-result=$(echo "$result" | $jq -s -c)
+result=$(echo "$result" | jq -s -c)
 #Filter the cache, then append it and save it.
 if [[ -e $JSON_CACHE_PATH && -s $JSON_CACHE_PATH ]]; then
     cacheresult="$(cat $JSON_CACHE_PATH)"
@@ -106,13 +106,13 @@ if [[ -e $JSON_CACHE_PATH && -s $JSON_CACHE_PATH ]]; then
         done
     fi
     if [[ -n $cacheresult ]]; then
-        readarray -t mons_array <<< "$(echo "$cacheresult" | $jq -r '.[].mon')"
+        readarray -t mons_array <<< "$(echo "$cacheresult" | jq -r '.[].mon')"
         if [[ -n "${mons_array[@]}" ]]; then
             for mon in "${mons_array[@]}"; do
                 #also, if the workspace was moved to a different monitor, and then you unplug it, 
                 #remove the workspace from the lists for other windows to avoid conflicts
-                readarray -t cachenums_array <<< "$(echo "$cacheresult" | $jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
-                readarray -t nums_array <<< "$(echo "$result" | $jq -r '.[].nums[]')"
+                readarray -t cachenums_array <<< "$(echo "$cacheresult" | jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
+                readarray -t nums_array <<< "$(echo "$result" | jq -r '.[].nums[]')"
                 if [[ "${#nums_array[@]}" -gt 0 && "${nums_array[0]}" != "" && \
                     "${#cachenums_array[@]}" -gt 0 && "${cachenums_array[0]}" != "" && \
                     $(check_conflict "${cachenums_array[@]}" "${nums_array[@]}") -eq 0 ]]
@@ -130,7 +130,7 @@ if [[ -e $JSON_CACHE_PATH && -s $JSON_CACHE_PATH ]]; then
     result=${result#'['}
     [[ -n  "$result" && -n "$cacheresult" ]] && result+=","
     [[ -n "$cacheresult" ]] && result+=$cacheresult
-    result="$(echo "[$result]" | $jq -c)"
+    result="$(echo "[$result]" | jq -c)"
 fi
 #save the new cache
 mkdir -p $(dirname $JSON_CACHE_PATH)
@@ -138,12 +138,12 @@ echo "$result" > $JSON_CACHE_PATH
 #and now to move them back.
 #using newmon and monwkspc.json, do extra monitor setups and then workspace moves for each newmon
 workspace_commands=()
-currentWkspc="$(i3-msg -t get_workspaces | $jq -r '.[] | select(.focused==true).num')"
+currentWkspc="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).num')"
 workspaceChecked="false"
 for mon in "${newmon[@]}"; do
     [[ -e $XRANDR_NEWMON_CONFIG && -s $XRANDR_NEWMON_CONFIG ]] && \
-        bash -c "$XRANDR_NEWMON_CONFIG \"$mon\""
-    readarray -t nums_array <<< "$(echo "$result" | $jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
+        sh -c "$XRANDR_NEWMON_CONFIG \"$mon\""
+    readarray -t nums_array <<< "$(echo "$result" | jq -r ".[] | select(.mon==\"$mon\") | .nums[]")"
     for num in "${nums_array[@]}"; do
         if [[ "$workspaceChecked" == "false" && "$currentWkspc" == "${nums_array[0]}" ]]; then
             #I do this check to ensure that it can still move the first one if you have it focused
@@ -157,7 +157,7 @@ done
 [[ "$workspaceChecked" != "true" && "$workspaceChecked" != "false" ]] && \
     workspace_commands+=( "$workspaceChecked" )
 for cmd in "${workspace_commands[@]}"; do
-    bash -c "$cmd"
+    sh -c "$cmd"
 done
 [[ -e $XRANDR_ALWAYSRUN_CONFIG && -s $XRANDR_ALWAYSRUN_CONFIG ]] && \
     exec $XRANDR_ALWAYSRUN_CONFIG ${final_mons[@]}
