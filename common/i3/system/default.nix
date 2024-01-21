@@ -21,14 +21,6 @@
   };
   config = lib.mkIf config.birdeeMods.i3.enable (let
     cfg = config.birdeeMods.i3;
-    jq = pkgs.writeScript "jq" (''
-      #!/usr/bin/env bash
-      exec ${pkgs.jq}/bin/jq "$@"
-    '');
-    xrandr = pkgs.writeScript "xrandr" (''
-      #!/usr/bin/env bash
-      exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-    '');
   in {
 
     services.xserver = {
@@ -60,8 +52,8 @@
         configFile = let
           monMover = (pkgs.writeScript "monWkspcCycle.sh" (''
             #!/usr/bin/env bash
-            jq=${jq}
-            xrandr=${xrandr}
+            alias jq='${pkgs.jq}/bin/jq'
+            alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
           '' + (builtins.readFile ../monWkspcCycle.sh) + ''
           ''));
           fehBG = (pkgs.writeScript "fehBG" ''
@@ -74,17 +66,17 @@
           '');
           bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (if cfg.bootUpMonScript != null then ''
             #!/usr/bin/env bash
-            xrandr=${xrandr}
+            alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
           '' + (builtins.readFile cfg.bootUpMonScript)
           else ''
             #!/usr/bin/env bash
-            ${xrandr} --auto
+            ${pkgs.xorg.xrandr}/bin/xrandr --auto
           '');
         in "${ pkgs.writeText "config" (''
             set $i3status ${i3status}
             set $monMover ${monMover}
             set $fehBG ${fehBG}
-            set $xrandr ${xrandr}
+            set $xrandr ${pkgs.xorg.xrandr}/bin/xrandr
             set $bootUpMonScript ${bootUpMonScript}
           '' + builtins.readFile ../config + ''
           '') }";

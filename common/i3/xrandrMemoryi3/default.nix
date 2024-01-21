@@ -16,32 +16,24 @@
       #!/usr/bin/env bash
   config = lib.mkIf config.birdeeMods.i3.xrandrMemoryi3.enable (let
     cfg = config.birdeeMods.i3.xrandrMemoryi3;
-    jq = pkgs.writeScript "jq" (''
-      #!/usr/bin/env ${pkgs.bash}/bin/bash
-      exec ${pkgs.jq}/bin/jq "$@"
-    '');
-    xrandr = pkgs.writeScript "xrandr" (''
-      #!/usr/bin/env ${pkgs.bash}/bin/bash
-      exec ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-    '');
     randrMemory = let
       configXrandrByOutput = pkgs.writeScript "configXrandrByOutput.sh" (
       if cfg.xrandrScriptByOutput != null then ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        xrandr=${xrandr}
+        alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
         '' + (builtins.readFile cfg.xrandrScriptByOutput)
       else "");
       configPrimaryXrandr = pkgs.writeScript "configPrimaryDisplay.sh" (
       if cfg.xrandrScriptByOutput != null then ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        alias xrandr='${xrandr}'
+        alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
         '' + (builtins.readFile cfg.primaryXrandrScript)
       else "");
     in
     (pkgs.writeScript "randrMemory.sh" (''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        jq=${jq}
-        alias xrandr='${xrandr}'
+        alias jq='${pkgs.jq}/bin/jq'
+        alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
         XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
       ''+ (builtins.readFile ./i3autoXrandrMemory.sh)));
