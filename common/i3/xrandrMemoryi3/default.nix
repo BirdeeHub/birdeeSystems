@@ -34,6 +34,8 @@
         #!/usr/bin/env ${pkgs.bash}/bin/bash
         alias jq='${pkgs.jq}/bin/jq'
         alias xrandr='${pkgs.xorg.xrandr}/bin/xrandr'
+        alias awk='${pkgs.gawk}/bin/awk'
+        alias i3-msg='${pkgs.i3}/bin/i3-msg'
         XRANDR_NEWMON_CONFIG=${configXrandrByOutput}
         XRANDR_ALWAYSRUN_CONFIG=${configPrimaryXrandr}
       ''+ (builtins.readFile ./i3autoXrandrMemory.sh)));
