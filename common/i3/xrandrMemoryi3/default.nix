@@ -6,6 +6,7 @@
       enableFor = lib.mkOption {
         default = [];
         type = listOf str;
+        description = "can currently only be 1 user unfortunately";
       };
       xrandrScriptByOutput = lib.mkOption {
         default = null;
@@ -17,7 +18,7 @@
       };
     };
   };
-      #!/usr/bin/env bash
+
   config = lib.mkIf config.birdeeMods.i3.xrandrMemoryi3.enable (let
     cfg = config.birdeeMods.i3.xrandrMemoryi3;
     randrMemory = let
