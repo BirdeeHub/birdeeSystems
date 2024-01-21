@@ -151,7 +151,19 @@ in {
   ];
   fonts.fontconfig.enable = true;
   qt.platformTheme = "gtk";
+  qt.enable = true;
+  qt.style.package = pkgs.adwaita-qt;
+  qt.style.name = "adwaita-dark";
+  gtk.enable = true;
 
+  gtk.cursorTheme.package = pkgs.graphite-cursors;
+  gtk.cursorTheme.name = "Graphite dark Cursors";
+
+  gtk.theme.package = pkgs.adw-gtk3;
+  gtk.theme.name = "adw-gtk3-dark";
+
+  gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
+  gtk.iconTheme.name = "BeautyLine Icon Theme";
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
