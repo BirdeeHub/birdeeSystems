@@ -121,6 +121,7 @@ in {
     nix-search-cli
     fastfetch
     lolcat
+    nix-prefetch
     wget
     gimp
     spotify
