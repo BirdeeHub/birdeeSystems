@@ -103,7 +103,6 @@
           pa_applet
           pavucontrol
           networkmanagerapplet
-          lxappearance
           # i3blocks #if you are planning on using i3blocks over i3status
           xfce4-volumed-pulse
           hicolor-icon-theme

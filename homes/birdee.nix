@@ -97,6 +97,7 @@ in {
     xfce.ristretto
     qbittorrent
     galculator
+    lxappearance
     qalculate-qt
     signal-desktop
     bitwarden-cli
@@ -156,14 +157,17 @@ in {
   qt.style.name = "adwaita-dark";
   gtk.enable = true;
 
-  gtk.cursorTheme.package = pkgs.graphite-cursors;
-  gtk.cursorTheme.name = "Graphite dark Cursors";
+  gtk.cursorTheme.package = pkgs.phinger-cursors;
+  gtk.cursorTheme.name = "phinger-cursors";
+
+  home.pointerCursor.package = pkgs.phinger-cursors;
+  home.pointerCursor.name = "phinger-cursors";
 
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3-dark";
 
   gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
-  gtk.iconTheme.name = "BeautyLine Icon Theme";
+  gtk.iconTheme.name = "BeautyLine";
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
