@@ -1,3 +1,4 @@
+{ home-manager ? false, ... }:
 { config, pkgs, self, inputs, lib, ... }: {
   options = {
     birdeeMods.i3.xrandrMemoryi3 = with lib.types; {

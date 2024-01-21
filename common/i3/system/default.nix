@@ -1,6 +1,6 @@
 { config, pkgs, self, inputs, lib, ... }: {
   imports = [
-    ./xrandrMemoryi3
+    (import ../xrandrMemoryi3 { home-manager = false;})
   ];
   options = {
     birdeeMods.i3 = with lib.types; {
