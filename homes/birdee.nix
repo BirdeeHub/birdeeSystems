@@ -29,10 +29,18 @@ in {
 
 
   home.shellAliases = {
-    flakeUpAndAddem = ''${pkgs.writeScript "flakeUpAndAddem.sh" (/*bash*/''
-      #!/usr/bin/env bash
+    flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" (/*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
       git add . && nix flake update && nix build --show-trace $target && git add .; $@
+    '')}'';
+    spkgname = ''${pkgs.writeShellScript "searchCLIname" (/*bash*/''
+      ${pkgs.nix-search-cli}/bin/nix-search -n "$@"
+    '')}'';
+    spkgprog = ''${pkgs.writeShellScript "searchCLIprog" (/*bash*/''
+      ${pkgs.nix-search-cli}/bin/nix-search -q  "package_programs:("$@")"
+    '')}'';
+    spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" (/*bash*/''
+      ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
     ls = "ls --color=tty";
     la = "ls -a";
