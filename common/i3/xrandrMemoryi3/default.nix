@@ -3,6 +3,10 @@
   options = {
     birdeeMods.i3.xrandrMemoryi3 = with lib.types; {
       enable = lib.mkEnableOption "an auto-run workspace switcher on monitor hotplug";
+      enableFor = lib.mkOption {
+        default = [];
+        type = listOf str;
+      };
       xrandrScriptByOutput = lib.mkOption {
         default = null;
         type = nullOr path;
@@ -58,7 +62,7 @@
     xrandrMemory = pkgs.writeScriptBin "xrandrMemory" (builtins.readFile randrMemory);
     ruleLines = builtins.concatStringsSep "\n" (builtins.map (name: ''
         ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${name}/.Xauthority", RUN+="${randrMemory}"
-    '') (builtins.attrNames users.users));
+    '') (cfg.enableFor));
   in {
     environment.systemPackages = [ xrandrMemory ];
     # How do I run a script when a monitor is connected/disconnected?
