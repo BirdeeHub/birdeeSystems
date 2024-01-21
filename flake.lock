@@ -324,15 +324,14 @@
         "flake-utils": "flake-utils_3",
         "nixd": "nixd",
         "nixpkgs": "nixpkgs_3",
-        "plugins-hlargs": "plugins-hlargs",
-        "plugins-lazy-nvim": "plugins-lazy-nvim"
+        "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1705809733,
-        "narHash": "sha256-iJGySpKSCVgjiHAcDrikBzeYxx+HVzb7u7xWg7qTdw0=",
+        "lastModified": 1705847988,
+        "narHash": "sha256-ItuwR4hux+1uHuGNoRGrB1DWg6/sB0BcbxF4fnG9P0k=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "0b80d2fe84748c188e860a323fe269dbcbd7119c",
+        "rev": "dc8ba1cd15adb504f141879e1a4f8e74c3fe4911",
         "type": "github"
       },
       "original": {
@@ -559,11 +558,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705830249,
-        "narHash": "sha256-Cg8BoXpv2yH/WB1oybR6xeWPCaBXfJo8o7XNLYGnp/k=",
+        "lastModified": 1705847594,
+        "narHash": "sha256-YtoT6OoTIkYcwm+VPeqn+cJhyacd/WIMtBoBEvRDYVY=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "bfd7ae8fd550bbae107547934fdb9d3dd04bb592",
+        "rev": "2b4a30cde35eb5b7813c731aa26fc475a27c723e",
         "type": "github"
       },
       "original": {
@@ -624,22 +623,6 @@
       "original": {
         "owner": "m-demare",
         "repo": "hlargs.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-lazy-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1705789578,
-        "narHash": "sha256-IUqn0zTUen+qVGkwyEtNfmiRQWP1dmLSOEjdC2QF6K8=",
-        "owner": "BirdeeHub",
-        "repo": "lazy.nvim",
-        "rev": "c151e1b61be0cdf2eeb668df94701ec8e150154d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "lazy.nvim",
         "type": "github"
       }
     },

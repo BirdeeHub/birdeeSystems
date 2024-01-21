@@ -29,9 +29,10 @@ in {
   };
   services.flatpak.enable = true;
 
-  # services.clamav.daemon.enable = true;
-  # services.clamav.updater.enable = true;
-  # services.clamav.updater.interval = "weekly";
+  services.clamav.daemon.enable = true;
+  services.clamav.updater.enable = true;
+  services.clamav.updater.interval = "weekly";
+  systemd.services.clamav-freshclam.wants = [ "network-online.target" ];
   environment.variables = {
   };
   environment.interactiveShellInit = ''
