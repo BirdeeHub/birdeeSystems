@@ -1,10 +1,14 @@
 { config, pkgs, self, inputs, stateVersion, users, hostname, ... }: let
 in {
   imports = [
-    inputs.nixos-hardware.outputs.nixosModules.asus-fx504gd
+    inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
     ./hardware-configuration.nix
   ];
   config = {
+    #Nouveau doesn't work at all on this model.
+    boot.kernelParams = [ "nouveau.modeset=0" ];
+
     services.asusd.enable = true;
     services.asusd.enableUserService = true;
 

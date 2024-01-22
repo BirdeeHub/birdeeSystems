@@ -1,6 +1,8 @@
 { config, pkgs, lib, self, inputs, stateVersion, users, hostname, ... }: let
 in {
   imports = [
+    inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
     ./hardware-configuration.nix
   ];
   config = {
