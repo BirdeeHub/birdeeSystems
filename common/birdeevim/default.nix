@@ -190,7 +190,13 @@
   };
 
   packageDefinitions = {
-    minimal = { pkgs, ... }: {settings = { wrapRc = false; }; categories = {};};
+    minimalVim = { pkgs, ... }: {
+      settings = {
+        wrapRc = false;
+        aliases = [ ];
+      };
+      categories = {};
+    };
     birdeeVim = { pkgs, ... }@misc: {
       settings = {
         wrapRc = true;
