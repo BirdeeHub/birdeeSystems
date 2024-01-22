@@ -65,6 +65,7 @@
         '') }";
       extraSessionCommands = cfg.extraSessionCommands;
     };
+
     environment.systemPackages = (let
       dmenu = pkgs.writeShellScriptBin "dmenu_run" (/* bash */''
         dmenu() {
