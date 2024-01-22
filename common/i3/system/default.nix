@@ -74,7 +74,7 @@
           ${pkgs.dmenu}/bin/dmenu_path "$@"
         }
         TERMINAL=alacritty
-      '' + (builtins.readFile ../dmenu_recency.sh));
+      '' + (builtins.readFile ../misc/dmenu_recency.sh));
       dmenuclr_recent = ''${pkgs.writeShellScriptBin "dmenuclr_recent" (/*bash*/''
         cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
         cache="$cachedir/dmenu_recent"

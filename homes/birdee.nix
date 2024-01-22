@@ -7,6 +7,7 @@ in {
     shell.fish
     firefox
     birdeeVim.module
+    ranger
     thunar
     overlays
   ];
@@ -28,8 +29,10 @@ in {
     firefox.enable = true;
     thunar = {
       enable = true;
-      plugins = [];
       enableCustomActions = true;
+    };
+    ranger = {
+      enable = true;
     };
   };
 
