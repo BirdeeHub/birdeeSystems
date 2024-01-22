@@ -26,6 +26,7 @@ in {
     packageDefinitions = birdeeVim.packageDefinitions;
   };
   i3 = systemOnly ./i3/system;
+  lightdm = systemOnly ./lightdm;
   term = {
     alacritty = if homeModule
       then ./term/alacritty/home-alacritty.nix

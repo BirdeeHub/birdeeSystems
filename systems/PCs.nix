@@ -12,6 +12,7 @@ in {
     shell.zsh
     shell.fish
     overlays
+    lightdm
   ];
 
   birdeeVim = {
@@ -26,6 +27,7 @@ in {
     bash.enable = true;
     fish.enable = true;
     alacritty.enable = true;
+    lightdm.enable = true;
   };
   services.flatpak.enable = true;
 
@@ -143,7 +145,7 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = let
+  environment.systemPackages = (let
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -158,7 +160,7 @@ in {
     xsel
     git
     ntfs3g
-  ];
+  ]);
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
