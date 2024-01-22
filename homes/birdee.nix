@@ -7,6 +7,7 @@ in {
     shell.fish
     firefox
     birdeeVim.module
+    thunar
     overlays
   ];
   # Home Manager needs a bit of information about you and the paths it should
@@ -25,6 +26,11 @@ in {
     fish.enable = true;
     alacritty.enable = true;
     firefox.enable = true;
+    thunar = {
+      enable = true;
+      plugins = [];
+      enableCustomActions = true;
+    };
   };
 
 
@@ -105,7 +111,6 @@ in {
     jdk
     gradle
     kotlin
-    xfce.thunar
     kotlin-native
     peek
     go

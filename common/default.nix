@@ -12,6 +12,7 @@
     );
 in {
   firefox = homeOnly ./firefox/homeFox.nix;
+  thunar = homeOnly ./thunar;
   birdeeVim = {
     module= if homeModule
       then birdeeVim.homeModule

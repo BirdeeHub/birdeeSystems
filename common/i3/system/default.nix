@@ -133,7 +133,6 @@
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk ];
     xdg.portal.config.common.default = "*";
 
-    programs.thunar.enable = true;
     programs.xfconf.enable = true;
 
     services.dbus.enable = true;
