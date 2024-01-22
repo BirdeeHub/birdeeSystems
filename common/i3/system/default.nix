@@ -75,6 +75,11 @@
         }
         TERMINAL=alacritty
       '' + (builtins.readFile ../dmenu_recency.sh));
+      dmenuclr_recent = ''${pkgs.writeShellScriptBin "dmenuclr_recent" (/*bash*/''
+        cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
+        cache="$cachedir/dmenu_recent"
+        rm $cache
+      '')}'';
       i3status = (pkgs.writeShellScriptBin "i3status" ''
         exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ../i3bar)} "$@"
       '');
@@ -88,6 +93,7 @@
       xss-lock
       libnotify
       dmenu #application launcher most people use
+      dmenuclr_recent
       pa_applet
       pavucontrol
       networkmanagerapplet
