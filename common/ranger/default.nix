@@ -11,6 +11,7 @@
     cfg = config.birdeeMods.ranger;
     ranger_commands = [
       ''map <C-Y> shell ${pkgs.xdragon}/bin/dragon -a -x %p''
+      ''set mouse_enabled!''
     ];
     reformattedCommands = builtins.map (item: ''--cmd="${item}"'') ranger_commands;
     cattedCommands = builtins.concatStringsSep " " reformattedCommands;
