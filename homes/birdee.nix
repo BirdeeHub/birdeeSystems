@@ -105,7 +105,7 @@ in {
     jdk
     gradle
     kotlin
-    # xfce.thunar
+    xfce.thunar
     kotlin-native
     peek
     go
