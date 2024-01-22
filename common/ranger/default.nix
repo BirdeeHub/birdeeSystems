@@ -9,9 +9,14 @@
     # I am only just learning how to use ranger for the first time.
   config = lib.mkIf config.birdeeMods.ranger.enable (let
     cfg = config.birdeeMods.ranger;
+    ranger_commands = [
+      ''map <C-Y> shell ${pkgs.xdragon}/bin/dragon -a -x %p''
+    ];
+    reformattedCommands = builtins.map (item: ''--cmd="${item}"'') ranger_commands;
+    cattedCommands = builtins.concatStringsSep " " reformattedCommands;
     ranger = pkgs.writeShellScriptBin "ranger" (let
     in ''
-      ${pkgs.ranger}/bin/ranger --cmd="map <C-Y> shell ${pkgs.xdragon}/bin/dragon -a -x %p" "$@"
+      ${pkgs.ranger}/bin/ranger ${cattedCommands} "$@"
     '');
   in {
     home.packages = with pkgs; [
