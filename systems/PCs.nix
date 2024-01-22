@@ -34,7 +34,7 @@ in {
   services.clamav.daemon.enable = true;
   services.clamav.updater.enable = true;
   services.clamav.updater.interval = "weekly";
-  systemd.services.clamav-freshclam.wants = [ "network-online.target" ];
+
   environment.variables = {
   };
   environment.interactiveShellInit = ''
