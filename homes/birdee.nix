@@ -130,6 +130,7 @@ in {
     nix-search-cli
     fastfetch
     lolcat
+    nurl
     nix-prefetch
     wget
     gimp
