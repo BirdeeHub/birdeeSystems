@@ -12,6 +12,12 @@
       i3blocks = {
         enable = lib.mkEnableOption "swap i3status for i3blocks";
       };
+      dmenu = {
+          terminalStr = lib.mkOption {
+            default = ''alacritty'';
+            type = str;
+          };
+      };
       extraSessionCommands = lib.mkOption {
         default = ''
           ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
@@ -74,7 +80,7 @@
         dmenu_path() {
           ${pkgs.dmenu}/bin/dmenu_path "$@"
         }
-        TERMINAL=alacritty
+        TERMINAL=${cfg.dmenu.terminalStr}
       '' + (builtins.readFile ../misc/dmenu_recency.sh));
       dmenuclr_recent = ''${pkgs.writeShellScriptBin "dmenuclr_recent" (/*bash*/''
         cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
