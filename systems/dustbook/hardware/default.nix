@@ -1,4 +1,4 @@
-{ config, pkgs, self, inputs, stateVersion, users, hostname, ... }: let
+{ config, pkgs, lib, self, inputs, stateVersion, users, hostname, ... }: let
 in {
   imports = [
     ./hardware-configuration.nix
@@ -23,5 +23,11 @@ in {
 
     environment.systemPackages = [ pkgs.glxinfo pkgs.pciutils pkgs.mesa ];
     virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
+
+    boot.kernelParams = [
+      "hid_apple.iso_layout=0"
+    ];
+
+    services.mbpfan.enable = lib.mkDefault true;
   };
 }
