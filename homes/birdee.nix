@@ -97,7 +97,7 @@ in {
     xfce.ristretto
     qbittorrent
     galculator
-    lxappearance
+    # lxappearance
     qalculate-qt
     signal-desktop
     bitwarden-cli
