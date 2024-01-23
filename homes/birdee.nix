@@ -115,6 +115,7 @@ in {
     gradle
     kotlin
     kotlin-native
+    docker-compose
     peek
     go
     _7zz
