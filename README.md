@@ -36,4 +36,4 @@ so also, TODO: notes specific nvim setup
 - file manager: ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
 - terminal alacritty
 - zsh
-- shell theme oh-my-posh, a mashup of emodipt-extend and atomic
+- shell themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
