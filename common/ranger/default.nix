@@ -11,6 +11,7 @@
     cfg = config.birdeeMods.ranger;
     ranger_commands = [
       ''map <C-Y> shell ${pkgs.xdragon}/bin/dragon -a -x %p''
+      ''map y<C-Y> shell ${pkgs.xdragon}/bin/dragon --all-compact -x %p''
       ''set mouse_enabled!''
       ''map ps shell echo "$(xclip -o) ." | xargs cp -r''
     ];
