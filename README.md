@@ -12,6 +12,7 @@ set up disko and nixos-anywhere or other provisioning solutions that I may find 
 
 set up secure rdp config for desktop from remote machines
 
+move as much as I can from i3 system module to a home-manager module
 
 Currently have asus rog fx504gd set up
 
