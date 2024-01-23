@@ -19,12 +19,8 @@
           };
       };
       extraSessionCommands = lib.mkOption {
-        default = ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
-            Xft.dpi: 100
-          ''}
-        '';
-        type = str;
+        default = null;
+        type = nullOr str;
       };
     };
   };
@@ -69,7 +65,7 @@
           set $bootUpMonScript ${bootUpMonScript}
         '' + builtins.readFile ../config + ''
         '') }";
-      # extraSessionCommands = cfg.extraSessionCommands;
+      extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;
     };
 
     environment.systemPackages = (let
