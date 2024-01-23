@@ -7,7 +7,7 @@ in {
   ];
   config = {
     hardware.opengl.extraPackages = with pkgs; [
-      vaapiVdpau
+      vaapiVdpau libva
     ];
     nixpkgs.config.nvidia.acceptLicense = true;
     hardware.nvidia.modesetting.enable = true;
