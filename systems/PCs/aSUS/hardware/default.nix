@@ -8,7 +8,9 @@ in {
   config = {
     #Nouveau doesn't work at all on this model.
     boot.kernelParams = [ "nouveau.modeset=0" ];
-
+    hardware.opengl.extraPackages = with pkgs; [
+      vaapiVdpau
+    ];
     services.asusd.enable = true;
     services.asusd.enableUserService = true;
 
