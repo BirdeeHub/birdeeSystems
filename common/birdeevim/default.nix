@@ -91,7 +91,8 @@
       ];
       general = with pkgs.vimPlugins; {
         theme = builtins.getAttr categories.colorscheme { 
-          "onedark" = onedark-nvim;
+          # "onedark" = onedark-nvim;
+          "onedark" = pkgs.neovimPlugins.onedark;
           "catppuccin" = catppuccin-nvim;
           "catppuccin-mocha" = catppuccin-nvim;
           "tokyonight" = tokyonight-nvim;

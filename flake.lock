@@ -558,11 +558,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1705999002,
-        "narHash": "sha256-hQR2p60mECeDTM4XqY8py6+umjPWIY8gzqqDdw+5L+s=",
+        "lastModified": 1706003092,
+        "narHash": "sha256-5Y+2oH4cmHua0Y3dmBOhkAoRV3UxExFWBGbkfIQnVfw=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "1d21e45d0a555e48e3800dfae234c330361bfc08",
+        "rev": "dbda804cf36a64d698b1ef4df35ecabfa45442a6",
         "type": "github"
       },
       "original": {
@@ -642,6 +642,22 @@
         "type": "github"
       }
     },
+    "plugins-onedark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1705931596,
+        "narHash": "sha256-jjvZ2z93xd1Yng8g6+cdsXhLkm2lC7DSUHiFYC+Gg5k=",
+        "owner": "navarasu",
+        "repo": "onedark.nvim",
+        "rev": "14e5de43cf1ff761c280d1ff5b9980897f5b46c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "navarasu",
+        "repo": "onedark.nvim",
+        "type": "github"
+      }
+    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -676,6 +692,7 @@
         "nur": "nur",
         "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
+        "plugins-onedark": "plugins-onedark",
         "sg-nvim": "sg-nvim"
       }
     },

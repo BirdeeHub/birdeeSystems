@@ -31,6 +31,10 @@
     # };
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
+    "plugins-onedark" = {
+      url = "github:navarasu/onedark.nvim";
+      flake = false;
+    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
