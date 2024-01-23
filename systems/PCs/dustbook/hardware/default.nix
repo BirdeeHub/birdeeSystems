@@ -6,6 +6,11 @@ in {
     ./hardware-configuration.nix
   ];
   config = {
+    #Nouveau doesn't work at all on this model.
+
+    hardware.opengl.extraPackages = with pkgs; [
+      vaapiVdpau
+    ];
     nixpkgs.config.nvidia.acceptLicense = true;
     hardware.nvidia.modesetting.enable = true;
     services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
@@ -28,6 +33,7 @@ in {
 
     boot.kernelParams = [
       "hid_apple.iso_layout=0"
+      "nouveau.modeset=0"
     ];
 
     services.mbpfan.enable = lib.mkDefault true;
