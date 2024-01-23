@@ -1,4 +1,7 @@
+{ config, pkgs, inputs, self, ... }: let
+in (/*toml*/''
 # https://alacritty.org/config-alacritty.html
+
 [font]
 size = 11.0
 
@@ -17,3 +20,4 @@ style = "Italic"
 [font.normal]
 family = "FiraMono Nerd Font"
 style = "Regular"
+'')

@@ -1,4 +1,4 @@
-{homeModule ? false, inputs, pkgs, ... }: let
+{homeModule ? false, inputs, pkgs, ... }@args: let
   birdeeVim = import ./birdeevim { inherit inputs; };
   homeOnly = path:
     (if homeModule
@@ -29,14 +29,9 @@ in {
   i3 = systemOnly ./i3/system;
   lightdm = systemOnly ./lightdm;
   term = {
-    alacritty = if homeModule
-      then ./term/alacritty/home-alacritty.nix
-      else ./term/alacritty/system-alacritty.nix;
+    alacritty = import ./term/alacritty homeModule;
+    tmux = homeOnly ./term/tmux;
   };
-  shell = {
-    bash = if homeModule then ./shell/home/bash.nix else ./shell/nixOS/bash.nix;
-    zsh = if homeModule then ./shell/home/zsh.nix else ./shell/nixOS/zsh.nix;
-    fish = if homeModule then ./shell/home/fish.nix else ./shell/nixOS/fish.nix;
-  };
+  shell = import ./term/shell args;
   overlays = ./overlays;
 }

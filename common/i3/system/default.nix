@@ -34,28 +34,25 @@
       enable = true;
       updateSessionEnvironment = true;
       configFile = let
-        monMover = (pkgs.writeScript "monWkspcCycle.sh" (''
-          #!/usr/bin/env bash
+        monMover = (pkgs.writeShellScript "monWkspcCycle.sh" ''
           jq() {
             ${pkgs.jq}/bin/jq "$@"
           }
           xrandr() {
             ${pkgs.xorg.xrandr}/bin/xrandr "$@"
           }
-        '' + (builtins.readFile ../monWkspcCycle.sh) + ''
-        ''));
-        fehBG = (pkgs.writeScript "fehBG" ''
-          #!/bin/sh
-          exec ${pkgs.feh}/bin/feh --bg-scale ${../misc/rooftophang.png} "$@"
+          ${builtins.readFile ../monWkspcCycle.sh}
         '');
-        bootUpMonScript = pkgs.writeScript "bootUpMon.sh" (if cfg.bootUpMonScript != null then ''
-          #!/usr/bin/env bash
+        fehBG = (pkgs.writeShellScript "fehBG" ''
+          exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${../misc/rooftophang.png} "$@"
+        '');
+        bootUpMonScript = pkgs.writeShellScript "bootUpMon.sh"
+        (if cfg.bootUpMonScript != null then ''
           xrandr() {
             ${pkgs.xorg.xrandr}/bin/xrandr "$@"
           }
         '' + (builtins.readFile cfg.bootUpMonScript)
         else ''
-          #!/usr/bin/env bash
           ${pkgs.xorg.xrandr}/bin/xrandr --auto
         '');
       in "${ pkgs.writeText "config" (''
@@ -86,8 +83,7 @@
       i3status = (pkgs.writeShellScriptBin "i3status" ''
         exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ../i3bar)} "$@"
       '');
-      i3lock = (pkgs.writeScriptBin "i3lock" ''
-        #!/bin/sh
+      i3lock = (pkgs.writeShellScriptBin "i3lock" ''
         exec ${pkgs.i3lock}/bin/i3lock -t -i ${../misc/DogAteHomework.png} "$@"
       '');
     in
@@ -97,6 +93,7 @@
       libnotify
       dmenu #application launcher most people use
       dmenuclr_recent
+      xorg.libXinerama
       pa_applet
       pavucontrol
       networkmanagerapplet

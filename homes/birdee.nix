@@ -2,6 +2,7 @@
 in {
   imports = with home-modules; [
     term.alacritty
+    term.tmux
     shell.bash
     shell.zsh
     shell.fish
