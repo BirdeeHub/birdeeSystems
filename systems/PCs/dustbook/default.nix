@@ -11,7 +11,7 @@ in {
 
   birdeeMods = {
     i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
-    i3.extraSessionCommands = ''
+    lightdm.SessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
         Xft.dpi: 80
       ''}
