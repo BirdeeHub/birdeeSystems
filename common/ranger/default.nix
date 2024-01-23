@@ -12,8 +12,9 @@
     ranger_commands = [
       ''map <C-Y> shell ${pkgs.xdragon}/bin/dragon -a -x %p''
       ''set mouse_enabled!''
+      ''map ps shell echo "$(xclip -o) ." | xargs cp -r''
     ];
-    reformattedCommands = builtins.map (item: ''--cmd="${item}"'') ranger_commands;
+    reformattedCommands = builtins.map (item: "--cmd='${item}'") ranger_commands;
     cattedCommands = builtins.concatStringsSep " " reformattedCommands;
     ranger = pkgs.writeShellScriptBin "ranger" (let
     in ''
@@ -21,6 +22,9 @@
     '');
   in {
     home.packages = with pkgs; [
+      xsel
+      xclip
+      findutils
       ranger
     ];
   });

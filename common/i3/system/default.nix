@@ -69,7 +69,7 @@
           set $bootUpMonScript ${bootUpMonScript}
         '' + builtins.readFile ../config + ''
         '') }";
-      extraSessionCommands = cfg.extraSessionCommands;
+      # extraSessionCommands = cfg.extraSessionCommands;
     };
 
     environment.systemPackages = (let
