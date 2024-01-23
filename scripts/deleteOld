@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+which home-manager ||\
+nix shell home-manager
+
+home-manager expire-generations "$(date +%F)"
+nix-env --delete-generations old

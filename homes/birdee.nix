@@ -27,10 +27,7 @@ in {
     fish.enable = true;
     alacritty.enable = true;
     firefox.enable = true;
-    thunar = {
-      enable = true;
-      enableCustomActions = true;
-    };
+    thunar.enable = true;
     ranger = {
       enable = true;
     };

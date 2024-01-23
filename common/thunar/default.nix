@@ -9,7 +9,10 @@
         description = lib.mdDoc "List of thunar plugins to install.";
         example = lib.literalExpression "with pkgs.xfce; [ thunar-archive-plugin thunar-volman ]";
       };
-      enableCustomActions = lib.mkEnableOption "birdee's thunar custom actions";
+      enableCustomActions = lib.mkOption {
+        default = true;
+        type = lib.types.bool;
+      };
     };
   };
   config = lib.mkIf config.birdeeMods.thunar.enable (let
