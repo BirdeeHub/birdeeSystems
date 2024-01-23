@@ -6,8 +6,6 @@ in {
     ./hardware-configuration.nix
   ];
   config = {
-    #Nouveau doesn't work at all on this model.
-
     hardware.opengl.extraPackages = with pkgs; [
       vaapiVdpau
     ];
