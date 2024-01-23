@@ -7,6 +7,7 @@
   config = lib.mkIf config.birdeeMods.ranger.enable (let
     cfg = config.birdeeMods.ranger;
     ranger = pkgs.stdenv.mkDerivation (let
+      rifle = ''${pkgs.ranger}/bin/rifle'';
       ranger_commands = pkgs.writeText "nixRangerRC.conf" (let
         dragon = ''${pkgs.xdragon}/bin/dragon'';
       in ''
@@ -38,6 +39,7 @@
         mkdir -p $out/bin
         mkdir -p $out/share/applications
         cp ${rangerBinScript} $out/bin/ranger
+        cp ${rifle} $out/bin/rifle
         cp ${ranger_desktop} $out/share/applications/ranger.desktop
       '');
     });
