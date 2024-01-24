@@ -1,3 +1,4 @@
+isHomeModule:
 { config, pkgs, inputs, self, ... }: let
 in (/*toml*/''
 # https://alacritty.org/config-alacritty.html

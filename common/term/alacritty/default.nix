@@ -1,5 +1,5 @@
 isHomeModule:
-{config, pkgs, self, inputs, lib, ... }: let
+{config, pkgs, self, inputs, lib, ... }@args: let
 in {
   options = {
     birdeeMods.alacritty = with lib.types; {
@@ -13,7 +13,7 @@ in {
   config = lib.mkIf config.birdeeMods.alacritty.enable (let
     cfg = config.birdeeMods.alacritty;
     alacrittyToml = pkgs.writeText "alacritty.toml" (builtins.concatStringsSep "\n" [
-      (import ./alacritty.nix { inherit config inputs pkgs self;})
+      (import ./alacritty.nix isHomeModule args)
       cfg.extraToml
       ]);
     alakitty = pkgs.writeScriptBin "alacritty" ''
