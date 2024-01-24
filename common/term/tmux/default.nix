@@ -17,6 +17,8 @@
         set -g display-panes-colour default
         set -g default-terminal "alacritty"
         set -ga terminal-overrides ",alacritty:RGB"
+        set-option -g prefix C-Space
+        set-option -g prefix2 C-b
       '';
     };
   });
