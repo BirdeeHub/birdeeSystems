@@ -68,7 +68,8 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $termCMD
+bindsym $mod+Shift+Return exec $xtraTermCMD
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -82,12 +83,12 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # Start Applications
-# bindsym $mod+Ctrl+m exec alacritty -T 'alsamixer' -e 'alsamixer'
+# bindsym $mod+Ctrl+m exec $termCMD -T 'alsamixer' -e 'alsamixer'
 bindsym $mod+Shift+m exec blueman-manager
 bindsym $mod+m exec pavucontrol
 bindsym $mod+F1 exec bitwarden
 bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec alacritty -e ranger
+bindsym $mod+F3 exec $termCMD -e ranger
 bindsym $mod+F4 exec signal-desktop
 bindsym $mod+F5 exec spotify
 bindsym $mod+F6 exec discord
@@ -95,7 +96,7 @@ bindsym $mod+F7 exec gimp
 bindsym $mod+F8 exec galculator
 bindsym $mod+Shift+F8 exec qalculate-qt
 bindsym $mod+F9 exec slack
-bindsym $mod+F10 exec chromium
+bindsym $mod+F10 exec slack
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 # bindsym $mod+Shift+d --release exec "dunstctl close-all"
 bindsym Print --release exec --no-startup-id xfce4-screenshooter

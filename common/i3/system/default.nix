@@ -55,9 +55,13 @@
         else ''
           ${pkgs.xorg.xrandr}/bin/xrandr --auto
         '');
+        xtraTermCMD = ''alacritty -e tx'';
+        termCMD = ''alacritty'';
       in "${ pkgs.writeText "config" (''
           set $monMover ${monMover}
           set $fehBG ${fehBG}
+          set $termCMD ${termCMD}
+          set $xtraTermCMD ${xtraTermCMD}
           set $xrandr ${pkgs.xorg.xrandr}/bin/xrandr
           set $bootUpMonScript ${bootUpMonScript}
         '' + builtins.readFile ../config + ''

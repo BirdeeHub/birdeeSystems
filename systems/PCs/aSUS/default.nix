@@ -12,9 +12,6 @@ in {
   birdeeMods = {
     i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
     i3.xrandrMemoryi3.enable = true;
-    i3.xrandrMemoryi3.enableFor = (builtins.attrNames users.users);
-    i3.xrandrMemoryi3.xrandrScriptByOutput = ./mon/configXrandrByOutput.sh;
-    i3.xrandrMemoryi3.primaryXrandrScript = ./mon/configPrimaryDisplay.sh;
   };
 
   environment.shellAliases = {

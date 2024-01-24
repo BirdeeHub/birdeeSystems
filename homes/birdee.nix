@@ -11,6 +11,7 @@ in {
     ranger
     thunar
     overlays
+    i3
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -33,6 +34,9 @@ in {
     ranger = {
       enable = true;
     };
+    i3.xrandrMemoryi3.enable = true;
+    i3.xrandrMemoryi3.xrandrScriptByOutput = ../systems/PCs/aSUS/mon/configXrandrByOutput.sh;
+    i3.xrandrMemoryi3.primaryXrandrScript = ../systems/PCs/aSUS/mon/configPrimaryDisplay.sh;
   };
 
 
