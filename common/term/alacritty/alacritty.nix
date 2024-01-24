@@ -1,6 +1,8 @@
 { config, pkgs, inputs, self, ... }: let
 in (/*toml*/''
 # https://alacritty.org/config-alacritty.html
+# [env]
+# TERM = "xterm-256color"
 
 [font]
 size = 11.0

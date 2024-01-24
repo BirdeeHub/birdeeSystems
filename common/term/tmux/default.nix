@@ -13,10 +13,11 @@
   in {
     programs.tmux = {
       enable = true;
-      terminal = "tmux-256color";
-    };
-    home.sessionVariables = {
-      TERM = "tmux-256color";
+      extraConfig = ''
+        set -g display-panes-colour default
+        set -g default-terminal "alacritty"
+        set -ga terminal-overrides ",alacritty:RGB"
+      '';
     };
   });
 }

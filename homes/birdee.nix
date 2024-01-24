@@ -27,6 +27,7 @@ in {
     bash.enable = true;
     fish.enable = true;
     alacritty.enable = true;
+    tmux.enable = true;
     firefox.enable = true;
     thunar.enable = true;
     ranger = {
