@@ -1,7 +1,6 @@
 {config, pkgs, inputs, lib, self, ... }: {
   options = {
     birdeeMods.fish.enable = lib.mkEnableOption "birdeeFish";
-    birdeeMods.fish.enableTMUX = lib.mkEnableOption "fish starts in TMUX";
   };
   config = lib.mkIf config.birdeeMods.fish.enable (let
     cfg = config.birdeeMods.fish;
@@ -10,10 +9,7 @@
       enable = true;
       promptInit = ''
         ${pkgs.oh-my-posh}/bin/oh-my-posh init fish --config ${../atomic-emodipt.omp.json} | source
-      '' + (if cfg.enableTMUX then ''
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session -t 0 && tmux attach
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session -t 0 || tmux new
-      '' else "");
+      '';
     };
   });
 }

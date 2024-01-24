@@ -23,9 +23,18 @@ in {
     packageNames = [ "birdeeVim" "notesVim" ];
   };
   birdeeMods = {
-    zsh.enable = true;
-    bash.enable = true;
-    fish.enable = true;
+    zsh = {
+      enable = true;
+      TMUXdefault = true;
+    };
+    bash = {
+      enable = true;
+      TMUXdefault = true;
+    };
+    fish = {
+      enable = true;
+      TMUXdefault = true;
+    };
     alacritty.enable = true;
     tmux.enable = true;
     firefox.enable = true;

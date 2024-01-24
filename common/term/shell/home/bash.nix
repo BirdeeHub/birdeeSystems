@@ -2,10 +2,10 @@
 {
   options = {
     birdeeMods.bash.enable = lib.mkEnableOption "birdeeBash";
-    birdeeMods.bash.enableTMUX = lib.mkOption {
+    birdeeMods.bash.TMUXdefault = lib.mkOption {
       description = "bash starts in TMUX";
       type = lib.types.bool;
-      default = true;
+      default = false;
     };
   };
   config = lib.mkIf config.birdeeMods.bash.enable (let
@@ -14,9 +14,8 @@
     programs.bash = {
       initExtra = ''
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init bash --config ${../atomic-emodipt.omp.json})"
-      '' + (if cfg.enableTMUX then ''
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session -t 0 && tmux attach
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session -t 0 || tmux new
+      '' + (if cfg.TMUXdefault then ''
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux new-session -A 0
       '' else "");
     };
   });
