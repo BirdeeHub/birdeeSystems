@@ -27,8 +27,10 @@
         set -ga terminal-overrides ",alacritty:RGB"
         set-option -g prefix C-Space
         set-option -g prefix2 C-b
-        # Remap C-Space l to C-Space P
+        # Remap prefix l to prefix P
         bind-key P last-window
+        # todo rebind movement and resize and the like to be more vim
+        # the rest can stay pretty default I think
       '';
     };
     home.shellAliases = {
