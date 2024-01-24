@@ -14,8 +14,6 @@
       promptInit = ''
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init bash --config ${../atomic-emodipt.omp.json})"
       '' + (if cfg.enableTMUX then ''
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session &> /dev/null && exec tmux attach
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session &> /dev/null || exec tmux
       '' else "");
     };
   });
