@@ -28,6 +28,8 @@
         # End of lines configured by zsh-newuser-install
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
       '' + (if cfg.enableTMUX then ''
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session && exec tmux attach
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session || exec tmux
       '' else "");
     };
   });
