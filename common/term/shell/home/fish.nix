@@ -2,11 +2,6 @@
 {
   options = {
     birdeeMods.fish.enable = lib.mkEnableOption "birdeeFish";
-    birdeeMods.fish.TMUXdefault = lib.mkOption {
-      description = "fish starts in TMUX";
-      type = lib.types.bool;
-      default = false;
-    };
   };
   config = lib.mkIf config.birdeeMods.fish.enable (let
     cfg = config.birdeeMods.fish;
@@ -14,10 +9,9 @@
     programs.fish = {
       enable = true;
       interactiveShellInit = ''
+        fish_vi_key_bindings
         ${pkgs.oh-my-posh}/bin/oh-my-posh init fish --config ${../atomic-emodipt.omp.json} | source
-      '' + (if cfg.TMUXdefault then ''
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux new-session -A 0
-      '' else "");
+      '';
     };
   });
 }

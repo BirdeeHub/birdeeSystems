@@ -7,6 +7,9 @@
   in {
     programs.fish = {
       enable = true;
+      interactiveShellInit = ''
+        fish_vi_key_bindings
+      '';
       promptInit = ''
         ${pkgs.oh-my-posh}/bin/oh-my-posh init fish --config ${../atomic-emodipt.omp.json} | source
       '';

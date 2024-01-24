@@ -27,6 +27,8 @@
         set -ga terminal-overrides ",alacritty:RGB"
         set-option -g prefix C-Space
         set-option -g prefix2 C-b
+        # Remap C-Space l to C-Space P
+        bind-key P last-window
       '';
     };
     home.shellAliases = {
