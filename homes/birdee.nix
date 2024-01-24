@@ -25,15 +25,15 @@ in {
   birdeeMods = {
     zsh = {
       enable = true;
-      TMUXdefault = true;
+      TMUXdefault = false;
     };
     bash = {
       enable = true;
-      TMUXdefault = true;
+      TMUXdefault = false;
     };
     fish = {
       enable = true;
-      TMUXdefault = true;
+      TMUXdefault = false;
     };
     alacritty.enable = true;
     tmux.enable = true;
