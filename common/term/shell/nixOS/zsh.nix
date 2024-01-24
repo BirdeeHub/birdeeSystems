@@ -28,11 +28,8 @@
         bindkey -v
         # End of lines configured by zsh-newuser-install
       '' + (if cfg.enableTMUX then ''
-        [ -z "$TMUX" ] && which tmux &> /dev/null && if [ $(tmux has-sessions &> /dev/null) ]; then
-          exec tmux attach
-        else
-          exec tmux
-        fi
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session &> /dev/null && exec tmux attach
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session &> /dev/null || exec tmux
       '' else "");
       promptInit = ''
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
