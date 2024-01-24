@@ -11,8 +11,8 @@
       promptInit = ''
         ${pkgs.oh-my-posh}/bin/oh-my-posh init fish --config ${../atomic-emodipt.omp.json} | source
       '' + (if cfg.enableTMUX then ''
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session && exec tmux attach
-        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session || exec tmux
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session -t 0 && tmux attach
+        [ -z "$TMUX" ] && which tmux &> /dev/null && tmux has-session -t 0 || tmux new
       '' else "");
     };
   });
