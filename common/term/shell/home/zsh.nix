@@ -2,8 +2,15 @@
 {
   options = {
     birdeeMods.zsh.enable = lib.mkEnableOption "birdeeZsh";
+    birdeeMods.zsh.enableTMUX = lib.mkOption {
+      description = "zsh starts in TMUX";
+      type = lib.types.bool;
+      default = true;
+    };
   };
-  config = lib.mkIf config.birdeeMods.zsh.enable {
+  config = lib.mkIf config.birdeeMods.zsh.enable (let
+    cfg = config.birdeeMods.zsh;
+  in {
     programs.zsh = {
       shellAliases = {};
       enable = true;
@@ -20,7 +27,9 @@
         bindkey -v
         # End of lines configured by zsh-newuser-install
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
-      '';
+      '' + (if cfg.enableTMUX then ''
+        [ -z "$TMUX" ] && which tmux &> /dev/null && exec tmux
+      '' else "");
     };
-  };
+  });
 }

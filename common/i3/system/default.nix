@@ -93,7 +93,6 @@
       libnotify
       dmenu #application launcher most people use
       dmenuclr_recent
-      xorg.libXinerama
       pa_applet
       pavucontrol
       networkmanagerapplet
@@ -114,6 +113,7 @@
       xfce4-taskmanager
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
+      # xorg.libXinerama
       # dex
       # hicolor-icon-theme
       # tango-icon-theme
