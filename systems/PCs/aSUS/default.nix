@@ -10,8 +10,6 @@ in {
   ];
 
   birdeeMods = {
-    i3.bootUpMonScript = ./mon/bootUpMonitorScript.sh;
-    i3.xrandrMemoryi3.enable = true;
   };
 
   environment.shellAliases = {

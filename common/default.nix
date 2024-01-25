@@ -27,6 +27,7 @@ in {
     packageDefinitions = birdeeVim.packageDefinitions;
   };
   i3 = if homeModule then ./i3/home else ./i3/system;
+  i3MonMemory = import ./i3MonMemory homeModule;
   lightdm = systemOnly ./lightdm;
   term = {
     alacritty = import ./term/alacritty homeModule;

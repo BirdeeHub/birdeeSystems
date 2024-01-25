@@ -13,6 +13,7 @@ in {
     shell.fish
     overlays
     lightdm
+    i3MonMemory
   ];
 
   birdeeVim = {
@@ -28,6 +29,7 @@ in {
     fish.enable = true;
     alacritty.enable = true;
     lightdm.enable = true;
+    i3MonMemory.enable = true;
   };
   services.flatpak.enable = true;
 
