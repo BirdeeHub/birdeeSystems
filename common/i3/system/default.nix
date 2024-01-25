@@ -37,7 +37,7 @@
         fehBG = (pkgs.writeShellScript "fehBG" ''
           exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${../misc/rooftophang.png} "$@"
         '');
-        xtraTermCMD = ''alacritty -e ${pkgs.bash}/bin/bash tx'';
+        xtraTermCMD = ''alacritty -e tx'';
         termCMD = ''alacritty'';
       in "${ pkgs.writeText "config" (''
           set $monMover ${monMover}

@@ -10,7 +10,7 @@
     };
   };
   config = lib.mkIf config.birdeeMods.tmux.enable (let
-    tmuxLaunchScript = pkgs.writeShellScript "tmuxAlias1" (/*bash*/''
+    tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
       if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
         selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
         tmux new-session -At $selected_session
@@ -34,8 +34,8 @@
         setw -g mode-keys vi
       '';
     };
-    home.shellAliases = {
-      tx = "${tmuxLaunchScript}";
-    };
+    home.packages = [
+      tx
+    ];
   });
 }
