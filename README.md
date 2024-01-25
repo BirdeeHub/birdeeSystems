@@ -4,9 +4,9 @@ TODO:
 
 get nvidia card working on macbook pro 9,1 (2012 macbook 3rd gen i7 and intel+nvidia gt 650M mac edition gpus)
 
-make auto monitor adjustment script fired from udev not glitch out with multiple users
+find clean way of importing xrandr scripts through home manager for the correct machine on single user
 
-set up tmux
+finish learning to set up tmux
 
 figure out secret management
 
