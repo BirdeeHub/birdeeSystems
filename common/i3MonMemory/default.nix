@@ -121,7 +121,7 @@ home-manager:
         Restart = "always";
       };
 
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = [ "graphical-session.target" "default.target" ];
     };
     systemd.user.services.i3xrandrBootUp = {
       Unit = {
@@ -132,9 +132,10 @@ home-manager:
       Service = {
         Type = "oneshot";
         ExecStart = "${XmonBootSH}";
+        # Restart = "on-failure";
       };
 
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = [ "graphical-session.target" "default.target" ];
     };
   }
   else {
