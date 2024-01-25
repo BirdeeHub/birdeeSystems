@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
+IFS='@' read -ra parts <<< "$1"
+hostname="${parts[1]}"
 
 which home-manager ||\
 nix shell home-manager
 
 git add . &&\
-sudo nixos-rebuild switch --show-trace --flake .#$1 &&\
-nix shell -c home-manager switch --show-trace --flake .#$2 &&\
+sudo nixos-rebuild switch --show-trace --flake .#$hostname &&\
+nix shell -c home-manager switch --show-trace --flake .#$1 &&\
 git add .
