@@ -44,7 +44,6 @@
           set $fehBG ${fehBG}
           set $termCMD ${termCMD}
           set $xtraTermCMD ${xtraTermCMD}
-          set $xrandr ${pkgs.xorg.xrandr}/bin/xrandr
         '' + builtins.readFile ../config + ''
         '') }";
       extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;

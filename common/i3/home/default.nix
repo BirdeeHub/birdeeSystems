@@ -20,13 +20,9 @@
   config = lib.mkIf config.birdeeMods.i3.enable (let
     cfg = config.birdeeMods.i3;
   in {
-    # xsession.initExtra = /*bash*/''
-    #   systemctl --user import-environment PATH DISPLAY XAUTHORITY DESKTOP_SESSION XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_RUNTIME_DIR XDG_SESSION_ID DBUS_SESSION_BUS_ADDRESS || true
-    #   dbus-update-activation-environment --systemd --all || true
-    # '';
-    # xsession.initExtra = ''
-    #   ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
-    # '';
+    xsession.initExtra = ''
+      ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all || true
+    '';
     xsession.windowManager.i3 = {
       enable = true;
       extraConfig = (let
@@ -42,14 +38,13 @@
         fehBG = (pkgs.writeShellScript "fehBG" ''
           exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${../misc/rooftophang.png} "$@"
         '');
-        xtraTermCMD = ''alacritty --hold -e ${pkgs.bash}/bin/bash -c tx'';
+        xtraTermCMD = ''alacritty -e tx'';
         termCMD = ''alacritty'';
       in ''
         set $monMover ${monMover}
         set $fehBG ${fehBG}
         set $termCMD ${termCMD}
         set $xtraTermCMD ${xtraTermCMD}
-        set $xrandr ${pkgs.xorg.xrandr}/bin/xrandr
       '');
     };
 
