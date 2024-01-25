@@ -31,6 +31,7 @@
         bind-key P last-window
         # todo rebind movement and resize and the like to be more vim
         # the rest can stay pretty default I think
+        setw -g mode-keys vi
       '';
     };
     home.shellAliases = {

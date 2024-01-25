@@ -37,7 +37,7 @@ in {
     };
     # i3.enable = true;
     i3MonMemory.enable = true;
-    i3MonMemory.monitorScriptDir = ./. + "/monitors_by_hostname/${builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname)}/mon";
+    i3MonMemory.monitorScriptDir = ./monitors_by_hostname/nestOS;
   };
 
 
@@ -136,6 +136,7 @@ in {
     # wine64
     python3
     distrobox
+    lazygit
     nix-search-cli
     fastfetch
     lolcat
