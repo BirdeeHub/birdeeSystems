@@ -4,8 +4,6 @@ TODO:
 
 get nvidia card working on macbook pro 9,1 (2012 macbook 3rd gen i7 and intel+nvidia gt 650M mac edition gpus)
 
-find clean way of importing xrandr scripts through home manager for the correct machine on single user
-
 finish learning to set up tmux
 
 figure out secret management
@@ -28,7 +26,6 @@ so also, TODO: notes specific nvim setup
 
 ---
 
-- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim/tree/nixCats-5.0.0)
 - display manager: lightdm
 - window manager: i3
 - desktop manager: none but I have like half of xfce including the power manager
@@ -37,3 +34,25 @@ so also, TODO: notes specific nvim setup
 - terminal alacritty
 - zsh
 - shell themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
+
+---
+If you check out nothing else from this repo, this link is the thing to click.
+
+It is a comprehensive format for importing your regular nvim configuration directly into nix.
+
+While still allowing you do have as many configs in 1 file, flake, or module as you want for all the cool direnv stuff.
+
+- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim/tree/nixCats-5.0.0)
+
+---
+
+- monitor management:
+    So I made this module for that at ./common/i3MonMemory
+
+    Its an expression that returns a module, true for home manager false for system.
+
+    System module has only an enable option.
+    It creates a udev rule that echoes $RANDOM to a temp file on monitor hotplug
+
+    Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces from whence they came when you plug the monitor back in.
+    

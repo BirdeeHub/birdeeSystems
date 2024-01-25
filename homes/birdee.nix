@@ -1,4 +1,4 @@
-{ config, pkgs, self, inputs, users, username, stateVersion, home-modules, ...  }@args: let
+{ config, pkgs, self, inputs, users, username, stateVersion, home-modules, monitorCFG, ...  }@args: let
 in {
   imports = with home-modules; [
     term.alacritty
@@ -37,7 +37,7 @@ in {
     };
     # i3.enable = true;
     i3MonMemory.enable = true;
-    i3MonMemory.monitorScriptDir = ./monitors_by_hostname/nestOS;
+    i3MonMemory.monitorScriptDir = monitorCFG;
   };
 
 

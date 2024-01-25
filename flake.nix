@@ -63,9 +63,21 @@
   in {
     packages = home-modules.birdeeVim.packages;
     homeConfigurations = {
-      "birdee" = home-manager.lib.homeManagerConfiguration {
+      "birdee@dustbook" = home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
           username = "birdee";
+          monitorCFG = ./homes/monitors_by_hostname/dustbook;
+          inherit stateVersion self system inputs users home-modules;
+        };
+        inherit pkgs;
+        modules = [
+          ./homes/birdee.nix
+        ];
+      };
+      "birdee@nestOS" = home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = {
+          username = "birdee";
+          monitorCFG = ./homes/monitors_by_hostname/nestOS;
           inherit stateVersion self system inputs users home-modules;
         };
         inherit pkgs;
