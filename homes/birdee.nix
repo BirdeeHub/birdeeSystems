@@ -35,8 +35,10 @@ in {
     ranger = {
       enable = true;
     };
+    # i3.enable = true;
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = ../systems/PCs/aSUS/mon;
+    # i3MonMemory.monitorScriptDir = ./. + "/../systems/PCs/${builtins.getEnv "hostname"}/mon";
   };
 
 
@@ -77,6 +79,10 @@ in {
     extraConfig = {
       XDG_MISC_DIR = "${config.home.homeDirectory}/Misc";
     };
+  };
+  xdg.mimeApps.defaultApplications = {
+    "inode/directory" = [ "ranger.desktop" ];
+    "application/pdf" = [ "firefox.desktop" "draw.desktop" "gimp.desktop" ];
   };
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -181,6 +187,9 @@ in {
 
   gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
   gtk.iconTheme.name = "BeautyLine";
+
+  programs.bash.enableVteIntegration = true;
+  programs.zsh.enableVteIntegration = true;
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {

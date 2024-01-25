@@ -23,6 +23,7 @@
   in {
     # Enable the X11 windowing system.
     services.xserver.enable = true;
+    services.xserver.desktopManager.xterm.enable = false;
 
     services.xserver.dpi = lib.mkIf (cfg.dpi != null) cfg.dpi;
 
@@ -38,5 +39,37 @@
       defaultSession = "none+i3";
       sessionCommands = lib.mkIf (cfg.sessionCommands != null) cfg.sessionCommands;
     };
+
+    qt.platformTheme = "gtk";
+
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = [
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.lxqt.xdg-desktop-portal-lxqt
+    ];
+    xdg.portal.config.common.default = "*";
+
+    programs.xfconf.enable = true;
+
+    services.dbus.enable = true;
+    services.xserver.updateDbusEnvironment = true;
+    services.xserver.gdk-pixbuf.modulePackages = [ pkgs.gdk-pixbuf pkgs.librsvg ];
+
+    programs.dconf.enable = true;
+    services.upower.enable = true;
+    services.udisks2.enable = true;
+    services.gnome.glib-networking.enable = true;
+    services.gvfs.enable = true;
+    services.tumbler.enable = true;
+    services.system-config-printer.enable = true;
+
+    environment.pathsToLink = [
+      "/share/xfce4"
+      "/lib/xfce4"
+      "/share/gtksourceview-3.0"
+      "/share/gtksourceview-4.0"
+    ];
+
   });
 }

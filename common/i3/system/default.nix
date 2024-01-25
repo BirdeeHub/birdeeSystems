@@ -4,13 +4,6 @@
   options = {
     birdeeMods.i3 = with lib.types; {
       enable = lib.mkEnableOption "birdee's i3 configuration";
-      bootUpMonScript = lib.mkOption {
-        default = null;
-        type = nullOr path;
-      };
-      i3blocks = {
-        enable = lib.mkEnableOption "swap i3status for i3blocks";
-      };
       dmenu = {
           terminalStr = lib.mkOption {
             default = ''alacritty'';
@@ -26,7 +19,6 @@
   config = lib.mkIf config.birdeeMods.i3.enable (let
     cfg = config.birdeeMods.i3;
   in {
-    services.xserver.desktopManager.xterm.enable = false;
 
       # Enable the i3 Desktop Environment.
     services.xserver.windowManager.i3 = {
@@ -45,16 +37,7 @@
         fehBG = (pkgs.writeShellScript "fehBG" ''
           exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${../misc/rooftophang.png} "$@"
         '');
-        bootUpMonScript = pkgs.writeShellScript "bootUpMon.sh"
-        (if cfg.bootUpMonScript != null then ''
-          xrandr() {
-            ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-          }
-        '' + (builtins.readFile cfg.bootUpMonScript)
-        else ''
-          ${pkgs.xorg.xrandr}/bin/xrandr --auto
-        '');
-        xtraTermCMD = ''alacritty -e tx'';
+        xtraTermCMD = ''alacritty -e ${pkgs.bash}/bin/bash tx'';
         termCMD = ''alacritty'';
       in "${ pkgs.writeText "config" (''
           set $monMover ${monMover}
@@ -62,7 +45,6 @@
           set $termCMD ${termCMD}
           set $xtraTermCMD ${xtraTermCMD}
           set $xrandr ${pkgs.xorg.xrandr}/bin/xrandr
-          set $bootUpMonScript ${bootUpMonScript}
         '' + builtins.readFile ../config + ''
         '') }";
       extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;
@@ -92,6 +74,7 @@
     in
     with pkgs; with pkgs.xfce; [
       i3lock #default i3 screen locker
+      i3status #default i3 status bar
       xss-lock
       libnotify
       dmenu #application launcher most people use
@@ -123,35 +106,7 @@
       # xfce4-icon-theme
       # gnome.gnome-themes-extra
       # gnome.adwaita-icon-theme
-    ] ++ (if cfg.i3blocks.enable == true then [ i3blocks ] else [ i3status ]));
-    qt.platformTheme = "gtk";
+    ]);
 
-    xdg.portal.enable = true;
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk ];
-    xdg.portal.config.common.default = "*";
-
-    programs.xfconf.enable = true;
-
-    services.dbus.enable = true;
-    services.xserver.updateDbusEnvironment = true;
-    services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg pkgs.gdk-pixbuf ];
-
-    programs.dconf.enable = true;
-    services.upower.enable = true;
-    services.udisks2.enable = true;
-    services.gnome.glib-networking.enable = true;
-    services.gvfs.enable = true;
-    services.tumbler.enable = true;
-    services.system-config-printer.enable = true;
-
-    programs.bash.vteIntegration = true;
-    programs.zsh.vteIntegration = true;
-
-    environment.pathsToLink = [
-      "/share/xfce4"
-      "/lib/xfce4"
-      "/share/gtksourceview-3.0"
-      "/share/gtksourceview-4.0"
-    ] ++ (if cfg.i3blocks.enable == true then [ "/libexec" ] else []);
   });
 }
