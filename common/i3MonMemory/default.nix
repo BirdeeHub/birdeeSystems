@@ -32,7 +32,7 @@ home-manager:
     } else {
       # the trigger mechanism requires root set up a udev rule.
       enable = lib.mkEnableOption (lib.literalExpression ''
-      prints "$RANDOM" to /tmp/${cfg.nameOfDir}/i3xrandrTriggerFile on udev rule trigger
+      prints "$RANDOM" to /tmp/i3monsMemory/i3xrandrTriggerFile on udev rule trigger
       '');
     };
   };
