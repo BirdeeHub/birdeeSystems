@@ -37,8 +37,7 @@ in {
     };
     # i3.enable = true;
     i3MonMemory.enable = true;
-    i3MonMemory.monitorScriptDir = ../systems/PCs/aSUS/mon;
-    # i3MonMemory.monitorScriptDir = ./. + "/../systems/PCs/${builtins.getEnv "hostname"}/mon";
+    i3MonMemory.monitorScriptDir = ./. + "/monitors_by_hostname/${builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname)}/mon";
   };
 
 
