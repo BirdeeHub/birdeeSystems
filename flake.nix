@@ -47,7 +47,7 @@
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
