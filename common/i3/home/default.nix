@@ -3,6 +3,7 @@
 
 # WORK IN PROGRESS
 # The goal is to move the entire thing into home manager if I can.
+# I think all this works but idk how to actually launch the session yet from home manager
 
   imports = [
   ];
