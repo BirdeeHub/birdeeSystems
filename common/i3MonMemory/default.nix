@@ -10,7 +10,7 @@ home-manager:
       };
       monitorScriptDir = lib.mkOption {
         default = null;
-        type = nullOr (oneOf [ str path ]);
+        type = nullOr path;
         description = (lib.literalExpression ''
           the absolute path to a directory containing 3 scripts
           which must be of specific names.
@@ -19,8 +19,7 @@ home-manager:
                   ┣━━ XmonBoot.sh
                   ┗━━ Xothers.sh
 
-          If you enter a path typed value and do not include all the scripts,
-          it will add default scripts.
+          If you do not include all the scripts, it will fill in default scripts.
 
           Items placed in $XDG_CONFIG_HOME/${cfg.nameOfDir}
           will override their nix provisioned counterparts with the same name.
@@ -32,7 +31,8 @@ home-manager:
     } else {
       # the trigger mechanism requires root set up a udev rule.
       enable = lib.mkEnableOption (lib.literalExpression ''
-      prints "$RANDOM" to /tmp/i3monsMemory/i3xrandrTriggerFile on udev rule trigger
+        echoes "$RANDOM" to /tmp/i3monsMemory/i3xrandrTriggerFile on udev rule trigger.
+        This serves as the trigger mechanism for the user level services.
       '');
     };
   };
