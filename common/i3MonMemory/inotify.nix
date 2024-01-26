@@ -24,7 +24,7 @@
         JSON_CACHE_PATH=/tmp/i3monsMemory/users/$USER/${nameOfDir}/userJsonCache.json
     ''+ (builtins.readFile ./i3autoXrandrMemory.sh));
 
-    i3notifyMon = (/*bash*/pkgs.writeShellScript "runi3xrandrMemory.sh" ''
+    i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''
         mkdir -p "$(dirname ${triggerFile})"
         ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(dirname ${triggerFile})" |
         while read -r directory events filename; do
