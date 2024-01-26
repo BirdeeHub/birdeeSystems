@@ -52,7 +52,7 @@ home-manager:
       + (if cfg.monitorScriptDir != null
           && builtins.pathExists ("${cfg.monitorScriptDir}/XmonBoot.sh")
         then builtins.readFile ("${cfg.monitorScriptDir}/XmonBoot.sh")
-        else builtins.readFile ./defaults/MonBoot.sh));
+        else builtins.readFile ./defaults/XmonBoot.sh));
 
     configXrandrByOutput = pkgs.writeShellScript "configXrandrByOutput.sh" (''
         xrandr() {
@@ -66,7 +66,7 @@ home-manager:
       + (if cfg.monitorScriptDir != null
           && builtins.pathExists ("${cfg.monitorScriptDir}/Xothers.sh")
         then builtins.readFile ("${cfg.monitorScriptDir}/Xothers.sh")
-        else builtins.readFile ./defaults/MonOthers.sh));
+        else builtins.readFile ./defaults/Xothers.sh));
 
     configPrimaryXrandr = pkgs.writeShellScript "configPrimaryDisplay.sh" (''
         xrandr() {
@@ -80,7 +80,7 @@ home-manager:
       + (if cfg.monitorScriptDir != null
           && builtins.pathExists ("${cfg.monitorScriptDir}/Xprimary.sh")
         then builtins.readFile ("${cfg.monitorScriptDir}/Xprimary.sh")
-        else builtins.readFile ./defaults/MonPrimary.sh));
+        else builtins.readFile ./defaults/Xprimary.sh));
 
     xrandrPrimarySH = if builtins.isString cfg.monitorScriptDir
       then "${cfg.monitorScriptDir}/Xprimary.sh"
@@ -132,7 +132,7 @@ home-manager:
       Service = {
         Type = "oneshot";
         ExecStart = "${XmonBootSH}";
-        # Restart = "on-failure";
+        Restart = "on-failure";
       };
 
       Install.WantedBy = [ "graphical-session.target" "default.target" ];
