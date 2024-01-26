@@ -33,6 +33,7 @@
         # the rest can stay pretty default I think
         setw -g mode-keys vi
       '';
+      plugins = [ pkgs.tmuxPlugins.onedark-theme ];
     };
     home.packages = [
       tx
