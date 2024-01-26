@@ -27,12 +27,13 @@
         set -ga terminal-overrides ",alacritty:RGB"
         set-option -g prefix C-Space
         set-option -g prefix2 C-b
-        # Remap prefix l to prefix P
+
         bind-key P last-window # -N "Select the previously current window"
         bind-key C-p switch-client -l # -N "Switch to the last client"
         set-window-option -g mode-keys vi
-        # todo rebind movement and resize and the like to be more vim
-        # the rest can stay pretty default I think
+        bind-key -T copy-mode-vi 'v' send -X begin-selection
+        bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+
         bind h select-pane -L # -N "Select pane to the left of the active pane"
         bind j select-pane -D # -N "Select pane below the active pane"
         bind k select-pane -U # -N "Select pane above the active pane"
