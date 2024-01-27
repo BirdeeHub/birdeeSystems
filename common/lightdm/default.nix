@@ -40,6 +40,12 @@
       sessionCommands = lib.mkIf (cfg.sessionCommands != null) cfg.sessionCommands;
     };
 
+    environment.systemPackages = [
+    ];
+
+    services.dbus.packages = [
+    ];
+
     qt.platformTheme = "gtk";
 
     xdg.portal.enable = true;

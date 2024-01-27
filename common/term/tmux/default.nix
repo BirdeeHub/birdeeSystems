@@ -19,8 +19,13 @@
       fi
     '');
   in {
+    home.packages = [
+      tx
+    ];
     programs.tmux = {
       enable = true;
+      disableConfirmationPrompt = true;
+      plugins = [ pkgs.tmuxPlugins.onedark-theme ];
       extraConfig = ''
         set -g display-panes-colour default
         set -g default-terminal "alacritty"
@@ -55,11 +60,6 @@
         bind -r M-l refresh-client -R 10 # -N "Move the visible part of the window right"
 
       '';
-      disableConfirmationPrompt = true;
-      plugins = [ pkgs.tmuxPlugins.onedark-theme ];
     };
-    home.packages = [
-      tx
-    ];
   });
 }
