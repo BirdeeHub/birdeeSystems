@@ -26,3 +26,12 @@
     };
   });
 }
+
+# function zle-line-init zle-keymap-select {
+#     export ZSH_COMMAND_MODE=$KEYMAP
+#     RPROMPT=%{$(tput cuu1)%}$KEYMAP
+#     zle reset-prompt
+# }
+#
+# zle -N zle-line-init
+# zle -N zle-keymap-select
