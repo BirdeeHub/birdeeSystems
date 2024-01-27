@@ -1,27 +1,27 @@
-{ pkgs, triggerFile, nameOfDir, xrandrPrimarySH, xrandrOthersSH, denyXDGoverride, ... }: let
+{ pkgs, triggerFile, userJsonCache, xrandrPrimarySH, xrandrOthersSH, ... }: let
+
+    dependencies = {
+      xrandr = pkgs.xorg.xrandr;
+      awk = pkgs.gawk;
+      jq = pkgs.jq;
+      i3-msg = pkgs.i3;
+      bash = pkgs.bash;
+    };
+    mkScriptAliases = with builtins; packageSet: concatStringsSep "\n" 
+      (attrValues (mapAttrs (name: value: ''
+          ${name}() {
+            ${value}/bin/${name} "$@"
+          }
+      '') packageSet));
 
     randrMemory = pkgs.writeScript "randrMemory.sh" (/*bash*/''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
-        bash() {
-            ${pkgs.bash}/bin/bash "$@"
-        }
-        jq() {
-            ${pkgs.jq}/bin/jq "$@"
-        }
-        xrandr() {
-            ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-        }
-        awk() {
-            ${pkgs.gawk}/bin/awk "$@"
-        }
-        i3-msg() {
-            ${pkgs.i3}/bin/i3-msg "$@"
-        }
+        ${mkScriptAliases dependencies}
         i3msgpath=${pkgs.i3}/bin/i3-msg
         XRANDR_NEWMON_CONFIG=${xrandrOthersSH}
         XRANDR_ALWAYSRUN_CONFIG=${xrandrPrimarySH}
         #the script makes and uses this .json file. set it to an appropriate dir
-        JSON_CACHE_PATH=/tmp/i3monsMemory/users/$USER/${nameOfDir}/userJsonCache.json
+        JSON_CACHE_PATH=${userJsonCache}/$USER/userJsonCache.json
     ''+ (builtins.readFile ./i3autoXrandrMemory.sh));
 
     i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''

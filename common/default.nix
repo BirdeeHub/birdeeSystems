@@ -35,4 +35,5 @@ in {
   };
   shell = import ./term/shell args;
   overlays = ./overlays;
+  util = import ./util {};
 }

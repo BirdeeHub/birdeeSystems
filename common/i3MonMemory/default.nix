@@ -1,5 +1,7 @@
 home-manager:
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: let
+  cfg = config.birdeeMods.i3MonMemory;
+in {
   options = {
     birdeeMods.i3MonMemory = with lib.types; if home-manager then {
       enable = lib.mkEnableOption "an auto-run workspace switcher on monitor hotplug";
@@ -15,8 +17,8 @@ home-manager:
           the absolute path to a directory containing 3 scripts
           which must be of specific names.
           i.e.
-          ${dir} ━┳━━ Xprimary.sh
-                  ┣━━ XmonBoot.sh
+          ${dir} ━┳━━ XmonBoot.sh
+                  ┣━━ Xprimary.sh
                   ┗━━ Xothers.sh
 
           If you do not include all the scripts, it will fill in default scripts.
@@ -28,6 +30,22 @@ home-manager:
         example = (lib.literalExpression ''monitorScriptDir = ${./monitorScripts}'');
       };
       denyXDGoverride = lib.mkEnableOption "dont override with scripts from $XDG_CONFIG_HOME";
+      internalDependencies = lib.mkOption {
+        default = {};
+        type = attrsOf package;
+        description = ''
+          packages to be made available to all user xrandr scripts but not to path
+          takes an attr set with programName = pkgs.programDerivation;
+          Can also take derivation string values.
+        '';
+        example = lib.literalExpression ''
+          cfg.internalDependencies = {
+            xrandr = pkgs.xorg.xrandr;
+            awk = pkgs.gawk;
+            jq = "${pkgs.jq}";
+          };
+        '';
+      };
     } else {
       # the trigger mechanism requires root set up a udev rule.
       enable = lib.mkEnableOption (lib.literalExpression ''
@@ -37,18 +55,23 @@ home-manager:
     };
   };
 
-  config = lib.mkIf config.birdeeMods.i3MonMemory.enable (let
-    cfg = config.birdeeMods.i3MonMemory;
-    ifXDG = if cfg.denyXDGoverride then "false &&" else "true &&";
+  config = lib.mkIf cfg.enable (let
+    dependencies = {
+      xrandr = pkgs.xorg.xrandr;
+      awk = pkgs.gawk;
+      jq = pkgs.jq;
+    } // cfg.internalDependencies;
+    mkScriptAliases = with builtins; packageSet: concatStringsSep "\n" 
+      (attrValues (mapAttrs (name: value: ''
+          ${name}() {
+            ${value}/bin/${name} "$@"
+          }
+      '') packageSet));
+    ifXDGthen = if cfg.denyXDGoverride then "false &&" else "true &&";
     mkUserXrandrScript = scriptName: (pkgs.writeShellScript "${scriptName}.sh" (''
-        xrandr() {
-          ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-        }
-        awk() {
-          ${pkgs.gawk}/bin/awk "$@"
-        }
+        ${mkScriptAliases dependencies}
         userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
-        ${ifXDG} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
+        ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
           exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh
         fi
       ''
@@ -63,11 +86,22 @@ home-manager:
 
     XmonBootSH = mkUserXrandrScript "XmonBoot";
 
+    # I could expose this as an option at some point idk.
+    # it doesnt have to be the same as triggerFile location
+    # it just has to be readable and writeable
+    # could be per user or the same for all,
+    # it saves to ${userJsonCache}/$USER/userJsonCache.json
+    # it just contains json with display names and workspace numbers
+    userJsonCache = "/tmp/i3monsMemory/users";
+
+    # Unfortunately triggerFile must be hardcoded
+    # otherwise it may not be the same for home-manager and system modules
+    # maybe ill make it an option but make the description
+    # a big warning that it must match if set.
     triggerFile = ''/tmp/i3monsMemory/i3xrandrTriggerFile'';
 
     inotifyScript = import ./inotify.nix {
-      inherit pkgs triggerFile xrandrOthersSH xrandrPrimarySH;
-      inherit (cfg) nameOfDir denyXDGoverride;
+      inherit pkgs triggerFile userJsonCache xrandrOthersSH xrandrPrimarySH;
     };
 
     udevAction = pkgs.writeShellScript "i3xrandrMemoryUDEV.sh" ''
@@ -103,6 +137,9 @@ home-manager:
         Type = "oneshot";
         ExecStart = "${XmonBootSH}";
         # Restart = "on-failure";
+        # ^ idk, if it fails its probably just gonna fail again
+        # because it means user error. It gives better error message
+        # when it only fails once.
       };
 
       Install.WantedBy = [ "graphical-session.target" "default.target" ];
