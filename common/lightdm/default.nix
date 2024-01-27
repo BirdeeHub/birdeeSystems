@@ -43,10 +43,13 @@
     qt.platformTheme = "gtk";
 
     xdg.portal.enable = true;
-    xdg.portal.extraPortals = [
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.lxqt.xdg-desktop-portal-lxqt
+    xdg.portal.extraPortals = with pkgs; [
+      xdg-desktop-portal
+      xdg-desktop-portal-gtk
+      lxqt.xdg-desktop-portal-lxqt
+      libsForQt5.xdg-desktop-portal-kde
+      xdg-desktop-portal-gnome
+      xdg-dbus-proxy
     ];
     xdg.portal.config.common.default = "*";
 
@@ -54,7 +57,7 @@
 
     services.dbus.enable = true;
     services.xserver.updateDbusEnvironment = true;
-    services.xserver.gdk-pixbuf.modulePackages = [ pkgs.gdk-pixbuf pkgs.librsvg ];
+    services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ gdk-pixbuf librsvg  ];
 
     programs.dconf.enable = true;
     services.upower.enable = true;
