@@ -40,59 +40,25 @@ home-manager:
   config = lib.mkIf config.birdeeMods.i3MonMemory.enable (let
     cfg = config.birdeeMods.i3MonMemory;
     ifXDG = if cfg.denyXDGoverride then "false &&" else "true &&";
-    bootupMonitorScript = pkgs.writeShellScript "defaultBootupMonitorScript.sh" (''
+    mkUserXrandrScript = scriptName: (pkgs.writeShellScript "${scriptName}.sh" (''
         xrandr() {
           ${pkgs.xorg.xrandr}/bin/xrandr "$@"
         }
         userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
-        ${ifXDG} if [[ -x $userXDGcfg/${cfg.nameOfDir}/XmonBoot.sh ]]; then
-          exec $userXDGcfg/${cfg.nameOfDir}/XmonBoot.sh
+        ${ifXDG} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
+          exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh
         fi
       ''
       + (if cfg.monitorScriptDir != null
-          && builtins.pathExists ("${cfg.monitorScriptDir}/XmonBoot.sh")
-        then builtins.readFile ("${cfg.monitorScriptDir}/XmonBoot.sh")
-        else builtins.readFile ./defaults/XmonBoot.sh));
+          && builtins.pathExists ("${cfg.monitorScriptDir}/${scriptName}.sh")
+        then builtins.readFile ("${cfg.monitorScriptDir}/${scriptName}.sh")
+        else builtins.readFile ./defaults/${scriptName}.sh)));
 
-    configXrandrByOutput = pkgs.writeShellScript "configXrandrByOutput.sh" (''
-        xrandr() {
-          ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-        }
-        userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
-        ${ifXDG} if [[ -x $userXDGcfg/${cfg.nameOfDir}/Xothers.sh ]]; then
-          exec $userXDGcfg/${cfg.nameOfDir}/Xothers.sh
-        fi
-      ''
-      + (if cfg.monitorScriptDir != null
-          && builtins.pathExists ("${cfg.monitorScriptDir}/Xothers.sh")
-        then builtins.readFile ("${cfg.monitorScriptDir}/Xothers.sh")
-        else builtins.readFile ./defaults/Xothers.sh));
+    xrandrPrimarySH = mkUserXrandrScript "Xprimary";
 
-    configPrimaryXrandr = pkgs.writeShellScript "configPrimaryDisplay.sh" (''
-        xrandr() {
-          ${pkgs.xorg.xrandr}/bin/xrandr "$@"
-        }
-        userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
-        ${ifXDG} if [[ -x $userXDGcfg/${cfg.nameOfDir}/Xprimary.sh ]]; then
-          exec $userXDGcfg/${cfg.nameOfDir}/Xprimary.sh
-        fi
-      ''
-      + (if cfg.monitorScriptDir != null
-          && builtins.pathExists ("${cfg.monitorScriptDir}/Xprimary.sh")
-        then builtins.readFile ("${cfg.monitorScriptDir}/Xprimary.sh")
-        else builtins.readFile ./defaults/Xprimary.sh));
+    xrandrOthersSH =mkUserXrandrScript "Xothers";
 
-    xrandrPrimarySH = if builtins.isString cfg.monitorScriptDir
-      then "${cfg.monitorScriptDir}/Xprimary.sh"
-      else "${configPrimaryXrandr}";
-
-    xrandrOthersSH = if builtins.isString cfg.monitorScriptDir
-      then "${cfg.monitorScriptDir}/Xothers.sh"
-      else "${configXrandrByOutput}";
-
-    XmonBootSH = if builtins.isString cfg.monitorScriptDir
-      then "${cfg.monitorScriptDir}/XmonBoot.sh"
-      else "${bootupMonitorScript}";
+    XmonBootSH = mkUserXrandrScript "XmonBoot";
 
     triggerFile = ''/tmp/i3monsMemory/i3xrandrTriggerFile'';
 
