@@ -44,6 +44,9 @@ home-manager:
         xrandr() {
           ${pkgs.xorg.xrandr}/bin/xrandr "$@"
         }
+        awk() {
+          ${pkgs.gawk}/bin/awk "$@"
+        }
         userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
         ${ifXDG} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
           exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh
@@ -79,6 +82,7 @@ home-manager:
       Unit = {
         Description = "i3MemoryMon";
         After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
       };
 
       Service = {
@@ -98,7 +102,7 @@ home-manager:
       Service = {
         Type = "oneshot";
         ExecStart = "${XmonBootSH}";
-        Restart = "on-failure";
+        # Restart = "on-failure";
       };
 
       Install.WantedBy = [ "graphical-session.target" "default.target" ];

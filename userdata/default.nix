@@ -3,7 +3,7 @@ rec {
   users = {
     birdee = {
       name = "birdee";
-      shell = pkgs.fish;
+      shell = pkgs.zsh;
       isNormalUser = true;
       description = "";
       extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];

@@ -3,23 +3,10 @@
 
 array=()
 while read -r line; do
-    array+=("$line")
+    array+=( "$line" )
 done <<< "$(echo "$(xrandr --listmonitors)" | tail +2 | awk '{print $4}')"
 
 
-xrandr --output "${array[0]}" --primary --preferred
-lastMon="${array[0]}"
-array=("${array[@]:1}")
-xrandr --output "${array[0]}" --left-of $lastMon --preferred
-pivotMon=$lastMon
-lastMon="${array[0]}"
-array=("${array[@]:1}")
-i=0
-for mon in "${array[@]}"; do
-    pos="--left-of"
-    $((i%2)) && pos="--right-of"
-    xrandr --output $mon $pos $pivotMon --preferred
-    pivotMon=$lastMon
-    lastMon=$mon
-done
+xrandr --output ${array[0]} --primary --preferred
+xrandr --output ${array[1]} --left-of ${array[0]} --preferred
 
