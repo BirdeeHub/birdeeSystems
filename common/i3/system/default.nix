@@ -14,6 +14,7 @@
         default = null;
         type = nullOr str;
       };
+      tmuxDefault = lib.mkEnableOption "swap tmux default alacritty to mod+enter from mod+shift+enter";
     };
   };
   config = lib.mkIf config.birdeeMods.i3.enable (let
@@ -37,8 +38,8 @@
         fehBG = (pkgs.writeShellScript "fehBG" ''
           exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${../misc/rooftophang.png} "$@"
         '');
-        xtraTermCMD = ''alacritty -e tx'';
-        termCMD = ''alacritty'';
+        termCMD = if cfg.tmuxDefault then ''alacritty -e tx'' else ''alacritty'';
+        xtraTermCMD = if cfg.tmuxDefault then ''alacritty'' else ''alacritty -e tx'';
       in "${ pkgs.writeText "config" (''
           set $monMover ${monMover}
           set $fehBG ${fehBG}
