@@ -115,6 +115,7 @@ in {
     xfce.ristretto
     qbittorrent
     galculator
+    gparted
     # lxappearance
     qalculate-qt
     signal-desktop

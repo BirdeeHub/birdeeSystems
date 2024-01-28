@@ -159,6 +159,7 @@ in {
     lshw
     wget
     tree
+    gparted
     zip
     _7zz
     unzip
