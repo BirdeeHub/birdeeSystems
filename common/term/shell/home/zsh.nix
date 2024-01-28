@@ -22,16 +22,15 @@
         bindkey -v
         # End of lines configured by zsh-newuser-install
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
+        function zle-line-init zle-keymap-select {
+            export ZSH_COMMAND_MODE=$KEYMAP
+            RPROMPT=$KEYMAP
+            zle reset-prompt
+        }
+
+        zle -N zle-line-init
+        zle -N zle-keymap-select
       '';
     };
   });
 }
-
-# function zle-line-init zle-keymap-select {
-#     export ZSH_COMMAND_MODE=$KEYMAP
-#     RPROMPT=%{$(tput cuu1)%}$KEYMAP
-#     zle reset-prompt
-# }
-#
-# zle -N zle-line-init
-# zle -N zle-keymap-select
