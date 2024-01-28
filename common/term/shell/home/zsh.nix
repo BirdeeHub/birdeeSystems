@@ -24,7 +24,7 @@
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${../atomic-emodipt.omp.json})"
         function zle-line-init zle-keymap-select {
             export ZSH_COMMAND_MODE=$KEYMAP
-            RPROMPT=$KEYMAP
+            RPROMPT=$ZSH_COMMAND_MODE
             zle reset-prompt
         }
 
