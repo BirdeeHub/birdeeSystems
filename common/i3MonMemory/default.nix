@@ -23,6 +23,14 @@ in {
 
           If you do not include all the scripts, it will fill in default scripts.
 
+          XmonBoot runs once at startup.
+
+          Xprimary is ran each time a monitor is unplugged or plugged in.
+          It is passed an array of all active displays as its arguments.
+
+          Xothers is ran 1 time per each new screen plugged in,
+          and is passed the name of the display added as its first argument.
+
           Items placed in $XDG_CONFIG_HOME/${cfg.nameOfDir}
           will override their nix provisioned counterparts with the same name.
           This behavior can be disabled by setting ${cfg.denyXDGoverride} to true.
@@ -61,7 +69,7 @@ in {
       awk = pkgs.gawk;
       jq = pkgs.jq;
     } // cfg.internalDependencies;
-    mkScriptAliases = with builtins; packageSet: concatStringsSep "\n" 
+    mkScriptAliases = with builtins; packageSet: concatStringsSep "\n"
       (attrValues (mapAttrs (name: value: ''
           ${name}() {
             ${value}/bin/${name} "$@"
