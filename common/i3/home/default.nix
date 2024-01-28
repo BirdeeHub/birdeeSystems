@@ -46,7 +46,8 @@
         set $fehBG ${fehBG}
         set $termCMD ${termCMD}
         set $xtraTermCMD ${xtraTermCMD}
-      '');
+      '' + (builtins.readFile ../config)) + ''
+      '';
     };
 
     home.packages = (let
