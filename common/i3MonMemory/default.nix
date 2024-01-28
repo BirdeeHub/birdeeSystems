@@ -82,7 +82,7 @@ in {
 
     xrandrPrimarySH = mkUserXrandrScript "Xprimary";
 
-    xrandrOthersSH =mkUserXrandrScript "Xothers";
+    xrandrOthersSH = mkUserXrandrScript "Xothers";
 
     XmonBootSH = mkUserXrandrScript "XmonBoot";
 
