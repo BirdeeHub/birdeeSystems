@@ -58,8 +58,9 @@
       config.allowUnfree = true;
     };
     users = import ./userdata pkgs;
-    home-modules = import ./common { homeModule = true; inherit inputs pkgs; };
-    system-modules = import ./common { homeModule = false; inherit inputs pkgs; };
+    common = import ./common { inherit inputs pkgs; };
+    home-modules = common { homeModule = true; };
+    system-modules = common { homeModule = false; };
   in {
     packages = home-modules.birdeeVim.packages;
     inherit home-modules system-modules;
