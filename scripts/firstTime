@@ -7,6 +7,6 @@ nix shell home-manager
 
 git add . &&\
 nix flake update &&\
-sudo nixos-rebuild switch --show-trace --flake .#$hostname &&\
+sudo nixos-rebuild --accept-flake-config switch --show-trace --flake .#$hostname &&\
 home-manager switch --show-trace --flake .#$1 &&\
 git add .
