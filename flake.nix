@@ -62,8 +62,7 @@
     system-modules = import ./common { homeModule = false; inherit inputs pkgs; };
   in {
     packages = home-modules.birdeeVim.packages;
-    home-modules = import ./common { homeModule = true; inherit inputs pkgs; };
-    system-modules = import ./common { homeModule = false; inherit inputs pkgs; };
+    inherit home-modules system-modules;
     homeConfigurations = {
       "birdee@dustbook" = home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
