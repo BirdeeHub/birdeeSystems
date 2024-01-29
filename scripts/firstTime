@@ -3,10 +3,10 @@ IFS='@' read -ra parts <<< "$1"
 hostname="${parts[1]}"
 
 which home-manager ||\
-nix shell home-manager
+nix --experimental-features flakes --extra-experimental-features nix-command shell home-manager
 
 git add . &&\
-nix flake update &&\
-sudo nixos-rebuild --accept-flake-config switch --show-trace --flake .#$hostname &&\
+nix --experimental-features flakes --extra-experimental-features nix-command flake update &&\
+sudo nixos-rebuild switch --show-trace --flake .#$hostname &&\
 home-manager switch --show-trace --flake .#$1 &&\
 git add .
