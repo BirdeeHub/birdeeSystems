@@ -18,7 +18,7 @@ Currently have asus rog fx504gd set up
 
 Mac 9,1 works but no nvidia card yet.
 
-good nvim setup, but I want to make a notes profile for it since I have this whole "as many different nvim configs as you want" thing with [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim/tree/nixCats-5.0.0)
+good nvim setup, but I want to make a notes profile for it since I have this whole "as many different nvim configs as you want" thing with [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 
 so also, TODO: notes specific nvim setup
 
@@ -40,7 +40,7 @@ It is a comprehensive format for importing your regular nvim configuration direc
 
 While still allowing you do have as many configs in 1 file, flake, or module as you want for all the cool direnv stuff.
 
-- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim/tree/nixCats-5.0.0)
+- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 
 ---
 
