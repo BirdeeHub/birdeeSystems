@@ -50,6 +50,9 @@ in {
   };
 
   # Bootloader.
+  boot.loader.timeout = 3;
+  boot.loader.systemd-boot.editor = false;
+  boot.loader.systemd-boot.configurationLimit = 50;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
