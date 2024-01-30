@@ -81,7 +81,7 @@ local userHome = vim.fn.expand('$HOME')
     workspace = { checkThirdParty = true },
     telemetry = { enabled = false },
     filetypes = { "kotlin", "java" },
-    cmd = { "jdt-language-server", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
+    -- cmd = { "jdt-language-server", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   }
 end
 if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
