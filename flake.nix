@@ -47,7 +47,7 @@
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, flake-utils, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
@@ -107,6 +107,16 @@
         inherit system;
         modules = [
           ./systems/PCs/dustbook
+        ];
+      };
+      "installer" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs system-modules;
+        };
+        inherit system;
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+          ./systems/PCs/installer
         ];
       };
     };
