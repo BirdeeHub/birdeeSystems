@@ -75,6 +75,9 @@
     };
 
     startupPlugins = {
+      java = with pkgs.vimPlugins; [
+        nvim-jdtls
+      ];
       neonixdev = [
         pkgs.vimPlugins.neodev-nvim
         pkgs.vimPlugins.neoconf-nvim

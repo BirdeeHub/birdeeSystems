@@ -6,12 +6,12 @@ if not require('nixCatsUtils').isNixCats then
   end
 
   local ok_mason, mason_registry = pcall(require, "mason-registry")
-  if not ok_mason then
-    vim.notify("mason-registry could not be loaded")
-    return
+  local jdtls_path
+  if ok_mason then
+    jdtls_path = mason_registry.get_package("jdtls"):get_install_path()
+  else
+    jdtls_path = vim.fn.exepath('jdtls')
   end
-
-  local jdtls_path = mason_registry.get_package("jdtls"):get_install_path()
 
   local operative_system
   if vim.fn.has("linux") then

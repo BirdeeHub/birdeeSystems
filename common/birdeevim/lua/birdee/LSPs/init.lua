@@ -27,7 +27,7 @@ if (nixCats('neonixdev')) then
       },
       signatureHelp = { enabled = true },
       diagnostics = {
-        globals = { "nixCats" },
+        globals = { "nixCats", "vim" },
       },
     },
     workspace = { checkThirdParty = true },
@@ -57,12 +57,12 @@ elseif (nixCats('lua')) then
 end
 if (nixCats('kotlin')) then
   servers.kotlin_language_server = {
-    Lua = {
-      formatters = {
-        ignoreComments = true,
-      },
-      signatureHelp = { enabled = true },
-    },
+    -- kotlin = {
+    --   formatters = {
+    --     ignoreComments = true,
+    --   },
+    --   signatureHelp = { enabled = true },
+    -- },
     workspace = { checkThirdParty = true },
     telemetry = { enabled = false },
     filetypes = { 'kotlin' },
@@ -70,18 +70,18 @@ if (nixCats('kotlin')) then
   }
 end
 if (nixCats('java')) then
-local userHome = vim.fn.expand('$HOME')
+local userHome = vim.loop.os_homedir()
   servers.jdtls = {
-    Lua = {
-      formatters = {
-        ignoreComments = true,
-      },
-      signatureHelp = { enabled = true },
-    },
+    -- java = {
+    --   formatters = {
+    --     ignoreComments = true,
+    --   },
+    --   signatureHelp = { enabled = true },
+    -- },
     workspace = { checkThirdParty = true },
     telemetry = { enabled = false },
     filetypes = { "kotlin", "java" },
-    -- cmd = { "jdt-language-server", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
+    cmd = { "jdtls", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   }
 end
 if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
