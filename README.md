@@ -32,6 +32,7 @@ so also, TODO: notes specific nvim setup
 - terminal alacritty
 - zsh
 - shell themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
+- tmux with some keybinds and onedark theme
 
 ---
 If you check out nothing else from this repo, this link is the thing to click.
