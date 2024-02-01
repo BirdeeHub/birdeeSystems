@@ -43,6 +43,12 @@ in {
     mesa
   ];
 
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+    # users.extraGroups.vboxusers.members = [ "birdee" ];
+  };
+
   #Nouveau doesn't work at all on this model.
   boot.kernelParams = [ "nouveau.modeset=0" ];
   hardware.opengl.extraPackages = with pkgs; [

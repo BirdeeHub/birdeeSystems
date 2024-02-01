@@ -143,13 +143,6 @@ in {
 
   virtualisation.docker.enable = true;
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-    # users.extraGroups.vboxusers.members = [ "birdee" ];
-  };
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-
   users.defaultUserShell = pkgs.zsh;
 
   # List packages installed in system profile. To search, run:
