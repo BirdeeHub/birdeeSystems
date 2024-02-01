@@ -12,6 +12,8 @@
 
   environment.shellAliases = {
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
+      sudo nix run github:nix-community/disko -- --mode disko /iso/tmp/birdeeSystems/systems/PCs/disko/$1.nix
+      sudo nixos-install --flake /iso/tmp/birdeeSystems#$2
     ''}";
   };
 
