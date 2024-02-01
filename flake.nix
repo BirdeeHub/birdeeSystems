@@ -13,6 +13,8 @@
     };
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
 
     # neovim
@@ -47,7 +49,7 @@
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, flake-utils, disko, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     pkgs = import nixpkgs {
@@ -106,16 +108,17 @@
         };
         inherit system;
         modules = [
+          disko.nixosModules.disko
           ./systems/PCs/dustbook
         ];
       };
       "installer" = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs system-modules;
+          inherit self nixpkgs disko inputs system-modules;
         };
         inherit system;
         modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+          disko.nixosModules.disko
           ./systems/PCs/installer
         ];
       };

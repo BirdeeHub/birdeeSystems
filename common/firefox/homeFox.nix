@@ -16,7 +16,6 @@
           privacy-badger
           wappalyzer
           bitwarden
-          tree-style-tab
           search-by-image
           foxyproxy-standard
           web-archives

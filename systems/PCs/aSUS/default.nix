@@ -2,10 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ config, pkgs, lib, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
-    ./hardware
+    inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
+    ./hardware-configuration.nix
     ../PCs.nix
   ];
 
@@ -36,6 +38,34 @@ in {
   in
   with pkgs; [
     ntfs3g
+    glxinfo
+    pciutils
+    mesa
   ];
 
+  #Nouveau doesn't work at all on this model.
+  boot.kernelParams = [ "nouveau.modeset=0" ];
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiVdpau
+  ];
+  services.asusd.enable = true;
+  services.asusd.enableUserService = true;
+
+  hardware.nvidia.modesetting.enable = true;
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
+  hardware.nvidia.prime = {
+    sync.enable = true;
+    nvidiaBusId = "PCI:01:00:0";   # Found with lspci | grep VGA
+    intelBusId = "PCI:00:02:0";   # Found with lspci | grep VGA
+  };
+
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+  boot.blacklistedKernelModules = [ "nouveau"];
+
+  virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 }

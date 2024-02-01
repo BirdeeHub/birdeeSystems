@@ -1,10 +1,18 @@
-{ config, lib, pkgs, system-modules, ... }: {
+{ config, lib, pkgs, self, system-modules, inputs, disko, nixpkgs, ... }: {
   imports = with system-modules; [
     birdeeVim.module
+    "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+    ../disko/sda.nix
   ];
 
   boot.kernelModules = [ "kvm-intel" "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+
+  disko.enableConfig = false;
+
+  isoImage.contents = [
+    { source = self; target = "/tmp/birdeeSystems";}
+  ];
 
   birdeeVim = {
     enable = true;
