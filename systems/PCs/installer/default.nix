@@ -7,7 +7,7 @@
   boot.kernelModules = [ "kvm-intel" "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
-  disko.enableConfig = false;
+  # disko.enableConfig = false;
 
   environment.shellAliases = {
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
