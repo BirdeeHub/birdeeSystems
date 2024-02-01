@@ -32,6 +32,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   services.xserver.libinput.enable = true;
   services.xserver.libinput.touchpad.disableWhileTyping = true;
-  environment.systemPackages = [ pkgs.git ];
+  environment.systemPackages = with pkgs; [
+    git
+  ];
 
 }

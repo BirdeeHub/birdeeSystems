@@ -151,11 +151,26 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    fuse
+    fuse3
+    parted
+    gparted
+    sshfs-fuse
+    socat
+    screen
+    tcpdump
+    sdparm
+    hdparm
+    smartmontools # for diagnosing hard disks
+    pciutils
+    usbutils
+    nvme-cli
+    unzip
+    zip
     vagrant
     lshw
     wget
     tree
-    gparted
     zip
     _7zz
     unzip
