@@ -27,6 +27,7 @@
       emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
     };
   };
+  fonts.fontDir.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # Allow flakes and new command
@@ -45,7 +46,6 @@
     alacritty.enable = true;
     lightdm.enable = true;
   };
-  fonts.fontDir.enable = true;
   users.defaultUserShell = pkgs.zsh;
   environment.systemPackages = (let
     ranger = pkgs.stdenv.mkDerivation (let

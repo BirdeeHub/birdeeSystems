@@ -118,7 +118,6 @@
         };
         inherit system;
         modules = [
-          disko.nixosModules.disko
           ./systems/PCs/installer
         ];
       };
