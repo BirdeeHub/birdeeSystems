@@ -123,5 +123,9 @@
         ];
       };
     };
+    diskoConfigurations = {
+      sda_swap = ./systems/PCs/disko/sda.nix;
+      sdb_swap = ./systems/PCs/disko/sdb.nix;
+    };
   };
 }
