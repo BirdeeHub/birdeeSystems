@@ -4,9 +4,13 @@ TODO:
 
 get nvidia card working on macbook pro 9,1 (2012 macbook 3rd gen i7 and intel+nvidia gt 650M mac edition gpus)
 
-figure out secret management
+set up disko for main machine and test flake version of disco installer alias
 
-set up disko and nixos-anywhere or other provisioning solutions that I may find out about
+nixos-anywhere or other provisioning solutions that I may find out about
+
+Improve installer iso so it looks the same but still can do calamares, and test flake version of disko install alias
+
+figure out secret management
 
 set up secure rdp config for desktop from remote machines
 
