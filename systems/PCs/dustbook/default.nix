@@ -52,7 +52,7 @@ in {
 
   boot.kernelParams = [
     "hid_apple.iso_layout=0"
-    "hid_apple.fnmode=0"
+    "hid_apple.fnmode=2"
     "nouveau.modeset=0"
   ];
 
