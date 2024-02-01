@@ -10,6 +10,11 @@
 
   disko.enableConfig = false;
 
+  environment.shellAliases = {
+    install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
+    ''}";
+  };
+
   isoImage.contents = [
     { source = self; target = "/tmp/birdeeSystems";}
   ];
