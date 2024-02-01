@@ -109,6 +109,7 @@
         inherit system;
         modules = [
           disko.nixosModules.disko
+          ./disko/sda_swap.nix
           ./systems/PCs/dustbook
         ];
       };
@@ -123,8 +124,8 @@
       };
     };
     diskoConfigurations = {
-      sda_swap = ./systems/PCs/disko/sda.nix;
-      sdb_swap = ./systems/PCs/disko/sdb.nix;
+      sda_swap = ./disko/sda_swap.nix;
+      sdb_swap = ./disko/sdb_swap.nix;
     };
   };
 }

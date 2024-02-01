@@ -11,8 +11,6 @@
   boot.kernelModules = [ "kvm-intel" "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
-  # disko.enableConfig = false;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # Allow flakes and new command

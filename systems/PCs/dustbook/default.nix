@@ -9,7 +9,6 @@ in {
     inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
     inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
     ./hardware-configuration.nix
-    ../disko/sda.nix
   ];
 
   birdeeMods = {
