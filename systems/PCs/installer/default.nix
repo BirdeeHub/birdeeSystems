@@ -20,12 +20,14 @@
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake /iso/tmp/birdeeSystems#$1
       sudo nixos-install --flake /iso/tmp/birdeeSystems#$1
+      cp -r /iso/tmp/birdeeSystems /mnt/tmp/
     ''}";
     disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake /iso/tmp/birdeeSystems#$1
     ''}";
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
       sudo nixos-install --flake /iso/tmp/birdeeSystems#$1
+      cp -r /iso/tmp/birdeeSystems /mnt/tmp/
     ''}";
   };
 
