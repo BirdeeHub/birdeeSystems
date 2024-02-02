@@ -17,8 +17,14 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.shellAliases = {
-    install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
+    birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake /iso/tmp/birdeeSystems#$1
+      sudo nixos-install --flake /iso/tmp/birdeeSystems#$1
+    ''}";
+    disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
+      sudo nix run github:nix-community/disko -- --mode disko --flake /iso/tmp/birdeeSystems#$1
+    ''}";
+    install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
       sudo nixos-install --flake /iso/tmp/birdeeSystems#$1
     ''}";
   };
