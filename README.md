@@ -59,3 +59,8 @@ While still allowing you do have as many configs in 1 file, flake, or module as 
 
     Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces from whence they came when you plug the monitor back in.
 
+
+
+---
+
+installer only works for x86_64-linux
