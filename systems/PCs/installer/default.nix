@@ -33,7 +33,7 @@
     { source = self; target = "/tmp/birdeeSystems";}
   ];
 
-  isoImage.isoBaseName = "birdeeSystems_Installer";
+  isoImage.isoBaseName = "birdeeSystems_installer";
 
   birdeeMods = {
     zsh.enable = true;
