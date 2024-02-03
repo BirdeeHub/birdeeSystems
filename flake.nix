@@ -98,6 +98,8 @@
         };
         inherit system;
         modules = [
+          disko.nixosModules.disko
+          ./disko/sdb_swap.nix
           ./systems/PCs/aSUS
         ];
       };

@@ -1,7 +1,7 @@
 { config, lib, pkgs, self, system-modules, inputs, disko, nixpkgs, ... }: {
   imports = with system-modules; [
-    birdeeVim.module
     "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+    birdeeVim.module
     term.alacritty
     shell.bash
     shell.zsh
