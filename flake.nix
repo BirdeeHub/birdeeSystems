@@ -99,7 +99,7 @@
         inherit system;
         modules = [
           disko.nixosModules.disko
-          ./disko/sdb_swap.nix
+          ./disko/PCs/sdb_swap.nix
           ./systems/PCs/aSUS
         ];
       };
@@ -111,7 +111,7 @@
         inherit system;
         modules = [
           disko.nixosModules.disko
-          ./disko/sda_swap.nix
+          ./disko/PCs/sda_swap.nix
           ./systems/PCs/dustbook
         ];
       };
@@ -126,8 +126,10 @@
       };
     };
     diskoConfigurations = {
-      sda_swap = import ./disko/sda_swap.nix;
-      sdb_swap = import ./disko/sdb_swap.nix;
+      PCs = {
+        sda_swap = import ./disko/PCs/sda_swap.nix;
+        sdb_swap = import ./disko/PCs/sdb_swap.nix;
+      };
     };
   };
 }
