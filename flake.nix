@@ -126,8 +126,8 @@
       };
     };
     diskoConfigurations = {
-      sda_swap = ./disko/sda_swap.nix;
-      sdb_swap = ./disko/sdb_swap.nix;
+      sda_swap = import ./disko/sda_swap.nix;
+      sdb_swap = import ./disko/sdb_swap.nix;
     };
   };
 }
