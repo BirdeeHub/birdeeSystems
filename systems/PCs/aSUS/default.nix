@@ -43,11 +43,11 @@ in {
     mesa
   ];
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-    # users.extraGroups.vboxusers.members = [ "birdee" ];
-  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  #   # users.extraGroups.vboxusers.members = [ "birdee" ];
+  # };
 
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   #Nouveau doesn't work at all on this model.
