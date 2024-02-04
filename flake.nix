@@ -6,7 +6,7 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -99,7 +99,7 @@
         inherit system;
         modules = [
           disko.nixosModules.disko
-          ./disko/sdb_swap.nix
+          ./disko/sda_swap.nix
           ./systems/PCs/aSUS
         ];
       };

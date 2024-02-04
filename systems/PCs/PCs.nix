@@ -168,6 +168,8 @@ in {
     unzip
     zip
     vagrant
+    exfat
+    exfatprogs
     lshw
     wget
     tree

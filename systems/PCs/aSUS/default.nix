@@ -49,8 +49,10 @@ in {
     # users.extraGroups.vboxusers.members = [ "birdee" ];
   };
 
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   #Nouveau doesn't work at all on this model.
   boot.kernelParams = [ "nouveau.modeset=0" ];
+  nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau
   ];
