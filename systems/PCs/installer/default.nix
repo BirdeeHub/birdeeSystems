@@ -33,7 +33,7 @@
   };
 
   isoImage.contents = [
-    { source = self; target = "/tmp/birdeeSystems";}
+    # { source = self; target = "/tmp/birdeeSystems";}
   ];
 
   isoImage.isoBaseName = "birdeeSystems_installer";
