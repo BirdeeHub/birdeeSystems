@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk = {
-      birdeeOSdb_swap = {
+      birdeeOSSD = {
         device = "/dev/sdb";
         type = "disk";
         content = {
