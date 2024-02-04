@@ -28,7 +28,7 @@
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$1
       mkdir -p /mnt/home/birdee/temp
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/temp
+      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/temp/birdeeSystems
     ''}";
   };
 
