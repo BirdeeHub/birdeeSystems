@@ -32,8 +32,8 @@
     ''}";
   };
 
-  isoImage.contents = [
-    # { source = self; target = "/tmp/birdeeSystems";}
+  isoImage.contents = lib.mkIf (builtins.isPath "${self}/secrets") [
+    { source = "${self}/secrets"; target = "/secrets";}
   ];
 
   isoImage.isoBaseName = "birdeeSystems_installer";
