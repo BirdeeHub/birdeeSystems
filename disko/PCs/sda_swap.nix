@@ -1,6 +1,6 @@
 {
   # note: the name birdeeOSSD is shared between
-  # both disko configs. This means, you can run one
+  # both PC disko configs. This means, you can run one
   # from the installer, and even if you have the other as a module
   # in your nixos config, the label will be the same and thus it will work fine.
   # it will be named disk-birdeeOSSD-{ESP, root, swap}
