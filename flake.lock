@@ -59,11 +59,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1706491084,
-        "narHash": "sha256-eaEv+orTmr2arXpoE4aFZQMVPOYXCBEbLgK22kOtkhs=",
+        "lastModified": 1707095972,
+        "narHash": "sha256-iQ2jpCCwYWpk4UcPEgQqRSOVsY2p8GkPmz/lJw47Cvo=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "f67ba6552845ea5d7f596a24d57c33a8a9dc8de9",
+        "rev": "2e9b88f02ec166b1c3f0a638688f8e4ef444de32",
         "type": "github"
       },
       "original": {
@@ -268,11 +268,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1706985585,
-        "narHash": "sha256-ptshv4qXiC6V0GCfpABz88UGGPNwqs5tAxaRUKbk1Qo=",
+        "lastModified": 1707114923,
+        "narHash": "sha256-LDYPWa+BgxHSNEye93SyIPgz5u3RAfh78P9KyO+rQzI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1ca210648a6ca9b957efde5da957f3de6b1f0c45",
+        "rev": "afcedcf2c8e424d0465e823cf833eb3adebe1db7",
         "type": "github"
       },
       "original": {
@@ -328,11 +328,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1706775293,
-        "narHash": "sha256-uMPnkV/7sUmho3qeMWZsrU1mopUr0yhH7J8IAnEX2fc=",
+        "lastModified": 1707096451,
+        "narHash": "sha256-bEEXbJ1iWn+fJ3yxCBkv2mJC8y4QaM+5SD08kcrhlyc=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "fe272a1d3e3e5bd26d5498567efe5efff11970e7",
+        "rev": "a4af32984b5af361dafc8fa20011ab45893c3523",
         "type": "github"
       },
       "original": {
@@ -409,11 +409,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1706683685,
-        "narHash": "sha256-FtPPshEpxH/ewBOsdKBNhlsL2MLEFv1hEnQ19f/bFsQ=",
+        "lastModified": 1706925685,
+        "narHash": "sha256-hVInjWMmgH4yZgA4ZtbgJM1qEAel72SYhP5nOWX4UIM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5ad9903c16126a7d949101687af0aa589b1d7d3d",
+        "rev": "79a13f1437e149dc7be2d1290c74d378dad60814",
         "type": "github"
       },
       "original": {
@@ -425,11 +425,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1706732774,
-        "narHash": "sha256-hqJlyJk4MRpcItGYMF+3uHe8HvxNETWvlGtLuVpqLU0=",
+        "lastModified": 1706913249,
+        "narHash": "sha256-x3M7iV++CsvRXI1fpyFPduGELUckZEhSv0XWnUopAG8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b8b232ae7b8b144397fdb12d20f592e5e7c1a64d",
+        "rev": "e92b6015881907e698782c77641aa49298330223",
         "type": "github"
       },
       "original": {
@@ -503,13 +503,29 @@
         "type": "github"
       }
     },
+    "nixpkgs_nvidiaFix": {
+      "locked": {
+        "lastModified": 1706975488,
+        "narHash": "sha256-arYN4yIKU1cN5sde1+hsRNrTsgEIsU+mrwT5N8jX+BQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "468a37e6ba01c45c91460580f345d48ecdb5a4db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "468a37e6ba01c45c91460580f345d48ecdb5a4db",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
-        "lastModified": 1707018236,
-        "narHash": "sha256-TUZVZURywivViXdC+nRhWh9/UUZ8IXnrDv1wRKPjUiM=",
+        "lastModified": 1707126301,
+        "narHash": "sha256-fzYJfTdd3I6YsWIY2FTya+asDoSWTVwxmVgIJjmvn8Y=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "5b2e8b3cb4404e60da0c4f64f9c17feae02132e8",
+        "rev": "4f131f190ff362b8cadca9d063ac8e16207c7af7",
         "type": "github"
       },
       "original": {
@@ -560,11 +576,11 @@
     "plugins-hlargs": {
       "flake": false,
       "locked": {
-        "lastModified": 1704665732,
-        "narHash": "sha256-WJMyYWlw4j3bGTX7iuQ3y6M+XKJkWtp+0zIkKyfKVRc=",
+        "lastModified": 1706816930,
+        "narHash": "sha256-pp8FBDqNiFTVr0PVyJfZvB9Mdvzuse54ug56fT1Y2nQ=",
         "owner": "m-demare",
         "repo": "hlargs.nvim",
-        "rev": "e45fd1f18f2fadf7d4ebe6f14ed1e70c7fca02da",
+        "rev": "e881f3a424139cc70c83121ec548732efdd67682",
         "type": "github"
       },
       "original": {
@@ -637,6 +653,7 @@
         "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs_nvidiaFix": "nixpkgs_nvidiaFix",
         "nur": "nur",
         "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",

@@ -49,7 +49,16 @@ in {
   #   # users.extraGroups.vboxusers.members = [ "birdee" ];
   # };
 
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  nixpkgs.overlays = [ (self: super: (let
+    kernel_pkgs_version = import inputs.nixpkgs_nvidiaFix {
+      inherit (self) system;
+      config.allowUnfree = true;
+    };
+  in {
+    linuxPackages_latest = kernel_pkgs_version.linuxPackages_latest;
+  })) ];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   #Nouveau doesn't work at all on this model.
   boot.kernelParams = [ "nouveau.modeset=0" ];
   nixpkgs.config.nvidia.acceptLicense = true;

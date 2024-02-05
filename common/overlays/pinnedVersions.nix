@@ -1,5 +1,6 @@
 importName: inputs: let
-  overlay = self: super: {
-  };
+  overlay = self: super: (let
+  in {
+  });
 in
 overlay
