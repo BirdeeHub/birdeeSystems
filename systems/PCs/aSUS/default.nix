@@ -57,8 +57,8 @@ in {
   in {
     linuxPackages_latest = kernel_pkgs_version.linuxPackages_latest;
   })) ];
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   #Nouveau doesn't work at all on this model.
   boot.kernelParams = [ "nouveau.modeset=0" ];
   nixpkgs.config.nvidia.acceptLicense = true;
