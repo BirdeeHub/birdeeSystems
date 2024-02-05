@@ -116,6 +116,8 @@ in {
     qbittorrent
     galculator
     gparted
+    ntfs3g
+    exfatprogs
     # lxappearance
     qalculate-qt
     signal-desktop
