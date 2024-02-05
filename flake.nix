@@ -100,7 +100,7 @@
         inherit system;
         modules = [
           disko.nixosModules.disko
-          ./disko/PCs/sdb_swap.nix
+          ./disko/PCs/sda_swap.nix
           ./systems/PCs/aSUS
         ];
       };
