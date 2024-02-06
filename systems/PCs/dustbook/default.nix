@@ -27,15 +27,6 @@ in {
     mesa
   ];
 
-  nixpkgs.overlays = [ (self: super: (let
-    kernel_pkgs_version = import inputs.nixpkgs_nvidiaFix {
-      inherit (self) system;
-      config.allowUnfree = true;
-      config.nvidia.acceptLicense = true;
-    };
-  in {
-    linuxPackages = kernel_pkgs_version.linuxPackages;
-  })) ];
   boot.kernelPackages = pkgs.linuxPackages;
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau libva

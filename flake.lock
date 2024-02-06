@@ -425,11 +425,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1706913249,
-        "narHash": "sha256-x3M7iV++CsvRXI1fpyFPduGELUckZEhSv0XWnUopAG8=",
+        "lastModified": 1707092692,
+        "narHash": "sha256-ZbHsm+mGk/izkWtT4xwwqz38fdlwu7nUUKXTOmm4SyE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e92b6015881907e698782c77641aa49298330223",
+        "rev": "faf912b086576fd1a15fca610166c98d47bc667e",
         "type": "github"
       },
       "original": {
@@ -503,29 +503,13 @@
         "type": "github"
       }
     },
-    "nixpkgs_nvidiaFix": {
-      "locked": {
-        "lastModified": 1706975488,
-        "narHash": "sha256-arYN4yIKU1cN5sde1+hsRNrTsgEIsU+mrwT5N8jX+BQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "468a37e6ba01c45c91460580f345d48ecdb5a4db",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "468a37e6ba01c45c91460580f345d48ecdb5a4db",
-        "type": "github"
-      }
-    },
     "nur": {
       "locked": {
-        "lastModified": 1707181497,
-        "narHash": "sha256-Bd+bqHnlxgsk67/jNN1mVldL8jT2p0OK5G4DhMGdOp4=",
+        "lastModified": 1707208536,
+        "narHash": "sha256-HmpnITyiTTcbLOaTYMIZtyA12O0z1bcZ73LP1eP+PUg=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "ff750f0d827f95ab132046d0d01e82c37b7a1c5c",
+        "rev": "715b35541008f5b4c1147d42d3d8bbd2ce1c974d",
         "type": "github"
       },
       "original": {
@@ -653,7 +637,6 @@
         "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs_nvidiaFix": "nixpkgs_nvidiaFix",
         "nur": "nur",
         "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
