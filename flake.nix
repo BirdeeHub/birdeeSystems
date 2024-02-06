@@ -118,7 +118,7 @@
       };
       "installer" = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit self nixpkgs disko inputs system-modules;
+          inherit self nixpkgs inputs system-modules;
         };
         inherit system;
         modules = [
