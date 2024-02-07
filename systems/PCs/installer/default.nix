@@ -29,6 +29,10 @@
       mkdir -p /mnt/home/birdee/temp
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/temp/birdeeSystems
     ''}";
+    ls = "ls --color=tty";
+    la = "ls -a";
+    ll = "ls -l";
+    l  = "ls -alh";
   };
 
   isoImage.contents = lib.mkIf (builtins.isPath "${self}/secrets") [
