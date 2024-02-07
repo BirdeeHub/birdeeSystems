@@ -3,6 +3,7 @@
 {inputs, ... }@attrs: let
   inherit (inputs.nixCats) utils;
   luaPath = "${./.}";
+  forEachSystem = inputs.flake-utils.lib.eachSystem inputs.flake-utils.lib.allSystems;
   # the following extra_pkg_config contains any values
   # which you want to pass to the config set of nixpkgs
   # import nixpkgs { config = extra_pkg_config; inherit system; }
@@ -11,7 +12,7 @@
   extra_pkg_config = {
     # allowUnfree = true;
   };
-  system_resolved = inputs.flake-utils.lib.eachDefaultSystem (system: let
+  system_resolved = forEachSystem (system: let
     # see :help nixCats.flake.outputs.overlays
     # This overlay grabs all the inputs named in the format
     # `plugins-<pluginName>`
@@ -21,8 +22,7 @@
     ((import ./overlays inputs) ++ [
       (utils.standardPluginOverlay inputs)
       # add any flake overlays here.
-      inputs.codeium.overlays.${system}.default
-    ])) ];
+    ] ++ (if (inputs.codeium.overlays ? system) then [ inputs.codeium.overlays.${system}.default ] else []))) ];
   in { inherit dependencyOverlays; });
   inherit (system_resolved) dependencyOverlays;
 
@@ -281,7 +281,7 @@
   };
 in
   # see :help nixCats.flake.outputs.exports
-  inputs.flake-utils.lib.eachDefaultSystem (system: let
+  forEachSystem (system: let
     inherit (utils) baseBuilder;
     customPackager = baseBuilder luaPath {
       inherit (inputs) nixpkgs;
