@@ -2,7 +2,6 @@
   imports = with system-modules; [
     "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     birdeeVim.module
-    term.alacritty
     shell.bash
     shell.zsh
     shell.fish
@@ -42,7 +41,6 @@
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
-    alacritty.enable = true;
   };
 
   users.defaultUserShell = pkgs.zsh;
