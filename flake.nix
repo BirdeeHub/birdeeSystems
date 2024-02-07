@@ -115,7 +115,8 @@
           ./systems/PCs/dustbook
         ];
       };
-      "installer" = nixpkgs.lib.nixosSystem {
+    } // (flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
+      { "installer" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit self nixpkgs inputs system-modules;
         };
@@ -124,7 +125,7 @@
           ./systems/PCs/installer
         ];
       };
-    };
+    }));
     diskoConfigurations = {
       PCs = {
         sda_swap = import ./disko/PCs/sda_swap.nix;
