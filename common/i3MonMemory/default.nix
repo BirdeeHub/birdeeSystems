@@ -80,7 +80,7 @@ in {
         ${mkScriptAliases dependencies}
         userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
         ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
-          exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh
+          exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh "$@"
         fi
       ''
       + (if cfg.monitorScriptDir != null
