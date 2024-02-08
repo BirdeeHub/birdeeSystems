@@ -104,6 +104,8 @@ in {
     # otherwise it may not be the same for home-manager and system modules
     # maybe ill make it an option but make the description
     # a big warning that it must match if set.
+    # this file must be writeable by root and readable by users.
+    # its content is irrelevant, user service triggers when the file is modified.
     triggerFile = ''/tmp/i3monsMemory/i3xrandrTriggerFile'';
 
     inotifyScript = import ./inotify.nix {
