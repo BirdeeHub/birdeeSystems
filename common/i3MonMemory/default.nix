@@ -29,6 +29,8 @@ in {
           Xothers is ran 1 time per each new screen plugged in,
           and is passed the name of the display added as its first argument.
 
+          Xothers is executed before Xprimary.
+
           Items placed in $XDG_CONFIG_HOME/${cfg.nameOfDir}
           will override their nix provisioned counterparts with the same name.
           This behavior can be disabled by setting ${cfg.denyXDGoverride} to true.
