@@ -100,7 +100,7 @@ in {
     # could be per user or the same for all,
     # it saves to ${userJsonCache}/$USER/userJsonCache.json
     # it just contains json with display names and workspace numbers
-    userJsonCache = ''cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}/i3monsMemory'';
+    userJsonCache = ''''${XDG_CACHE_HOME:-"$HOME/.cache"}/i3monsMemory'';
 
     # Unfortunately triggerFile must be hardcoded
     # otherwise it may not be the same for home-manager and system modules
