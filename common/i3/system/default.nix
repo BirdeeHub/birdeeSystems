@@ -5,16 +5,41 @@
     birdeeMods.i3 = with lib.types; {
       enable = lib.mkEnableOption "birdee's i3 configuration";
       dmenu = {
-          terminalStr = lib.mkOption {
-            default = ''alacritty'';
-            type = str;
-          };
+        terminalStr = lib.mkOption {
+          default = ''alacritty'';
+          type = str;
+        };
+      };
+      terminalStr = lib.mkOption {
+        default = ''alacritty'';
+        type = str;
       };
       extraSessionCommands = lib.mkOption {
         default = null;
         type = nullOr str;
       };
       tmuxDefault = lib.mkEnableOption "swap tmux default alacritty to mod+enter from mod+shift+enter";
+      defaultLockerEnabled = lib.mkOption { 
+        default = true;
+        type = bool;
+        description = "default locker = i3lock + xss-lock";
+      };
+      prependedConfig = lib.mkOption {
+        default = '''';
+        type = str;
+      };
+      appendedConfig = lib.mkOption {
+        default = '''';
+        type = str;
+      };
+      background = lib.mkOption {
+        default = ../misc/rooftophang.png;
+        type = nullOr path;
+      };
+      lockerBackground = lib.mkOption {
+        default = ../misc/DogAteHomework.png;
+        type = nullOr path;
+      };
     };
   };
   config = lib.mkIf config.birdeeMods.i3.enable (let
@@ -35,18 +60,21 @@
           }
           ${builtins.readFile ../monWkspcCycle.sh}
         '');
-        fehBG = (pkgs.writeShellScript "fehBG" ''
-          exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${../misc/rooftophang.png} "$@"
-        '');
-        termCMD = if cfg.tmuxDefault then ''alacritty -e tx'' else ''alacritty'';
-        xtraTermCMD = if cfg.tmuxDefault then ''alacritty'' else ''alacritty -e tx'';
+        fehBG = (pkgs.writeShellScript "fehBG" (if cfg.background != null then ''
+          exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${cfg.background} "$@"
+        '' else "exit 0"));
+        termCMD = if cfg.tmuxDefault then ''${cfg.terminalStr} -e tx'' else ''${cfg.terminalStr}'';
+        xtraTermCMD = if cfg.tmuxDefault then ''${cfg.terminalStr}'' else ''${cfg.terminalStr} -e tx'';
       in "${ pkgs.writeText "config" (''
           set $monMover ${monMover}
           set $fehBG ${fehBG}
           set $termCMD ${termCMD}
           set $xtraTermCMD ${xtraTermCMD}
-        '' + builtins.readFile ../config + ''
-        '') }";
+          set $termSTR ${cfg.terminalStr}
+          ${cfg.prependedConfig}
+        '' + builtins.readFile ../config + (if cfg.defaultLockerEnabled then ''
+          exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+        '' else "") + cfg.appendedConfig) }";
       extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;
     };
 
@@ -69,13 +97,14 @@
         exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ../i3bar)} "$@"
       '');
       i3lock = (pkgs.writeShellScriptBin "i3lock" ''
-        exec ${pkgs.i3lock}/bin/i3lock -t -i ${../misc/DogAteHomework.png} "$@"
+        exec ${pkgs.i3lock}/bin/i3lock -t -i ${cfg.lockerBackground} "$@"
       '');
     in
-    with pkgs; with pkgs.xfce; [
-      i3lock #default i3 screen locker
-      i3status #default i3 status bar
+    with pkgs; with pkgs.xfce; (if cfg.defaultLockerEnabled then [
       xss-lock
+      i3lock #default i3 screen locker
+    ] else []) ++ [
+      i3status #default i3 status bar
       libnotify
       dmenu #application launcher most people use
       dmenuclr_recent

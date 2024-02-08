@@ -45,10 +45,6 @@ exec --no-startup-id xfce4-power-manager
 
 # exec --no-startup-id dbus-launch --exit-with-session i3
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 
@@ -88,7 +84,7 @@ bindsym $mod+Shift+m exec blueman-manager
 bindsym $mod+m exec pavucontrol
 bindsym $mod+F1 exec bitwarden
 bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec $termCMD -e ranger
+bindsym $mod+F3 exec $termSTR -e ranger
 bindsym $mod+F4 exec signal-desktop
 bindsym $mod+F5 exec spotify
 bindsym $mod+F6 exec discord
@@ -430,5 +426,4 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
 
