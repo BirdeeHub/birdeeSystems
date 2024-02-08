@@ -21,8 +21,6 @@ in {
                   ┣━━ Xprimary.sh
                   ┗━━ Xothers.sh
 
-          If you do not include all the scripts, it will fill in default scripts.
-
           XmonBoot runs once at startup.
 
           Xprimary is ran each time a monitor is unplugged or plugged in.
@@ -34,7 +32,14 @@ in {
           Items placed in $XDG_CONFIG_HOME/${cfg.nameOfDir}
           will override their nix provisioned counterparts with the same name.
           This behavior can be disabled by setting ${cfg.denyXDGoverride} to true.
-        '');
+        '') + ''
+
+          If you do not include all the scripts,
+          it will fill in the remaining with default scripts.
+          The default scripts are not very good but very easy to
+          understand and modify to configure for yourself.
+          They are at ${./defaults}
+        '';
         example = (lib.literalExpression ''monitorScriptDir = ${./monitorScripts}'');
       };
       denyXDGoverride = lib.mkEnableOption "dont override with scripts from $XDG_CONFIG_HOME";
