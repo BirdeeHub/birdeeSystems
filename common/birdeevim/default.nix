@@ -230,6 +230,7 @@
         neonixdev = true;
         AI = true;
         java = true;
+        go = true;
         kotlin = true;
         test = true;
         lspDebugMode = false;
@@ -279,6 +280,7 @@
         general = true;
         neonixdev = true;
         java = true;
+        go = true;
         kotlin = true;
         test = true;
         lspDebugMode = false;
