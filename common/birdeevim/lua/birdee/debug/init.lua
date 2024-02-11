@@ -92,3 +92,6 @@ end
 if nixCats('bash') then
   require("birdee.debug.bash")
 end
+if nixCats('go') then
+  require("birdee.debug.go")
+end

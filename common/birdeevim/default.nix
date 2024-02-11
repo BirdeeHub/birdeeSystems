@@ -52,6 +52,10 @@
       kotlin = with pkgs; [
         kotlin-language-server
       ];
+      go = with pkgs; [
+        gopls
+        delve
+      ];
       lua = with pkgs; [
         lua-language-server
       ];
@@ -75,6 +79,9 @@
     };
 
     startupPlugins = {
+      go = with pkgs.vimPlugins; [
+        nvim-dap-go
+      ];
       java = with pkgs.vimPlugins; [
         nvim-jdtls
       ];

@@ -129,7 +129,12 @@ in {
     kotlin-native
     docker-compose
     peek
+
     go
+    gotools
+    go-tools
+    sqlite-interactive
+
     _7zz
     # flatpak
     # gnome.gnome-software

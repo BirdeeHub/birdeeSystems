@@ -6,7 +6,7 @@ if not require('nixCatsUtils').isNixCats then
 end
 
 local servers = {}
-if (nixCats('neonixdev')) then
+if nixCats('neonixdev') then
   require('neodev').setup({})
   -- this allows our thing to have plugin library detection
   -- despite not being in our .config/nvim folder
@@ -39,10 +39,10 @@ if (nixCats('neonixdev')) then
   end
   servers.nil_ls = {}
 
-elseif (nixCats('nix')) then
+elseif nixCats('nix') then
   servers.nixd = {}
   servers.nil_ls = {}
-elseif (nixCats('lua')) then
+elseif nixCats('lua') then
   servers.lua_ls = {
     Lua = {
       formatters = {
@@ -55,7 +55,7 @@ elseif (nixCats('lua')) then
     filetypes = { 'lua' },
   }
 end
-if (nixCats('kotlin')) then
+if nixCats('kotlin') then
   servers.kotlin_language_server = {
     -- kotlin = {
     --   formatters = {
@@ -69,7 +69,7 @@ if (nixCats('kotlin')) then
     root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
   }
 end
-if (nixCats('java')) then
+if nixCats('java') then
 local userHome = vim.loop.os_homedir()
   servers.jdtls = {
     -- java = {
@@ -83,6 +83,9 @@ local userHome = vim.loop.os_homedir()
     filetypes = { "kotlin", "java" },
     cmd = { "jdtls", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   }
+end
+if nixCats('go') then
+  servers.gopls = {}
 end
 if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
   vim.lsp.set_log_level("debug")
