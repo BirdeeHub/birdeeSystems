@@ -171,6 +171,7 @@ in {
     hdparm
     smartmontools # for diagnosing hard disks
     pciutils
+    lm_sensors
     usbutils
     nvme-cli
     unzip

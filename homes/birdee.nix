@@ -118,6 +118,8 @@ in {
     gparted
     ntfs3g
     exfatprogs
+    lm_sensors
+    psensor
     # lxappearance
     qalculate-qt
     signal-desktop
