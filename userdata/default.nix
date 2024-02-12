@@ -13,6 +13,11 @@ rec {
   };
   git = {
     birdee = {
+      extraConfig = {
+        core = {
+          fsmonitor = "true";
+        };
+      };
       userName = "BirdeeHub";
     };
   };
