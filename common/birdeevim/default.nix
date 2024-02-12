@@ -55,6 +55,10 @@
       go = with pkgs; [
         gopls
         delve
+        golint
+        gotools
+        go-tools
+        go
       ];
       lua = with pkgs; [
         lua-language-server
