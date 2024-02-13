@@ -55,10 +55,10 @@ in {
     spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" (/*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
-    ls = "ls --color=tty";
-    la = "ls -a";
-    ll = "ls -l";
-    l  = "ls -alh";
+    ls = "lsd";
+    la = "lsd -a";
+    ll = "lsd -l";
+    l  = "lsd -alh";
   };
   home.sessionVariables = {
     EDITOR = "birdeeVim";

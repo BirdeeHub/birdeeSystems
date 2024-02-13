@@ -43,10 +43,10 @@ in {
   environment.interactiveShellInit = ''
   '';
   environment.shellAliases = {
-    ls = "ls --color=tty";
-    la = "ls -a";
-    ll = "ls -l";
-    l  = "ls -alh";
+    ls = "lsd";
+    la = "lsd -a";
+    ll = "lsd -l";
+    l  = "lsd -alh";
   };
 
   # Bootloader.
@@ -180,6 +180,8 @@ in {
     exfat
     exfatprogs
     lshw
+    lsd
+    bat
     wget
     tree
     zip
