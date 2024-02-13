@@ -158,6 +158,8 @@ in {
     spotify
     zsh
     tree
+    bat
+    lsd
     zip
     unzip
     git
