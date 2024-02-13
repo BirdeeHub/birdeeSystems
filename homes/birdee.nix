@@ -160,6 +160,8 @@ in {
     spotify
     zsh
     tree
+    fd
+    fzf
     duf
     tldr
     lsof
