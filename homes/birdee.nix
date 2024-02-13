@@ -152,12 +152,18 @@ in {
     fastfetch
     lolcat
     nurl
+    gping
+    
     nix-prefetch
     wget
     gimp
     spotify
     zsh
     tree
+    duf
+    tldr
+    lsof
+    noti
     bat
     lsd
     zip
