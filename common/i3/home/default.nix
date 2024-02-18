@@ -2,8 +2,13 @@
 
 
 # WORK IN PROGRESS
-# The goal is to move the entire thing into home manager if I can.
-# For some reason I get 2 separate i3bars when I launch it this way though??
+# I need to test stuff out like keyrings with this setup because
+# I am usure if my dbus-update-activation-environment
+# work around worked.
+# For some reason, it removes my border indicator for focused windows
+# on firefox when loaded via home manager and it drives me nuts.
+
+# will swap to this one when those are figured out.
 
   imports = [
   ];
@@ -58,6 +63,7 @@
     '';
     xsession.windowManager.i3 = {
       enable = true;
+      config = null;
       extraConfig = (let
         monMover = (pkgs.writeShellScript "monWkspcCycle.sh" ''
           jq() {
