@@ -328,11 +328,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1707824057,
-        "narHash": "sha256-yRDcXrdlxWPqt+uFmI63oYI6LzwWxV2r0OJMxn/HDI4=",
+        "lastModified": 1708269708,
+        "narHash": "sha256-/WmCE/aguYhhmLzf5+RgreEnieQvi2F+O049hQ0IMzE=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "0472f4a1c9ea6547d93a11a526a2fe68b28b5e36",
+        "rev": "9ebfdada64dc3218febdfe00853d55e505a678a5",
         "type": "github"
       },
       "original": {
@@ -409,11 +409,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1707743206,
-        "narHash": "sha256-AehgH64b28yKobC/DAWYZWkJBxL/vP83vkY+ag2Hhy4=",
+        "lastModified": 1708214945,
+        "narHash": "sha256-LwP/lKuPasVLqUX+XFf6DbW4BWmM7o5K5unx/dXCJWY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2d627a2a704708673e56346fcb13d25344b8eaf3",
+        "rev": "e015f24e508c549ab2ab2ad74dcdad3ae07513fe",
         "type": "github"
       },
       "original": {
@@ -505,11 +505,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1708242239,
-        "narHash": "sha256-qvek/eYwR2n0+x0Bs9DzLSdbbhHyLVfsL8LQo2ffUWc=",
+        "lastModified": 1708261229,
+        "narHash": "sha256-mC9gMz4E7Dm9nvCE6oqNMmZLMdoJ3Pjik2oqEZDVrgU=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "82d83574b9eb036f268c6a218f68f3ebbb44c482",
+        "rev": "c4296c55625e5394c142d5c07c00cddb76d5241b",
         "type": "github"
       },
       "original": {
