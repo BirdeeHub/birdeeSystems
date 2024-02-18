@@ -292,6 +292,8 @@
       };
     };
   };
+
+  defaultPackageName = "birdeeVim";
 in
   # see :help nixCats.flake.outputs.exports
   forEachSystem (system: let
@@ -308,17 +310,17 @@ in
   in {
     # this will make a package out of each of the packageDefinitions defined above
     # and set the default package to the one named here.
-    packages = utils.mkPackages nixCatsBuilder packageDefinitions "birdeeVim";
+    packages = utils.mkPackages nixCatsBuilder packageDefinitions defaultPackageName;
 
     # this will make an overlay out of each of the packageDefinitions defined above
     # and set the default overlay to the one named here.
-    overlays = utils.mkOverlays nixCatsBuilder packageDefinitions "birdeeVim";
+    overlays = utils.mkOverlays nixCatsBuilder packageDefinitions defaultPackageName;
 
     # choose your package for devShell
     # and add whatever else you want in it.
     devShell = pkgs.mkShell {
-      name = "birdeeVim";
-      packages = [ (nixCatsBuilder "birdeeVim") ];
+      name = defaultPackageName;
+      packages = [ (nixCatsBuilder defaultPackageName) ];
       inputsFrom = [ ];
       shellHook = ''
       '';
@@ -331,15 +333,13 @@ in
 ) // {
   # we also export a nixos module to allow configuration from configuration.nix
   nixosModules.default = utils.mkNixosModules {
-    defaultPackageName = "birdeeVim";
     inherit (inputs) nixpkgs;
-    inherit dependencyOverlays luaPath categoryDefinitions packageDefinitions;
+    inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
   # and the same for home manager
   homeModule = utils.mkHomeModules {
-    defaultPackageName = "birdeeVim";
     inherit (inputs) nixpkgs;
-    inherit dependencyOverlays luaPath categoryDefinitions packageDefinitions;
+    inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
   # now we can export some things that can be imported in other
   # flakes, WITHOUT needing to use a system variable to do it.
