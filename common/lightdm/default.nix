@@ -24,6 +24,13 @@
     # Enable the X11 windowing system.
     services.xserver.enable = true;
     services.xserver.desktopManager.xterm.enable = false;
+    services.xserver.displayManager.session = [
+      {
+        manage = "window";
+        name = "fake";
+        start = "";
+      }
+    ];
 
     services.xserver.dpi = lib.mkIf (cfg.dpi != null) cfg.dpi;
 
@@ -37,6 +44,7 @@
         '';
       };
       defaultSession = "none+i3";
+      # defaultSession = "none+fake";
       sessionCommands = lib.mkIf (cfg.sessionCommands != null) cfg.sessionCommands;
     };
 

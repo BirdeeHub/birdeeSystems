@@ -36,6 +36,7 @@ in {
       enable = true;
     };
     # i3.enable = true;
+    # i3.tmuxDefault = true;
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
