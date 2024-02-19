@@ -121,6 +121,7 @@ in {
     exfatprogs
     lm_sensors
     psensor
+    # qemu
     # lxappearance
     qalculate-qt
     signal-desktop

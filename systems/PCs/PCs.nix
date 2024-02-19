@@ -34,6 +34,9 @@ in {
   };
   services.flatpak.enable = true;
 
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  virtualisation.libvirtd.enable = true;
+
   services.clamav.daemon.enable = true;
   services.clamav.updater.enable = true;
   services.clamav.updater.interval = "weekly";
@@ -159,6 +162,7 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    qemu
     fuse
     fuse3
     parted
