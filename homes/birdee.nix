@@ -60,6 +60,7 @@ in {
     la = "lsd -a";
     ll = "lsd -l";
     l  = "lsd -alh";
+    yeet = "rm -rf";
   };
   home.sessionVariables = {
     EDITOR = "birdeeVim";
