@@ -172,6 +172,7 @@
           undotree
           nui-nvim
           neo-tree-nvim
+          treesj
         ];
       };
     };
