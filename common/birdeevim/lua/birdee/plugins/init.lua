@@ -22,6 +22,7 @@ end
 
 require('birdee.plugins.gutter')
 
+vim.keymap.set('n', '<leader>FS', [[:TSJSplit<CR>]], { desc = "treesj split/join" })
 
 vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
 vim.g.undotree_WindowLayout = 1
