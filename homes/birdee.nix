@@ -122,6 +122,7 @@ in {
     exfatprogs
     lm_sensors
     psensor
+    btop
     # qemu
     # lxappearance
     qalculate-qt
