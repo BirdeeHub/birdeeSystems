@@ -10,7 +10,7 @@
   # will not apply to module imports
   # as that will have your system values
   extra_pkg_config = {
-    # allowUnfree = true;
+    allowUnfree = true;
   };
   system_resolved = forEachSystem (system: let
     # see :help nixCats.flake.outputs.overlays
