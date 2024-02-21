@@ -61,6 +61,7 @@ in {
     ll = "lsd -l";
     l  = "lsd -alh";
     yeet = "rm -rf";
+    run = "nohup xdg-open";
   };
   home.sessionVariables = {
     EDITOR = "birdeeVim";
