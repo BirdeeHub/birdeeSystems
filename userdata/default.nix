@@ -18,7 +18,7 @@ rec {
           fsmonitor = "true";
         };
       };
-      userName = "BirdeeHub";
+      # userName = "BirdeeHub";
     };
   };
   homeManager = {
