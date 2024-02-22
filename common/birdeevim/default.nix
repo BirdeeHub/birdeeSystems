@@ -12,7 +12,7 @@
   extra_pkg_config = {
     allowUnfree = true;
   };
-  system_resolved = forEachSystem (system: let
+  inherit (forEachSystem (system: let
     # see :help nixCats.flake.outputs.overlays
     # This overlay grabs all the inputs named in the format
     # `plugins-<pluginName>`
@@ -22,9 +22,10 @@
     ((import ./overlays inputs) ++ [
       (utils.standardPluginOverlay inputs)
       # add any flake overlays here.
-    ] ++ (if (inputs.codeium.overlays ? system) then [ inputs.codeium.overlays.${system}.default ] else []))) ];
-  in { inherit dependencyOverlays; });
-  inherit (system_resolved) dependencyOverlays;
+    ] ++ (if (inputs.codeium.overlays ? system)
+      then [ inputs.codeium.overlays.${system}.default ] else [])
+    )) ];
+  in { inherit dependencyOverlays; })) dependencyOverlays;
 
   categoryDefinitions = { pkgs, settings, categories, name, ... }@packageDef: {
 
@@ -80,9 +81,13 @@
         bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
         pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
+      notes = with pkgs; [
+      ];
     };
 
     startupPlugins = {
+      notes = with pkgs.vimPlugins; [
+      ];
       go = with pkgs.vimPlugins; [
         nvim-dap-go
       ];
@@ -182,6 +187,7 @@
       customPlugins = with pkgs.nixCatsBuilds; [ ];
       gitPlugins = with pkgs.neovimPlugins; [ ];
       general = with pkgs.vimPlugins; [ ];
+      notes = with pkgs.vimPlugins; [ ];
     };
 
     environmentVariables = {
@@ -254,6 +260,7 @@
       };
       categories = {
         inherit bitwardenItemIDs;
+        notes = true;
         bitwarden = true;
         generalBuildInputs = true;
         bash = true;
