@@ -102,7 +102,7 @@ require('neo-tree').setup({
     },
   },
 })
-vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
+vim.keymap.set("n", "<leader>_", "<cmd>Neotree toggle<CR>", { noremap = true, desc = 'Open neo-tree' })
 
 require('birdee.plugins.oil')
 require('birdee.plugins.which-key')
