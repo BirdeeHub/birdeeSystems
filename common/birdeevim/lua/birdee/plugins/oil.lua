@@ -8,7 +8,7 @@ require("oil").setup({
     "icon",
     "permissions",
     "size",
-    "mtime",
+    -- "mtime",
   },
   -- Buffer-local options to use for oil buffers
   buf_options = {
