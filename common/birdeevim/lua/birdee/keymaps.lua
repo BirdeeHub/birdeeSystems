@@ -24,8 +24,8 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Netrw
-vim.keymap.set("n", "<leader>FF", "<cmd>Explore<CR>", { noremap = true, desc = '[F]ile[F]inder' })
-vim.keymap.set("n", "<leader>Fh", "<cmd>e .<CR>", { noremap = true, desc = '[F]ile[h]ome' })
+-- vim.keymap.set("n", "<leader>FF", "<cmd>Explore<CR>", { noremap = true, desc = '[F]ile[F]inder' })
+-- vim.keymap.set("n", "<leader>Fh", "<cmd>e .<CR>", { noremap = true, desc = '[F]ile[h]ome' })
 
 
 -- Diagnostic keymaps
@@ -38,9 +38,10 @@ vim.keymap.set('n', '<leader>t', [[:terminal<CR>]], { desc = 'open terminal in c
 
 
 -- these 3 jankily fix which-key related errors for some reason
-vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
-vim.keymap.set({"n", "v", "x"}, '"', '"', { desc = '+registers'})
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+-- I disabled them via which-key options now.
+-- vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
+-- vim.keymap.set({"n", "v", "x"}, '"', '"', { desc = '+registers'})
+-- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- dont worry about it.... it saved me some time in the end
 vim.keymap.set({'v', 'x'}, '<leader>Fp', [["ad:let @a = substitute(@a, '\\(favicon-.\\{-}\\)\\(\\.com\\|\\.org\\|\\.net\\|\\.edu\\|\\.gov\\|\\.mil\\|\\.int\\|\\.io\\|\\.co\\|\\.ai\\|\\.ly\\|\\.me\\|\\.tv\\|\\.info\\|\\.co\\.uk\\|\\.de\\|\\.jp\\|\\.cn\\|\\.au\\|\\.fr\\|\\.it\\|\\.es\\|\\.br\\|\\.gay\\)', 'https:\/\/', 'g')<CR>dd:while substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') != @a | let @a = substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') | endwhile<CR>"ap]], { desc = 'fix the links in copies from phind' })

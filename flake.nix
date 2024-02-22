@@ -21,6 +21,10 @@
     flake-utils.url = "github:numtide/flake-utils";
     # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    "plugins-which-key-nvim" = {
+      url = "github:BirdeeHub/which-key.nvim";
+      flake = false;
+    };
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay eventually
     "bash-debug-adapter" = {

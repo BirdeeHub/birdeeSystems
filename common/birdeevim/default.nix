@@ -166,13 +166,14 @@
         other = [
           nvim-web-devicons
           conform-nvim
-          which-key-nvim
+          pkgs.neovimPlugins.which-key-nvim
           nvim-surround
           eyeliner-nvim
           undotree
           nui-nvim
           neo-tree-nvim
           treesj
+          oil-nvim
         ];
       };
     };

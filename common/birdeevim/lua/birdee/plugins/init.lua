@@ -104,22 +104,8 @@ require('neo-tree').setup({
 })
 vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
-local leaderCmsg
-if nixCats('AI') then
-  leaderCmsg = "[C]ode (and [C]ody)"
-else
-  leaderCmsg = "[C]ode"
-end
+require('oil').setup()
+vim.keymap.set("n", "<leader>FF", "<cmd>Oil<CR>", { noremap = true, desc = '[F]ile[F]inder' })
+vim.keymap.set("n", "<leader>Fh", "<cmd>Oil .<CR>", { noremap = true, desc = '[F]ile[h]ome' })
 
-require('which-key').setup()
-require('which-key').register {
-  ['<leader>c'] = { name = leaderCmsg, _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-  ['<leader>m'] = { name = '[M]arkdown', _ = 'which_key_ignore' },
-  ['<leader>F'] = { name = '[F]ile or [F]ormat', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
-}
+require('birdee.plugins.which-key')
