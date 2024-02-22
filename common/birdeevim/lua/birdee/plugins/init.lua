@@ -27,6 +27,8 @@ if(nixCats('general.markdown')) then
   vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
 end
 
+require('birdee.plugins.notes')
+
 require('birdee.plugins.gutter')
 
 vim.keymap.set('n', '<leader>Ft', [[:TSJToggle<CR>]], { desc = "treesj split/join" })

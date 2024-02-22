@@ -87,6 +87,7 @@
 
     startupPlugins = {
       notes = with pkgs.vimPlugins; [
+        otter-nvim
       ];
       go = with pkgs.vimPlugins; [
         nvim-dap-go
