@@ -2,6 +2,13 @@ local colorschemer = nixCats('colorscheme')-- also schemes lualine
 if not require('nixCatsUtils').isNixCats then
   colorschemer = 'onedark'
 end
+if colorschemer == 'onedark' then
+  require('onedark').setup {
+    -- Set a style preset. 'dark' is default.
+    style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+  }
+  require('onedark').load()
+end
 local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
