@@ -11,14 +11,16 @@ conform.setup({
   },
 })
 
-vim.keymap.set({ "n", "v" }, "<leader>Fc", function()
+vim.keymap.set({ "n", "v" }, "<leader>FF", function()
   conform.format({
     lsp_fallback = true,
     async = false,
     timeout_ms = 1000,
   })
-end, { desc = "[F]ormat [c]onform" })
+end, { desc = "[F]ormat [F]ile" })
 
+
+-- vim.keymap.set("n", "<leader>Fm", "<cmd>Format<CR>", { noremap = true, desc = '[F]or[m]at (lsp)' })
 
 
 
