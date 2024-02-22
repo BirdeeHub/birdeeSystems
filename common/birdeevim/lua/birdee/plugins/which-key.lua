@@ -101,6 +101,6 @@ require('which-key').register {
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
   ['<leader>m'] = { name = '[M]arkdown', _ = 'which_key_ignore' },
-  ['<leader>F'] = { name = '[F]ile or [F]ormat', _ = 'which_key_ignore' },
+  ['<leader>F'] = { name = '[F]ormat', _ = 'which_key_ignore' },
   ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
 }
