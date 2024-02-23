@@ -328,11 +328,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1708613909,
-        "narHash": "sha256-u68lPZi20fVBCzsIxx4XYhvWrmsI2xWqtsQe7lBa0rY=",
+        "lastModified": 1708662303,
+        "narHash": "sha256-r4xg2cwza6qoyEEPIah4LYbK25wtf3nUJA4vcHR1iR4=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "72aa41bf98cd282c1cc6e2092afd3d4baa377752",
+        "rev": "329ba3baca3650cf0b99b25221040ee6dd84b842",
         "type": "github"
       },
       "original": {
@@ -505,11 +505,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1708656022,
-        "narHash": "sha256-MEpaUNydnm5l3xXuAPgFiYVbsN4pHPUTbIomHSU51w8=",
+        "lastModified": 1708661193,
+        "narHash": "sha256-Wocbgy1HBaKqo6nLBUEX6ZDb/cM1HOvyrX5xzk2RP18=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "5c4df0594289335dbe400664a2771969397e7c7f",
+        "rev": "bba66b7118eb9466eba8309fa2cbc8bb30677e5b",
         "type": "github"
       },
       "original": {
