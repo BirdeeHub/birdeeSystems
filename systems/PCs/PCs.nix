@@ -174,6 +174,7 @@ in {
     sdparm
     hdparm
     smartmontools # for diagnosing hard disks
+    nix-info
     pciutils
     lm_sensors
     usbutils
