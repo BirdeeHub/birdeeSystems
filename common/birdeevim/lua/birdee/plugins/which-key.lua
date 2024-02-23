@@ -83,8 +83,9 @@ require('which-key').setup({
   -- disable the WhichKey popup for certain buf types and file types.
   -- Disabled by default for Telescope
   disable = {
-    buftypes = { "acwrite" },
-    filetypes = { "oil" },
+    -- throws errors for oil but only when the toggle trash keybind g\\ is enabled.
+    -- buftypes = { "acwrite" },
+    -- filetypes = { "oil" },
   },
 })
 local leaderCmsg
