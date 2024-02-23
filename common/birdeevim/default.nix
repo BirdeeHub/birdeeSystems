@@ -73,6 +73,8 @@
 
     startupPlugins = {
       notes = with pkgs.vimPlugins; [
+        neorg
+        neorg-telescope
         otter-nvim
       ];
       go = with pkgs.vimPlugins; [
