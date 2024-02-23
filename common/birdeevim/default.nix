@@ -158,7 +158,8 @@
         other = [
           nvim-web-devicons
           conform-nvim
-          pkgs.neovimPlugins.which-key-nvim
+          # pkgs.neovimPlugins.which-key-nvim
+          which-key-nvim
           nvim-surround
           eyeliner-nvim
           undotree

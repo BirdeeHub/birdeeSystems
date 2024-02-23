@@ -605,22 +605,6 @@
         "type": "github"
       }
     },
-    "plugins-which-key-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1708599554,
-        "narHash": "sha256-G1aYV7dX0JDpAIT1R6K/3emEEtDHZevwI1ywc+GRIy4=",
-        "owner": "BirdeeHub",
-        "repo": "which-key.nvim",
-        "rev": "e5a3cce1912e0e6d38155249501aa79792114237",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "which-key.nvim",
-        "type": "github"
-      }
-    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -657,7 +641,6 @@
         "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-onedark": "plugins-onedark",
-        "plugins-which-key-nvim": "plugins-which-key-nvim",
         "sg-nvim": "sg-nvim"
       }
     },
