@@ -7,11 +7,11 @@
   };
   inherit (forEachSystem (system: let
     dependencyOverlays = [ (utils.mergeOverlayLists inputs.nixCats.dependencyOverlays.${system}
-    ((import ./overlays inputs) ++ [
-      (utils.standardPluginOverlay inputs)
-      # add any flake overlays here.
-    ] ++ (if (inputs.codeium.overlays ? system)
-      then [ inputs.codeium.overlays.${system}.default ] else [])
+      ((import ./overlays inputs) ++ [
+        (utils.standardPluginOverlay inputs)
+        # add any flake overlays here.
+      ] ++ (if (inputs.codeium.overlays ? system)
+        then [ inputs.codeium.overlays.${system}.default ] else [])
     )) ];
   in { inherit dependencyOverlays; })) dependencyOverlays;
 
@@ -158,7 +158,6 @@
         other = [
           nvim-web-devicons
           conform-nvim
-          # pkgs.neovimPlugins.which-key-nvim
           which-key-nvim
           nvim-surround
           eyeliner-nvim
