@@ -1,5 +1,3 @@
-# Copyright (c) 2023 BirdeeHub 
-# Licensed under the MIT license 
 {inputs, ... }@attrs: let
   inherit (inputs.nixCats) utils;
   luaPath = "${./.}";
