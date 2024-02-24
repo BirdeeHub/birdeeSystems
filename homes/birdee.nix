@@ -174,6 +174,7 @@ in {
     bat
     lsd
     zip
+    dig
     unzip
     git
     pciutils
