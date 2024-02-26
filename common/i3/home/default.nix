@@ -25,10 +25,10 @@
         default = ''alacritty'';
         type = str;
       };
-      # extraSessionCommands = lib.mkOption {
-      #   default = null;
-      #   type = nullOr str;
-      # };
+      extraSessionCommands = lib.mkOption {
+        default = null;
+        type = nullOr str;
+      };
       tmuxDefault = lib.mkEnableOption "swap tmux default alacritty to mod+enter from mod+shift+enter";
       defaultLockerEnabled = lib.mkOption { 
         default = true;
@@ -60,7 +60,7 @@
     xsession.scriptPath = ".xsession";
     xsession.initExtra = ''
       ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all || true
-    '';
+    '' + (if cfg.extraSessionCommands == null then "" else cfg.extraSessionCommands);
     xsession.windowManager.i3 = {
       enable = true;
       config = null;
