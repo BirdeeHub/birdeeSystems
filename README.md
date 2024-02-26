@@ -1,13 +1,5 @@
 Just me learning how to use nix. I actually started making nixCats before using nixOS.
 
-TODO:
-
-nixos-anywhere or other provisioning solutions that I may find out about
-
-figure out secret management
-
-set up secure rdp config for desktop from remote machines
-
 ---
 
 asus rog fx504gd and Mac 9,1
@@ -26,15 +18,16 @@ While still allowing you do have as many configs in 1 file, flake, or module as 
 
 ---
 
-- monitor management:
-    So I made this module for that at [./common/i3MonMemory](./common/i3MonMemory)
+monitor management:
 
-    Its an expression that returns a module, true for home manager false for system.
+  So I made this module for that at [./common/i3MonMemory](./common/i3MonMemory)
 
-    System module has only an enable option.
-    It creates a udev rule that echoes $RANDOM to a temp file on monitor hotplug
+  Its an expression that returns a module, true for home manager false for system.
 
-    Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces from whence they came when you plug the monitor back in.
+  System module has only an enable option.
+  It creates a udev rule that echoes $RANDOM to a temp file on monitor hotplug
+
+  Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces from whence they came when you plug the monitor back in.
 
 ---
 
