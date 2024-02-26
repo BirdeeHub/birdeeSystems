@@ -25,7 +25,7 @@
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
       mkdir -p /mnt/home/$username
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
+      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
     ''}";
     disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
@@ -38,7 +38,7 @@
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
       mkdir -p /mnt/home/$username
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
+      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
     ''}";
     ls = "ls --color=tty";
     la = "ls -a";
