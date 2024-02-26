@@ -35,8 +35,8 @@ in {
     ranger = {
       enable = true;
     };
-    # i3.enable = true;
-    # i3.tmuxDefault = true;
+    i3.enable = true;
+    i3.tmuxDefault = true;
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
@@ -212,6 +212,11 @@ in {
 
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3-dark";
+
+  gtk.gtk3.extraCss = ''.window-frame {margin: 0}'';
+  gtk.gtk3.extraConfig = {};
+  gtk.gtk4.extraCss = ''.window-frame {margin: 0}'';
+  gtk.gtk4.extraConfig = {};
 
   gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
   gtk.iconTheme.name = "BeautyLine";

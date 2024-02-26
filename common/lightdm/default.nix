@@ -43,8 +43,8 @@
         extraConfig = ''
         '';
       };
-      defaultSession = "none+i3";
-      # defaultSession = "none+fake";
+      # defaultSession = "none+i3";
+      defaultSession = "none+fake";
       sessionCommands = lib.mkIf (cfg.sessionCommands != null) cfg.sessionCommands;
     };
 
