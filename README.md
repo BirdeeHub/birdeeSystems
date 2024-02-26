@@ -2,25 +2,17 @@ Just me learning how to use nix. I actually started making nixCats before using 
 
 TODO:
 
-get nvidia card working on macbook pro 9,1 (2012 macbook 3rd gen i7 and intel+nvidia gt 650M mac edition gpus)
-
-set up disko for main machine
-
 nixos-anywhere or other provisioning solutions that I may find out about
-
-Improve installer iso so it looks the same but still can do calamares, and test flake version of disko install alias
 
 figure out secret management
 
 set up secure rdp config for desktop from remote machines
 
-move as much as I can from i3 system module to a home-manager module
+Figure out why firefox borders dissapear when loading i3 via home manager
 
 ---
 
-Currently have asus rog fx504gd set up
-
-Mac 9,1 works but no nvidia card yet.
+asus rog fx504gd and Mac 9,1
 
 good nvim setup, but I want to make a notes profile for it since I have this whole "as many different nvim configs as you want" thing with [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 
