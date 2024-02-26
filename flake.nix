@@ -21,18 +21,10 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
-    # have not figured out how to download a debug adapter not on nixpkgs
-    # Will be attempting to build this from source in an overlay eventually
-    "bash-debug-adapter" = {
-      url = "github:rogalmic/vscode-bash-debug";
-      flake = false;
-    };
     neovim = {
       url = "github:neovim/neovim/nightly";
       flake = false;
     };
-    # If you want your plugin to be loaded by the standard overlay,
-    # Then you should name it "plugins-something"
     "plugins-onedark" = {
       url = "github:navarasu/onedark.nvim";
       flake = false;
@@ -47,6 +39,12 @@
     };
     codeium.url = "github:Exafunction/codeium.nvim";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
+    # have not figured out how to download a debug adapter not on nixpkgs
+    # Will be attempting to build this from source in an overlay eventually
+    "bash-debug-adapter" = {
+      url = "github:rogalmic/vscode-bash-debug";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, flake-utils, disko, ... }@inputs: let
