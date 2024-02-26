@@ -22,7 +22,7 @@ if nixCats('notes') then
   require('neorg').setup {
     load = {
       ["core.defaults"] = {},
-      ["core.norg.concealer"] = {},
+      ["core.concealer"] = {},
       ["core.integrations.telescope"] = {}
       -- ["core.dirman"] = {
       --     config = {

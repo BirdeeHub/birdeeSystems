@@ -10,6 +10,7 @@
       ((import ./overlays inputs) ++ [
         (utils.standardPluginOverlay inputs)
         # add any flake overlays here.
+        inputs.neorg-overlay.overlays.default
       ] ++ (if (inputs.codeium.overlays ? system)
         then [ inputs.codeium.overlays.${system}.default ] else [])
     )) ];
