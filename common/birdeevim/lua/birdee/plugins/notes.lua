@@ -23,9 +23,16 @@ if nixCats('notes') then
     load = {
       ["core.defaults"] = {},
       ["core.concealer"] = {},
-      ["core.completion"] = {},
+      ["core.completion"] = {
+        config = {
+          engine = "nvim-cmp",
+          name = "[Neorg]",
+        },
+      },
       ["core.manoeuvre"] = {},
-      ["core.presenter"] = {},
+      -- ["core.presenter"] = {
+      --   zen_mode = "",
+      -- },
       ["core.export"] = {},
       ["core.export.markdown"] = {},
       ["core.ui.calendar"] = {},
