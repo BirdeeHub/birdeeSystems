@@ -17,19 +17,25 @@
 
   environment.shellAliases = {
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
-      sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
-      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$1
-      sudo passwd --root /mnt birdee
-      mkdir -p /mnt/home/birdee
+      IFS='@' read -ra parts <<< "$1"
+      hostname="${parts[1]}"
+      username="${parts[2]}"
+      sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$hostname
+      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
+      sudo passwd --root /mnt $username
+      mkdir -p /mnt/home/$username
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
     ''}";
     disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
     ''}";
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
-      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$1
-      sudo passwd --root /mnt birdee
-      mkdir -p /mnt/home/birdee
+      IFS='@' read -ra parts <<< "$1"
+      hostname="${parts[1]}"
+      username="${parts[2]}"
+      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
+      sudo passwd --root /mnt $username
+      mkdir -p /mnt/home/$username
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
     ''}";
     ls = "ls --color=tty";
