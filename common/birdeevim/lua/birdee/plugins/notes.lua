@@ -57,7 +57,9 @@ if nixCats('notes') then
       },
       ["core.manoeuvre"] = {},
       -- ["core.presenter"] = {
-      --   zen_mode = "",
+      --   config = {
+      --     zen_mode = "",
+      --   },
       -- },
       ["core.export"] = {},
       ["core.export.markdown"] = {},
