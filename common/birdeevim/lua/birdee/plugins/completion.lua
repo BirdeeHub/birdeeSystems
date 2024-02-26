@@ -66,6 +66,7 @@ cmp.setup {
     { name = 'nvim_lsp'--[[ , keyword_length = 3 ]] },
     { name = 'luasnip' },
     { name = 'nvim_lsp_signature_help'--[[ , keyword_length = 3  ]]},
+    { name = "neorg" },
     -- { name = 'cmp_tabnine' },
     { name = 'path' },
     { name = 'codeium' },
@@ -119,5 +120,6 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' },
     -- { name = 'cmdline_history' },
     { name = 'path' },
+    { name = "neorg" },
   },
 })
