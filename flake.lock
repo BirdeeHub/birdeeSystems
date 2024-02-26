@@ -830,22 +830,6 @@
         "type": "github"
       }
     },
-    "plugins-onedark": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1706527208,
-        "narHash": "sha256-1+aO8vrUGEe/NIVI1C1xJyuQVPQZ1s510lopkEVP7No=",
-        "owner": "navarasu",
-        "repo": "onedark.nvim",
-        "rev": "1230aaf2a427b2c5b73aba6e4a9a5881d3e69429",
-        "type": "github"
-      },
-      "original": {
-        "owner": "navarasu",
-        "repo": "onedark.nvim",
-        "type": "github"
-      }
-    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -883,7 +867,6 @@
         "nur": "nur",
         "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
-        "plugins-onedark": "plugins-onedark",
         "sg-nvim": "sg-nvim"
       }
     },

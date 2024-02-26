@@ -25,10 +25,6 @@
       url = "github:neovim/neovim/nightly";
       flake = false;
     };
-    "plugins-onedark" = {
-      url = "github:navarasu/onedark.nvim";
-      flake = false;
-    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
@@ -39,8 +35,6 @@
     };
     codeium.url = "github:Exafunction/codeium.nvim";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
-    # have not figured out how to download a debug adapter not on nixpkgs
-    # Will be attempting to build this from source in an overlay eventually
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
