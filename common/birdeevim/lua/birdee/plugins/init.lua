@@ -111,7 +111,7 @@ vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end, { nor
 require("ibl").setup()
 
 -- I honestly only use this to see the little git icons. 
--- I wanna figure out how to add them to netrw instead and ditch this
+-- I wanna figure out how to add them to oil instead and ditch this
 require('neo-tree').setup({
   close_if_last_window = true,
   window = {
