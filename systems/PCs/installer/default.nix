@@ -19,15 +19,18 @@
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$1
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/temp/birdeeSystems
+      sudo passwd --root /mnt birdee
+      mkdir -p /mnt/home/birdee
+      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
     ''}";
     disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
     ''}";
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$1
-      mkdir -p /mnt/home/birdee/temp
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/temp/birdeeSystems
+      sudo passwd --root /mnt birdee
+      mkdir -p /mnt/home/birdee
+      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
     ''}";
     ls = "ls --color=tty";
     la = "ls -a";
