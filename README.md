@@ -26,22 +26,6 @@ While still allowing you do have as many configs in 1 file, flake, or module as 
 
 ---
 
-common modules are imported via [./common/default.nix](./common/default.nix) into the main [flake.nix](./flake.nix)
-
-They are then sent to the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
-
-- [display manager:](./common/lightdm/default.nix) lightdm which loads .xsession]
-- [window manager:](./common/i3/home/default.nix) i3 loaded via home manager from .xsession
-- [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim
-- desktop manager: none but I have like half of xfce including the power manager
-- [browser:](./common/firefox) firefox
-- [file manager:](./common/ranger/default.nix) ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
-- [terminal:](./common/term/alacritty/default.nix) alacritty
-- [shell:](./common/term/shell/home/zsh.nix) zsh with vi mode plugin themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
-- [tmux:](./common/term/tmux/default.nix) with some keybinds and onedark theme
-
----
-
 - monitor management:
     So I made this module for that at [./common/i3MonMemory](./common/i3MonMemory)
 
@@ -52,8 +36,22 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 
     Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces from whence they came when you plug the monitor back in.
 
+---
 
+common modules are imported via [./common/default.nix](./common/default.nix) into the main [flake.nix](./flake.nix)
+
+They are then sent to the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
 
 ---
 
-installer only works for x86_64-linux
+- [display manager:](./common/lightdm/default.nix) lightdm which loads .xsession]
+- desktop manager: none but I have like half of xfce including the power manager
+- [window manager:](./common/i3/home/default.nix) i3 loaded via home manager from .xsession
+- [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim
+- [browser:](./common/firefox) firefox
+- [file manager:](./common/ranger/default.nix) ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
+- [terminal:](./common/term/alacritty/default.nix) alacritty
+- [shell:](./common/term/shell/home/zsh.nix) zsh with vi mode plugin themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
+- [tmux:](./common/term/tmux/default.nix) with some keybinds and onedark theme
+
+---
