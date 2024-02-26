@@ -23,13 +23,21 @@ if nixCats('notes') then
     load = {
       ["core.defaults"] = {},
       ["core.concealer"] = {},
+      ["core.completion"] = {},
+      ["core.manoeuvre"] = {},
+      ["core.presenter"] = {},
+      ["core.export"] = {},
+      ["core.export.markdown"] = {},
+      ["core.ui.calendar"] = {},
       ["core.integrations.telescope"] = {}
       -- ["core.dirman"] = {
-      --     config = {
-      --         workspaces = {
-      --             notes = "~/notes/home",
-      --         }
-      --     }
+      --   config = {
+      --     workspaces = {
+      --       my_ws = "~/neorg", -- Format: <name_of_workspace> = <path_to_workspace_root>
+      --       my_other_notes = "~/work/notes",
+      --     },
+      --     index = "index.norg", -- The name of the main (root) .norg file
+      --   }
       -- }
     }
   }
