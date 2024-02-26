@@ -8,8 +8,6 @@ figure out secret management
 
 set up secure rdp config for desktop from remote machines
 
-Figure out why firefox borders dissapear when loading i3 via home manager
-
 ---
 
 asus rog fx504gd and Mac 9,1
@@ -20,8 +18,9 @@ so also, TODO: notes specific nvim setup
 
 ---
 
-- display manager: lightdm
-- window manager: i3
+- display manager: lightdm which loads .xsession
+- window manager: i3 loaded via home manager from .xsession
+- text editor: neovim-nightly via [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 - desktop manager: none but I have like half of xfce including the power manager
 - browser: firefox
 - file manager: ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
