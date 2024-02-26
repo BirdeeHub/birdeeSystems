@@ -22,6 +22,7 @@
       username="${parts[2]}"
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$hostname
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
+      echo "please set password for user $username"
       sudo passwd --root /mnt $username
       mkdir -p /mnt/home/$username
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
@@ -34,6 +35,7 @@
       hostname="${parts[1]}"
       username="${parts[2]}"
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
+      echo "please set password for user $username"
       sudo passwd --root /mnt $username
       mkdir -p /mnt/home/$username
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/birdee/birdeeSystems
