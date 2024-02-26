@@ -205,6 +205,7 @@
   packageDefinitions = {
     minimalVim = { pkgs, ... }: {
       settings = {
+        nvimSRC = inputs.neovim;
         wrapRc = false;
         aliases = [ ];
       };
@@ -216,6 +217,7 @@
         # so that it finds my ai auths in ~/.cache/birdeevim
         configDirName = "birdeevim";
         withNodeJs = true;
+        nvimSRC = inputs.neovim;
         withRuby = true;
         extraName = "";
         withPython3 = true;
@@ -244,6 +246,7 @@
         configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = true;
+        nvimSRC = inputs.neovim;
         viAlias = false;
         vimAlias = false;
         aliases = [ "note" ];
@@ -272,6 +275,7 @@
         wrapRc = true;
         withNodeJs = false;
         viAlias = false;
+        nvimSRC = inputs.neovim;
         vimAlias = false;
         aliases = [ "vi" "vim" ];
       };

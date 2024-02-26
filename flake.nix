@@ -27,10 +27,10 @@
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
     };
-    # neovim = {
-    #   url = "github:neovim/neovim";
-    #   flake = false;
-    # };
+    neovim = {
+      url = "github:neovim/neovim/nightly";
+      flake = false;
+    };
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     "plugins-onedark" = {
