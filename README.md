@@ -28,7 +28,7 @@ While still allowing you do have as many configs in 1 file, flake, or module as 
 
 - display manager: lightdm which loads .xsession
 - window manager: i3 loaded via home manager from .xsession
-- text editor: neovim-nightly via [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
+- text editor: neovim-nightly via [my personal configuration of nvim via nixCats-nvim](./common/birdeevim)
 - desktop manager: none but I have like half of xfce including the power manager
 - browser: firefox
 - file manager: ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
