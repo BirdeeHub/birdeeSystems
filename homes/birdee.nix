@@ -213,10 +213,10 @@ in {
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3-dark";
 
-  gtk.gtk3.extraCss = ''.window-frame {margin: 0}'';
-  gtk.gtk3.extraConfig = {};
-  gtk.gtk4.extraCss = ''.window-frame {margin: 0}'';
-  gtk.gtk4.extraConfig = {};
+  # gtk.gtk3.extraCss = '''';
+  # gtk.gtk3.extraConfig = {};
+  # gtk.gtk4.extraCss = '''';
+  # gtk.gtk4.extraConfig = {};
 
   gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
   gtk.iconTheme.name = "BeautyLine";
