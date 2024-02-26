@@ -12,9 +12,17 @@ set up secure rdp config for desktop from remote machines
 
 asus rog fx504gd and Mac 9,1
 
-good nvim setup, but I want to make a notes profile for it since I have this whole "as many different nvim configs as you want" thing with [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
+only x86_64-linux
 
-so also, TODO: notes specific nvim setup
+---
+
+If you check out nothing else from this repo, this link is the thing to click.
+
+It is a comprehensive format for importing your regular nvim configuration directly into nix.
+
+While still allowing you do have as many configs in 1 file, flake, or module as you want for all the cool direnv stuff.
+
+- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 
 ---
 
@@ -28,15 +36,6 @@ so also, TODO: notes specific nvim setup
 - zsh
 - shell themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
 - tmux with some keybinds and onedark theme
-
----
-If you check out nothing else from this repo, this link is the thing to click.
-
-It is a comprehensive format for importing your regular nvim configuration directly into nix.
-
-While still allowing you do have as many configs in 1 file, flake, or module as you want for all the cool direnv stuff.
-
-- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 
 ---
 
