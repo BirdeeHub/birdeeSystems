@@ -17,9 +17,8 @@
 
   environment.shellAliases = {
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
-      IFS='@' read -ra parts <<< "$1"
-      hostname="${parts[1]}"
-      username="${parts[2]}"
+      hostname=$1
+      username=$2
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$hostname
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
       echo "please set password for user $username"
@@ -31,9 +30,8 @@
       sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
     ''}";
     install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
-      IFS='@' read -ra parts <<< "$1"
-      hostname="${parts[1]}"
-      username="${parts[2]}"
+      hostname=$1
+      username=$2
       sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
