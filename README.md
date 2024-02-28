@@ -29,6 +29,11 @@ monitor management:
 
   Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces back from whence they came when you plug the monitor back in.
 
+  If you had this repo as a flake input, you could access those via importing
+
+    inputs.birdeeSystems.home-modules.i3MonMemory
+    inputs.birdeeSystems.system-modules.i3MonMemory
+
 ---
 
 common modules are imported via [./common/default.nix](./common/default.nix) into the main [flake.nix](./flake.nix)
