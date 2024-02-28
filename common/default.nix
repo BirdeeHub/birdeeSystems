@@ -34,6 +34,6 @@ in {
     tmux = homeOnly ./term/tmux;
   };
   shell = import ./term/shell (args // conditions);
-  overlays = import ./overlays { inherit inputs; };
+  overlays = ./overlays;
   util = import ./util {};
 }
