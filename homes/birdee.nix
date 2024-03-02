@@ -124,6 +124,7 @@ in {
     lm_sensors
     psensor
     btop
+    graphviz-nox
     # qemu
     # lxappearance
     qalculate-qt
