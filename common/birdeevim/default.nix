@@ -218,7 +218,7 @@
         withNodeJs = true;
         nvimSRC = inputs.neovim;
         withRuby = true;
-        extraName = "";
+        extraName = "birdeevim";
         withPython3 = true;
         aliases = [ "vim" "vi" ];
       };
