@@ -20,6 +20,8 @@
     # neovim
     flake-utils.url = "github:numtide/flake-utils";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats.inputs.nixpkgs.follows = "nixpkgs";
+    nixCats.inputs.flake-utils.follows = "flake-utils";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     neovim = {
       url = "github:neovim/neovim/nightly";
