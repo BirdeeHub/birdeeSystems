@@ -1,11 +1,12 @@
-{ config, pkgs, self, inputs, lib, ... }: {
+{ config, pkgs, self, inputs, lib, ... }: let
+  cfg = config.birdeeMods.ranger;
+in {
   options = {
     birdeeMods.ranger = with lib.types; {
       enable = lib.mkEnableOption "birdee's ranger";
     };
   };
-  config = lib.mkIf config.birdeeMods.ranger.enable (let
-    cfg = config.birdeeMods.ranger;
+  config = lib.mkIf cfg.enable (let
     ranger = pkgs.stdenv.mkDerivation (let
       rifle = ''${pkgs.ranger}/bin/rifle'';
       ranger_commands = pkgs.writeText "nixRangerRC.conf" (let
