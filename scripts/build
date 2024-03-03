@@ -3,7 +3,8 @@ IFS='@' read -ra parts <<< "$1"
 hostname="${parts[1]}"
 
 git add . &&\
-nix flake update &&\
+[ -n $2 ] && [ "$2" == "-up" ] &&\
+nix flake update
 sudo nixos-rebuild switch --show-trace --flake .#$hostname &&\
 home-manager switch --show-trace --flake .#$1 &&\
 git add .
