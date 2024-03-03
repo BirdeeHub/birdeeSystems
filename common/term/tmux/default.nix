@@ -61,7 +61,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
 
     pluginConfigs = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
 
-    confText = ''
+    confText = (/* tmux */ ''
       # ============================================= #
       # Start with defaults from the Sensible plugin  #
       # --------------------------------------------- #
@@ -119,8 +119,8 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
       bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
 
-    '' + pluginConfigs + ''
-    '';
+    '') + pluginConfigs + ( /* tmux */ ''
+    '');
 
   in (if isHomeModule then {
     home.packages = [
