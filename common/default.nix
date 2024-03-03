@@ -19,6 +19,7 @@ in {
       then birdeeVim.homeModule
       else birdeeVim.nixosModules.default;
     packages = birdeeVim.packages;
+    utils = birdeeVim.utils;
     overlays = birdeeVim.overlays;
     devShell = birdeeVim.devShell;
     customPackager = birdeeVim.customPackager;
