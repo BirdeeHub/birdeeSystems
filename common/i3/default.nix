@@ -130,6 +130,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
     ]);
 
   in (if isHomeModule then {
+
     xsession.enable = true;
     xsession.scriptPath = ".xsession";
     xsession.initExtra = ''
@@ -142,8 +143,9 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
     };
 
     home.packages = i3packagesList;
+
   } else {
-      # Enable the i3 Desktop Environment.
+
     services.xserver.windowManager.i3 = {
       enable = true;
       updateSessionEnvironment = true;
@@ -151,5 +153,6 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
       extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;
     };
     environment.systemPackages = i3packagesList;
+
   }));
 }
