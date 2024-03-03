@@ -18,7 +18,7 @@ rec {
           fsmonitor = "true";
         };
       };
-      # userName = "BirdeeHub";
+      userName = "birdee";
     };
   };
   homeManager = {
@@ -26,7 +26,6 @@ rec {
   };
 
   mkHMdir = username: let
-    username = "birdee";
     homeDirPrefix = if pkgs.stdenv.hostPlatform.isDarwin then "Users" else "home";
     homeDirectory = "/${homeDirPrefix}/${username}";
   in {
