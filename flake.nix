@@ -50,7 +50,7 @@
       inherit system;
       overlays = [
         inputs.nur.overlay
-      ];
+      ] ++ (import ./overlays { inherit inputs; });
       config.allowUnfree = true;
     };
     users = import ./userdata pkgs;

@@ -25,6 +25,4 @@ overlay
 
   };
   overlayList = builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet);
-in {
-  nixpkgs.overlays = overlayList;
-}
+in overlayList

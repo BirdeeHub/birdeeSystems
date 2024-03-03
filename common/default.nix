@@ -34,6 +34,5 @@ in {
     tmux = homeOnly ./term/tmux;
   };
   shell = import ./term/shell (args // conditions);
-  overlays = ./overlays;
   util = import ./util {};
 }

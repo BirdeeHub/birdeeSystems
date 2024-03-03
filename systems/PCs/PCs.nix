@@ -11,7 +11,6 @@ in {
     shell.bash
     shell.zsh
     shell.fish
-    overlays
     lightdm
     i3MonMemory
   ];

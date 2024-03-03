@@ -10,7 +10,6 @@ in {
     birdeeVim.module
     ranger
     thunar
-    overlays
     i3
     i3MonMemory
   ];
