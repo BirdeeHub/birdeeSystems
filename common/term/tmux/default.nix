@@ -7,9 +7,23 @@
         type = bool;
         description = "enable birdee's tmux configuration";
       };
+      secureSocket = lib.mkOption {
+        default = pkgs.stdenv.isLinux;
+        type = types.bool;
+        description = ''
+          Store tmux socket under {file}`/run`, which is more
+          secure than {file}`/tmp`, but as a downside it doesn't
+          survive user logout.
+        '';
+      };
     };
   };
   config = lib.mkIf config.birdeeMods.tmux.enable (let
+    cfg = config.birdeeMods.tmux;
+    # tmuxBoolToStr = value: if value then "on" else "off";
+
+    pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
+
     tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
       if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
         selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
@@ -18,48 +32,92 @@
         tmux new-session
       fi
     '');
+
+    configPlugins = plugins: (with lib;
+      if plugins == [] || ! (builtins.isList plugins) then "" else ''
+        # ============ #
+        # Load plugins #
+        # ------------ #
+
+        ${(concatMapStringsSep "\n\n" (p: ''
+          # ${pluginName p}
+          # ---------------------
+          ${p.extraConfig or ""}
+          run-shell ${if types.package.check p then p.rtp else p.plugin.rtp}
+        '') plugins)}
+        # ============================================== #
+      ''
+    );
+
+    pluginConfigs = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
+
   in {
     home.packages = [
       tx
+      pkgs.tmux
     ];
-    programs.tmux = {
-      enable = true;
-      disableConfirmationPrompt = true;
-      plugins = [ pkgs.tmuxPlugins.onedark-theme ];
-      extraConfig = ''
-        set -g display-panes-colour default
-        set -g default-terminal "alacritty"
-        set -ga terminal-overrides ",alacritty:RGB"
-        set-option -g prefix C-Space
-        set-option -g prefix2 C-b
+    home.sessionVariables = (lib.mkIf cfg.secureSocket {
+      TMUX_TMPDIR = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}'';
+    });
+    xdg.configFile."tmux/tmux.conf".text =  ''
+      # ============================================= #
+      # Start with defaults from the Sensible plugin  #
+      # --------------------------------------------- #
+      run-shell ${pkgs.tmuxPlugins.sensible.rtp}
+      # ============================================= #
 
-        bind-key P last-window # -N "Select the previously current window"
-        bind-key C-p switch-client -l # -N "Switch to the last client"
-        set-window-option -g mode-keys vi
-        bind-key -T copy-mode-vi 'v' send -X begin-selection
-        bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+      set -g display-panes-colour default
+      set -g default-terminal "alacritty"
+      set -ga terminal-overrides ",alacritty:RGB"
 
-        bind h select-pane -L # -N "Select pane to the left of the active pane"
-        bind j select-pane -D # -N "Select pane below the active pane"
-        bind k select-pane -U # -N "Select pane above the active pane"
-        bind l select-pane -R # -N "Select pane to the right of the active pane"
+      set  -g base-index      1
+      setw -g pane-base-index 1
 
-        bind -r H resize-pane -L # -N "Resize the pane left"
-        bind -r J resize-pane -D # -N "Resize the pane down"
-        bind -r K resize-pane -U # -N "Resize the pane up"
-        bind -r L resize-pane -R # -N "Resize the pane right"
+      set -g status-keys vi
+      set -g mode-keys   vi
 
-        bind -r C-H resize-pane -L 5 # -N "Resize the pane left by 5"
-        bind -r C-J resize-pane -D 5 # -N "Resize the pane down by 5"
-        bind -r C-K resize-pane -U 5 # -N "Resize the pane up by 5"
-        bind -r C-L resize-pane -R 5 # -N "Resize the pane right by 5"
+      unbind C-b
+      set-option -g prefix C-Space
+      set -g prefix C-Space
+      bind -N "Send the prefix key through to the application" \
+        C-Space send-prefix
 
-        bind -r M-h refresh-client -L 10 # -N "Move the visible part of the window left"
-        bind -r M-j refresh-client -U 10 # -N "Move the visible part of the window up"
-        bind -r M-k refresh-client -D 10 # -N "Move the visible part of the window down"
-        bind -r M-l refresh-client -R 10 # -N "Move the visible part of the window right"
+      bind-key -N "Kill the current window" & kill-window
+      bind-key -N "Kill the current pane" x kill-pane
 
-      '';
-    };
+      set  -g mouse             on
+      setw -g aggressive-resize off
+      setw -g clock-mode-style  12
+      set  -s escape-time       500
+      set  -g history-limit     2000
+
+      bind-key -N "Select the previously current window" P last-window
+      bind-key -N "Switch to the last client" C-p switch-client -l
+      set-window-option -g mode-keys vi
+      bind-key -T copy-mode-vi 'v' send -X begin-selection
+      bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+
+      bind -N "Select pane to the left of the active pane" h select-pane -L
+      bind -N "Select pane below the active pane" j select-pane -D
+      bind -N "Select pane above the active pane" k select-pane -U
+      bind -N "Select pane to the right of the active pane" l select-pane -R
+
+      bind -r -N "Resize the pane left" H resize-pane -L
+      bind -r -N "Resize the pane down" J resize-pane -D
+      bind -r -N "Resize the pane up" K resize-pane -U
+      bind -r -N "Resize the pane right" L resize-pane -R
+
+      bind -r -N "Resize the pane left by 5" C-H resize-pane -L 5
+      bind -r -N "Resize the pane down by 5" C-J resize-pane -D 5
+      bind -r -N "Resize the pane up by 5" C-K resize-pane -U 5
+      bind -r -N "Resize the pane right by 5" C-L resize-pane -R 5
+
+      bind -r -N "Move the visible part of the window left" M-h refresh-client -L 10
+      bind -r -N "Move the visible part of the window up" M-j refresh-client -U 10
+      bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
+      bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
+
+    '' + pluginConfigs + ''
+    '';
   });
 }
