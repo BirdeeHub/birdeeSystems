@@ -69,7 +69,8 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
         '' + builtins.readFile ./config + (if cfg.defaultLockerEnabled then ''
           exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
         '' else "") + cfg.appendedConfig);
-      i3packagesList = (let
+
+    i3packagesList = (let
       dmenu = pkgs.writeShellScriptBin "dmenu_run" (/* bash */''
         dmenu() {
           ${pkgs.dmenu}/bin/dmenu "$@"
@@ -127,6 +128,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
       # gnome.gnome-themes-extra
       # gnome.adwaita-icon-theme
     ]);
+
   in (if isHomeModule then {
     xsession.enable = true;
     xsession.scriptPath = ".xsession";
