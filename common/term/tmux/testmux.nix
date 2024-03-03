@@ -47,6 +47,8 @@
       ''
     );
 
+    pluginConfigs = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
+
   in {
     home.packages = [
       tx
@@ -113,7 +115,7 @@
       bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
       bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
 
-    '' + (configPlugins [ pkgs.tmuxPlugins.onedark-theme ]) + ''
+    '' + pluginConfigs + ''
     '';
   });
 }
