@@ -12,7 +12,7 @@ importName: inputs: let
 in
 overlay
 */
-{ inputs, ... }: let 
+inputs: let 
   overlaySet = {
 
     # this is how you would add another overlay file
