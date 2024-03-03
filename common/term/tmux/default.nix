@@ -1,4 +1,4 @@
-{ config, pkgs, self, inputs, lib, ... }: {
+isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
   imports = [];
   options = {
     birdeeMods.tmux = with lib.types; {
@@ -16,7 +16,17 @@
           survive user logout.
         '';
       };
-    };
+    } // (if !isHomeModule then {
+      withUtempter = lib.mkIf (! isHomeModule) (lib.mkOption {
+        description = lib.mdDoc ''
+          Whether to enable libutempter for tmux.
+          This is required so that tmux can write to /var/run/utmp (which can be queried with `who` to display currently connected user sessions).
+          Note, this will add a guid wrapper for the group utmp!
+        '';
+        default = true;
+        type = types.bool;
+      });
+    } else {});
   };
   config = lib.mkIf config.birdeeMods.tmux.enable (let
     cfg = config.birdeeMods.tmux;
@@ -51,15 +61,7 @@
 
     pluginConfigs = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
 
-  in {
-    home.packages = [
-      tx
-      pkgs.tmux
-    ];
-    home.sessionVariables = (lib.mkIf cfg.secureSocket {
-      TMUX_TMPDIR = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}'';
-    });
-    xdg.configFile."tmux/tmux.conf".text =  ''
+    confText = ''
       # ============================================= #
       # Start with defaults from the Sensible plugin  #
       # --------------------------------------------- #
@@ -119,5 +121,35 @@
 
     '' + pluginConfigs + ''
     '';
-  });
+
+  in (if isHomeModule then {
+    home.packages = [
+      tx
+      pkgs.tmux
+    ];
+    home.sessionVariables = (lib.mkIf cfg.secureSocket {
+      TMUX_TMPDIR = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}'';
+    });
+    xdg.configFile."tmux/tmux.conf".text = confText;
+  } else {
+    environment = {
+      etc."tmux.conf".text = confText;
+      systemPackages = [
+        tx
+        pkgs.tmux
+      ];
+      variables = (lib.mkIf cfg.secureSocket {
+        TMUX_TMPDIR = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}'';
+      });
+      security.wrappers = lib.mkIf cfg.withUtempter {
+        utempter = {
+          source = "${pkgs.libutempter}/lib/utempter/utempter";
+          owner = "root";
+          group = "utmp";
+          setuid = false;
+          setgid = true;
+        };
+      };
+    };
+  }));
 }
