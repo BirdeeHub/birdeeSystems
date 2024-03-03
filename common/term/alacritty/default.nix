@@ -7,6 +7,10 @@ isHomeModule:
     # [env]
     # TERM = "xterm-256color"
 
+    [shell]
+    program = "/usr/bin/env"
+    args = ["zsh", "-l"]
+
     [font]
     size = 11.0
 
