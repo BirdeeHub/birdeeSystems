@@ -79,7 +79,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
           ${pkgs.dmenu}/bin/dmenu_path "$@"
         }
         TERMINAL=${cfg.dmenu.terminalStr}
-      '' + (builtins.readFile ./misc/dmenu_recency.sh));
+      '' + (builtins.readFile ./dmenu_recency.sh));
       dmenuclr_recent = ''${pkgs.writeShellScriptBin "dmenuclr_recent" (/*bash*/''
         cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
         cache="$cachedir/dmenu_recent"
