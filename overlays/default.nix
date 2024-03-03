@@ -25,4 +25,4 @@ inputs: let
 
   };
   overlayList = builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet);
-in overlayList
+in overlayList ++ [ inputs.nur.overlay ]

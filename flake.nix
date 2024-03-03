@@ -46,9 +46,7 @@
   outputs = { self, nixpkgs, home-manager, flake-utils, disko, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
-    overlays = [
-      inputs.nur.overlay
-    ] ++ (import ./overlays inputs);
+    overlays = (import ./overlays inputs);
     pkgs = import inputs.nixpkgs {
       inherit system overlays;
       config.allowUnfree = true;
