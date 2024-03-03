@@ -46,11 +46,11 @@
   outputs = { self, nixpkgs, home-manager, flake-utils, disko, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
+    overlays = [
+      inputs.nur.overlay
+    ] ++ (import ./overlays inputs);
     pkgs = import inputs.nixpkgs {
-      inherit system;
-      overlays = [
-        inputs.nur.overlay
-      ] ++ (import ./overlays inputs);
+      inherit system overlays;
       config.allowUnfree = true;
     };
     users = import ./userdata pkgs;
@@ -88,7 +88,7 @@
       "nestOS" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "nestOS";
-          inherit stateVersion self inputs users system-modules;
+          inherit stateVersion self inputs users system-modules overlays;
         };
         inherit system;
         modules = [
@@ -100,7 +100,7 @@
       "dustbook" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "dustbook";
-          inherit stateVersion self inputs users system-modules;
+          inherit stateVersion self inputs users system-modules overlays;
         };
         inherit system;
         modules = [
@@ -112,7 +112,7 @@
     } // (flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
       { "installer" = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit self nixpkgs inputs system-modules;
+          inherit self nixpkgs inputs system-modules overlays;
         };
         inherit system;
         modules = [
