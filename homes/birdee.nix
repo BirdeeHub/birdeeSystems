@@ -124,6 +124,8 @@ in {
     psensor
     btop
     graphviz-nox
+    nix-output-monitor
+    nix-info
     # qemu
     # lxappearance
     qalculate-qt
