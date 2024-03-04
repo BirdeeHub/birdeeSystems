@@ -60,3 +60,5 @@ So I was going to try to do this, but then on first install, no way to log in un
 - [tmux:](./common/term/tmux/default.nix) with some keybinds and onedark theme
 
 ---
+
+to do: change firefox config to use autoconf instead of copying prefs.js raw so that I dont have to reaccept terms and conditions every time I provision firefox from scratch.
