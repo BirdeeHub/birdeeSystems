@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 git add . &&\
-nix flake update &&\
+[ -n $2 ] && [ "$2" == "-up" ] &&\
+nix flake update
 home-manager switch --show-trace --flake .#$1 &&\
 git add .

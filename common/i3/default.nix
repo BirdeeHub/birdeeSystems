@@ -19,7 +19,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
         type = nullOr str;
       };
       tmuxDefault = lib.mkEnableOption "swap tmux default alacritty to mod+enter from mod+shift+enter";
-      defaultLockerEnabled = lib.mkOption { 
+      defaultLockerEnabled = lib.mkOption {
         default = true;
         type = bool;
         description = "default locker = i3lock + xss-lock";
