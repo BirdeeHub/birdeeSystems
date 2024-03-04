@@ -28,8 +28,9 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       });
     } else {});
   };
-  config = lib.mkIf config.birdeeMods.tmux.enable (let
+  config = let
     cfg = config.birdeeMods.tmux;
+  in lib.mkIf cfg.enable (let
     # tmuxBoolToStr = value: if value then "on" else "off";
 
     pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
