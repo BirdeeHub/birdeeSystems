@@ -8,8 +8,8 @@ isHomeModule:
     # TERM = "xterm-256color"
 
     [shell]
-    program = "/usr/bin/env"
-    args = ["zsh", "-l"]
+    program = "${pkgs.zsh}/bin/zsh"
+    args = [ "-l" ]
 
     [font]
     size = 11.0
