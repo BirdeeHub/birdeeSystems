@@ -13,7 +13,7 @@
 in {
   firefox = homeOnly ./firefox/homeFox.nix;
   thunar = homeOnly ./thunar;
-  ranger = homeOnly ./ranger;
+  ranger = import ./ranger homeModule;
   birdeeVim = {
     module= if homeModule
       then birdeeVim.homeModule

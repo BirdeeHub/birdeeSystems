@@ -1,4 +1,4 @@
-{ config, pkgs, self, inputs, lib, ... }: let
+isHomeModule: { config, pkgs, self, inputs, lib, ... }: let
   cfg = config.birdeeMods.ranger;
 in {
   options = {
@@ -44,12 +44,19 @@ in {
         cp ${ranger_desktop} $out/share/applications/ranger.desktop
       '');
     });
-  in {
+  in (if isHomeModule then {
     home.packages = with pkgs; [
       xsel
       xclip
       findutils
       ranger
     ];
-  });
+  } else {
+    environment.systemPackages = with pkgs; [
+      xsel
+      xclip
+      findutils
+      ranger
+    ];
+  }));
 }
