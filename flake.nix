@@ -124,5 +124,6 @@
         sdb_swap = import ./disko/PCs/sdb_swap.nix;
       };
     };
+    templates = import ./templates inputs;
   };
 }
