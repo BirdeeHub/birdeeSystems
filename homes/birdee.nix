@@ -126,6 +126,7 @@ in {
     graphviz-nox
     nix-output-monitor
     nix-info
+    direnv
     # qemu
     # lxappearance
     qalculate-qt
