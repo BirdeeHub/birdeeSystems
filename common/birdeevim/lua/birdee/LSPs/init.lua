@@ -135,16 +135,19 @@ end
 if nixCats('java') then
 -- local userHome = vim.loop.os_homedir()
   servers.jdtls = {
-    -- java = {
-    --   formatters = {
-    --     ignoreComments = true,
-    --   },
-    --   signatureHelp = { enabled = true },
-    -- },
+    java = {
+      formatters = {
+        ignoreComments = true,
+      },
+      signatureHelp = { enabled = true },
+    },
     workspace = { checkThirdParty = true },
     telemetry = { enabled = false },
-    filetypes = { "kotlin", "java" },
+    -- filetypes = { "kotlin", "java" },
     -- cmd = { "jdtls", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
+  }
+  servers.gradle_ls = {
+    cmd = { nixCats("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/server/server.jar" },
   }
 end
 if nixCats('go') then

@@ -41,7 +41,8 @@
       ];
       kotlin = with pkgs; [
         kotlin-language-server
-      ];
+      ] ++ (if categories.java then [] else [
+      ]);
       go = with pkgs; [
         gopls
         delve
@@ -238,6 +239,7 @@
         javaExtras = {
           java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
           java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+          gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
         };
         go = true;
         kotlin = true;
@@ -295,6 +297,7 @@
         javaExtras = {
           java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
           java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+          gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
         };
         go = true;
         kotlin = true;
