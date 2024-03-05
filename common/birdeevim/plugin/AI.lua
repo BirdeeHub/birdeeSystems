@@ -37,7 +37,6 @@ if nixCats('nixCats_packageName') ~= "minimal" then
       end
     end
     require("sg").setup({
-      on_attach = require("caps-onattach").on_attach,
       enable_cody = true,
     })
     vim.keymap.set('n', '<leader>cs', require('sg.extensions.telescope').fuzzy_search_results, { noremap = true, desc = 'cody search' })

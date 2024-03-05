@@ -136,9 +136,10 @@
         ];
         core = [
           # telescope
-          telescope-fzf-native-nvim
           plenary-nvim
           telescope-nvim
+          telescope-fzf-native-nvim
+          telescope-ui-select-nvim
           # treesitter
           nvim-treesitter-textobjects
           nvim-treesitter.withAllGrammars
@@ -168,6 +169,7 @@
           neo-tree-nvim
           treesj
           oil-nvim
+          todo-comments-nvim
         ];
       };
     };
@@ -233,6 +235,10 @@
         neonixdev = true;
         AI = true;
         java = true;
+        javaExtras = {
+          java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
+          java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+        };
         go = true;
         kotlin = true;
         test = true;
@@ -286,6 +292,10 @@
         general = true;
         neonixdev = true;
         java = true;
+        javaExtras = {
+          java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
+          java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+        };
         go = true;
         kotlin = true;
         test = true;

@@ -7,10 +7,22 @@ if not require('nixCatsUtils').isNixCats then
 
   local ok_mason, mason_registry = pcall(require, "mason-registry")
   local jdtls_path
+  local jt_path
+  local jda_path
+  local jt_server_jars
+  local jda_server_jar
   if ok_mason then
     jdtls_path = mason_registry.get_package("jdtls"):get_install_path()
+    jt_path = mason_registry.get_package("java-test"):get_install_path()
+    jda_path = mason_registry.get_package("java-debug-adapter"):get_install_path()
+    jt_server_jars = vim.fn.glob(jt_path .. "/extension/server/*.jar")
+    jda_server_jar = vim.fn.glob(jda_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
   else
     jdtls_path = vim.fn.exepath('jdtls')
+    jt_path = nixCats("javaExtras.java-test")
+    jda_path = nixCats("javaExtras.java-debug-adapter")
+    jt_server_jars = vim.fn.glob(jt_path .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
+    jda_server_jar = vim.fn.glob(jda_path .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")
   end
 
   local operative_system
@@ -28,16 +40,18 @@ if not require('nixCatsUtils').isNixCats then
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
-  local jt_path = mason_registry.get_package("java-test"):get_install_path()
-  local jda_path = mason_registry.get_package("java-debug-adapter"):get_install_path()
 
   local bundles = {}
 
-  local jt_server_jars = vim.fn.glob(jt_path .. "/extension/server/*.jar")
   vim.list_extend(bundles, vim.split(jt_server_jars, "\n"))
 
-  local jda_server_jar = vim.fn.glob(jda_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
   vim.list_extend(bundles, vim.split(jda_server_jar, "\n"))
+
+  -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  if nixCats('cmp') then
+    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+  end
 
   -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
   local config = {
@@ -83,8 +97,8 @@ if not require('nixCatsUtils').isNixCats then
       workspace_dir,
     },
 
-    on_attach = require("cap-onattach").on_attach,
-    capabilities = require("cap-onattach").get_capabilities(),
+    -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+    capabilities = capabilities,
 
     -- 💀
     -- This is the default if not provided, you can remove it. Or adjust as needed.
@@ -154,4 +168,7 @@ if not require('nixCatsUtils').isNixCats then
       bundles = bundles,
     },
   }
+  -- This starts a new client & server,
+  -- or attaches to an existing client & server depending on the `root_dir`.
+  require('jdtls').start_or_attach(config)
 end

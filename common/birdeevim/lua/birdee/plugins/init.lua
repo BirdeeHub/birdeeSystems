@@ -20,6 +20,8 @@ require('birdee.plugins.nestsitter')
 
 require('birdee.plugins.completion')
 
+require("todo-comments").setup({ signs = false })
+
 if(nixCats('general.markdown')) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })

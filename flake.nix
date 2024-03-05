@@ -16,7 +16,6 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-
     # neovim
     flake-utils.url = "github:numtide/flake-utils";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
