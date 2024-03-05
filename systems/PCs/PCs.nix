@@ -32,8 +32,13 @@ in {
     i3MonMemory.enable = true;
   };
 
-  nix.registry.birdeeSystems = {
-    flake = self;
+  nix.registry = {
+    birdeeSystems.flake = self;
+    gomod2nix.to = {
+      type = "github";
+      owner = "nix-community";
+      repo = "gomod2nix";
+    };
   };
 
   nix.extraOptions = ''
