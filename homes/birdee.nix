@@ -40,7 +40,6 @@ in {
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
 
-
   home.shellAliases = {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" (/*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
@@ -65,6 +64,15 @@ in {
   home.sessionVariables = {
     EDITOR = "birdeeVim";
     XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+  };
+
+  nix.registry = {
+    birdeeSystems.flake = self;
+    gomod2nix.to = {
+      type = "github";
+      owner = "nix-community";
+      repo = "gomod2nix";
+    };
   };
 
   xdg.enable = true;
