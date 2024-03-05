@@ -68,7 +68,6 @@ in {
 
   nix.registry = {
     birdeeSystems.flake = self;
-    nixCats.flake = inputs.nixCats;
     gomod2nix.to = {
       type = "github";
       owner = "nix-community";
