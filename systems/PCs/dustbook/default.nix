@@ -8,6 +8,7 @@ in {
     ../PCs.nix
     inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
     inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     ./hardware-configuration.nix
   ];
 

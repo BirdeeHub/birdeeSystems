@@ -32,6 +32,10 @@ in {
     i3MonMemory.enable = true;
   };
 
+  nix.registry.birdeeSystems = {
+    flake = self;
+  };
+
   nix.extraOptions = ''
     plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
     extra-builtins-file = ${./.}
