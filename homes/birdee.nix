@@ -203,13 +203,6 @@ in {
     remmina
     ventoy-full
 
-    (lua5_2.withPackages (lpkgs: with lpkgs; [
-      luafilesystem
-      cjson
-      busted
-      inspect
-    ]))
-
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
