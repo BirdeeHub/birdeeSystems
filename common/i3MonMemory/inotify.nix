@@ -6,7 +6,6 @@
     dependencies = {
       xrandr = pkgs.xorg.xrandr;
       i3-msg = pkgs.i3;
-      bash = pkgs.bash;
       awk = pkgs.gawk;
     };
     mkScriptAliases = with builtins; packageSet: concatStringsSep "\n" 
