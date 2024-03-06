@@ -13,6 +13,7 @@
     busted
     inspect
     http
+    cqueues
   ]);
   appname = "REPLACE_ME";
 in
