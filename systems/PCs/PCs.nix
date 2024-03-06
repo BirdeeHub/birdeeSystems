@@ -13,6 +13,7 @@ in {
     shell.fish
     lightdm
     i3MonMemory
+    LD
   ];
 
   birdeeVim = {
@@ -30,6 +31,7 @@ in {
     alacritty.enable = true;
     lightdm.enable = true;
     i3MonMemory.enable = true;
+    LD.enable = true;
   };
 
   nix.extraOptions = ''

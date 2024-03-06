@@ -11,6 +11,7 @@
       else path
     );
 in {
+  LD = systemOnly ./LD;
   firefox = homeOnly ./firefox/homeFox.nix;
   thunar = homeOnly ./thunar;
   ranger = import ./ranger homeModule;
