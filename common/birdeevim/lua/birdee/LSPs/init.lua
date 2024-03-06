@@ -143,11 +143,13 @@ if nixCats('java') then
     },
     workspace = { checkThirdParty = true },
     telemetry = { enabled = false },
-    -- filetypes = { "kotlin", "java" },
+    filetypes = { "kotlin", "java" },
     -- cmd = { "jdtls", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   }
   servers.gradle_ls = {
-    cmd = { nixCats("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/server/server.jar" },
+    root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
+    cmd = { nixCats("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
+    filetypes = { "kotlin", "java" },
   }
 end
 if nixCats('go') then
