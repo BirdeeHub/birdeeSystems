@@ -37,7 +37,7 @@ in {
         gawk
       ])}
   '';
-  passthru = {};
+  passthru = { inherit luaEnv; };
   meta = {
     mainProgram = "${appname}";
   };
