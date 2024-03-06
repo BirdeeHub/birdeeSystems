@@ -9,8 +9,7 @@
       awk = pkgs.gawk;
     };
     mkScriptAliases = with builtins; packageSet: concatStringsSep "\n" 
-      (["local paths = {}"] ++
-      (attrValues (mapAttrs (name: value: ''
+      (["local paths = {}"] ++ (attrValues (mapAttrs (name: value: ''
       paths[ [[${name}]] ] = [[${value}/bin/${name}]]'') packageSet)));
 
     randrMemory = pkgs.writeScript "randrMemory.lua" (/* lua */''
