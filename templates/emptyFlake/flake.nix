@@ -8,7 +8,7 @@
   in
   forEachSystem (system: let
     pkgs = import nixpkgs { inherit system; };
-    default_package = pkgs.callPackage ./. { inherit inputs pkgs; };
+    default_package = pkgs.callPackage ./. { inherit inputs; };
   in{
     packages = {
       default = default_package;
