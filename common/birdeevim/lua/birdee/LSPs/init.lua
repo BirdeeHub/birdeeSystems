@@ -112,22 +112,22 @@ elseif nixCats('lua') then
         ignoreComments = true,
       },
       signatureHelp = { enabled = true },
+      workspace = { checkThirdParty = true },
+      telemetry = { enabled = false },
     },
-    workspace = { checkThirdParty = true },
-    telemetry = { enabled = false },
     filetypes = { 'lua' },
   }
 end
 if nixCats('kotlin') then
   servers.kotlin_language_server = {
-    -- kotlin = {
-    --   formatters = {
-    --     ignoreComments = true,
-    --   },
-    --   signatureHelp = { enabled = true },
-    -- },
-    -- workspace = { checkThirdParty = true },
-    -- telemetry = { enabled = false },
+    kotlin = {
+      formatters = {
+        ignoreComments = true,
+      },
+      signatureHelp = { enabled = true },
+      workspace = { checkThirdParty = true },
+      telemetry = { enabled = false },
+    },
     -- filetypes = { 'kotlin' },
     -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
   }
@@ -140,9 +140,9 @@ if nixCats('java') then
         ignoreComments = true,
       },
       signatureHelp = { enabled = true },
+      workspace = { checkThirdParty = true },
+      telemetry = { enabled = false },
     },
-    workspace = { checkThirdParty = true },
-    telemetry = { enabled = false },
     filetypes = { "kotlin", "java" },
     -- cmd = { "jdtls", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   }
