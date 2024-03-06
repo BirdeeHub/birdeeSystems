@@ -3,7 +3,7 @@
 in {
   options = {
     birdeeMods.LD = with lib.types; {
-      enable = lib.mkEnableOption "birdee's ranger";
+      enable = lib.mkEnableOption "LD stuff";
     };
   };
   config = lib.mkIf cfg.enable (let
