@@ -1,12 +1,12 @@
 { pkgs, inputs, lib, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
-  procPath = (with pkgs; [
+  procPath = with pkgs; [
     coreutils
     findutils
     gnumake
     gnused
     gnugrep
     gawk
-  ]);
+  ];
   luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
     luafilesystem
     cjson
