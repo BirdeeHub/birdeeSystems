@@ -45,7 +45,7 @@ if userJsonCache == "" then
 end
 
 -- get initial i3 info
-local i3msgOut = os.capture(paths["i3-msg"] .. " -t get_workspaces", true)
+local i3msgOut = os.capture(nix_paths["i3-msg"] .. " -t get_workspaces", true)
 local cjson = require "cjson.safe"
 local i3wkspcInfo, err = cjson.decode(i3msgOut)
 if err ~= nil then
@@ -63,11 +63,11 @@ end
 -- get initial and final active mons
 local initial_mons = {}
 local final_mons = {}
-local initial_monstring = os.capture(paths.xrandr
-    .. [[ --listactivemonitors | ]] .. paths.awk .. [[ '{print($4)}']], true)
-os.execute(paths.xrandr .. [[ --auto]])
-local final_monstring = os.capture(paths.xrandr
-    .. [[ --listactivemonitors | ]] .. paths.awk .. [[ '{print($4)}']], true)
+local initial_monstring = os.capture(nix_paths.xrandr
+    .. [[ --listactivemonitors | ]] .. nix_paths.awk .. [[ '{print($4)}']], true)
+os.execute(nix_paths.xrandr .. [[ --auto]])
+local final_monstring = os.capture(nix_paths.xrandr
+    .. [[ --listactivemonitors | ]] .. nix_paths.awk .. [[ '{print($4)}']], true)
 for w in initial_monstring:gmatch("%S+") do
   table.insert(initial_mons, w)
 end
@@ -115,7 +115,7 @@ end
 local workspaceCommands = {}
 local focusedWorkspaces = {}
 local deferredCommand = nil
-local newi3msgOut = cjson.decode(os.capture(paths["i3-msg"] .. " -t get_workspaces", true))
+local newi3msgOut = cjson.decode(os.capture(nix_paths["i3-msg"] .. " -t get_workspaces", true))
 for _, v in pairs(newi3msgOut) do
   if v.focused == true then
     table.insert(focusedWorkspaces, v.num)
@@ -131,15 +131,15 @@ for i, mon in ipairs(newmon) do
         if v == wkspc then
           -- if the first workspace is focused, we will put it off until last
           -- because you cant move a focused workspace to another output
-          deferredCommand = paths["i3-msg"] .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
+          deferredCommand = nix_paths["i3-msg"] .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
           break
         else
-          table.insert(workspaceCommands, paths["i3-msg"] .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]])
+          table.insert(workspaceCommands, nix_paths["i3-msg"] .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]])
           break
         end
       end
     else
-      table.insert(workspaceCommands, paths["i3-msg"] .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]])
+      table.insert(workspaceCommands, nix_paths["i3-msg"] .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]])
     end
   end
 end
