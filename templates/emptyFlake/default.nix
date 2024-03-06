@@ -24,7 +24,7 @@ in {
   name = "${appname}";
   src = ./.;
   buildInputs = with pkgs; [  ];
-  propagatedBuildInputs = with pkgs; [ luaEnv ];
+  propagatedBuildInputs = with pkgs; [ luaEnv ] ++ procPath;
   nativeBuildInputs = with pkgs; [ makeWrapper ];
   propagatedNativeBuildInputs = with pkgs; [  ];
   buildPhase = ''
