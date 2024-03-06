@@ -23,8 +23,6 @@ in {
         dbus
         expat
         fontconfig
-        fontconfig
-        freetype
         freetype
         fuse3
         gdk-pixbuf
@@ -34,7 +32,6 @@ in {
         libGL
         libappindicator-gtk3
         libdrm
-        libglvnd
         libglvnd
         libnotify
         libpulseaudio
