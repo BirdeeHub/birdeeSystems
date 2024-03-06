@@ -40,6 +40,8 @@ if userJsonCache == "" then
     userJsonCache = os.getenv('XDG_CACHE_HOME')
   elseif os.getenv('HOME') ~= nil then
     userJsonCache = os.getenv('HOME') .. '/.cache'
+  else
+    userJsonCache = "/tmp"
   end
   userJsonCache = userJsonCache .. "/i3MonMemory/" .. os.getenv('USER') .."/userJsonCache.json"
 end
