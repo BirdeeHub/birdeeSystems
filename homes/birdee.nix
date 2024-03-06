@@ -136,6 +136,7 @@ in {
     nix-output-monitor
     nix-info
     direnv
+    steam-run
     # qemu
     # lxappearance
     qalculate-qt
