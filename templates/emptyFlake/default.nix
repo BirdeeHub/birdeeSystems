@@ -14,6 +14,7 @@
     inspect
     http
     cqueues
+    stdlib
   ]);
   appname = "REPLACE_ME";
 in
