@@ -34,6 +34,7 @@ local function dirname(str)
   return str:match("(.*[/\\])")
 end
 
+-- set userJsonCache location if not set by module
 if userJsonCache == "" then
   if os.getenv('XDG_CACHE_HOME') ~= nil then
     userJsonCache = os.getenv('XDG_CACHE_HOME')
@@ -43,6 +44,7 @@ if userJsonCache == "" then
   userJsonCache = userJsonCache .. "/i3MonMemory/" .. os.getenv('USER') .."/userJsonCache.json"
 end
 
+-- get initial i3 info
 local i3msgOut = os.capture(paths["i3-msg"] .. " -t get_workspaces", true)
 local cjson = require "cjson.safe"
 local i3wkspcInfo, err = cjson.decode(i3msgOut)
@@ -58,6 +60,7 @@ for _, v in ipairs(i3wkspcInfo) do
   end
 end
 
+-- get initial and final active mons
 local initial_mons = {}
 local final_mons = {}
 local initial_monstring = os.capture(paths.xrandr
@@ -74,6 +77,7 @@ end
 local gonemon = remove_values(initial_mons, final_mons)
 local newmon = remove_values(final_mons, initial_mons)
 
+-- process gonemons and cache
 local newCache = {}
 local rhandle = io.open(userJsonCache, "r")
 if rhandle then
@@ -104,6 +108,7 @@ if err == nil then
   end
 end
 
+-- create i3-msg commands to move workspaces and run xrandr scripts
 if alwaysRunConfig ~= nil then
   os.execute(alwaysRunConfig .. " " .. table.concat(final_mons, " "))
 end
@@ -138,6 +143,8 @@ for i, mon in ipairs(newmon) do
     end
   end
 end
+
+-- run all the moves last after the xrandring is completed.
 os.execute(table.concat(workspaceCommands, " "))
 if deferredCommand ~= nil then
   os.execute(deferredCommand)
