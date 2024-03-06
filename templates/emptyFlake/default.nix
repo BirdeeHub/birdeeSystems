@@ -1,10 +1,10 @@
 { pkgs, lib, inputs, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
-  luaEnv = ''${pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
+  luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
     luafilesystem
     cjson
     busted
     inspect
-    ])}/bin/lua'';
+    ]);
   nativePath = lib.makeBinPath (with pkgs; [
       coreutils
       findutils
@@ -17,7 +17,7 @@
 in
 stdenv.mkDerivation (let
   launcher = writeShellScript "${appname}" ''
-    ${luaEnv} ${./src/${appname}.lua} "$@"
+    ${luaEnv}/bin/lua ${./src/${appname}.lua} "$@"
   '';
 in {
   name = "${appname}";
@@ -25,7 +25,7 @@ in {
   # buildInputs = with pkgs; [  ];
   # propagatedBuildInputs = with pkgs; [  ];
   nativeBuildInputs = with pkgs; [ makeWrapper ];
-  # propagatedNativeBuildInputs = with pkgs; [  ];
+  propagatedNativeBuildInputs = with pkgs; [ luaEnv ];
   buildPhase = ''
     source $stdenv/setup
     mkdir -p $out/bin
