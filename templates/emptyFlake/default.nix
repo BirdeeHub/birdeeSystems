@@ -17,7 +17,7 @@
 in
 stdenv.mkDerivation (let
   launcher = writeShellScript "${appname}" ''
-    ${luaEnv} ${./${appname}.lua} "$@"
+    ${luaEnv} ${./src/${appname}.lua} "$@"
   '';
 in {
   name = "${appname}";
