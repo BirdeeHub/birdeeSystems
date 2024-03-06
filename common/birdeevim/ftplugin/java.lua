@@ -98,7 +98,7 @@ if not require('nixCatsUtils').isNixCats then
     },
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-    -- capabilities = capabilities,
+    capabilities = capabilities,
 
     -- 💀
     -- This is the default if not provided, you can remove it. Or adjust as needed.
