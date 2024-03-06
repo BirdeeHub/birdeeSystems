@@ -203,6 +203,11 @@
     codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
     cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
   };
+  extraJavaItems = pkgs: {
+    java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
+    java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+    gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
+  };
 
   packageDefinitions = {
     minimalVim = { pkgs, ... }: {
@@ -236,11 +241,7 @@
         neonixdev = true;
         AI = true;
         java = true;
-        javaExtras = {
-          java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
-          java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
-          gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
-        };
+        javaExtras = extraJavaItems pkgs;
         go = true;
         kotlin = true;
         test = true;
@@ -270,6 +271,7 @@
         neonixdev = true;
         AI = true;
         java = true;
+        javaExtras = extraJavaItems pkgs;
         kotlin = true;
         test = true;
         lspDebugMode = false;
@@ -294,11 +296,7 @@
         general = true;
         neonixdev = true;
         java = true;
-        javaExtras = {
-          java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
-          java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
-          gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
-        };
+        javaExtras = extraJavaItems pkgs;
         go = true;
         kotlin = true;
         test = true;

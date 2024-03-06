@@ -37,7 +37,6 @@
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
   vim.opt.list = true
   vim.opt.listchars:append("space:⋅")
   -- Set highlight on search
