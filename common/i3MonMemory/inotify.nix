@@ -1,28 +1,28 @@
 { pkgs, triggerFile, userJsonCache, xrandrPrimarySH, xrandrOthersSH, ... }: let
-
+    luaEnv = "${ pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
+      luafilesystem
+      cjson
+    ]) }/bin/lua";
     dependencies = {
       xrandr = pkgs.xorg.xrandr;
-      awk = pkgs.gawk;
-      jq = pkgs.jq;
       i3-msg = pkgs.i3;
       bash = pkgs.bash;
+      awk = pkgs.gawk;
     };
     mkScriptAliases = with builtins; packageSet: concatStringsSep "\n" 
-      (attrValues (mapAttrs (name: value: ''
-          ${name}() {
-            ${value}/bin/${name} "$@"
-          }
-      '') packageSet));
+      ([ (/* lua */ "
+        local paths = {}
+      ") ] ++ (attrValues (mapAttrs (name: value: /* lua */ ''
+            paths[ [[${name}]] ] = [[${value}/bin/${name}]]
+      '') packageSet)));
 
-    randrMemory = pkgs.writeScript "randrMemory.sh" (/*bash*/''
-        #!/usr/bin/env ${pkgs.bash}/bin/bash
+    randrMemory = pkgs.writeScript "randrMemory.lua" (/* lua */''
+        #!/usr/bin/env ${luaEnv}
         ${mkScriptAliases dependencies}
-        i3msgpath=${pkgs.i3}/bin/i3-msg
-        XRANDR_NEWMON_CONFIG=${xrandrOthersSH}
-        XRANDR_ALWAYSRUN_CONFIG=${xrandrPrimarySH}
-        #the script makes and uses this .json file. set it to an appropriate dir
-        JSON_CACHE_PATH=${userJsonCache}/$USER/userJsonCache.json
-    ''+ (builtins.readFile ./i3autoXrandrMemory.sh));
+        local newmonConfig = [[${xrandrOthersSH}]]
+        local alwaysRunConfig = [[${xrandrPrimarySH}]]
+        local userJsonCache = [[${userJsonCache}]]
+    '' + (builtins.readFile ./i3autoXrandrMemory.lua));
 
     i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''
         mkdir -p "$(dirname ${triggerFile})"

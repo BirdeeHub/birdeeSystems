@@ -102,10 +102,10 @@ in {
     XmonBootSH = mkUserXrandrScript "XmonBoot";
 
     # I could expose this as an option at some point idk.
-    # it saves to ${userJsonCache}/$USER/userJsonCache.json
+    # it saves to $XDG_CACHE_HOME/i3MonMemory/$USER/userJsonCache.json
     # it just contains json with display names and workspace numbers
     # and only needs to be readable and writeable by the user.
-    userJsonCache = ''''${XDG_CACHE_HOME:-"$HOME/.cache"}/i3monsMemory'';
+    userJsonCache = "";
 
     # Unfortunately triggerFile must be hardcoded
     # otherwise it may not be the same for home-manager and system modules
