@@ -1,4 +1,20 @@
-{ pkgs, luaEnv, procPath, appname, inputs, lib, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
+{ pkgs, inputs, lib, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
+  procPath = (with pkgs; [
+    coreutils
+    findutils
+    gnumake
+    gnused
+    gnugrep
+    gawk
+  ]);
+  luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
+    luafilesystem
+    cjson
+    busted
+    inspect
+    http
+  ]);
+  appname = "REPLACE_ME";
 in
 stdenv.mkDerivation (let
   launcher = writeShellScript "${appname}" ''
