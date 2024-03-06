@@ -8,15 +8,38 @@
   in
   forEachSystem (system: let
     pkgs = import nixpkgs { inherit system; };
-    default_package = pkgs.callPackage ./. { inherit inputs pkgs; };
+    procPath = (with pkgs; [
+      coreutils
+      findutils
+      gnumake
+      gnused
+      gnugrep
+      gawk
+    ]);
+    luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
+      luafilesystem
+      cjson
+      busted
+      inspect
+      http
+    ]);
+    appname = "REPLACE_ME";
+    default_package = pkgs.callPackage ./. { inherit inputs pkgs procPath luaEnv appname; };
   in{
     packages = {
       default = default_package;
+      ${appname} = default_package;
     };
     devShells = {
       default = pkgs.mkShell {
         packages = [ default_package ];
-        inputsFrom = [ ];
+        inputsFrom = [ luaEnv ] ++ procPath;
+        shellHook = ''
+        '';
+      };
+      ${appname} = pkgs.mkShell {
+        packages = [ default_package ];
+        inputsFrom = [ luaEnv ] ++ procPath;
         shellHook = ''
         '';
       };

@@ -1,19 +1,4 @@
-{ pkgs, lib, inputs, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
-  luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
-    luafilesystem
-    cjson
-    busted
-    inspect
-    ]);
-  nativePath = lib.makeBinPath (with pkgs; [
-      coreutils
-      findutils
-      gnumake
-      gnused
-      gnugrep
-      gawk
-    ]);
-  appname = "REPLACE_ME";
+{ pkgs, luaEnv, procPath, appname, inputs, lib, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
 in
 stdenv.mkDerivation (let
   launcher = writeShellScript "${appname}" ''
@@ -22,10 +7,10 @@ stdenv.mkDerivation (let
 in {
   name = "${appname}";
   src = ./.;
-  # buildInputs = with pkgs; [  ];
-  # propagatedBuildInputs = with pkgs; [  ];
+  buildInputs = with pkgs; [  ];
+  propagatedBuildInputs = with pkgs; [ luaEnv ];
   nativeBuildInputs = with pkgs; [ makeWrapper ];
-  propagatedNativeBuildInputs = with pkgs; [ luaEnv ];
+  propagatedNativeBuildInputs = with pkgs; [  ];
   buildPhase = ''
     source $stdenv/setup
     mkdir -p $out/bin
@@ -36,7 +21,7 @@ in {
   installPhase = '''';
   postFixup = ''
     wrapProgram $out/bin/${appname} \
-      --set PATH ${nativePath}
+      --set PATH ${lib.makeBinPath procPath}
   '';
   passthru = { inherit luaEnv; };
   meta = {
