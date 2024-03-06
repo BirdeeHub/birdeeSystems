@@ -207,6 +207,7 @@ in {
       luafilesystem
       cjson
       busted
+      inspect
     ]))
 
     # # You can also create simple shell scripts directly inside your
