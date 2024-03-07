@@ -9,7 +9,7 @@
       , userJsonCache ? null
       , ...
     }: stdenv.mkDerivation (let
-      procPath = (with pkgs; [ i3 xorg.xrandr gawk ]);
+      procPath = with pkgs; [ i3 xorg.xrandr gawk ];
       luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
       launcher = writeShellScript "${appname}" ''
         export PATH=${lib.makeBinPath procPath}
