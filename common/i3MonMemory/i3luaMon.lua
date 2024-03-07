@@ -1,7 +1,7 @@
 local newmonConfig = arg[1]
 local alwaysRunConfig = arg[2]
 local userJsonCache = arg[3]
-print(userJsonCache)
+
 function os.capture(cmd, trim)
   local f = assert(io.popen(cmd, 'r'))
   local s = assert(f:read('*a'))
@@ -113,6 +113,9 @@ if err == nil then
 end
 
 -- create i3-msg commands to move workspaces and run xrandr scripts
+local function mkWkspcCMD(wkspc, mon)
+  return [[i3-msg "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
+end
 if alwaysRunConfig ~= nil then
   os.execute(alwaysRunConfig .. " " .. table.concat(final_mons, " "))
 end
@@ -135,15 +138,15 @@ for i, mon in ipairs(newmon) do
         if v == wkspc then
           -- if the first workspace is focused, we will put it off until last
           -- because you cant move a focused workspace to another output
-          deferredCommand = [[i3-msg "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
+          deferredCommand = mkWkspcCMD(wkspc, mon)
           break
         else
-          table.insert(workspaceCommands, [[i3-msg "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]])
+          table.insert(workspaceCommands, mkWkspcCMD(wkspc, mon))
           break
         end
       end
     else
-      table.insert(workspaceCommands, [[i3-msg "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]])
+      table.insert(workspaceCommands, mkWkspcCMD(wkspc, mon))
     end
   end
 end
