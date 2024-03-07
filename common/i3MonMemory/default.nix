@@ -46,7 +46,10 @@ in {
       };
       denyXDGoverride = lib.mkEnableOption "dont override with scripts from $XDG_CONFIG_HOME";
       internalDependencies = lib.mkOption {
-        default = {};
+        default = {
+          xrandr = pkgs.xorg.xrandr;
+          awk = pkgs.gawk;
+        };
         type = attrsOf package;
         description = ''
           packages to be made available to all user xrandr scripts but not to path
@@ -71,20 +74,15 @@ in {
   };
 
   config = lib.mkIf cfg.enable (let
-    dependencies = {
-      xrandr = pkgs.xorg.xrandr;
-      awk = pkgs.gawk;
-      jq = pkgs.jq;
-    } // cfg.internalDependencies;
     mkScriptAliases = with builtins; packageSet: concatStringsSep "\n"
       (attrValues (mapAttrs (name: value: ''
-          ${name}() {
-            ${value}/bin/${name} "$@"
-          }
+        ${name}() {
+          ${value}/bin/${name} "$@"
+        }
       '') packageSet));
     ifXDGthen = if cfg.denyXDGoverride then "false &&" else "true &&";
     mkUserXrandrScript = scriptName: (pkgs.writeShellScript "${scriptName}.sh" (''
-        ${mkScriptAliases dependencies}
+        ${mkScriptAliases cfg.internalDependencies}
         userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
         ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
           exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh "$@"
