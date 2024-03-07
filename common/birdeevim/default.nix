@@ -69,6 +69,15 @@
         bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
         pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
+      # TODO: implement python stuff
+      python = with pkgs.python312Packages; [
+        python-lsp-server
+        python-lsp-black
+        python-lsp-ruff
+        pylsp-rope
+        pylsp-mypy
+        jedi-language-server
+      ];
       notes = with pkgs; [
       ];
     };
