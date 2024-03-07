@@ -74,15 +74,24 @@
         python-lsp-server
         python-lsp-black
         python-lsp-ruff
+        pyls-flake8
         pylsp-rope
         pylsp-mypy
-        jedi-language-server
+        # jedi-language-server
+        pyls-isort
+        pytest
+        yapf
+        pylint
+        autopep8
       ];
       notes = with pkgs; [
       ];
     };
 
     startupPlugins = {
+      python = with pkgs.vimPlugins; [
+        nvim-dap-python
+      ];
       notes = with pkgs.vimPlugins; [
         neorg
         neorg-telescope
