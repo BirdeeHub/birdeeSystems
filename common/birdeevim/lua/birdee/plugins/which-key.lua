@@ -104,4 +104,5 @@ require('which-key').register {
   ['<leader>m'] = { name = '[M]arkdown', _ = 'which_key_ignore' },
   ['<leader>F'] = { name = '[F]ormat', _ = 'which_key_ignore' },
   ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
+  ['<leader>x'] = { name = 'e[X]tra buffer commands', _ = 'which_key_ignore' },
 }

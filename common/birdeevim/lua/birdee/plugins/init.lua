@@ -90,6 +90,7 @@ require('lualine').setup({
       {
         'filename', path = 1, status = true,
       },
+      'buffers',
       -- 'lsp_progress',
     },
   },
