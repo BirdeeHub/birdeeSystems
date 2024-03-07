@@ -113,9 +113,6 @@ if err == nil then
 end
 
 -- create i3-msg commands to move workspaces and run xrandr scripts
-local function mkWkspcCMD(wkspc, mon)
-  return [[i3-msg "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
-end
 if alwaysRunConfig ~= nil then
   os.execute(alwaysRunConfig .. " " .. table.concat(final_mons, " "))
 end
@@ -127,6 +124,9 @@ for _, v in pairs(newi3msgOut) do
   if v.focused == true then
     table.insert(focusedWorkspaces, v.num)
   end
+end
+local function mkWkspcCMD(wkspc, mon)
+  return [[i3-msg "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
 end
 for i, mon in ipairs(newmon) do
   if newmonConfig ~= nil then
