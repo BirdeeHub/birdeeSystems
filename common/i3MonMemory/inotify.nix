@@ -1,19 +1,18 @@
 { pkgs, triggerFile, userJsonCache ? null, xrandrPrimarySH, xrandrOthersSH, ... }: let
-    luaDRV = { pkgs
-    , xrandrPrimarySH
-    , xrandrOthersSH
-    , lib
-    , makeWrapper
-    , writeShellScript
-    , stdenv
-    , appname ? "i3luaMon"
-    , userJsonCache ? null
-    , ...
+    i3luaMon = { pkgs
+      , xrandrPrimarySH
+      , xrandrOthersSH
+      , lib
+      , makeWrapper
+      , writeShellScript
+      , stdenv
+      , appname ? "i3luaMon"
+      , userJsonCache ? null
+      , ...
     }: stdenv.mkDerivation (let
       launcher = writeShellScript "${appname}" ''
         ${luaEnv}/bin/lua ${./${appname}.lua} "${xrandrOthersSH}" "${xrandrPrimarySH}"''
             + (if userJsonCache == null then "" else '' "${userJsonCache}"'');
-
       procPath = (with pkgs; [ i3 xorg.xrandr gawk ]);
       luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
     in {
@@ -39,7 +38,7 @@
     });
 
     appname = "i3luaMon";
-    randrMemory = pkgs.callPackage luaDRV {
+    randrMemory = pkgs.callPackage i3luaMon {
         inherit userJsonCache xrandrPrimarySH xrandrOthersSH appname;
     };
     i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''

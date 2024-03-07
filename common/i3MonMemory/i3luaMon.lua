@@ -48,6 +48,8 @@ if userJsonCache == nil then
     userJsonCache = "/tmp"
   end
   userJsonCache = userJsonCache .. "/i3MonMemory/" .. os.getenv('USER') .."/userJsonCache.json"
+else
+  userJsonCache = userJsonCache .. os.getenv('USER') .."/userJsonCache.json"
 end
 
 -- get initial i3 info

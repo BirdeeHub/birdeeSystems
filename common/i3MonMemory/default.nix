@@ -8,7 +8,7 @@ in {
       nameOfDir = lib.mkOption {
         default = "xrandrMemoryi3";
         type = str;
-        description = "name of directory in $XDG_CONFIG_HOME";
+        description = "name of directory in $XDG_CONFIG_HOME for configuration scripts.";
       };
       monitorScriptDir = lib.mkOption {
         default = null;
@@ -101,12 +101,6 @@ in {
 
     XmonBootSH = mkUserXrandrScript "XmonBoot";
 
-    # I could expose this as an option at some point idk.
-    # it saves to $XDG_CACHE_HOME/i3MonMemory/$USER/userJsonCache.json
-    # it just contains json with display names and workspace numbers
-    # and only needs to be readable and writeable by the user.
-    userJsonCache = null;
-
     # Unfortunately triggerFile must be hardcoded
     # otherwise it may not be the same for home-manager and system modules
     # maybe ill make it an option but make the description
@@ -116,7 +110,7 @@ in {
     triggerFile = ''/tmp/i3monsMemory/i3xrandrTriggerFile'';
 
     inotifyScript = import ./inotify.nix {
-      inherit pkgs triggerFile userJsonCache xrandrOthersSH xrandrPrimarySH;
+      inherit pkgs triggerFile xrandrOthersSH xrandrPrimarySH;
     };
 
     udevAction = pkgs.writeShellScript "i3xrandrMemoryUDEV.sh" ''
