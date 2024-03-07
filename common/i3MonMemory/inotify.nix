@@ -24,7 +24,7 @@
         mkdir -p $out/bin
         mkdir -p $out/lib
         cp ${launcher} $out/bin/${appname}
-        cp -r ./* $out/lib/
+        cp ./${appname}.lua $out/lib/
       '';
       installPhase = '''';
       postFixup = ''
