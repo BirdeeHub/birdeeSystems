@@ -57,7 +57,7 @@ local i3msgOut = os.capture([[i3-msg -t get_workspaces]], true)
 local cjson = require "cjson.safe"
 local i3wkspcInfo, err = cjson.decode(i3msgOut)
 if err ~= nil then
-  os.exit(1, true)
+  return
 end
 local byMon = {}
 for _, v in ipairs(i3wkspcInfo) do
