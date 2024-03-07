@@ -78,8 +78,8 @@ in {
       (attrValues (mapAttrs (name: value: ''
         ${name}() {
           ${value}/bin/${name} "$@"
-        }
-      '') packageSet));
+        }''
+      ) packageSet));
     ifXDGthen = if cfg.denyXDGoverride then "false &&" else "true &&";
     mkUserXrandrScript = scriptName: (pkgs.writeShellScript "${scriptName}.sh" (''
         ${mkScriptAliases cfg.internalDependencies}
