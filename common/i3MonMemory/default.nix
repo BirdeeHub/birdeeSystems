@@ -99,12 +99,9 @@ in {
 
     XmonBootSH = mkUserXrandrScript "XmonBoot";
 
-    # Unfortunately triggerFile must be hardcoded
-    # otherwise it may not be the same for home-manager and system modules
-    # maybe ill make it an option but make the description
-    # a big warning that it must match if set.
-    # this file must be writeable by root and readable by users.
-    # its content is irrelevant, user service triggers when the file is modified.
+    # Both the home manager and system modules MUST both point at this same file.
+    # root will write a random number to it on monitor hotplug.
+    # user service inotify script will be triggered and run the lua script.
     triggerFile = ''/tmp/i3monsMemory/i3xrandrTriggerFile'';
 
     inotifyScript = import ./inotify.nix {
@@ -143,10 +140,6 @@ in {
       Service = {
         Type = "oneshot";
         ExecStart = "${XmonBootSH}";
-        # Restart = "on-failure";
-        # ^ idk, if it fails its probably just gonna fail again
-        # because it means user error. It gives better error message
-        # when it only fails once.
       };
 
       Install.WantedBy = [ "graphical-session.target" "default.target" ];
