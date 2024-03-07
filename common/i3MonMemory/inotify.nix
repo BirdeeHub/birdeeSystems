@@ -3,22 +3,21 @@
       , xrandrPrimarySH
       , xrandrOthersSH
       , lib
-      , makeWrapper
       , writeShellScript
       , stdenv
       , appname ? "i3luaMon"
       , userJsonCache ? null
       , ...
     }: stdenv.mkDerivation (let
-      launcher = writeShellScript "${appname}" ''
-        ${luaEnv}/bin/lua ${./${appname}.lua} "${xrandrOthersSH}" "${xrandrPrimarySH}"''
-            + (if userJsonCache == null then "" else '' "${userJsonCache}"'');
       procPath = (with pkgs; [ i3 xorg.xrandr gawk ]);
       luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
+      launcher = writeShellScript "${appname}" ''
+        export PATH=${lib.makeBinPath procPath}
+        ${luaEnv}/bin/lua ${./${appname}.lua} "${xrandrOthersSH}" "${xrandrPrimarySH}"''
+            + (if userJsonCache == null then "" else '' "${userJsonCache}"'');
     in {
       name = "${appname}";
       src = ./.;
-      nativeBuildInputs = [ makeWrapper ];
       buildPhase = ''
         source $stdenv/setup
         mkdir -p $out/bin
@@ -26,12 +25,6 @@
         cp ${launcher} $out/bin/${appname}
         cp ./${appname}.lua $out/lib/
       '';
-      installPhase = '''';
-      postFixup = ''
-        wrapProgram $out/bin/${appname} \
-          --set PATH ${lib.makeBinPath procPath}
-      '';
-      passthru = { inherit luaEnv; };
       meta = {
         mainProgram = "${appname}";
       };
