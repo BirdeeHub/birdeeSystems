@@ -1,7 +1,14 @@
-local newmonConfig = arg[1]
-local alwaysRunConfig = arg[2]
-local userJsonCache = arg[3]
-
+function os.mkdir_recursive(path)
+  local lfs = require("lfs")
+  local current_path = "/"
+  for dir in path:gmatch("[^/\\]+") do
+    current_path = current_path .. dir .. "/"
+    lfs.mkdir(current_path)
+  end
+end
+function string.dirname(str)
+  return str:match("(.*[/\\])")
+end
 function os.capture(cmd, trim)
   local f = assert(io.popen(cmd, 'r'), "unable to execute: " .. cmd)
   local s = assert(f:read('*a'), "unable to read output of: " .. cmd)
@@ -12,20 +19,12 @@ function os.capture(cmd, trim)
   s = string.gsub(s, '[\n\r]+', ' ')
   return s
 end
-function os.mkdir_recursive(path)
-  lfs = require("lfs")
-  local current_path = "/"
-  for dir in path:gmatch("[^/\\]+") do
-    current_path = current_path .. dir .. "/"
-    lfs.mkdir(current_path)
-  end
-end
-local function remove_values(table1, table2)
+function table.remove_values(OG, rmv)
   local result = {}
-  for i, value in ipairs(table1) do
+  for i, value in ipairs(OG) do
     result[i] = value
   end
-  for _, value in ipairs(table2) do
+  for _, value in ipairs(rmv) do
     for i, v in ipairs(result) do
       if v == value then
         table.remove(result, i)
@@ -35,21 +34,23 @@ local function remove_values(table1, table2)
   end
   return result
 end
-local function dirname(str)
-  return str:match("(.*[/\\])")
+local function resolve_cachepath(path)
+  local resPath = path or ((os.getenv('XDG_CACHE_HOME')
+      or os.getenv('HOME') .. '/.cache'
+      or '/tmp') .. "/i3MonMemory/")
+  return resPath .. os.getenv('USER') .."/userJsonCache.json"
 end
 
--- set userJsonCache location if not set by module
-if userJsonCache == nil then
-  userJsonCache = (os.getenv('XDG_CACHE_HOME') or os.getenv('HOME') .. '/.cache' or '/tmp') .. "/i3MonMemory/"
-end
-userJsonCache = userJsonCache .. "/" .. os.getenv('USER') .."/userJsonCache.json"
+-- get config values and cache path
+local newmonConfig = arg[1]
+local alwaysRunConfig = arg[2]
+local userJsonCache = resolve_cachepath(arg[3])
 
 -- get initial i3 info
 local i3msgOut = os.capture([[i3-msg -t get_workspaces]], true)
 local cjson = require "cjson.safe"
 local i3wkspcInfo, err = cjson.decode(i3msgOut)
-assert(err ~= nil, "unable to parse i3-msg output")
+assert(err == nil, "unable to parse i3-msg output")
 local byMon = {}
 for _, v in ipairs(i3wkspcInfo) do
   if byMon[v.output] == nil then
@@ -71,25 +72,22 @@ end
 for w in final_monstring:gmatch("%S+") do
   table.insert(final_mons, w)
 end
-local gonemon = remove_values(initial_mons, final_mons)
-local newmon = remove_values(final_mons, initial_mons)
+local gonemon = table.remove_values(initial_mons, final_mons)
+local newmon = table.remove_values(final_mons, initial_mons)
 
 -- process gonemons and cache
 local newCache = {}
 local rhandle = io.open(userJsonCache, "r")
 if rhandle then
-  local cachedJson
-  cachedJson = rhandle:read("*a")
+  local cachedJson = rhandle:read("*a")
   rhandle:close()
   newCache, err = cjson.decode(cachedJson)
-  if err ~= nil then
-    newCache = {}
-  end
+  if err ~= nil then newCache = {} end
 end
 for _, mon in ipairs(gonemon) do
   for i, v in pairs(newCache) do
     if i ~= mon then
-      newCache[i] = remove_values(v, byMon[mon])
+      newCache[i] = table.remove_values(v, byMon[mon])
     end
   end
   newCache[mon] = byMon[mon]
@@ -97,7 +95,7 @@ end
 local resultJson
 resultJson, err = cjson.encode(newCache)
 if err == nil then
-  os.mkdir_recursive(dirname(userJsonCache))
+  os.mkdir_recursive(string.dirname(userJsonCache))
   local whandle = io.open(userJsonCache, "w")
   if whandle then
       whandle:write(resultJson)
@@ -143,9 +141,5 @@ for i, mon in ipairs(newmon) do
     end
   end
 end
-
 -- run all the moves last after the xrandring is completed.
-os.execute(table.concat(workspaceCommands, " "))
-if deferredCommand ~= nil then
-  os.execute(deferredCommand)
-end
+os.execute(table.concat(workspaceCommands, " ") .. (deferredCommand or ""))
