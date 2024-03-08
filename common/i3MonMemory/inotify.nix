@@ -16,8 +16,7 @@
         src = ./.;
         buildPhase = ''
           source $stdenv/setup
-          mkdir -p $out/lib
-          ${luaEnv}/bin/luac -o $out/lib/${appname}.luac ./${appname}.lua
+          ${luaEnv}/bin/luac -o $out ./${appname}.lua
         '';
         meta = {
           mainProgram = "${appname}";
@@ -25,7 +24,7 @@
       };
       launcher = writeShellScript "${appname}" ''
         export PATH=${lib.makeBinPath procPath}
-        ${luaEnv}/bin/lua ${luaProg}/lib/${appname}.luac "${xrandrOthersSH}" "${xrandrPrimarySH}"''
+        ${luaEnv}/bin/lua ${luaProg} "${xrandrOthersSH}" "${xrandrPrimarySH}"''
             + (if userJsonCache == null then "" else '' "${userJsonCache}"'');
     in launcher;
 
