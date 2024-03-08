@@ -1,13 +1,14 @@
 { pkgs, triggerFile, userJsonCache ? null, xrandrPrimarySH, xrandrOthersSH, ... }: let
 
-    i3luaMon = { pkgs
-      , xrandrPrimarySH
+    i3luaMon = {
+      appname ? "i3luaMon"
+      , userJsonCache ? null
       , xrandrOthersSH
+      , xrandrPrimarySH
+      , pkgs
       , lib
       , writeShellScript
       , stdenv
-      , appname ? "i3luaMon"
-      , userJsonCache ? null
       , ...
     }: let
       procPath = with pkgs; [ i3 xorg.xrandr gawk ];
