@@ -8,27 +8,26 @@
       , appname ? "i3luaMon"
       , userJsonCache ? null
       , ...
-    }: stdenv.mkDerivation (let
+    }: let
       procPath = with pkgs; [ i3 xorg.xrandr gawk ];
       luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
+      luaProg = stdenv.mkDerivation {
+        name = "${appname}";
+        src = ./.;
+        buildPhase = ''
+          source $stdenv/setup
+          mkdir -p $out/lib
+          ${luaEnv}/bin/luac -o $out/lib/${appname}.luac ./${appname}.lua
+        '';
+        meta = {
+          mainProgram = "${appname}";
+        };
+      };
       launcher = writeShellScript "${appname}" ''
         export PATH=${lib.makeBinPath procPath}
-        ${luaEnv}/bin/lua ${./${appname}.lua} "${xrandrOthersSH}" "${xrandrPrimarySH}"''
+        ${luaEnv}/bin/lua ${luaProg}/lib/${appname}.luac "${xrandrOthersSH}" "${xrandrPrimarySH}"''
             + (if userJsonCache == null then "" else '' "${userJsonCache}"'');
-    in {
-      name = "${appname}";
-      src = ./.;
-      buildPhase = ''
-        source $stdenv/setup
-        mkdir -p $out/bin
-        mkdir -p $out/lib
-        cp ${launcher} $out/bin/${appname}
-        cp ./${appname}.lua $out/lib/
-      '';
-      meta = {
-        mainProgram = "${appname}";
-      };
-    });
+    in launcher;
 
     appname = "i3luaMon";
     randrMemory = pkgs.callPackage i3luaMon {
@@ -39,7 +38,7 @@
         ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(dirname ${triggerFile})" |
         while read -r directory events filename; do
             if [ "$filename" = "$(basename ${triggerFile})" ]; then
-                ${pkgs.bash}/bin/bash -c '${randrMemory}/bin/${appname}'
+                ${pkgs.bash}/bin/bash -c '${randrMemory}'
             fi
         done
     '');
