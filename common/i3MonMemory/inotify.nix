@@ -1,4 +1,5 @@
 { pkgs, triggerFile, userJsonCache ? null, xrandrPrimarySH, xrandrOthersSH, ... }: let
+
     i3luaMon = { pkgs
       , xrandrPrimarySH
       , xrandrOthersSH
@@ -32,6 +33,7 @@
     randrMemory = pkgs.callPackage i3luaMon {
         inherit userJsonCache xrandrPrimarySH xrandrOthersSH appname;
     };
+
     i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''
         mkdir -p "$(dirname ${triggerFile})"
         ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(dirname ${triggerFile})" |
