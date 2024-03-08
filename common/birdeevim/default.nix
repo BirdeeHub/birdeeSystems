@@ -83,7 +83,7 @@
         # yapf
         pylint
         # autopep8
-        # debugpy
+        debugpy
       ];
       notes = with pkgs; [
       ];
