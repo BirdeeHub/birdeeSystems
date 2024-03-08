@@ -219,7 +219,7 @@
     # vim.g.python3_host_prog
     # :!nvim-python3
     extraPython3Packages = {
-      test = (py:[
+      python = (py:[
         py.debugpy
         py.pylsp-mypy
         py.pyls-isort
@@ -235,11 +235,11 @@
       ]);
     };
     extraPythonPackages = {
-      test = (_:[]);
+      python = (_:[]);
     };
     # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
-      test = [ (_:[]) ];
+      lua = [ (_:[]) ];
     };
   };
 
