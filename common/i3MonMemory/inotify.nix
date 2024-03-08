@@ -19,9 +19,7 @@
           source $stdenv/setup
           ${luaEnv}/bin/luac -o $out ./${appname}.lua
         '';
-        meta = {
-          mainProgram = "${appname}";
-        };
+        meta = { mainProgram = "${appname}"; };
       };
       launcher = writeShellScript "${appname}" ''
         export PATH=${lib.makeBinPath procPath}
@@ -29,9 +27,9 @@
             + (if userJsonCache == null then "" else '' "${userJsonCache}"'');
     in launcher;
 
-    appname = "i3luaMon";
-    randrMemory = pkgs.callPackage i3luaMon {
-        inherit userJsonCache xrandrPrimarySH xrandrOthersSH appname;
+    i3MonMemory = pkgs.callPackage i3luaMon {
+        appname = "i3luaMon";
+        inherit userJsonCache xrandrPrimarySH xrandrOthersSH;
     };
 
     i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''
@@ -39,7 +37,7 @@
         ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(dirname ${triggerFile})" |
         while read -r directory events filename; do
             if [ "$filename" = "$(basename ${triggerFile})" ]; then
-                ${pkgs.bash}/bin/bash -c '${randrMemory}'
+                ${pkgs.bash}/bin/bash -c '${i3MonMemory}'
             fi
         done
     '');
