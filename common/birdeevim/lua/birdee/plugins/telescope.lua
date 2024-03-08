@@ -73,8 +73,8 @@ end, { desc = '[S]earch [/] in Open Files' })
 
 -- Shortcut for searching your neovim configuration files
 vim.keymap.set('n', '<leader>sn', function()
-  builtin.find_files { cwd = vim.fn.stdpath 'config' }
-end, { desc = '[S]earch [N]eovim files' })
+  builtin.find_files { cwd = vim.fn.expand('$HOME') .. "/birdeeSystems" }
+end, { desc = '[S]earch [N]ix config files' })
 
 -- Telescope live_grep in git root
 -- Function to find the git root directory based on the current buffer's path
