@@ -57,6 +57,10 @@ if not require('nixCatsUtils').isNixCats then
   require('mason-lspconfig').setup()
 end
 
+if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
+  vim.lsp.set_log_level("debug")
+end
+
 local servers = {}
 if nixCats('neonixdev') then
   require('neodev').setup({})
@@ -157,10 +161,26 @@ end
 if nixCats('go') then
   servers.gopls = {}
 end
-if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
-  vim.lsp.set_log_level("debug")
+if nixCats('python') then
+  servers.pylsp = {
+    plugins = {
+      -- formatter options
+      black = { enabled = true },
+      autopep8 = { enabled = false },
+      yapf = { enabled = false },
+      -- linter options
+      pylint = { enabled = true, executable = "pylint" },
+      pyflakes = { enabled = false },
+      pycodestyle = { enabled = false },
+      -- type checker
+      pylsp_mypy = { enabled = true },
+      -- auto-completion options
+      jedi_completion = { fuzzy = true },
+      -- import sorting
+      pyls_isort = { enabled = true },
+    }
+  }
 end
-
 -- This is this flake's version of what kickstarter has set up for mason handlers.
 -- This is a convenience function that calls lspconfig on the lsps we downloaded via nix
 -- This will not download your lsp. Nix does that.

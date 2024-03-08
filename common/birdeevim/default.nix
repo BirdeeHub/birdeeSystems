@@ -74,16 +74,16 @@
         # jedi-language-server
         python-lsp-server
         python-lsp-black
-        python-lsp-ruff
-        pyls-flake8
-        pylsp-rope
+        # python-lsp-ruff
+        # pyls-flake8
+        # pylsp-rope
         pylsp-mypy
         pyls-isort
         pytest
-        yapf
+        # yapf
         pylint
-        autopep8
-        debugpy
+        # autopep8
+        # debugpy
       ];
       notes = with pkgs; [
       ];
