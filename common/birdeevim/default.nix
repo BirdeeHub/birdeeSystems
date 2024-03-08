@@ -41,6 +41,7 @@
       ];
       kotlin = with pkgs; [
         kotlin-language-server
+        ktlint
       ] ++ (if categories.java then [] else [
       ]);
       go = with pkgs; [
@@ -216,9 +217,6 @@
 
     # python.withPackages or lua.withPackages
     # vim.g.python3_host_prog
-    extraPythonPackages = {
-      test = (_:[]);
-    };
     extraPython3Packages = {
       test = (py:[
         py.debugpy
@@ -235,10 +233,13 @@
         # autopep8
       ]);
     };
+    extraPythonPackages = {
+      test = (_:[]);
+    };
+    # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
       test = [ (_:[]) ];
     };
-
   };
 
   # just to select the right thing out of bitwarden. 
