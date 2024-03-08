@@ -79,7 +79,6 @@ require('hlargs').setup({
 vim.cmd([[hi clear @lsp.type.parameter]])
 vim.cmd([[hi link @lsp.type.parameter Hlargs]])
 require('Comment').setup()
--- require('fidget').setup({})
 require('nvim-surround').setup()
 
 local harpoon = require("harpoon")

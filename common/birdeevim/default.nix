@@ -170,7 +170,6 @@
           #   ]
           # ))
           nvim-lspconfig
-          # fidget-nvim
           lualine-lsp-progress
           lualine-nvim
           marks-nvim
