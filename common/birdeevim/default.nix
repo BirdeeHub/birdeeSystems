@@ -217,6 +217,7 @@
 
     # python.withPackages or lua.withPackages
     # vim.g.python3_host_prog
+    # :!nvim-python3
     extraPython3Packages = {
       test = (py:[
         py.debugpy
