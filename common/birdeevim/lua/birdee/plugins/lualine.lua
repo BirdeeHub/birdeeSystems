@@ -39,7 +39,6 @@ require('lualine').setup({
       {
         'filename', path = 1, status = true,
       },
-      -- 
     },
     lualine_x = {
       'encoding',
@@ -54,7 +53,7 @@ require('lualine').setup({
     lualine_b = {},
     lualine_c = {
       {
-        'filename', path = 1, status = true,
+        'filename', path = 3, status = true,
       },
     },
     lualine_x = {'filetype'},
