@@ -50,11 +50,12 @@ require('lualine').setup({
   },
   inactive_sections = {
     lualine_a = {},
-    lualine_b = {},
-    lualine_c = {
+    lualine_b = {
       {
         'filename', path = 3, status = true,
       },
+    },
+    lualine_c = {
     },
     lualine_x = {'filetype'},
     lualine_y = {},
