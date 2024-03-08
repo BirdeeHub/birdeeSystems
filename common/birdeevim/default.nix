@@ -176,6 +176,7 @@
           comment-nvim
           indent-blankline-nvim
           gitsigns-nvim
+          nvim-lint
         ];
         other = [
           nvim-web-devicons
