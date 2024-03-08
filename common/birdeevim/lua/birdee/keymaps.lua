@@ -10,10 +10,10 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
 vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
 vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
 
-vim.keymap.set("n", "[b", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
-vim.keymap.set("n", "]b", "<cmd>bnext<CR>", { desc = 'Next buffer' })
-vim.keymap.set("n", "<leader>xl", "<cmd>b#<CR>", { desc = 'Last buffer' })
-vim.keymap.set("n", "<leader>xx", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
+vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
+vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
+vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
+vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
 
 -- see help sticky keys on windows
 vim.cmd([[command! W w]])
