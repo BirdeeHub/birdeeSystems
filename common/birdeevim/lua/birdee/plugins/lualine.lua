@@ -9,6 +9,21 @@ if colorschemer == 'onedark' then
   }
   require('onedark').load()
 end
+local components = {
+  python_env = {
+    function()
+      if vim.bo.filetype == "python" then
+        local venv = os.getenv "CONDA_DEFAULT_ENV" or os.getenv "VIRTUAL_ENV"
+        if venv then
+          local icons = require "nvim-web-devicons"
+          local py_icon, _ = icons.get_icon ".py"
+          return string.format(" " .. py_icon .. " (%s)", utils.env_cleanup(venv))
+        end
+      end
+      return ""
+    end
+  },
+}
 require('lualine').setup({
   options = {
     icons_enabled = true,
@@ -41,6 +56,7 @@ require('lualine').setup({
       },
     },
     lualine_x = {
+      components.python_env,
       'encoding',
       'fileformat',
       'filetype',

@@ -69,22 +69,20 @@
         bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
         pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
-      # TODO: implement python stuff
       python = with pkgs.python311Packages; [
         # jedi-language-server
         python-lsp-server
-        python-lsp-black
-        pylsp-mypy
-        pyls-isort
+        debugpy
         pytest
         pylint
-        debugpy
+        # NOTE: check if these actually have bin folders
+        # currently they are commented out though, unsure if I want them
+        # but if no bin folder, add to extraPython3packages instead
         # python-lsp-ruff
         # pyls-flake8
         # pylsp-rope
         # yapf
         # autopep8
-        # debugpy
       ];
       notes = with pkgs; [
       ];
@@ -216,6 +214,7 @@
     };
 
     # python.withPackages or lua.withPackages
+    # vim.g.python3_host_prog
     extraPythonPackages = {
       test = (_:[]);
     };
@@ -228,6 +227,11 @@
         py.python-lsp-black
         py.pytest
         py.pylint
+        # python-lsp-ruff
+        # pyls-flake8
+        # pylsp-rope
+        # yapf
+        # autopep8
       ]);
     };
     extraLuaPackages = {
