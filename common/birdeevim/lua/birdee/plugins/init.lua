@@ -35,7 +35,7 @@ require('birdee.plugins.gutter')
 
 local tsj = require('treesj')
 
-local langs = {--[[ configuration for languages ]]}
+-- local langs = {--[[ configuration for languages ]]}
 
 tsj.setup({
   ---@type boolean Use default keymaps (<space>m - toggle, <space>j - join, <space>s - split)
@@ -58,7 +58,7 @@ tsj.setup({
   ---@type nil|function Callback for treesj error handler. func (err_text, level, ...other_text)
   on_error = nil,
   ---@type table Presets for languages
-  -- langs = {}, -- See the default presets in lua/treesj/langs
+  -- langs = langs, -- See the default presets in lua/treesj/langs
 })
 vim.keymap.set('n', '<leader>Ft', [[:TSJToggle<CR>]], { desc = "treesj split/join" })
 
