@@ -70,14 +70,14 @@
         pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
       # TODO: implement python stuff
-      python = with pkgs.python312Packages; [
+      python = with pkgs.python311Packages; [
+        # jedi-language-server
         python-lsp-server
         python-lsp-black
         python-lsp-ruff
         pyls-flake8
         pylsp-rope
         pylsp-mypy
-        # jedi-language-server
         pyls-isort
         pytest
         yapf
@@ -263,6 +263,7 @@
         javaExtras = extraJavaItems pkgs;
         go = true;
         kotlin = true;
+        python = true;
         test = true;
         lspDebugMode = false;
         colorscheme = "onedark";
