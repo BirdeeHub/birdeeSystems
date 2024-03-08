@@ -74,16 +74,17 @@
         # jedi-language-server
         python-lsp-server
         python-lsp-black
-        # python-lsp-ruff
-        # pyls-flake8
-        # pylsp-rope
         pylsp-mypy
         pyls-isort
         pytest
-        # yapf
         pylint
-        # autopep8
         debugpy
+        # python-lsp-ruff
+        # pyls-flake8
+        # pylsp-rope
+        # yapf
+        # autopep8
+        # debugpy
       ];
       notes = with pkgs; [
       ];
@@ -212,6 +213,25 @@
       test = [
         '' --set BIRDTVAR2 "It worked again!"''
       ];
+    };
+
+    # python.withPackages or lua.withPackages
+    extraPythonPackages = {
+      test = (_:[]);
+    };
+    extraPython3Packages = {
+      test = (py:[
+        py.debugpy
+        py.pylsp-mypy
+        py.pyls-isort
+        py.python-lsp-server
+        py.python-lsp-black
+        py.pytest
+        py.pylint
+      ]);
+    };
+    extraLuaPackages = {
+      test = [ (_:[]) ];
     };
 
   };

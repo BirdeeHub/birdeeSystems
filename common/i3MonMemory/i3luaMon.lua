@@ -40,17 +40,9 @@ end
 
 -- set userJsonCache location if not set by module
 if userJsonCache == nil then
-  if os.getenv('XDG_CACHE_HOME') ~= nil then
-    userJsonCache = os.getenv('XDG_CACHE_HOME')
-  elseif os.getenv('HOME') ~= nil then
-    userJsonCache = os.getenv('HOME') .. '/.cache'
-  else
-    userJsonCache = "/tmp"
-  end
-  userJsonCache = userJsonCache .. "/i3MonMemory/" .. os.getenv('USER') .."/userJsonCache.json"
-else
-  userJsonCache = userJsonCache .. "/" .. os.getenv('USER') .."/userJsonCache.json"
+  userJsonCache = (os.getenv('XDG_CACHE_HOME') or os.getenv('HOME') .. '/.cache' or '/tmp') .. "/i3MonMemory/"
 end
+userJsonCache = userJsonCache .. "/" .. os.getenv('USER') .."/userJsonCache.json"
 
 -- get initial i3 info
 local i3msgOut = os.capture([[i3-msg -t get_workspaces]], true)
