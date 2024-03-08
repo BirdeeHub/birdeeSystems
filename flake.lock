@@ -441,11 +441,11 @@
     "neovim": {
       "flake": false,
       "locked": {
-        "lastModified": 1709764988,
-        "narHash": "sha256-qNpTZNbWdZo1QyjOC5AgR7Cidu7Hs6JeeVxmKAjjcV0=",
+        "lastModified": 1709871671,
+        "narHash": "sha256-TQG9DVB2u8wNLs/jwlOwjMlUppxaGhpS9ERagVkLsuE=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "6525832a8c4d44a8ebabba02a5ea1ce09b389a4f",
+        "rev": "25124d3607b8f645d65e734c72cfc1da7498b34e",
         "type": "github"
       },
       "original": {
@@ -466,11 +466,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1709792049,
-        "narHash": "sha256-sf7fz0hDEkVD1eqEUQrJc8CNWTclabhQ2Nkd2HmLx4A=",
+        "lastModified": 1709874440,
+        "narHash": "sha256-YDO5RhAjLHD7DJp2AmxO/X1mVwUvaY0dp+shp/PxzLk=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "4659c445c1a485dc05665887a05e2e153f416e14",
+        "rev": "a5468cc9536b4f7644e515b08359d48b3ada7080",
         "type": "github"
       },
       "original": {
@@ -716,11 +716,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1709859919,
-        "narHash": "sha256-jtdb0gruPEdrt09wdfD60u9/WsrarsXw9PbLJUyIfaQ=",
+        "lastModified": 1709876523,
+        "narHash": "sha256-0PTUu6ZKAf19/B5gt/aJpllSjeas2pu6W6kfBeVRgS0=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "58fa39c20a5f813f127d8fc0d06e36dba31ec6af",
+        "rev": "9ef124059b9f2fb675ae3a6ae68e62a3ef8f7b6a",
         "type": "github"
       },
       "original": {
