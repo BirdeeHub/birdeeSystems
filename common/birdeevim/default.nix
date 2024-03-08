@@ -293,6 +293,7 @@
         java = true;
         javaExtras = extraJavaItems pkgs;
         kotlin = true;
+        python = true;
         test = true;
         lspDebugMode = false;
         colorscheme = "tokyonight";
@@ -319,6 +320,7 @@
         javaExtras = extraJavaItems pkgs;
         go = true;
         kotlin = true;
+        python = true;
         test = true;
         lspDebugMode = false;
         colorscheme = "catppuccin";
