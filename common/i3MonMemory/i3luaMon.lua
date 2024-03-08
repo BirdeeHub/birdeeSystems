@@ -36,8 +36,7 @@ function table.remove_values(OG, rmv)
 end
 local function resolve_cachepath(path)
   local resPath = path or ((os.getenv('XDG_CACHE_HOME')
-      or os.getenv('HOME') .. '/.cache'
-      or '/tmp') .. "/i3MonMemory/")
+      or os.getenv('HOME') .. '/.cache' or '/tmp') .. "/i3MonMemory/")
   return resPath .. os.getenv('USER') .."/userJsonCache.json"
 end
 
