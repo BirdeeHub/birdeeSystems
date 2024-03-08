@@ -34,16 +34,13 @@ function table.remove_values(OG, rmv)
   end
   return result
 end
-local function resolve_cachepath(path)
-  local resPath = path or ((os.getenv('XDG_CACHE_HOME')
-      or os.getenv('HOME') .. '/.cache' or '/tmp') .. "/i3MonMemory/")
-  return resPath .. os.getenv('USER') .."/userJsonCache.json"
-end
 
 -- get config values and cache path
 local newmonConfig = arg[1]
 local alwaysRunConfig = arg[2]
-local userJsonCache = resolve_cachepath(arg[3])
+local basecachepath = arg[3] or ((os.getenv('XDG_CACHE_HOME')
+    or os.getenv('HOME') .. '/.cache' or '/tmp') .. "/i3MonMemory/")
+local userJsonCache = basecachepath .. os.getenv('USER') .."/userJsonCache.json"
 
 -- get initial i3 info
 local i3msgOut = os.capture([[i3-msg -t get_workspaces]], true)
