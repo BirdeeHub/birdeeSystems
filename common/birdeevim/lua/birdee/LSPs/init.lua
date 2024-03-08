@@ -162,6 +162,7 @@ if nixCats('go') then
   servers.gopls = {}
 end
 if nixCats('python') then
+  -- servers.pyright = {},
   servers.pylsp = {
     plugins = {
       -- formatter options
@@ -181,21 +182,8 @@ if nixCats('python') then
     }
   }
 end
--- This is this flake's version of what kickstarter has set up for mason handlers.
--- This is a convenience function that calls lspconfig on the lsps we downloaded via nix
--- This will not download your lsp. Nix does that.
-
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---  All of them are listed in https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
---  You may do the same thing with cmd
 
 -- servers.clangd = {},
--- servers.gopls = {},
--- servers.pyright = {},
 -- servers.rust_analyzer = {},
 -- servers.tsserver = {},
 -- servers.html = { filetypes = { 'html', 'twig', 'hbs'} },
