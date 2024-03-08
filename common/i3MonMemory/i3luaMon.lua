@@ -3,8 +3,8 @@ local alwaysRunConfig = arg[2]
 local userJsonCache = arg[3]
 
 function os.capture(cmd, trim)
-  local f = assert(io.popen(cmd, 'r'))
-  local s = assert(f:read('*a'))
+  local f = assert(io.popen(cmd, 'r'), "unable to execute: " .. cmd)
+  local s = assert(f:read('*a'), "unable to read output of: " .. cmd)
   f:close()
   if not trim then return s end
   s = string.gsub(s, '^%s+', "")
@@ -13,10 +13,11 @@ function os.capture(cmd, trim)
   return s
 end
 function os.mkdir_recursive(path)
+  lfs = require("lfs")
   local current_path = "/"
   for dir in path:gmatch("[^/\\]+") do
     current_path = current_path .. dir .. "/"
-    require("lfs").mkdir(current_path)
+    lfs.mkdir(current_path)
   end
 end
 local function remove_values(table1, table2)
@@ -48,9 +49,7 @@ userJsonCache = userJsonCache .. "/" .. os.getenv('USER') .."/userJsonCache.json
 local i3msgOut = os.capture([[i3-msg -t get_workspaces]], true)
 local cjson = require "cjson.safe"
 local i3wkspcInfo, err = cjson.decode(i3msgOut)
-if err ~= nil then
-  return
-end
+assert(err ~= nil, "unable to parse i3-msg output")
 local byMon = {}
 for _, v in ipairs(i3wkspcInfo) do
   if byMon[v.output] == nil then
