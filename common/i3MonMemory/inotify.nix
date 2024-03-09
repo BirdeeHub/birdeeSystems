@@ -1,7 +1,7 @@
 { pkgs, triggerFile, userJsonCache ? null, xrandrPrimarySH, xrandrOthersSH, ... }: let
 
     i3luaMon = {
-      appname ? "i3luaMon"
+      appname
       , userJsonCache ? null
       , xrandrOthersSH
       , xrandrPrimarySH
