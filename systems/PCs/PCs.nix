@@ -119,6 +119,7 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -169,6 +170,7 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    hplip
     qemu
     fuse
     fuse3
