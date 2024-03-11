@@ -183,10 +183,20 @@ if nixCats('python') then
   }
 end
 
--- servers.clangd = {},
--- servers.rust_analyzer = {},
--- servers.tsserver = {},
--- servers.html = { filetypes = { 'html', 'twig', 'hbs'} },
+if nixCats('C') then
+  servers.clangd = {
+    clangd_config = {
+      init_options = {
+        compilationDatabasePath="./build",
+      },
+    }
+  }
+  -- vim.cmd[[let g:cmake_link_compile_commands = 1]]
+  servers.cmake = {}
+end
+-- servers.rust_analyzer = {}
+-- servers.tsserver = {}
+-- servers.html = { filetypes = { 'html', 'twig', 'hbs'} }
 
 if not require('nixCatsUtils').isNixCats then
   -- Ensure the servers above are installed

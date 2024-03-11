@@ -87,9 +87,20 @@
       ];
       notes = with pkgs; [
       ];
+      C = with pkgs; [
+        llvmPackages_16.clangUseLLVM
+        cmake-language-server
+        cpplint
+        cmake
+        cmake-format
+      ];
     };
 
     startupPlugins = {
+      C = with pkgs.vimPlugins; [
+        vim-cmake
+        clangd_extensions-nvim
+      ];
       python = with pkgs.vimPlugins; [
         nvim-dap-python
       ];
@@ -266,7 +277,7 @@
     };
     birdeeVim = { pkgs, ... }@misc: {
       settings = {
-        wrapRc = true;
+        wrapRc = false;
         # so that it finds my ai auths in ~/.cache/birdeevim
         configDirName = "birdeevim";
         withNodeJs = true;
@@ -291,6 +302,7 @@
         go = true;
         kotlin = true;
         python = true;
+        C = true;
         test = true;
         lspDebugMode = false;
         colorscheme = "onedark";

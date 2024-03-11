@@ -7,6 +7,9 @@ conform.setup({
     -- Conform will run multiple formatters sequentially
     python = { "isort", "black" },
     kotlin = { 'ktlint' },
+    c = { "clang_format" },
+    cpp = { "clang_format" },
+    cmake = { "cmake_format" },
     -- Use a sub-list to run only the first available formatter
     -- javascript = { { "prettierd", "prettier" } },
   },

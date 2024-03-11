@@ -21,6 +21,8 @@ vim.cmd([[command! Wq wq]])
 vim.cmd([[command! WQ wq]])
 vim.cmd([[command! Q q]])
 
+vim.keymap.set("n", "<leader>:", ":<C-f>", { desc = 'delete buffer' })
+
 -- opposite of A
 vim.keymap.set('n', 'B', '^i', { noremap = true, silent = true, desc = 'edit at beginning of line' })
 
