@@ -30,22 +30,22 @@ with builtins; rec {
 
   mkLuaApp = arguments: let
     mkLuaAppWcallPackage = {
-    pkgs
-    , lib
-    , writeShellScriptBin
-    , writeShellScript
-    , writeText
-    , stdenv
-    # args below:
-    , appname
-    , procPath
-    , luaEnv
-    , source
-    , extra_launcher_lua ? ""
-    , extra_launcher_commands ? ""
-    , args ? []
-    , to_bin ? true
-    , ...
+      pkgs
+      , lib
+      , writeShellScriptBin
+      , writeShellScript
+      , writeText
+      , stdenv
+      # args below:
+      , appname
+      , procPath
+      , luaEnv
+      , source
+      , extra_launcher_lua ? ""
+      , extra_launcher_commands ? ""
+      , args ? []
+      , to_bin ? true
+      , ...
     }: let
       luaFileAction = /*bash*/''
         local file=$1
@@ -63,9 +63,9 @@ with builtins; rec {
         buildPhase = mkRecBuilder { action = luaFileAction; };
       };
       launcher = let
-        main = writeText "main.lua" ''
-          package.path = package.path .. ";${app}/?.luac;${app}/?/init.luac;./?.luac;./?/init.luac"
-          package.cpath = package.cpath .. ";${app}/?.luac;${app}/?/init.luac;./?.luac;./?/init.luac"
+        main = writeText "main.lua" /* lua */ ''
+          package.path = package.path .. [[;${app}/?.luac;${app}/?/init.luac;./?.luac;./?/init.luac]]
+          package.cpath = package.cpath .. [[;${app}/?.luac;${app}/?/init.luac;./?.luac;./?/init.luac]]
           ${extra_launcher_lua}
           dofile("${app}/init.luac")
         '';
