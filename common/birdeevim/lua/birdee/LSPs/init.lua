@@ -185,11 +185,11 @@ end
 
 if nixCats('C') then
   servers.clangd = {
-    clangd_config = {
-      init_options = {
-        compilationDatabasePath="./build",
-      },
-    }
+    -- clangd_config = {
+    --   init_options = {
+    --     compilationDatabasePath="./build",
+    --   },
+    -- }
   }
   -- vim.cmd[[let g:cmake_link_compile_commands = 1]]
   servers.cmake = {}
