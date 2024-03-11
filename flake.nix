@@ -6,7 +6,7 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +49,9 @@
     pkgs = import inputs.nixpkgs {
       inherit system overlays;
       config.allowUnfree = true;
+      config.permittedInsecurePackages = [
+        "nix-2.16.2"
+      ];
     };
     users = import ./userdata pkgs;
     common = import ./common { inherit inputs pkgs; };

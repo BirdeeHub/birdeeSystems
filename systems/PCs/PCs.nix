@@ -33,11 +33,13 @@ in {
     i3MonMemory.enable = true;
     LD.enable = true;
   };
-
-  nix.extraOptions = ''
-    plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
-    extra-builtins-file = ${./.}
-  '';
+  nixpkgs.config.permittedInsecurePackages = [
+    "nix-2.16.2"
+  ];
+  # nix.extraOptions = ''
+  #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
+  #   extra-builtins-file = ${./.}
+  # '';
 
   services.flatpak.enable = true;
 
@@ -212,7 +214,7 @@ in {
   # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-curses;
     enableSSHSupport = true;
   };
 

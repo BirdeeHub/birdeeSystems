@@ -36,5 +36,5 @@ in {
     tmux = import ./term/tmux homeModule;
   };
   shell = import ./term/shell (args // conditions);
-  util = import ./util {};
+  util = import ./util;
 }
