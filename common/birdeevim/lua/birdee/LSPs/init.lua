@@ -184,7 +184,7 @@ if nixCats('C') then
     --   },
     -- }
   }
-  -- vim.cmd[[let g:cmake_link_compile_commands = 1]]
+  vim.cmd[[let g:cmake_link_compile_commands = 1]]
   servers.cmake = {}
 end
 -- servers.rust_analyzer = {}
