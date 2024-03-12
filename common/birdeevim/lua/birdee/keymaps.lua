@@ -24,7 +24,8 @@ vim.cmd([[command! Q q]])
 vim.keymap.set("n", "<leader>:", ":<C-f>", { desc = 'delete buffer' })
 
 -- opposite of A
-vim.keymap.set('n', 'B', '^i', { noremap = true, silent = true, desc = 'edit at beginning of line' })
+-- Im dumb and didnt know this was actually I
+-- vim.keymap.set('n', 'B', '^i', { noremap = true, silent = true, desc = 'edit at beginning of line' })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })

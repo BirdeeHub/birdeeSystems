@@ -42,14 +42,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-if nixCats('cmp') then
-  capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-end
---vim.tbl_extend('keep', capabilities, require'coq'.lsp_ensure_capabilities())
---vim.api.nvim_out_write(vim.inspect(capabilities))
-
 if not require('nixCatsUtils').isNixCats then
   -- mason-lspconfig requires that these setup functions are called in this order
   -- before setting up the servers.
@@ -185,6 +177,7 @@ end
 
 if nixCats('C') then
   servers.clangd = {
+    -- unneded thanks to clangd_extensions-nvim I think
     -- clangd_config = {
     --   init_options = {
     --     compilationDatabasePath="./build",
@@ -209,8 +202,7 @@ if not require('nixCatsUtils').isNixCats then
   mason_lspconfig.setup_handlers {
     function(server_name)
       require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        -- capabilities = require('caps-onattach').get_capabilities(),
+        capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
         -- on_attach = require('caps-onattach').on_attach,
         settings = servers[server_name],
         filetypes = (servers[server_name] or {}).filetypes,
@@ -220,8 +212,7 @@ if not require('nixCatsUtils').isNixCats then
 else
   for server_name,_ in pairs(servers) do
     require('lspconfig')[server_name].setup({
-      capabilities = capabilities,
-      -- capabilities = require('caps-onattach').get_capabilities(),
+      capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
       -- on_attach = require('caps-onattach').on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,

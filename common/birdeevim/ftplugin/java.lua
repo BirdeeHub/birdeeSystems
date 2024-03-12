@@ -47,12 +47,6 @@ if not require('nixCatsUtils').isNixCats then
 
   vim.list_extend(bundles, vim.split(jda_server_jar, "\n"))
 
-  -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  if nixCats('cmp') then
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-  end
-
   -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
   local config = {
     -- The command that starts the language server
@@ -97,8 +91,7 @@ if not require('nixCatsUtils').isNixCats then
       workspace_dir,
     },
 
-    -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-    capabilities = capabilities,
+    capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
 
     -- 💀
     -- This is the default if not provided, you can remove it. Or adjust as needed.
