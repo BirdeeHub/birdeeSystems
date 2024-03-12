@@ -4,6 +4,9 @@
   forEachSystem = inputs.flake-utils.lib.eachSystem inputs.flake-utils.lib.allSystems;
   extra_pkg_config = {
     allowUnfree = true;
+    permittedInsecurePackages = [
+      "nix-2.16.2"
+    ];
   };
   inherit (forEachSystem (system: let
     dependencyOverlays = [ (utils.mergeOverlayLists inputs.nixCats.dependencyOverlays.${system}
@@ -334,6 +337,7 @@
         javaExtras = extraJavaItems pkgs;
         kotlin = true;
         python = true;
+        C = true;
         test = true;
         lspDebugMode = false;
         colorscheme = "tokyonight";
@@ -361,6 +365,7 @@
         go = true;
         kotlin = true;
         python = true;
+        C = true;
         test = true;
         lspDebugMode = false;
         colorscheme = "catppuccin";
