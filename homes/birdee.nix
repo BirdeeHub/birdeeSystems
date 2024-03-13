@@ -151,7 +151,7 @@ in {
     peek
     gnumake
     cmake
-    gccgo
+    # gccgo
 
     go
     gotools

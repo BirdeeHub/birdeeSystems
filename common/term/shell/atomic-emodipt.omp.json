@@ -26,7 +26,7 @@
                 "bash": "Bash"
               }
             },
-            "template": " \ue795 {{ .Name }}"
+            "template": "{{ if eq \"0\" .Env.DEVSHELL }} <#89E7FA>\uf313</> {{else}} \ue795 {{ end }}{{ .Name }}"
           },
           {
             "foreground": "#F3C267",
