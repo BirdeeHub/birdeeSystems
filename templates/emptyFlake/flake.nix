@@ -17,7 +17,9 @@
       default = pkgs.mkShell {
         packages = [ default_package ];
         inputsFrom = [];
+        DEVSHELL = 0;
         shellHook = ''
+          exec ${pkgs.zsh}/bin/zsh
         '';
       };
     };

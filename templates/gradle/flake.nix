@@ -88,6 +88,10 @@
 				JAVA_HOME        = "${jdk}";
 				LD_LIBRARY_PATH  = "${lib.makeLibraryPath buildInputs}";
 				ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk/";
+				DEVSHELL = 0;
+				shellHook = ''
+					exec ${pkgs.zsh}/bin/zsh
+				'';
 			};
 
 			doc = pkgs.mkShell rec {
@@ -99,6 +103,10 @@
 				buildInputs = with pkgs; [];
 
 				JAVA_HOME = "${jdk}";
+				DEVSHELL = 0;
+				shellHook = ''
+					exec ${pkgs.zsh}/bin/zsh
+				'';
 			};
 		};
 	};
