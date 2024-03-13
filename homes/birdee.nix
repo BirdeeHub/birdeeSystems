@@ -151,8 +151,6 @@ in {
     peek
     gnumake
     cmake
-    # llvmPackages_16.clangUseLLVM
-    # llvmPackages_16.bintools
     gccgo
 
     go
