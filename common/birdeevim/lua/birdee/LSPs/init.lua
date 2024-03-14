@@ -156,25 +156,43 @@ end
 if nixCats('python') then
   -- servers.pyright = {},
   servers.pylsp = {
-    plugins = {
-      -- formatter options
-      black = { enabled = true },
-      autopep8 = { enabled = false },
-      yapf = { enabled = false },
-      -- linter options
-      pylint = { enabled = true, executable = "pylint" },
-      pyflakes = { enabled = false },
-      pycodestyle = { enabled = false },
-      -- type checker
-      pylsp_mypy = { enabled = true },
-      -- auto-completion options
-      jedi_completion = { fuzzy = true },
-      -- import sorting
-      pyls_isort = { enabled = true },
-    }
+    pylsp = {
+      plugins = {
+        -- formatter options
+        black = { enabled = true },
+        autopep8 = { enabled = false },
+        yapf = { enabled = false },
+        -- linter options
+        pylint = { enabled = true, executable = "pylint" },
+        pyflakes = { enabled = false },
+        pycodestyle = { enabled = false },
+        -- type checker
+        pylsp_mypy = { enabled = true },
+        -- auto-completion options
+        jedi_completion = { fuzzy = true },
+        -- import sorting
+        pyls_isort = { enabled = true },
+      },
+    },
   }
 end
 
+if nixCats('htmx') then
+  servers.htmx = {}
+  servers.html = {
+    html = {
+      format = {
+        templating = true,
+        wrapLineLength = 120,
+        wrapAttributes = 'auto',
+      },
+      hover = {
+        documentation = true,
+        references = true,
+      },
+    },
+  }
+end
 if nixCats('C') then
   servers.clangd = {
     -- unneded thanks to clangd_extensions-nvim I think

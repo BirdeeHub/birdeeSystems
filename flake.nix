@@ -36,6 +36,10 @@
     };
     codeium.url = "github:Exafunction/codeium.nvim";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
+    vscode-html-languageservice = {
+      url = "github:microsoft/vscode-html-languageservice";
+      flake = false;
+    };
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
@@ -59,7 +63,7 @@
     system-modules = common { homeModule = false; };
   in {
     packages = home-modules.birdeeVim.packages;
-    inherit home-modules system-modules;
+    inherit home-modules system-modules overlays;
     homeConfigurations = {
       "birdee@dustbook" = home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {

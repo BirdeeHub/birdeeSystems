@@ -56,6 +56,10 @@
         go-tools
         go
       ];
+      htmx = with pkgs; [
+        htmx-lsp
+        html-lsp
+      ];
       lua = with pkgs; [
         lua-language-server
       ];
@@ -80,9 +84,6 @@
         debugpy
         pytest
         pylint
-        # NOTE: check if these actually have bin folders
-        # currently they are commented out though, unsure if I want them
-        # but if no bin folder, add to extraPython3packages instead
         # python-lsp-ruff
         # pyls-flake8
         # pylsp-rope
@@ -282,7 +283,7 @@
     };
     birdeeVim = { pkgs, ... }@misc: {
       settings = {
-        wrapRc = true;
+        wrapRc = false;
         # so that it finds my ai auths in ~/.cache/birdeevim
         configDirName = "birdeevim";
         withNodeJs = true;
@@ -301,6 +302,7 @@
         customPlugins = true;
         general = true;
         neonixdev = true;
+        htmx = true;
         AI = true;
         java = true;
         javaExtras = extraJavaItems pkgs;
