@@ -45,7 +45,7 @@ let
     name = "vscode-html-languageservice";
     packageName = "vscode-html-languageservice";
     version = "5.1.2";
-    src = inputs.vscode-html-languageservice.outPath;
+    src = inputs.vscode-html-languageservice;
     dependencies = [
       sources."@vscode/l10n-0.0.18"
       sources."vscode-languageserver-textdocument-1.0.11"
