@@ -184,7 +184,7 @@ if nixCats('C') then
     --   },
     -- }
   }
-  vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -Bbuild .<CR>]], { desc = 'Run CMake with compile_commands.json' })
+  vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]], { desc = 'Run CMake with compile_commands.json' })
   vim.cmd[[let g:cmake_link_compile_commands = 1]]
   servers.cmake = {}
 end
