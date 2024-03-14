@@ -283,7 +283,7 @@
     };
     birdeeVim = { pkgs, ... }@misc: {
       settings = {
-        wrapRc = false;
+        wrapRc = true;
         # so that it finds my ai auths in ~/.cache/birdeevim
         configDirName = "birdeevim";
         withNodeJs = true;
