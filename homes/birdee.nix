@@ -40,6 +40,12 @@ in {
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
 
+  nix.gc = {
+    automatic = true;
+    frequency = "weekly";
+    options = "-d";
+  };
+
   home.shellAliases = {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" (/*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
