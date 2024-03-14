@@ -58,6 +58,7 @@
       ];
       htmx = with pkgs; [
         htmx-lsp
+        # TODO: html lsp executable not found, but its building SOMETHING
         html-lsp
       ];
       lua = with pkgs; [
