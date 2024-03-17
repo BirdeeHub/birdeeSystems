@@ -47,8 +47,7 @@ in {
       (alakitty-toml isHomeModule args)
       cfg.extraToml
       ]);
-    alakitty = pkgs.writeScriptBin "alacritty" ''
-      #!/bin/sh
+    alakitty = pkgs.writeShellScriptBin "alacritty" ''
       exec ${pkgs.alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
     '';
   in (if isHomeModule then {
