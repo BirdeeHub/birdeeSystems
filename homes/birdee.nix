@@ -149,16 +149,11 @@ in {
     signal-desktop
     bitwarden-cli
     discord
-    jdk
-    gradle
-    kotlin
-    kotlin-native
     docker-compose
     peek
     gnumake
     cmake
-    # gccgo
-
+    # gccgo just have a dev shell for c....
     go
     gotools
     go-tools
@@ -218,6 +213,14 @@ in {
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+
+    # stinky
+    jdk
+    gradle
+    kotlin
+    kotlin-native
+    jetbrains.idea-community
+    android-studio
   ];
   fonts.fontconfig.enable = true;
   qt.platformTheme = "gtk";
