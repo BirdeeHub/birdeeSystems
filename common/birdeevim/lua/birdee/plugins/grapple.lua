@@ -1,15 +1,6 @@
 -- TODO: This does not yet work
 local function open_tmux_buffer(name)
-    -- Check if session exists
-    local tmux_cmd = string.format("tmux has-session -t %s", name)
-    local session_exists = os.execute(tmux_cmd)
-    if session_exists == 0 then
-      -- Attach to existing session
-      os.execute(string.format("tmux attach-session -t %s", name))
-    else
-      -- Create new session
-      os.execute(string.format("tmux new-session -As %s", name))
-    end
+      vim.cmd([[!tmux new-session -At ]] .. name)
 end
 
 local function grapple_select(index)
