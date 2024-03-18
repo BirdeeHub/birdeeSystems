@@ -149,6 +149,7 @@
         ];
         StdPlugOver = with pkgs.neovimPlugins; [
           harpoon
+          grapple
           hlargs
         ];
         cmp = [

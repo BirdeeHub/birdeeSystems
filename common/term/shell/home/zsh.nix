@@ -9,7 +9,10 @@
     programs.zsh = {
       shellAliases = {};
       enable = true;
-      enableAutosuggestions = true;
+      autosuggestion = {
+        enable = true;
+      };
+      enableVteIntegration = true;
       completionInit = (builtins.readFile ../compinstallOut);
       history.ignoreAllDups = true;
       initExtra = ''

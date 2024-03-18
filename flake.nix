@@ -30,6 +30,10 @@
       url = "github:milisims/nvim-luaref";
       flake = false;
     };
+    "plugins-grapple" = {
+      url = "github:cbochs/grapple.nvim";
+      flake = false;
+    };
     "plugins-harpoon" = {
       url = "github:ThePrimeagen/harpoon/harpoon2";
       flake = false;

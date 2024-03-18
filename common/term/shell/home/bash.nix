@@ -7,6 +7,7 @@
     cfg = config.birdeeMods.bash;
   in {
     programs.bash = {
+      enableVteIntegration = true;
       initExtra = ''
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init bash --config ${../atomic-emodipt.omp.json})"
       '';

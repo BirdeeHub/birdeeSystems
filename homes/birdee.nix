@@ -246,8 +246,6 @@ in {
   gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
   gtk.iconTheme.name = "BeautyLine";
 
-  programs.bash.enableVteIntegration = true;
-  programs.zsh.enableVteIntegration = true;
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
