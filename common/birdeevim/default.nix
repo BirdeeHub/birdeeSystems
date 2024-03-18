@@ -144,7 +144,6 @@
           markdown-preview-nvim
         ];
         StdPlugOver = with pkgs.neovimPlugins; [
-          harpoon
           grapple
           hlargs
         ];

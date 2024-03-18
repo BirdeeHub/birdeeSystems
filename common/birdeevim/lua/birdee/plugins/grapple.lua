@@ -1,3 +1,17 @@
+-- TODO: This does not yet work
+local function open_tmux_buffer(name)
+    -- Check if session exists
+    local tmux_cmd = string.format("tmux has-session -t %s", name)
+    local session_exists = os.execute(tmux_cmd)
+    if session_exists == 0 then
+      -- Attach to existing session
+      os.execute(string.format("tmux attach-session -t %s", name))
+    else
+      -- Create new session
+      os.execute(string.format("tmux new-session -As %s", name))
+    end
+end
+
 local function grapple_select(index)
   -- Select based on URI "scheme"
   require("grapple").select({
@@ -8,7 +22,10 @@ local function grapple_select(index)
           elseif vim.startswith(path, "https://") then
               vim.ui.open(path)
           elseif vim.startswith(path, "tmux://") then
-              -- open tmux session
+              -- remove tmux:// prefix
+              local name = string.sub(path, 8) -- Remove "tmux://"
+              open_tmux_buffer(name)
+
           else
               vim.cmd.edit(path)
           end
@@ -29,11 +46,3 @@ vim.keymap.set("n", "<M-7>", function() grapple_select(7) end, { noremap = true,
 vim.keymap.set("n", "<M-8>", function() grapple_select(8) end, { noremap = true, silent = true, desc = "Grapple Select index 8" })
 vim.keymap.set("n", "<M-9>", function() grapple_select(9) end, { noremap = true, silent = true, desc = "Grapple Select index 9" })
 vim.keymap.set("n", "<M-0>", function() grapple_select(10) end, { noremap = true, silent = true, desc = "Grapple Select index 10" })
-
-
---[[
--- Tag some URI
-require("grapple").tag({ path = "oil:///Users/cbochs/git/grapple.nvim/" })
-require("grapple").tag({ path = "https://google.com" })
-require("grapple").tag({ path = "tmux://my-session" })
-]]

@@ -34,10 +34,6 @@
       url = "github:cbochs/grapple.nvim";
       flake = false;
     };
-    "plugins-harpoon" = {
-      url = "github:ThePrimeagen/harpoon/harpoon2";
-      flake = false;
-    };
     codeium.url = "github:Exafunction/codeium.nvim";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
     vscode-html-languageservice = {
