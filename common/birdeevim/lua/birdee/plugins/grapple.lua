@@ -1,26 +1,26 @@
 -- TODO: This does not yet work
 local function open_tmux_buffer(name)
-      vim.cmd([[!tmux new-session -At ]] .. name)
+  vim.cmd([[!tmux new-session -At ]] .. name)
 end
 
 local function grapple_select(index)
   -- Select based on URI "scheme"
   require("grapple").select({
-      index = index,
-      command = function(path)
-          if vim.startswith(path, "oil://") then
-              require("oil").open(path)
-          elseif vim.startswith(path, "https://") then
-              vim.ui.open(path)
-          elseif vim.startswith(path, "tmux://") then
-              -- remove tmux:// prefix
-              local name = string.sub(path, 8) -- Remove "tmux://"
-              open_tmux_buffer(name)
+    index = index,
+    command = function(path)
+      if vim.startswith(path, "oil://") then
+        require("oil").open(path)
+      elseif vim.startswith(path, "https://") then
+        vim.ui.open(path)
+      elseif vim.startswith(path, "tmux://") then
+        -- remove tmux:// prefix
+        local name = string.sub(path, 8)
+        open_tmux_buffer(name)
 
-          else
-              vim.cmd.edit(path)
-          end
-      end,
+      else
+        vim.cmd.edit(path)
+      end
+    end,
   })
 end
 vim.keymap.set("n", "<leader>ha", function() require("grapple").tag({ path = vim.fn.expand("%:p") }) end, { noremap = true, silent = true, desc = 'grapple append' })
