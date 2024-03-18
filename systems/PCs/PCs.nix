@@ -33,9 +33,6 @@ in {
     i3MonMemory.enable = true;
     LD.enable = true;
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "nix-2.16.2"
-  ];
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';

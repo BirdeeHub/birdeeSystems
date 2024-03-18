@@ -4,10 +4,6 @@
   forEachSystem = inputs.flake-utils.lib.eachSystem inputs.flake-utils.lib.allSystems;
   extra_pkg_config = {
     allowUnfree = true;
-    # nixd needs this for now....
-    permittedInsecurePackages = [
-      "nix-2.16.2"
-    ];
   };
   inherit (forEachSystem (system: let
     dependencyOverlays = [ (utils.mergeOverlayLists inputs.nixCats.dependencyOverlays.${system}

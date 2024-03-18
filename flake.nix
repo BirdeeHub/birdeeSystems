@@ -57,9 +57,6 @@
     pkgs = import inputs.nixpkgs {
       inherit system overlays;
       config.allowUnfree = true;
-      config.permittedInsecurePackages = [
-        "nix-2.16.2"
-      ];
     };
     users = import ./userdata pkgs;
     common = import ./common { inherit inputs pkgs; };
