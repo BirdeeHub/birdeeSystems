@@ -272,12 +272,13 @@
 
   birdeevim_settings = { pkgs, ... }@misc: {
     # so that it finds my ai auths in ~/.cache/birdeevim
+    extraName = "birdeevim";
     configDirName = "birdeevim";
     withNodeJs = true;
-    # nvimSRC = inputs.neovim;
     withRuby = true;
-    extraName = "birdeevim";
     withPython3 = true;
+    viAlias = false;
+    vimAlias = false;
     neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   };
   birdeevim_categories = { pkgs, ... }@misc: {
@@ -304,15 +305,10 @@
     notesVim = { pkgs, ... }@misc: {
       settings = {
         configDirName = "birdeevim";
-        wrapRc = true;
-        withNodeJs = true;
-        # nvimSRC = inputs.neovim;
+        withRuby = false;
         extraName = "notesVim";
-        viAlias = false;
-        vimAlias = false;
         aliases = [ "note" ];
-        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-      };
+      } // birdeevim_settings misc;
       categories = {
         inherit bitwardenItemIDs;
         notes = true;
@@ -348,26 +344,24 @@
     };
     noAInvim = { pkgs, ... }@misc: {
       settings = {
-        configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = true;
         extraName = "noAInvim";
-        # nvimSRC = inputs.neovim;
-        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
         aliases = [ "vi" "vim" ];
-      };
+      } // birdeevim_settings misc;
       categories = {
         AI = false;
       } // birdeevim_categories misc;
     };
-    minimalVim = { pkgs, ... }: {
+    minimalVim = { pkgs, ... }@misc: {
       settings = {
-        extraName = "minimalVim";
-        # nvimSRC = inputs.neovim;
-        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
         wrapRc = false;
-        aliases = [ ];
-      };
+        aliases = null;
+        extraName = "minimalVim";
+        withNodeJs = false;
+        withRuby = false;
+        withPython3 = false;
+      } // birdeevim_settings misc;
       categories = {};
     };
   };
