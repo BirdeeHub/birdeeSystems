@@ -330,11 +330,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1710714957,
-        "narHash": "sha256-eZCxuF58YWgaJMMRrn8oRkwRhxooe5kBS/s2wRVr9PA=",
+        "lastModified": 1710800522,
+        "narHash": "sha256-RPcufupTkBtZzeyfE4kQLTnK4MObDiZbs1Xyp/AKpY0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "7b3fca5adcf6c709874a8f2e0c364fe9c58db989",
+        "rev": "6665da45dd03857a4ae600cf246435e6ae57407e",
         "type": "github"
       },
       "original": {
@@ -716,11 +716,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1710794701,
-        "narHash": "sha256-NQaXLIVMMWFhpbd4p75xfpWMcMkVXn8fmdSsS4nop7w=",
+        "lastModified": 1710809841,
+        "narHash": "sha256-juqaAyJCJkyUJfxESzEYro8XEX1oIbuZnlk6wC7+yq0=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "8c2ca0f744b3dd0b616e37239bdb8eef0a3f64a0",
+        "rev": "170ac37859ee9c7610eb5bee033cc3fb228d51de",
         "type": "github"
       },
       "original": {
@@ -754,33 +754,16 @@
     "plugins-grapple": {
       "flake": false,
       "locked": {
-        "lastModified": 1710766672,
-        "narHash": "sha256-vUmflrK8vL4aWXKimIYXTkVHASfinpwONj730Y+UIRE=",
+        "lastModified": 1710802061,
+        "narHash": "sha256-r6rBOn/6gEmnLQ60DzyRczK5sRbTVUSVO3eD1/v8Wuk=",
         "owner": "cbochs",
         "repo": "grapple.nvim",
-        "rev": "93d79d52edabbcc077800dea04818e7629cd766b",
+        "rev": "6dc1bad1f67d2984d942ef43d87b98ef34447ab9",
         "type": "github"
       },
       "original": {
         "owner": "cbochs",
         "repo": "grapple.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-harpoon": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1706306053,
-        "narHash": "sha256-RjwNUuKQpLkRBX3F9o25Vqvpu3Ah1TCFQ5Dk4jXhsbI=",
-        "owner": "ThePrimeagen",
-        "repo": "harpoon",
-        "rev": "a38be6e0dd4c6db66997deab71fc4453ace97f9c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ThePrimeagen",
-        "ref": "harpoon2",
-        "repo": "harpoon",
         "type": "github"
       }
     },
@@ -852,7 +835,6 @@
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
         "plugins-grapple": "plugins-grapple",
-        "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "sg-nvim": "sg-nvim",
         "vscode-html-languageservice": "vscode-html-languageservice"

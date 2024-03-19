@@ -11,11 +11,7 @@ local function open_tmux_buffer(name)
   require("birdee.plugins.tmux").gotoTerminal(convertToIntegerOrString(name))
 end
 
-local function grapple_select(index)
-  -- Select based on URI "scheme"
-  require("grapple").select({
-    index = index,
-    command = function(path)
+local function grapple_default_select(path)
       if vim.startswith(path, "oil://") then
         require("oil").open(path)
       elseif vim.startswith(path, "https://") then
@@ -27,7 +23,17 @@ local function grapple_select(index)
       else
         vim.cmd.edit(path)
       end
-    end,
+end
+
+require("grapple").setup({
+  command = grapple_default_select,
+})
+
+local function grapple_select(index)
+  -- Select based on URI "scheme"
+  require("grapple").select({
+    index = index,
+    command = grapple_default_select,
   })
 end
 vim.keymap.set("n", "<leader>ha", function() require("grapple").tag({ path = vim.fn.expand("%:p") }) end, { noremap = true, silent = true, desc = 'grapple append' })
