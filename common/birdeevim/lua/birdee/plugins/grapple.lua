@@ -16,7 +16,7 @@ local function grapple_default_select(path)
     -- remove tmux:// prefix
     local name = string.sub(path, 8)
     -- if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
-    require("birdee.plugins.tmux").gotoTerminal(convertToIntegerOrString(name))
+    require("birdee.tmux").gotoTerminal(convertToIntegerOrString(name))
   else
     vim.cmd.edit(path)
   end

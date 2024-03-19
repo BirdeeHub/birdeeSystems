@@ -1,33 +1,7 @@
 local global_config = {
   tmux_autoclose_windows = false,
 }
-local utils = {}
-function utils.split_string(str, delimiter)
-  local result = {}
-  for match in (str .. delimiter):gmatch("(.-)" .. delimiter) do
-      table.insert(result, match)
-  end
-  return result
-end
-function utils.get_os_command_output(cmd, cwd)
-  if type(cmd) ~= "table" then
-      print("[get_os_command_output]: cmd has to be a table")
-      return {}
-  end
-  local command = table.remove(cmd, 1)
-  local stderr = {}
-  local stdout, ret = require("plenary.job")
-      :new({
-          command = command,
-          args = cmd,
-          cwd = cwd,
-          on_stderr = function(_, data)
-              table.insert(stderr, data)
-          end,
-      })
-      :sync()
-  return stdout, ret, stderr
-end
+local utils = require("birdee.utils")
 
 local M = {}
 local tmux_windows = {}
@@ -40,7 +14,7 @@ if global_config.tmux_autoclose_windows then
 
     vim.api.nvim_create_autocmd("VimLeave", {
         callback = function()
-            require("birdee.plugins.tmux").clear_all()
+            require("birdee.tmux").clear_all()
         end,
         group = grapple_tmux_group,
     })
