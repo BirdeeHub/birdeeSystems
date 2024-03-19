@@ -355,7 +355,6 @@
       };
       categories = {
         AI = false;
-        colorscheme = "catppuccin";
       } // birdeevim_categories misc;
     };
     minimalVim = { pkgs, ... }: {
