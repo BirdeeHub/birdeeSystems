@@ -46,22 +46,21 @@ in {
       };
       denyXDGoverride = lib.mkEnableOption "dont override with scripts from $XDG_CONFIG_HOME";
       internalDependencies = lib.mkOption {
-        default = {
-          xrandr = pkgs.xorg.xrandr;
-          awk = pkgs.gawk;
-        };
-        type = attrsOf package;
+        default = with pkgs; [
+          xorg.xrandr
+          gawk
+        ];
+        type = listOf package;
         description = ''
           packages to be made available to all user xrandr scripts but not to path
-          takes an attr set with programName = pkgs.programDerivation;
           Can also take derivation string values.
         '';
         example = lib.literalExpression ''
-          cfg.internalDependencies = {
-            xrandr = pkgs.xorg.xrandr;
-            awk = pkgs.gawk;
-            jq = "${pkgs.jq}";
-          };
+          cfg.internalDependencies = with pkgs; [
+            xorg.xrandr
+            gawk
+            "${jq}"
+          ];
         '';
       };
     } else {
@@ -74,24 +73,19 @@ in {
   };
 
   config = lib.mkIf cfg.enable (let
-    mkScriptAliases = with builtins; packageSet: concatStringsSep "\n"
-      (attrValues (mapAttrs (name: value: ''
-        ${name}() {
-          ${value}/bin/${name} "$@"
-        }''
-      ) packageSet));
-    ifXDGthen = if cfg.denyXDGoverride then "false &&" else "true &&";
-    mkUserXrandrScript = scriptName: (pkgs.writeShellScript "${scriptName}.sh" (''
-        ${mkScriptAliases cfg.internalDependencies}
-        userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
-        ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
-          exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh "$@"
-        fi
-      ''
-      + (if cfg.monitorScriptDir != null
-          && builtins.pathExists ("${cfg.monitorScriptDir}/${scriptName}.sh")
-        then builtins.readFile ("${cfg.monitorScriptDir}/${scriptName}.sh")
-        else builtins.readFile ./defaults/${scriptName}.sh)));
+    mkUserXrandrScript = scriptName: (let
+      ifXDGthen = if cfg.denyXDGoverride then "false &&" else "true &&";
+    in pkgs.writeShellScript "${scriptName}.sh" (''
+      export PATH="${lib.makeBinPath cfg.internalDependencies}:$PATH";
+      userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
+      ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
+        exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh "$@"
+      fi
+    ''
+    + (if cfg.monitorScriptDir != null
+        && builtins.pathExists ("${cfg.monitorScriptDir}/${scriptName}.sh")
+      then builtins.readFile ("${cfg.monitorScriptDir}/${scriptName}.sh")
+      else builtins.readFile ./defaults/${scriptName}.sh)));
 
     xrandrPrimarySH = mkUserXrandrScript "Xprimary";
 
