@@ -75,23 +75,23 @@ in {
   config = lib.mkIf cfg.enable (let
     mkUserXrandrScript = scriptName: (let
       ifXDGthen = if cfg.denyXDGoverride then "false &&" else "true &&";
-    in pkgs.writeShellScript "${scriptName}.sh" (''
+    in pkgs.writeShellScript "${scriptName}" (''
       export PATH="${lib.makeBinPath cfg.internalDependencies}:$PATH";
       userXDGcfg="''${XDG_CONFIG_HOME:-$HOME/.config}"
-      ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh ]]; then
-        exec $userXDGcfg/${cfg.nameOfDir}/${scriptName}.sh "$@"
+      ${ifXDGthen} if [[ -x $userXDGcfg/${cfg.nameOfDir}/${scriptName} ]]; then
+        exec $userXDGcfg/${cfg.nameOfDir}/${scriptName} "$@"
       fi
     ''
     + (if cfg.monitorScriptDir != null
-        && builtins.pathExists ("${cfg.monitorScriptDir}/${scriptName}.sh")
-      then builtins.readFile ("${cfg.monitorScriptDir}/${scriptName}.sh")
-      else builtins.readFile ./defaults/${scriptName}.sh)));
+        && builtins.pathExists ("${cfg.monitorScriptDir}/${scriptName}")
+      then builtins.readFile ("${cfg.monitorScriptDir}/${scriptName}")
+      else builtins.readFile ./defaults/${scriptName})));
 
-    xrandrPrimarySH = mkUserXrandrScript "Xprimary";
+    xrandrPrimarySH = mkUserXrandrScript "Xprimary.sh";
 
-    xrandrOthersSH = mkUserXrandrScript "Xothers";
+    xrandrOthersSH = mkUserXrandrScript "Xothers.sh";
 
-    XmonBootSH = mkUserXrandrScript "XmonBoot";
+    XmonBootSH = mkUserXrandrScript "XmonBoot.sh";
 
     # Both the home manager and system modules MUST both point at this same file.
     # root will write a random number to it on monitor hotplug.
