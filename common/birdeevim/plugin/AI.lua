@@ -3,7 +3,7 @@ if nixCats('nixCats_packageName') ~= "minimal" then
     local bitwardenAuth = nixCats('bitwardenItemIDs')
     if not require('nixCatsUtils').isNixCats then bitwardenAuth = false end
 
-    -- TEMPRARY SO IT STOPS ASKING ME
+    -- TEMPORARY SO IT STOPS ASKING ME
     bitwardenAuth = nil
 
     local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
@@ -73,8 +73,8 @@ if nixCats('nixCats_packageName') ~= "minimal" then
       end
     end
 
-    vim.cmd([[command! ClearSGAuth lua require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
-    vim.cmd([[command! ClearCodeiumAuth lua require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
-    vim.cmd([[command! ClearBitwardenData lua require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json')]])
+    vim.cmd([[command! ClearSGAuth lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json'))]])
+    vim.cmd([[command! ClearCodeiumAuth lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json'))]])
+    vim.cmd([[command! ClearBitwardenData lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json'))]])
   end
 end

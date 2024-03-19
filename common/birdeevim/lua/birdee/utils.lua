@@ -2,7 +2,9 @@ local M = {}
 function M.deleteFileIfExists(file_path)
   if vim.fn.filereadable(file_path) == 1 then
     os.remove(file_path)
+    return true
   end
+  return false
 end
 
 function M.split_string(str, delimiter)
