@@ -270,6 +270,37 @@
     gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
   };
 
+  birdeevim_settings = { pkgs, ... }@misc: {
+    # so that it finds my ai auths in ~/.cache/birdeevim
+    configDirName = "birdeevim";
+    withNodeJs = true;
+    nvimSRC = inputs.neovim;
+    withRuby = true;
+    extraName = "birdeevim";
+    withPython3 = true;
+  };
+  birdeevim_categories = { pkgs, ... }@misc: {
+    inherit bitwardenItemIDs;
+    bitwarden = true;
+    generalBuildInputs = true;
+    bash = true;
+    debug = true;
+    customPlugins = true;
+    general = true;
+    neonixdev = true;
+    htmx = true;
+    AI = true;
+    java = true;
+    javaExtras = extraJavaItems pkgs;
+    go = true;
+    kotlin = true;
+    python = true;
+    C = true;
+    test = true;
+    lspDebugMode = false;
+    colorscheme = "onedark";
+  };
+
   packageDefinitions = {
     minimalVim = { pkgs, ... }: {
       settings = {
@@ -279,39 +310,17 @@
       };
       categories = {};
     };
-    birdeeVim = { pkgs, ... }@misc: {
+    testvim = args: {
+      settings = {
+        wrapRc = false;
+      } // birdeevim_settings args;
+      categories = birdeevim_categories args;
+    };
+    birdeeVim = args: {
       settings = {
         wrapRc = true;
-        # so that it finds my ai auths in ~/.cache/birdeevim
-        configDirName = "birdeevim";
-        withNodeJs = true;
-        nvimSRC = inputs.neovim;
-        withRuby = true;
-        extraName = "birdeevim";
-        withPython3 = true;
-        aliases = [ "vim" "vi" ];
-      };
-      categories = {
-        inherit bitwardenItemIDs;
-        bitwarden = true;
-        generalBuildInputs = true;
-        bash = true;
-        debug = true;
-        customPlugins = true;
-        general = true;
-        neonixdev = true;
-        htmx = true;
-        AI = true;
-        java = true;
-        javaExtras = extraJavaItems pkgs;
-        go = true;
-        kotlin = true;
-        python = true;
-        C = true;
-        test = true;
-        lspDebugMode = false;
-        colorscheme = "onedark";
-      };
+      } // birdeevim_settings args;
+      categories = birdeevim_categories args;
     };
     notesVim = { pkgs, ... }@misc: {
       settings = {
