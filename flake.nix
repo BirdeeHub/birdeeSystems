@@ -26,10 +26,10 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim = {
-      url = "github:neovim/neovim/nightly";
-      flake = false;
-    };
+    # neovim = {
+    #   url = "github:neovim/neovim/nightly";
+    #   flake = false;
+    # };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
