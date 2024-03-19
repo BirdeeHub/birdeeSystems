@@ -1,4 +1,3 @@
-local Job = require("plenary.job")
 local global_config = {
   tmux_autoclose_windows = false,
 }
@@ -17,7 +16,7 @@ function utils.get_os_command_output(cmd, cwd)
   end
   local command = table.remove(cmd, 1)
   local stderr = {}
-  local stdout, ret = Job
+  local stdout, ret = require("plenary.job")
       :new({
           command = command,
           args = cmd,
