@@ -279,7 +279,11 @@
     withPython3 = true;
     viAlias = false;
     vimAlias = false;
-    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    nvimSRC = inputs.neovim;
+    # neovim-unwrapped = inputs.neovim-flake.${pkgs.system}.neovim;
+    # neovim-unwrapped = inputs.neovim-flake.${pkgs.system}.neovim-debug;
+    # neovim-unwrapped = inputs.neovim-flake.${pkgs.system}.neovim-developer;
+    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   };
   birdeevim_categories = { pkgs, ... }@misc: {
     inherit bitwardenItemIDs;
