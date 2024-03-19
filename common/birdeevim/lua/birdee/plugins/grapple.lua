@@ -37,6 +37,8 @@ vim.keymap.set("n", "<leader>ha", function() require("grapple").tag({ path = vim
 vim.keymap.set("n", "<leader>hr", function() require("grapple").untag({ path = vim.fn.expand("%:p") }) end, { noremap = true, silent = true, desc = 'grapple remove' })
 vim.keymap.set("n", "<leader>ht", function() require("grapple").toggle() end, { noremap = true, silent = true, desc = 'grapple toggle' })
 vim.keymap.set("n", "<leader>hm", [[<cmd>Grapple open_tags<CR>]], { noremap = true, silent = true, desc = 'open grapple tags menu' })
+vim.keymap.set("n", "<leader>hs", [[<cmd>Grapple open_scopes<CR>]], { noremap = true, silent = true, desc = 'open grapple scopes menu' })
+vim.keymap.set("n", "<leader>hl", [[<cmd>Grapple open_loaded<CR>]], { noremap = true, silent = true, desc = 'open grapple loaded scopes menu' })
 vim.keymap.set("n", "<M-1>", function() grapple_select(1) end, { noremap = true, silent = true, desc = "Grapple Select index 1" })
 vim.keymap.set("n", "<M-2>", function() grapple_select(2) end, { noremap = true, silent = true, desc = "Grapple Select index 2" })
 vim.keymap.set("n", "<M-3>", function() grapple_select(3) end, { noremap = true, silent = true, desc = "Grapple Select index 3" })
