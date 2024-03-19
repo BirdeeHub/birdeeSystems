@@ -536,23 +536,6 @@
         "type": "github"
       }
     },
-    "neovim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1710823454,
-        "narHash": "sha256-91aoa8vW8Zrm9IbbFC/SGvjFT9r607J3NNyCyXnvMnI=",
-        "owner": "neovim",
-        "repo": "neovim",
-        "rev": "400ef8aaa0766544fb0bcb4d367fa2da5279c5f3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neovim",
-        "ref": "nightly",
-        "repo": "neovim",
-        "type": "github"
-      }
-    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils_6",
@@ -975,7 +958,6 @@
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "neorg-overlay": "neorg-overlay",
-        "neovim": "neovim",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
