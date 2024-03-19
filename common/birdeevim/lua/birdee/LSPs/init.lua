@@ -150,6 +150,9 @@ if nixCats('java') or nixCats('kotlin') then
     filetypes = { "kotlin", "java" },
   }
 end
+if nixCats('bash') then
+  servers.bashls = {}
+end
 if nixCats('go') then
   servers.gopls = {}
 end
