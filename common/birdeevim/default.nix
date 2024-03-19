@@ -274,6 +274,7 @@
     # so that it finds my ai auths in ~/.cache/birdeevim
     extraName = "birdeevim";
     configDirName = "birdeevim";
+    wrapRc = true;
     withNodeJs = true;
     withRuby = true;
     withPython3 = true;
