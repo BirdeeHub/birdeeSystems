@@ -1,6 +1,14 @@
--- TODO: This does not yet work
+local function convertToIntegerOrString(value)
+    local number = tonumber(value)
+    if number and number % 1 == 0 then
+        return math.floor(number) -- Optionally, you can use math.floor() to ensure it's an integer
+    else
+        return value
+    end
+end
 local function open_tmux_buffer(name)
-  vim.cmd([[!tmux new-session -At ]] .. name)
+  -- if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
+  require("birdee.plugins.tmux").gotoTerminal(convertToIntegerOrString(name))
 end
 
 local function grapple_select(index)
@@ -16,7 +24,6 @@ local function grapple_select(index)
         -- remove tmux:// prefix
         local name = string.sub(path, 8)
         open_tmux_buffer(name)
-
       else
         vim.cmd.edit(path)
       end

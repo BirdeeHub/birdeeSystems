@@ -767,6 +767,23 @@
         "type": "github"
       }
     },
+    "plugins-harpoon": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706306053,
+        "narHash": "sha256-RjwNUuKQpLkRBX3F9o25Vqvpu3Ah1TCFQ5Dk4jXhsbI=",
+        "owner": "ThePrimeagen",
+        "repo": "harpoon",
+        "rev": "a38be6e0dd4c6db66997deab71fc4453ace97f9c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ThePrimeagen",
+        "ref": "harpoon2",
+        "repo": "harpoon",
+        "type": "github"
+      }
+    },
     "plugins-hlargs": {
       "flake": false,
       "locked": {
@@ -835,6 +852,7 @@
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
         "plugins-grapple": "plugins-grapple",
+        "plugins-harpoon": "plugins-harpoon",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "sg-nvim": "sg-nvim",
         "vscode-html-languageservice": "vscode-html-languageservice"
