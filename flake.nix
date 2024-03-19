@@ -22,6 +22,10 @@
     nixCats.inputs.nixpkgs.follows = "nixpkgs";
     nixCats.inputs.flake-utils.follows = "flake-utils";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     neovim = {
       url = "github:neovim/neovim/nightly";
       flake = false;

@@ -274,10 +274,11 @@
     # so that it finds my ai auths in ~/.cache/birdeevim
     configDirName = "birdeevim";
     withNodeJs = true;
-    nvimSRC = inputs.neovim;
+    # nvimSRC = inputs.neovim;
     withRuby = true;
     extraName = "birdeevim";
     withPython3 = true;
+    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   };
   birdeevim_categories = { pkgs, ... }@misc: {
     inherit bitwardenItemIDs;
@@ -305,11 +306,12 @@
         configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = true;
-        nvimSRC = inputs.neovim;
+        # nvimSRC = inputs.neovim;
         extraName = "notesVim";
         viAlias = false;
         vimAlias = false;
         aliases = [ "note" ];
+        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
       };
       categories = {
         inherit bitwardenItemIDs;
@@ -350,7 +352,8 @@
         wrapRc = true;
         withNodeJs = true;
         extraName = "noAInvim";
-        nvimSRC = inputs.neovim;
+        # nvimSRC = inputs.neovim;
+        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
         aliases = [ "vi" "vim" ];
       };
       categories = {
@@ -360,7 +363,8 @@
     minimalVim = { pkgs, ... }: {
       settings = {
         extraName = "minimalVim";
-        nvimSRC = inputs.neovim;
+        # nvimSRC = inputs.neovim;
+        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
         wrapRc = false;
         aliases = [ ];
       };
