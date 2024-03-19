@@ -753,11 +753,11 @@
     "plugins-grapple": {
       "flake": false,
       "locked": {
-        "lastModified": 1710802061,
-        "narHash": "sha256-r6rBOn/6gEmnLQ60DzyRczK5sRbTVUSVO3eD1/v8Wuk=",
+        "lastModified": 1710854837,
+        "narHash": "sha256-p1/fV4zET2Q+iquKX34DGsP3JgJ7mXPwj/3an9sMPm8=",
         "owner": "cbochs",
         "repo": "grapple.nvim",
-        "rev": "6dc1bad1f67d2984d942ef43d87b98ef34447ab9",
+        "rev": "7e7ad7ff5ac811ecbebbff2d847f1c7cb29a1a16",
         "type": "github"
       },
       "original": {

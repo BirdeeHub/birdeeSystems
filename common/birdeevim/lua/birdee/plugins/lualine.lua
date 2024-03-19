@@ -79,10 +79,10 @@ require('lualine').setup({
   },
   tabline = {
     lualine_a = { 'buffers' },
-    lualine_b = { 'lsp_progress', },
     lualine_c = {},
+    lualine_b = { 'lsp_progress', },
     lualine_x = {},
-    lualine_y = {},
+    lualine_y = { 'grapple', },
     lualine_z = { 'tabs' }
   },
   winbar = {
