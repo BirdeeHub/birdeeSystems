@@ -302,6 +302,20 @@
   };
 
   packageDefinitions = {
+    birdeeVim = args: {
+      settings = {
+        wrapRc = true;
+        aliases = [ "vi" ];
+      } // birdeevim_settings args;
+      categories = birdeevim_categories args;
+    };
+    testvim = args: {
+      settings = {
+        wrapRc = false;
+        aliases = [ "vim" ];
+      } // birdeevim_settings args;
+      categories = birdeevim_categories args;
+    };
     minimalVim = { pkgs, ... }: {
       settings = {
         nvimSRC = inputs.neovim;
@@ -309,18 +323,6 @@
         aliases = [ ];
       };
       categories = {};
-    };
-    testvim = args: {
-      settings = {
-        wrapRc = false;
-      } // birdeevim_settings args;
-      categories = birdeevim_categories args;
-    };
-    birdeeVim = args: {
-      settings = {
-        wrapRc = true;
-      } // birdeevim_settings args;
-      categories = birdeevim_categories args;
     };
     notesVim = { pkgs, ... }@misc: {
       settings = {
