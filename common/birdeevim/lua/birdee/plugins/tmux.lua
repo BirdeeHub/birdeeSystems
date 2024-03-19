@@ -12,7 +12,7 @@ function utils.split_string(str, delimiter)
 end
 function utils.get_os_command_output(cmd, cwd)
   if type(cmd) ~= "table" then
-      print("Harpoon: [get_os_command_output]: cmd has to be a table")
+      print("[get_os_command_output]: cmd has to be a table")
       return {}
   end
   local command = table.remove(cmd, 1)
@@ -34,8 +34,8 @@ local M = {}
 local tmux_windows = {}
 
 if global_config.tmux_autoclose_windows then
-    local harpoon_tmux_group = vim.api.nvim_create_augroup(
-        "HARPOON_TMUX",
+    local grapple_tmux_group = vim.api.nvim_create_augroup(
+        "GRAPPLE_TMUX",
         { clear = true }
     )
 
@@ -43,7 +43,7 @@ if global_config.tmux_autoclose_windows then
         callback = function()
             require("birdee.plugins.tmux").clear_all()
         end,
-        group = harpoon_tmux_group,
+        group = grapple_tmux_group,
     })
 end
 

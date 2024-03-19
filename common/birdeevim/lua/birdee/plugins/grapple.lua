@@ -6,23 +6,20 @@ local function convertToIntegerOrString(value)
         return value
     end
 end
-local function open_tmux_buffer(name)
-  -- if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
-  require("birdee.plugins.tmux").gotoTerminal(convertToIntegerOrString(name))
-end
 
 local function grapple_default_select(path)
-      if vim.startswith(path, "oil://") then
-        require("oil").open(path)
-      elseif vim.startswith(path, "https://") then
-        vim.ui.open(path)
-      elseif vim.startswith(path, "tmux://") then
-        -- remove tmux:// prefix
-        local name = string.sub(path, 8)
-        open_tmux_buffer(name)
-      else
-        vim.cmd.edit(path)
-      end
+  if vim.startswith(path, "oil://") then
+    require("oil").open(path)
+  elseif vim.startswith(path, "https://") then
+    vim.ui.open(path)
+  elseif vim.startswith(path, "tmux://") then
+    -- remove tmux:// prefix
+    local name = string.sub(path, 8)
+    -- if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
+    require("birdee.plugins.tmux").gotoTerminal(convertToIntegerOrString(name))
+  else
+    vim.cmd.edit(path)
+  end
 end
 
 require("grapple").setup({
@@ -33,7 +30,7 @@ local function grapple_select(index)
   -- Select based on URI "scheme"
   require("grapple").select({
     index = index,
-    command = grapple_default_select,
+    -- command = grapple_default_select,
   })
 end
 vim.keymap.set("n", "<leader>ha", function() require("grapple").tag({ path = vim.fn.expand("%:p") }) end, { noremap = true, silent = true, desc = 'grapple append' })
