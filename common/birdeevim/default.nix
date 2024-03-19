@@ -351,6 +351,8 @@
       } // birdeevim_settings misc;
       categories = {
         AI = false;
+        bitwardenItemIDs = false;
+        bitwarden = false;
       } // birdeevim_categories misc;
     };
     minimalVim = { pkgs, ... }@misc: {
