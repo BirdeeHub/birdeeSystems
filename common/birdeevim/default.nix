@@ -294,42 +294,19 @@
     javaExtras = extraJavaItems pkgs;
     go = true;
     kotlin = true;
-    python = true;
     C = true;
-    test = true;
     lspDebugMode = false;
     colorscheme = "onedark";
   };
 
   packageDefinitions = {
-    birdeeVim = args: {
-      settings = {
-        wrapRc = true;
-        aliases = [ "vi" ];
-      } // birdeevim_settings args;
-      categories = birdeevim_categories args;
-    };
-    testvim = args: {
-      settings = {
-        wrapRc = false;
-        aliases = [ "vim" ];
-      } // birdeevim_settings args;
-      categories = birdeevim_categories args;
-    };
-    minimalVim = { pkgs, ... }: {
-      settings = {
-        nvimSRC = inputs.neovim;
-        wrapRc = false;
-        aliases = [ ];
-      };
-      categories = {};
-    };
     notesVim = { pkgs, ... }@misc: {
       settings = {
         configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = true;
         nvimSRC = inputs.neovim;
+        extraName = "birdeevim";
         viAlias = false;
         vimAlias = false;
         aliases = [ "note" ];
@@ -339,49 +316,55 @@
         notes = true;
         bitwarden = true;
         generalBuildInputs = true;
-        bash = true;
-        debug = true;
         customPlugins = true;
         general = true;
         neonixdev = true;
         AI = true;
-        java = true;
-        javaExtras = extraJavaItems pkgs;
-        kotlin = true;
-        python = true;
-        C = true;
-        test = true;
         lspDebugMode = false;
         colorscheme = "tokyonight";
       };
+    };
+    birdeeVim = args: {
+      settings = {
+        wrapRc = true;
+        aliases = [ "vi" ];
+      } // birdeevim_settings args;
+      categories = {
+        python = true;
+      } // birdeevim_categories args;
+    };
+    testvim = args: {
+      settings = {
+        wrapRc = false;
+        aliases = [ "vim" ];
+      } // birdeevim_settings args;
+      categories = {
+        test = true;
+        # notes = true;
+        lspDebugMode = true;
+      } // birdeevim_categories args;
     };
     noAInvim = { pkgs, ... }@misc: {
       settings = {
         configDirName = "birdeevim";
         wrapRc = true;
-        withNodeJs = false;
-        viAlias = false;
+        withNodeJs = true;
+        extraName = "birdeevim";
         nvimSRC = inputs.neovim;
-        vimAlias = false;
         aliases = [ "vi" "vim" ];
       };
       categories = {
-        generalBuildInputs = true;
-        bash = true;
-        debug = true;
-        customPlugins = true;
-        general = true;
-        neonixdev = true;
-        java = true;
-        javaExtras = extraJavaItems pkgs;
-        go = true;
-        kotlin = true;
-        python = true;
-        C = true;
-        test = true;
-        lspDebugMode = false;
+        AI = false;
         colorscheme = "catppuccin";
+      } // birdeevim_categories misc;
+    };
+    minimalVim = { pkgs, ... }: {
+      settings = {
+        nvimSRC = inputs.neovim;
+        wrapRc = false;
+        aliases = [ ];
       };
+      categories = {};
     };
   };
 
