@@ -306,7 +306,7 @@
         wrapRc = true;
         withNodeJs = true;
         nvimSRC = inputs.neovim;
-        extraName = "birdeevim";
+        extraName = "notesVim";
         viAlias = false;
         vimAlias = false;
         aliases = [ "note" ];
@@ -349,7 +349,7 @@
         configDirName = "birdeevim";
         wrapRc = true;
         withNodeJs = true;
-        extraName = "birdeevim";
+        extraName = "noAInvim";
         nvimSRC = inputs.neovim;
         aliases = [ "vi" "vim" ];
       };
@@ -360,6 +360,7 @@
     };
     minimalVim = { pkgs, ... }: {
       settings = {
+        extraName = "minimalVim";
         nvimSRC = inputs.neovim;
         wrapRc = false;
         aliases = [ ];
