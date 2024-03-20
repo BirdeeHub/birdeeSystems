@@ -65,7 +65,7 @@ in {
     ll = "lsd -l";
     l  = "lsd -alh";
     yeet = "rm -rf";
-    dugood = ''${pkgs.writeShellScript "dugood" ''echo "$(du -hd1 $@ | sort -hr)"''}'';
+    dugood = ''${pkgs.writeShellScript "dugood" ''du -hd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
   };
   home.sessionVariables = {
