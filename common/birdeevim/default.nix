@@ -328,6 +328,7 @@
         AI = true;
         lspDebugMode = false;
         colorscheme = "tokyonight";
+        python = true;
       };
     };
     birdeeVim = args: {
@@ -336,7 +337,6 @@
         aliases = [ "vi" ];
       };
       categories =  birdeevim_categories args // {
-        python = true;
       };
     };
     testvim = args: {
