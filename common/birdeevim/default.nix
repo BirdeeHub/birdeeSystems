@@ -110,6 +110,8 @@
       notes = with pkgs.vimPlugins; [
         neorg
         neorg-telescope
+      ];
+      htmx = with pkgs.vimPlugins; [
         otter-nvim
       ];
       go = with pkgs.vimPlugins; [
