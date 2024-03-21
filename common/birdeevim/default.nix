@@ -311,12 +311,12 @@
 
   packageDefinitions = {
     notesVim = { pkgs, ... }@misc: {
-      settings = {
+      settings = birdeevim_settings misc // {
         configDirName = "birdeevim";
         withRuby = false;
         extraName = "notesVim";
         aliases = [ "note" ];
-      } // birdeevim_settings misc;
+      };
       categories = {
         inherit bitwardenItemIDs;
         notes = true;
@@ -331,47 +331,47 @@
       };
     };
     birdeeVim = args: {
-      settings = {
+      settings =  birdeevim_settings args // {
         wrapRc = true;
         aliases = [ "vi" ];
-      } // birdeevim_settings args;
-      categories = {
+      };
+      categories =  birdeevim_categories args // {
         python = true;
-      } // birdeevim_categories args;
+      };
     };
     testvim = args: {
-      settings = {
+      settings = birdeevim_settings args // {
         wrapRc = false;
         aliases = [ "vim" ];
-      } // birdeevim_settings args;
-      categories = {
+      };
+      categories = birdeevim_categories args // {
         test = true;
         # notes = true;
         lspDebugMode = true;
-      } // birdeevim_categories args;
+      };
     };
     noAInvim = { pkgs, ... }@misc: {
-      settings = {
+      settings = birdeevim_settings misc // {
         wrapRc = true;
         withNodeJs = true;
         extraName = "noAInvim";
         aliases = [ "vi" "vim" ];
-      } // birdeevim_settings misc;
-      categories = {
+      };
+      categories = birdeevim_categories misc // {
         AI = false;
         bitwardenItemIDs = false;
         bitwarden = false;
-      } // birdeevim_categories misc;
+      };
     };
     minimalVim = { pkgs, ... }@misc: {
-      settings = {
+      settings = birdeevim_settings misc // {
         wrapRc = false;
         aliases = null;
         extraName = "minimalVim";
         withNodeJs = false;
         withRuby = false;
         withPython3 = false;
-      } // birdeevim_settings misc;
+      };
       categories = {};
     };
   };
