@@ -36,7 +36,7 @@ cmp.setup {
     ['<C-p>'] = cmp.mapping.scroll_docs(-4),
     ['<C-n>'] = cmp.mapping.scroll_docs(4),
     ['<M-c>'] = cmp.mapping.complete {},
-    ['<M-o>'] = cmp.mapping.confirm {
+    ['<M-l>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
