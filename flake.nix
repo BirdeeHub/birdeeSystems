@@ -35,6 +35,18 @@
       url = "github:milisims/nvim-luaref";
       flake = false;
     };
+    "plugins-telescope-git-file-history" = {
+      url = "github:isak102/telescope-git-file-history.nvim";
+      flake = false;
+    };
+    "plugins-visual-whitespace" = {
+      url = "github:mcauley-penney/visual-whitespace.nvim";
+      flake = false;
+    };
+    "plugins-garbage-day" = {
+      url = "github:Zeioth/garbage-day.nvim";
+      flake = false;
+    };
     "plugins-grapple" = {
       url = "github:cbochs/grapple.nvim";
       flake = false;

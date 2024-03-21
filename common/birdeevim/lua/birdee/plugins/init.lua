@@ -24,6 +24,15 @@ require('birdee.plugins.lualine')
 
 require("todo-comments").setup({ signs = false })
 
+require('garbage-day').setup({})
+
+require('visual-whitespace').setup({
+  highlight = { link = 'Visual' },
+  space_char = '·',
+  tab_char = '→',
+  nl_char = '↲'
+})
+
 if(nixCats('general.markdown')) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })

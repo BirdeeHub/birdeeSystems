@@ -147,6 +147,8 @@
         StdPlugOver = with pkgs.neovimPlugins; [
           grapple
           hlargs
+          garbage-day
+          visual-whitespace
         ];
         cmp = [
           # cmp stuff
@@ -164,6 +166,7 @@
           lspkind-nvim
         ];
         git = [
+          pkgs.neovimPlugins.telescope-git-file-history
           vim-sleuth
           vim-fugitive
           vim-rhubarb

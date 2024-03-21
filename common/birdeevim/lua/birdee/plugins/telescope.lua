@@ -112,3 +112,6 @@ end
 
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 vim.keymap.set('n', '<leader>sp', live_grep_git_root, { desc = '[S]earch git [P]roject root' })
+
+
+require("telescope").load_extension("git_file_history")

@@ -750,6 +750,22 @@
         "type": "github"
       }
     },
+    "plugins-garbage-day": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710864788,
+        "narHash": "sha256-HRjbZNlUAZVegtRtN97T/khi0WL1BNTiGym7yfn8iKY=",
+        "owner": "Zeioth",
+        "repo": "garbage-day.nvim",
+        "rev": "29d6abeed654bf142e0f5e741e1968b16f59357a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Zeioth",
+        "repo": "garbage-day.nvim",
+        "type": "github"
+      }
+    },
     "plugins-grapple": {
       "flake": false,
       "locked": {
@@ -798,6 +814,38 @@
         "type": "github"
       }
     },
+    "plugins-telescope-git-file-history": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710955015,
+        "narHash": "sha256-7cVmZaseWntB339DSB4sNKIMQkwkhLPBYEuLlVg0J28=",
+        "owner": "isak102",
+        "repo": "telescope-git-file-history.nvim",
+        "rev": "f94fab1d5a51fa28dd95b1a6bd377505dc1a8e82",
+        "type": "github"
+      },
+      "original": {
+        "owner": "isak102",
+        "repo": "telescope-git-file-history.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-visual-whitespace": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710627446,
+        "narHash": "sha256-NFoQoTMK0zdCoZ4cos/jBjozbehxi3WQB7X9ZxCVsvY=",
+        "owner": "mcauley-penney",
+        "repo": "visual-whitespace.nvim",
+        "rev": "979aea2ab9c62508c086e4d91a5c821df54168a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mcauley-penney",
+        "repo": "visual-whitespace.nvim",
+        "type": "github"
+      }
+    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -833,8 +881,11 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
+        "plugins-garbage-day": "plugins-garbage-day",
         "plugins-grapple": "plugins-grapple",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
+        "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
+        "plugins-visual-whitespace": "plugins-visual-whitespace",
         "sg-nvim": "sg-nvim",
         "vscode-html-languageservice": "vscode-html-languageservice"
       }
