@@ -218,7 +218,6 @@
       customPlugins = with pkgs.nixCatsBuilds; [ ];
       gitPlugins = with pkgs.neovimPlugins; [ ];
       general = with pkgs.vimPlugins; [ ];
-      notes = with pkgs.vimPlugins; [ ];
     };
 
     environmentVariables = {
