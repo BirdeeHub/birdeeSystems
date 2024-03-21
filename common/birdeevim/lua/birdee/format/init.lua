@@ -25,5 +25,3 @@ end, { desc = "[F]ormat [F]ile" })
 
 
 -- vim.keymap.set("n", "<leader>Fm", "<cmd>Format<CR>", { noremap = true, desc = '[F]or[m]at (lsp)' })
-
-

@@ -1,5 +1,5 @@
 local global_config = {
-  tmux_autoclose_windows = false,
+    tmux_autoclose_windows = false,
 }
 local utils = require("birdee.utils")
 
@@ -21,7 +21,6 @@ if global_config.tmux_autoclose_windows then
 end
 
 local function create_terminal()
-
     local window_id
 
     -- Create a new tmux window and store the window id
@@ -46,7 +45,6 @@ end
 
 -- Checks if the tmux window with the given window id exists
 local function terminal_exists(window_id)
-
     local exists = false
 
     local window_list, _, _ = utils.get_os_command_output({
@@ -68,7 +66,6 @@ local function terminal_exists(window_id)
 end
 
 local function find_terminal(args)
-
     if type(args) == "string" then
         -- assume args is a valid tmux target identifier
         -- if invalid, the error returned by tmux will be thrown
@@ -123,7 +120,6 @@ function M.gotoTerminal(idx)
 end
 
 function M.clear_all()
-
     for _, window in pairs(tmux_windows) do
         -- Delete the current tmux window
         utils.get_os_command_output({

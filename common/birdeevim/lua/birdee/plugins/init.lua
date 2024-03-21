@@ -1,4 +1,4 @@
-local colorschemer = nixCats('colorscheme')-- also schemes lualine
+local colorschemer = nixCats('colorscheme') -- also schemes lualine
 if not require('nixCatsUtils').isNixCats then
   colorschemer = 'onedark'
 end
@@ -9,7 +9,7 @@ if colorschemer == 'onedark' then
   }
   require('onedark').load()
 end
-local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
+local hlargsColor = '#32a88f'  -- if this doesnt work for new theme, change it here
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
@@ -33,11 +33,11 @@ require('visual-whitespace').setup({
   nl_char = '↲'
 })
 
-if(nixCats('general.markdown')) then
+if (nixCats('general.markdown')) then
   vim.g.mkdp_auto_close = 0
-  vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
-  vim.keymap.set('n','<leader>ms','<cmd>MarkdownPreviewStop <CR>',{ noremap = true, desc = 'markdown preview stop' })
-  vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
+  vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true, desc = 'markdown preview' })
+  vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
+  vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>', { noremap = true, desc = 'markdown preview toggle' })
 end
 
 require('birdee.plugins.notes')
@@ -80,7 +80,7 @@ vim.g.undotree_SplitWidth = 40
 -- Highlights unique characters for f/F and t/T motions
 require('eyeliner').setup {
   highlight_on_key = true, -- show highlights only after key press
-  dim = true, -- dim all other characters
+  dim = true,              -- dim all other characters
 }
 require('hlargs').setup({
   color = hlargsColor,
@@ -94,7 +94,7 @@ require('birdee.plugins.grapple')
 
 require("ibl").setup()
 
--- I honestly only use this to see the little git icons. 
+-- I honestly only use this to see the little git icons.
 -- I wanna figure out how to add them to oil instead and ditch this
 require('neo-tree').setup({
   close_if_last_window = true,
@@ -102,7 +102,7 @@ require('neo-tree').setup({
     position = "float",
     mappings = {
       ["<space>"] = {
-        nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
+        nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
         noremap = false,
       },
     },

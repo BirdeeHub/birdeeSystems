@@ -1,4 +1,4 @@
-local colorschemer = nixCats('colorscheme')-- also schemes lualine
+local colorschemer = nixCats('colorscheme') -- also schemes lualine
 if not require('nixCatsUtils').isNixCats then
   colorschemer = 'onedark'
 end
@@ -28,8 +28,8 @@ require('lualine').setup({
   options = {
     icons_enabled = true,
     theme = colorschemer,
-    component_separators = { left = '|', right = '|'},
-    section_separators = { left = '', right = ''},
+    component_separators = { left = '|', right = '|' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {
       statusline = {},
       winbar = {},
@@ -61,8 +61,8 @@ require('lualine').setup({
       'fileformat',
       'filetype',
     },
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
   },
   inactive_sections = {
     lualine_a = {},
@@ -73,7 +73,7 @@ require('lualine').setup({
     },
     lualine_c = {
     },
-    lualine_x = {'filetype'},
+    lualine_x = { 'filetype' },
     lualine_y = {},
     lualine_z = {}
   },

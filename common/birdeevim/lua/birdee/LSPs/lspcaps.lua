@@ -9,4 +9,5 @@ function M.get_capabilities()
   --vim.api.nvim_out_write(vim.inspect(capabilities))
   return capabilities
 end
+
 return M

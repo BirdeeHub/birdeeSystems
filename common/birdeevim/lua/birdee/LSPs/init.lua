@@ -93,11 +93,12 @@ if nixCats('neonixdev') then
     },
     filetypes = { 'lua' },
   }
-  if require('nixCatsUtils').isNixCats then servers.nixd = {}
-  else servers.rnix = {}
+  if require('nixCatsUtils').isNixCats then
+    servers.nixd = {}
+  else
+    servers.rnix = {}
   end
   servers.nil_ls = {}
-
 elseif nixCats('nix') then
   servers.nixd = {}
   servers.nil_ls = {}
@@ -129,7 +130,7 @@ if nixCats('kotlin') then
   }
 end
 if nixCats('java') then
--- local userHome = vim.loop.os_homedir()
+  -- local userHome = vim.loop.os_homedir()
   servers.jdtls = {
     java = {
       formatters = {
@@ -145,7 +146,7 @@ if nixCats('java') then
 end
 if nixCats('java') or nixCats('kotlin') then
   servers.gradle_ls = {
-    root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
+    root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },
     cmd = { nixCats("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
     filetypes = { "kotlin", "java" },
   }
@@ -205,8 +206,9 @@ if nixCats('C') then
     --   },
     -- }
   }
-  vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]], { desc = 'Run CMake with compile_commands.json' })
-  vim.cmd[[let g:cmake_link_compile_commands = 1]]
+  vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
+    { desc = 'Run CMake with compile_commands.json' })
+  vim.cmd [[let g:cmake_link_compile_commands = 1]]
   servers.cmake = {}
 end
 -- servers.rust_analyzer = {}
@@ -232,7 +234,7 @@ if not require('nixCatsUtils').isNixCats then
     end,
   }
 else
-  for server_name,_ in pairs(servers) do
+  for server_name, _ in pairs(servers) do
     require('lspconfig')[server_name].setup({
       capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
       -- on_attach = require('caps-onattach').on_attach,

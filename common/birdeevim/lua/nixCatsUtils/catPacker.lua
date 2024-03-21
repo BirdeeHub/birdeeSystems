@@ -1,16 +1,15 @@
+-- first you should go ahead and install your dependencies
+-- you arent using nix if you are using this.
+-- this means you will have to install some stuff manually.
 
-  -- first you should go ahead and install your dependencies
-  -- you arent using nix if you are using this.
-  -- this means you will have to install some stuff manually.
+-- so, you will need cmake, gcc, npm, nodejs,
+-- ripgrep, fd, <curl or wget>, and git,
+-- you will also need rustup and to run rustup toolchain install stable
 
-  -- so, you will need cmake, gcc, npm, nodejs,
-  -- ripgrep, fd, <curl or wget>, and git,
-  -- you will also need rustup and to run rustup toolchain install stable
+-- now you see why nix is so great. You dont have to do that every time.
 
-  -- now you see why nix is so great. You dont have to do that every time.
-
-  -- so, now for the stuff we can still auto install without nix:
-  -- first check if we should be loading pckr:
+-- so, now for the stuff we can still auto install without nix:
+-- first check if we should be loading pckr:
 if not require('nixCatsUtils').isNixCats then
   -- you can use this same method
   -- if you want to install via mason when not in nix
@@ -35,11 +34,11 @@ if not require('nixCatsUtils').isNixCats then
   bootstrap_pckr()
 
   -- ### DONT USE CONFIG VARIABLE ###
-  -- unless you are ok with that instruction 
+  -- unless you are ok with that instruction
   -- not being ran when used via nix,
   -- this file will not be ran when using nix
 
-  require('pckr').add{
+  require('pckr').add {
 
     { 'joshdick/onedark.vim', },
 
@@ -48,7 +47,7 @@ if not require('nixCatsUtils').isNixCats then
         'nvim-treesitter/nvim-treesitter-textobjects',
       },
     },
-    {'nvim-telescope/telescope.nvim',
+    { 'nvim-telescope/telescope.nvim',
       requires = {
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'which make && make', }
