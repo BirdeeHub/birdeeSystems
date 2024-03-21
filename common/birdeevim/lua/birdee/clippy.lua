@@ -27,9 +27,6 @@ vim.keymap.set('i', '<C-p>', '<C-r><C-p>+',
 -- I thought I was cool, but apparently I was doing a workaround to restore default behavior.
 
 
--- a collection of mappings to allow you to yank to clipboard using <leader>y
--- as well as a few nice paste options, and ctrl+a
--- in normal mode, it accepts motions as well.
 -- vim.keymap.set("n", '<leader>y', [[:set opfunc=Yank_to_clipboard<CR>g@]], { silent = true, desc = 'Yank to clipboard (accepts motions)' })
 -- vim.cmd([[
 --   function! Yank_to_clipboard(type)
