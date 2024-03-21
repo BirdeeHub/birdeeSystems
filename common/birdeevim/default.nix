@@ -134,7 +134,7 @@
         nvim-dap-virtual-text
       ];
       general = with pkgs.vimPlugins; {
-        theme = builtins.getAttr categories.colorscheme { 
+        theme = builtins.getAttr categories.colorscheme {
           "onedark" = onedark-nvim;
           "catppuccin" = catppuccin-nvim;
           "catppuccin-mocha" = catppuccin-nvim;
