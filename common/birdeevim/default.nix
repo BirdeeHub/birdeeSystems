@@ -38,12 +38,11 @@
       ];
       java = with pkgs; [
         jdt-language-server
-      ];
+      ] ++ (if categories ? kotlin && categories.kotlin then [] else []);
       kotlin = with pkgs; [
         kotlin-language-server
         ktlint
-      ] ++ (if categories.java then [] else [
-      ]);
+      ] ++ (if categories ? java && categories.java then [] else []);
       go = with pkgs; [
         gopls
         delve
