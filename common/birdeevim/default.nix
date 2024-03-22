@@ -51,11 +51,19 @@
         go-tools
         go
       ];
-      htmx = with pkgs; [
-        htmx-lsp
-        # TODO: html lsp executable not found, but its building SOMETHING
-        html-lsp
-      ];
+      web = {
+        HTMX = with pkgs; [
+          htmx-lsp
+        ];
+        HTML = with pkgs; [
+          vscode-langservers-extracted
+        ];
+        JS = with pkgs.nodePackages; [
+          typescript-language-server
+          eslint
+          prettier
+        ];
+      };
       lua = with pkgs; [
         lua-language-server
       ];
@@ -298,10 +306,10 @@
     customPlugins = true;
     general = true;
     neonixdev = true;
-    htmx = true;
     AI = true;
     java = true;
     javaExtras = extraJavaItems pkgs;
+    web = true;
     go = true;
     kotlin = true;
     C = true;

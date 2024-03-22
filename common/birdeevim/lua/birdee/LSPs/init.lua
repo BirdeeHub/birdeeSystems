@@ -181,21 +181,31 @@ if nixCats('python') then
   }
 end
 
-if nixCats('htmx') then
-  servers.htmx = {}
-  servers.html = {
-    html = {
-      format = {
-        templating = true,
-        wrapLineLength = 120,
-        wrapAttributes = 'auto',
+if nixCats('web') then
+  if nixCats('JS') then
+    servers.tsserver = {}
+  end
+  if nixCats('HTMX') then
+    servers.htmx = {}
+  end
+  if nixCats('HTML') then
+    servers.cssls = {}
+    servers.eslint = {}
+    servers.jsonls = {}
+    servers.html = {
+      html = {
+        format = {
+          templating = true,
+          wrapLineLength = 120,
+          wrapAttributes = 'auto',
+        },
+        hover = {
+          documentation = true,
+          references = true,
+        },
       },
-      hover = {
-        documentation = true,
-        references = true,
-      },
-    },
-  }
+    }
+  end
 end
 if nixCats('C') then
   servers.clangd = {

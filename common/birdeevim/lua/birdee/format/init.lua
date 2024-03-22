@@ -11,7 +11,7 @@ conform.setup({
     cpp = { "clang_format" },
     cmake = { "cmake_format" },
     -- Use a sub-list to run only the first available formatter
-    -- javascript = { { "prettierd", "prettier" } },
+    javascript = { { "prettierd", "prettier" } },
   },
 })
 
