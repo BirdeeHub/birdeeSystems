@@ -125,6 +125,7 @@ in {
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    fira-code
     openmoji-color
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })

@@ -143,6 +143,7 @@ in {
   # services.xserver.synaptics.enable = true;
   # services.xserver.synaptics.palmDetect = true;
   fonts.packages = with pkgs; [
+    fira-code
     openmoji-color
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
@@ -151,7 +152,7 @@ in {
     enable = true;
     defaultFonts = {
       serif = [ "GoMono Nerd Font Mono" ];
-      sansSerif = [ "FiraCode Nerd Font Mono" ];
+      sansSerif = [ "FiraCode Nerd Font Mono" "FiraCode" ];
       monospace = [ "FiraCode Nerd Font Mono" ];
       emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
     };
