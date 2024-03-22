@@ -119,7 +119,7 @@
         neorg
         neorg-telescope
       ];
-      htmx = with pkgs.vimPlugins; [
+      web = with pkgs.vimPlugins; [
         otter-nvim
       ];
       go = with pkgs.vimPlugins; [
