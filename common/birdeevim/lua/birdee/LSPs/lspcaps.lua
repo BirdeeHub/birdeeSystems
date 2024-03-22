@@ -5,6 +5,7 @@ function M.get_capabilities()
   if nixCats('cmp') then
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
   end
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
   --vim.tbl_extend('keep', capabilities, require'coq'.lsp_ensure_capabilities())
   --vim.api.nvim_out_write(vim.inspect(capabilities))
   return capabilities
