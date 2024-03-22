@@ -181,6 +181,10 @@ if nixCats('python') then
   }
 end
 
+if nixCats('general.markdown') then
+  servers.marksman = {}
+end
+
 if nixCats('web') then
   if nixCats('JS') then
     servers.tsserver = {}

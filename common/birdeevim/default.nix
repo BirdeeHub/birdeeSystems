@@ -24,11 +24,12 @@
     };
 
     lspsAndRuntimeDeps = {
-      general = with pkgs; [
-        universal-ctags
-        ripgrep
-        fd
-      ];
+      general = {
+        core = with pkgs; [ universal-ctags ripgrep fd ];
+        markdown = with pkgs; [
+          marksman
+        ];
+      };
       bitwarden = with pkgs; [
         bitwarden-cli
       ];
