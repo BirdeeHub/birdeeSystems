@@ -158,6 +158,7 @@
           hlargs
           garbage-day
           visual-whitespace
+          render-markdown
         ];
         cmp = [
           # cmp stuff

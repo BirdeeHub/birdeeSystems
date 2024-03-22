@@ -814,6 +814,22 @@
         "type": "github"
       }
     },
+    "plugins-render-markdown": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711076160,
+        "narHash": "sha256-tgDSJpR9sJRS0AU3EikJN0OTiVXrdimL+IkiGqQxr1Q=",
+        "owner": "MeanderingProgrammer",
+        "repo": "markdown.nvim",
+        "rev": "d7d793baf716db965e6f4f4cc0d14a640300cc26",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MeanderingProgrammer",
+        "repo": "markdown.nvim",
+        "type": "github"
+      }
+    },
     "plugins-telescope-git-file-history": {
       "flake": false,
       "locked": {
@@ -884,6 +900,7 @@
         "plugins-garbage-day": "plugins-garbage-day",
         "plugins-grapple": "plugins-grapple",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
+        "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "sg-nvim": "sg-nvim",

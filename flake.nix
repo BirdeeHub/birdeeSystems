@@ -31,6 +31,10 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    "plugins-render-markdown" = {
+      url = "github:MeanderingProgrammer/markdown.nvim";
+      flake = false;
+    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;

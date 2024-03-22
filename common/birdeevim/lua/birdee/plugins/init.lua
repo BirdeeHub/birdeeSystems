@@ -56,6 +56,8 @@ require('visual-whitespace').setup({
   nl_char = '↲'
 })
 
+require('render-markdown').setup({})
+
 if (nixCats('general.markdown')) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true, desc = 'markdown preview' })
