@@ -2,6 +2,7 @@ local M = {}
 
 local function get_git_url_info(branch, local_path)
 	local isCurrentPath = false
+	local isCurrentBranch = false
 	local path = local_path
 	if path == nil then
 		isCurrentPath = true
@@ -27,13 +28,16 @@ local function get_git_url_info(branch, local_path)
 	elseif git_url:sub(-4) == ".git" then
 		git_url = git_url:sub(1, -5)
 	end
+	-- gets the absolute path, then subtracts the git repository root from it and the /.
 	local relgitpath = path:sub(#vim.fn.system("git -C " .. forgit .. " rev-parse --show-toplevel"):gsub("\n", "") + 2)
 	local resolved_branch = branch
 	if resolved_branch == nil then
+		isCurrentBranch = true
 		resolved_branch = vim.fn.system("git -C " .. forgit .. " branch --show-current"):gsub("\n", "")
 	end
+
 	local lnSuffix = ""
-	if not isDir and isCurrentPath then
+	if not isDir and isCurrentBranch and isCurrentPath then
 		local stsel = vim.fn.line(".")
 		local endsel = vim.fn.line("v")
 		if stsel == endsel then
@@ -75,7 +79,7 @@ function M.get_git_remote_url(desired_branch, local_path)
 end
 
 function M.git_url_to_clipboard(desired_branch, local_path)
-	  vim.fn.setreg("+", M.get_git_remote_url(desired_branch, local_path))
+	vim.fn.setreg("+", M.get_git_remote_url(desired_branch, local_path))
 end
 
 return M
