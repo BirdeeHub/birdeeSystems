@@ -28,6 +28,7 @@
         core = with pkgs; [ universal-ctags ripgrep fd ];
         markdown = with pkgs; [
           marksman
+          python311Packages.pylatexenc
         ];
       };
       bitwarden = with pkgs; [
