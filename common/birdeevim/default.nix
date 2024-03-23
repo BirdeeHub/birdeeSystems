@@ -194,6 +194,7 @@
           pkgs.neovimPlugins.fugit2-nvim
           vim-fugitive
           vim-rhubarb
+          diffview-nvim
         ];
         core = [
           # telescope
