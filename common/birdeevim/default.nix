@@ -192,8 +192,11 @@
         git = [
           pkgs.neovimPlugins.telescope-git-file-history
           pkgs.neovimPlugins.fugit2-nvim
+          pkgs.neovimPlugins.nvim-tinygit
           vim-fugitive
           vim-rhubarb
+          nvim-notify
+          dressing-nvim
           diffview-nvim
         ];
         core = [
