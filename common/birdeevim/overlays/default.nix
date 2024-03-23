@@ -14,7 +14,6 @@ inputs: let
   overlaySet = {
 
     nixCatsBuilds = import ./customBuildsOverlay.nix;
-    html-lsp = import ./html-lsp;
 
   };
 in

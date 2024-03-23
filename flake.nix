@@ -35,6 +35,10 @@
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
     };
+    "plugins-fugit2-nvim" = {
+      url = "github:SuperBo/fugit2.nvim";
+      flake = false;
+    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
@@ -57,10 +61,6 @@
     };
     codeium.url = "github:Exafunction/codeium.nvim";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
-    vscode-html-languageservice = {
-      url = "github:microsoft/vscode-html-languageservice";
-      flake = false;
-    };
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;

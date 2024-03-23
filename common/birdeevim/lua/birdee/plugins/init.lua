@@ -22,6 +22,8 @@ require('birdee.plugins.completion')
 
 require('birdee.plugins.lualine')
 
+require('birdee.plugins.fugit2')
+
 require("todo-comments").setup({ signs = false })
 
 require('garbage-day').setup({})

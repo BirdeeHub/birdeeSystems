@@ -441,11 +441,11 @@
     "neovim": {
       "flake": false,
       "locked": {
-        "lastModified": 1711165583,
-        "narHash": "sha256-XGGhyTicKQe/XK1wOFgpke8PfHndh9Ej5iU+brUIIRg=",
+        "lastModified": 1711182833,
+        "narHash": "sha256-kk+jamNQwbkokKhugdAZ146fArJ6+/QO355fGeMiVHA=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "2955c921ceaf5764e8d1592a78370d9ca3a268e2",
+        "rev": "881f5e59173a4f1b9a4cb16e425709e40d79d0e9",
         "type": "github"
       },
       "original": {
@@ -465,11 +465,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1710982022,
-        "narHash": "sha256-p3immHS+u7w7fmK+B725bCh2Jwc6ZXwDEzU2yba5PzQ=",
+        "lastModified": 1711190322,
+        "narHash": "sha256-l1dEeF+OrVeCzwc3bBOJgTR5XkgRR3ZHiq9fP6Yl41A=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "c6d3921279088f897089c33dc0bb06317a1dc817",
+        "rev": "00f94d85f9154de2921aa1f9c426a3caa4fe6113",
         "type": "github"
       },
       "original": {
@@ -715,11 +715,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1711180853,
-        "narHash": "sha256-2yLzrDC/E6KBW1DW2j30Q/aewVq/I2WkIM52DhnwzJY=",
+        "lastModified": 1711191078,
+        "narHash": "sha256-18MbLMfzRHVYEfY/GVpI0MvoCueh7Bit1kOx/Z4JNys=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "74b67d9523469652f998d3a75597d79cd91af771",
+        "rev": "8f5e05e50ced9197fc6fc21d73f53276eed05eeb",
         "type": "github"
       },
       "original": {
@@ -747,6 +747,22 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "plugins-fugit2-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711182801,
+        "narHash": "sha256-/f7VaQxZ7qz54RK0et4Oo+N1mtqdI0uV/9Ca9wnUGrk=",
+        "owner": "SuperBo",
+        "repo": "fugit2.nvim",
+        "rev": "c28ef432c240d18af10884263714f84af254c150",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SuperBo",
+        "repo": "fugit2.nvim",
         "type": "github"
       }
     },
@@ -897,14 +913,14 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
+        "plugins-fugit2-nvim": "plugins-fugit2-nvim",
         "plugins-garbage-day": "plugins-garbage-day",
         "plugins-grapple": "plugins-grapple",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
-        "sg-nvim": "sg-nvim",
-        "vscode-html-languageservice": "vscode-html-languageservice"
+        "sg-nvim": "sg-nvim"
       }
     },
     "rust-overlay": {
@@ -1058,22 +1074,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "vscode-html-languageservice": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711118410,
-        "narHash": "sha256-RnE8oEB3xb9YubPidjx6rtXcqZ247HifgMvcpQkghVo=",
-        "owner": "microsoft",
-        "repo": "vscode-html-languageservice",
-        "rev": "56bc297f17de0c8d86ca5b1543175d500b03239f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "microsoft",
-        "repo": "vscode-html-languageservice",
         "type": "github"
       }
     }

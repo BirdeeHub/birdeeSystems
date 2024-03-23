@@ -23,9 +23,21 @@
       ];
     };
 
+    sharedLibraries = {
+      general = {
+        git = with pkgs; [
+          libgit2
+        ];
+      };
+    };
+
     lspsAndRuntimeDeps = {
       general = {
-        core = with pkgs; [ universal-ctags ripgrep fd ];
+        core = with pkgs; [
+          universal-ctags
+          ripgrep
+          fd
+        ];
         markdown = with pkgs; [
           marksman
           python311Packages.pylatexenc
@@ -179,6 +191,7 @@
         ];
         git = [
           pkgs.neovimPlugins.telescope-git-file-history
+          pkgs.neovimPlugins.fugit2-nvim
           vim-sleuth
           vim-fugitive
           vim-rhubarb
@@ -240,7 +253,7 @@
     extraWrapperArgs = {
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
       test = [
-        '' --set BIRDTVAR2 "It worked again!"''
+        # '' --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.libgit2 ]}"''
       ];
     };
 
