@@ -6,16 +6,16 @@ local function get_git_url_info(branch, local_path)
 	local path = local_path
 	if path == nil then
 		isCurrentPath = true
-		path = vim.fn.expand("%")
+		path = vim.fn.expand("%:p")
 		if path == "" then
 			print("No file is open, nor was a path supplied")
 			return
 		end
 	end
-	path = path:gsub("\n", "")
 	if string.find(path, "oil://", 1, true) then
 		path = path:sub(7, -1)
 	end
+	path = vim.fn.fnamemodify(path:gsub("\n", ""), ':p')
 	local isDir = (vim.fn.isdirectory(path) == 1)
 	local forgit = path
 	if not isDir then
@@ -30,14 +30,17 @@ local function get_git_url_info(branch, local_path)
 	end
 	-- gets the absolute path, then subtracts the git repository root from it and the /.
 	local relgitpath = path:sub(#vim.fn.system("git -C " .. forgit .. " rev-parse --show-toplevel"):gsub("\n", "") + 2)
-	local resolved_branch = branch
-	if resolved_branch == nil then
+	local resolved_branch = vim.fn.system("git -C " .. forgit .. " branch --show-current"):gsub("\n", "")
+	if branch == nil then
 		isCurrentBranch = true
-		resolved_branch = vim.fn.system("git -C " .. forgit .. " branch --show-current"):gsub("\n", "")
+	elseif resolved_branch == branch then
+		isCurrentBranch = true
+	else
+		resolved_branch = branch
 	end
 
 	local lnSuffix = ""
-	if not isDir and isCurrentBranch and isCurrentPath then
+	if not isDir and isCurrentPath and isCurrentBranch then
 		local stsel = vim.fn.line(".")
 		local endsel = vim.fn.line("v")
 		if stsel == endsel then
