@@ -22,7 +22,7 @@ require('birdee.plugins.completion')
 
 require('birdee.plugins.lualine')
 
-require('birdee.plugins.fugit2')
+require('birdee.plugins.git')
 
 require("todo-comments").setup({ signs = false })
 
@@ -71,6 +71,17 @@ require('birdee.plugins.notes')
 
 require('birdee.plugins.gutter')
 
+require('birdee.plugins.grapple')
+
+require('birdee.plugins.oil')
+
+require("ibl").setup()
+
+require('Comment').setup()
+
+require('nvim-surround').setup()
+
+
 local tsj = require('treesj')
 
 -- local langs = {--[[ configuration for languages ]]}
@@ -114,42 +125,4 @@ require('hlargs').setup({
 })
 vim.cmd([[hi clear @lsp.type.parameter]])
 vim.cmd([[hi link @lsp.type.parameter Hlargs]])
-require('Comment').setup()
-require('nvim-surround').setup()
-
-require('birdee.plugins.grapple')
-
-require("ibl").setup()
-
--- I honestly only use this to see the little git icons.
--- I wanna figure out how to add them to oil instead and ditch this
-require('neo-tree').setup({
-  close_if_last_window = true,
-  window = {
-    position = "float",
-    mappings = {
-      ["<space>"] = {
-        nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
-        noremap = false,
-      },
-    },
-  },
-  filesystem = {
-    filtered_items = {
-      visible = true,
-      hide_dotfiles = true,
-      hide_gitignored = true,
-      hide_hidden = true,
-    },
-    hijack_netrw_behavior = "disabled",
-  },
-  buffers = {
-    follow_current_file = {
-      enabled = true,
-    },
-  },
-})
-vim.keymap.set("n", "<leader>_", "<cmd>Neotree toggle<CR>", { noremap = true, desc = 'Open neo-tree' })
-
-require('birdee.plugins.oil')
 require('birdee.plugins.which-key')

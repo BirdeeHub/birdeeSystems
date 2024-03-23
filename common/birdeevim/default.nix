@@ -192,10 +192,12 @@
         git = [
           pkgs.neovimPlugins.telescope-git-file-history
           pkgs.neovimPlugins.fugit2-nvim
-          vim-sleuth
+          pkgs.neovimPlugins.nvim-tinygit
           vim-fugitive
           vim-rhubarb
-          diffview-nvim
+          dressing-nvim
+          nvim-notify
+          gitsigns-nvim
         ];
         core = [
           # telescope
@@ -213,26 +215,25 @@
           #   ]
           # ))
           nvim-lspconfig
+          vim-sleuth
           lualine-lsp-progress
           lualine-nvim
           marks-nvim
           vim-repeat
           comment-nvim
           indent-blankline-nvim
-          gitsigns-nvim
           nvim-lint
-        ];
-        other = [
-          nvim-web-devicons
           conform-nvim
-          which-key-nvim
-          nvim-surround
-          eyeliner-nvim
+          oil-nvim
           undotree
           nui-nvim
-          neo-tree-nvim
+          nvim-web-devicons
+          nvim-surround
           treesj
-          oil-nvim
+        ];
+        other = [
+          which-key-nvim
+          eyeliner-nvim
           todo-comments-nvim
         ];
       };
