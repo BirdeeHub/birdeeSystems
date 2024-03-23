@@ -39,10 +39,6 @@
       url = "github:SuperBo/fugit2.nvim";
       flake = false;
     };
-    "plugins-nvim-tinygit" = {
-      url = "github:chrisgrieser/nvim-tinygit";
-      flake = false;
-    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;

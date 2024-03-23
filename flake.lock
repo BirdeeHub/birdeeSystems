@@ -830,22 +830,6 @@
         "type": "github"
       }
     },
-    "plugins-nvim-tinygit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711032050,
-        "narHash": "sha256-OtstEikJkSbNQCNE8HowbMqa+SghwZj4q7SyBE/9WTw=",
-        "owner": "chrisgrieser",
-        "repo": "nvim-tinygit",
-        "rev": "e30de8c4bc274a21acc8d45fc955693350f6af3b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "chrisgrieser",
-        "repo": "nvim-tinygit",
-        "type": "github"
-      }
-    },
     "plugins-render-markdown": {
       "flake": false,
       "locked": {
@@ -933,7 +917,6 @@
         "plugins-garbage-day": "plugins-garbage-day",
         "plugins-grapple": "plugins-grapple",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
-        "plugins-nvim-tinygit": "plugins-nvim-tinygit",
         "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",

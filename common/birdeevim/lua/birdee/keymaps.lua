@@ -58,3 +58,4 @@ if nixCats('notes') then
     { desc = 'fix the links in copies from phind' })
 end
 
+vim.keymap.set('', '<leader>gl', function() require('birdee.git-remote-url').git_url_to_clipboard() end, { desc = 'Get git link' })
