@@ -77,8 +77,7 @@ function M.get_git_remote_url(desired_branch, local_path)
 	local branch = url_info.branch or ""
 	local relgitpath = url_info.relgitpath or ""
 	local lnSuffix = url_info.lnSuffix or ""
-	local combined = build_git_url(git_url, branch, relgitpath, lnSuffix)
-	return combined
+	return build_git_url(git_url, branch, relgitpath, lnSuffix)
 end
 
 function M.git_url_to_clipboard(desired_branch, local_path)
