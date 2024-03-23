@@ -194,7 +194,6 @@
           pkgs.neovimPlugins.fugit2-nvim
           vim-fugitive
           vim-rhubarb
-          gitsigns-nvim
         ];
         core = [
           # telescope
@@ -215,6 +214,7 @@
           vim-sleuth
           lualine-lsp-progress
           lualine-nvim
+          gitsigns-nvim
           marks-nvim
           vim-repeat
           comment-nvim
