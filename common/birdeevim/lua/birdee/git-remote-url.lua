@@ -75,7 +75,7 @@ function M.get_git_remote_url(desired_branch, local_path)
 end
 
 function M.git_url_to_clipboard(desired_branch, local_path)
-	  vim.fn.setreg("+", M.get_git_url(desired_branch, local_path))
+	  vim.fn.setreg("+", M.get_git_remote_url(desired_branch, local_path))
 end
 
 return M
