@@ -13,4 +13,8 @@ inputs: {
     path = ./emptyFlake;
     description = "an empty flake";
   };
+  helloC = {
+    path = ./helloC;
+    description = "an C empty flake that is probably not how you are meant to do it at all plz send help";
+  };
 }
