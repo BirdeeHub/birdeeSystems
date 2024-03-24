@@ -40,7 +40,7 @@ local function get_git_url_info(branch, local_path, select_start, select_end)
 	end
 
 	local lnSuffix = ""
-	if not isDir and isCurrentPath and isCurrentBranch then
+	if not isDir and ((isCurrentPath and isCurrentBranch) or (select_start ~= nil and select_end ~= nil)) then
 		local stsel = select_start or vim.fn.line(".")
 		local endsel = select_end or vim.fn.line("v")
 		if stsel == endsel then
