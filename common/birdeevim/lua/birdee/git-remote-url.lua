@@ -1,6 +1,6 @@
 local M = {}
 
-local function get_git_url_info(branch, local_path)
+local function get_git_url_info(branch, local_path, select_start, select_end)
 	local isCurrentPath = false
 	local isCurrentBranch = false
 	local path = local_path
@@ -41,8 +41,8 @@ local function get_git_url_info(branch, local_path)
 
 	local lnSuffix = ""
 	if not isDir and isCurrentPath and isCurrentBranch then
-		local stsel = vim.fn.line(".")
-		local endsel = vim.fn.line("v")
+		local stsel = select_start or vim.fn.line(".")
+		local endsel = select_end or vim.fn.line("v")
 		if stsel == endsel then
 			lnSuffix = "#L" .. stsel
 		elseif stsel < endsel then
@@ -71,8 +71,8 @@ local function build_git_url(git_url, branch, relgitpath, lnSuffix)
 	end
 end
 
-function M.get_git_remote_url(desired_branch, local_path)
-	local url_info = get_git_url_info(desired_branch, local_path) or {}
+function M.get_git_remote_url(desired_branch, local_path, select_start, select_end)
+	local url_info = get_git_url_info(desired_branch, local_path, select_start, select_end) or {}
 	local git_url = url_info.git_url or ""
 	local branch = url_info.branch or ""
 	local relgitpath = url_info.relgitpath or ""
@@ -80,8 +80,8 @@ function M.get_git_remote_url(desired_branch, local_path)
 	return build_git_url(git_url, branch, relgitpath, lnSuffix)
 end
 
-function M.git_url_to_clipboard(desired_branch, local_path)
-	vim.fn.setreg("+", M.get_git_remote_url(desired_branch, local_path))
+function M.git_url_to_clipboard(desired_branch, local_path, select_start, select_end)
+	vim.fn.setreg("+", M.get_git_remote_url(desired_branch, local_path, select_start, select_end))
 end
 
 return M
