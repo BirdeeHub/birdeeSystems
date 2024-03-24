@@ -51,6 +51,10 @@
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;
     };
+    "plugins-large_file" = {
+      url = "github:mireq/large_file";
+      flake = false;
+    };
     "plugins-visual-whitespace" = {
       url = "github:mcauley-penney/visual-whitespace.nvim";
       flake = false;

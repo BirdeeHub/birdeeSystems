@@ -814,6 +814,22 @@
         "type": "github"
       }
     },
+    "plugins-large_file": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711288079,
+        "narHash": "sha256-0yxPl242N5pi4CvR1TsD+yzkps2Ej9pAHXWOMRoOazk=",
+        "owner": "mireq",
+        "repo": "large_file",
+        "rev": "d9740134f80994d56f50e2931ba9307f49e420dc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mireq",
+        "repo": "large_file",
+        "type": "github"
+      }
+    },
     "plugins-nvim-luaref": {
       "flake": false,
       "locked": {
@@ -932,6 +948,7 @@
         "plugins-fugit2-nvim": "plugins-fugit2-nvim",
         "plugins-garbage-day": "plugins-garbage-day",
         "plugins-grapple": "plugins-grapple",
+        "plugins-large_file": "plugins-large_file",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",
         "plugins-render-markdown": "plugins-render-markdown",

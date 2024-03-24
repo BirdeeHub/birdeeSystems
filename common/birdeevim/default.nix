@@ -233,6 +233,7 @@
           treesj
         ];
         other = [
+          pkgs.neovimPlugins.large_file
           which-key-nvim
           eyeliner-nvim
           todo-comments-nvim

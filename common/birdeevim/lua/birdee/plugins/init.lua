@@ -14,6 +14,17 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
+require("large_file").setup({
+  size_limit = 4 * 1024 * 1024,  -- 4 MB
+  buffer_options = {
+      swapfile = false,
+      bufhidden = 'unload',
+      buftype = 'nowrite',
+      undolevels = -1,
+  },
+  on_large_file_read_pre = function(ev) end
+})
+
 require('birdee.plugins.telescope')
 
 require('birdee.plugins.nestsitter')
