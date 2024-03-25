@@ -14,7 +14,7 @@ in {
   # plz help I dont think Im doing any of this correctly
   name = "${appname}";
   src = ./.;
-  phases = [ "buildPhase" "installPhase" "postFixup" ];
+  phases = [ "buildPhase" "postFixup" ];
   buildInputs = with pkgs; [  ];
   nativeBuildInputs = with pkgs; [ makeWrapper cmake ];
   propagatedNativeBuildInputs = with pkgs; [  ];
@@ -23,8 +23,6 @@ in {
     mkdir -p $out
     export APPNAME=${appname}
     cd $out && cmake $src && make install
-  '';
-  installPhase = ''
   '';
   postFixup = ''
     wrapProgram $out/bin/${appname} \

@@ -19,7 +19,7 @@
         inputsFrom = with pkgs; [ llvmPackages_16.clangUseLLVM stdenv.cc.cc.lib cmake gnumake ];
         DEVSHELL = 0;
         shellHook = ''
-          [ -f ./compile_commands.json ] && rm ./compile_commands.json
+          [ -e ./compile_commands.json ] && rm ./compile_commands.json
           ln -s ${default_package}/compile_commands.json
           exec ${pkgs.zsh}/bin/zsh
         '';
