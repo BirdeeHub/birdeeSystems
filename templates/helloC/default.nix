@@ -7,21 +7,21 @@
     gnugrep
     gawk
   ];
-  appname = "HelloWorld";
+  APPNAME = "HelloWorld";
 in
 stdenv.mkDerivation (let
 in {
-  name = "${appname}";
+  name = "${APPNAME}";
   src = ./.;
-  APPNAME = appname;
+  inherit APPNAME;
   # buildInputs = with pkgs; [  ];
   nativeBuildInputs = with pkgs; [ makeWrapper cmake ];
   # propagatedNativeBuildInputs = with pkgs; [  ];
   postFixup = ''
-    wrapProgram $out/bin/${appname} \
+    wrapProgram $out/bin/${APPNAME} \
       --set PATH ${lib.makeBinPath procPath}
   '';
   meta = {
-    mainProgram = "${appname}";
+    mainProgram = "${APPNAME}";
   };
 })
