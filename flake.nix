@@ -151,10 +151,8 @@
       };
     }));
     diskoConfigurations = {
-      PCs = {
         sda_swap = import ./disko/PCs/sda_swap.nix;
         sdb_swap = import ./disko/PCs/sdb_swap.nix;
-      };
     };
     templates = import ./templates inputs;
   };
