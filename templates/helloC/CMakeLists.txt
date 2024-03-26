@@ -8,3 +8,4 @@ set(SOURCES
 )
 add_executable("${PROJECT_NAME}" "${SOURCES}")
 install(TARGETS "${PROJECT_NAME}" DESTINATION "${OUTDIR}")
+install(FILES "${CMAKE_BINARY_DIR}/compile_commands.json" DESTINATION "$ENV{out}/build")

@@ -20,7 +20,7 @@
         DEVSHELL = 0;
         shellHook = ''
           [ -e ./compile_commands.json ] && rm ./compile_commands.json
-          ln -s ${default_package}/compile_commands.json
+          ln -s ${default_package}/build/compile_commands.json
           exec ${pkgs.zsh}/bin/zsh
         '';
       };
