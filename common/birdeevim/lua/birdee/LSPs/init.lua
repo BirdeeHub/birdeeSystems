@@ -185,31 +185,29 @@ if nixCats('general.markdown') then
   servers.marksman = {}
 end
 
-if nixCats('web') then
-  if nixCats('web.JS') then
-    servers.tsserver = {}
-  end
-  if nixCats('web.HTMX') then
-    servers.htmx = {}
-  end
-  if nixCats('web.HTML') then
-    servers.cssls = {}
-    servers.eslint = {}
-    servers.jsonls = {}
-    servers.html = {
-      html = {
-        format = {
-          templating = true,
-          wrapLineLength = 120,
-          wrapAttributes = 'auto',
-        },
-        hover = {
-          documentation = true,
-          references = true,
-        },
+if nixCats('web.JS') then
+  servers.tsserver = {}
+end
+if nixCats('web.HTMX') then
+  servers.htmx = {}
+end
+if nixCats('web.HTML') then
+  servers.cssls = {}
+  servers.eslint = {}
+  servers.jsonls = {}
+  servers.html = {
+    html = {
+      format = {
+        templating = true,
+        wrapLineLength = 120,
+        wrapAttributes = 'auto',
       },
-    }
-  end
+      hover = {
+        documentation = true,
+        references = true,
+      },
+    },
+  }
 end
 if nixCats('C') then
   servers.clangd = {
