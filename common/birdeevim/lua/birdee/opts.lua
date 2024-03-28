@@ -71,9 +71,9 @@ vim.g.netrw_liststyle = 0
 vim.g.netrw_banner = 0
 
 vim.api.nvim_create_autocmd('FileType', {
-pattern = 'help',
-callback = function()
-  vim.bo.bufhidden = 'unload'
-  vim.cmd.wincmd('L')
-end,
+  pattern = 'help',
+  callback = function()
+    vim.bo.bufhidden = 'unload'
+    vim.cmd.wincmd('L')
+  end,
 })
