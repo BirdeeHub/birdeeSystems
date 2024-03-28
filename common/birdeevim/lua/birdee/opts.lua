@@ -69,3 +69,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.g.netrw_liststyle = 0
 vim.g.netrw_banner = 0
+
+vim.cmd([[
+  augroup vertical_help
+  autocmd!
+  autocmd FileType help wincmd L
+  augroup END
+]])
