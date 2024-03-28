@@ -39,7 +39,7 @@ require("todo-comments").setup({ signs = false })
 
 require('garbage-day').setup({})
 
-if nixCats('htmx') then
+if nixCats('web') then
   local otter = require 'otter'
   otter.setup {
     lsp = {
