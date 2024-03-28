@@ -70,9 +70,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.g.netrw_liststyle = 0
 vim.g.netrw_banner = 0
 
-vim.cmd([[
-  augroup vertical_help
-  autocmd!
-  autocmd FileType help wincmd L
-  augroup END
-]])
+vim.api.nvim_create_autocmd('FileType', {
+pattern = 'help',
+callback = function()
+  vim.bo.bufhidden = 'unload'
+  vim.cmd.wincmd('L')
+end,
+})
