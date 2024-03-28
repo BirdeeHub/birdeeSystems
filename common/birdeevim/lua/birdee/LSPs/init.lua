@@ -196,6 +196,7 @@ if nixCats('web.HTML') then
   servers.eslint = {}
   servers.jsonls = {}
   servers.html = {
+    filetypes = { 'html', 'twig', 'hbs', 'templ' },
     html = {
       format = {
         templating = true,
@@ -223,9 +224,14 @@ if nixCats('C') then
   vim.cmd [[let g:cmake_link_compile_commands = 1]]
   servers.cmake = {}
 end
+
 -- servers.rust_analyzer = {}
--- servers.tsserver = {}
--- servers.html = { filetypes = { 'html', 'twig', 'hbs'} }
+
+
+
+
+
+
 
 if not require('nixCatsUtils').isNixCats then
   -- Ensure the servers above are installed
