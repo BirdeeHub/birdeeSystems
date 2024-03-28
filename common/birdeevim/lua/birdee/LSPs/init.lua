@@ -186,13 +186,13 @@ if nixCats('general.markdown') then
 end
 
 if nixCats('web') then
-  if nixCats('JS') then
+  if nixCats('web.JS') then
     servers.tsserver = {}
   end
-  if nixCats('HTMX') then
+  if nixCats('web.HTMX') then
     servers.htmx = {}
   end
-  if nixCats('HTML') then
+  if nixCats('web.HTML') then
     servers.cssls = {}
     servers.eslint = {}
     servers.jsonls = {}
