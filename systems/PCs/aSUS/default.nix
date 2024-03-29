@@ -50,6 +50,9 @@ in {
   #   # users.extraGroups.vboxusers.members = [ "birdee" ];
   # };
 
+  services.auto-cpufreq.enable = true;
+  services.thermald.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   #Nouveau doesn't work at all on this model.

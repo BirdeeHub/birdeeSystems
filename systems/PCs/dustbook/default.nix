@@ -28,6 +28,9 @@ in {
     mesa
   ];
 
+  services.auto-cpufreq.enable = true;
+  services.thermald.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages;
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau libva
