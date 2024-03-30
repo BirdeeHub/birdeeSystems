@@ -69,6 +69,9 @@
         templ = with inputs; [
           templ.packages.${pkgs.system}.templ
         ];
+        tailwindcss = with pkgs; [
+          tailwindcss-language-server
+        ];
         HTMX = with pkgs; [
           htmx-lsp
         ];

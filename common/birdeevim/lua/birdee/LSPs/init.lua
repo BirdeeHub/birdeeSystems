@@ -188,6 +188,9 @@ end
 if nixCats('web.templ') then
   servers.templ = {}
 end
+if nixCats('web.tailwindcss') then
+  servers.tailwindcss = {}
+end
 if nixCats('web.JS') then
   servers.tsserver = {}
 end
