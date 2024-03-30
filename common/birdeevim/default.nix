@@ -66,6 +66,9 @@
         go
       ];
       web = {
+        templ = with inputs; [
+          templ.packages.${pkgs.system}.templ
+        ];
         HTMX = with pkgs; [
           htmx-lsp
         ];

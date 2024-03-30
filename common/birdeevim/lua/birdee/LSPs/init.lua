@@ -185,6 +185,9 @@ if nixCats('general.markdown') then
   servers.marksman = {}
 end
 
+if nixCats('web.templ') then
+  servers.templ = {}
+end
 if nixCats('web.JS') then
   servers.tsserver = {}
 end

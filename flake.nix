@@ -30,6 +30,7 @@
     #   url = "github:neovim/neovim?dir=contrib";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+    templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     "plugins-render-markdown" = {
       url = "github:MeanderingProgrammer/markdown.nvim";
