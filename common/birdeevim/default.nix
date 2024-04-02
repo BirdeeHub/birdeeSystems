@@ -37,6 +37,7 @@
           universal-ctags
           ripgrep
           fd
+          ast-grep
         ];
         markdown = with pkgs; [
           marksman

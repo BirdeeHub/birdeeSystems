@@ -56,6 +56,10 @@
       url = "github:mireq/large_file";
       flake = false;
     };
+    "plugins-code-compass" = {
+      url = "github:emmanueltouzery/code-compass.nvim";
+      flake = false;
+    };
     "plugins-visual-whitespace" = {
       url = "github:mcauley-penney/visual-whitespace.nvim";
       flake = false;

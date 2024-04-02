@@ -131,6 +131,7 @@ in {
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
     vlc
+    nix-tree
     xfce.ristretto
     qbittorrent
     galculator
