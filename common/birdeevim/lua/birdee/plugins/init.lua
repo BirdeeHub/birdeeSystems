@@ -9,18 +9,18 @@ if colorschemer == 'onedark' then
   }
   require('onedark').load()
 end
-local hlargsColor = '#32a88f'  -- if this doesnt work for new theme, change it here
+local hlargsColor = '#32a88f' -- if this doesnt work for new theme, change it here
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
 require("large_file").setup({
-  size_limit = 4 * 1024 * 1024,  -- 4 MB
+  size_limit = 4 * 1024 * 1024, -- 4 MB
   buffer_options = {
-      swapfile = false,
-      bufhidden = 'unload',
-      buftype = 'nowrite',
-      undolevels = -1,
+    swapfile = false,
+    bufhidden = 'unload',
+    buftype = 'nowrite',
+    undolevels = -1,
   },
   on_large_file_read_pre = function(ev) end
 })
@@ -35,7 +35,7 @@ require('birdee.plugins.lualine')
 
 require('birdee.plugins.git')
 
-require('birdee.plugins.imgclip')
+require('birdee.plugins.clipboard')
 
 require("todo-comments").setup({ signs = false })
 
@@ -70,11 +70,6 @@ require('visual-whitespace').setup({
   tab_char = '→',
   nl_char = '↲'
 })
-require('yankbank').setup({
-  max_entries = 10,
-  sep = "-----",
-})
-vim.keymap.set("n", "<leader>sc", ":YankBank<CR>", { silent = true, noremap = true, desc = "[s]earch [c]liphist (yankbank)" })
 
 require('render-markdown').setup({})
 
@@ -82,7 +77,8 @@ if (nixCats('general.markdown')) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true, desc = 'markdown preview' })
   vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
-  vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>', { noremap = true, desc = 'markdown preview toggle' })
+  vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
+    { noremap = true, desc = 'markdown preview toggle' })
 end
 
 require('birdee.plugins.notes')

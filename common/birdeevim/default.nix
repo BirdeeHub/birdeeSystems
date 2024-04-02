@@ -241,7 +241,7 @@
         ];
         other = [
           pkgs.neovimPlugins.large_file
-          pkgs.neovimPlugins.yankbank
+          nvim-neoclip-lua
           pkgs.neovimPlugins.img-clip
           which-key-nvim
           eyeliner-nvim

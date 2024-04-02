@@ -807,11 +807,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1712076512,
-        "narHash": "sha256-dhFrjd6e1xREwKBgxE0S3wsMdb6CQ5A8gTWOoD6F7ws=",
+        "lastModified": 1712087101,
+        "narHash": "sha256-yaGe1cyIORTh7HCtGmMK8ZYhGeBs//Y8H+G71Q3ZSVM=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "e15ab220131513386cd6365ac52ac92e7edcc1ec",
+        "rev": "1c024d942e16494b10038d7f2ef4b20e385718a8",
         "type": "github"
       },
       "original": {
@@ -1034,22 +1034,6 @@
         "type": "github"
       }
     },
-    "plugins-yankbank": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1712081320,
-        "narHash": "sha256-39XLLS5WJ+Wl6b4F5KpTUByRZTI1ZpxPJ8wDnUG/pSc=",
-        "owner": "ptdewey",
-        "repo": "yankbank-nvim",
-        "rev": "5ec28cb3a14c9891a6236fb324f045c4f7165e68",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ptdewey",
-        "repo": "yankbank-nvim",
-        "type": "github"
-      }
-    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -1096,7 +1080,6 @@
         "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
-        "plugins-yankbank": "plugins-yankbank",
         "sg-nvim": "sg-nvim",
         "templ": "templ"
       }
