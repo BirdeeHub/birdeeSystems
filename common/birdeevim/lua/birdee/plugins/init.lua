@@ -68,6 +68,10 @@ require('visual-whitespace').setup({
   tab_char = '→',
   nl_char = '↲'
 })
+require('yankbank').setup({
+  max_entries = 10,
+  sep = "-----",
+})
 
 require('render-markdown').setup({})
 

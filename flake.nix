@@ -48,6 +48,10 @@
       url = "github:milisims/nvim-luaref";
       flake = false;
     };
+    "plugins-yankbank" = {
+      url = "github:ptdewey/yankbank-nvim";
+      flake = false;
+    };
     "plugins-telescope-git-file-history" = {
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;

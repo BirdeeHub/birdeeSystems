@@ -241,6 +241,7 @@
         ];
         other = [
           pkgs.neovimPlugins.large_file
+          pkgs.neovimPlugins.yankbank
           which-key-nvim
           eyeliner-nvim
           todo-comments-nvim

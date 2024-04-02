@@ -517,11 +517,11 @@
     "neovim": {
       "flake": false,
       "locked": {
-        "lastModified": 1712033301,
-        "narHash": "sha256-5D6T1XOTKkZrCKs0sM2feOveXqRijUV6m9N2DALErp8=",
+        "lastModified": 1712049196,
+        "narHash": "sha256-I/K+lQcWgL71D5UZgtTf/XdSdb75HXPxZNN6NgYSnlo=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "b3f9da9524b0b1bb992d3dd84eaa92980923cb3e",
+        "rev": "6cfca21bac6bb39b50cba1c23ffb2b69e2d94df8",
         "type": "github"
       },
       "original": {
@@ -807,11 +807,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1712042687,
-        "narHash": "sha256-99mV4B1J8DnI823jR2fsE9mFt+PYfyFcmDK5WgL5juk=",
+        "lastModified": 1712051077,
+        "narHash": "sha256-eM/LTDd/2zwcizYEvuV/8BRX03Hfsjxp7ZXnparG6nw=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "329cd2917d26fd295f750845bb8ebf5c775da3d6",
+        "rev": "a4291b2fa3c6d7edbc07f7e49dcf207173c754c0",
         "type": "github"
       },
       "original": {
@@ -1018,6 +1018,22 @@
         "type": "github"
       }
     },
+    "plugins-yankbank": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711979668,
+        "narHash": "sha256-rxCy8TQLMNK8S2Qc6QCCqPTgBdVumXsU+tjz0YHVrA4=",
+        "owner": "ptdewey",
+        "repo": "yankbank-nvim",
+        "rev": "45f5836625940c23a2a8fb4635af300f049307f3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ptdewey",
+        "repo": "yankbank-nvim",
+        "type": "github"
+      }
+    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -1063,6 +1079,7 @@
         "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
+        "plugins-yankbank": "plugins-yankbank",
         "sg-nvim": "sg-nvim",
         "templ": "templ"
       }
@@ -1222,11 +1239,11 @@
         "xc": "xc"
       },
       "locked": {
-        "lastModified": 1711790254,
-        "narHash": "sha256-VlUvmEWSKxzxRX4Gb7cn2m3sRjHgvMFidCrHQOL8JB4=",
+        "lastModified": 1712048901,
+        "narHash": "sha256-Agoz84GWNeOkTMsHzh9bwiRKD+9lxRvLT4e/OYpvihA=",
         "owner": "a-h",
         "repo": "templ",
-        "rev": "dbbb53b6a378691d8948c0dad7e8919f28d16f9d",
+        "rev": "8cc2e944ec466f9a52701dca9edef89b2459075c",
         "type": "github"
       },
       "original": {
