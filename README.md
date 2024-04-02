@@ -25,7 +25,9 @@ monitor management:
   Its an expression that returns a module, true for home manager false for system.
 
   System module has only an enable option.
-  It creates a udev rule that echoes $RANDOM to a temp file on monitor hotplug
+  It creates a udev rule that echoes $RANDOM to a temp file on monitor hotplug.
+
+  It is necessary for the user service to work.
 
   Home module specifies service using inotify to run your xrandr scripts, and handles putting your i3 workspaces back from whence they came when you plug the monitor back in.
 
@@ -33,6 +35,8 @@ monitor management:
 
     inputs.birdeeSystems.home-modules.i3MonMemory
     inputs.birdeeSystems.system-modules.i3MonMemory
+
+  In fact, all items [specified in this file](./common/default.nix) can be imported in this way in other flakes.
 
 ---
 
