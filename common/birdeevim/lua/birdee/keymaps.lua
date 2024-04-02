@@ -44,7 +44,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 vim.keymap.set('n', '<leader>t', [[:terminal<CR>]], { desc = 'open terminal in current buffer' })
 
-vim.keymap.set("n", "<leader>sc", ":YankBank<CR>", { noremap = true, desc = "[s]earch [c]liphist (yankbank)" })
 
 
 -- these 3 jankily fix which-key related errors for some reason

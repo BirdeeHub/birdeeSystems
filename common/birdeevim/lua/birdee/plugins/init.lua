@@ -72,6 +72,7 @@ require('yankbank').setup({
   max_entries = 10,
   sep = "-----",
 })
+vim.keymap.set("n", "<leader>sc", ":YankBank<CR>", { silent = true, noremap = true, desc = "[s]earch [c]liphist (yankbank)" })
 
 require('render-markdown').setup({})
 
