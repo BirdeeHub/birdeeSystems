@@ -35,6 +35,8 @@ require('birdee.plugins.lualine')
 
 require('birdee.plugins.git')
 
+require('birdee.plugins.imgclip')
+
 require("todo-comments").setup({ signs = false })
 
 require('garbage-day').setup({})

@@ -517,11 +517,11 @@
     "neovim": {
       "flake": false,
       "locked": {
-        "lastModified": 1712049196,
-        "narHash": "sha256-I/K+lQcWgL71D5UZgtTf/XdSdb75HXPxZNN6NgYSnlo=",
+        "lastModified": 1712072837,
+        "narHash": "sha256-zouwr3bfc/T2S/PMSR1oCpKUB7c0FphhZ2Jo4NSIVoc=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "6cfca21bac6bb39b50cba1c23ffb2b69e2d94df8",
+        "rev": "d9235efa76229708586d3c9db3dcbac46127ca0a",
         "type": "github"
       },
       "original": {
@@ -807,11 +807,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1712051077,
-        "narHash": "sha256-eM/LTDd/2zwcizYEvuV/8BRX03Hfsjxp7ZXnparG6nw=",
+        "lastModified": 1712076512,
+        "narHash": "sha256-dhFrjd6e1xREwKBgxE0S3wsMdb6CQ5A8gTWOoD6F7ws=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "a4291b2fa3c6d7edbc07f7e49dcf207173c754c0",
+        "rev": "e15ab220131513386cd6365ac52ac92e7edcc1ec",
         "type": "github"
       },
       "original": {
@@ -922,6 +922,22 @@
         "type": "github"
       }
     },
+    "plugins-img-clip": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712067946,
+        "narHash": "sha256-WR7EreUeIlC0Pn1oGFpSGA/u/Tl4hqN/fYAqjXnRwCA=",
+        "owner": "HakonHarnes",
+        "repo": "img-clip.nvim",
+        "rev": "61ece8b8a206a31459d3f3ff186d6e2b2f958356",
+        "type": "github"
+      },
+      "original": {
+        "owner": "HakonHarnes",
+        "repo": "img-clip.nvim",
+        "type": "github"
+      }
+    },
     "plugins-large_file": {
       "flake": false,
       "locked": {
@@ -1021,11 +1037,11 @@
     "plugins-yankbank": {
       "flake": false,
       "locked": {
-        "lastModified": 1711979668,
-        "narHash": "sha256-rxCy8TQLMNK8S2Qc6QCCqPTgBdVumXsU+tjz0YHVrA4=",
+        "lastModified": 1712081320,
+        "narHash": "sha256-39XLLS5WJ+Wl6b4F5KpTUByRZTI1ZpxPJ8wDnUG/pSc=",
         "owner": "ptdewey",
         "repo": "yankbank-nvim",
-        "rev": "45f5836625940c23a2a8fb4635af300f049307f3",
+        "rev": "5ec28cb3a14c9891a6236fb324f045c4f7165e68",
         "type": "github"
       },
       "original": {
@@ -1073,6 +1089,7 @@
         "plugins-fugit2-nvim": "plugins-fugit2-nvim",
         "plugins-garbage-day": "plugins-garbage-day",
         "plugins-grapple": "plugins-grapple",
+        "plugins-img-clip": "plugins-img-clip",
         "plugins-large_file": "plugins-large_file",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",

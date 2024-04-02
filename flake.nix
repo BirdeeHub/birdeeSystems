@@ -76,6 +76,10 @@
       url = "github:cbochs/grapple.nvim";
       flake = false;
     };
+    "plugins-img-clip" = {
+      url = "github:HakonHarnes/img-clip.nvim";
+      flake = false;
+    };
     codeium.url = "github:Exafunction/codeium.nvim";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
     "bash-debug-adapter" = {
