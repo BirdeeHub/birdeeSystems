@@ -47,7 +47,14 @@ require('lualine').setup({
     lualine_a = { 'mode' },
     lualine_b = {
       'branch',
-      'diff',
+      {
+        "diff",
+        symbols = {
+          added = require("birdee.icons").git.added,
+          modified = require("birdee.icons").git.modified,
+          removed = require("birdee.icons").git.removed,
+        },
+      },
       'diagnostics',
     },
     lualine_c = {

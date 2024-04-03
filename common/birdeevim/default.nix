@@ -234,6 +234,7 @@
           conform-nvim
           oil-nvim
           undotree
+          pkgs.neovimPlugins.nvim-nio
           nui-nvim
           nvim-web-devicons
           nvim-surround

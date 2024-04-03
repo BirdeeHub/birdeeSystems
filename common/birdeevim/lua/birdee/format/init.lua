@@ -4,6 +4,7 @@ conform.setup({
   formatters_by_ft = {
     lua = { "stylua" },
     go = { "gofmt", "golint" },
+    templ = { "templ" },
     -- Conform will run multiple formatters sequentially
     python = { "isort", "black" },
     kotlin = { 'ktlint' },
