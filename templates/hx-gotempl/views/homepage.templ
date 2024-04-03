@@ -15,13 +15,13 @@ templ BodyContents(name string) {
 
 templ trashcan() {
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-		<path fill="none" d="M0 0h24v24H0z"/>
-		<path d="M4 2h16a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1zM3 6h18v16a1 1 0 01-1 1H4a1 1 0 01-1-1V6zm3 3v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0z"/>
+		<path fill="none" d="M0 0h24v24H0z"></path>
+		<path d="M4 2h16a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1zM3 6h18v16a1 1 0 01-1 1H4a1 1 0 01-1-1V6zm3 3v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0z"></path>
 	</svg>
 }
 
 templ barsSAVAGE() {
-    <img src="/images/bars.svg" alt="loading" style="width: 1rem;" />
+	<img src="/images/bars.svg" alt="loading" style="width: 1rem;"/>
 }
 
 templ Homepage() {
@@ -29,10 +29,10 @@ templ Homepage() {
 	<html lang="en">
 		<head>
 			<title>TEST</title>
-			<meta charset="utf-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
-			<link rel="stylesheet" href="/styles/templ.css" />
+			<link rel="stylesheet" href="/styles/templ.css"/>
 		</head>
 		<body>
 			@BodyContents("World")
@@ -52,7 +52,7 @@ script htmxAllowedCodes() {
 	})
 }
 
-var StaticStyles []templ.CSSClass = []templ.CSSClass{flexColumn(),flexRow()}
+var StaticStyles []templ.CSSClass = []templ.CSSClass{flexColumn(), flexRow()}
 
 css flexRow() {
 	display: flex;
