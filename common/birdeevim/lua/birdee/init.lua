@@ -3,6 +3,9 @@ require('nixCatsUtils').setup {
 }
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+require("birdee.opts")
+require("birdee.keymaps")
+require("birdee.clippy")
 if nixCats('nixCats_packageName') ~= "minimalVim" then
   require('nixCatsUtils.catPacker')
   require("birdee.plugins")
@@ -12,6 +15,3 @@ if nixCats('nixCats_packageName') ~= "minimalVim" then
   end
   require("birdee.format")
 end
-require("birdee.keymaps")
-require("birdee.clippy")
-require("birdee.opts")
