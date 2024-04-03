@@ -1,0 +1,42 @@
+schema = 3
+
+[mod]
+  [mod."github.com/a-h/templ"]
+    version = "v0.2.648"
+    hash = "sha256-s5z0VUXQd7JUGhNMrNA7Txfn4qS6eTIakLgmn0xOy88="
+  [mod."github.com/golang-jwt/jwt"]
+    version = "v3.2.2+incompatible"
+    hash = "sha256-LOkpuXhWrFayvVf1GOaOmZI5YKEsgqVSb22aF8LnCEM="
+  [mod."github.com/labstack/echo/v4"]
+    version = "v4.11.4"
+    hash = "sha256-pVKfkZtxi5e/1MTK2RcKWSgNpEbRDo3lKUVKo01WYO0="
+  [mod."github.com/labstack/gommon"]
+    version = "v0.4.2"
+    hash = "sha256-395+BETDpv15L2lsCiEccwakXgEQxKHlYBAU0Ot3qhY="
+  [mod."github.com/mattn/go-colorable"]
+    version = "v0.1.13"
+    hash = "sha256-qb3Qbo0CELGRIzvw7NVM1g/aayaz4Tguppk9MD2/OI8="
+  [mod."github.com/mattn/go-isatty"]
+    version = "v0.0.20"
+    hash = "sha256-qhw9hWtU5wnyFyuMbKx+7RB8ckQaFQ8D+8GKPkN3HHQ="
+  [mod."github.com/valyala/bytebufferpool"]
+    version = "v1.0.0"
+    hash = "sha256-I9FPZ3kCNRB+o0dpMwBnwZ35Fj9+ThvITn8a3Jr8mAY="
+  [mod."github.com/valyala/fasttemplate"]
+    version = "v1.2.2"
+    hash = "sha256-gp+lNXE8zjO+qJDM/YbS6V43HFsYP6PKn4ux1qa5lZ0="
+  [mod."golang.org/x/crypto"]
+    version = "v0.17.0"
+    hash = "sha256-/vzBaeD/Ymyc7cpjBvSfJfuZ57zWa9LOaZM7b33eIx0="
+  [mod."golang.org/x/net"]
+    version = "v0.19.0"
+    hash = "sha256-3M5rKEvJx4cO/q+06cGjR5sxF5JpnUWY0+fQttrWdT4="
+  [mod."golang.org/x/sys"]
+    version = "v0.15.0"
+    hash = "sha256-n7TlABF6179RzGq3gctPDKDPRtDfnwPdjNCMm8ps2KY="
+  [mod."golang.org/x/text"]
+    version = "v0.14.0"
+    hash = "sha256-yh3B0tom1RfzQBf1RNmfdNWF1PtiqxV41jW1GVS6JAg="
+  [mod."golang.org/x/time"]
+    version = "v0.5.0"
+    hash = "sha256-W6RgwgdYTO3byIPOFxrP2IpAZdgaGowAaVfYby7AULU="
