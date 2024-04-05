@@ -16,7 +16,7 @@ vim.defer_fn(function()
       keymaps = {
         init_selection = '<M-t>',
         node_incremental = '<M-t>',
-        scope_incremental = '<C-t>',
+        scope_incremental = '<M-T>',
         node_decremental = '<M-r>',
       },
     },
