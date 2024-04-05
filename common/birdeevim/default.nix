@@ -109,7 +109,7 @@
         python-lsp-server
         debugpy
         pytest
-        pylint
+        # pylint
         # python-lsp-ruff
         # pyls-flake8
         # pylsp-rope
