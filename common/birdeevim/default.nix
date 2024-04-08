@@ -280,7 +280,7 @@
         py.pylsp-mypy
         py.pyls-isort
         py.python-lsp-server
-        py.python-lsp-black
+        # py.python-lsp-black
         py.pytest
         py.pylint
         # python-lsp-ruff

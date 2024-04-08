@@ -163,7 +163,7 @@ if nixCats('python') then
     pylsp = {
       plugins = {
         -- formatter options
-        black = { enabled = true },
+        black = { enabled = false },
         autopep8 = { enabled = false },
         yapf = { enabled = false },
         -- linter options

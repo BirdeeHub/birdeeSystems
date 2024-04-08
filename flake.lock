@@ -541,16 +541,15 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1712577129,
+        "lastModified": 1712578233,
         "narHash": "sha256-/4LQTp/KwliTBhfMpi9J951huQ6fNj3W7734txrrtNw=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "24eb6935192f884da0e5052fadcbb93183173ae2",
+        "rev": "5d587160dffbb30577e4bebf1caa186085d9d704",
         "type": "github"
       },
       "original": {
         "owner": "BirdeeHub",
-        "ref": "overlaysCheckFix",
         "repo": "nixCats-nvim",
         "type": "github"
       }
@@ -808,11 +807,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1712576698,
-        "narHash": "sha256-sUvOKQHUQt6x9Db4a/VWeyOHKruA7lVByO3brKD/yb8=",
+        "lastModified": 1712577859,
+        "narHash": "sha256-Dj/v0G964gStuJQ4AZlU/BXhfUbboCeegfPEGOM0x9c=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "96b9a930341019d17ff4d58f4209ad69a3eb162d",
+        "rev": "47a8f374c33c567f9b0c63f6a953f38e3b6eb921",
         "type": "github"
       },
       "original": {
