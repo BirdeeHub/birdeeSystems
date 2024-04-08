@@ -18,7 +18,7 @@
 
     # neovim
     flake-utils.url = "github:numtide/flake-utils";
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim/overlaysCheckFix";
     nixCats.inputs.nixpkgs.follows = "nixpkgs";
     nixCats.inputs.flake-utils.follows = "flake-utils";
     neovim = { url = "github:neovim/neovim"; flake = false; };

@@ -1,5 +1,6 @@
 {inputs, ... }@attrs: let
   inherit (inputs.nixCats) utils;
+  inherit (inputs) nixpkgs;
   luaPath = "${./.}";
   forEachSystem = inputs.flake-utils.lib.eachSystem inputs.flake-utils.lib.allSystems;
   extra_pkg_config = {
@@ -418,35 +419,40 @@ in
   forEachSystem (system: let
     inherit (utils) baseBuilder;
     customPackager = baseBuilder luaPath {
-      inherit (inputs) nixpkgs;
+      inherit nixpkgs;
       inherit system dependencyOverlays extra_pkg_config;
     } categoryDefinitions;
     nixCatsBuilder = customPackager packageDefinitions;
-    pkgs = import inputs.nixpkgs { inherit system; };
+    pkgs = import nixpkgs { inherit system; };
   in {
     packages = utils.mkPackages nixCatsBuilder packageDefinitions defaultPackageName;
 
-    overlays = utils.mkOverlays nixCatsBuilder packageDefinitions defaultPackageName;
-
-    devShell = pkgs.mkShell {
-      name = defaultPackageName;
-      packages = [ (nixCatsBuilder defaultPackageName) ];
-      inputsFrom = [ ];
-      DEVSHELL = 0;
-      shellHook = ''
-        exec ${pkgs.zsh}/bin/zsh
-      '';
+    devShells = {
+      default = pkgs.mkShell {
+        name = defaultPackageName;
+        packages = [ (nixCatsBuilder defaultPackageName) ];
+        inputsFrom = [ ];
+        DEVSHELL = 0;
+        shellHook = ''
+          exec ${pkgs.zsh}/bin/zsh
+        '';
+      };
     };
 
     inherit customPackager;
   }
 ) // {
+  overlays = utils.makeOverlays luaPath {
+    # we pass in the things to make a pkgs variable to build nvim with later
+    inherit nixpkgs dependencyOverlays extra_pkg_config;
+    # and also our categoryDefinitions
+  } categoryDefinitions packageDefinitions defaultPackageName;
   nixosModules.default = utils.mkNixosModules {
-    inherit (inputs) nixpkgs;
+    inherit nixpkgs;
     inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
   homeModule = utils.mkHomeModules {
-    inherit (inputs) nixpkgs;
+    inherit nixpkgs;
     inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
   inherit utils dependencyOverlays categoryDefinitions packageDefinitions;
