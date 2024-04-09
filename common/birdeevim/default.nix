@@ -443,9 +443,7 @@ in
   }
 ) // {
   overlays = utils.makeOverlays luaPath {
-    # we pass in the things to make a pkgs variable to build nvim with later
     inherit nixpkgs dependencyOverlays extra_pkg_config;
-    # and also our categoryDefinitions
   } categoryDefinitions packageDefinitions defaultPackageName;
   nixosModules.default = utils.mkNixosModules {
     inherit nixpkgs;
