@@ -156,7 +156,7 @@ if nixCats('bash') then
 end
 if nixCats('go') then
   servers.gopls = {
-    filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
+    -- filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
   }
 end
 if nixCats('python') then
