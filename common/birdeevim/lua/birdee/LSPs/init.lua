@@ -155,7 +155,9 @@ if nixCats('bash') then
   servers.bashls = {}
 end
 if nixCats('go') then
-  servers.gopls = {}
+  servers.gopls = {
+    filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
+  }
 end
 if nixCats('python') then
   -- servers.pyright = {},
