@@ -98,7 +98,8 @@
     system-modules = common { homeModule = false; };
   in {
     packages = home-modules.birdeeVim.packages;
-    inherit home-modules system-modules overlays;
+    inherit home-modules system-modules;
+    myOverlays = overlays;
     homeConfigurations = {
       "birdee@dustbook" = home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
@@ -148,7 +149,13 @@
           ./systems/PCs/dustbook
         ];
       };
-    } // (flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
+    };
+    diskoConfigurations = {
+      PC_sda_swap = import ./disko/PCs/sda_swap.nix;
+      PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
+    };
+    templates = import ./templates inputs;
+  } // (flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
       { "installer" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit self nixpkgs inputs system-modules overlays;
@@ -159,10 +166,4 @@
         ];
       };
     }));
-    diskoConfigurations = {
-      PC_sda_swap = import ./disko/PCs/sda_swap.nix;
-      PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
-    };
-    templates = import ./templates inputs;
-  };
 }
