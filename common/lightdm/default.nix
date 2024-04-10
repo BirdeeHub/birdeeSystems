@@ -43,10 +43,10 @@
         extraConfig = ''
         '';
       };
-      # defaultSession = "none+i3";
-      defaultSession = "none+fake";
       sessionCommands = lib.mkIf (cfg.sessionCommands != null) cfg.sessionCommands;
     };
+    # services.displayManager.defaultSession = "none+i3";
+    services.displayManager.defaultSession = "none+fake";
 
     environment.systemPackages = [
     ];

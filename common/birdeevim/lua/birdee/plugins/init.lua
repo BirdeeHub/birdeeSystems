@@ -39,8 +39,6 @@ require('birdee.plugins.clipboard')
 
 require("todo-comments").setup({ signs = false })
 
-require('garbage-day').setup({})
-
 if nixCats('web') then
   local otter = require 'otter'
   otter.setup {

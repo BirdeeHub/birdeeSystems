@@ -68,10 +68,6 @@
       url = "github:mcauley-penney/visual-whitespace.nvim";
       flake = false;
     };
-    "plugins-garbage-day" = {
-      url = "github:Zeioth/garbage-day.nvim";
-      flake = false;
-    };
     "plugins-grapple" = {
       url = "github:cbochs/grapple.nvim";
       flake = false;

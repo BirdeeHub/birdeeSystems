@@ -178,7 +178,6 @@
         StdPlugOver = with pkgs.neovimPlugins; [
           grapple
           hlargs
-          garbage-day
           visual-whitespace
           render-markdown
         ];
