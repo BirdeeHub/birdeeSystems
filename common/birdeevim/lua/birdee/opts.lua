@@ -2,9 +2,17 @@
 -- See `:help vim.o`
 
 -- vim.opt.list = true
+-- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- vim.opt.listchars:append("space:⋅")
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.opt.hlsearch = true
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = 'split'
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 10
 
 -- Make line numbers default
 vim.wo.number = true
