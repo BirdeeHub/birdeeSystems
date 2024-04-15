@@ -1,14 +1,9 @@
---  This function gets run when an LSP attaches to a particular buffer.
---    That is to say, every time a new file is opened that is associated with
---    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
---    function will be executed to configure the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('nixCats-lsp-attach', { clear = true }),
   callback = function(event)
     local map = function(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
     end
-
     --  To jump back, press <C-T>.
     map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
     map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -22,7 +17,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- WARN: This is not Goto Definition, this is Goto Declaration.
     --  For example, in C this would take you to the header
     map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
     --    See `:help CursorHold` for information about when this is executed
@@ -41,13 +35,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- end
   end,
 })
-
-if not require('nixCatsUtils').isNixCats then
-  -- mason-lspconfig requires that these setup functions are called in this order
-  -- before setting up the servers.
-  require('mason').setup()
-  require('mason-lspconfig').setup()
-end
 
 if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
   vim.lsp.set_log_level("debug")
@@ -241,33 +228,29 @@ end
 
 
 
-if not require('nixCatsUtils').isNixCats then
-  -- Ensure the servers above are installed
-  local mason_lspconfig = require 'mason-lspconfig'
-
-  mason_lspconfig.setup {
-    ensure_installed = vim.tbl_keys(servers),
-  }
-
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
-        -- on_attach = require('caps-onattach').on_attach,
-        settings = servers[server_name],
-        filetypes = (servers[server_name] or {}).filetypes,
-      }
-    end,
-  }
-else
+if require('nixCatsUtils').isNixCats then
   for server_name, _ in pairs(servers) do
     require('lspconfig')[server_name].setup({
       capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
-      -- on_attach = require('caps-onattach').on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
       cmd = (servers[server_name] or {}).cmd,
       root_pattern = (servers[server_name] or {}).root_pattern,
     })
   end
+else
+  require('mason').setup()
+  local mason_lspconfig = require 'mason-lspconfig'
+  mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
+  }
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+      }
+    end,
+  }
 end

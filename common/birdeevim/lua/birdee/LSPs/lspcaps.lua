@@ -2,7 +2,7 @@ local M = {}
 function M.get_capabilities()
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  if nixCats('cmp') then
+  if nixCats('general.cmp') then
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
   end
   capabilities.textDocument.completion.completionItem.snippetSupport = true
