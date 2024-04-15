@@ -62,10 +62,10 @@ cmp.setup {
 
   sources = cmp.config.sources {
     -- The insertion order influences the priority of the sources
+    { name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
+    { name = 'luasnip' },
     { name = "neorg" },
     { name = 'otter' },
-    { name = 'luasnip' },
-    { name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
     { name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
     -- { name = 'cmp_tabnine' },
     { name = 'path' },
@@ -84,10 +84,10 @@ cmp.setup {
 cmp.setup.filetype('lua', {
   sources = cmp.config.sources {
     -- The insertion order influences the priority of the sources
+    { name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
+    { name = 'luasnip' },
     { name = "neorg" },
     { name = 'otter' },
-    { name = 'luasnip' },
-    { name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
     { name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
     -- { name = 'cmp_tabnine' },
     { name = 'path' },
