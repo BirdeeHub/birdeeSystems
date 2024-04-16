@@ -14,4 +14,5 @@ if nixCats('nixCats_packageName') ~= "minimalVim" then
     require("birdee.debug")
   end
   require("birdee.format")
+  require("birdee.lint")
 end
