@@ -87,7 +87,7 @@
         ];
       };
       rust = with pkgs; [
-        vscode-extensions.rust-lang.rust-analyzer
+        rust-analyzer
       ];
       lua = with pkgs; [
         lua-language-server
