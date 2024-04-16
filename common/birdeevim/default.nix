@@ -86,6 +86,9 @@
           prettier
         ];
       };
+      rust = with pkgs; [
+        vscode-extensions.rust-lang.rust-analyzer
+      ];
       lua = with pkgs; [
         lua-language-server
       ];
@@ -341,6 +344,7 @@
     web = true;
     go = true;
     kotlin = true;
+    rust = true;
     C = true;
     lspDebugMode = false;
     colorscheme = "onedark";

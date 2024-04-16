@@ -91,7 +91,7 @@ if not require('nixCatsUtils').isNixCats then
       workspace_dir,
     },
 
-    capabilities = require('birdee.LSPs.lspcaps').get_capabilities(),
+    capabilities = require('birdee.LSPs').get_capabilities(),
 
     -- 💀
     -- This is the default if not provided, you can remove it. Or adjust as needed.
