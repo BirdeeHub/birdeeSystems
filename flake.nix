@@ -56,10 +56,6 @@
       url = "github:mireq/large_file";
       flake = false;
     };
-    "plugins-nvim-nio" = {
-      url = "github:nvim-neotest/nvim-nio";
-      flake = false;
-    };
     "plugins-code-compass" = {
       url = "github:emmanueltouzery/code-compass.nvim";
       flake = false;

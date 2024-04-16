@@ -22,11 +22,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1711050931,
-        "narHash": "sha256-BYDaQQ7G7v5csNCl7chanPDtHA1Mll1Y8c+pQxvUWuQ=",
+        "lastModified": 1713218945,
+        "narHash": "sha256-ue3vpTlX8QFHOdOqhKIXdXw+lDo+vkcDJso0ePUsEMs=",
         "owner": "Exafunction",
         "repo": "codeium.nvim",
-        "rev": "a070f57c0f54bd940436b94c8b679bcad5a48811",
+        "rev": "a3ec7d0dff7527edf38ff76b62b0a85d87d1b05b",
         "type": "github"
       },
       "original": {
@@ -59,11 +59,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1713152224,
-        "narHash": "sha256-k1aV06cotPwWO3FW+ho+dEoGjxNM303+UmhiG2o6XPs=",
+        "lastModified": 1713204594,
+        "narHash": "sha256-5yyHYBWFZUKXkJvOccPBeX83hH2iED54NLnWs2eWgS0=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "bb5ba68ebb73b5ca7996b64e1457fe885891e78e",
+        "rev": "d51114dc1bf3cfaba2b6644aabd16ff0c9909af5",
         "type": "github"
       },
       "original": {
@@ -462,11 +462,11 @@
     "neorg": {
       "flake": false,
       "locked": {
-        "lastModified": 1713027428,
-        "narHash": "sha256-inna55gzcLcYuPNBSlLA6OgcZTQD2lIiCAyDxCcMvfc=",
+        "lastModified": 1713195188,
+        "narHash": "sha256-ukbS/aVRrTKjFHsTKQEMoUPSAFx2wAlxYMcej3PaD8Y=",
         "owner": "nvim-neorg",
         "repo": "neorg",
-        "rev": "c424705b1518844d64a37cf20b63c0280b9d6b47",
+        "rev": "d84610ac03db9d4bc5a5d28e9ab7e3fe7c82839a",
         "type": "github"
       },
       "original": {
@@ -485,11 +485,11 @@
         "norg-meta": "norg-meta"
       },
       "locked": {
-        "lastModified": 1713161808,
-        "narHash": "sha256-TDX1c6exZXTalgzv0o2HnIvhi96EjJMLzLGJhRZjvwU=",
+        "lastModified": 1713197760,
+        "narHash": "sha256-nyMZteP2HzMmIr+/EFIdNH7l+WMWxURCjhR7RxOdYeY=",
         "owner": "nvim-neorg",
         "repo": "nixpkgs-neorg-overlay",
-        "rev": "addcbc0c58f735b0d3d591ff56ca61b6e0e3c22d",
+        "rev": "05008c15c67de7a22f04f7ed22debeacd59b7e9b",
         "type": "github"
       },
       "original": {
@@ -517,11 +517,11 @@
     "neovim": {
       "flake": false,
       "locked": {
-        "lastModified": 1713174957,
-        "narHash": "sha256-ZDvszZGlLzoDExNgr/LyLjsTjxWFZwDSiLSyjb2k7fA=",
+        "lastModified": 1713226401,
+        "narHash": "sha256-fgi6JJDyV1qDk3spCfrAjdeMk0Mr9SkQbYvERVhex64=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "4ec8fd43bfdf1924ee03e07afc8a46dfdd3c9b12",
+        "rev": "b4ddee111679012194a1e3ba78299ac540c51c77",
         "type": "github"
       },
       "original": {
@@ -538,14 +538,15 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "plugins-hlargs": "plugins-hlargs"
+        "plugins-hlargs": "plugins-hlargs",
+        "plugins-nvim-nio": "plugins-nvim-nio"
       },
       "locked": {
-        "lastModified": 1712758342,
-        "narHash": "sha256-MrGfqWn3RdzjgwojgD4yrMcOzKnGKY76CrKZmo/6zFA=",
+        "lastModified": 1713226384,
+        "narHash": "sha256-F2AaZWluEjW6wTw1igi9kzNjpgnnovTZTkGDbEqfYdU=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "53a0e7fc5120a3db2827c988ade993552e36b94a",
+        "rev": "a73e938877afbcdfe21d34a7c5513d912d934511",
         "type": "github"
       },
       "original": {
@@ -807,11 +808,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1713176702,
-        "narHash": "sha256-HBh2aFK04UOA035j4sexZSaZsMRzYB8aN/FOCsR89w8=",
+        "lastModified": 1713217470,
+        "narHash": "sha256-fsDAxXSacvYwtvT55tT7MVZzudsBcf/mtSVBfbl6Zjc=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "8abf694d334a030ac65b20f0257ce70fb46fde8b",
+        "rev": "d74371d2183243d37aa711a6cbdb33375398b9ad",
         "type": "github"
       },
       "original": {
@@ -1075,7 +1076,6 @@
         "plugins-img-clip": "plugins-img-clip",
         "plugins-large_file": "plugins-large_file",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
-        "plugins-nvim-nio": "plugins-nvim-nio",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",
         "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
