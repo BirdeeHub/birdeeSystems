@@ -46,12 +46,11 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 
 ---
 
-So I was going to try to do this, but then on first install, no way to log in until I install via home manager, and no way to install via home manager without logging in...
-- [display manager:](./common/lightdm/default.nix) lightdm which loads .xsession]
-- [window manager:](./common/i3/home/default.nix) i3 loaded via home manager from .xsession
-
-  So instead Im just doing this one for now and having default session be none+i3
-- [window manager:](./common/i3/system/default.nix) i3
+So I was going to try to do what it says after these links, but then on first install, no way to log in until I install via home manager, and no way to install via home manager without logging in...
+- [display manager:](./common/lightdm/default.nix) lightdm which loads .xsession
+- [window manager:](./common/i3/default.nix) i3 loaded via home manager from .xsession
+So instead Im just doing i3 as a system module for now and having default session be none+i3
+rather than trying to handle EVERYTHING about it from home manager
 
 ---
 
