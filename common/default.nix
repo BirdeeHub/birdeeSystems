@@ -19,14 +19,9 @@ in {
     module= if homeModule
       then birdeeVim.homeModule
       else birdeeVim.nixosModules.default;
-    packages = birdeeVim.packages;
-    utils = birdeeVim.utils;
-    overlays = birdeeVim.overlays;
-    devShell = birdeeVim.devShell;
-    customPackager = birdeeVim.customPackager;
-    dependencyOverlays = birdeeVim.dependencyOverlays;
-    categoryDefinitions = birdeeVim.categoryDefinitions;
-    packageDefinitions = birdeeVim.packageDefinitions;
+    inherit (birdeeVim) packages utils overlays
+      devShell customPackager dependencyOverlays
+      categoryDefinitions packageDefinitions;
   };
   i3 = import ./i3 homeModule;
   i3MonMemory = import ./i3MonMemory homeModule;
