@@ -29,7 +29,7 @@ monitor management:
 
   It is necessary for the user service to work.
 
-  Home module specifies service using inotify to trigget when that temp file is written to and then run your xrandr scripts, and handle putting your i3 workspaces back from whence they came when you plug the monitor back in.
+  Home module specifies service using inotify to trigger when that temp file is written to and then run your xrandr scripts, and handle putting your i3 workspaces back from whence they came when you plug the monitor back in.
 
   If you had this repo as a flake input, you could access those via importing
 
