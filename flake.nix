@@ -152,7 +152,7 @@
     };
     templates = import ./templates inputs;
   } // (flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
-      { "installer" = nixpkgs.lib.nixosSystem {
+      { installer = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit self nixpkgs inputs system-modules overlays;
         };

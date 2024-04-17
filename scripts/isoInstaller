@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 system=$1
-nix build .#nixosConfigurations.installer.${system}.config.system.build.isoImage
+nix build .#installer.${system}.config.system.build.isoImage
 # sudo dd if=./result/iso/something.iso of=/dev/sdd bs=1M status=progress
