@@ -54,7 +54,7 @@
     services.dbus.packages = [
     ];
 
-    qt.platformTheme = "gtk";
+    qt.platformTheme = "gtk2";
 
     xdg.portal.enable = true;
     xdg.portal.extraPortals = with pkgs; [

@@ -181,6 +181,7 @@ in {
     
     nix-prefetch
     wget
+    openssl
     gimp
     spotify
     zsh
@@ -226,7 +227,7 @@ in {
     android-studio
   ];
   fonts.fontconfig.enable = true;
-  qt.platformTheme = "gtk";
+  qt.platformTheme.name = "gtk3";
   qt.enable = true;
   qt.style.package = pkgs.adwaita-qt;
   qt.style.name = "adwaita-dark";
