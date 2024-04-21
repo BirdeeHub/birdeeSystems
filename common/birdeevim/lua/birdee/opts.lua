@@ -5,6 +5,7 @@
 -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- vim.opt.listchars:append("space:⋅")
 -- Set highlight on search
+-- vim.opt.hlsearch = false
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
