@@ -29,6 +29,7 @@
     neovim-flake = {
       url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
