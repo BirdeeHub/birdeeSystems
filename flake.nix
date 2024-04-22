@@ -27,7 +27,7 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     neovim-flake = {
-      url = "github:neovim/neovim?dir=contrib";
+      url = "github:neovim/neovim/nightly?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
