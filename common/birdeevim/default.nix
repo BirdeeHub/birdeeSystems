@@ -323,10 +323,10 @@
     withPython3 = true;
     viAlias = false;
     vimAlias = false;
-    nvimSRC = inputs.neovim;
-    # neovim-unwrapped = inputs.neovim-flake.${pkgs.system}.neovim;
-    # neovim-unwrapped = inputs.neovim-flake.${pkgs.system}.neovim-debug;
-    # neovim-unwrapped = inputs.neovim-flake.${pkgs.system}.neovim-developer;
+    # nvimSRC = inputs.neovim;
+    neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-debug;
+    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-developer;
     # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   };
   birdeevim_categories = { pkgs, ... }@misc: {
