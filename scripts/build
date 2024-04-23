@@ -5,6 +5,6 @@ hostname="${parts[1]}"
 git add . &&\
 [ -n $2 ] && [ "$2" == "-up" ] &&\
 nix flake update
-sudo nixos-rebuild switch --log-format internal-json -v --show-trace --flake .#$hostname |& nom --json &&\
-home-manager switch -v --show-trace --flake .#$1  |& nom &&\
+sudo nixos-rebuild switch -v --show-trace --flake .#$hostname |& nom &&\
+home-manager switch -L -v --show-trace --flake .#$1  |& nom &&\
 git add .
