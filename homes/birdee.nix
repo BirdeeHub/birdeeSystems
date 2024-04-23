@@ -49,7 +49,7 @@ in {
   home.shellAliases = {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" (/*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
-      git add . && nix flake update && nix build --show-trace $target && git add .; $@
+      git add . && nix flake update && nix build --log-format internal-json -v --show-trace $target |& nom --json && git add .; $@
     '')}'';
     spkgname = ''${pkgs.writeShellScript "searchCLIname" (/*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -n "$@"
