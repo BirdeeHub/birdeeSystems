@@ -177,6 +177,7 @@ in {
     gparted
     sshfs-fuse
     socat
+    nix-output-monitor
     screen
     tcpdump
     sdparm

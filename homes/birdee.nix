@@ -132,6 +132,7 @@ in {
 
     vlc
     nix-tree
+    nix-output-monitor
     xfce.ristretto
     qbittorrent
     galculator
