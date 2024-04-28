@@ -12,6 +12,7 @@ in {
     thunar
     i3
     i3MonMemory
+    # ollama
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -38,6 +39,7 @@ in {
     i3.tmuxDefault = true;
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = monitorCFG;
+    # ollama.enable = true;
   };
 
   nix.gc = {

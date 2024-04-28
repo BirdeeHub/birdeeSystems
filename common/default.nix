@@ -32,4 +32,6 @@ in {
   };
   shell = import ./term/shell (args // conditions);
   util = import ./util;
+  ollama = systemOnly (import ./ollama homeModule);
+  # ollama = import ./ollama homeModule;
 }
