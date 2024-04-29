@@ -78,6 +78,7 @@ in {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    # setLdLibraryPath = true;
   };
   boot.blacklistedKernelModules = [ "nouveau"];
 

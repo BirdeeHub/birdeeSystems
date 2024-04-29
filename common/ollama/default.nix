@@ -2,7 +2,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], users, ... }: le
   inherit (lib) types;
 
   cfg = config.birdeeMods.ollama;
-  ollamaPackage = cfg.package.override {
+  ollamaPackage= cfg.package.override {
     inherit (cfg) acceleration;
     linuxPackages = config.boot.kernelPackages // {
       nvidia_x11 = config.hardware.nvidia.package;

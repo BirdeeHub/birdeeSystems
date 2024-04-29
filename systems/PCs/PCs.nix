@@ -34,6 +34,7 @@ in {
     i3MonMemory.enable = true;
     LD.enable = true;
     ollama.enable = true;
+    ollama.acceleration = "cuda";
   };
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
