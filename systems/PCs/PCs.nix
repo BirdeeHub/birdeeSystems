@@ -15,7 +15,6 @@ in {
     i3MonMemory
     LD
     ollama
-    "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
   ];
 
   birdeeVim = {
@@ -142,8 +141,8 @@ in {
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.touchpad.disableWhileTyping = true;
+  services.libinput.enable = true;
+  services.libinput.touchpad.disableWhileTyping = true;
   # services.xserver.synaptics.enable = true;
   # services.xserver.synaptics.palmDetect = true;
   fonts.packages = with pkgs; [
