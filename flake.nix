@@ -146,6 +146,30 @@
           }
         ];
       };
+      "birdee@dustbook" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          hostname = "dustbook";
+          inherit nixpkgs stateVersion self inputs users system-modules overlays;
+        };
+        inherit system;
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./disko/PCs/sda_swap.nix
+          ./systems/PCs/dustbook
+          {
+            nixpkgs.overlays = overlays;
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.birdee = import ./homes/birdee.nix;
+            home-manager.extraSpecialArgs = {
+              username = "birdee";
+              monitorCFG = ./homes/monitors_by_hostname/dustbook;
+              inherit nixpkgs stateVersion self system inputs users home-modules;
+            };
+          }
+        ];
+      };
       "nestOS" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "nestOS";
