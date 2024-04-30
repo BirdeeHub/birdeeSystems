@@ -102,7 +102,7 @@
         extraSpecialArgs = {
           username = "birdee";
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
-          inherit stateVersion self system inputs users home-modules;
+          inherit nixpkgs stateVersion self system inputs users home-modules;
         };
         inherit pkgs;
         modules = [
@@ -113,7 +113,7 @@
         extraSpecialArgs = {
           username = "birdee";
           monitorCFG = ./homes/monitors_by_hostname/nestOS;
-          inherit stateVersion self system inputs users home-modules;
+          inherit nixpkgs stateVersion self system inputs users home-modules;
         };
         inherit pkgs;
         modules = [
@@ -125,7 +125,7 @@
       "nestOS" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "nestOS";
-          inherit stateVersion self inputs users system-modules overlays;
+          inherit nixpkgs stateVersion self inputs users system-modules overlays;
         };
         inherit system;
         modules = [
@@ -137,7 +137,7 @@
       "dustbook" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "dustbook";
-          inherit stateVersion self inputs users system-modules overlays;
+          inherit nixpkgs stateVersion self inputs users system-modules overlays;
         };
         inherit system;
         modules = [
