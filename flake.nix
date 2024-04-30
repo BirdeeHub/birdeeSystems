@@ -156,7 +156,7 @@
           home-manager.nixosModules.home-manager
           ./systems/VMs/qemu
           {
-            nixpkgs.overlays = (import ./overlays inputs);
+            nixpkgs.overlays = overlays;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.birdee = import ./homes/birdee.nix;
