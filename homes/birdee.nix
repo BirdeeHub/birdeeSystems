@@ -160,10 +160,12 @@ in {
     gnumake
     cmake
     # gccgo just have a dev shell for c....
-    go
+    gccgo
     gotools
     go-tools
     sqlite-interactive
+
+    clisp
 
     _7zz
     # flatpak
