@@ -162,7 +162,7 @@
             home-manager.users.birdee = import ./homes/birdee.nix;
             home-manager.extraSpecialArgs = {
               username = "birdee";
-              monitorCFG = ./homes/monitors_by_hostname/nestOS;
+              monitorCFG = null;
               inherit nixpkgs stateVersion self system inputs users home-modules;
             };
           }
