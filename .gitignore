@@ -1,3 +1,4 @@
 **/result
 **/.luarc.json
 /secrets
+**/*.qcow2

@@ -146,6 +146,28 @@
           ./systems/PCs/dustbook
         ];
       };
+      "my-qemu-vm" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          hostname = "virtbird";
+          inherit nixpkgs stateVersion self inputs users system-modules overlays;
+        };
+        inherit system;
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./systems/VMs/qemu
+          {
+            nixpkgs.overlays = (import ./overlays inputs);
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.birdee = import ./homes/birdee.nix;
+            home-manager.extraSpecialArgs = {
+              username = "birdee";
+              monitorCFG = ./homes/monitors_by_hostname/nestOS;
+              inherit nixpkgs stateVersion self system inputs users home-modules;
+            };
+          }
+        ];
+      };
     };
     diskoConfigurations = {
       PC_sda_swap = import ./disko/PCs/sda_swap.nix;

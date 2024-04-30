@@ -1,4 +1,4 @@
-{ config, pkgs, self, inputs, users, username, stateVersion, home-modules, monitorCFG, ...  }@args: let
+{ config, pkgs, self, inputs, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
     term.alacritty
