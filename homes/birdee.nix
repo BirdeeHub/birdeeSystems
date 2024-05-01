@@ -136,6 +136,7 @@ in {
     nix-tree
     nix-output-monitor
     xfce.ristretto
+    grex
     qbittorrent
     galculator
     gparted
