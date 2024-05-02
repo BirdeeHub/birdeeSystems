@@ -3,4 +3,5 @@
 git add . &&\
 [ -n $2 ] && [ "$2" == "-up" ] &&\
 nix --experimental-features flakes --extra-experimental-features nix-command flake update
-sudo nixos-rebuild switch --show-trace --flake .#$1
+sudo nixos-rebuild switch --show-trace --flake .#$1 &&\
+git add .
