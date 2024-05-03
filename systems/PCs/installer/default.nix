@@ -79,8 +79,8 @@
     packageNames = [ "noAInvim" ];
   };
 
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.touchpad.disableWhileTyping = true;
+  services.libinput.enable = true;
+  services.libinput.touchpad.disableWhileTyping = true;
   environment.systemPackages = (let
     ranger = pkgs.stdenv.mkDerivation (let
       rifle = ''${pkgs.ranger}/bin/rifle'';
