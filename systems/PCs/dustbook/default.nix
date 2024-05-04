@@ -12,6 +12,12 @@ in {
     ./hardware-configuration.nix
   ];
 
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+    # users.extraGroups.vboxusers.members = [ "birdee" ];
+  };
+
   birdeeMods = {
     lightdm.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
