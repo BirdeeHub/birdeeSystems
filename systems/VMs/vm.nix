@@ -21,7 +21,7 @@ in {
     packageNames = [ "noAInvim" ];
   };
 
-  users.users = users.users;
+  users.users = users.users // {initialPassword = "test";};
   birdeeMods = {
     i3.enable = true;
     i3.tmuxDefault = true;
