@@ -94,6 +94,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       set  -s escape-time       500
       set  -g history-limit     2000
       set -gq allow-passthrough on
+      set -g visual-activity off
 
       bind-key -N "Select the previously current window" C-p last-window
       bind-key -N "Switch to the last client" P switch-client -l

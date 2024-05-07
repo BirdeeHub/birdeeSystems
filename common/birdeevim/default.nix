@@ -345,7 +345,6 @@
     customPlugins = true;
     general = true;
     neonixdev = true;
-    vimagePreview = true;
     AI = true;
     java = true;
     javaExtras = extraJavaItems pkgs;
@@ -374,10 +373,10 @@
         customPlugins = true;
         general = true;
         neonixdev = true;
+        vimagePreview = true;
         AI = true;
         lspDebugMode = false;
         colorscheme = "tokyonight";
-        python = true;
       };
     };
     birdeeVim = args: {

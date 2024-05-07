@@ -144,6 +144,7 @@ in {
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
+    ueberzugpp
     vlc
     nix-tree
     nix-output-monitor
