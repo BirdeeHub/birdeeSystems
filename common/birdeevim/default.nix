@@ -349,6 +349,7 @@
     java = true;
     javaExtras = extraJavaItems pkgs;
     web = true;
+    vimagePreview = true;
     go = true;
     kotlin = true;
     rust = true;
