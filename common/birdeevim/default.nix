@@ -103,10 +103,14 @@
         lua-language-server
         nixd
       ];
+      vimagePreview = with pkgs; [
+        imagemagick
+        ueberzugpp
+      ];
       bash = with pkgs; [
         nodePackages.bash-language-server
-        bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-        pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
+        # bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
+        # pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
       python = with pkgs.python311Packages; [
         # jedi-language-server
@@ -133,6 +137,9 @@
     };
 
     startupPlugins = {
+      vimagePreview = with pkgs.vimPlugins; [
+        image-nvim
+      ];
       C = with pkgs.vimPlugins; [
         vim-cmake
         clangd_extensions-nvim
@@ -297,7 +304,7 @@
     };
     # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
-      lua = [ (_:[]) ];
+      lua = [ (lp: with lp; [ magick ]) ];
     };
   };
 
@@ -338,6 +345,7 @@
     customPlugins = true;
     general = true;
     neonixdev = true;
+    vimagePreview = true;
     AI = true;
     java = true;
     javaExtras = extraJavaItems pkgs;

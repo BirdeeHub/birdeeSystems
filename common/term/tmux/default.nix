@@ -93,6 +93,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       setw -g clock-mode-style  12
       set  -s escape-time       500
       set  -g history-limit     2000
+      set -gq allow-passthrough on
 
       bind-key -N "Select the previously current window" C-p last-window
       bind-key -N "Switch to the last client" P switch-client -l

@@ -37,6 +37,8 @@ require('birdee.plugins.git')
 
 require('birdee.plugins.clipboard')
 
+require('birdee.plugins.image')
+
 require("todo-comments").setup({ signs = false })
 
 if nixCats('web') then
