@@ -21,7 +21,16 @@ in {
     packageNames = [ "noAInvim" ];
   };
 
-  users.users = users.users // {initialPassword = "test";};
+  users.users.birdee = {
+      name = "birdee";
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      description = "";
+      extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+      initialPassword = "test";
+      # this is packages for nixOS user config.
+      # packages = []; # empty because that is managed by home-manager
+    };
   birdeeMods = {
     i3.enable = true;
     i3.tmuxDefault = true;

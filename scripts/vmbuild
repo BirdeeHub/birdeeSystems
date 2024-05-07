@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+git add . &&\
+nixos-rebuild build-vm --flake .#$1
