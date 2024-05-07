@@ -137,6 +137,7 @@ in {
     bettercap
     openvpn
     snort
+    ghidra
 
     fira-code
     openmoji-color
