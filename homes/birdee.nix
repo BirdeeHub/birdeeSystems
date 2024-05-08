@@ -62,9 +62,9 @@ in {
     spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" (/*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
-    ls = "lsd";
-    la = "lsd -a";
-    ll = "lsd -l";
+    # ls = "ls";
+    la = "ls -a";
+    ll = "ls -lah";
     l  = "lsd -alh";
     yeet = "rm -rf";
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hd1 $@ | sort -hr''}'';
