@@ -60,9 +60,8 @@ in {
   environment.interactiveShellInit = ''
   '';
   environment.shellAliases = {
-    ls = "lsd";
     la = "lsd -a";
-    ll = "lsd -l";
+    ll = "lsd -lh";
     l  = "lsd -alh";
   };
 
