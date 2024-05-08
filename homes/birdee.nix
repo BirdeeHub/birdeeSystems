@@ -63,8 +63,8 @@ in {
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
     # ls = "ls";
-    la = "ls -a";
-    ll = "ls -lah";
+    la = "lsd -a";
+    ll = "lsd -lh";
     l  = "lsd -alh";
     yeet = "rm -rf";
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hd1 $@ | sort -hr''}'';
