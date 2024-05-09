@@ -21,4 +21,10 @@ inputs: {
     path = ./hx-gotempl;
     description = "an empty go + templ + htmx flake template";
   };
+  pythonshell-untested = {
+    path = ./pythonshell-untested;
+    description = ''a python shell I got from a reddit comment,
+                  I have not tried it yet.
+                  no idea if it works.'';
+  };
 }
