@@ -54,6 +54,7 @@ in {
   environment.interactiveShellInit = ''
   '';
   environment.shellAliases = {
+    lsnc = "lsd --color=never";
     la = "lsd -a";
     ll = "lsd -lh";
     l  = "lsd -alh";

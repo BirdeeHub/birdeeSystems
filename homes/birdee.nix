@@ -62,7 +62,7 @@ in {
     spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" (/*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
-    # ls = "ls";
+    lsnc = "lsd --color=never";
     la = "lsd -a";
     ll = "lsd -lh";
     l  = "lsd -alh";

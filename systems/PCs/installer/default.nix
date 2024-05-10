@@ -38,7 +38,7 @@
       mkdir -p /mnt/home/$username
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
     ''}";
-    ls = "ls --color=tty";
+    lsnc = "lsd --color=never";
     la = "ls -a";
     ll = "ls -l";
     l  = "ls -alh";
