@@ -252,8 +252,9 @@
         ];
         other = [
           pkgs.neovimPlugins.large_file
-          nvim-neoclip-lua
           pkgs.neovimPlugins.img-clip
+          nvim-highlight-colors
+          nvim-neoclip-lua
           which-key-nvim
           eyeliner-nvim
           todo-comments-nvim
