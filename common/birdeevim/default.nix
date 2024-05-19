@@ -238,7 +238,6 @@
           gitsigns-nvim
           marks-nvim
           vim-repeat
-          comment-nvim
           indent-blankline-nvim
           nvim-lint
           conform-nvim

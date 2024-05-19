@@ -91,8 +91,6 @@ require('birdee.plugins.oil')
 
 require("ibl").setup()
 
-require('Comment').setup()
-
 require('nvim-surround').setup()
 
 

@@ -40,7 +40,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 vim.keymap.set('n', '<leader>t', [[:terminal<CR>]], { desc = 'open terminal in current buffer' })
 
-
+vim.keymap.set('n', '<leader>lh', function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, { desc = 'Toggle inlay hints' })
 
 -- these 3 jankily fix which-key related errors for some reason
 -- I disabled them via which-key options now.
