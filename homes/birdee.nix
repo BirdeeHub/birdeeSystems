@@ -76,6 +76,10 @@ in {
     JAVA_HOME = "${pkgs.jdk}";
   };
 
+  nix.settings = {
+    access-tokens = "!include /home/birdee/.secrets/ghtoke";
+  };
+
   nix.registry = {
     birdeeSystems.flake = self;
     gomod2nix.to = {

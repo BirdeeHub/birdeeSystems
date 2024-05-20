@@ -6,5 +6,5 @@ git add . &&\
 [ -n $2 ] && [ "$2" == "-up" ] &&\
 nix flake update
 sudo nixos-rebuild switch --show-trace --flake .#$hostname &&\
-home-manager switch --show-trace --flake .#$1 &&\
+home-manager switch -b hm_bkp --show-trace --flake .#$1 &&\
 git add .

@@ -22,6 +22,10 @@ in {
     packageNames = [ "noAInvim" ];
   };
 
+  nix.settings = {
+    access-tokens = "!include /home/birdee/.secrets/ghtoke";
+  };
+
   users.users = users.users;
   birdeeMods = {
     i3.enable = true;

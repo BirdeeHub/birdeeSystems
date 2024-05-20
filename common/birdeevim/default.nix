@@ -331,7 +331,7 @@
     viAlias = false;
     vimAlias = false;
     # nvimSRC = inputs.neovim;
-    neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim;
     # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-debug;
     # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-developer;
     # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;

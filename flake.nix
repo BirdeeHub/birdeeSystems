@@ -26,11 +26,11 @@
     #   url = "github:nix-community/neovim-nightly-overlay";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
-    neovim-flake = {
-      url = "github:neovim/neovim/nightly?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
+    # neovim-flake = {
+    #   url = "github:neovim/neovim/nightly?dir=contrib";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.flake-utils.follows = "flake-utils";
+    # };
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     "plugins-render-markdown" = {
@@ -107,6 +107,9 @@
         inherit pkgs;
         modules = [
           ./homes/birdee.nix
+          ({ pkgs, ... }:{
+            nix.package = pkgs.nix;
+          })
         ];
       };
       "birdee@nestOS" = home-manager.lib.homeManagerConfiguration {
@@ -118,6 +121,9 @@
         inherit pkgs;
         modules = [
           ./homes/birdee.nix
+          ({ pkgs, ... }:{
+            nix.package = pkgs.nix;
+          })
         ];
       };
     };
