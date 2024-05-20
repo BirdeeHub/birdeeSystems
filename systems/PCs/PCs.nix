@@ -23,7 +23,8 @@ in {
   };
 
   nix.settings = {
-    access-tokens = "!include /home/birdee/.secrets/ghtoke";
+    access-tokens = "!include /home/birdee/.secrets/gitoke";
+    # bash-prompt-prefix = "✓";
   };
 
   users.users = users.users;

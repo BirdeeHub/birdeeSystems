@@ -77,7 +77,8 @@ in {
   };
 
   nix.settings = {
-    access-tokens = "!include /home/birdee/.secrets/ghtoke";
+    access-tokens = "!include ~/.secrets/gitoke";
+    # bash-prompt-prefix = "✓";
   };
 
   nix.registry = {
