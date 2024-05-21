@@ -334,7 +334,8 @@
     # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim;
     # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-debug;
     # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-developer;
-    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-developer;
+    # neovim-unwrapped = pkgs.callPackage inputs.neovim-joakim {};
   };
   birdeevim_categories = { pkgs, ... }@misc: {
     inherit bitwardenItemIDs;

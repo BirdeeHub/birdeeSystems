@@ -31,6 +31,10 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     #   inputs.flake-utils.follows = "flake-utils";
     # };
+    # neovim-joakim = {
+    #   url = "github:JoakimPaulsson/nix-neovim-build";
+    #   flake = false;
+    # };
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     "plugins-render-markdown" = {
