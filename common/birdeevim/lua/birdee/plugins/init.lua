@@ -41,6 +41,8 @@ require('birdee.plugins.image')
 
 require("todo-comments").setup({ signs = false })
 
+require('Comment').setup()
+
 if nixCats('web') then
   local otter = require 'otter'
   otter.setup {

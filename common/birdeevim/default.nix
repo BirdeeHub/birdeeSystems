@@ -12,6 +12,7 @@
         (utils.standardPluginOverlay inputs)
         # add any flake overlays here.
         inputs.neorg-overlay.overlays.default
+        # inputs.neovim-nightly-overlay.overlays.default
       ] ++ (if (inputs.codeium.overlays ? system)
         then [ inputs.codeium.overlays.${system}.default ] else [])
     )) ];
@@ -247,6 +248,7 @@
           nui-nvim
           nvim-web-devicons
           nvim-surround
+          comment-nvim
           treesj
         ];
         other = [
@@ -330,12 +332,9 @@
     withPython3 = true;
     viAlias = false;
     vimAlias = false;
-    # nvimSRC = inputs.neovim;
-    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim;
-    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-debug;
-    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-developer;
-    # neovim-unwrapped = inputs.neovim-flake.packages.${pkgs.system}.neovim-developer;
-    # neovim-unwrapped = pkgs.callPackage inputs.neovim-joakim {};
+    # nvimSRC = inputs.neovim-src;
+    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   };
   birdeevim_categories = { pkgs, ... }@misc: {
     inherit bitwardenItemIDs;

@@ -224,6 +224,7 @@ in {
     git
     pciutils
     xclip
+    xcp
     xsel
     xorg.xev
     xorg.xmodmap

@@ -21,11 +21,12 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     nixCats.inputs.nixpkgs.follows = "nixpkgs";
     nixCats.inputs.flake-utils.follows = "flake-utils";
-    # neovim = { url = "github:neovim/neovim"; flake = false; };
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    # neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      # inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.neovim-src.follows = "neovim-src";
+    };
     # neovim-flake = {
     #   url = "github:neovim/neovim/nightly?dir=contrib";
     #   inputs.nixpkgs.follows = "nixpkgs";
