@@ -683,11 +683,11 @@
         "plugins-nvim-nio": "plugins-nvim-nio"
       },
       "locked": {
-        "lastModified": 1716682172,
-        "narHash": "sha256-CtG+/NEMCgE+T0idRHbPaqpKnZOuEymXZU1QykIiGqs=",
+        "lastModified": 1716706574,
+        "narHash": "sha256-0lJACEmiuu0X57apPbvhHAncr3jb67zJ8HIJK3IqoA0=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "7702e594c56c20fe8dacd8da539cfd27c002bef8",
+        "rev": "47a24db0dbf4b0f021323eacb0195197a26030bc",
         "type": "github"
       },
       "original": {
@@ -965,11 +965,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1716702368,
-        "narHash": "sha256-0m/2hHl6Ku4Ihs5sZAauYSkmd1b9Q3RoP30b0zjvVFw=",
+        "lastModified": 1716706473,
+        "narHash": "sha256-ObCen0feITe8AZh8mQacBtGI2OAhvYtG1CHcsz/dhSk=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "39658951e9d5978d2fbc4585ae147c6958cd40fc",
+        "rev": "e0913887c8e2ae0ef5513e107011de46482a54fd",
         "type": "github"
       },
       "original": {
