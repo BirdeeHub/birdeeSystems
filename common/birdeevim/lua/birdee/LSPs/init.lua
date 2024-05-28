@@ -139,7 +139,9 @@ if nixCats('web.tailwindcss') then
   servers.tailwindcss = {}
 end
 if nixCats('web.JS') then
-  servers.tsserver = {}
+  servers.tsserver = {
+    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "templ" },
+  }
 end
 if nixCats('web.HTMX') then
   servers.htmx = {}
