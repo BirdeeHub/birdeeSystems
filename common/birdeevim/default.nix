@@ -138,6 +138,11 @@
     };
 
     startupPlugins = {
+      SQL = with pkgs.vimPlugins; [
+      vim-dadbod
+      vim-dadbod-ui
+      vim-dadbod-completion
+      ];
       vimagePreview = with pkgs.vimPlugins; [
         image-nvim
       ];
@@ -353,6 +358,7 @@
     go = true;
     kotlin = true;
     rust = true;
+    SQL = true;
     C = true;
     lspDebugMode = false;
     colorscheme = "onedark";

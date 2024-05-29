@@ -81,6 +81,13 @@ cmp.setup {
   },
 }
 
+cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
+  sources = cmp.config.sources {
+    { name = 'dadbod-completion' },
+    { name = 'buffer' },
+  },
+})
+
 cmp.setup.filetype('lua', {
   sources = cmp.config.sources {
     -- The insertion order influences the priority of the sources
