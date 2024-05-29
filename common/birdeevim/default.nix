@@ -135,13 +135,16 @@
         cmake
         cmake-format
       ];
+      SQL = with pkgs; [
+        sqlite
+      ];
     };
 
     startupPlugins = {
       SQL = with pkgs.vimPlugins; [
-      vim-dadbod
-      vim-dadbod-ui
-      vim-dadbod-completion
+        vim-dadbod
+        vim-dadbod-ui
+        vim-dadbod-completion
       ];
       vimagePreview = with pkgs.vimPlugins; [
         image-nvim
