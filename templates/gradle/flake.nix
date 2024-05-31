@@ -19,15 +19,17 @@
       lockFile = ./gradle.lock;
       gradleFlags = [ "installDist" ];
     };
+    gradle = pkgs.gradle;
+    jdk = pkgs.jdk;
   in {
     packages.default = defaultPackage;
     devShells = {
       default = pkgs.mkShell {
         name = "gradle2nix";
         packages = [ inputs.gradle2nix.packages.${system}.gradle2nix ];
-        inputsFrom = [ ];
-        GRADLE_HOME = "${pkgs.gradle}";
-        JAVA_HOME = "${pkgs.jdk}";
+        inputsFrom = [ gradle jdk ];
+        GRADLE_HOME = "${gradle}";
+        JAVA_HOME = "${jdk}";
         DEVSHELL = 0;
         shellHook = ''
           exec ${pkgs.zsh}/bin/zsh
