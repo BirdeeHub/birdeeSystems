@@ -5,6 +5,10 @@ inputs: {
     path = ./gradle;
     description = "hopefully a working gradle shell?";
   };
+  android = {
+    path = ./android;
+    description = "hopefully a working android shell?";
+  };
   flakeSchema = {
     path = ./flakeSchema;
     description = "an empty flake schema copy paste";
