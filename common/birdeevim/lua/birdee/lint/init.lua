@@ -4,7 +4,7 @@ require('lint').linters_by_ft = {
   cpp = { 'cpplint' },
   javascript = { 'eslint' },
   typescript = { 'eslint' },
-  elixir = { 'credo' },
+  -- elixir = { 'credo' },
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
