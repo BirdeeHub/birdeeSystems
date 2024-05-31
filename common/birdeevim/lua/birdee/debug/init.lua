@@ -95,3 +95,6 @@ end
 if nixCats('go') then
   require("birdee.debug.go")
 end
+if nixCats('elixir') then
+  require("birdee.debug.elixir")
+end

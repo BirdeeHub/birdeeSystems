@@ -68,6 +68,9 @@
         go-tools
         go
       ];
+      elixir = with pkgs; [
+        elixir-ls
+      ];
       web = {
         templ = with inputs; [
           templ.packages.${pkgs.system}.templ

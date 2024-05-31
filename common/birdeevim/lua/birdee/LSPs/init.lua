@@ -60,6 +60,11 @@ elseif nixCats('lua') then
     filetypes = { 'lua' },
   }
 end
+if nixCats('elixir') then
+  servers.elixirls = {
+    cmd = { "elixir-ls" },
+  }
+end
 if nixCats('kotlin') then
   servers.kotlin_language_server = {
     kotlin = {
