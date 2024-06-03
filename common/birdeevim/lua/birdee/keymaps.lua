@@ -64,4 +64,4 @@ vim.keymap.set('n', '<leader><leader>g', function()
   else
     print("No buffer number provided")
   end
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = 'Go to buffer by number [num]<keybind>', })
