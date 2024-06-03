@@ -56,3 +56,12 @@ if nixCats('notes') then
 end
 
 vim.keymap.set('', '<leader>gl', function() require('birdee.git-remote-url').git_url_to_clipboard() end, { desc = 'Get git link' })
+
+vim.keymap.set('n', '<leader><leader>g', function()
+  local count = vim.v.count
+  if count > 0 then
+    vim.cmd('buffer ' .. count)
+  else
+    print("No buffer number provided")
+  end
+end, { noremap = true, silent = true })
