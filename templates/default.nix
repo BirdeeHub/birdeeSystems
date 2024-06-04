@@ -25,6 +25,10 @@ inputs: {
     path = ./hx-gotempl;
     description = "an empty go + templ + htmx flake template";
   };
+  lua-fenster = {
+    path = ./lua-fenster;
+    description = "a lua environment with fenster built in it";
+  };
   pythonshell-untested = {
     path = ./pythonshell-untested;
     description = ''a python shell I got from a reddit comment,
