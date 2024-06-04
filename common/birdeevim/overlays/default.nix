@@ -14,6 +14,7 @@ inputs: let
   overlaySet = {
 
     nixCatsBuilds = import ./customBuildsOverlay.nix;
+    internalvim = import ./build;
 
   };
 in
