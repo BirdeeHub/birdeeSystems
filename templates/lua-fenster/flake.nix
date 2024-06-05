@@ -24,13 +24,41 @@
 		};
 	in (forEachSystem (system: let
 		pkgs = import inputs.nixpkgs { inherit system; };
-		thisLua = pkgs.luajit;
+		thisLua = pkgs.lua5_3;
 		lua-fenster = buildFenster pkgs thisLua;
-		lua = thisLua.withPackages (_: [ lua-fenster ]);
+		program = import ./. {
+			inherit pkgs;
+			inherit (pkgs) lib;
+			appname = "ferret";
+			source = ./src;
+			extra_launcher_lua = "";
+			extra_launcher_commands = "";
+			args = [];
+			to_bin = true;
+			isJIT = false;
+			luaEnv = thisLua.withPackages (lpkgs: with lpkgs; [
+				luafilesystem
+				cjson
+				busted
+				inspect
+				http
+				cqueues
+				stdlib
+				lua-fenster
+			]);
+			procPath = with pkgs; [
+				coreutils
+				findutils
+				gnumake
+				gnused
+				gnugrep
+				gawk
+			];
+		};
 	in {
 		packages = {
-			inherit lua lua-fenster;
-			default = lua-fenster;
+			inherit lua-fenster;
+			default = program;
 		};
 	}) // { inherit buildFenster; });
 }
