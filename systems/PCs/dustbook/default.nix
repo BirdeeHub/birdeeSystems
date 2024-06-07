@@ -12,11 +12,11 @@ in {
     ./hardware-configuration.nix
   ];
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-    # users.extraGroups.vboxusers.members = [ "birdee" ];
-  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  #   # users.extraGroups.vboxusers.members = [ "birdee" ];
+  # };
 
   birdeeMods = {
     lightdm.sessionCommands = ''
