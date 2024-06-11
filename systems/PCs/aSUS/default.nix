@@ -82,5 +82,5 @@ in {
   };
   boot.blacklistedKernelModules = [ "nouveau"];
 
-  virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
+  # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 }
