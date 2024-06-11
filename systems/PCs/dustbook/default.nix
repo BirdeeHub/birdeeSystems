@@ -58,7 +58,7 @@ in {
     driSupport32Bit = true;
   };
 
-  virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
+  # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 
   boot.kernelParams = [
     "hid_apple.iso_layout=0"
