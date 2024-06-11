@@ -90,7 +90,8 @@
     home-modules = common { homeModule = true; };
     system-modules = common { homeModule = false; };
   in {
-    packages = home-modules.birdeeVim.packages;
+    # packages = home-modules.birdeeVim.packages;
+    packages.${pkgs.system} = { inherit (pkgs) dep-tree; };
     inherit home-modules system-modules;
     myOverlays = overlays;
     homeConfigurations = {
