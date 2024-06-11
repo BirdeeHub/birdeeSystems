@@ -58,7 +58,7 @@ importName: inputs: let
       # checkFlags = [ "-skip=TestTui" ];
       preCheck = ''
         substituteInPlace internal/tui/tui_test.go \
-        --replace-fail /tmp/dep-tree-tests ${depsDRV}
+          --replace-fail /tmp/dep-tree-tests ${depsDRV}
       '';
     });
   });
