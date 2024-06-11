@@ -22,6 +22,7 @@ inputs: let
 
     # except this one which outputs wherever it needs to.
     pinnedVersions = import ./pinnedVersions.nix;
+    dep-tree = import ./dep-tree.nix;
 
   };
   overlayList = builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet);

@@ -139,6 +139,8 @@ in {
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
+    dep-tree
+
     ffuf
     nmap
     sqlmap
