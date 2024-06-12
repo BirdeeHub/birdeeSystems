@@ -1,6 +1,6 @@
 importName: inputs: let
   overlay = self: super: (let
-    dep-tree-pkg = {lib, stdenv, fetchFromGitHub, writeText, buildGoModule, ... }:
+    dep-tree-pkg = {lib, stdenv, fetchFromGitHub, writeText, buildGoModule, linkFarm, ... }:
       buildGoModule (let
         testDeps = {
           react-stl-viewer = fetchFromGitHub {
@@ -31,15 +31,9 @@ importName: inputs: let
             sha256 = "sha256-76ib8KMjTS2iUOwkQYCsoeL3GwBaA/MRQU2eGjJEpOo=";
           };
         };
-        depscommands = builtins.mapAttrs (name: value: "mkdir -p $out/${name}; cp -rv ${value.outPath}/* $out/${name};") testDeps;
-        depscommandsjoined = builtins.concatStringsSep "\n" (builtins.attrValues depscommands);
-        depsDRV = stdenv.mkDerivation {
-          name = "dep-tree_testDeps";
-          builder = writeText "dep-tree_testDeps" ''
-            source $stdenv/setup
-            ${depscommandsjoined}
-          '';
-        };
+        testFarm = linkFarm "dep-tree_testDepsFarm"
+            (builtins.attrValues
+              (builtins.mapAttrs (name: value: { name = name; path = value; }) testDeps));
       in rec {
         pname = "dep-tree";
         version = "0.20.3";
@@ -58,7 +52,7 @@ importName: inputs: let
         # checkFlags = [ "-skip=TestTui" ];
         preCheck = ''
           substituteInPlace internal/tui/tui_test.go \
-            --replace-fail /tmp/dep-tree-tests ${depsDRV}
+            --replace-fail /tmp/dep-tree-tests ${testFarm}
         '';
         meta = {
           description = "A tool for visualizing interconnectedness of codebases in multiple languages.";
