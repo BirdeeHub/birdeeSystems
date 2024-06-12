@@ -1,6 +1,6 @@
 importName: inputs: let
   overlay = self: super: (let
-    dep-tree-pkg = {lib, stdenv, fetchFromGitHub, writeText, buildGoModule, linkFarm, ... }:
+    dep-tree-pkg = {lib, fetchFromGitHub, buildGoModule, linkFarm, ... }:
       buildGoModule (let
         testDeps = {
           react-stl-viewer = fetchFromGitHub {
