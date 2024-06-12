@@ -142,6 +142,7 @@ in {
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    inputs.minesweeper.packages.${system}.default
 
     ffuf
     nmap
