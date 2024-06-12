@@ -127,8 +127,12 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = let
+    # put these here so you remember to keep them up to date
+    selfpackaged = with pkgs; [
+      dep-tree
+    ];
   in
-  with pkgs; [
+  with pkgs; selfpackaged ++ [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -138,8 +142,6 @@ in {
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    dep-tree
 
     ffuf
     nmap
