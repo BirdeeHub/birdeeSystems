@@ -80,7 +80,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, disko, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, disko, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
     overlays = (import ./overlays inputs);
@@ -227,7 +227,7 @@
       PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
     };
     templates = import ./templates inputs;
-  } // (flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
+  } // ((import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all (system:
       { installer = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit self nixpkgs inputs system-modules overlays;

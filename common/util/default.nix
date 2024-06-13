@@ -1,5 +1,11 @@
 with builtins; rec {
 
+  linkFarmPair =
+    name:
+    path:
+    { inherit name path; };
+  
+
   mkScriptAliases = packageSet: concatStringsSep "\n" (mapAttrs (name: value: ''
       ${name}() {
         ${value}/bin/${name} "$@"
