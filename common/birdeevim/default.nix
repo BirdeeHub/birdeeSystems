@@ -2,7 +2,7 @@
   inherit (inputs.nixCats) utils;
   inherit (inputs) nixpkgs;
   luaPath = "${./.}";
-  forEachSystem = inputs.flake-utils.lib.eachSystem inputs.flake-utils.lib.allSystems;
+  forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
   extra_pkg_config = {
     allowUnfree = true;
   };

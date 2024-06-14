@@ -11,6 +11,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
@@ -20,10 +21,8 @@
     minesweeper.inputs.flake-utils.follows = "flake-utils";
 
     # neovim
-    flake-utils.url = "github:numtide/flake-utils";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     nixCats.inputs.nixpkgs.follows = "nixpkgs";
-    nixCats.inputs.flake-utils.follows = "flake-utils";
     neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
@@ -83,6 +82,7 @@
   outputs = { self, nixpkgs, home-manager, disko, ... }@inputs: let
     system = "x86_64-linux";
     stateVersion = "23.05";
+    forEachSystem = (import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all;
     overlays = (import ./overlays inputs);
     pkgs = import inputs.nixpkgs {
       inherit system overlays;
@@ -227,7 +227,7 @@
       PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
     };
     templates = import ./templates inputs;
-  } // ((import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all (system:
+  } // (forEachSystem (system:
       { installer = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit self nixpkgs inputs system-modules overlays;

@@ -584,9 +584,6 @@
     },
     "nixCats": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -594,11 +591,11 @@
         "plugins-nvim-nio": "plugins-nvim-nio"
       },
       "locked": {
-        "lastModified": 1718283614,
-        "narHash": "sha256-wZoJ/rKwpJfojuSc9Y+qxazQEmahNR9yg5+2w8oB57I=",
+        "lastModified": 1718329048,
+        "narHash": "sha256-gdmibPTgpJuvCzSpIv1eeCchabkiYs4JaLxF42/qgzQ=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "2ff507dad6a93cb8a4b3afee0607c82451cbe076",
+        "rev": "fe5df4a0a7e9ae0e5c365c84f01c0265274c6b4e",
         "type": "github"
       },
       "original": {
