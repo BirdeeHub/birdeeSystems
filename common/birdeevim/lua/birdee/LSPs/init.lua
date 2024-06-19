@@ -242,6 +242,7 @@ require('lz.n').load({
       "clangd_extensions.nvim",
       "vim-cmake",
       "cmp-nvim-lsp",
+      "telescope.nvim",
       name,
     }
     if not require('nixCatsUtils').isNixCats then
