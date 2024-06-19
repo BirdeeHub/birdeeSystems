@@ -41,6 +41,9 @@
           fd
           ast-grep
         ];
+        other = with pkgs; [
+          sqlite
+        ];
         markdown = with pkgs; [
           marksman
           python311Packages.pylatexenc
@@ -139,7 +142,6 @@
         cmake-format
       ];
       SQL = with pkgs; [
-        sqlite
       ];
     };
 
@@ -147,6 +149,19 @@
       lz-n = with pkgs; [
         neovimPlugins.lz-n
       ];
+      theme = with pkgs.vimPlugins; builtins.getAttr categories.colorscheme {
+        "onedark" = onedark-nvim;
+        "catppuccin" = catppuccin-nvim;
+        "catppuccin-mocha" = catppuccin-nvim;
+        "tokyonight" = tokyonight-nvim;
+        "tokyonight-day" = tokyonight-nvim;
+      };
+      general = with pkgs; [
+        neovimPlugins.large_file
+      ];
+    };
+
+    optionalPlugins = {
       SQL = with pkgs.vimPlugins; [
         vim-dadbod
         vim-dadbod-ui
@@ -190,13 +205,6 @@
         nvim-dap-virtual-text
       ];
       general = with pkgs.vimPlugins; {
-        theme = builtins.getAttr categories.colorscheme {
-          "onedark" = onedark-nvim;
-          "catppuccin" = catppuccin-nvim;
-          "catppuccin-mocha" = catppuccin-nvim;
-          "tokyonight" = tokyonight-nvim;
-          "tokyonight-day" = tokyonight-nvim;
-        };
         markdown = with pkgs.vimPlugins; [
           markdown-preview-nvim
         ];
@@ -266,7 +274,6 @@
           treesj
         ];
         other = [
-          pkgs.neovimPlugins.large_file
           pkgs.neovimPlugins.img-clip
           nvim-highlight-colors
           nvim-neoclip-lua
@@ -275,10 +282,6 @@
           todo-comments-nvim
         ];
       };
-    };
-
-    optionalPlugins = {
-
     };
 
     environmentVariables = {
@@ -353,6 +356,8 @@
     inherit bitwardenItemIDs;
     bitwarden = true;
     generalBuildInputs = true;
+    theme = true;
+    colorscheme = "onedark";
     lz-n = true;
     bash = true;
     debug = true;
@@ -370,7 +375,6 @@
     SQL = true;
     C = true;
     lspDebugMode = false;
-    colorscheme = "onedark";
   };
 
   packageDefinitions = {
@@ -393,6 +397,7 @@
         AI = true;
         lspDebugMode = false;
         lz-n = true;
+        theme = true;
         colorscheme = "tokyonight";
       };
     };

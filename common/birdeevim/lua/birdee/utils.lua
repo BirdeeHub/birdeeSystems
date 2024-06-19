@@ -71,4 +71,15 @@ function M.authTerminal()
   return session
 end
 
+function M.safe_packadd_list(names)
+  for _, name in ipairs(names) do
+    if type(name) == 'string' then
+      local ok, err = pcall(vim.cmd, 'packadd ' .. name)
+      if not ok then
+        print('packadd ' .. name .. ' failed: ' .. err)
+      end
+    end
+  end
+end
+
 return M
