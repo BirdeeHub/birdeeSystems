@@ -41,6 +41,9 @@
           fd
           ast-grep
         ];
+        other = with pkgs; [
+          sqlite
+        ];
         markdown = with pkgs; [
           marksman
           python311Packages.pylatexenc
@@ -139,12 +142,37 @@
         cmake-format
       ];
       SQL = with pkgs; [
-        sqlite
       ];
     };
 
     startupPlugins = {
+      lz-n = with pkgs; [
+        neovimPlugins.lz-n
+      ];
+      theme = with pkgs.vimPlugins; builtins.getAttr categories.colorscheme {
+        "onedark" = onedark-nvim;
+        "catppuccin" = catppuccin-nvim;
+        "catppuccin-mocha" = catppuccin-nvim;
+        "tokyonight" = tokyonight-nvim;
+        "tokyonight-day" = tokyonight-nvim;
+      };
+      general = with pkgs; [
+        neovimPlugins.large_file
+        vimPlugins.oil-nvim
+        vimPlugins.vim-repeat
+        neovimPlugins.nvim-luaref
+        vimPlugins.nvim-nio
+        vimPlugins.nui-nvim
+        vimPlugins.plenary-nvim
+        vimPlugins.nvim-web-devicons
+        # What is this used by?
+        vimPlugins.nvim-notify
+      ];
+    };
+
+    optionalPlugins = {
       SQL = with pkgs.vimPlugins; [
+        # TODO: Still need to load these with lz-n
         vim-dadbod
         vim-dadbod-ui
         vim-dadbod-completion
@@ -170,12 +198,13 @@
         nvim-dap-go
       ];
       java = with pkgs.vimPlugins; [
+        # TODO: Still need to load this with lz-n
+        # Add to lspconfig lz-n? or ftplugin file? both?
         nvim-jdtls
       ];
       neonixdev = [
         pkgs.vimPlugins.neodev-nvim
         pkgs.vimPlugins.neoconf-nvim
-        pkgs.neovimPlugins.nvim-luaref
       ];
       AI = [
         pkgs.vimPlugins.codeium-nvim
@@ -187,13 +216,6 @@
         nvim-dap-virtual-text
       ];
       general = with pkgs.vimPlugins; {
-        theme = builtins.getAttr categories.colorscheme {
-          "onedark" = onedark-nvim;
-          "catppuccin" = catppuccin-nvim;
-          "catppuccin-mocha" = catppuccin-nvim;
-          "tokyonight" = tokyonight-nvim;
-          "tokyonight-day" = tokyonight-nvim;
-        };
         markdown = with pkgs.vimPlugins; [
           markdown-preview-nvim
         ];
@@ -222,16 +244,13 @@
           pkgs.neovimPlugins.telescope-git-file-history
           pkgs.neovimPlugins.fugit2-nvim
           pkgs.neovimPlugins.nvim-tinygit
-          vim-fugitive
-          vim-rhubarb
-          nvim-notify
           dressing-nvim
           diffview-nvim
+          vim-rhubarb
+          vim-fugitive
         ];
         core = [
-          pkgs.neovimPlugins.lz-n
           # telescope
-          plenary-nvim
           telescope-nvim
           telescope-fzf-native-nvim
           telescope-ui-select-nvim
@@ -245,26 +264,22 @@
           #   ]
           # ))
           nvim-lspconfig
-          vim-sleuth
           lualine-lsp-progress
           lualine-nvim
           gitsigns-nvim
           marks-nvim
-          vim-repeat
           indent-blankline-nvim
           nvim-lint
           conform-nvim
-          oil-nvim
           undotree
-          nvim-nio
-          nui-nvim
-          nvim-web-devicons
           nvim-surround
           comment-nvim
           treesj
+
+          # TODO: Still need to load this with lz-n
+          vim-sleuth
         ];
         other = [
-          pkgs.neovimPlugins.large_file
           pkgs.neovimPlugins.img-clip
           nvim-highlight-colors
           nvim-neoclip-lua
@@ -273,12 +288,6 @@
           todo-comments-nvim
         ];
       };
-    };
-
-    optionalPlugins = {
-      customPlugins = with pkgs.nixCatsBuilds; [ ];
-      gitPlugins = with pkgs.neovimPlugins; [ ];
-      general = with pkgs.vimPlugins; [ ];
     };
 
     environmentVariables = {
@@ -353,6 +362,9 @@
     inherit bitwardenItemIDs;
     bitwarden = true;
     generalBuildInputs = true;
+    theme = true;
+    colorscheme = "onedark";
+    lz-n = true;
     bash = true;
     debug = true;
     customPlugins = true;
@@ -365,11 +377,11 @@
     vimagePreview = true;
     go = true;
     kotlin = true;
+    python = true;
     rust = true;
     SQL = true;
     C = true;
     lspDebugMode = false;
-    colorscheme = "onedark";
   };
 
   packageDefinitions = {
@@ -391,6 +403,8 @@
         vimagePreview = true;
         AI = true;
         lspDebugMode = false;
+        lz-n = true;
+        theme = true;
         colorscheme = "tokyonight";
       };
     };

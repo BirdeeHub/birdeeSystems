@@ -60,9 +60,8 @@
     xdg.portal.extraPortals = with pkgs; [
       xdg-desktop-portal
       xdg-desktop-portal-gtk
-      lxqt.xdg-desktop-portal-lxqt
-      libsForQt5.xdg-desktop-portal-kde
-      xdg-desktop-portal-gnome
+      # libsForQt5.xdg-desktop-portal-kde
+      # xdg-desktop-portal-gnome
       xdg-dbus-proxy
     ];
     xdg.portal.config.common.default = "*";
