@@ -158,6 +158,7 @@
       };
       general = with pkgs; [
         neovimPlugins.large_file
+        vimPlugins.vim-repeat
       ];
     };
 
@@ -233,11 +234,13 @@
           pkgs.neovimPlugins.telescope-git-file-history
           pkgs.neovimPlugins.fugit2-nvim
           pkgs.neovimPlugins.nvim-tinygit
-          vim-fugitive
+          dressing-nvim
+
+          # Still need to load these with lz-n
+          diffview-nvim
           vim-rhubarb
           nvim-notify
-          dressing-nvim
-          diffview-nvim
+          vim-fugitive
         ];
         core = [
           # telescope
@@ -255,12 +258,10 @@
           #   ]
           # ))
           nvim-lspconfig
-          vim-sleuth
           lualine-lsp-progress
           lualine-nvim
           gitsigns-nvim
           marks-nvim
-          vim-repeat
           indent-blankline-nvim
           nvim-lint
           conform-nvim
@@ -272,6 +273,9 @@
           nvim-surround
           comment-nvim
           treesj
+
+          # Still need to load this with lz-n
+          vim-sleuth
         ];
         other = [
           pkgs.neovimPlugins.img-clip
