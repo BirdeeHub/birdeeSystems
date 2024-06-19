@@ -307,13 +307,13 @@ require('lz.n').load({
   end,
 })
 
-vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
+vim.keymap.set('n', '<leader>U', "<cmd>UndotreeToggle<CR>", { desc = "Undo Tree" })
 require('lz.n').load({
   "undotree",
-  -- cmd = { "" },
+  cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
   -- event = "",
   -- ft = "",
-  keys = "<leader>U",
+  -- keys = "<leader>U",
   -- colorscheme = "",
   load = function (name)
     local list = {
