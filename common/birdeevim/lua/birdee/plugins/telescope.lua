@@ -21,7 +21,25 @@
 -- See `:help telescope` and `:help telescope.setup()`
 require('lz.n').load({
   "telescope.nvim",
-  cmd = { "Telescope", "TodoTelescope" },
+  cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
+  -- event = "",
+  -- ft = "",
+  keys = {
+    "<leader>sp",
+    "<leader>sn",
+    "<leader>/",
+    "<leader><leader>s",
+    "<leader>s.",
+    "<leader>sr",
+    "<leader>sd",
+    "<leader>sg",
+    "<leader>sw",
+    "<leader>ss",
+    "<leader>sf",
+    "<leader>sk",
+    "<leader>sh",
+  },
+  -- colorscheme = "",
   load = function (name)
     local list = {
       name,
