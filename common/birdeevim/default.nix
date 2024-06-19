@@ -144,6 +144,12 @@
     };
 
     startupPlugins = {
+      general = with pkgs; [
+        neovimPlugins.lz-n
+      ];
+    };
+
+    optionalPlugins = {
       SQL = with pkgs.vimPlugins; [
         vim-dadbod
         vim-dadbod-ui
@@ -229,7 +235,6 @@
           diffview-nvim
         ];
         core = [
-          pkgs.neovimPlugins.lz-n
           # telescope
           plenary-nvim
           telescope-nvim
@@ -273,12 +278,6 @@
           todo-comments-nvim
         ];
       };
-    };
-
-    optionalPlugins = {
-      customPlugins = with pkgs.nixCatsBuilds; [ ];
-      gitPlugins = with pkgs.neovimPlugins; [ ];
-      general = with pkgs.vimPlugins; [ ];
     };
 
     environmentVariables = {
