@@ -1,18 +1,5 @@
 local servers = {}
 if nixCats('neonixdev') then
-  require('neodev').setup({})
-  -- this allows our thing to have plugin library detection
-  -- despite not being in our .config/nvim folder
-  -- I learned about it here:
-  -- https://github.com/lecoqjacob/nixCats-nvim/blob/main/.neoconf.json
-  require("neoconf").setup({
-    plugins = {
-      lua_ls = {
-        enabled = true,
-        enabled_for_neovim_config = true,
-      },
-    },
-  })
   servers.lua_ls = {
     Lua = {
       runtime = { version = 'LuaJIT' },
@@ -179,9 +166,6 @@ if nixCats('C') then
     --   },
     -- }
   }
-  vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
-    { desc = 'Run CMake with compile_commands.json' })
-  vim.cmd [[let g:cmake_link_compile_commands = 1]]
   servers.cmake = {}
 end
 
@@ -259,31 +243,71 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 ---------------------------------------------------------------------------------
 
-if require('nixCatsUtils').isNixCats then
-  for server_name, _ in pairs(servers) do
-    require('lspconfig')[server_name].setup({
-      capabilities = M.get_capabilities(),
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-      cmd = (servers[server_name] or {}).cmd,
-      root_pattern = (servers[server_name] or {}).root_pattern,
-    })
-  end
-else
-  require('mason').setup()
-  local mason_lspconfig = require 'mason-lspconfig'
-  mason_lspconfig.setup {
-    ensure_installed = vim.tbl_keys(servers),
-  }
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = M.get_capabilities(),
-        settings = servers[server_name],
-        filetypes = (servers[server_name] or {}).filetypes,
+require('lz.n').load({
+  "nvim-lspconfig",
+  -- cmd = { "" },
+  -- event = "",
+  -- ft = "",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      "neoconf.nvim",
+      "neodev.nvim",
+      "clangd_extensions.nvim",
+      "vim-cmake",
+      name,
+    }
+    require("birdee.utils").safe_packadd_list(list)
+  end,
+  after = function (plugin)
+    if nixCats('neonixdev') then
+      require('neodev').setup({})
+      -- this allows our thing to have plugin library detection
+      -- despite not being in our .config/nvim folder
+      -- I learned about it here:
+      -- https://github.com/lecoqjacob/nixCats-nvim/blob/main/.neoconf.json
+      require("neoconf").setup({
+        plugins = {
+          lua_ls = {
+            enabled = true,
+            enabled_for_neovim_config = true,
+          },
+        },
+      })
+    end
+    if nixCats('C') then
+      vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
+        { desc = 'Run CMake with compile_commands.json' })
+      vim.cmd [[let g:cmake_link_compile_commands = 1]]
+    end
+    if require('nixCatsUtils').isNixCats then
+      for server_name, _ in pairs(servers) do
+        require('lspconfig')[server_name].setup({
+          capabilities = M.get_capabilities(),
+          settings = servers[server_name],
+          filetypes = (servers[server_name] or {}).filetypes,
+          cmd = (servers[server_name] or {}).cmd,
+          root_pattern = (servers[server_name] or {}).root_pattern,
+        })
+      end
+    else
+      require('mason').setup()
+      local mason_lspconfig = require 'mason-lspconfig'
+      mason_lspconfig.setup {
+        ensure_installed = vim.tbl_keys(servers),
       }
-    end,
-  }
-end
+      mason_lspconfig.setup_handlers {
+        function(server_name)
+          require('lspconfig')[server_name].setup {
+            capabilities = M.get_capabilities(),
+            settings = servers[server_name],
+            filetypes = (servers[server_name] or {}).filetypes,
+          }
+        end,
+      }
+    end
+  end,
+})
 
 return M
