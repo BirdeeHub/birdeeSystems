@@ -118,6 +118,7 @@ require('lz.n').load({
     cmp.setup.filetype('lua', {
       sources = cmp.config.sources {
         -- The insertion order influences the priority of the sources
+        { name = 'lazydev', --[[ group_index = 0 ]] },
         { name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
         { name = 'luasnip' },
         { name = "neorg" },
