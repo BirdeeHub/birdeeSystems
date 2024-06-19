@@ -231,7 +231,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('lz.n').load({
   "nvim-lspconfig",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "BufReadPre",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

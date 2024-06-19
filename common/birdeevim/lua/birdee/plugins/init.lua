@@ -43,7 +43,7 @@ require('birdee.plugins.image')
 require('lz.n').load({
   "vim-sleuth",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -58,7 +58,7 @@ require('lz.n').load({
 require('lz.n').load({
   "todo-comments.nvim",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -76,9 +76,9 @@ require('lz.n').load({
 require('lz.n').load({
   "comment.nvim",
   -- cmd = { "" },
-  -- event = "",
+  -- event = "UIEnter",
   -- ft = "",
-  -- keys = "",
+  keys = { "gc", "gb" },
   -- colorscheme = "",
   load = function (name)
     local list = {
@@ -95,7 +95,7 @@ if nixCats('web') then
   require('lz.n').load({
     "otter.nvim",
     -- cmd = { "" },
-    -- event = "",
+    event = "UIEnter",
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
@@ -155,7 +155,7 @@ require('lz.n').load({
 require('lz.n').load({
   "visual-whitespace",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -227,7 +227,7 @@ require('birdee.plugins.grapple')
 require('lz.n').load({
   "indent-blankline.nvim",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -245,7 +245,7 @@ require('lz.n').load({
 require('lz.n').load({
   "nvim-surround",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -307,12 +307,13 @@ require('lz.n').load({
   end,
 })
 
+vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
 require('lz.n').load({
   "undotree",
   -- cmd = { "" },
   -- event = "",
   -- ft = "",
-  -- keys = "",
+  keys = "<leader>U",
   -- colorscheme = "",
   load = function (name)
     local list = {
@@ -321,7 +322,6 @@ require('lz.n').load({
     require("birdee.utils").safe_packadd_list(list)
   end,
   after = function (plugin)
-    vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
     vim.g.undotree_WindowLayout = 1
     vim.g.undotree_SplitWidth = 40
   end,
@@ -330,7 +330,7 @@ require('lz.n').load({
 require('lz.n').load({
   "eyeliner.nvim",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -351,7 +351,7 @@ require('lz.n').load({
 require('lz.n').load({
   "hlargs",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

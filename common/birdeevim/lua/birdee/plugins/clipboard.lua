@@ -1,9 +1,9 @@
 require('lz.n').load({
   "nvim-neoclip.lua",
-  -- cmd = { "" },
+  cmd = { "Telescope" },
   -- event = "",
   -- ft = "",
-  -- keys = "",
+  keys = { "<leader>sm", "<leader>sc", "<leader>ss" },
   -- colorscheme = "",
   load = function (name)
     local list = {
@@ -86,7 +86,7 @@ require('lz.n').load({
 
 require('lz.n').load({
   "img-clip",
-  -- cmd = { "" },
+  cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
   -- event = "",
   -- ft = "",
   -- keys = "",

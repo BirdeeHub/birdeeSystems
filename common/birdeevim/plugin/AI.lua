@@ -9,8 +9,9 @@ if nixCats('nixCats_packageName') ~= "minimal" then
       -- colorscheme = "",
       load = function (name)
         local list = {
-          name,
           "codeium.nvim",
+          "telescope.nvim",
+          name,
         }
         require("birdee.utils").safe_packadd_list(list)
       end,
