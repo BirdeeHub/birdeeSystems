@@ -160,12 +160,12 @@
         neovimPlugins.large_file
         vimPlugins.vim-repeat
         neovimPlugins.nvim-luaref
-        nvim-nio
-        nui-nvim
-        plenary-nvim
-        nvim-web-devicons
+        vimPlugins.nvim-nio
+        vimPlugins.nui-nvim
+        vimPlugins.plenary-nvim
+        vimPlugins.nvim-web-devicons
         # What is this used by?
-        nvim-notify
+        vimPlugins.nvim-notify
       ];
     };
 
