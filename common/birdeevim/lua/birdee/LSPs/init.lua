@@ -66,6 +66,11 @@ if nixCats('kotlin') then
     -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
   }
 end
+if nixCats('java') then
+  servers.jdtls = {
+    -- filetypes = { 'java', 'kotlin' },
+  }
+end
 if nixCats('java') or nixCats('kotlin') then
   servers.gradle_ls = {
     root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },

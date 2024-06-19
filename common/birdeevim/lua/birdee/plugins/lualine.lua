@@ -18,21 +18,21 @@ require('lz.n').load({
     if not require('nixCatsUtils').isNixCats then
       colorschemer = 'onedark'
     end
-    local components = {
-      python_env = {
-        function()
-          if vim.bo.filetype == "python" then
-            local venv = os.getenv "CONDA_DEFAULT_ENV" or os.getenv "VIRTUAL_ENV"
-            if venv then
-              local icons = require "nvim-web-devicons"
-              local py_icon, _ = icons.get_icon ".py"
-              return string.format(" " .. py_icon .. " (%s)", venv)
-            end
-          end
-          return ""
-        end
-      },
-    }
+    -- local components = {
+    --   python_env = {
+    --     function()
+    --       if vim.bo.filetype == "python" then
+    --         local venv = os.getenv "CONDA_DEFAULT_ENV" or os.getenv "VIRTUAL_ENV"
+    --         if venv then
+    --           local icons = require "nvim-web-devicons"
+    --           local py_icon, _ = icons.get_icon ".py"
+    --           return string.format(" " .. py_icon .. " (%s)", venv)
+    --         end
+    --       end
+    --       return ""
+    --     end
+    --   },
+    -- }
     require('lualine').setup({
       options = {
         icons_enabled = true,
@@ -72,7 +72,7 @@ require('lz.n').load({
           },
         },
         lualine_x = {
-          components.python_env,
+          -- components.python_env,
           'encoding',
           'fileformat',
           'filetype',
