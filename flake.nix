@@ -32,7 +32,7 @@
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     "plugins-lz-n" = {
-      url = "github:nvim-neorocks/lz.n/4bc51dea03d0b6e196194939267cac82eb828f04";
+      url = "github:nvim-neorocks/lz.n";
       flake = false;
     };
     "plugins-render-markdown" = {

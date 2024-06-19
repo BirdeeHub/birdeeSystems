@@ -568,11 +568,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1718240128,
-        "narHash": "sha256-vJ9DE7Ix7LfbUKB2agguf+rhdKyjXLcbH6dh1WjCmXs=",
+        "lastModified": 1718760024,
+        "narHash": "sha256-blRTvQ1QTL9cwwN1TEGP7HaOoApraGiqasVXt0eMH4Q=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "0231265c8cf8c13f317bbddcfcbac2639e7022cd",
+        "rev": "b1c439cef6cae54745f3bf446596c1b7e417c80e",
         "type": "github"
       },
       "original": {
@@ -1001,7 +1001,6 @@
       "original": {
         "owner": "nvim-neorocks",
         "repo": "lz.n",
-        "rev": "4bc51dea03d0b6e196194939267cac82eb828f04",
         "type": "github"
       }
     },
