@@ -988,6 +988,22 @@
         "type": "github"
       }
     },
+    "plugins-lz-n": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1718726812,
+        "narHash": "sha256-fXOGfcLQZNwxzTUCui2vk36BphkO7Mi8/F9Ea0D2qsE=",
+        "owner": "nvim-neorocks",
+        "repo": "lz.n",
+        "rev": "5368c55db04664755ffb6b39eab241bf63989f5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-neorocks",
+        "repo": "lz.n",
+        "type": "github"
+      }
+    },
     "plugins-nvim-luaref": {
       "flake": false,
       "locked": {
@@ -1125,6 +1141,7 @@
         "plugins-grapple": "plugins-grapple",
         "plugins-img-clip": "plugins-img-clip",
         "plugins-large_file": "plugins-large_file",
+        "plugins-lz-n": "plugins-lz-n",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",
         "plugins-render-markdown": "plugins-render-markdown",

@@ -259,7 +259,7 @@ in {
     gradle
     kotlin
     kotlin-native
-    jetbrains.idea-community
+    # jetbrains.idea-community
     android-studio
   ];
   fonts.fontconfig.enable = true;
