@@ -41,6 +41,21 @@ require('birdee.plugins.clipboard')
 require('birdee.plugins.image')
 
 require('lz.n').load({
+  "vim-sleuth",
+  -- cmd = { "" },
+  -- event = "",
+  -- ft = "",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      name,
+    }
+    require("birdee.utils").safe_packadd_list(list)
+  end,
+})
+
+require('lz.n').load({
   "todo-comments.nvim",
   -- cmd = { "" },
   -- event = "",

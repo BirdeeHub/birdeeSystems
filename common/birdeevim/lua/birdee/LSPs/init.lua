@@ -66,21 +66,6 @@ if nixCats('kotlin') then
     -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
   }
 end
-if nixCats('java') then
-  -- local userHome = vim.loop.os_homedir()
-  servers.jdtls = {
-    java = {
-      formatters = {
-        ignoreComments = true,
-      },
-      signatureHelp = { enabled = true },
-      workspace = { checkThirdParty = true },
-      telemetry = { enabled = false },
-    },
-    filetypes = { "kotlin", "java" },
-    -- cmd = { "jdtls", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
-  }
-end
 if nixCats('java') or nixCats('kotlin') then
   servers.gradle_ls = {
     root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },

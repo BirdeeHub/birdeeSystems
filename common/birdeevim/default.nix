@@ -172,7 +172,6 @@
 
     optionalPlugins = {
       SQL = with pkgs.vimPlugins; [
-        # TODO: Still need to load these with lz-n
         vim-dadbod
         vim-dadbod-ui
         vim-dadbod-completion
@@ -198,8 +197,6 @@
         nvim-dap-go
       ];
       java = with pkgs.vimPlugins; [
-        # TODO: Still need to load this with lz-n
-        # Add to lspconfig lz-n? or ftplugin file? both?
         nvim-jdtls
       ];
       neonixdev = [
@@ -275,8 +272,6 @@
           nvim-surround
           comment-nvim
           treesj
-
-          # TODO: Still need to load this with lz-n
           vim-sleuth
         ];
         other = [
