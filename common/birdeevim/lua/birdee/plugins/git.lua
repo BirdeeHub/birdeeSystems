@@ -1,6 +1,25 @@
 require('lz.n').load({
+  "vim-fugitive",
+  cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
+    "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
+    "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
+    "DiffviewRefresh", "DiffviewFileHistory", },
+  -- event = "",
+  -- ft = "",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      name,
+      "vim-rhubarb",
+      "diffview.nvim",
+    }
+    require("birdee.utils").safe_packadd_list(list)
+  end,
+})
+require('lz.n').load({
   "fugit2-nvim",
-  -- cmd = { "" },
+  cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
   -- event = "",
   -- ft = "",
   -- keys = "",
@@ -9,7 +28,6 @@ require('lz.n').load({
     local list = {
       "dressing.nvim",
       "diffview.nvim",
-      "nvim-web-devicons",
       "nvim-tinygit",
       name,
     }

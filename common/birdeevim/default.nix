@@ -244,8 +244,6 @@
           pkgs.neovimPlugins.fugit2-nvim
           pkgs.neovimPlugins.nvim-tinygit
           dressing-nvim
-
-          # TODO: Still need to load these with lz-n
           diffview-nvim
           vim-rhubarb
           vim-fugitive
