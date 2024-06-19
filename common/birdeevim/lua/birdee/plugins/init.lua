@@ -414,7 +414,7 @@ require('lz.n').load({
 if nixCats('neonixdev') then
   require('lz.n').load({
     "lazydev-nvim",
-    -- cmd = { "" },
+    cmd = { "LazyDev" },
     -- event = "DeferredUIEnter",
     ft = "lua",
     -- keys = "",
