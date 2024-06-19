@@ -47,7 +47,6 @@ require('lz.n').load({
   -- colorscheme = "",
   load = function (name)
     local list = {
-      "plenary.nvim",
       name,
     }
     require("birdee.utils").safe_packadd_list(list)

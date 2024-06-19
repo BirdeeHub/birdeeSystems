@@ -24,7 +24,6 @@ require('lz.n').load({
   cmd = { "Telescope", "TodoTelescope" },
   load = function (name)
     local list = {
-      "plenary.nvim",
       name,
       "telescope-fzf-native.nvim",
       "vim-fugitive",

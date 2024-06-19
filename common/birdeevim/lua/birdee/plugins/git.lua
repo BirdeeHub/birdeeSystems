@@ -7,10 +7,8 @@ require('lz.n').load({
   -- colorscheme = "",
   load = function (name)
     local list = {
-      "plenary.nvim",
       "dressing.nvim",
       "diffview.nvim",
-      "nui.nvim",
       "nvim-web-devicons",
       "nvim-tinygit",
       name,

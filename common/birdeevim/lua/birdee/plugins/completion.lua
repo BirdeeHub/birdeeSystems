@@ -8,7 +8,6 @@ require('lz.n').load({
   load = function (name)
     local list = {
       name,
-      "plenary.nvim",
       "lspkind-nvim",
       "cmp-buffer",
       "cmp-cmdline",

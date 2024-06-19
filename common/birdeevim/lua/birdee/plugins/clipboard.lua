@@ -7,7 +7,6 @@ require('lz.n').load({
   -- colorscheme = "",
   load = function (name)
     local list = {
-      "plenary.nvim",
       "telescope.nvim",
       name,
     }

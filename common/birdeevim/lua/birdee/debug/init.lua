@@ -7,7 +7,6 @@ require('lz.n').load({
   -- colorscheme = "",
   load = function (name)
     local list = {
-      "nvim-nio",
       name,
       "nvim-dap-ui",
       "nvim-dap-virtual-text",

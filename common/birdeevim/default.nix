@@ -159,11 +159,19 @@
       general = with pkgs; [
         neovimPlugins.large_file
         vimPlugins.vim-repeat
+        neovimPlugins.nvim-luaref
+        nvim-nio
+        nui-nvim
+        plenary-nvim
+        nvim-web-devicons
+        # What is this used by?
+        nvim-notify
       ];
     };
 
     optionalPlugins = {
       SQL = with pkgs.vimPlugins; [
+        # TODO: Still need to load these with lz-n
         vim-dadbod
         vim-dadbod-ui
         vim-dadbod-completion
@@ -189,12 +197,13 @@
         nvim-dap-go
       ];
       java = with pkgs.vimPlugins; [
+        # TODO: Still need to load this with lz-n
+        # Add to lspconfig lz-n? or ftplugin file? both?
         nvim-jdtls
       ];
       neonixdev = [
         pkgs.vimPlugins.neodev-nvim
         pkgs.vimPlugins.neoconf-nvim
-        pkgs.neovimPlugins.nvim-luaref
       ];
       AI = [
         pkgs.vimPlugins.codeium-nvim
@@ -236,15 +245,13 @@
           pkgs.neovimPlugins.nvim-tinygit
           dressing-nvim
 
-          # Still need to load these with lz-n
+          # TODO: Still need to load these with lz-n
           diffview-nvim
           vim-rhubarb
-          nvim-notify
           vim-fugitive
         ];
         core = [
           # telescope
-          plenary-nvim
           telescope-nvim
           telescope-fzf-native-nvim
           telescope-ui-select-nvim
@@ -267,14 +274,11 @@
           conform-nvim
           oil-nvim
           undotree
-          nvim-nio
-          nui-nvim
-          nvim-web-devicons
           nvim-surround
           comment-nvim
           treesj
 
-          # Still need to load this with lz-n
+          # TODO: Still need to load this with lz-n
           vim-sleuth
         ];
         other = [
