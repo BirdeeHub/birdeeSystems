@@ -17,6 +17,8 @@ require('lz.n').load({
     require("birdee.utils").safe_packadd_list(list)
   end,
 })
+
+vim.keymap.set("n", "<leader>_", "<cmd>Fugit2<CR>", { noremap = true, desc = 'Fugit2' })
 require('lz.n').load({
   "fugit2-nvim",
   cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
@@ -204,6 +206,5 @@ require('lz.n').load({
         external_diffview = true,
     })
 
-    vim.keymap.set("n", "<leader>_", "<cmd>Fugit2<CR>", { noremap = true, desc = 'Fugit2' })
   end,
 })
