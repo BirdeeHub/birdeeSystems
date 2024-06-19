@@ -144,12 +144,9 @@
     };
 
     startupPlugins = {
-      general = with pkgs; [
+      lz-n = with pkgs; [
         neovimPlugins.lz-n
       ];
-    };
-
-    optionalPlugins = {
       SQL = with pkgs.vimPlugins; [
         vim-dadbod
         vim-dadbod-ui
@@ -280,6 +277,10 @@
       };
     };
 
+    optionalPlugins = {
+
+    };
+
     environmentVariables = {
       test = {
         BIRDTVAR = "It worked!";
@@ -352,6 +353,7 @@
     inherit bitwardenItemIDs;
     bitwarden = true;
     generalBuildInputs = true;
+    lz-n = true;
     bash = true;
     debug = true;
     customPlugins = true;
@@ -390,6 +392,7 @@
         vimagePreview = true;
         AI = true;
         lspDebugMode = false;
+        lz-n = true;
         colorscheme = "tokyonight";
       };
     };
