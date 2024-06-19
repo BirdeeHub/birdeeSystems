@@ -118,6 +118,26 @@ if nixCats('web') then
 end
 
 require('lz.n').load({
+  "vim-dadbod",
+  cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
+    "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
+  -- event = "",
+  -- ft = "",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      name,
+      "vim-dadbod-ui",
+      "vim-dadbod-completion",
+    }
+    require("birdee.utils").safe_packadd_list(list)
+  end,
+  after = function (plugin)
+  end,
+})
+
+require('lz.n').load({
   "visual-whitespace",
   -- cmd = { "" },
   -- event = "",
