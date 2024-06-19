@@ -371,6 +371,7 @@
     vimagePreview = true;
     go = true;
     kotlin = true;
+    python = true;
     rust = true;
     SQL = true;
     C = true;

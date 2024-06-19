@@ -258,6 +258,10 @@ require('lz.n').load({
       "vim-cmake",
       name,
     }
+    if not require('nixCatsUtils').isNixCats then
+      list[#list + 1] = "mason.nvim"
+      list[#list + 1] = "mason-lspconfig"
+    end
     require("birdee.utils").safe_packadd_list(list)
   end,
   after = function (plugin)
