@@ -991,16 +991,17 @@
     "plugins-lz-n": {
       "flake": false,
       "locked": {
-        "lastModified": 1718726812,
-        "narHash": "sha256-fXOGfcLQZNwxzTUCui2vk36BphkO7Mi8/F9Ea0D2qsE=",
+        "lastModified": 1718813189,
+        "narHash": "sha256-6f7B7X8s3HCjjw5nLPOFwyseTk65Xx7WNKf1MIkI89I=",
         "owner": "nvim-neorocks",
         "repo": "lz.n",
-        "rev": "5368c55db04664755ffb6b39eab241bf63989f5e",
+        "rev": "4bc51dea03d0b6e196194939267cac82eb828f04",
         "type": "github"
       },
       "original": {
         "owner": "nvim-neorocks",
         "repo": "lz.n",
+        "rev": "4bc51dea03d0b6e196194939267cac82eb828f04",
         "type": "github"
       }
     },

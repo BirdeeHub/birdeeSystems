@@ -3,7 +3,7 @@ if nixCats('nixCats_packageName') ~= "minimal" then
     require('lz.n').load({
       "vimplugin-sg.nvim",
       -- cmd = { "" },
-      event = "UIEnter",
+      event = "DeferredUIEnter",
       -- ft = "",
       -- keys = "",
       -- colorscheme = "",

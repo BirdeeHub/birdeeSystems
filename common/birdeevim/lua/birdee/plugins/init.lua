@@ -43,7 +43,7 @@ require('birdee.plugins.image')
 require('lz.n').load({
   "vim-sleuth",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -58,7 +58,7 @@ require('lz.n').load({
 require('lz.n').load({
   "todo-comments.nvim",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -76,7 +76,7 @@ require('lz.n').load({
 require('lz.n').load({
   "comment.nvim",
   -- cmd = { "" },
-  -- event = "UIEnter",
+  -- event = "DeferredUIEnter",
   -- ft = "",
   keys = { "gc", "gb" },
   -- colorscheme = "",
@@ -95,7 +95,7 @@ if nixCats('web') then
   require('lz.n').load({
     "otter.nvim",
     -- cmd = { "" },
-    event = "UIEnter",
+    event = "DeferredUIEnter",
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
@@ -155,7 +155,7 @@ require('lz.n').load({
 require('lz.n').load({
   "visual-whitespace",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -227,7 +227,7 @@ require('birdee.plugins.grapple')
 require('lz.n').load({
   "indent-blankline.nvim",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -245,7 +245,7 @@ require('lz.n').load({
 require('lz.n').load({
   "nvim-surround",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -330,7 +330,7 @@ require('lz.n').load({
 require('lz.n').load({
   "eyeliner.nvim",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -351,7 +351,7 @@ require('lz.n').load({
 require('lz.n').load({
   "hlargs",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -375,7 +375,7 @@ require('birdee.plugins.which-key')
 require('lz.n').load({
   "nvim-highlight-colors",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

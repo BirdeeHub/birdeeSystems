@@ -1,7 +1,7 @@
 require('lz.n').load({
   "which-key.nvim",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

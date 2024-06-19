@@ -1,7 +1,7 @@
 require('lz.n').load({
   "luasnip",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

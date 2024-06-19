@@ -1,7 +1,7 @@
 require('lz.n').load({
   "lualine.nvim",
   -- cmd = { "" },
-  event = "UIEnter",
+  event = "DeferredUIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
