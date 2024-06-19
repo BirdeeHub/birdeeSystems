@@ -231,7 +231,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('lz.n').load({
   "nvim-lspconfig",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -241,6 +241,7 @@ require('lz.n').load({
       "neodev.nvim",
       "clangd_extensions.nvim",
       "vim-cmake",
+      "cmp-nvim-lsp",
       name,
     }
     if not require('nixCatsUtils').isNixCats then

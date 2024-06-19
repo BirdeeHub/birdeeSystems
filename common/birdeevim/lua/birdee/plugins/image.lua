@@ -2,8 +2,8 @@ if nixCats('vimagePreview') then
   require('lz.n').load({
     "image.nvim",
     -- cmd = { "" },
-    -- event = "",
-    -- ft = "",
+    -- event = "UIEnter",
+    ft = { "norg", "markdown", --[[ "html", "css" ]] },
     -- keys = "",
     -- colorscheme = "",
     load = function (name)

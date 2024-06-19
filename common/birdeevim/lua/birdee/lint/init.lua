@@ -1,7 +1,7 @@
 require('lz.n').load({
   "nvim-lint",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

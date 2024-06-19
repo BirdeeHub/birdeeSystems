@@ -4,7 +4,7 @@ if nixCats('notes') then
     "neorg",
     -- cmd = { "" },
     -- event = "",
-    -- ft = "",
+    ft = "norg",
     -- keys = "",
     -- colorscheme = "",
     load = function (name)

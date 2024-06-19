@@ -1,7 +1,7 @@
 require('lz.n').load({
   "grapple",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

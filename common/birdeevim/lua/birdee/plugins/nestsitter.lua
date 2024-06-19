@@ -1,7 +1,7 @@
 require('lz.n').load({
   "nvim-treesitter",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

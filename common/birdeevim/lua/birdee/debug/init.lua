@@ -3,7 +3,7 @@ require('lz.n').load({
   -- cmd = { "" },
   -- event = "",
   -- ft = "",
-  -- keys = "",
+  keys = { "<F5>", "<F1>", "<F2>", "<F3>", "<leader>b", "<leader>B", "<F7>" },
   -- colorscheme = "",
   load = function (name)
     local list = {

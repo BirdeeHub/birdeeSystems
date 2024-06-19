@@ -179,7 +179,7 @@ require('lz.n').load({
   "render-markdown",
   -- cmd = { "" },
   -- event = "",
-  -- ft = "",
+  ft = "markdown",
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
@@ -194,12 +194,16 @@ require('lz.n').load({
   end,
 })
 
+vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true, desc = 'markdown preview' })
+vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
+vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
+  { noremap = true, desc = 'markdown preview toggle' })
 if (nixCats('general.markdown')) then
   require('lz.n').load({
     "markdown-preview.nvim",
-    -- cmd = { "" },
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     -- event = "",
-    -- ft = "",
+    -- ft = "markdown",
     -- keys = "",
     -- colorscheme = "",
     load = function (name)
@@ -208,12 +212,8 @@ if (nixCats('general.markdown')) then
       }
       require("birdee.utils").safe_packadd_list(list)
     end,
-    after = function (plugin)
+    before = function (plugin)
       vim.g.mkdp_auto_close = 0
-      vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true, desc = 'markdown preview' })
-      vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
-      vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
-	{ noremap = true, desc = 'markdown preview toggle' })
     end,
   })
 end
@@ -261,9 +261,10 @@ require('lz.n').load({
 })
 
 
+vim.keymap.set('n', '<leader>Ft', [[:TSJToggle<CR>]], { desc = "treesj split/join" })
 require('lz.n').load({
   "treesj",
-  -- cmd = { "" },
+  cmd = { "TSJToggle" },
   -- event = "",
   -- ft = "",
   -- keys = "",
@@ -303,7 +304,6 @@ require('lz.n').load({
       ---@type table Presets for languages
       -- langs = langs, -- See the default presets in lua/treesj/langs
     })
-    vim.keymap.set('n', '<leader>Ft', [[:TSJToggle<CR>]], { desc = "treesj split/join" })
   end,
 })
 
@@ -375,7 +375,7 @@ require('birdee.plugins.which-key')
 require('lz.n').load({
   "nvim-highlight-colors",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

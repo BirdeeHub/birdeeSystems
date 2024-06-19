@@ -1,7 +1,7 @@
 require('lz.n').load({
   "marks.nvim",
   -- cmd = { "" },
-  -- event = "",
+  event = "UIEnter",
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -52,8 +52,8 @@ require('lz.n').load({
 require('lz.n').load({
   "gitsigns.nvim",
   -- cmd = { "" },
-  -- event = "",
   -- ft = "",
+  event = "UIEnter",
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
