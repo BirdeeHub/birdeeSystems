@@ -229,6 +229,7 @@
           diffview-nvim
         ];
         core = [
+          pkgs.neovimPlugins.lz-n
           # telescope
           plenary-nvim
           telescope-nvim
@@ -255,7 +256,7 @@
           conform-nvim
           oil-nvim
           undotree
-          pkgs.neovimPlugins.nvim-nio
+          nvim-nio
           nui-nvim
           nvim-web-devicons
           nvim-surround
