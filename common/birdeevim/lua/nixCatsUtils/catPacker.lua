@@ -102,7 +102,7 @@ if not require('nixCatsUtils').isNixCats then
     { 'lewis6991/gitsigns.nvim', },
     { 'nvim-lualine/lualine.nvim', },
     { 'lukas-reineke/indent-blankline.nvim', },
-    { 'numToStr/Comment.nvim', },
+    -- { 'numToStr/Comment.nvim', },
     { 'milisims/nvim-luaref', },
     { 'sindrets/diffview.nvim', },
     { 'chentoast/marks.nvim', },

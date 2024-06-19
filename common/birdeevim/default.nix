@@ -270,7 +270,6 @@
           conform-nvim
           undotree
           nvim-surround
-          comment-nvim
           treesj
           vim-sleuth
         ];

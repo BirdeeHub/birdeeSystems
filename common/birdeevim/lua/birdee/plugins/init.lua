@@ -73,23 +73,23 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
-  "comment.nvim",
-  -- cmd = { "" },
-  -- event = "DeferredUIEnter",
-  -- ft = "",
-  keys = { "gc", "gb" },
-  -- colorscheme = "",
-  load = function (name)
-    local list = {
-      name,
-    }
-    require("birdee.utils").safe_packadd_list(list)
-  end,
-  after = function (plugin)
-    require('Comment').setup()
-  end,
-})
+-- require('lz.n').load({
+--   "comment.nvim",
+--   -- cmd = { "" },
+--   -- event = "DeferredUIEnter",
+--   -- ft = "",
+--   keys = { "gc", "gb" },
+--   -- colorscheme = "",
+--   load = function (name)
+--     local list = {
+--       name,
+--     }
+--     require("birdee.utils").safe_packadd_list(list)
+--   end,
+--   after = function (plugin)
+--     require('Comment').setup()
+--   end,
+-- })
 
 if nixCats('web') then
   require('lz.n').load({
