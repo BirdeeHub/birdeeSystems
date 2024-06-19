@@ -988,6 +988,22 @@
         "type": "github"
       }
     },
+    "plugins-lazydev-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1718447010,
+        "narHash": "sha256-sMwSh79gTzwY/TPUB5nOi73o1p+y31LR7WEieHq5Q84=",
+        "owner": "folke",
+        "repo": "lazydev.nvim",
+        "rev": "6184ebbbc8045d70077659b7d30c705a588dc62f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "lazydev.nvim",
+        "type": "github"
+      }
+    },
     "plugins-lz-n": {
       "flake": false,
       "locked": {
@@ -1141,6 +1157,7 @@
         "plugins-grapple": "plugins-grapple",
         "plugins-img-clip": "plugins-img-clip",
         "plugins-large_file": "plugins-large_file",
+        "plugins-lazydev-nvim": "plugins-lazydev-nvim",
         "plugins-lz-n": "plugins-lz-n",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",

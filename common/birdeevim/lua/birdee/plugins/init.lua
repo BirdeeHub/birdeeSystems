@@ -410,3 +410,29 @@ require('lz.n').load({
     }
   end,
 })
+
+if nixCats('neonixdev') then
+  require('lz.n').load({
+    "lazydev-nvim",
+    -- cmd = { "" },
+    -- event = "DeferredUIEnter",
+    ft = "lua",
+    -- keys = "",
+    -- colorscheme = "",
+    load = function (name)
+      local list = {
+	name,
+      }
+      require("birdee.utils").safe_packadd_list(list)
+    end,
+    after = function (plugin)
+      require('lazydev').setup({
+	-- library = {
+	  -- See the configuration section for more details
+	  -- Load luvit types when the `vim.uv` word is found
+	  -- { path = "luvit-meta/library", words = { "vim%.uv" } },
+	-- },
+      })
+    end,
+  })
+end

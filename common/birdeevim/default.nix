@@ -200,8 +200,7 @@
         nvim-jdtls
       ];
       neonixdev = [
-        pkgs.vimPlugins.neodev-nvim
-        pkgs.vimPlugins.neoconf-nvim
+        pkgs.neovimPlugins.lazydev-nvim
       ];
       AI = [
         pkgs.vimPlugins.codeium-nvim

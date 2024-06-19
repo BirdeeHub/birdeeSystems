@@ -35,6 +35,10 @@
       url = "github:nvim-neorocks/lz.n";
       flake = false;
     };
+    "plugins-lazydev-nvim" = {
+      url = "github:folke/lazydev.nvim";
+      flake = false;
+    };
     "plugins-render-markdown" = {
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
