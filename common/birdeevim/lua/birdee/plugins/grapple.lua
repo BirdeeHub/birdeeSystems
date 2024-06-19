@@ -7,7 +7,6 @@ require('lz.n').load({
   -- colorscheme = "",
   load = function (name)
     local list = {
-      "nvim-web-devicons",
       name,
     }
     require("birdee.utils").safe_packadd_list(list)

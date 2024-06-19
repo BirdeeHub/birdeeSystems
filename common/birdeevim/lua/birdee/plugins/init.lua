@@ -24,6 +24,8 @@ require("large_file").setup({
   on_large_file_read_pre = function(ev) end
 })
 
+require('birdee.plugins.oil')
+
 require('birdee.plugins.telescope')
 
 require('birdee.plugins.nestsitter')
@@ -186,8 +188,6 @@ require('birdee.plugins.notes')
 require('birdee.plugins.gutter')
 
 require('birdee.plugins.grapple')
-
-require('birdee.plugins.oil')
 
 require('lz.n').load({
   "indent-blankline.nvim",

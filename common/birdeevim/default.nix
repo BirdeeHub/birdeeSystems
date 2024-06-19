@@ -158,6 +158,7 @@
       };
       general = with pkgs; [
         neovimPlugins.large_file
+        vimPlugins.oil-nvim
         vimPlugins.vim-repeat
         neovimPlugins.nvim-luaref
         vimPlugins.nvim-nio
@@ -270,7 +271,6 @@
           indent-blankline-nvim
           nvim-lint
           conform-nvim
-          oil-nvim
           undotree
           nvim-surround
           comment-nvim
