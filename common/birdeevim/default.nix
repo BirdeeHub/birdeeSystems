@@ -199,8 +199,8 @@
       java = with pkgs.vimPlugins; [
         nvim-jdtls
       ];
-      neonixdev = [
-        pkgs.neovimPlugins.lazydev-nvim
+      neonixdev = with pkgs.vimPlugins; [
+        lazydev-nvim
       ];
       AI = [
         pkgs.vimPlugins.codeium-nvim
