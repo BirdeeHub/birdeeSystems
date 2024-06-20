@@ -12,6 +12,7 @@
         (utils.standardPluginOverlay inputs)
         # add any flake overlays here.
         inputs.neorg-overlay.overlays.default
+        inputs.lz-n.overlays.default
         # inputs.neovim-nightly-overlay.overlays.default
       ] ++ (if (inputs.codeium.overlays ? system)
         then [ inputs.codeium.overlays.${system}.default ] else [])
@@ -147,7 +148,7 @@
 
     startupPlugins = {
       lz-n = with pkgs; [
-        neovimPlugins.lz-n
+        vimPlugins.lz-n
       ];
       theme = with pkgs.vimPlugins; builtins.getAttr categories.colorscheme {
         "onedark" = onedark-nvim;

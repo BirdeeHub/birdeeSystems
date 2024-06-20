@@ -33,14 +33,12 @@
     # };
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
-    "plugins-lz-n" = {
+    # "plugins-lz-n" = {
+    lz-n = {
       url = "github:nvim-neorocks/lz.n";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgsNV";
+      # flake = false;
     };
-    # "plugins-lazydev-nvim" = {
-    #   url = "github:folke/lazydev.nvim";
-    #   flake = false;
-    # };
     "plugins-render-markdown" = {
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
@@ -81,10 +79,14 @@
       url = "github:HakonHarnes/img-clip.nvim";
       flake = false;
     };
-    codeium.url = "github:Exafunction/codeium.nvim";
-    # codeium.inputs.nixpkgs.follows = "nixpkgsNV";
-    sg-nvim.url = "github:sourcegraph/sg.nvim";
-    # sg-nvim.inputs.nixpkgs.follows = "nixpkgsNV";
+    codeium = {
+      url = "github:Exafunction/codeium.nvim";
+      # inputs.nixpkgs.follows = "nixpkgsNV";
+    };
+    sg-nvim = {
+      url = "github:sourcegraph/sg.nvim";
+      # inputs.nixpkgs.follows = "nixpkgsNV";
+    };
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
