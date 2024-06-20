@@ -1,3 +1,4 @@
+vim.notify = require("notify")
 local colorschemer = nixCats('colorscheme') -- also schemes lualine
 if not require('nixCatsUtils').isNixCats then
   colorschemer = 'onedark'

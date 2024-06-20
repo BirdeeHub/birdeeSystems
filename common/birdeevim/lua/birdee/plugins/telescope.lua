@@ -1,4 +1,4 @@
--- Telescope is a fuzzy finder that comes with a lot of different things that
+- Telescope is a fuzzy finder that comes with a lot of different things that
 -- it can fuzzy find! It's more than just a "file finder", it can search
 -- many different aspects of Neovim, your workspace, LSP, and more!
 --
@@ -38,6 +38,8 @@ require('lz.n').load({
     "<leader>sf",
     "<leader>sk",
     "<leader>sh",
+    "<leader>sM",
+    "<leader>sb",
   },
   -- colorscheme = "",
   load = function (name)
@@ -145,7 +147,9 @@ require('lz.n').load({
     vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
     vim.keymap.set('n', '<leader>sp', live_grep_git_root, { desc = '[S]earch git [P]roject root' })
 
-
+    require("telescope").load_extension("notify")
     require("telescope").load_extension("git_file_history")
+    vim.keymap.set('n', '<leader>sb', '<cmd>Telescope git_file_history<CR>', { desc = '[S]earch [B]ackup history' })
+    vim.keymap.set('n', '<leader>sM', '<cmd>Telescope notify<CR>', { desc = '[S]earch [M]essage' })
   end,
 })
