@@ -9,6 +9,7 @@ if nixCats('nixCats_packageName') ~= "minimal" then
       -- colorscheme = "",
       load = function (name)
         local list = {
+          "nvim-cmp",
           "codeium.nvim",
           "telescope.nvim",
           name,
