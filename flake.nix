@@ -250,6 +250,7 @@
         };
         inherit system;
         modules = [
+          { nixpkgs.overlays = overlays; }
           ./systems/PCs/installer
         ];
       };
