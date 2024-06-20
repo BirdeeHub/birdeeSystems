@@ -20,6 +20,7 @@ in {
   birdeeVim = {
     enable = true;
     packageNames = [ "noAInvim" ];
+    nixpkgs_version = inputs.nixpkgsNV;
   };
 
   nix.settings = {

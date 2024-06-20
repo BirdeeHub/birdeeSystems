@@ -6,7 +6,9 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
+    nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgsVB.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +24,7 @@
 
     # neovim
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    nixCats.inputs.nixpkgs.follows = "nixpkgs";
+    nixCats.inputs.nixpkgs.follows = "nixpkgsNV";
     neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
@@ -80,7 +82,9 @@
       flake = false;
     };
     codeium.url = "github:Exafunction/codeium.nvim";
+    # codeium.inputs.nixpkgs.follows = "nixpkgsNV";
     sg-nvim.url = "github:sourcegraph/sg.nvim";
+    # sg-nvim.inputs.nixpkgs.follows = "nixpkgsNV";
     "bash-debug-adapter" = {
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
@@ -190,6 +194,7 @@
         };
         inherit system;
         modules = [
+          { nixpkgs.overlays = overlays; }
           disko.nixosModules.disko
           ./disko/PCs/sda_swap.nix
           ./systems/PCs/aSUS
@@ -202,6 +207,7 @@
         };
         inherit system;
         modules = [
+          { nixpkgs.overlays = overlays; }
           disko.nixosModules.disko
           ./disko/PCs/sda_swap.nix
           ./systems/PCs/dustbook

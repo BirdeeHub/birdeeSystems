@@ -23,6 +23,7 @@ in {
   birdeeVim = {
     enable = true;
     packageNames = [ "birdeeVim" "notesVim" "testvim" ];
+    nixpkgs_version = inputs.nixpkgsNV;
   };
   birdeeMods = {
     zsh.enable = true;

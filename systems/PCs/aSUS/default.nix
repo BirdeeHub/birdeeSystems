@@ -47,6 +47,7 @@ in {
   virtualisation.virtualbox.host = {
     enable = true;
     enableExtensionPack = true;
+    package = pkgs.virtualbox;
     # users.extraGroups.vboxusers.members = [ "birdee" ];
   };
 

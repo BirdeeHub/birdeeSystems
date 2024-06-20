@@ -1,6 +1,6 @@
 {inputs, ... }@attrs: let
   inherit (inputs.nixCats) utils;
-  inherit (inputs) nixpkgs;
+  nixpkgs = inputs.nixpkgsNV;
   luaPath = "${./.}";
   forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
   extra_pkg_config = {
