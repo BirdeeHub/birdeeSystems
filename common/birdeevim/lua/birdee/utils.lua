@@ -76,7 +76,7 @@ function M.safe_packadd_list(names)
     if type(name) == 'string' then
       local ok, err = pcall(vim.cmd, 'packadd ' .. name)
       if not ok then
-        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN)
+        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_packadd_list" })
       end
     end
   end
@@ -86,10 +86,30 @@ function M.safe_force_packadd_list(names)
     if type(name) == 'string' then
       local ok, err = pcall(vim.cmd, 'packadd! ' .. name)
       if not ok then
-        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN)
+        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_force_packadd_list" })
       end
     end
   end
+end
+
+---@param plugin_name string
+---@param mod_paths string[]
+function M.add_to_lazy_require(plugin_name, mod_paths)
+  require("birdee.lazystate").add(plugin_name, mod_paths)
+end
+
+local oldrequire = require
+function M.birdee_require(mod)
+  local ok, value = pcall(oldrequire, mod)
+  if ok then
+    return value
+  end
+
+  if require("birdee.lazystate").call(mod) then
+    return require(mod)
+  end
+
+  return value
 end
 
 return M
