@@ -1,7 +1,7 @@
 require('lz.n').load({
   "nvim-cmp",
   -- cmd = { "" },
-  -- event = "UIEnter",
+  -- event = { "VimEnter" },
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
