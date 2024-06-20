@@ -1,4 +1,4 @@
-- Telescope is a fuzzy finder that comes with a lot of different things that
+-- Telescope is a fuzzy finder that comes with a lot of different things that
 -- it can fuzzy find! It's more than just a "file finder", it can search
 -- many different aspects of Neovim, your workspace, LSP, and more!
 --
