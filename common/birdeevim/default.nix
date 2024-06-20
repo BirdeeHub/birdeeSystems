@@ -147,9 +147,7 @@
     };
 
     startupPlugins = {
-      lz-n = with pkgs; [
-        vimPlugins.lz-n
-      ];
+      inherit (pkgs.vimPlugins) lz-n;
       theme = with pkgs.vimPlugins; builtins.getAttr categories.colorscheme {
         "onedark" = onedark-nvim;
         "catppuccin" = catppuccin-nvim;
