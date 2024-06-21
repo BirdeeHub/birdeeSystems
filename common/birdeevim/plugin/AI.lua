@@ -14,7 +14,7 @@ if nixCats('nixCats_packageName') ~= "minimal" then
           "telescope.nvim",
           name,
         }
-        require("birdee.utils").safe_packadd_list(list)
+        require("birdee.lazyutils").safe_packadd_list(list)
       end,
       after = function (plugin)
         local bitwardenAuth = nixCats('bitwardenItemIDs')

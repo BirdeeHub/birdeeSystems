@@ -11,7 +11,7 @@ require('lz.n').load({
       "grapple",
       "lualine-lsp-progress",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.lazyutils").safe_packadd_list(list)
   end,
   after = function (plugin)
     local colorschemer = nixCats('colorscheme') -- also schemes lualine

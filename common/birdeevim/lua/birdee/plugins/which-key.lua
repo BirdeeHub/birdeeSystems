@@ -9,7 +9,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.lazyutils").safe_packadd_list(list)
   end,
   after = function (plugin)
     require('which-key').setup({

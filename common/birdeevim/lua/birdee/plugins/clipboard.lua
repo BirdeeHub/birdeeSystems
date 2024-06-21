@@ -10,7 +10,7 @@ require('lz.n').load({
       "telescope.nvim",
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.lazyutils").safe_packadd_list(list)
   end,
   after = function (plugin)
     require('neoclip').setup({
@@ -95,7 +95,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.lazyutils").safe_packadd_list(list)
   end,
   after = function (plugin)
     require("img-clip").setup({
