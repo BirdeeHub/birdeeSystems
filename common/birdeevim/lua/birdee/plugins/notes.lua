@@ -13,7 +13,7 @@ if nixCats('notes') then
         "neorg-telescope",
         name,
       }
-      require("birdee.lazyutils").safe_packadd_list(list)
+      require("birdee.utils").safe_packadd_list(list)
     end,
     after = function (plugin)
       require('neorg').setup {

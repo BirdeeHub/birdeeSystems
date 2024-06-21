@@ -71,4 +71,26 @@ function M.authTerminal()
   return session
 end
 
+function M.safe_packadd_list(names)
+  for _, name in ipairs(names) do
+    if type(name) == 'string' then
+      local ok, err = pcall(vim.cmd, 'packadd ' .. name)
+      if not ok then
+        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_packadd_list" })
+      end
+    end
+  end
+end
+
+function M.safe_force_packadd_list(names)
+  for _, name in ipairs(names) do
+    if type(name) == 'string' then
+      local ok, err = pcall(vim.cmd, 'packadd! ' .. name)
+      if not ok then
+        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_force_packadd_list" })
+      end
+    end
+  end
+end
+
 return M

@@ -12,7 +12,7 @@ local sourcelist = {
   "cmp-path",
   "cmp_luasnip",
 }
-require("birdee.lazyutils").safe_packadd_list(sourcelist)
+require("birdee.utils").safe_packadd_list(sourcelist)
 
 require('lz.n').load({
   "nvim-cmp",
@@ -30,7 +30,7 @@ require('lz.n').load({
       "otter.nvim",
       "codeium.nvim",
     }
-    require("birdee.lazyutils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd_list(list)
   end,
   after = function (plugin)
     -- [[ Configure nvim-cmp ]]

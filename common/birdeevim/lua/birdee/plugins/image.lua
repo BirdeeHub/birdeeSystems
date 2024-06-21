@@ -10,7 +10,7 @@ if nixCats('vimagePreview') then
       local list = {
         name,
       }
-      require("birdee.lazyutils").safe_packadd_list(list)
+      require("birdee.utils").safe_packadd_list(list)
     end,
     after = function (plugin)
       -- default config
