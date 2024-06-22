@@ -1,4 +1,3 @@
-vim.notify = require("notify")
 local colorschemer = nixCats('colorscheme') -- also schemes lualine
 if not require('nixCatsUtils').isNixCats then
   colorschemer = 'onedark'
@@ -202,10 +201,10 @@ vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
 if (nixCats('general.markdown')) then
   require('lz.n').load({
     "markdown-preview.nvim",
-    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
+    -- cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     -- event = "",
-    -- ft = "markdown",
-    -- keys = "",
+    ft = "markdown",
+    -- keys = {"<leader>mp", "<leader>ms", "<leader>mt", },
     -- colorscheme = "",
     load = function (name)
       local list = {

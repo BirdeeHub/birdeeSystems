@@ -162,10 +162,9 @@
         neovimPlugins.nvim-luaref
         vimPlugins.nvim-nio
         vimPlugins.nui-nvim
-        vimPlugins.plenary-nvim
         vimPlugins.nvim-web-devicons
-        # What is this used by?
         vimPlugins.nvim-notify
+        vimPlugins.plenary-nvim
       ];
     };
 
