@@ -34,15 +34,20 @@ local M = {
     type = "on_require",
 }
 
+---@class lz_n_plugin: lz.n.Plugin
+---@field on_require string[]|string
+
 ---Adds a plugin to be lazy loaded upon requiring any submodule of provided mod paths
----@param plugin lz.n.Plugin
+---@param plugin lz_n_plugin
 function M.add(plugin)
+  local on_req = plugin.on_require
   ---@type string[]
   local mod_paths
-  if type(plugin.on_require) == "table" then
-      mod_paths = plugin.on_require
-  elseif type(plugin.on_require) == "string" then
-      mod_paths = { plugin.on_require }
+  if type(on_req) == "table" then
+      ---@cast on_req string[]
+      mod_paths = on_req
+  elseif type(on_req) == "string" then
+      mod_paths = { on_req }
   end
   ---@param mod_path string
   ---@return boolean
