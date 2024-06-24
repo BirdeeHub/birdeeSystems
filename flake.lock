@@ -800,11 +800,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1719115928,
-        "narHash": "sha256-LiJnFC8G7rghTbyeLnmpnL/mtUYOyAw+wQO+swggATs=",
+        "lastModified": 1719205057,
+        "narHash": "sha256-sso8ZvGUeJ485whWmTJOxMcx7HubOavT02l7Wa9ijvA=",
         "owner": "BirdeeHub",
         "repo": "lz.n",
-        "rev": "cbd4c5caa9879df27fc2b7b98c60114321405f7b",
+        "rev": "e697ac9e2bd87a455f7d4a4dc7bb17a2ca524add",
         "type": "github"
       },
       "original": {

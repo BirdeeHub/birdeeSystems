@@ -30,8 +30,7 @@ end
 ---@class lz.n.ReqHandler: lz.n.Handler
 ---@type lz.n.ReqHandler
 local M = {
-  type = "on_require",
-  new_fields = "on_require",
+  spec_field = "on_require",
   ---@param plugin lz.n.Plugin
   del = function (plugin)
     states[plugin.name] = nil
