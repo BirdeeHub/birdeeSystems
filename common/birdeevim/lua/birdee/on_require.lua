@@ -47,10 +47,10 @@ function M.add(plugin)
   ---@type string[]
   local mod_paths
   if type(on_req) == "table" then
-      ---@cast on_req string[]
-      mod_paths = on_req
+    ---@cast on_req string[]
+    mod_paths = on_req
   elseif type(on_req) == "string" then
-      mod_paths = { on_req }
+    mod_paths = { on_req }
   end
   ---@param mod_path string
   ---@return boolean

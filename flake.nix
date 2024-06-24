@@ -97,6 +97,7 @@
     system = "x86_64-linux";
     stateVersion = "23.05";
     forEachSystem = (import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all;
+    withEachSystem = (import ./platforms.nix).bySystems nixpkgs.lib.platforms.all;
     overlays = (import ./overlays inputs);
     pkgs = import inputs.nixpkgs {
       inherit system overlays;
@@ -238,21 +239,21 @@
         ];
       };
     };
+    "installer" = withEachSystem (system: nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit self nixpkgs inputs system-modules overlays;
+      };
+      inherit system;
+      modules = [
+        { nixpkgs.overlays = overlays; }
+        ./systems/PCs/installer
+      ];
+    });
     diskoConfigurations = {
       PC_sda_swap = import ./disko/PCs/sda_swap.nix;
       PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
     };
     templates = import ./templates inputs;
-  } // (forEachSystem (system:
-      { installer = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit self nixpkgs inputs system-modules overlays;
-        };
-        inherit system;
-        modules = [
-          { nixpkgs.overlays = overlays; }
-          ./systems/PCs/installer
-        ];
-      };
+  } // (forEachSystem (system: { 
     }));
 }
