@@ -1019,11 +1019,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1719230506,
-        "narHash": "sha256-74FRrG/fFEKfRur948KrSUrbIWEmXaLdaAh2mbVhLgI=",
+        "lastModified": 1719238130,
+        "narHash": "sha256-+AZ58v+HHvP2BOD2DnvcoJE9Hps+vmYu+vVAadhSu3U=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "0cd027167c8a77f8bdc1cfecfa12906cac853518",
+        "rev": "646fba4e8c2aededf902c903a45cb3017f937916",
         "type": "github"
       },
       "original": {

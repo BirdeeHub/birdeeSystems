@@ -344,6 +344,7 @@
     withPython3 = true;
     viAlias = false;
     vimAlias = false;
+    unwrappedCfgPath = "/home/birdee/birdeeSystems/common/birdeevim";
     # nvimSRC = inputs.neovim-src;
     neovim-unwrapped = pkgs.internalvim.nvim;
     # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
