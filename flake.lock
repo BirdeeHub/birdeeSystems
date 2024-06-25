@@ -800,15 +800,15 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1719213722,
-        "narHash": "sha256-2m8BsxeiTYhQrD1L+zcQK5qnQg9fRA3OuL4BKhddMuY=",
-        "owner": "BirdeeHub",
+        "lastModified": 1719248596,
+        "narHash": "sha256-GBDmumQ0XYxawPdUncI6fW413MMSjGl6TwCQTexUpnE=",
+        "owner": "nvim-neorocks",
         "repo": "lz.n",
-        "rev": "47f84f916651e8ee04a37e3037e12698d7e7cc50",
+        "rev": "24f9fe1024c936d9fa6a5607b73a4ae1958c9d77",
         "type": "github"
       },
       "original": {
-        "owner": "BirdeeHub",
+        "owner": "nvim-neorocks",
         "repo": "lz.n",
         "type": "github"
       }
