@@ -7,14 +7,17 @@ local states = {}
 ---@return boolean
 local function call(mod_path)
   local found = false
-  local names = {}
-  for name, has in pairs(states) do
-    if has(mod_path) then
-      table.insert(names, name)
+  local plugins = {}
+  for _, has in pairs(states) do
+    local plugin = has(mod_path)
+    if plugin ~= nil then
+      table.insert(plugins, plugin)
       found = true
     end
   end
-  trigger_load(names)
+  if plugins ~= {} then
+    trigger_load(plugins)
+  end
   return found
 end
 
@@ -45,22 +48,24 @@ local M = {
 function M.add(plugin)
   local on_req = plugin.on_require
   ---@type string[]
-  local mod_paths
+  local mod_paths = {}
   if type(on_req) == "table" then
     ---@cast on_req string[]
     mod_paths = on_req
   elseif type(on_req) == "string" then
     mod_paths = { on_req }
+  else
+    return
   end
   ---@param mod_path string
-  ---@return boolean
+  ---@return lz_n_plugin|nil
   local function item(mod_path)
     for _, v in ipairs(mod_paths) do
       if starts_with(mod_path, v) then
-        return true
+        return plugin
       end
     end
-    return false
+    return nil
   end
   states[plugin.name] = item
 end
@@ -72,6 +77,7 @@ require('_G').require = function (mod_path)
   if ok then
     return value
   end
+  package.loaded[mod_path] = nil
   if call(mod_path) then
     return oldrequire(mod_path)
   end
