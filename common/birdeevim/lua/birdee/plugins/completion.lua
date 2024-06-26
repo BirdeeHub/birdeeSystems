@@ -1,19 +1,3 @@
--- NOTE: packadd doesnt source after directories,
--- and these run a hook in after/plugin to provide the source
--- so we packadd these eagerly here for now until a better solution is found
-local sourcelist = {
-  "nvim-cmp",
-  "cmp-buffer",
-  "cmp-cmdline",
-  "cmp-cmdline-history",
-  "cmp-nvim-lsp",
-  "cmp-nvim-lsp-signature-help",
-  "cmp-nvim-lua",
-  "cmp-path",
-  "cmp_luasnip",
-}
-require("birdee.utils").safe_packadd_list(sourcelist)
-
 require('lz.n').load({
   "nvim-cmp",
   -- cmd = { "" },
@@ -31,6 +15,18 @@ require('lz.n').load({
       "codeium.nvim",
     }
     require("birdee.utils").safe_packadd_list(list)
+    local sourcelist = {
+      "nvim-cmp",
+      "cmp-buffer",
+      "cmp-cmdline",
+      "cmp-cmdline-history",
+      "cmp-nvim-lsp",
+      "cmp-nvim-lsp-signature-help",
+      "cmp-nvim-lua",
+      "cmp-path",
+      "cmp_luasnip",
+    }
+    require("birdee.utils").packadd_with_after_dirs(sourcelist)
   end,
   after = function (plugin)
     -- [[ Configure nvim-cmp ]]

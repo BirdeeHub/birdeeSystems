@@ -93,6 +93,42 @@ function M.safe_force_packadd_list(names)
   end
 end
 
+function M.packadd_with_after_dirs(plugin_names)
+  local names
+  if type(plugin_names) == 'table' then
+    names = plugin_names
+  elseif type(plugin_names) == 'string' then
+    names = { plugin_names }
+  else
+    return
+  end
+  local to_source = {}
+  for _, name in ipairs(names) do
+    if type(name) == 'string' then
+      local ok, err = pcall(vim.cmd, 'packadd ' .. name)
+      if not ok then
+        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_packadd_list" })
+      else
+        table.insert(to_source, name)
+      end
+    end
+  end
+  for _, name in pairs(to_source) do
+    local afterpath = require('nixCats').pawsible.allPlugins.opt[name] .. "/after"
+    if vim.fn.isdirectory(afterpath) == 1 then
+      local plugin_dir = afterpath .. "/plugin"
+      if vim.fn.isdirectory(plugin_dir) == 1 then
+        local files = vim.fn.glob(plugin_dir .. "/*", false, true)
+        for _, file in ipairs(files) do
+          if vim.fn.filereadable(file) == 1 then
+            vim.cmd("source " .. file)
+          end
+        end
+      end
+    end
+  end
+end
+
 function M.starts_with(str, prefix)
   if str == nil or prefix == nil then
     return false
