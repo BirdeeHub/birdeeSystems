@@ -16,7 +16,6 @@ require('lz.n').load({
     }
     require("birdee.utils").safe_packadd_list(list)
     local sourcelist = {
-      "nvim-cmp",
       "cmp-buffer",
       "cmp-cmdline",
       "cmp-cmdline-history",
