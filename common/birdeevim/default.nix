@@ -164,7 +164,6 @@
         vimPlugins.nui-nvim
         vimPlugins.nvim-web-devicons
         vimPlugins.nvim-notify
-        vimPlugins.plenary-nvim
       ];
     };
 
@@ -244,6 +243,7 @@
           vim-fugitive
         ];
         core = [
+          plenary-nvim
           # telescope
           telescope-nvim
           telescope-fzf-native-nvim

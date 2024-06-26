@@ -93,4 +93,11 @@ function M.safe_force_packadd_list(names)
   end
 end
 
+function M.starts_with(str, prefix)
+  if str == nil or prefix == nil then
+    return false
+  end
+  return string.sub(str, 1, string.len(prefix)) == prefix
+end
+
 return M

@@ -34,7 +34,8 @@
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     lz-n = {
-      url = "github:nvim-neorocks/lz.n";
+      # url = "github:nvim-neorocks/lz.n";
+      url = "github:BirdeeHub/lz.n";
       inputs.nixpkgs.follows = "nixpkgsNV";
     };
     "plugins-render-markdown" = {

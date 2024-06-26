@@ -1,7 +1,7 @@
-local trigger_load = require("lz.n").trigger_load
-
 ---@type table<string, function>
 local states = {}
+
+local trigger_load = require("lz.n").trigger_load
 
 ---@param mod_path string
 ---@return boolean
@@ -70,7 +70,6 @@ function M.add(plugin)
   states[plugin.name] = item
 end
 
--- NOTE: run require overload
 local oldrequire = require
 require('_G').require = function (mod_path)
   local ok, value = pcall(oldrequire, mod_path)

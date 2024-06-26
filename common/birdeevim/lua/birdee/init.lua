@@ -3,8 +3,9 @@ require('nixCatsUtils').setup {
 }
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+require('lz.n').register_handler(require("birdee.on_require"))
+require("lz.n").load({"plenary.nvim", on_require = {"plenary", "luassert", "say"}})
 vim.notify = require("notify")
--- require('lz.n').register_handler(require("birdee.on_require"))
 require("birdee.opts")
 require("birdee.keymaps")
 require("birdee.clippy")
