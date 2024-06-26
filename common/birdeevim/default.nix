@@ -422,7 +422,6 @@
     noAInvim = { pkgs, ... }@misc: {
       settings = birdeevim_settings misc // {
         wrapRc = true;
-        withNodeJs = true;
         extraName = "noAInvim";
         aliases = [ "vi" "vim" ];
       };
