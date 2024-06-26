@@ -436,6 +436,7 @@
         debug = true;
         customPlugins = true;
         general = true;
+        nix = true;
         web = true;
         go = true;
         SQL = true;
