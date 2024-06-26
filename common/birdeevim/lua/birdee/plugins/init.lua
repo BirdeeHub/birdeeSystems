@@ -91,7 +91,7 @@ require('lz.n').load({
 --   end,
 -- })
 
-if nixCats('web') then
+if nixCats('otter') then
   require('lz.n').load({
     "otter.nvim",
     -- cmd = { "" },

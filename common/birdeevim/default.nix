@@ -187,7 +187,7 @@
         neorg
         neorg-telescope
       ];
-      web = with pkgs.vimPlugins; [
+      otter = with pkgs.vimPlugins; [
         otter-nvim
       ];
       go = with pkgs.vimPlugins; [
@@ -324,6 +324,7 @@
 
   # just to select the right thing out of bitwarden. 
   # Don't get excited its just a UUID
+  # Also they arent valid anymore
   bitwardenItemIDs = {
     codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
     cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
@@ -353,27 +354,28 @@
   birdeevim_categories = { pkgs, ... }@misc: {
     inherit bitwardenItemIDs;
     bitwarden = true;
+    AI = true;
+    vimagePreview = true;
+    lspDebugMode = false;
     generalBuildInputs = true;
     theme = true;
     colorscheme = "onedark";
     lz-n = true;
-    bash = true;
     debug = true;
     customPlugins = true;
     general = true;
+    otter = true;
+    bash = true;
     neonixdev = true;
-    AI = true;
     java = true;
     javaExtras = extraJavaItems pkgs;
     web = true;
-    vimagePreview = true;
     go = true;
     kotlin = true;
     python = true;
     rust = true;
     SQL = true;
     C = true;
-    lspDebugMode = false;
   };
 
   packageDefinitions = {
@@ -387,6 +389,7 @@
       categories = {
         inherit bitwardenItemIDs;
         notes = true;
+        otter = true;
         bitwarden = true;
         generalBuildInputs = true;
         customPlugins = true;
@@ -417,6 +420,25 @@
         test = true;
         # notes = true;
         lspDebugMode = true;
+      };
+    };
+    vigo = { pkgs, ... }@misc: {
+      settings = birdeevim_settings misc // {
+        wrapRc = true;
+        extraName = "vigo";
+        # aliases = [ "vigo" ];
+      };
+      categories = {
+        generalBuildInputs = true;
+        theme = true;
+        colorscheme = "onedark";
+        lz-n = true;
+        debug = true;
+        customPlugins = true;
+        general = true;
+        web = true;
+        go = true;
+        SQL = true;
       };
     };
     noAInvim = { pkgs, ... }@misc: {
