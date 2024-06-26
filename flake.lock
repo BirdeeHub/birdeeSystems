@@ -800,17 +800,16 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
+        "dirtyRev": "2a4fd37b572b25b2db1ef39127882d2de49a7feb-dirty",
+        "dirtyShortRev": "2a4fd37-dirty",
         "lastModified": 1719390093,
-        "narHash": "sha256-ZGL1GimQNsN8l5RdNoSr1f/HqRyKCoYPVMjy51kRuhA=",
-        "owner": "BirdeeHub",
-        "repo": "lz.n",
-        "rev": "2a4fd37b572b25b2db1ef39127882d2de49a7feb",
-        "type": "github"
+        "narHash": "sha256-7hj11wkCKv/eTX4IWEmqMuiheVU6FmBtlTgVoYAAPvM=",
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lz.n"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "repo": "lz.n",
-        "type": "github"
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lz.n"
       }
     },
     "minesweeper": {
