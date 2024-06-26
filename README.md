@@ -56,7 +56,7 @@ rather than trying to handle EVERYTHING about it from home manager
 ---
 
 - desktop manager: none but I have like half of xfce including the power manager
-- [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim
+- [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim. You can run it with `nix shell github:BirdeeHub/birdeeSystems#birdeeVim` and then typing vi, vim, or birdeeVim
 - [browser:](./common/firefox) firefox
 - [file manager:](./common/ranger/default.nix) ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
 - [terminal:](./common/term/alacritty/default.nix) alacritty
