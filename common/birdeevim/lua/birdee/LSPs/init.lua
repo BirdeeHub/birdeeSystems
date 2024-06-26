@@ -252,7 +252,7 @@ require('lz.n').load({
       list[#list + 1] = "mason.nvim"
       list[#list + 1] = "mason-lspconfig"
     end
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     if nixCats('C') then

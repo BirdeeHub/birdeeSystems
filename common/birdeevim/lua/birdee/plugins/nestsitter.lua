@@ -10,7 +10,7 @@ require('lz.n').load({
       name,
       "nvim-treesitter-textobjects",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
 

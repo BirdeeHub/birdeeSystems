@@ -14,7 +14,7 @@ require('lz.n').load({
       "vim-rhubarb",
       "diffview.nvim",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
 })
 
@@ -33,7 +33,7 @@ require('lz.n').load({
       "nvim-tinygit",
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require("dressing").setup({

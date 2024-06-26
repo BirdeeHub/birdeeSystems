@@ -14,7 +14,7 @@ require('lz.n').load({
       "otter.nvim",
       "codeium.nvim",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
     local sourcelist = {
       "cmp-buffer",
       "cmp-cmdline",

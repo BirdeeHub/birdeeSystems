@@ -71,7 +71,15 @@ function M.authTerminal()
   return session
 end
 
-function M.safe_packadd_list(names)
+function M.safe_packadd(plugin_names)
+  local names
+  if type(plugin_names) == 'table' then
+    names = plugin_names
+  elseif type(plugin_names) == 'string' then
+    names = { plugin_names }
+  else
+    return
+  end
   for _, name in ipairs(names) do
     if type(name) == 'string' then
       local ok, err = pcall(vim.cmd, 'packadd ' .. name)
@@ -82,7 +90,15 @@ function M.safe_packadd_list(names)
   end
 end
 
-function M.safe_force_packadd_list(names)
+function M.safe_force_packadd(plugin_names)
+  local names
+  if type(plugin_names) == 'table' then
+    names = plugin_names
+  elseif type(plugin_names) == 'string' then
+    names = { plugin_names }
+  else
+    return
+  end
   for _, name in ipairs(names) do
     if type(name) == 'string' then
       local ok, err = pcall(vim.cmd, 'packadd! ' .. name)

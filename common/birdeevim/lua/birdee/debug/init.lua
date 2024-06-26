@@ -13,7 +13,7 @@ require('lz.n').load({
       "nvim-dap-go",
       "nvim-dap-python",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     local dap = require 'dap'

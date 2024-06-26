@@ -51,7 +51,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
 })
 
@@ -66,7 +66,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require("todo-comments").setup({ signs = false })
@@ -84,7 +84,7 @@ require('lz.n').load({
 --     local list = {
 --       name,
 --     }
---     require("birdee.utils").safe_packadd_list(list)
+--     require("birdee.utils").safe_packadd(list)
 --   end,
 --   after = function (plugin)
 --     require('Comment').setup()
@@ -105,7 +105,7 @@ if nixCats('web') then
 	"nvim-treesitter",
 	name,
       }
-      require("birdee.utils").safe_packadd_list(list)
+      require("birdee.utils").safe_packadd(list)
     end,
     after = function (plugin)
       local otter = require 'otter'
@@ -146,7 +146,7 @@ require('lz.n').load({
       "vim-dadbod-ui",
       "vim-dadbod-completion",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
   end,
@@ -163,7 +163,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require('visual-whitespace').setup({
@@ -187,7 +187,7 @@ require('lz.n').load({
       "nvim-treesitter",
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require('render-markdown').setup({})
@@ -210,7 +210,7 @@ if (nixCats('general.markdown')) then
       local list = {
 	name,
       }
-      require("birdee.utils").safe_packadd_list(list)
+      require("birdee.utils").safe_packadd(list)
     end,
     before = function (plugin)
       vim.g.mkdp_auto_close = 0
@@ -235,7 +235,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require("ibl").setup()
@@ -253,7 +253,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require('nvim-surround').setup()
@@ -274,7 +274,7 @@ require('lz.n').load({
       "nvim-treesitter",
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     local tsj = require('treesj')
@@ -319,7 +319,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     vim.g.undotree_WindowLayout = 1
@@ -338,7 +338,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     -- Highlights unique characters for f/F and t/T motions
@@ -360,7 +360,7 @@ require('lz.n').load({
       "nvim-treesitter",
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require('hlargs').setup({
@@ -383,7 +383,7 @@ require('lz.n').load({
     local list = {
       name,
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require("nvim-highlight-colors").setup {
@@ -423,7 +423,7 @@ if nixCats('neonixdev') then
       local list = {
 	name,
       }
-      require("birdee.utils").safe_packadd_list(list)
+      require("birdee.utils").safe_packadd(list)
     end,
     after = function (plugin)
       require('lazydev').setup({

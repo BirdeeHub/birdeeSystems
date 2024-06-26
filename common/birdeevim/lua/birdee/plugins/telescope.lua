@@ -50,7 +50,7 @@ require('lz.n').load({
       "telescope-git-file-history",
       "telescope-ui-select.nvim",
     }
-    require("birdee.utils").safe_packadd_list(list)
+    require("birdee.utils").safe_packadd(list)
   end,
   after = function (plugin)
     require('telescope').setup {
