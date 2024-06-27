@@ -107,8 +107,9 @@
     common = import ./common { inherit inputs pkgs; };
     home-modules = common { homeModule = true; };
     system-modules = common { homeModule = false; };
-  in {
-    packages = home-modules.birdeeVim.packages;
+  in (forEachSystem (system: {
+    packages = home-modules.birdeeVim.packages.${system};
+    })) // {
     inherit home-modules system-modules;
     myOverlays = overlays;
     homeConfigurations = {
@@ -254,6 +255,5 @@
       PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
     };
     templates = import ./templates inputs;
-  } // (forEachSystem (system: { 
-    }));
+  };
 }
