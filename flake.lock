@@ -800,17 +800,16 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1719403942,
-        "narHash": "sha256-p7ieyoD9Nv69vsXN/moH+vQK+TyD/k7Dwe9hOEet4ag=",
-        "owner": "nvim-neorocks",
-        "repo": "lz.n",
-        "rev": "4ef22dd57ba1fbe51b411655ddd7821e7b6ec197",
-        "type": "github"
+        "dirtyRev": "2a4fd37b572b25b2db1ef39127882d2de49a7feb-dirty",
+        "dirtyShortRev": "2a4fd37-dirty",
+        "lastModified": 1719390093,
+        "narHash": "sha256-qm/6Mfc2FF9qM1Uagy0RiMM8qahSDahCesfJlM+j13c=",
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lz.n"
       },
       "original": {
-        "owner": "nvim-neorocks",
-        "repo": "lz.n",
-        "type": "github"
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lz.n"
       }
     },
     "minesweeper": {
