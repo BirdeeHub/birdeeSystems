@@ -144,9 +144,9 @@ require('lz.n').load({
     local list = {
       name,
       "vim-dadbod-ui",
-      "vim-dadbod-completion",
     }
     require("birdee.utils").safe_packadd(list)
+    require("birdee.utils").packadd_with_after_dirs("vim-dadbod-completion")
   end,
   after = function (plugin)
   end,
