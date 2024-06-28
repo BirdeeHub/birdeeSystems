@@ -6,21 +6,21 @@ local trigger_load = require("lz.n").trigger_load
 ---@param mod_path string
 ---@return boolean
 local function call(mod_path)
-  local found = false
   local plugins = {}
   for _, has in pairs(states) do
     local plugin = has(mod_path)
     if plugin ~= nil then
       table.insert(plugins, plugin)
-      found = true
     end
   end
   if plugins ~= {} then
     trigger_load(plugins)
+    return true
   end
-  return found
+  return false
 end
 
+-- this is probably the most naive way to check if this is a submodule or not
 local function starts_with(str, prefix)
   if str == nil or prefix == nil then
     return false
@@ -59,7 +59,7 @@ function M.add(plugin)
   end
   ---@param mod_path string
   ---@return lz_n_plugin|nil
-  local function item(mod_path)
+  states[plugin.name] = function(mod_path)
     for _, v in ipairs(mod_paths) do
       if starts_with(mod_path, v) then
         return plugin
@@ -67,8 +67,10 @@ function M.add(plugin)
     end
     return nil
   end
-  states[plugin.name] = item
 end
+
+-- NOTE: the thing that calls the load...
+-- replacing the global require function with one that calls our call function
 
 local oldrequire = require
 require('_G').require = function (mod_path)
@@ -76,8 +78,8 @@ require('_G').require = function (mod_path)
   if ok then
     return value
   end
-  package.loaded[mod_path] = nil
-  if call(mod_path) then
+  if call(mod_path) == true then
+    package.loaded[mod_path] = nil
     return oldrequire(mod_path)
   end
   error(value)
