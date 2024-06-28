@@ -12,3 +12,5 @@ Keep in mind its going to download a lot of lsps and plugins.
 You should use the noAI one because otherwise it would throw an error because you dont have my key and also it wont download bitwarden cli for you.
 
 Also, I can't claim every language setup works perfectly or anything. Especially kotlin. This is not a distribution its mine.
+
+(completion keys are h = `<esc>` j = `next` k = `previous` l = `accept`)
