@@ -379,30 +379,6 @@
   };
 
   packageDefinitions = {
-    notesVim = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
-        configDirName = "birdeevim";
-        withRuby = false;
-        extraName = "notesVim";
-        aliases = [ "note" ];
-      };
-      categories = {
-        inherit bitwardenItemIDs;
-        notes = true;
-        otter = true;
-        bitwarden = true;
-        generalBuildInputs = true;
-        customPlugins = true;
-        general = true;
-        neonixdev = true;
-        vimagePreview = true;
-        AI = true;
-        lspDebugMode = false;
-        lz-n = true;
-        theme = true;
-        colorscheme = "tokyonight";
-      };
-    };
     birdeeVim = args: {
       settings =  birdeevim_settings args // {
         wrapRc = true;
@@ -452,6 +428,30 @@
         AI = false;
         bitwardenItemIDs = false;
         bitwarden = false;
+      };
+    };
+    notesVim = { pkgs, ... }@misc: {
+      settings = birdeevim_settings misc // {
+        configDirName = "birdeevim";
+        withRuby = false;
+        extraName = "notesVim";
+        aliases = [ "note" ];
+      };
+      categories = {
+        inherit bitwardenItemIDs;
+        notes = true;
+        otter = true;
+        bitwarden = true;
+        generalBuildInputs = true;
+        customPlugins = true;
+        general = true;
+        neonixdev = true;
+        vimagePreview = true;
+        AI = true;
+        lspDebugMode = false;
+        lz-n = true;
+        theme = true;
+        colorscheme = "tokyonight";
       };
     };
     minimalVim = { pkgs, ... }@misc: {
