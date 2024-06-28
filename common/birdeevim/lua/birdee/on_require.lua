@@ -78,8 +78,8 @@ require('_G').require = function (mod_path)
   if ok then
     return value
   end
+  package.loaded[mod_path] = nil
   if call(mod_path) == true then
-    package.loaded[mod_path] = nil
     return oldrequire(mod_path)
   end
   error(value)
