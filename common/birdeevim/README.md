@@ -13,4 +13,4 @@ You should use the noAI one because otherwise it would throw an error because yo
 
 Also, I can't claim every language setup works perfectly or anything. Especially kotlin. This is not a distribution its mine.
 
-(completion keys are h = `<esc>` j = `next` k = `previous` l = `accept`)
+(completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`)
