@@ -167,49 +167,49 @@
       ];
     };
 
-    optionalPlugins = {
-      SQL = with pkgs.vimPlugins; [
+    optionalPlugins = with pkgs.vimPlugins; {
+      SQL = [
         vim-dadbod
         vim-dadbod-ui
         vim-dadbod-completion
       ];
-      vimagePreview = with pkgs.vimPlugins; [
+      vimagePreview = [
         image-nvim
       ];
-      C = with pkgs.vimPlugins; [
+      C = [
         vim-cmake
         clangd_extensions-nvim
       ];
-      python = with pkgs.vimPlugins; [
+      python = [
         nvim-dap-python
       ];
-      notes = with pkgs.vimPlugins; [
+      notes = [
         neorg
         neorg-telescope
       ];
-      otter = with pkgs.vimPlugins; [
+      otter = [
         otter-nvim
       ];
-      go = with pkgs.vimPlugins; [
+      go = [
         nvim-dap-go
       ];
-      java = with pkgs.vimPlugins; [
+      java = [
         nvim-jdtls
       ];
-      neonixdev = with pkgs.vimPlugins; [
+      neonixdev = [
         lazydev-nvim
       ];
       AI = [
-        pkgs.vimPlugins.codeium-nvim
+        codeium-nvim
         inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
       ];
-      debug = with pkgs.vimPlugins; [
+      debug = [
         nvim-dap
         nvim-dap-ui
         nvim-dap-virtual-text
       ];
-      general = with pkgs.vimPlugins; {
-        markdown = with pkgs.vimPlugins; [
+      general = {
+        markdown = [
           markdown-preview-nvim
         ];
         StdPlugOver = with pkgs.neovimPlugins; [
@@ -233,10 +233,10 @@
           cmp-cmdline-history
           lspkind-nvim
         ];
-        git = [
-          pkgs.neovimPlugins.telescope-git-file-history
-          pkgs.neovimPlugins.fugit2-nvim
-          pkgs.neovimPlugins.nvim-tinygit
+        git = with pkgs.neovimPlugins; [
+          telescope-git-file-history
+          fugit2-nvim
+          nvim-tinygit
           dressing-nvim
           diffview-nvim
           vim-rhubarb
