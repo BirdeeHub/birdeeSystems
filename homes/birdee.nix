@@ -198,6 +198,8 @@ in {
 
     clisp
 
+    man-pages
+    man-pages-posix
     _7zz
     # flatpak
     # gnome.gnome-software

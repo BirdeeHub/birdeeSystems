@@ -173,6 +173,7 @@ in {
     };
   };
   fonts.fontDir.enable = true;
+  documentation.dev.enable = true;
 
   virtualisation.docker.enable = true;
 
@@ -220,6 +221,8 @@ in {
     xsel
     git
     ntfs3g
+    man-pages
+    man-pages-posix
   ]);
 
   # Some programs need SUID wrappers, can be configured further or are
