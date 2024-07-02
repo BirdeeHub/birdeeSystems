@@ -221,7 +221,7 @@ in {
     wget
     openssl
     gimp
-    spotify
+    # spotify
     zsh
     tree
     fd

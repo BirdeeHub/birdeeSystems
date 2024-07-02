@@ -126,6 +126,9 @@
     ntfs3g
     findutils
     exfat
+    clamav
+    chkrootkit
+    lynis
     exfatprogs
     _7zz
     lshw

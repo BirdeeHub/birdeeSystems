@@ -34,37 +34,37 @@
       };
     };
 
-    lspsAndRuntimeDeps = {
+    lspsAndRuntimeDeps = with pkgs; {
       general = {
-        core = with pkgs; [
+        core = [
           universal-ctags
           ripgrep
           fd
           ast-grep
         ];
-        other = with pkgs; [
+        other = [
           sqlite
         ];
-        markdown = with pkgs; [
+        markdown = [
           marksman
           python311Packages.pylatexenc
         ];
       };
-      bitwarden = with pkgs; [
+      bitwarden = [
         bitwarden-cli
       ];
-      AI = [
-        inputs.codeium.packages.${pkgs.system}.codeium-lsp
-        inputs.sg-nvim.packages.${pkgs.system}.default
+      AI = with inputs; [
+        codeium.packages.${system}.codeium-lsp
+        sg-nvim.packages.${system}.default
       ];
-      java = with pkgs; [
+      java = [
         jdt-language-server
       ] ++ (if categories ? kotlin && categories.kotlin then [] else []);
-      kotlin = with pkgs; [
+      kotlin = [
         kotlin-language-server
         ktlint
       ] ++ (if categories ? java && categories.java then [] else []);
-      go = with pkgs; [
+      go = [
         gopls
         delve
         golint
@@ -72,55 +72,55 @@
         go-tools
         go
       ];
-      elixir = with pkgs; [
+      elixir = [
         elixir-ls
       ];
       web = {
         templ = with inputs; [
-          templ.packages.${pkgs.system}.templ
+          templ.packages.${system}.templ
         ];
-        tailwindcss = with pkgs; [
+        tailwindcss = [
           tailwindcss-language-server
         ];
-        HTMX = with pkgs; [
+        HTMX = [
           htmx-lsp
         ];
-        HTML = with pkgs; [
+        HTML = [
           vscode-langservers-extracted
         ];
-        JS = with pkgs.nodePackages; [
+        JS = with nodePackages; [
           typescript-language-server
           eslint
           prettier
         ];
       };
-      rust = with pkgs; [
+      rust = [
         rust-analyzer
       ];
-      lua = with pkgs; [
+      lua = [
         lua-language-server
       ];
-      nix = with pkgs; [
+      nix = [
         nix-doc
         nil
         nixd
       ];
-      neonixdev = with pkgs; [
+      neonixdev = [
         nix-doc
         nil
         lua-language-server
         nixd
       ];
-      vimagePreview = with pkgs; [
+      vimagePreview = [
         imagemagick
         ueberzugpp
       ];
-      bash = with pkgs; [
+      bash = [
         nodePackages.bash-language-server
         # bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
         # pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
-      python = with pkgs.python311Packages; [
+      python = with python311Packages; [
         # jedi-language-server
         python-lsp-server
         debugpy
@@ -132,9 +132,9 @@
         # yapf
         # autopep8
       ];
-      notes = with pkgs; [
+      notes = [
       ];
-      C = with pkgs; [
+      C = [
         clang-tools
         valgrind
         cmake-language-server
@@ -142,28 +142,28 @@
         cmake
         cmake-format
       ];
-      SQL = with pkgs; [
+      SQL = [
       ];
     };
 
-    startupPlugins = {
-      inherit (pkgs.vimPlugins) lz-n;
-      theme = with pkgs.vimPlugins; builtins.getAttr categories.colorscheme {
+    startupPlugins = with pkgs.vimPlugins; {
+      inherit lz-n;
+      theme = builtins.getAttr categories.colorscheme {
         "onedark" = onedark-nvim;
         "catppuccin" = catppuccin-nvim;
         "catppuccin-mocha" = catppuccin-nvim;
         "tokyonight" = tokyonight-nvim;
         "tokyonight-day" = tokyonight-nvim;
       };
-      general = with pkgs; [
-        neovimPlugins.large_file
-        vimPlugins.oil-nvim
-        vimPlugins.vim-repeat
-        neovimPlugins.nvim-luaref
-        vimPlugins.nvim-nio
-        vimPlugins.nui-nvim
-        vimPlugins.nvim-web-devicons
-        vimPlugins.nvim-notify
+      general = with pkgs.neovimPlugins; [
+        large_file
+        oil-nvim
+        vim-repeat
+        nvim-luaref
+        nvim-nio
+        nui-nvim
+        nvim-web-devicons
+        nvim-notify
       ];
     };
 
@@ -208,11 +208,11 @@
         nvim-dap-ui
         nvim-dap-virtual-text
       ];
-      general = {
+      general = with pkgs.neovimPlugins; {
         markdown = [
           markdown-preview-nvim
         ];
-        StdPlugOver = with pkgs.neovimPlugins; [
+        StdPlugOver = [
           grapple
           hlargs
           visual-whitespace
@@ -233,7 +233,7 @@
           cmp-cmdline-history
           lspkind-nvim
         ];
-        git = with pkgs.neovimPlugins; [
+        git = [
           telescope-git-file-history
           fugit2-nvim
           nvim-tinygit
@@ -271,7 +271,7 @@
           vim-sleuth
         ];
         other = [
-          pkgs.neovimPlugins.img-clip
+          img-clip
           nvim-highlight-colors
           nvim-neoclip-lua
           which-key-nvim
