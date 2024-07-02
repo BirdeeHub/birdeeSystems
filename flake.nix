@@ -11,7 +11,7 @@
     nixpkgsVB.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgsNV";
     };
     flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/nur";

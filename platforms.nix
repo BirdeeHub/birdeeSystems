@@ -1,7 +1,7 @@
 with builtins; rec {
   # flake-utils' main function, because its all I used
   # Builds a map from <attr>=value to <attr>.<system>=value for each system
-  eachSystem = systems: f:
+  eachSystem = with builtins; systems: f:
     let
       # Merge together the outputs for all systems.
       op = attrs: system:
