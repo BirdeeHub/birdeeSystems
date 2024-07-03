@@ -347,8 +347,8 @@
     vimAlias = false;
     unwrappedCfgPath = "/home/birdee/birdeeSystems/common/birdeevim";
     # nvimSRC = inputs.neovim-src;
-    neovim-unwrapped = pkgs.internalvim.nvim;
-    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = pkgs.internalvim.nvim;
+    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
     # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   };
   birdeevim_categories = { pkgs, ... }@misc: {
