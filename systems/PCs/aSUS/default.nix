@@ -61,7 +61,6 @@ in {
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau
-    libGL
   ];
   services.asusd.enable = true;
   services.asusd.enableUserService = true;
