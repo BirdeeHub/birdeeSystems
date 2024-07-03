@@ -104,12 +104,14 @@
         nix-doc
         nil
         nixd
+        nixfmt-rfc-style
       ];
       neonixdev = [
         nix-doc
         nil
         lua-language-server
         nixd
+        nixfmt-rfc-style
       ];
       vimagePreview = [
         imagemagick

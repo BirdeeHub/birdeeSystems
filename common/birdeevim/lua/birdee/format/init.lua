@@ -17,6 +17,7 @@ require('lz.n').load({
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
+        nix = { "nixfmt" },
         go = { "gofmt", "golint" },
         templ = { "templ" },
         -- Conform will run multiple formatters sequentially
