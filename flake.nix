@@ -101,12 +101,15 @@
     common = import ./common { inherit inputs; };
     home-modules = common { homeModule = true; };
     system-modules = common { homeModule = false; };
-  in (forEachSystem (system: let
-    pkgs = import inputs.nixpkgs {
-      inherit system overlays;
-      config.allowUnfree = true;
-    };
   in {
+    inherit home-modules system-modules;
+    myOverlays = overlays;
+    diskoConfigurations = {
+      PC_sda_swap = import ./disko/PCs/sda_swap.nix;
+      PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
+    };
+    templates = import ./templates inputs;
+  } // (forEachSystem (system: {
     packages = home-modules.birdeeVim.packages.${system} // {
       homeConfigurations = let
         pkgs = import inputs.nixpkgs {
@@ -265,14 +268,5 @@
         };
       };
     };
-  })) // {
-    inherit home-modules system-modules;
-    myOverlays = overlays;
-    
-    diskoConfigurations = {
-      PC_sda_swap = import ./disko/PCs/sda_swap.nix;
-      PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
-    };
-    templates = import ./templates inputs;
-  };
+  }));
 }
