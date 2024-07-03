@@ -1166,6 +1166,22 @@
         "type": "github"
       }
     },
+    "nixpkgsLocked": {
+      "locked": {
+        "lastModified": 1718149104,
+        "narHash": "sha256-Ds1QpobBX2yoUDx9ZruqVGJ/uQPgcXoYuobBguyKEh8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e913ae340076bbb73d9f4d3d065c2bca7caafb16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e913ae340076bbb73d9f4d3d065c2bca7caafb16",
+        "type": "github"
+      }
+    },
     "nixpkgsNV": {
       "locked": {
         "lastModified": 1719379843,
@@ -1179,22 +1195,6 @@
         "owner": "nixos",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgsVB": {
-      "locked": {
-        "lastModified": 1718149104,
-        "narHash": "sha256-Ds1QpobBX2yoUDx9ZruqVGJ/uQPgcXoYuobBguyKEh8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e913ae340076bbb73d9f4d3d065c2bca7caafb16",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e913ae340076bbb73d9f4d3d065c2bca7caafb16",
         "type": "github"
       }
     },
@@ -1733,8 +1733,8 @@
         "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_10",
+        "nixpkgsLocked": "nixpkgsLocked",
         "nixpkgsNV": "nixpkgsNV",
-        "nixpkgsVB": "nixpkgsVB",
         "nur": "nur",
         "plugins-code-compass": "plugins-code-compass",
         "plugins-fugit2-nvim": "plugins-fugit2-nvim",

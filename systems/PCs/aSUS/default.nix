@@ -7,7 +7,7 @@ in {
   imports = with system-modules; [
     inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
     inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
     ../PCs.nix
   ];
@@ -57,7 +57,7 @@ in {
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   #Nouveau doesn't work at all on this model.
-  boot.kernelParams = [ "nouveau.modeset=0" ];
+  boot.kernelParams = [ "nouveau.modeset=0" /* "nvidia-drm.modeset=1" */ ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau
