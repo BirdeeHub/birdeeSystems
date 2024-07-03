@@ -7,7 +7,7 @@ in {
     shell.zsh
     shell.fish
     firefox
-    birdeeVim.module
+    birdeeVim.homeModule
     ranger
     thunar
     i3

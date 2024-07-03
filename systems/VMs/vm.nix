@@ -6,7 +6,7 @@
 in {
   imports = with system-modules; [
     i3
-    birdeeVim.module
+    birdeeVim.nixosModules.default
     term.alacritty
     shell.bash
     shell.zsh

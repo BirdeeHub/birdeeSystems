@@ -86,7 +86,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
         rm $cache
       '')}'';
       i3status = (pkgs.writeShellScriptBin "i3status" ''
-        exec ${pkgs.i3status}/bin/i3status --config ${builtins.toFile "i3bar" (builtins.readFile ./i3bar)} "$@"
+        exec ${pkgs.i3status}/bin/i3status --config ${pkgs.writeText "i3bar" (pkgs.callPackage ./i3bar.nix {})} "$@"
       '');
       i3lock = (pkgs.writeShellScriptBin "i3lock" ''
         exec ${pkgs.i3lock}/bin/i3lock -t -i ${cfg.lockerBackground} "$@"

@@ -1,5 +1,4 @@
-{ inputs, pkgs, ... }@args: { homeModule ? false, ... }@conditions: let
-  birdeeVim = import ./birdeevim { inherit inputs; };
+{ inputs, ... }@args: { homeModule ? false, ... }@conditions: let
   homeOnly = path:
     (if homeModule
       then path
@@ -15,14 +14,7 @@ in {
   firefox = homeOnly ./firefox/homeFox.nix;
   thunar = homeOnly ./thunar;
   ranger = import ./ranger homeModule;
-  birdeeVim = {
-    module= if homeModule
-      then birdeeVim.homeModule
-      else birdeeVim.nixosModules.default;
-    inherit (birdeeVim) packages utils overlays
-      devShell customPackager dependencyOverlays
-      categoryDefinitions packageDefinitions;
-  };
+  birdeeVim = import ./birdeevim { inherit inputs; };
   i3 = import ./i3 homeModule;
   i3MonMemory = import ./i3MonMemory homeModule;
   lightdm = systemOnly ./lightdm;
@@ -30,7 +22,7 @@ in {
     alacritty = import ./term/alacritty homeModule;
     tmux = import ./term/tmux homeModule;
   };
-  shell = import ./term/shell (args // conditions);
+  shell = import ./term/shell homeModule;
   util = import ./util;
   ollama = systemOnly (import ./ollama homeModule);
   # ollama = import ./ollama homeModule;
