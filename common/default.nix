@@ -24,6 +24,4 @@ in {
   };
   shell = import ./term/shell homeModule;
   util = import ./util;
-  ollama = systemOnly (import ./ollama homeModule);
-  # ollama = import ./ollama homeModule;
 }

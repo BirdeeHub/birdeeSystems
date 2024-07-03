@@ -14,7 +14,6 @@ in {
     lightdm
     i3MonMemory
     LD
-    ollama
   ];
 
   birdeeVim = {
@@ -45,14 +44,16 @@ in {
     lightdm.enable = true;
     i3MonMemory.enable = true;
     LD.enable = true;
-    ollama.enable = true;
-    ollama.acceleration = "cuda";
   };
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
 
   services.flatpak.enable = true;
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
 
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
   virtualisation.libvirtd.enable = true;
