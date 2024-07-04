@@ -114,7 +114,14 @@
     };
     templates = import ./templates inputs;
   } // (forEachSystem (system: {
-    packages = home-modules.birdeeVim.packages.${system} // {
+    packages = (let
+      pkgs = import inputs.nixpkgs {
+        inherit system overlays;
+        config.allowUnfree = true;
+      };
+    in {
+      inherit (pkgs) dep-tree;
+    }) // home-modules.birdeeVim.packages.${system} // {
       homeConfigurations = let
         pkgs = import inputs.nixpkgs {
           inherit system overlays;
