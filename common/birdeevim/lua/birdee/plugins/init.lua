@@ -91,46 +91,45 @@ require('lz.n').load({
 --   end,
 -- })
 
-if nixCats('otter') then
-  require('lz.n').load({
-    "otter.nvim",
-    -- cmd = { "" },
-    event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
-    load = function (name)
-      local list = {
-	"nvim-lspconfig",
-	"nvim-treesitter",
-	name,
-      }
-      require("birdee.utils").safe_packadd(list)
-    end,
-    after = function (plugin)
-      local otter = require 'otter'
-      otter.setup {
-	lsp = {
-	  hover = {
-	    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-	  },
+require('lz.n').load({
+  "otter.nvim",
+  enabled = require('nixCatsUtils').enableForCategory('otter'),
+  -- cmd = { "" },
+  event = "DeferredUIEnter",
+  -- ft = "",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      "nvim-lspconfig",
+      "nvim-treesitter",
+      name,
+    }
+    require("birdee.utils").safe_packadd(list)
+  end,
+  after = function (plugin)
+    local otter = require 'otter'
+    otter.setup {
+      lsp = {
+	hover = {
+	  border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 	},
-	buffers = {
-	  -- if set to true, the filetype of the otterbuffers will be set.
-	  -- otherwise only the autocommand of lspconfig that attaches
-	  -- the language server will be executed without setting the filetype
-	  set_filetype = true,
-	  -- write <path>.otter.<embedded language extension> files
-	  -- to disk on save of main buffer.
-	  -- usefule for some linters that require actual files
-	  -- otter files are deleted on quit or main buffer close
-	  write_to_disk = false,
-	},
-	strip_wrapping_quote_characters = { "'", '"', "`" },
-      }
-    end,
-  })
-end
+      },
+      buffers = {
+	-- if set to true, the filetype of the otterbuffers will be set.
+	-- otherwise only the autocommand of lspconfig that attaches
+	-- the language server will be executed without setting the filetype
+	set_filetype = true,
+	-- write <path>.otter.<embedded language extension> files
+	-- to disk on save of main buffer.
+	-- usefule for some linters that require actual files
+	-- otter files are deleted on quit or main buffer close
+	write_to_disk = false,
+      },
+      strip_wrapping_quote_characters = { "'", '"', "`" },
+    }
+  end,
+})
 
 require('lz.n').load({
   "vim-dadbod",
@@ -198,25 +197,24 @@ vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true,
 vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
 vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
   { noremap = true, desc = 'markdown preview toggle' })
-if (nixCats('general.markdown')) then
-  require('lz.n').load({
-    "markdown-preview.nvim",
-    -- cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
-    -- event = "",
-    ft = "markdown",
-    -- keys = {"<leader>mp", "<leader>ms", "<leader>mt", },
-    -- colorscheme = "",
-    load = function (name)
-      local list = {
-	name,
-      }
-      require("birdee.utils").safe_packadd(list)
-    end,
-    before = function (plugin)
-      vim.g.mkdp_auto_close = 0
-    end,
-  })
-end
+require('lz.n').load({
+  "markdown-preview.nvim",
+  enabled = require('nixCatsUtils').enableForCategory('general.markdown'),
+  -- cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
+  -- event = "",
+  ft = "markdown",
+  -- keys = {"<leader>mp", "<leader>ms", "<leader>mt", },
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      name,
+    }
+    require("birdee.utils").safe_packadd(list)
+  end,
+  before = function (plugin)
+    vim.g.mkdp_auto_close = 0
+  end,
+})
 
 require('birdee.plugins.notes')
 
@@ -411,29 +409,27 @@ require('lz.n').load({
   end,
 })
 
-if nixCats('neonixdev') then
-  require('lz.n').load({
-    "lazydev.nvim",
-    enabled = nixCats('neonixdev') == true,
-    cmd = { "LazyDev" },
-    -- event = "DeferredUIEnter",
-    ft = "lua",
-    -- keys = "",
-    -- colorscheme = "",
-    load = function (name)
-      local list = {
-	name,
-      }
-      require("birdee.utils").safe_packadd(list)
-    end,
-    after = function (plugin)
-      require('lazydev').setup({
-	-- library = {
-	  -- See the configuration section for more details
-	  -- Load luvit types when the `vim.uv` word is found
-	  -- { path = "luvit-meta/library", words = { "vim%.uv" } },
-	-- },
-      })
-    end,
-  })
-end
+require('lz.n').load({
+  "lazydev.nvim",
+  enabled = require('nixCatsUtils').enableForCategory('neonixdev'),
+  cmd = { "LazyDev" },
+  -- event = "DeferredUIEnter",
+  ft = "lua",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    local list = {
+      name,
+    }
+    require("birdee.utils").safe_packadd(list)
+  end,
+  after = function (plugin)
+    require('lazydev').setup({
+      -- library = {
+	-- See the configuration section for more details
+	-- Load luvit types when the `vim.uv` word is found
+	-- { path = "luvit-meta/library", words = { "vim%.uv" } },
+      -- },
+    })
+  end,
+})
