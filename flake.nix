@@ -373,11 +373,11 @@
                   }
                 ];
               };
-              "installer" = nixpkgs.lib.nixosSystem {
+              "installer" = inputs.nixpkgsNV.lib.nixosSystem {
                 specialArgs = {
+                  nixpkgs = inputs.nixpkgsNV;
                   inherit
                     self
-                    nixpkgs
                     inputs
                     system-modules
                     overlays
