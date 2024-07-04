@@ -39,6 +39,10 @@
       # url = "git+file:/home/birdee/Projects/lz.n";
       inputs.nixpkgs.follows = "nixpkgsNV";
     };
+    "plugins-hlargs" = {
+      url = "github:m-demare/hlargs.nvim";
+      flake = false;
+    };
     "plugins-render-markdown" = {
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
