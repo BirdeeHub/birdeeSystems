@@ -13,7 +13,7 @@ in {
   LD = systemOnly ./LD;
   firefox = homeOnly ./firefox/homeFox.nix;
   thunar = homeOnly ./thunar;
-  ranger = import ./ranger homeModule;
+  ranger = import ./term/ranger homeModule;
   birdeeVim = import ./birdeevim { inherit inputs; };
   i3 = import ./i3 homeModule;
   i3MonMemory = import ./i3MonMemory homeModule;
