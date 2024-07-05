@@ -36,6 +36,34 @@ require('lz.n').load({
     luasnip.config.setup {}
     local lspkind = require('lspkind')
 
+    local key_mappings = {
+      ['<C-p>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'c', 'i' }),
+      ['<C-n>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'c', 'i' }),
+      ['<M-c>'] = cmp.mapping(cmp.mapping.complete({}), { 'c', 'i', 's' }),
+      ['<M-l>'] = cmp.mapping(cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }), { 'c', 'i', 's' }),
+      ['<M-j>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_locally_jumpable() then
+          luasnip.expand_or_jump()
+        else
+          fallback()
+        end
+      end, { 'c', 'i', 's' }),
+      ['<M-k>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'c', 'i', 's' }),
+    }
+
     cmp.setup {
       formatting = {
         format = lspkind.cmp_format {
@@ -61,33 +89,7 @@ require('lz.n').load({
           luasnip.lsp_expand(args.body)
         end,
       },
-      mapping = cmp.mapping.preset.insert {
-        ['<C-p>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-n>'] = cmp.mapping.scroll_docs(4),
-        ['<M-c>'] = cmp.mapping.complete {},
-        ['<M-l>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        },
-        ['<M-j>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<M-k>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-      },
+      mapping = cmp.mapping.preset.insert(key_mappings),
 
       sources = cmp.config.sources {
         -- The insertion order influences the priority of the sources
@@ -141,7 +143,7 @@ require('lz.n').load({
 
     -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline({ '/', '?' }, {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline(key_mappings),
       sources = {
         { name = 'nvim_lsp_document_symbol' --[[ , keyword_length = 3  ]] },
         { name = 'buffer' },
@@ -154,7 +156,7 @@ require('lz.n').load({
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline(key_mappings),
       sources = cmp.config.sources {
         { name = 'cmdline' },
         -- { name = 'cmdline_history' },
