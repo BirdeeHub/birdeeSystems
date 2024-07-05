@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+[ -n "$1" ] && hostname=$1 && shift 1 &&\
+[ -n "$1" ] && [ "$1" == "up" ] && isUp="-u" && shift 1
+
+git add . &&\
+export FLAKE=$(realpath .) &&\
+nix run nixpkgs#nh -- os switch -v $isUp -H "$hostname" -- --show-trace "$@" &&\
+git add .

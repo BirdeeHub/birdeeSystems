@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+[ -n "$1" ] && cfgOutput=$1 && shift 1 &&\
+[ -n "$1" ] && [ "$1" == "up" ] && isUp="-u" && shift 1
+
+git add . &&\
+nix run nixpkgs#nh -- home switch -v -b hm_bkp $isUp -c "$cfgOutput" -- --show-trace "$@" &&\
+git add .

@@ -176,6 +176,7 @@ in {
     btop
     graphviz-nox
     nix-output-monitor
+    nh
     nix-info
     direnv
     steam-run

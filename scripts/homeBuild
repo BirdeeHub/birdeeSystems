@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-git add . &&\
-[ -n $2 ] && [ "$2" == "-up" ] &&\
-nix flake update
-home-manager switch -b hm_bkp --show-trace --flake .#$1 &&\
-git add .

@@ -46,14 +46,12 @@ in {
     });
   in (if isHomeModule then {
     home.packages = with pkgs; [
-      xsel
       xclip
       findutils
       ranger
     ];
   } else {
     environment.systemPackages = with pkgs; [
-      xsel
       xclip
       findutils
       ranger

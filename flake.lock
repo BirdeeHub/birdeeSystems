@@ -1647,11 +1647,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1720169094,
-        "narHash": "sha256-1IA/GL7aPdoEQ8qA5gVzOTq67U/PHarkhwXmmkxdm1U=",
+        "lastModified": 1720197433,
+        "narHash": "sha256-kC6RnEZFVMHe+fTL0V4+QvXmRnpBrEG+8q4HCi+KAmo=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "8966131f6539d6dac01fe961702f3f948e77651e",
+        "rev": "6d6488e9ee482b67d1ad9aff902acd4d6b482fd3",
         "type": "github"
       },
       "original": {
@@ -1701,11 +1701,11 @@
     "plugins-fugit2-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1720141698,
-        "narHash": "sha256-8p+JsPZghud3QfcQiCAMgYzUFwBMyAbUfo7kRJCqRiY=",
+        "lastModified": 1720178940,
+        "narHash": "sha256-U9Ve7mgJlQwArgDBOXC2ezaaG7zIOJalLEl5Hyw2jMA=",
         "owner": "SuperBo",
         "repo": "fugit2.nvim",
-        "rev": "8c00326572281d737ddc3a22fcae087b2af6f23f",
+        "rev": "e8b262d3f974a301b9efae98a571e6c9e635ab16",
         "type": "github"
       },
       "original": {
