@@ -1,4 +1,4 @@
-{inputs, ... }@attrs: let
+{inputs, flake-path ? "/home/birdee/birdeeSystems", ... }@attrs: let
   inherit (inputs.nixCats) utils;
   nixpkgs = inputs.nixpkgsNV;
   luaPath = "${./.}";
@@ -347,7 +347,7 @@
     withPython3 = true;
     viAlias = false;
     vimAlias = false;
-    unwrappedCfgPath = "/home/birdee/birdeeSystems/common/birdeevim";
+    unwrappedCfgPath = "${flake-path}/common/birdeevim";
     # nvimSRC = inputs.neovim-src;
     # neovim-unwrapped = pkgs.internalvim.nvim;
     neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;

@@ -1,4 +1,4 @@
-{ inputs, ... }@args: { homeModule ? false, ... }@conditions: let
+{ inputs, flake-path, ... }@args: { homeModule ? false, ... }@conditions: let
   homeOnly = path:
     (if homeModule
       then path
@@ -14,7 +14,7 @@ in {
   firefox = homeOnly ./firefox/homeFox.nix;
   thunar = homeOnly ./thunar;
   ranger = import ./term/ranger homeModule;
-  birdeeVim = import ./birdeevim { inherit inputs; };
+  birdeeVim = import ./birdeevim { inherit inputs flake-path; };
   i3 = import ./i3 homeModule;
   i3MonMemory = import ./i3MonMemory homeModule;
   lightdm = systemOnly ./lightdm;

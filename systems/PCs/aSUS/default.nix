@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ config, pkgs, flake-path, lib, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
     inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
@@ -17,15 +17,15 @@ in {
 
   environment.shellAliases = {
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
-      export FLAKE="/home/birdee/birdeeSystems";
+      export FLAKE="${flake-path}";
       exec ${self}/scripts/system "$@"
     ''}'';
     me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
-      export FLAKE="/home/birdee/birdeeSystems";
+      export FLAKE="${flake-path}";
       exec ${self}/scripts/home "$@"
     ''}'';
     me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
-      export FLAKE="/home/birdee/birdeeSystems";
+      export FLAKE="${flake-path}";
       exec ${self}/scripts/both "$@"
     ''}'';
     leftMon = ''${pkgs.writeScript "leftMonFlexible.sh" (/*bash*/''

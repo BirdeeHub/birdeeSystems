@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, inputs, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
     term.alacritty
@@ -70,15 +70,15 @@ in {
     run = "nohup xdg-open";
 
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
-      export FLAKE="/home/birdee/birdeeSystems";
+      export FLAKE="${flake-path}";
       exec ${self}/scripts/system "$@"
     ''}'';
     me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
-      export FLAKE="/home/birdee/birdeeSystems";
+      export FLAKE="${flake-path}";
       exec ${self}/scripts/home "$@"
     ''}'';
     me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
-      export FLAKE="/home/birdee/birdeeSystems";
+      export FLAKE="${flake-path}";
       exec ${self}/scripts/both "$@"
     ''}'';
   };

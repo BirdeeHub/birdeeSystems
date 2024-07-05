@@ -107,11 +107,12 @@
       ...
     }@inputs:
     let
+      flake-path = "/home/birdee/birdeeSystems";
       stateVersion = "23.05";
       forEachSystem = (import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all;
       withEachSystem = (import ./platforms.nix).bySystems nixpkgs.lib.platforms.all;
       overlays = (import ./overlays inputs);
-      common = import ./common { inherit inputs; };
+      common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
     in
@@ -160,6 +161,7 @@
                     inputs
                     users
                     home-modules
+                    flake-path
                     ;
                 };
                 inherit pkgs;
@@ -185,6 +187,7 @@
                     inputs
                     users
                     home-modules
+                    flake-path
                     ;
                 };
                 inherit pkgs;
@@ -219,6 +222,7 @@
                     users
                     system-modules
                     overlays
+                    flake-path
                     ;
                 };
                 inherit system;
@@ -247,6 +251,7 @@
                           inputs
                           users
                           home-modules
+                          flake-path
                           ;
                       };
                       services.displayManager.defaultSession = lib.mkDefault "none+fake";
@@ -265,6 +270,7 @@
                     users
                     system-modules
                     overlays
+                    flake-path
                     ;
                 };
                 inherit system;
@@ -293,6 +299,7 @@
                           inputs
                           users
                           home-modules
+                          flake-path
                           ;
                       };
                       services.displayManager.defaultSession = lib.mkDefault "none+fake";
@@ -311,6 +318,7 @@
                     users
                     system-modules
                     overlays
+                    flake-path
                     ;
                 };
                 inherit system;
@@ -332,6 +340,7 @@
                     users
                     system-modules
                     overlays
+                    flake-path
                     ;
                 };
                 inherit system;
@@ -353,6 +362,7 @@
                     users
                     system-modules
                     overlays
+                    flake-path
                     ;
                 };
                 inherit system;
@@ -379,6 +389,7 @@
                           inputs
                           users
                           home-modules
+                          flake-path
                           ;
                       };
                       services.displayManager.defaultSession = lib.mkDefault "none+fake";
