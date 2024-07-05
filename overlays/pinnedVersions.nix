@@ -5,6 +5,7 @@ importName: inputs: let
     };
   in {
     virtualbox = pkgs.virtualbox;
+    qalculate-qt = pkgs.qalculate-qt;
   });
 in
 overlay

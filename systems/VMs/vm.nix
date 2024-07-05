@@ -32,8 +32,8 @@ in {
       # packages = []; # empty because that is managed by home-manager
     };
   birdeeMods = {
-    i3.enable = true;
-    i3.tmuxDefault = true;
+    # i3.enable = true;
+    # i3.tmuxDefault = true;
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;

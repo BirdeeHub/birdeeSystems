@@ -18,6 +18,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
         default = null;
         type = nullOr str;
       };
+      updateDbusEnvironment = lib.mkEnableOption "updating of dbus session environment";
       tmuxDefault = lib.mkEnableOption "swap tmux default alacritty to mod+enter from mod+shift+enter";
       defaultLockerEnabled = lib.mkOption {
         default = true;
@@ -133,9 +134,9 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
 
     xsession.enable = true;
     xsession.scriptPath = ".xsession";
-    xsession.initExtra = ''
+    xsession.initExtra = ''${lib.optionalString cfg.updateDbusEnvironment ''
       ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all || true
-    '' + (if cfg.extraSessionCommands == null then "" else cfg.extraSessionCommands);
+    ''}'' + (if cfg.extraSessionCommands == null then "" else cfg.extraSessionCommands);
     xsession.windowManager.i3 = {
       enable = true;
       config = null;
@@ -146,13 +147,16 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
 
   } else {
 
+    services.displayManager.defaultSession = lib.mkForce "none+i3";
+    # services.displayManager.defaultSession = lib.mkOverride 50 "none+i3";
     services.xserver.windowManager.i3 = {
       enable = true;
-      updateSessionEnvironment = true;
+      updateSessionEnvironment = cfg.updateDbusEnvironment;
       configFile = "${ pkgs.writeText "config" i3Config }";
       extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;
     };
     environment.systemPackages = i3packagesList;
+    # services.xserver.updateDbusEnvironment = cfg.updateDbusEnvironment;
 
   }));
 }
