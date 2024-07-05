@@ -4,5 +4,6 @@
 [ -n "$1" ] && [ "$1" == "up" ] && isUp="-u" && shift 1
 
 git add . &&\
+FLAKE=${FLAKE:-$(realpath .)} && export FLAKE &&\
 nix run nixpkgs#nh -- home switch -v -b hm_bkp $isUp -c "$cfgOutput" -- --show-trace "$@" &&\
 git add .

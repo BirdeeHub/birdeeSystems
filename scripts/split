@@ -7,7 +7,7 @@ shift 1
 [ -n "$1" ] && [ "$1" == "up" ] && isUp="-u" && shift 1
 
 git add . &&\
-export FLAKE=$(realpath .) &&\
+FLAKE=${FLAKE:-$(realpath .)} && export FLAKE &&\
 nix run nixpkgs#nh -- os switch -v $isUp -H "$hostname" -- --show-trace "$@" &&\
 nix run nixpkgs#nh -- home switch -v -b hm_bkp $isUp -c "$fullfirst" -- --show-trace "$@" &&\
 git add .
