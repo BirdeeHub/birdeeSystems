@@ -159,6 +159,7 @@ in {
     noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
 
+    dislocker
     ueberzugpp
     vlc
     nix-tree

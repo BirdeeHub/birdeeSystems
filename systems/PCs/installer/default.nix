@@ -133,6 +133,7 @@
     _7zz
     lshw
     xclip
+    dislocker
   ]);
 
 }

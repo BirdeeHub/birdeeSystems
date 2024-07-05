@@ -222,6 +222,7 @@ in {
     xsel
     git
     ntfs3g
+    dislocker
     man-pages
     man-pages-posix
   ]);
