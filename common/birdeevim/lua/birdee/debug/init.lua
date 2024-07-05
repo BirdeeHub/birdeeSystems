@@ -6,14 +6,13 @@ require('lz.n').load({
   keys = { "<F5>", "<F1>", "<F2>", "<F3>", "<leader>b", "<leader>B", "<F7>" },
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
       "nvim-dap-ui",
       "nvim-dap-virtual-text",
       "nvim-dap-go",
       "nvim-dap-python",
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     local dap = require 'dap'

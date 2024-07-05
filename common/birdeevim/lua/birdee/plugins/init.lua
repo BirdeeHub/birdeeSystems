@@ -48,10 +48,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
 })
 
@@ -63,10 +62,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require("todo-comments").setup({ signs = false })
@@ -81,10 +79,9 @@ require('lz.n').load({
 --   keys = { "gc", "gb" },
 --   -- colorscheme = "",
 --   load = function (name)
---     local list = {
+--     require("birdee.utils").safe_packadd({
 --       name,
---     }
---     require("birdee.utils").safe_packadd(list)
+--     })
 --   end,
 --   after = function (plugin)
 --     require('Comment').setup()
@@ -101,12 +98,11 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "nvim-lspconfig",
       "nvim-treesitter",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     local otter = require 'otter'
@@ -153,11 +149,10 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
       "vim-dadbod-ui",
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
     require("birdee.utils").packadd_with_after_dirs("vim-dadbod-completion")
   end,
   after = function (plugin)
@@ -172,10 +167,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('visual-whitespace').setup({
@@ -195,11 +189,10 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "nvim-treesitter",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('render-markdown').setup({})
@@ -219,10 +212,9 @@ require('lz.n').load({
   -- keys = {"<leader>mp", "<leader>ms", "<leader>mt", },
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   before = function (plugin)
     vim.g.mkdp_auto_close = 0
@@ -243,10 +235,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require("ibl").setup()
@@ -261,10 +252,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('nvim-surround').setup()
@@ -281,11 +271,10 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "nvim-treesitter",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     local tsj = require('treesj')
@@ -327,10 +316,9 @@ require('lz.n').load({
   -- keys = "<leader>U",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     vim.g.undotree_WindowLayout = 1
@@ -346,10 +334,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     -- Highlights unique characters for f/F and t/T motions
@@ -367,11 +354,10 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "nvim-treesitter",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('hlargs').setup({
@@ -391,10 +377,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require("nvim-highlight-colors").setup {
@@ -431,10 +416,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('lazydev').setup({

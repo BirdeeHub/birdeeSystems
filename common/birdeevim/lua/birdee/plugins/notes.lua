@@ -8,12 +8,11 @@ if nixCats('notes') then
     -- keys = "",
     -- colorscheme = "",
     load = function (name)
-      local list = {
+      require("birdee.utils").safe_packadd({
         "norg-grammar",
         "neorg-telescope",
         name,
-      }
-      require("birdee.utils").safe_packadd(list)
+      })
     end,
     after = function (plugin)
       require('neorg').setup {

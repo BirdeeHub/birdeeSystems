@@ -9,12 +9,11 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
       "vim-rhubarb",
       "diffview.nvim",
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
 })
 
@@ -27,13 +26,12 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "dressing.nvim",
       "diffview.nvim",
       "nvim-tinygit",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require("dressing").setup({

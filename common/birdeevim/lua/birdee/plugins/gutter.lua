@@ -6,10 +6,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require 'marks'.setup {
@@ -57,10 +56,9 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('gitsigns').setup({

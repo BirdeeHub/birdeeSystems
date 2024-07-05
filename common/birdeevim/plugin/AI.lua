@@ -7,13 +7,12 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "nvim-cmp",
       "codeium.nvim",
       "telescope.nvim",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     local bitwardenAuth = nixCats('bitwardenItemIDs')

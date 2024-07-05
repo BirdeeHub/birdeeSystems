@@ -6,11 +6,10 @@ require('lz.n').load({
   keys = { "<leader>sm", "<leader>sc", "<leader>ss" },
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       "telescope.nvim",
       name,
-    }
-    require("birdee.utils").safe_packadd(list)
+    })
   end,
   after = function (plugin)
     require('neoclip').setup({

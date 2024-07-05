@@ -6,16 +6,15 @@ require('lz.n').load({
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
-    local list = {
+    require("birdee.utils").safe_packadd({
       name,
       "friendly-snippets",
       "luasnip",
       "lspkind-nvim",
       "otter.nvim",
       "codeium.nvim",
-    }
-    require("birdee.utils").safe_packadd(list)
-    local sourcelist = {
+    })
+    require("birdee.utils").packadd_with_after_dirs({
       "cmp-buffer",
       "cmp-cmdline",
       "cmp-cmdline-history",
@@ -24,8 +23,7 @@ require('lz.n').load({
       "cmp-nvim-lua",
       "cmp-path",
       "cmp_luasnip",
-    }
-    require("birdee.utils").packadd_with_after_dirs(sourcelist)
+    })
   end,
   after = function (plugin)
     -- [[ Configure nvim-cmp ]]
