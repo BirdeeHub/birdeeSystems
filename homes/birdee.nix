@@ -249,13 +249,6 @@ in {
     remmina
     ventoy-full
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-
     # stinky
     jdk
     gradle
@@ -263,6 +256,7 @@ in {
     kotlin-native
     # jetbrains.idea-community
     android-studio
+    visualvm
   ];
   fonts.fontconfig.enable = true;
   qt.platformTheme.name = "gtk3";
