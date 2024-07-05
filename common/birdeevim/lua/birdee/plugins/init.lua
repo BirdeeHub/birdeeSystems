@@ -109,11 +109,20 @@ require('lz.n').load({
   end,
   after = function (plugin)
     local otter = require 'otter'
-    otter.setup {
+    otter.setup{
       lsp = {
-	hover = {
-	  border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-	},
+	-- `:h events` that cause the diagnostics to update. Set to:
+	-- { "BufWritePost", "InsertLeave", "TextChanged" } for less performant
+	-- but more instant diagnostic updates
+	diagnostic_update_events = { "BufWritePost" },
+	-- function to find the root dir where the otter-ls is started
+	root_dir = function(_, bufnr)
+	  return vim.fs.root(bufnr or 0, {
+	    ".git",
+	    "_quarto.yml",
+	    "package.json",
+	  }) or vim.fn.getcwd(0)
+	end,
       },
       buffers = {
 	-- if set to true, the filetype of the otterbuffers will be set.
@@ -127,7 +136,11 @@ require('lz.n').load({
 	write_to_disk = false,
       },
       strip_wrapping_quote_characters = { "'", '"', "`" },
+      -- otter may not work the way you expect when entire code blocks are indented (eg. in Org files)
+      -- When true, otter handles these cases fully.
+      handle_leading_whitespace = false,
     }
+    otter.activate(nil, true, true, nil)
   end,
 })
 
