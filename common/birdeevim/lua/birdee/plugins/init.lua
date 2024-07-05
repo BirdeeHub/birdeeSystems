@@ -95,8 +95,8 @@ require('lz.n').load({
   "otter.nvim",
   enabled = require('nixCatsUtils').enableForCategory('otter'),
   -- cmd = { "" },
-  event = "DeferredUIEnter",
-  -- ft = "",
+  -- event = "DeferredUIEnter",
+  ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
