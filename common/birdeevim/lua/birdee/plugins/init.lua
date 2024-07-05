@@ -96,7 +96,8 @@ require('lz.n').load({
   enabled = require('nixCatsUtils').enableForCategory('otter'),
   -- cmd = { "" },
   -- event = "DeferredUIEnter",
-  ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
+  on_require = { "otter" },
+  -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
   -- keys = "",
   -- colorscheme = "",
   load = function (name)
@@ -128,7 +129,7 @@ require('lz.n').load({
 	-- if set to true, the filetype of the otterbuffers will be set.
 	-- otherwise only the autocommand of lspconfig that attaches
 	-- the language server will be executed without setting the filetype
-	set_filetype = true,
+	set_filetype = false,
 	-- write <path>.otter.<embedded language extension> files
 	-- to disk on save of main buffer.
 	-- usefule for some linters that require actual files
@@ -140,7 +141,6 @@ require('lz.n').load({
       -- When true, otter handles these cases fully.
       handle_leading_whitespace = false,
     }
-    otter.activate(nil, true, true, nil)
   end,
 })
 
