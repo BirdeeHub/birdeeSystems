@@ -46,8 +46,9 @@
       };
       sessionCommands = lib.mkIf (cfg.sessionCommands != null) cfg.sessionCommands;
     };
-    services.displayManager.defaultSession = lib.mkDefault "none+fake";
+    # services.displayManager.defaultSession = lib.mkDefault "none+fake";
     # services.displayManager.defaultSession = lib.mkOverride 1000 "none+fake";
+    services.displayManager.defaultSession = lib.mkOverride 1002 "none+fake";
 
     environment.systemPackages = [
     ];

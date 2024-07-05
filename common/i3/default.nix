@@ -147,8 +147,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
 
   } else {
 
-    services.displayManager.defaultSession = lib.mkForce "none+i3";
-    # services.displayManager.defaultSession = lib.mkOverride 50 "none+i3";
+    services.displayManager.defaultSession = lib.mkOverride 1001 "none+i3";
     services.xserver.windowManager.i3 = {
       enable = true;
       updateSessionEnvironment = cfg.updateDbusEnvironment;

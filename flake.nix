@@ -226,27 +226,31 @@
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/aSUS
-                  {
-                    nixpkgs.overlays = overlays;
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
-                    home-manager.users.birdee = import ./homes/birdee.nix;
-                    home-manager.backupFileExtension = "hm-bkp";
-                    home-manager.verbose = true;
-                    home-manager.extraSpecialArgs = {
-                      username = "birdee";
-                      monitorCFG = ./homes/monitors_by_hostname/nestOS;
-                      inherit
-                        nixpkgs
-                        stateVersion
-                        self
-                        system
-                        inputs
-                        users
-                        home-modules
-                        ;
-                    };
-                  }
+                  (
+                    { lib, ... }:
+                    {
+                      nixpkgs.overlays = overlays;
+                      home-manager.useGlobalPkgs = true;
+                      home-manager.useUserPackages = true;
+                      home-manager.users.birdee = import ./homes/birdee.nix;
+                      home-manager.backupFileExtension = "hm-bkp";
+                      home-manager.verbose = true;
+                      home-manager.extraSpecialArgs = {
+                        username = "birdee";
+                        monitorCFG = ./homes/monitors_by_hostname/nestOS;
+                        inherit
+                          nixpkgs
+                          stateVersion
+                          self
+                          system
+                          inputs
+                          users
+                          home-modules
+                          ;
+                      };
+                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
+                    }
+                  )
                 ];
               };
               "birdee@dustbook" = nixpkgs.lib.nixosSystem {
@@ -268,27 +272,31 @@
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/dustbook
-                  {
-                    nixpkgs.overlays = overlays;
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
-                    home-manager.users.birdee = import ./homes/birdee.nix;
-                    home-manager.backupFileExtension = "hm-bkp";
-                    home-manager.verbose = true;
-                    home-manager.extraSpecialArgs = {
-                      username = "birdee";
-                      monitorCFG = ./homes/monitors_by_hostname/dustbook;
-                      inherit
-                        nixpkgs
-                        stateVersion
-                        self
-                        system
-                        inputs
-                        users
-                        home-modules
-                        ;
-                    };
-                  }
+                  (
+                    { lib, ... }:
+                    {
+                      nixpkgs.overlays = overlays;
+                      home-manager.useGlobalPkgs = true;
+                      home-manager.useUserPackages = true;
+                      home-manager.users.birdee = import ./homes/birdee.nix;
+                      home-manager.backupFileExtension = "hm-bkp";
+                      home-manager.verbose = true;
+                      home-manager.extraSpecialArgs = {
+                        username = "birdee";
+                        monitorCFG = ./homes/monitors_by_hostname/dustbook;
+                        inherit
+                          nixpkgs
+                          stateVersion
+                          self
+                          system
+                          inputs
+                          users
+                          home-modules
+                          ;
+                      };
+                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
+                    }
+                  )
                 ];
               };
               "nestOS" = nixpkgs.lib.nixosSystem {
@@ -350,27 +358,31 @@
                 modules = [
                   home-manager.nixosModules.home-manager
                   ./systems/VMs/qemu
-                  {
-                    nixpkgs.overlays = overlays;
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
-                    home-manager.users.birdee = import ./homes/birdee.nix;
-                    home-manager.backupFileExtension = "hm-bkp";
-                    home-manager.verbose = true;
-                    home-manager.extraSpecialArgs = {
-                      username = "birdee";
-                      monitorCFG = null;
-                      inherit
-                        nixpkgs
-                        stateVersion
-                        self
-                        system
-                        inputs
-                        users
-                        home-modules
-                        ;
-                    };
-                  }
+                  (
+                    { lib, ... }:
+                    {
+                      nixpkgs.overlays = overlays;
+                      home-manager.useGlobalPkgs = true;
+                      home-manager.useUserPackages = true;
+                      home-manager.users.birdee = import ./homes/birdee.nix;
+                      home-manager.backupFileExtension = "hm-bkp";
+                      home-manager.verbose = true;
+                      home-manager.extraSpecialArgs = {
+                        username = "birdee";
+                        monitorCFG = null;
+                        inherit
+                          nixpkgs
+                          stateVersion
+                          self
+                          system
+                          inputs
+                          users
+                          home-modules
+                          ;
+                      };
+                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
+                    }
+                  )
                 ];
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {
