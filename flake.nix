@@ -6,6 +6,7 @@
   '';
 
   inputs = {
+    # system
     nixpkgs.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
