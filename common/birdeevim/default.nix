@@ -414,6 +414,7 @@
         debug = true;
         customPlugins = true;
         general = true;
+        otter = true;
         nix = true;
         web = true;
         go = true;
