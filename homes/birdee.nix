@@ -68,6 +68,19 @@ in {
     yeet = "rm -rf";
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
+
+    me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/system "$@"
+    ''}'';
+    me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/home "$@"
+    ''}'';
+    me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/both "$@"
+    ''}'';
   };
   home.sessionVariables = {
     EDITOR = "birdeeVim";

@@ -34,6 +34,21 @@ in {
     mesa
   ];
 
+  environment.shellAliases = {
+    me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/system "$@"
+    ''}'';
+    me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/home "$@"
+    ''}'';
+    me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/both "$@"
+    ''}'';
+  };
+
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 

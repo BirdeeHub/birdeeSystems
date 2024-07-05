@@ -16,6 +16,18 @@ in {
   };
 
   environment.shellAliases = {
+    me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/system "$@"
+    ''}'';
+    me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/home "$@"
+    ''}'';
+    me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
+      export FLAKE="/home/birdee/birdeeSystems";
+      exec ${self}/scripts/both "$@"
+    ''}'';
     leftMon = ''${pkgs.writeScript "leftMonFlexible.sh" (/*bash*/''
       #!/usr/bin/env bash
       rate=59.95; mode="1920x1080"; side="l";
