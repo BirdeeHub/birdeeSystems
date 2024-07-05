@@ -25,7 +25,6 @@
           mullvad
           ninja-cookie
           ublock-origin
-          reddit-enhancement-suite
           languagetool
           maya-dark
           darkreader
