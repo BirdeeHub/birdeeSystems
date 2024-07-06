@@ -34,10 +34,10 @@
     };
 
     i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''
-        mkdir -p "$(dirname ${triggerFile})"
-        ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(dirname ${triggerFile})" |
+        ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname ${triggerFile})"
+        ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(${pkgs.coreutils}/bin/dirname ${triggerFile})" |
         while read -r directory events filename; do
-            if [ "$filename" = "$(basename ${triggerFile})" ]; then
+            if [ "$filename" = "$(${pkgs.coreutils}/bin/basename ${triggerFile})" ]; then
                 ${pkgs.bash}/bin/bash -c '${i3MonMemory}'
             fi
         done

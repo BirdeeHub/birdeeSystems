@@ -49,6 +49,7 @@ in {
         default = with pkgs; [
           xorg.xrandr
           gawk
+          coreutils-full
         ];
         type = listOf package;
         description = ''
@@ -57,6 +58,7 @@ in {
         '';
         example = lib.literalExpression ''
           cfg.internalDependencies = with pkgs; [
+            coreutils-full
             xorg.xrandr
             gawk
             "${jq}"
