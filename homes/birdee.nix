@@ -176,7 +176,6 @@ in {
     ueberzugpp
     vlc
     nix-tree
-    nix-output-monitor
     xfce.ristretto
     grex
     qbittorrent
