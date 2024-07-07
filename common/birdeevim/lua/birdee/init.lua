@@ -1,5 +1,5 @@
 require('nixCatsUtils').setup {
-  nin_nix_value = true,
+  non_nix_value = true,
 }
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
