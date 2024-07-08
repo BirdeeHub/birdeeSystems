@@ -439,6 +439,9 @@ require('lz.n').load({
   -- ft = "lua",
   -- keys = "",
   -- colorscheme = "",
+  before = function (plugin)
+    vim.g.startuptime_exe_path = require('birdee.utils').get_os_command_output({ "which", nixCats("nixCats_packageName")},".")[1]
+  end,
   load = function (name)
     require("birdee.utils").safe_packadd({ name, })
   end,
