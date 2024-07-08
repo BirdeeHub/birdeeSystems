@@ -430,3 +430,18 @@ require('lz.n').load({
     })
   end,
 })
+
+require('lz.n').load({
+  "vim-startuptime",
+  enabled = require('nixCatsUtils').enableForCategory('startuptime'),
+  cmd = { "StartupTime" },
+  -- event = "DeferredUIEnter",
+  -- ft = "lua",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    require("birdee.utils").safe_packadd({ name, })
+  end,
+  -- after = function (plugin)
+  -- end,
+})

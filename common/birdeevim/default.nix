@@ -170,6 +170,9 @@
     };
 
     optionalPlugins = with pkgs.vimPlugins; {
+      startuptime = [
+        vim-startuptime
+      ];
       SQL = [
         vim-dadbod
         vim-dadbod-ui
@@ -397,6 +400,7 @@
       categories = birdeevim_categories args // {
         test = true;
         # notes = true;
+        startuptime = true;
         lspDebugMode = true;
       };
     };
