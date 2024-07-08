@@ -40,6 +40,10 @@ if not require('nixCatsUtils').isNixCats then
 
   require('pckr').add {
 
+    -- TODO: add the ones that are missing to the list.
+    -- TODO: make sure they all download with the same name as nix
+    -- TODO: pretty much all of these are lazy loaded now
+
     { 'joshdick/onedark.vim', },
 
     { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
