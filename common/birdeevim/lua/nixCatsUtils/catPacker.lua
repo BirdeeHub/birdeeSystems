@@ -40,6 +40,8 @@ if not require('nixCatsUtils').isNixCats then
 
   require('pckr').add {
 
+    -- Eventually, you should do these todos.
+    -- But like... you only need them when you cant use nix...
     -- TODO: add the ones that are missing to the list.
     -- TODO: make sure they all download with the same name as nix
     -- TODO: pretty much all of these are lazy loaded now
