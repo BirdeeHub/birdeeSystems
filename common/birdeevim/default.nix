@@ -170,9 +170,6 @@
     };
 
     optionalPlugins = with pkgs.vimPlugins; {
-      startuptime = [
-        vim-startuptime
-      ];
       SQL = [
         vim-dadbod
         vim-dadbod-ui
@@ -282,6 +279,7 @@
           which-key-nvim
           eyeliner-nvim
           todo-comments-nvim
+          vim-startuptime
         ];
       };
     };

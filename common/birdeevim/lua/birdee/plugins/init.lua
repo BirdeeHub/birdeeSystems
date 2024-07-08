@@ -433,7 +433,7 @@ require('lz.n').load({
 
 require('lz.n').load({
   "vim-startuptime",
-  enabled = require('nixCatsUtils').enableForCategory('startuptime'),
+  enabled = require('nixCatsUtils').enableForCategory('general.other'),
   cmd = { "StartupTime" },
   -- event = "DeferredUIEnter",
   -- ft = "lua",
