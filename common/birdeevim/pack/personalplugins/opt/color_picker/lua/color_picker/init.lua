@@ -1,313 +1,6 @@
+-- https://github.com/OXY2DEV/colors.nvim/tree/main/lua/colors
 local picker = {};
 local utils = require("color_picker.utils");
--- local winanims = require("window-animations.animations");
-
-picker.colorPicker = {
-	__buf = nil,
-	__win = nil,
-	__ns = vim.api.nvim_create_namespace("colorPicker"),
-	__on = nil,
-
-	_r = 0,
-	_g = 0,
-	_b = 0,
-
-	_x = 0,
-	_y = 0,
-
-	__entries = 30,
-
-	get_level = function (self, value)
-		local val_per_lvl = 255 / self.__entries;
-		local lvl = math.floor(value / val_per_lvl);
-
-		return math.min(math.max(lvl, 1), self.__entries);
-	end,
-	set_options = function (self)
-		vim.bo[self.__buf].modifiable = false;
-
-		vim.wo[self.__win].number = false;
-		vim.wo[self.__win].relativenumber = false;
-	end,
-
-	create_hls = function (self)
-		for i = 0, (self.__entries - 1) do
-			-- Red
-			vim.api.nvim_set_hl(0, "Colors_r_" .. tostring(i + 1), {
-				fg = utils.toStr({ r = math.floor((255 / (self.__entries - 1)) * i), g = 0, b = 0 }),
-				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
-			});
-
-			-- Green
-			vim.api.nvim_set_hl(0, "Colors_g_" .. tostring(i + 1), {
-				fg = utils.toStr({ r = 0, g = math.floor((255 / (self.__entries - 1)) * i), b = 0 }),
-				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
-			})
-
-			-- Blue
-			vim.api.nvim_set_hl(0, "Colors_b_" .. tostring(i + 1), {
-				fg = utils.toStr({ r = 0, g = 0, b = math.floor((255 / (self.__entries - 1)) * i)}),
-				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
-			})
-		end
-
-		vim.api.nvim_set_hl(0, "Colors_r_" .. self.__entries, {
-			fg = utils.toStr({ r = 255, g = 0, b = 0 })
-		});
-		vim.api.nvim_set_hl(0, "Colors_g_" .. self.__entries, {
-			fg = utils.toStr({ r = 0, g = 255, b = 0 })
-		});
-		vim.api.nvim_set_hl(0, "Colors_b_" .. self.__entries, {
-			fg = utils.toStr({ r = 0, g = 0, b = 255 })
-		});
-
-
-		vim.api.nvim_set_hl(0, "Colors_hex", {
-			bg = utils.toStr({ r = self._r, g = self._g, b = self._b })
-		});
-		vim.api.nvim_set_hl(0, "Colors_hex_fg", {
-			fg = utils.toStr({ r = self._r, g = self._g, b = self._b })
-		});
-	end,
-	create_ui = function (self)
-		local slider_r = {};
-		local slider_g = {};
-		local slider_b = {};
-
-		local l_r = self:get_level(self._r);
-		local l_g = self:get_level(self._g);
-		local l_b = self:get_level(self._b);
-
-		for i = 1, self.__entries do
-			if i == l_r then
-				table.insert(slider_r, { "▞", "Colors_r_" .. i })
-			else
-				table.insert(slider_r, { "█", "Colors_r_" .. i })
-			end
-
-			if i == l_g then
-				table.insert(slider_g, { "▞", "Colors_g_" .. i })
-			else
-				table.insert(slider_g, { "█", "Colors_g_" .. i })
-			end
-
-			if i == l_b then
-				table.insert(slider_b, { "▞", "Colors_b_" .. i })
-			else
-				table.insert(slider_b, { "█", "Colors_b_" .. i })
-			end
-
-		end
-
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 0, 3, {
-			virt_text = slider_r,
-			hl_mode = "combine",
-		});
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 0, 3, {
-			virt_text_pos = "right_align",
-			virt_text = { { tostring(self._r) } },
-
-			hl_mode = "combine",
-		});
-
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 1, 3, {
-			virt_text = slider_g,
-			hl_mode = "combine",
-		});
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 1, 3, {
-			virt_text_pos = "right_align",
-			virt_text = { { tostring(self._g) } },
-
-			hl_mode = "combine",
-		});
-
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 2, 3, {
-			virt_text = slider_b,
-			hl_mode = "combine",
-		});
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 2, 3, {
-			virt_text_pos = "right_align",
-			virt_text = { { tostring(self._b) } },
-
-			hl_mode = "combine",
-		});
-
-		vim.api.nvim_buf_set_extmark(self.__buf, self.__ns, 4, 3, {
-			virt_text_pos = "eol",
-			virt_text = {
-				{ utils.toStr({ r = self._r, g = self._g, b = self._b }), "Colors_hex" },
-				{ " ██", "Colors_hex_fg" },
-			},
-
-			hl_mode = "combine",
-		});
-	end,
-	update_hex = function (self)
-		vim.api.nvim_set_hl(0, "Colors_hex", {
-			bg = utils.toStr({ r = self._r, g = self._g, b = self._b })
-		});
-		vim.api.nvim_set_hl(0, "Colors_hex_fg", {
-			fg = utils.toStr({ r = self._r, g = self._g, b = self._b })
-		});
-	end,
-	clear_virt_texts = function (self)
-		vim.api.nvim_buf_clear_namespace(self.__buf, self.__ns, 0, -1)
-	end,
-
-	set_keymaps = function (self)
-		vim.api.nvim_buf_set_keymap(self.__buf, "n", "<left>", "<left>", {
-			silent = true,
-			callback = function ()
-				local cursor = vim.api.nvim_win_get_cursor(self.__win);
-
-				if cursor[1] == 1 and (self._r - 1) >= 0 then
-					self._r = self._r - 1;
-				elseif cursor[1] == 2 and (self._g - 1) >= 0 then
-					self._g = self._g - 1;
-				elseif cursor[1] == 3 and (self._b - 1) >= 0 then
-					self._b = self._b - 1;
-				end
-
-				self:clear_virt_texts();
-				self:update_hex();
-				self:create_ui();
-			end
-		})
-		vim.api.nvim_buf_set_keymap(self.__buf, "n", "z", "<left>", {
-			silent = true,
-			callback = function ()
-				local cursor = vim.api.nvim_win_get_cursor(self.__win);
-
-				if cursor[1] == 1 and (self._r - 10) >= 0 then
-					self._r = self._r - 10;
-				elseif cursor[1] == 2 and (self._g - 10) >= 0 then
-					self._g = self._g - 10;
-				elseif cursor[1] == 3 and (self._b - 10) >= 0 then
-					self._b = self._b - 10;
-				end
-
-				self:clear_virt_texts();
-				self:update_hex();
-				self:create_ui();
-			end
-		})
-
-		vim.api.nvim_buf_set_keymap(self.__buf, "n", "<right>", "", {
-			silent = true,
-			callback = function ()
-				local cursor = vim.api.nvim_win_get_cursor(self.__win);
-
-				if cursor[1] == 1 and (self._r + 1) <= 255 then
-					self._r = self._r + 1;
-				elseif cursor[1] == 2 and (self._g + 1) <= 255 then
-					self._g = self._g + 1;
-				elseif cursor[1] == 3 and (self._b + 1) <= 255 then
-					self._b = self._b + 1;
-				end
-
-				self:clear_virt_texts();
-				self:update_hex();
-				self:create_ui();
-			end
-		})
-		vim.api.nvim_buf_set_keymap(self.__buf, "n", "x", "", {
-			silent = true,
-			callback = function ()
-				local cursor = vim.api.nvim_win_get_cursor(self.__win);
-
-				if cursor[1] == 1 and (self._r + 10) <= 255 then
-					self._r = self._r + 10;
-				elseif cursor[1] == 2 and (self._g + 10) <= 255 then
-					self._g = self._g + 10;
-				elseif cursor[1] == 3 and (self._b + 10) <= 255 then
-					self._b = self._b + 10;
-				end
-
-				self:clear_virt_texts();
-				self:update_hex();
-				self:create_ui();
-			end
-		})
-
-		vim.api.nvim_buf_set_keymap(self.__buf, "n", "q", "", {
-			silent = true,
-			callback = function ()
-				winanims.to(self.__win, {
-					delay = 0, framws = 20,
-					width = 1,
-
-					on_complete = function ()
-						vim.api.nvim_win_close(self.__win, true)
-
-						self.__buf = nil;
-						self.__win = nil;
-					end
-				})
-			end
-		});
-		vim.api.nvim_buf_set_keymap(self.__buf, "n", "<Enter>", "", {
-			silent = true,
-			callback = function ()
-				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr({ r = self._r, g = self._g, b = self._b }) });
-
-				winanims.to(self.__win, {
-					delay = 0, framws = 20,
-					width = 1,
-
-					on_complete = function ()
-						vim.api.nvim_win_close(self.__win, true)
-
-						self.__buf = nil;
-						self.__win = nil;
-					end
-				})
-			end
-		});
-	end,
-
-	init = function (self)
-		if self.__buf ~= nil then
-			return;
-		end
-
-		self.__on = vim.api.nvim_get_current_buf();
-
-		self._y = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1] - 1;
-		self._x = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[2];
-
-		self.__buf = vim.api.nvim_create_buf(false, true);
-		self.__win = vim.api.nvim_open_win(self.__buf, true, {
-			relative = "cursor",
-
-			row = 1,
-			col = 1,
-
-			width = 1,
-			height = 5,
-
-			border = "rounded"
-		});
-
-		vim.api.nvim_buf_set_lines(self.__buf, 0, -1, false, {
-			"R:  ",
-			"G:  ",
-			"B:  ",
-			"",
-			"Color: "
-		});
-
-		self:create_hls();
-		self:set_options();
-
-		self:set_keymaps();
-		self:create_ui();
-
-		winanims.to(self.__win, {
-			delay = 60, framws = 20,
-			width = 4 + self.__entries + 5,
-		})
-	end
-}
 
 picker.gradientPicker = {
 	__buf_1 = nil,
@@ -335,7 +28,6 @@ picker.gradientPicker = {
 
 	__entries = 20,
 	_steps = 10,
-	_animate = false,
 
 	_cache = {},
 	_cache_pos = 1,
@@ -772,17 +464,7 @@ picker.gradientPicker = {
 		});
 	end,
 	close_win = function (self, win)
-		if self._animate == true then
-			winanims.to(win, {
-				delay = 0, framws = 20,
-				width = 1,
-				on_complete = function ()
-					vim.api.nvim_win_close(win, true);
-				end
-			})
-		else
-			vim.api.nvim_win_close(win, true);
-		end
+		vim.api.nvim_win_close(win, true);
 	end,
 
 	init = function (self)
@@ -805,7 +487,7 @@ picker.gradientPicker = {
 				row = self._y,
 				col = _off + self._x,
 
-				width = self._animate == true and 1 or self.__entries + 4 + 4,
+				width = self.__entries + 4 + 4,
 				height = 5,
 
 				border = "rounded"
@@ -816,7 +498,7 @@ picker.gradientPicker = {
 				row = self._y,
 				col = _off + self._x + self.__entries + 6 + 4,
 
-				width = self._animate == true and 1 or self.__entries + 4 + 4,
+				width = self.__entries + 4 + 4,
 				height = 5,
 
 				border = "rounded"
@@ -827,7 +509,7 @@ picker.gradientPicker = {
 				row = self._y + 7,
 				col = _off + self._x,
 
-				width = self._animate == true and 3 or self._steps,
+				width = self._steps,
 				height = 3,
 
 				border = "rounded"
@@ -846,7 +528,7 @@ picker.gradientPicker = {
 			row = self._y,
 			col = _off + self._x,
 
-			width = self._animate == true and 1 or self.__entries + 4 + 4,
+			width = self.__entries + 4 + 4,
 			height = 5,
 
 			focusable = false,
@@ -858,7 +540,7 @@ picker.gradientPicker = {
 			row = self._y,
 			col = _off + self._x + self.__entries + 6 + 4,
 
-			width = self._animate == true and 1 or self.__entries + 4 + 4,
+			width = self.__entries + 4 + 4,
 			height = 5,
 
 			focusable = false,
@@ -870,7 +552,7 @@ picker.gradientPicker = {
 			row = self._y + 7,
 			col = _off + self._x,
 
-			width = self._animate == true and 3 or self._steps,
+			width = self._steps,
 			height = 3,
 
 			focusable = false,
@@ -1007,21 +689,6 @@ picker.gradientPicker = {
 		self:set_options();
 		self:create_ui(self.__buf_1, 1);
 		self:create_ui(self.__buf_2, 2);
-
-		if self._animate == true then
-			winanims.to(self.__win_1, {
-				delay = 60, framws = 20,
-				width = self.__entries + 4 + 4,
-			})
-			winanims.to(self.__win_2, {
-				delay = 60, framws = 20,
-				width = self.__entries + 4 + 4,
-			})
-			winanims.to(self.__win_3, {
-				delay = 60, framws = 20,
-				width = self._steps > 30 and self._steps or 30,
-			})
-		end
 
 		self:add_movement(self.__win_1, self.__buf_1, 1);
 		self:add_movement(self.__win_2, self.__buf_2, 2);
