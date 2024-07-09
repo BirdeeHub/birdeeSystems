@@ -119,8 +119,6 @@
       ];
       bash = [
         nodePackages.bash-language-server
-        # bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-        # pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
       ];
       python = with python311Packages; [
         # jedi-language-server
