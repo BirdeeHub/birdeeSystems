@@ -448,3 +448,22 @@ require('lz.n').load({
   -- after = function (plugin)
   -- end,
 })
+
+vim.keymap.set('n', '<leader>cpc', '<cmd>StartupTime<CR>',{desc = 'color_picker'})
+require('lz.n').load({
+  "color_picker",
+  -- enabled = require('nixCatsUtils').enableForCategory('general.other'),
+  -- cmd = { "StartupTime" },
+  on_require = "color_picker",
+  -- event = "DeferredUIEnter",
+  -- ft = "lua",
+  -- keys = "",
+  -- colorscheme = "",
+  -- before = function (plugin)
+  -- end,
+  load = function (name)
+    require("birdee.utils").safe_packadd({ name, })
+  end,
+  -- after = function (plugin)
+  -- end,
+})
