@@ -449,7 +449,8 @@ require('lz.n').load({
   -- end,
 })
 
-vim.keymap.set('n', '<leader>cpc', '<cmd>StartupTime<CR>',{desc = 'color_picker'})
+vim.keymap.set('n', '<leader>cpc', function() require("color_picker").colorPicker:init() end,{desc = 'color_picker color'})
+vim.keymap.set('n', '<leader>cpg', function() require("color_picker").gradientPicker:init() end,{desc = 'color_picker gradient'})
 require('lz.n').load({
   "color_picker",
   -- enabled = require('nixCatsUtils').enableForCategory('general.other'),
