@@ -48,21 +48,21 @@ return {
 
 	create_hls = function (self)
 		for i = 0, self.__entries do
-			-- Red
+			-- Hue
 			vim.api.nvim_set_hl(0, "Colors_h_" .. tostring(i + 1), {
-				fg = utils.toStr({ h = utils.lerp(0, 360, self.__entries, i), s = 0, v = 0 }),
+				fg = utils.toStr({ h = utils.lerp(0, 360, self.__entries, i), s = 100, v = 100 }),
 				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 			});
 
-			-- Green
+			-- Saturation
 			vim.api.nvim_set_hl(0, "Colors_s_" .. tostring(i + 1), {
-				fg = utils.toStr({ h = 0, s = utils.lerp(0, 100, self.__entries, i), v = 0 }),
+				fg = utils.toStr({ h = 0, s = utils.lerp(0, 100, self.__entries, i), v = 100 }),
 				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 			})
 
-			-- Blue
+			-- Value
 			vim.api.nvim_set_hl(0, "Colors_v_" .. tostring(i + 1), {
-				fg = utils.toStr({ h = 0, s = 0, v = utils.lerp(0, 100, self.__entries, i) }),
+				fg = utils.toStr({ h = 0, s = 100, v = utils.lerp(0, 100, self.__entries, i) }),
 				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 			})
 		end
@@ -272,6 +272,19 @@ return {
 		vim.api.nvim_buf_clear_namespace(buf, self.__ns, 0, -1)
 	end,
 	update_hex = function (self, n)
+
+		for i = 0, self.__entries do
+			-- Saturation
+			vim.api.nvim_set_hl(0, "Colors_s_" .. tostring(i + 1), {
+				fg = utils.toStr({ h = self["_h_" .. n], s = utils.lerp(0, 100, self.__entries, i), v = 100 }),
+				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
+			})
+			-- Value
+			vim.api.nvim_set_hl(0, "Colors_v_" .. tostring(i + 1), {
+				fg = utils.toStr({ h = self["_h_" .. n], s = 100, v = utils.lerp(0, 100, self.__entries, i) }),
+				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
+			})
+		end
 		vim.api.nvim_set_hl(0, "Colors_hex_" .. n, {
 			bg = utils.toStr({ h = self["_h_" .. n], s = self["_s_" .. n], v = self["_v_" .. n] }),
 			fg = utils.getFg({ h = self["_h_" .. n], s = self["_s_" .. n], v = self["_v_" .. n] })
@@ -329,9 +342,9 @@ return {
 		vim.bo[self.__buf_1].filetype = "Gradient_picker"
 
 		vim.api.nvim_buf_set_lines(self.__buf_1, 0, -1, false, {
-			"R: ",
-			"G: ",
-			"B: ",
+			"H: ",
+			"S: ",
+			"V: ",
 			"",
 			"Color: "
 		});
