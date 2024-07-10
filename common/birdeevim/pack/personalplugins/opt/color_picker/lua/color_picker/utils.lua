@@ -8,10 +8,18 @@ utils.lerp = function (a, b, t, i)
 	return a + (b - a) * t * (i or 1);
 end
 
+---@overload fun(color: color_hsv): string
+---@overload fun(color: color_rgb): string
 utils.getFg = function (colorTable)
-	local brightness = colorTable.r * 0.299 + colorTable.g * 0.587 + colorTable.b * 0.114;
+	local brightness
+	if type(colorTable.h) == "number" and type(colorTable.s) == "number" and type(colorTable.v) == "number" then
+		brightness = colorTable.v;
+	else
+		---@cast colorTable color_rgb
+		brightness = utils.rgbToHsv(colorTable.r, colorTable.g, colorTable.b).v;
+	end
 
-	if brightness > 160 then
+	if brightness > 60 then
 		return "#000000";
 	else
 		return "#FFFFFF";
@@ -19,9 +27,12 @@ utils.getFg = function (colorTable)
 end
 
 ---+ Title: "Turns color tables to hex color codes"
----@param color { r: number, g: number, b: number } Table containing the color
----@return string # Hexadecimal color code
+---@overload fun(color: color_hsv): string
+---@overload fun(color: color_rgb): string
 utils.toStr = function (color)
+	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
+		color = utils.hsvToRgb(color.h, color.s, color.v);
+	end
 	local R = #string.format("%x", color.r) == 1 and "0" .. string.format("%x", color.r) or string.format("%x", color.r);
 	local G = #string.format("%x", color.g) == 1 and "0" .. string.format("%x", color.g) or string.format("%x", color.g);
 	local B = #string.format("%x", color.b) == 1 and "0" .. string.format("%x", color.b) or string.format("%x", color.b);
@@ -32,7 +43,7 @@ end
 
 ---+ Icon: " " Title: "rgb number to table converter" BorderL: " " BorderR: " "
 --- @param color number Number returned by "nvim_get_hl()"
---- @return table # Table with r, g, b values
+--- @return color_rgb # Table with r, g, b values
 utils.rgbToTable = function (color)
 	local hex = string.format("%x", color);
 
@@ -46,7 +57,7 @@ end
 
 ---+ Icon: " " Title: "hex color to table converter" BorderL: " " BorderR: " "
 --- @param color string Hexadecimal color code
---- @return table
+--- @return color_rgb # Table with r, g, b values
 utils.hexToTable = function (color)
 	local hex = string.gsub(color, "#", "");
 
@@ -119,6 +130,10 @@ utils.ease = function(ease, from, to, position)
 end
 --_
 
+---@param r number
+---@param g number
+---@param b number
+---@return color_hsv
 function utils.rgbToHsv(r, g, b)
     -- Normalize the RGB values
     local r_prime = r / 255
@@ -160,9 +175,13 @@ function utils.rgbToHsv(r, g, b)
         h = h + 360
     end
 
-    return h, s * 100, v * 100  -- Return HSV values with H in degrees, S and V as percentages
+    return { h = h, s = s * 100, v = v * 100 }  -- Return HSV values with H in degrees, S and V as percentages
 end
 
+---@param h number
+---@param s number
+---@param v number
+---@return color_rgb
 function utils.hsvToRgb(h, s, v)
     -- Convert saturation and value to [0, 1] range
     s = s / 100
@@ -193,7 +212,7 @@ function utils.hsvToRgb(h, s, v)
     local g = (g_prime + m) * 255
     local b = (b_prime + m) * 255
 
-    return math.floor(r), math.floor(g), math.floor(b)
+    return { r = math.floor(r), g = math.floor(g), b = math.floor(b) }
 end
 
 return utils;
