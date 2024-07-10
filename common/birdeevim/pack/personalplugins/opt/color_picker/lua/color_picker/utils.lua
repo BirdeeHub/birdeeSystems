@@ -1,5 +1,15 @@
 local utils = {}
 
+---@class color_hsv
+---@field h number
+---@field s number
+---@field v number
+
+---@class color_rgb
+---@field r number
+---@field g number
+---@field b number
+
 utils.lerp = function (a, b, t, i)
 	if t > 1 then
 		t = 1 / t;
