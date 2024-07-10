@@ -5,7 +5,6 @@ local picker = {};
 
 picker.colorPicker = require("color_picker.color")
 picker.gradientPicker = require("color_picker.gradient")
--- TODO: This cool thing
 picker.huePicker = require("color_picker.huesatv")
 
 return picker;
