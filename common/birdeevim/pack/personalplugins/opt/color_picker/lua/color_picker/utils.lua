@@ -119,4 +119,48 @@ utils.ease = function(ease, from, to, position)
 end
 --_
 
+function utils.rgbToHsv(r, g, b)
+    -- Normalize the RGB values
+    local r_prime = r / 255
+    local g_prime = g / 255
+    local b_prime = b / 255
+
+    -- Find max and min values
+    local c_max = math.max(r_prime, g_prime, b_prime)
+    local c_min = math.min(r_prime, g_prime, b_prime)
+    local delta = c_max - c_min
+
+    -- Calculate Value (V)
+    local v = c_max
+
+    -- Calculate Saturation (S)
+    local s
+    if c_max == 0 then
+        s = 0
+    else
+        s = delta / c_max
+    end
+
+    -- Calculate Hue (H)
+    local h
+    if delta == 0 then
+        h = 0
+    else
+        if c_max == r_prime then
+            h = 60 * (((g_prime - b_prime) / delta) % 6)
+        elseif c_max == g_prime then
+            h = 60 * (((b_prime - r_prime) / delta) + 2)
+        elseif c_max == b_prime then
+            h = 60 * (((r_prime - g_prime) / delta) + 4)
+        end
+    end
+
+    -- Ensure hue is non-negative
+    if h < 0 then
+        h = h + 360
+    end
+
+    return h, s * 100, v * 100  -- Return HSV values with H in degrees, S and V as percentages
+end
+
 return utils;
