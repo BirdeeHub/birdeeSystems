@@ -163,4 +163,37 @@ function utils.rgbToHsv(r, g, b)
     return h, s * 100, v * 100  -- Return HSV values with H in degrees, S and V as percentages
 end
 
+function utils.hsvToRgb(h, s, v)
+    -- Convert saturation and value to [0, 1] range
+    s = s / 100
+    v = v / 100
+
+    local c = v * s
+    local x = c * (1 - math.abs((h / 60) % 2 - 1))
+    local m = v - c
+
+    local r_prime, g_prime, b_prime
+
+    if h < 60 then
+        r_prime, g_prime, b_prime = c, x, 0
+    elseif h < 120 then
+        r_prime, g_prime, b_prime = x, c, 0
+    elseif h < 180 then
+        r_prime, g_prime, b_prime = 0, c, x
+    elseif h < 240 then
+        r_prime, g_prime, b_prime = 0, x, c
+    elseif h < 300 then
+        r_prime, g_prime, b_prime = x, 0, c
+    else
+        r_prime, g_prime, b_prime = c, 0, x
+    end
+
+    -- Convert back to [0, 255] range
+    local r = (r_prime + m) * 255
+    local g = (g_prime + m) * 255
+    local b = (b_prime + m) * 255
+
+    return math.floor(r), math.floor(g), math.floor(b)
+end
+
 return utils;
