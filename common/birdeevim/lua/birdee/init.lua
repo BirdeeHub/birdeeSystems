@@ -6,6 +6,7 @@ vim.g.maplocalleader = ' '
 -- require('lz.n').register_handler(require("birdee.debug_handler").handler)
 vim.notify = require("notify")
 require('lz.n').register_handler(require("birdee.on_require"))
+require("birdee.patcheduiopen")
 require("birdee.opts")
 require("birdee.keymaps")
 require("birdee.clippy")
