@@ -454,21 +454,8 @@ vim.keymap.set('n', '<leader>cpg', function() require("color_picker").gradientPi
 vim.keymap.set('n', '<leader>cph', function() require("color_picker").huePicker:init() end,{desc = 'color_picker hsv (TODO)'})
 require('lz.n').load({
   "color_picker",
-  -- enabled = require('nixCatsUtils').enableForCategory('general.other'),
-  -- cmd = { "StartupTime" },
   on_require = "color_picker",
-  -- event = "DeferredUIEnter",
-  -- ft = "lua",
-  -- keys = {
-  --   '<leader>cpc',
-  --   '<leader>cpg',
-  -- },
-  -- colorscheme = "",
-  -- before = function (plugin)
-  -- end,
   load = function (name)
     require("birdee.utils").safe_packadd({ name, })
   end,
-  -- after = function (plugin)
-  -- end,
 })
