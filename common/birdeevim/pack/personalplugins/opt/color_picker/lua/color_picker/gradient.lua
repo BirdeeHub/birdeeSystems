@@ -1,3 +1,5 @@
+-- NOTE: This code is from
+-- https://github.com/OXY2DEV/colors.nvim/tree/main/lua/colors
 local utils = require("color_picker.utils");
 return {
 	__buf_1 = nil,

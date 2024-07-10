@@ -1,5 +1,4 @@
--- NOTE: This code is from
--- https://github.com/OXY2DEV/colors.nvim/tree/main/lua/colors
+-- TODO: hsv picker, hue + 2d field x = sat y = value (brightness) like google if possible, but start with 3 bars.
 local utils = require("color_picker.utils");
 return {
 	__buf_1 = nil,
