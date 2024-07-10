@@ -451,6 +451,7 @@ require('lz.n').load({
 
 vim.keymap.set('n', '<leader>cpc', function() require("color_picker").colorPicker:init() end,{desc = 'color_picker color'})
 vim.keymap.set('n', '<leader>cpg', function() require("color_picker").gradientPicker:init() end,{desc = 'color_picker gradient'})
+vim.keymap.set('n', '<leader>cph', function() require("color_picker").huePicker:init() end,{desc = 'color_picker hsv (TODO)'})
 require('lz.n').load({
   "color_picker",
   -- enabled = require('nixCatsUtils').enableForCategory('general.other'),
