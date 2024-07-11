@@ -1,5 +1,3 @@
 local M = {}
-function M.runRectangle()
-    require("testui.rectangle").run()
-end
+M.run = require("testui.rectangle").run
 return M
