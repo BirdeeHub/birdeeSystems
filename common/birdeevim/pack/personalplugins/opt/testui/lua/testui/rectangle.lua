@@ -14,8 +14,11 @@ local function run_fenster()
         end
     end
 end
+local function callback()
+    vim.notify("Done", vim.log.levels.INFO)
+end
 return {
     run = function ()
-        require('plenary.async').run(run_fenster,function() vim.notify("Done", vim.log.levels.INFO) end)
+        require('plenary.async').run(run_fenster,callback)
     end
 }
