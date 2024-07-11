@@ -22,10 +22,6 @@
     minesweeper.url = "github:BirdeeHub/minesweeper/nix";
     minesweeper.inputs.nixpkgs.follows = "nixpkgs";
     minesweeper.inputs.flake-utils.follows = "flake-utils";
-    lua-fenster = {
-      url = "github:jonasgeiler/lua-fenster";
-      flake = false;
-    };
 
     # neovim
     nixCats.url = "github:BirdeeHub/nixCats-nvim";

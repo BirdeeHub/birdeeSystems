@@ -453,9 +453,3 @@ require('lz.n').load({
   -- after = function (plugin)
   -- end,
 })
-
-require('lz.n').load({
-  "testui",
-  enabled = nixCats('test') == true,
-  on_require = { "testui" },
-})

@@ -934,22 +934,6 @@
         "type": "github"
       }
     },
-    "lua-fenster": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1719189907,
-        "narHash": "sha256-mH1lIuw3h/xiF2wz6K4MnpJkH91QrLBE4IapGR6/2x8=",
-        "owner": "jonasgeiler",
-        "repo": "lua-fenster",
-        "rev": "7db2498eb0ac8a4168cbaa4be5d5799594e64b46",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jonasgeiler",
-        "repo": "lua-fenster",
-        "type": "github"
-      }
-    },
     "lz-n": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -1924,7 +1908,6 @@
         "disko": "disko",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
-        "lua-fenster": "lua-fenster",
         "lz-n": "lz-n",
         "minesweeper": "minesweeper",
         "neorg-overlay": "neorg-overlay",
