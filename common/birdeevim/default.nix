@@ -320,6 +320,7 @@
     # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
       general = [ (lp: with lp; [ magick jsregexp ]) ];
+      test = [ (pkgs.nixCatsBuilds.buildFenster inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim.lua) ];
     };
   };
 
