@@ -230,7 +230,6 @@ return {
 				self:update_gradient();
 				self:create_ui(buf, n)
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
 				self:create_preview();
 			end
 		});
@@ -256,7 +255,6 @@ return {
 				self:update_gradient();
 				self:create_ui(buf, n)
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
 				self:create_preview();
 			end
 		});
@@ -283,7 +281,6 @@ return {
 				self:update_gradient();
 				self:create_ui(buf, n)
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
 				self:create_preview();
 			end
 		})
@@ -309,7 +306,6 @@ return {
 				self:update_gradient();
 				self:create_ui(buf, n);
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
 				self:create_preview();
 			end
 		});
