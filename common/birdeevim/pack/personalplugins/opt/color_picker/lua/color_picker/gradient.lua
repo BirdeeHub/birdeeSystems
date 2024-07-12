@@ -477,6 +477,8 @@ return {
 		self._y = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1] - 1;
 		self._x = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[2];
 
+		self._y = self._y - vim.fn.line('w0', self.__onwin)
+
 		local _off = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff;
 
 		if self.__buf_1 and self.__buf_2 and self.__buf_3 then
