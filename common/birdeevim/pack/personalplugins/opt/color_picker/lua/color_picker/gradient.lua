@@ -229,6 +229,9 @@ return {
 				self:update_hex(n);
 				self:update_gradient();
 				self:create_ui(buf, n)
+				self:clear_ns(self.__buf_3);
+				self:update_gradient();
+				self:create_preview();
 			end
 		});
 		vim.api.nvim_buf_set_keymap(buf, "n", "z", "", {
@@ -252,6 +255,9 @@ return {
 				self:update_hex(n);
 				self:update_gradient();
 				self:create_ui(buf, n)
+				self:clear_ns(self.__buf_3);
+				self:update_gradient();
+				self:create_preview();
 			end
 		});
 
@@ -276,6 +282,9 @@ return {
 				self:update_hex(n);
 				self:update_gradient();
 				self:create_ui(buf, n)
+				self:clear_ns(self.__buf_3);
+				self:update_gradient();
+				self:create_preview();
 			end
 		})
 		vim.api.nvim_buf_set_keymap(buf, "n", "x", "", {
@@ -299,6 +308,9 @@ return {
 				self:update_hex(n);
 				self:update_gradient();
 				self:create_ui(buf, n);
+				self:clear_ns(self.__buf_3);
+				self:update_gradient();
+				self:create_preview();
 			end
 		});
 	end,
@@ -376,6 +388,10 @@ return {
 				if cursor[1] == 1 and (self._steps - 1) >= 5 then
 					self._steps = self._steps - 1;
 				end
+				local width = vim.api.nvim_win_get_width(self.__win_3)
+				if self._steps < width and width > 30 then
+					vim.api.nvim_win_set_width(self.__win_3, width - 1)
+				end
 
 				self:clear_ns(self.__buf_3);
 				self:update_gradient();
@@ -422,6 +438,10 @@ return {
 
 				if cursor[1] == 1 then
 					self._steps = self._steps + 1;
+				end
+				local width = vim.api.nvim_win_get_width(self.__win_3)
+				if self._steps > width then
+					vim.api.nvim_win_set_width(self.__win_3, width + 1)
 				end
 
 				self:clear_ns(self.__buf_3);
@@ -510,7 +530,7 @@ return {
 				row = self._y + 7,
 				col = _off + self._x,
 
-				width = self._steps,
+				width = self._steps > 30 and self._steps or 30,
 				height = 3,
 
 				border = "rounded"
@@ -553,7 +573,7 @@ return {
 			row = self._y + 7,
 			col = _off + self._x,
 
-			width = self._steps,
+			width = self._steps > 30 and self._steps or 30,
 			height = 3,
 
 			focusable = false,
