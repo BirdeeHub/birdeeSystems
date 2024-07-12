@@ -41,16 +41,19 @@ return {
 	set_options = function (self)
 		vim.bo[self.__buf_1].modifiable = false;
 
+		vim.wo[self.__win_1].signcolumn = "no"
 		vim.wo[self.__win_1].number = false;
 		vim.wo[self.__win_1].relativenumber = false;
 
 		vim.bo[self.__buf_2].modifiable = false;
 
+		vim.wo[self.__win_2].signcolumn = "no"
 		vim.wo[self.__win_2].number = false;
 		vim.wo[self.__win_2].relativenumber = false;
 
 		vim.bo[self.__buf_3].modifiable = false;
 
+		vim.wo[self.__win_3].signcolumn = "no"
 		vim.wo[self.__win_3].number = false;
 		vim.wo[self.__win_3].relativenumber = false;
 	end,
@@ -601,10 +604,6 @@ return {
 		});
 
 		::bufReady::
-
-		vim.wo[self.__win_1].signcolumn = "no"
-		vim.wo[self.__win_2].signcolumn = "no"
-		vim.wo[self.__win_3].signcolumn = "no"
 
 		if not self.__au and not self._close_1 and not self._close_2 and not self._close_3 then
 			self.__au = vim.api.nvim_create_autocmd({ "WinEnter" }, {

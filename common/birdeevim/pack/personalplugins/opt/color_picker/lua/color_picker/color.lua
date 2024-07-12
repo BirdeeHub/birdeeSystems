@@ -34,6 +34,7 @@ return {
 	set_options = function (self)
 		vim.bo[self.__buf_1].modifiable = false;
 
+		vim.wo[self.__win_1].signcolumn = "no"
 		vim.wo[self.__win_1].number = false;
 		vim.wo[self.__win_1].relativenumber = false;
 	end,
@@ -329,8 +330,6 @@ return {
 			"",
 			"Color: "
 		});
-
-		vim.wo[self.__win_1].signcolumn = "no"
 
 		::bufReady::
 
