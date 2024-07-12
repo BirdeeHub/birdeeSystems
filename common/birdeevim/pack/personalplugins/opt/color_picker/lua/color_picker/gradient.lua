@@ -584,6 +584,10 @@ return {
 			"Current color: "
 		});
 
+		vim.wo[self.__win_1].signcolumn = "no"
+		vim.wo[self.__win_2].signcolumn = "no"
+		vim.wo[self.__win_3].signcolumn = "no"
+
 		::bufReady::
 
 		if not self.__au and not self._close_1 and not self._close_2 and not self._close_3 then

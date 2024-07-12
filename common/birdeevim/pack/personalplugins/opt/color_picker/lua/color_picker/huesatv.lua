@@ -350,6 +350,8 @@ return {
 			"Color: "
 		});
 
+		vim.wo[self.__win_1].signcolumn = "no"
+
 		::bufReady::
 
 		if not self.__au and not self._close_1 then
