@@ -18,6 +18,7 @@ require('lz.n').load({
       javascript = { 'eslint' },
       typescript = { 'eslint' },
       -- elixir = { 'credo' },
+      go = { 'golangcilint' },
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {

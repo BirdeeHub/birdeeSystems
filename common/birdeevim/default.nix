@@ -68,6 +68,7 @@
         gopls
         delve
         golint
+        golangci-lint
         gotools
         go-tools
         go
