@@ -236,16 +236,6 @@ return {
 			end
 		});
 	end,
-	add_switches = function (self, buf)
-		vim.api.nvim_buf_set_keymap(buf, "n", "<Tab>", "", {
-			silent = true,
-			callback = function ()
-				local c_win = vim.api.nvim_get_current_win();
-
-				vim.api.nvim_set_current_win(self.__win_1);
-			end
-		});
-	end,
 	add_exit = function (self, buf)
 		vim.api.nvim_buf_set_keymap(buf, "n", "q", "", {
 			silent = true,
@@ -383,8 +373,6 @@ return {
 		self:create_ui(self.__buf_1, 1);
 
 		self:add_movement(self.__win_1, self.__buf_1, 1);
-
-		self:add_switches(self.__buf_1);
 
 		self:add_exit(self.__buf_1);
 
