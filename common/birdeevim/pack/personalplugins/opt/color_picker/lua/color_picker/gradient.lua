@@ -1,6 +1,8 @@
 -- NOTE: This code is from
 -- https://github.com/OXY2DEV/colors.nvim/tree/main/lua/colors
 local utils = require("color_picker.utils");
+local M = {}
+function M.get()
 return {
 	picker1 = nil,
 	picker2 = nil,
@@ -35,7 +37,7 @@ return {
 
 	set_options = function (self)
 		vim.bo[self.__buf_3].modifiable = false;
-		vim.notify("" .. vim.inspect(vim.api.nvim_win_is_valid(self.__win_3)) .. " " .. vim.inspect(self.__win_3))
+
 		vim.wo[self.__win_3].signcolumn = "no"
 		vim.wo[self.__win_3].number = false;
 		vim.wo[self.__win_3].relativenumber = false;
@@ -260,8 +262,17 @@ return {
 		local _off = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff;
 
 		local grad_callback = function (n, color)
+			local ready = true
+			if self["_color_" .. n] == nil then
+				ready = false
+			end
 			self["_color_" .. n] = color
-			if self._color_1 and self._color_2 then
+			if self._color_1 and self._color_2 and not ready then
+				self:clear_ns(self.__buf_3);
+				self:create_hls();
+				self:create_preview();
+			end
+			if ready then
 				self:clear_ns(self.__buf_3);
 				self:update_gradient();
 				self:create_preview();
@@ -322,9 +333,6 @@ return {
 
 		self:add_grad_control();
 
-		self:create_hls();
-		self:create_preview();
-
 		if not self.__au then
 			self.__au = vim.api.nvim_create_autocmd({ "WinEnter" }, {
 				callback = function (event)
@@ -344,3 +352,5 @@ return {
 		end
 	end
 }
+end
+return M
