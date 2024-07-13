@@ -185,7 +185,7 @@ function utils.rgbToHsv(r, g, b)
         h = h + 360
     end
 
-    return { h = h, s = s * 100, v = v * 100 }  -- Return HSV values with H in degrees, S and V as percentages
+    return { h = math.floor(h), s = math.floor(s * 100), v = math.floor(v * 100) }  -- Return HSV values with H in degrees, S and V as percentages
 end
 
 ---@param h number

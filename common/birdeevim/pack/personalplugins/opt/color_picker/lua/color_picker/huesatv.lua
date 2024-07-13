@@ -252,6 +252,21 @@ return {
 				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr({ h = self["_h_" ..n], s = self["_s_" .. n], v = self["_v_" .. n] }) });
 			end
 		});
+		vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
+			silent = true,
+			callback = function ()
+				local inputcolor = utils.hexToTable(vim.fn.input('Please input a color code: '))
+				if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
+					local inputhsv = utils.rgbToHsv(inputcolor.r, inputcolor.g, inputcolor.b)
+					self["_h_" .. n] = inputhsv.h
+					self["_s_" .. n] = inputhsv.s
+					self["_v_" .. n] = inputhsv.v
+					self:clear_ns(buf);
+					self:update_hex(n);
+					self:create_ui(buf, n);
+				end
+			end
+		});
 	end,
 
 	clear_ns = function (self, buf)

@@ -245,6 +245,20 @@ return {
 				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr({ r = self["_r_" ..n], g = self["_g_" .. n], b = self["_b_" .. n] }) });
 			end
 		});
+		vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
+			silent = true,
+			callback = function ()
+				local inputcolor = utils.hexToTable(vim.fn.input('Please input a color code: '))
+				if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
+					self["_r_" .. n] = inputcolor.r
+					self["_g_" .. n] = inputcolor.g
+					self["_b_" .. n] = inputcolor.b
+					self:clear_ns(buf);
+					self:update_hex(n);
+					self:create_ui(buf, n);
+				end
+			end
+		});
 	end,
 
 	clear_ns = function (self, buf)

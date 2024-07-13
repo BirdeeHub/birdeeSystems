@@ -338,6 +338,23 @@ return {
 		});
 	end,
 	add_actions = function (self, buf, n)
+		vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
+			silent = true,
+			callback = function ()
+				local inputcolor = utils.hexToTable(vim.fn.input('Please input a color code: '))
+				if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
+					self["_r_" .. n] = inputcolor.r
+					self["_g_" .. n] = inputcolor.g
+					self["_b_" .. n] = inputcolor.b
+					self:clear_ns(buf);
+					self:update_hex(n);
+					self:update_gradient();
+					self:create_ui(buf, n);
+					self:clear_ns(self.__buf_3);
+					self:create_preview();
+				end
+			end
+		});
 		vim.api.nvim_buf_set_keymap(buf, "n", "<Enter>", "", {
 			silent = true,
 			callback = function ()
