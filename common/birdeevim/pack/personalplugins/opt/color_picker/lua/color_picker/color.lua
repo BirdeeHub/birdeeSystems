@@ -252,6 +252,13 @@ function M.get()
 					vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr(self._color) })
 				end
 			})
+			vim.api.nvim_buf_set_keymap(buf, "n", "y", "", {
+				silent = true,
+				callback = function()
+					vim.api.nvim_set_current_win(self.__onwin)
+					vim.fn.setreg('+', utils.toStr(self._color))
+				end
+			})
 			vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
 				silent = true,
 				callback = function()
