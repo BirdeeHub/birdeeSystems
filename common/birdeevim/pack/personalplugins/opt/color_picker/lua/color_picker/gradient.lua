@@ -236,17 +236,8 @@ return {
 		---@param n number
 		---@param color color_rgb
 		local function grad_callback(n, color)
-			local ready = true
-			if self["_color_" .. n] == nil then
-				ready = false
-			end
 			self["_color_" .. n] = color
-			if not ready and self._color_1 and self._color_2 then
-				self:clear_ns(self.__buf_3);
-				self:set_hls();
-				self:create_preview();
-			end
-			if ready then
+			if self._color_1 and self._color_2 then
 				self:clear_ns(self.__buf_3);
 				self:set_hls();
 				self:create_preview();
