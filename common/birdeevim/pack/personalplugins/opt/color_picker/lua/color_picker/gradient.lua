@@ -261,7 +261,9 @@ return {
 
 		local _off = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff;
 
-		local grad_callback = function (n, color)
+		---@param n number
+		---@param color color_rgb
+		local function grad_callback(n, color)
 			local ready = true
 			if self["_color_" .. n] == nil then
 				ready = false
