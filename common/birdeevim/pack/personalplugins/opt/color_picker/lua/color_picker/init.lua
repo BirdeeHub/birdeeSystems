@@ -1,7 +1,7 @@
 -- TODO: add history feature (should store as hex so that it can be easily generalized for other color spaces)
 -- TODO: add ability to export to vim.fn.setreg('+', color) instead of buffer
 -- TODO: add ability to customize keybinds
--- TODO: add cmyk, hsl, and lab color type pickers
+-- TODO: add CMYK and LAB color type pickers
 local picker = {}
 local rgb = require("color_picker.color").get()
 local hsv = require("color_picker.hsv").get()
