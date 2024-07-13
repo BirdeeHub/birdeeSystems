@@ -1,4 +1,3 @@
--- NOTE: in roughly this order
 -- TODO: add history feature (should store as hex so that it can be easily generalized for other color spaces)
 -- TODO: add ability to export to vim.fn.setreg('+', color) instead of buffer
 -- TODO: add ability to customize keybinds
