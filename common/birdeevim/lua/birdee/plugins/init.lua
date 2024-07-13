@@ -91,6 +91,15 @@ require('lz.n').load({
 })
 
 require('lz.n').load({
+  "vim-startuptime",
+  enabled = require('nixCatsUtils').enableForCategory('general.other'),
+  cmd = { "StartupTime" },
+  before = function (_)
+    vim.g.startuptime_exe_path = vim.fn.exepath(nixCats('nixCats_packageName'))
+  end,
+})
+
+require('lz.n').load({
   "todo-comments.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -106,23 +115,6 @@ require('lz.n').load({
     require("todo-comments").setup({ signs = false })
   end,
 })
-
--- require('lz.n').load({
---   "comment.nvim",
---   -- cmd = { "" },
---   -- event = "DeferredUIEnter",
---   -- ft = "",
---   keys = { "gc", "gb" },
---   -- colorscheme = "",
---   load = function (name)
---     require("birdee.utils").safe_packadd({
---       name,
---     })
---   end,
---   after = function (plugin)
---     require('Comment').setup()
---   end,
--- })
 
 require('lz.n').load({
   "otter.nvim",
@@ -345,14 +337,14 @@ require('lz.n').load({
   -- ft = "",
   -- keys = "<leader>U",
   -- colorscheme = "",
+  before = function (_)
+    vim.g.undotree_WindowLayout = 1
+    vim.g.undotree_SplitWidth = 40
+  end,
   load = function (name)
     require("birdee.utils").safe_packadd({
       name,
     })
-  end,
-  after = function (plugin)
-    vim.g.undotree_WindowLayout = 1
-    vim.g.undotree_SplitWidth = 40
   end,
 })
 
@@ -436,20 +428,19 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
-  "vim-startuptime",
-  enabled = require('nixCatsUtils').enableForCategory('general.other'),
-  cmd = { "StartupTime" },
-  -- event = "DeferredUIEnter",
-  -- ft = "lua",
-  -- keys = "",
-  -- colorscheme = "",
-  before = function (plugin)
-    vim.g.startuptime_exe_path = vim.fn.exepath(nixCats('nixCats_packageName'))
-  end,
-  load = function (name)
-    require("birdee.utils").safe_packadd({ name, })
-  end,
-  -- after = function (plugin)
-  -- end,
-})
+-- require('lz.n').load({
+--   "comment.nvim",
+--   -- cmd = { "" },
+--   -- event = "DeferredUIEnter",
+--   -- ft = "",
+--   keys = { "gc", "gb" },
+--   -- colorscheme = "",
+--   load = function (name)
+--     require("birdee.utils").safe_packadd({
+--       name,
+--     })
+--   end,
+--   after = function (plugin)
+--     require('Comment').setup()
+--   end,
+-- })
