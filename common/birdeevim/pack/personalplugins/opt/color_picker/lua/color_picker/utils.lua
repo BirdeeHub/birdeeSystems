@@ -1,15 +1,5 @@
 local utils = {}
 
----@class color_hsv
----@field h number
----@field s number
----@field v number
-
----@class color_rgb
----@field r number
----@field g number
----@field b number
-
 utils.lerp = function (a, b, t, i)
 	if t > 1 then
 		t = 1 / t;
@@ -20,19 +10,23 @@ end
 
 ---@overload fun(color: color_hsv): string
 ---@overload fun(color: color_rgb): string
-utils.getFg = function (colorTable)
+utils.getFg = function (color)
 	local brightness
-	if type(colorTable.h) == "number" and type(colorTable.s) == "number" and type(colorTable.v) == "number" then
-		brightness = colorTable.v;
+	---@diagnostic disable: undefined-field
+	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
+		brightness = color.v;
+	elseif type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
+		---@cast color color_rgb
+		brightness = utils.rgbToHsv(color).v;
 	else
-		---@cast colorTable color_rgb
-		brightness = utils.rgbToHsv(colorTable.r, colorTable.g, colorTable.b).v;
+	---@diagnostic enable: undefined-field
+		return "#000000"
 	end
 
 	if brightness > 60 then
-		return "#000000";
+		return "#000000"
 	else
-		return "#FFFFFF";
+		return "#FFFFFF"
 	end
 end
 
@@ -41,7 +35,7 @@ end
 ---@overload fun(color: color_rgb): string
 utils.toStr = function (color)
 	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
-		color = utils.hsvToRgb(color.h, color.s, color.v);
+		color = utils.hsvToRgb(color);
 	end
 	local R = #string.format("%x", color.r) == 1 and "0" .. string.format("%x", color.r) or string.format("%x", color.r);
 	local G = #string.format("%x", color.g) == 1 and "0" .. string.format("%x", color.g) or string.format("%x", color.g);
@@ -54,7 +48,7 @@ end
 ---+ Icon: " " Title: "rgb number to table converter" BorderL: " " BorderR: " "
 --- @param color number Number returned by "nvim_get_hl()"
 --- @return color_rgb # Table with r, g, b values
-utils.rgbToTable = function (color)
+utils.rgbToRgb = function (color)
 	local hex = string.format("%x", color);
 
 	return {
@@ -68,7 +62,7 @@ end
 ---+ Icon: " " Title: "hex color to table converter" BorderL: " " BorderR: " "
 --- @param color string Hexadecimal color code
 --- @return color_rgb # Table with r, g, b values
-utils.hexToTable = function (color)
+utils.hexToRgb = function (color)
 	local hex = string.gsub(color, "#", "");
 
 	if #hex == 3 then
@@ -140,15 +134,13 @@ utils.ease = function(ease, from, to, position)
 end
 --_
 
----@param r number
----@param g number
----@param b number
+---@param color color_rgb
 ---@return color_hsv
-function utils.rgbToHsv(r, g, b)
+function utils.rgbToHsv(color)
     -- Normalize the RGB values
-    local r_prime = r / 255
-    local g_prime = g / 255
-    local b_prime = b / 255
+    local r_prime = color.r / 255
+    local g_prime = color.g / 255
+    local b_prime = color.b / 255
 
     -- Find max and min values
     local c_max = math.max(r_prime, g_prime, b_prime)
@@ -188,11 +180,12 @@ function utils.rgbToHsv(r, g, b)
     return { h = math.floor(h), s = math.floor(s * 100), v = math.floor(v * 100) }  -- Return HSV values with H in degrees, S and V as percentages
 end
 
----@param h number
----@param s number
----@param v number
+---@param color color_hsv
 ---@return color_rgb
-function utils.hsvToRgb(h, s, v)
+function utils.hsvToRgb(color)
+	local h = color.h
+	local s = color.s
+	local v = color.v
     -- Convert saturation and value to [0, 1] range
     s = s / 100
     v = v / 100

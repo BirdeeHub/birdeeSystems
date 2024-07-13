@@ -109,7 +109,7 @@ return {
 
 		vim.api.nvim_set_hl(0, "Colors_hex_p", {
 			bg = self._cache[self._cache_pos],
-			fg = utils.getFg(utils.hexToTable(self._cache[self._cache_pos]))
+			fg = utils.getFg(utils.hexToRgb(self._cache[self._cache_pos]))
 		});
 		vim.api.nvim_set_hl(0, "Colors_hex_p_fg", {
 			fg = self._cache[self._cache_pos],
@@ -342,7 +342,7 @@ return {
 		vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
 			silent = true,
 			callback = function ()
-				local inputcolor = utils.hexToTable(vim.fn.input('Please input a color code: '))
+				local inputcolor = utils.hexToRgb(vim.fn.input('Please input a color code: '))
 				if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
 					self["_r_" .. n] = inputcolor.r
 					self["_g_" .. n] = inputcolor.g
@@ -493,7 +493,7 @@ return {
 
 		vim.api.nvim_set_hl(0, "Colors_hex_p", {
 			bg = self._cache[self._cache_pos],
-			fg = utils.getFg(utils.hexToTable(self._cache[self._cache_pos]))
+			fg = utils.getFg(utils.hexToRgb(self._cache[self._cache_pos]))
 		});
 		vim.api.nvim_set_hl(0, "Colors_hex_p_fg", {
 			fg = self._cache[self._cache_pos],

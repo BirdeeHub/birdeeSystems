@@ -107,8 +107,8 @@ return {
 		end
 
 
-		local rgb_1 = utils.hsvToRgb(self._h_1, self._s_1, self._v_1)
-		local rgb_2 = utils.hsvToRgb(self._h_2, self._s_2, self._v_2)
+		local rgb_1 = utils.hsvToRgb({ h = self._h_1, s = self._s_1, v = self._v_1})
+		local rgb_2 = utils.hsvToRgb({ h = self._h_2, s = self._s_2, v = self._v_2})
 
 		for i = 0, self._steps do
 			vim.api.nvim_set_hl(0, "Colors_p_" .. tostring(i + 1), {
@@ -139,7 +139,7 @@ return {
 
 		vim.api.nvim_set_hl(0, "Colors_hex_p", {
 			bg = self._cache[self._cache_pos],
-			fg = utils.getFg(utils.hexToTable(self._cache[self._cache_pos]))
+			fg = utils.getFg(utils.hexToRgb(self._cache[self._cache_pos]))
 		});
 		vim.api.nvim_set_hl(0, "Colors_hex_p_fg", {
 			fg = self._cache[self._cache_pos],
@@ -373,9 +373,9 @@ return {
 		vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
 			silent = true,
 			callback = function ()
-				local inputcolor = utils.hexToTable(vim.fn.input('Please input a color code: '))
+				local inputcolor = utils.hexToRgb(vim.fn.input('Please input a color code: '))
 				if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
-					local inputhsv = utils.rgbToHsv(inputcolor.r, inputcolor.g, inputcolor.b)
+					local inputhsv = utils.rgbToHsv(inputcolor)
 					self["_h_" .. n] = inputhsv.h
 					self["_s_" .. n] = inputhsv.s
 					self["_v_" .. n] = inputhsv.v
@@ -528,8 +528,8 @@ return {
 	update_gradient = function (self)
 		self._cache = {};
 
-		local rgb_1 = utils.hsvToRgb(self._h_1, self._s_1, self._v_1)
-		local rgb_2 = utils.hsvToRgb(self._h_2, self._s_2, self._v_2)
+		local rgb_1 = utils.hsvToRgb({ h = self._h_1, s = self._s_1, v = self._v_1})
+		local rgb_2 = utils.hsvToRgb({ h = self._h_2, s = self._s_2, v = self._v_2})
 
 		for i = 0, self._steps do
 			vim.api.nvim_set_hl(0, "Colors_p_" .. tostring(i + 1), {
