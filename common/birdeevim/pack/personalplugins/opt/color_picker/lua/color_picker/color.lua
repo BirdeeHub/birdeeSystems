@@ -8,14 +8,13 @@ return {
 	__on = nil,
 	__onwin = nil,
 
-	__ns = vim.api.nvim_create_namespace("colorPicker"),
+	__ns = vim.api.nvim_create_namespace(""),
 	__au = nil,
 
 	_x = 0, _y = 0,
 
-	_r = 0,
-	_g = 0,
-	_b = 0,
+	---@type color_rgb
+	_color = { r = 0, g = 0, b = 0 },
 
 	_close = nil,
 
@@ -36,61 +35,61 @@ return {
 		vim.wo[self.__win].relativenumber = false;
 	end,
 
-	create_hls = function (self)
+	create_hls = function (self, n)
 		for i = 0, self.__entries do
 			-- Red
-			vim.api.nvim_set_hl(0, "Colors_r_" .. tostring(i + 1), {
+			vim.api.nvim_set_hl(0, "Colors_r_" .. n .. "_" .. tostring(i + 1), {
 				fg = utils.toStr({ r = utils.lerp(0, 255, self.__entries, i), g = 0, b = 0 }),
 				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 			});
 
 			-- Green
-			vim.api.nvim_set_hl(0, "Colors_g_" .. tostring(i + 1), {
+			vim.api.nvim_set_hl(0, "Colors_g_" .. n .. "_" .. tostring(i + 1), {
 				fg = utils.toStr({ r = 0, g = utils.lerp(0, 255, self.__entries, i), b = 0 }),
 				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 			})
 
 			-- Blue
-			vim.api.nvim_set_hl(0, "Colors_b_" .. tostring(i + 1), {
+			vim.api.nvim_set_hl(0, "Colors_b_" .. n .. "_" .. tostring(i + 1), {
 				fg = utils.toStr({ r = 0, g = 0, b = utils.lerp(0, 255, self.__entries, i) }),
 				bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 			})
 		end
 
-		vim.api.nvim_set_hl(0, "Colors_hex", {
-			bg = utils.toStr({ r = self._r, g = self._g, b = self._b}),
-			fg = utils.getFg({ r = self._r, g = self._g, b = self._b})
+		vim.api.nvim_set_hl(0, "Colors_hex_" .. n, {
+			bg = utils.toStr(self._color),
+			fg = utils.getFg(self._color)
 		});
-		vim.api.nvim_set_hl(0, "Colors_hex_fg", {
-			fg = utils.toStr({ r = self._r, g = self._g, b = self._b})
+		vim.api.nvim_set_hl(0, "Colors_hex_fg_" .. n, {
+			fg = utils.toStr(self._color)
 		});
 	end,
-	create_ui = function (self, buf)
+	create_ui = function (self, buf, n)
 		local slider_r = {};
 		local slider_g = {};
 		local slider_b = {};
 
-		local r = self:get_level(self._r);
-		local g = self:get_level(self._g);
-		local b = self:get_level(self._b);
+		local r = self:get_level(self._color.r);
+		local g = self:get_level(self._color.g);
+		local b = self:get_level(self._color.b);
 
 		for i = 1, self.__entries do
 			if i == r then
-				table.insert(slider_r, { "▌", "Colors_r_" .. i })
+				table.insert(slider_r, { "▌", "Colors_r_" .. n .. "_" .. i })
 			else
-				table.insert(slider_r, { "█", "Colors_r_" .. i })
+				table.insert(slider_r, { "█", "Colors_r_" .. n .. "_" .. i })
 			end
 
 			if i == g then
-				table.insert(slider_g, { "▌", "Colors_g_" .. i })
+				table.insert(slider_g, { "▌", "Colors_g_" .. n .. "_" .. i })
 			else
-				table.insert(slider_g, { "█", "Colors_g_" .. i })
+				table.insert(slider_g, { "█", "Colors_g_" .. n .. "_" .. i })
 			end
 
 			if i == b then
-				table.insert(slider_b, { "▌", "Colors_b_" .. i })
+				table.insert(slider_b, { "▌", "Colors_b_" .. n .. "_" .. i })
 			else
-				table.insert(slider_b, { "█", "Colors_b_" .. i })
+				table.insert(slider_b, { "█", "Colors_b_" .. n .. "_" .. i })
 			end
 
 		end
@@ -101,7 +100,7 @@ return {
 		});
 		vim.api.nvim_buf_set_extmark(buf, self.__ns, 0, 3, {
 			virt_text_pos = "right_align",
-			virt_text = { { tostring(self._r) } },
+			virt_text = { { tostring(self._color.r) } },
 
 			hl_mode = "combine",
 		});
@@ -112,7 +111,7 @@ return {
 		});
 		vim.api.nvim_buf_set_extmark(buf, self.__ns, 1, 3, {
 			virt_text_pos = "right_align",
-			virt_text = { { tostring(self._g) } },
+			virt_text = { { tostring(self._color.g) } },
 
 			hl_mode = "combine",
 		});
@@ -123,7 +122,7 @@ return {
 		});
 		vim.api.nvim_buf_set_extmark(buf, self.__ns, 2, 3, {
 			virt_text_pos = "right_align",
-			virt_text = { { tostring(self._b) } },
+			virt_text = { { tostring(self._color.b) } },
 
 			hl_mode = "combine",
 		});
@@ -131,35 +130,35 @@ return {
 		vim.api.nvim_buf_set_extmark(buf, self.__ns, 4, 3, {
 			virt_text_pos = "eol",
 			virt_text = {
-				{ utils.toStr({ r = self._r, g = self._g, b = self._b }), "Colors_hex" },
-				{ " ██", "Colors_hex_fg" },
+				{ utils.toStr(self._color), "Colors_hex_" .. n },
+				{ " ██", "Colors_hex_fg_" .. n },
 			},
 
 			hl_mode = "combine",
 		});
 	end,
 
-	add_movement = function (self, win, buf)
+	add_movement = function (self, win, buf, n)
 		vim.api.nvim_buf_set_keymap(buf, "n", "<left>", "", {
 			silent = true,
 			callback = function ()
 				local cursor = vim.api.nvim_win_get_cursor(win);
 
-				local R = self._r
-				local G = self._g
-				local B = self._b
+				local R = self._color.r
+				local G = self._color.g
+				local B = self._color.b
 
 				if cursor[1] == 1 and (R - 1) >= 0 then
-					self._r = R - 1;
+					self._color.r = R - 1;
 				elseif cursor[1] == 2 and (G - 1) >= 0 then
-					self._g = G - 1;
+					self._color.g = G - 1;
 				elseif cursor[1] == 3 and (B - 1) >= 0 then
-					self._b = B - 1;
+					self._color.b = B - 1;
 				end
 
 				self:clear_ns(buf);
-				self:update_hex();
-				self:create_ui(buf)
+				self:update_hex(n);
+				self:create_ui(buf, n)
 			end
 		});
 		vim.api.nvim_buf_set_keymap(buf, "n", "z", "", {
@@ -167,21 +166,21 @@ return {
 			callback = function ()
 				local cursor = vim.api.nvim_win_get_cursor(win);
 
-				local R = self._r
-				local G = self._g
-				local B = self._b
+				local R = self._color.r
+				local G = self._color.g
+				local B = self._color.b
 
 				if cursor[1] == 1 and (R - 10) >= 0 then
-					self._r = R - 10;
+					self._color.r = R - 10;
 				elseif cursor[1] == 2 and (G - 10) >= 0 then
-					self._g = G - 10;
+					self._color.g = G - 10;
 				elseif cursor[1] == 3 and (B - 10) >= 0 then
-					self._b = B - 10;
+					self._color.b = B - 10;
 				end
 
 				self:clear_ns(buf);
-				self:update_hex();
-				self:create_ui(buf)
+				self:update_hex(n);
+				self:create_ui(buf, n)
 			end
 		});
 
@@ -190,21 +189,21 @@ return {
 			callback = function ()
 				local cursor = vim.api.nvim_win_get_cursor(win);
 
-				local R = self._r
-				local G = self._g
-				local B = self._b
+				local R = self._color.r
+				local G = self._color.g
+				local B = self._color.b
 
 				if cursor[1] == 1 and (R + 1) <= 255 then
-					self._r = R + 1;
+					self._color.r = R + 1;
 				elseif cursor[1] == 2 and (G + 1) <= 255 then
-					self._g = G + 1;
+					self._color.g = G + 1;
 				elseif cursor[1] == 3 and (B + 1) <= 255 then
-					self._b = B + 1;
+					self._color.b = B + 1;
 				end
 
 				self:clear_ns(buf);
-				self:update_hex();
-				self:create_ui(buf)
+				self:update_hex(n);
+				self:create_ui(buf, n)
 			end
 		})
 		vim.api.nvim_buf_set_keymap(buf, "n", "x", "", {
@@ -212,21 +211,21 @@ return {
 			callback = function ()
 				local cursor = vim.api.nvim_win_get_cursor(win);
 
-				local R = self._r
-				local G = self._g
-				local B = self._b
+				local R = self._color.r
+				local G = self._color.g
+				local B = self._color.b
 
 				if cursor[1] == 1 and (R + 10) <= 255 then
-					self._r = R + 10;
+					self._color.r = R + 10;
 				elseif cursor[1] == 2 and (G + 10) <= 255 then
-					self._g = G + 10;
+					self._color.g = G + 10;
 				elseif cursor[1] == 3 and (B + 10) <= 255 then
-					self._b = B + 10;
+					self._color.b = B + 10;
 				end
 
 				self:clear_ns(buf);
-				self:update_hex();
-				self:create_ui(buf);
+				self:update_hex(n);
+				self:create_ui(buf, n);
 			end
 		});
 	end,
@@ -238,12 +237,12 @@ return {
 			end
 		});
 	end,
-	add_actions = function (self, buf)
+	add_actions = function (self, buf, n)
 		vim.api.nvim_buf_set_keymap(buf, "n", "<Enter>", "", {
 			silent = true,
 			callback = function ()
 				vim.api.nvim_set_current_win(self.__onwin)
-				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr({ r = self._r, g = self._g, b = self._b }) });
+				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr(self._color) });
 			end
 		});
 		vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
@@ -251,12 +250,10 @@ return {
 			callback = function ()
 				local inputcolor = utils.hexToRgb(vim.fn.input('Please input a color code: '))
 				if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
-					self._r = inputcolor.r
-					self._g = inputcolor.g
-					self._b = inputcolor.b
+					self._color = inputcolor
 					self:clear_ns(buf);
-					self:update_hex();
-					self:create_ui(buf);
+					self:update_hex(n);
+					self:create_ui(buf, n);
 				end
 			end
 		});
@@ -265,31 +262,37 @@ return {
 	clear_ns = function (self, buf)
 		vim.api.nvim_buf_clear_namespace(buf, self.__ns, 0, -1)
 	end,
-	update_hex = function (self)
-		vim.api.nvim_set_hl(0, "Colors_hex", {
-			bg = utils.toStr({ r = self._r, g = self._g, b = self._b }),
-			fg = utils.getFg({ r = self._r, g = self._g, b = self._b })
+	update_hex = function (self, n)
+		vim.api.nvim_set_hl(0, "Colors_hex_" .. n, {
+			bg = utils.toStr(self._color),
+			fg = utils.getFg(self._color)
 		});
-		vim.api.nvim_set_hl(0, "Colors_hex_fg", {
-			fg = utils.toStr({ r = self._r, g = self._g, b = self._b })
+		vim.api.nvim_set_hl(0, "Colors_hex_fg_" .. n, {
+			fg = utils.toStr(self._color)
 		});
 	end,
 	close_win = function (self, win)
 		vim.api.nvim_win_close(win, true);
 	end,
 
-	init = function (self)
+	init = function (self, c_x, c_y, x, y, n, color)
 		if self.__win and vim.api.nvim_win_is_valid(self.__win) then
 			return;
+		end
+		if type(color) == 'string' then
+			self._color = utils.hexToRgb(color)
+		elseif type(color) == 'table' then
+			self._color = color
 		end
 
 		self.__on = vim.api.nvim_get_current_buf();
 		self.__onwin = vim.api.nvim_get_current_win();
 
-		self._y = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1] - 1;
-		self._x = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[2];
+		self._x = c_x or vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[2];
+		x = x or self._x
 
-		self._y = self._y - vim.fn.line('w0', self.__onwin)
+		self._y = c_y or vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1] - 1
+		y = y or self._y - vim.fn.line('w0', self.__onwin);
 
 		local _off = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff;
 
@@ -297,8 +300,8 @@ return {
 			self.__win = vim.api.nvim_open_win(self.__buf, true, {
 				relative = "editor",
 
-				row = self._y,
-				col = _off + self._x,
+				row = y,
+				col = _off + x,
 
 				width = self.__entries + 4 + 4,
 				height = 5,
@@ -312,8 +315,8 @@ return {
 			self.__win = vim.api.nvim_open_win(self.__buf, true, {
 				relative = "editor",
 
-				row = self._y,
-				col = _off + self._x,
+				row = y,
+				col = _off + x,
 
 				width = self.__entries + 4 + 4,
 				height = 5,
@@ -364,15 +367,15 @@ return {
 		end
 
 		self:set_options();
-		self:create_ui(self.__buf, 1);
+		self:create_ui(self.__buf, n or 1);
 
-		self:add_movement(self.__win, self.__buf, 1);
+		self:add_movement(self.__win, self.__buf, n or 1);
 
 		self:add_exit(self.__buf);
 
-		self:add_actions(self.__buf, 1)
+		self:add_actions(self.__buf, n or 1)
 
-		self:create_hls();
+		self:create_hls(n or 1);
 	end
 
 }
