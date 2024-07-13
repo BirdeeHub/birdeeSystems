@@ -18,7 +18,8 @@ utils.getFg = function(color)
 		---@cast color color_rgb
 		brightness = utils.rgbToHsv(color).v
 	elseif type(color.h) == "number" and type(color.s) == "number" and type(color.l) == "number" then
-		brightness = color.l
+		---@cast color color_hsl
+		brightness = utils.hslToHsv(color).v
 	else
 		return "#000000"
 	end
@@ -251,6 +252,21 @@ function utils.hslToRgb(color)
 	b = math.max(0, math.min(255, b))
 
 	return { r = math.floor(r), g = math.floor(g), b = math.floor(b) }
+end
+
+---@param color color_hsl
+---@return color_hsv
+function utils.hslToHsv(color)
+    local s_l = color.s / 100
+    local l = color.l / 100
+
+    local v = l + s_l * math.min(l, 1 - l)
+    local s_v = 0
+    if v ~= 0 then
+        s_v = 2 * (1 - l / v)
+    end
+
+    return { h = color.h, s = math.floor(s_v * 100), v = math.floor(v * 100) }
 end
 
 return utils

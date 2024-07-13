@@ -15,7 +15,7 @@ function M.get()
 		_y = 0,
 
 		---@type color_hsl
-		_color = { h = 0, s = 100, l = 100 },
+		_color = { h = 0, s = 100, l = 50 },
 
 		---@type fun(n:number, color: color_rgb)
 		_grad_callback = function(n, color) end,
