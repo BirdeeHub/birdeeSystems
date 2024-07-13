@@ -46,6 +46,36 @@ require('birdee.plugins.clipboard')
 
 require('birdee.plugins.image')
 
+require('birdee.plugins.notes')
+
+require('birdee.plugins.gutter')
+
+require('birdee.plugins.grapple')
+
+require('birdee.plugins.which-key')
+
+require('lz.n').load({
+  "lazydev.nvim",
+  enabled = require('nixCatsUtils').enableForCategory('neonixdev'),
+  cmd = { "LazyDev" },
+  -- event = "DeferredUIEnter",
+  ft = "lua",
+  -- keys = "",
+  -- colorscheme = "",
+  load = function (name)
+    require("birdee.utils").safe_packadd({ name, })
+  end,
+  after = function (plugin)
+    require('lazydev').setup({
+      -- library = {
+	-- See the configuration section for more details
+	-- Load luvit types when the `vim.uv` word is found
+	-- { path = "luvit-meta/library", words = { "vim%.uv" } },
+      -- },
+    })
+  end,
+})
+
 require('lz.n').load({
   "vim-sleuth",
   -- cmd = { "" },
@@ -227,12 +257,6 @@ require('lz.n').load({
   end,
 })
 
-require('birdee.plugins.notes')
-
-require('birdee.plugins.gutter')
-
-require('birdee.plugins.grapple')
-
 require('lz.n').load({
   "indent-blankline.nvim",
   -- cmd = { "" },
@@ -373,7 +397,6 @@ require('lz.n').load({
     vim.cmd([[hi link @lsp.type.parameter Hlargs]])
   end,
 })
-require('birdee.plugins.which-key')
 
 require('lz.n').load({
   "nvim-highlight-colors",
@@ -410,28 +433,6 @@ require('lz.n').load({
 	{ label = '%-%-theme%-secondary%-color', color = '#5a5d64' },
       }
     }
-  end,
-})
-
-require('lz.n').load({
-  "lazydev.nvim",
-  enabled = require('nixCatsUtils').enableForCategory('neonixdev'),
-  cmd = { "LazyDev" },
-  -- event = "DeferredUIEnter",
-  ft = "lua",
-  -- keys = "",
-  -- colorscheme = "",
-  load = function (name)
-    require("birdee.utils").safe_packadd({ name, })
-  end,
-  after = function (plugin)
-    require('lazydev').setup({
-      -- library = {
-	-- See the configuration section for more details
-	-- Load luvit types when the `vim.uv` word is found
-	-- { path = "luvit-meta/library", words = { "vim%.uv" } },
-      -- },
-    })
   end,
 })
 
