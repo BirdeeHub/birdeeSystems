@@ -1,5 +1,6 @@
 -- TODO: add history feature
 -- TODO: add ability to customize keybinds
+-- TODO: add cmyk, hsl, and lab color type pickers?
 local picker = {};
 
 picker.colorPicker = function() require("color_picker.color"):init() end
