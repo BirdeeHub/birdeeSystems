@@ -350,6 +350,10 @@ return {
 				end
 			});
 		end
+
+		if vim.api.nvim_win_is_valid(picker1.__win) then
+			vim.api.nvim_set_current_win(picker1.__win)
+		end
 	end
 }
 end
