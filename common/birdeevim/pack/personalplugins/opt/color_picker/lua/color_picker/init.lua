@@ -1,5 +1,5 @@
 -- NOTE: in this order
--- TODO: add history feature (should store as hex so that it can be generalized for other color spaces)
+-- TODO: add history feature (should store as hex so that it can be easily generalized for other color spaces)
 -- TODO: add ability to customize keybinds
 -- TODO: refactor such that 2 pickers can be provided and a gradient view is generated for it.
 -- TODO: add cmyk, hsl, and lab color type pickers
