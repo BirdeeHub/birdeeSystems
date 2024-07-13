@@ -43,7 +43,8 @@ return {
 		vim.wo[self.__win_3].relativenumber = false;
 	end,
 
-	create_hls = function (self)
+	set_hls = function (self)
+		self._cache = {};
 		for i = 0, self._steps do
 			vim.api.nvim_set_hl(0, "Colors_p_" .. tostring(i + 1), {
 				fg = utils.toStr({ r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i), g = utils.lerp(self._color_1.g, self._color_2.g, self._steps, i), b = utils.lerp(self._color_1.b, self._color_2.b, self._steps, i)}),
@@ -61,6 +62,7 @@ return {
 			fg = self._cache[self._cache_pos],
 		});
 	end,
+
 	create_preview = function (self)
 		local _p = {};
 
@@ -138,7 +140,7 @@ return {
 				end
 
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
+				self:set_hls();
 				self:create_preview();
 			end
 		});
@@ -156,7 +158,7 @@ return {
 				end
 
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
+				self:set_hls();
 				self:create_preview();
 			end
 		});
@@ -179,7 +181,7 @@ return {
 				end
 
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
+				self:set_hls();
 				self:create_preview();
 			end
 		});
@@ -197,7 +199,7 @@ return {
 				end
 
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
+				self:set_hls();
 				self:create_preview();
 			end
 		});
@@ -205,26 +207,6 @@ return {
 
 	clear_ns = function (self, buf)
 		vim.api.nvim_buf_clear_namespace(buf, self.__ns, 0, -1)
-	end,
-
-	update_gradient = function (self)
-		self._cache = {};
-
-		for i = 0, self._steps do
-			vim.api.nvim_set_hl(0, "Colors_p_" .. tostring(i + 1), {
-				fg = utils.toStr({ r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i), g = utils.lerp(self._color_1.g, self._color_2.g, self._steps, i), b = utils.lerp(self._color_1.b, self._color_2.b, self._steps, i)}),
-			})
-
-			table.insert(self._cache, utils.toStr({ r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i), g = utils.lerp(self._color_1.g, self._color_2.g, self._steps, i), b = utils.lerp(self._color_1.b, self._color_2.b, self._steps, i)}))
-		end
-
-		vim.api.nvim_set_hl(0, "Colors_hex_p", {
-			bg = self._cache[self._cache_pos],
-			fg = utils.getFg(utils.hexToRgb(self._cache[self._cache_pos]))
-		});
-		vim.api.nvim_set_hl(0, "Colors_hex_p_fg", {
-			fg = self._cache[self._cache_pos],
-		});
 	end,
 	close_win = function (self, win)
 		vim.api.nvim_win_close(win, true);
@@ -261,12 +243,12 @@ return {
 			self["_color_" .. n] = color
 			if not ready and self._color_1 and self._color_2 then
 				self:clear_ns(self.__buf_3);
-				self:create_hls();
+				self:set_hls();
 				self:create_preview();
 			end
 			if ready then
 				self:clear_ns(self.__buf_3);
-				self:update_gradient();
+				self:set_hls();
 				self:create_preview();
 			end
 		end
