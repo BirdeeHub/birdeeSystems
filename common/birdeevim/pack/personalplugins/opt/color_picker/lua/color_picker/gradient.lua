@@ -535,75 +535,74 @@ return {
 				border = "rounded"
 			});
 
-			goto bufReady;
+		else
+
+			self.__buf_1 = vim.api.nvim_create_buf(false, true);
+			self.__buf_2 = vim.api.nvim_create_buf(false, true);
+			self.__buf_3 = vim.api.nvim_create_buf(false, true);
+
+			self.__win_1 = vim.api.nvim_open_win(self.__buf_1, true, {
+				relative = "editor",
+
+				row = self._y,
+				col = _off + self._x,
+
+				width = self.__entries + 4 + 4,
+				height = 5,
+
+				focusable = false,
+				border = "rounded"
+			});
+			self.__win_2 = vim.api.nvim_open_win(self.__buf_2, false, {
+				relative = "editor",
+
+				row = self._y,
+				col = _off + self._x + self.__entries + 6 + 4,
+
+				width = self.__entries + 4 + 4,
+				height = 5,
+
+				focusable = false,
+				border = "rounded"
+			});
+			self.__win_3 = vim.api.nvim_open_win(self.__buf_3, false, {
+				relative = "editor",
+
+				row = self._y + 7,
+				col = _off + self._x,
+
+				width = self._steps > 30 and self._steps or 30,
+				height = 3,
+
+				focusable = false,
+				border = "rounded"
+			});
+
+			vim.bo[self.__buf_1].filetype = "Gradient_picker"
+			vim.bo[self.__buf_2].filetype = "Gradient_picker"
+			vim.bo[self.__buf_3].filetype = "Gradient_picker"
+
+			vim.api.nvim_buf_set_lines(self.__buf_1, 0, -1, false, {
+				"R: ",
+				"G: ",
+				"B: ",
+				"",
+				"Color: "
+			});
+			vim.api.nvim_buf_set_lines(self.__buf_2, 0, -1, false, {
+				"R: ",
+				"G: ",
+				"B: ",
+				"",
+				"Color: "
+			});
+			vim.api.nvim_buf_set_lines(self.__buf_3, 0, -1, false, {
+				"",
+				string.rep("─", self._steps > 30 and self._steps or 30),
+				"Current color: "
+			});
+
 		end
-
-		self.__buf_1 = vim.api.nvim_create_buf(false, true);
-		self.__buf_2 = vim.api.nvim_create_buf(false, true);
-		self.__buf_3 = vim.api.nvim_create_buf(false, true);
-
-		self.__win_1 = vim.api.nvim_open_win(self.__buf_1, true, {
-			relative = "editor",
-
-			row = self._y,
-			col = _off + self._x,
-
-			width = self.__entries + 4 + 4,
-			height = 5,
-
-			focusable = false,
-			border = "rounded"
-		});
-		self.__win_2 = vim.api.nvim_open_win(self.__buf_2, false, {
-			relative = "editor",
-
-			row = self._y,
-			col = _off + self._x + self.__entries + 6 + 4,
-
-			width = self.__entries + 4 + 4,
-			height = 5,
-
-			focusable = false,
-			border = "rounded"
-		});
-		self.__win_3 = vim.api.nvim_open_win(self.__buf_3, false, {
-			relative = "editor",
-
-			row = self._y + 7,
-			col = _off + self._x,
-
-			width = self._steps > 30 and self._steps or 30,
-			height = 3,
-
-			focusable = false,
-			border = "rounded"
-		});
-
-		vim.bo[self.__buf_1].filetype = "Gradient_picker"
-		vim.bo[self.__buf_2].filetype = "Gradient_picker"
-		vim.bo[self.__buf_3].filetype = "Gradient_picker"
-
-		vim.api.nvim_buf_set_lines(self.__buf_1, 0, -1, false, {
-			"R: ",
-			"G: ",
-			"B: ",
-			"",
-			"Color: "
-		});
-		vim.api.nvim_buf_set_lines(self.__buf_2, 0, -1, false, {
-			"R: ",
-			"G: ",
-			"B: ",
-			"",
-			"Color: "
-		});
-		vim.api.nvim_buf_set_lines(self.__buf_3, 0, -1, false, {
-			"",
-			string.rep("─", self._steps > 30 and self._steps or 30),
-			"Current color: "
-		});
-
-		::bufReady::
 
 		if not self.__au and not self._close_1 and not self._close_2 and not self._close_3 then
 			self.__au = vim.api.nvim_create_autocmd({ "WinEnter" }, {
