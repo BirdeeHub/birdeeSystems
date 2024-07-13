@@ -2,10 +2,10 @@ local utils = {}
 
 utils.lerp = function (a, b, t, i)
 	if t > 1 then
-		t = 1 / t;
+		t = 1 / t
 	end
 
-	return a + (b - a) * t * (i or 1);
+	return a + (b - a) * t * (i or 1)
 end
 
 ---@overload fun(color: color_hsv): string
@@ -14,10 +14,10 @@ utils.getFg = function (color)
 	local brightness
 	---@diagnostic disable: undefined-field
 	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
-		brightness = color.v;
+		brightness = color.v
 	elseif type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
 		---@cast color color_rgb
-		brightness = utils.rgbToHsv(color).v;
+		brightness = utils.rgbToHsv(color).v
 	else
 	---@diagnostic enable: undefined-field
 		return "#000000"
@@ -35,13 +35,13 @@ end
 ---@overload fun(color: color_rgb): string
 utils.toStr = function (color)
 	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
-		color = utils.hsvToRgb(color);
+		color = utils.hsvToRgb(color)
 	end
-	local R = #string.format("%x", color.r) == 1 and "0" .. string.format("%x", color.r) or string.format("%x", color.r);
-	local G = #string.format("%x", color.g) == 1 and "0" .. string.format("%x", color.g) or string.format("%x", color.g);
-	local B = #string.format("%x", color.b) == 1 and "0" .. string.format("%x", color.b) or string.format("%x", color.b);
+	local R = #string.format("%x", color.r) == 1 and "0" .. string.format("%x", color.r) or string.format("%x", color.r)
+	local G = #string.format("%x", color.g) == 1 and "0" .. string.format("%x", color.g) or string.format("%x", color.g)
+	local B = #string.format("%x", color.b) == 1 and "0" .. string.format("%x", color.b) or string.format("%x", color.b)
 
-	return "#" .. R .. G .. B;
+	return "#" .. R .. G .. B
 end
 ---_
 
@@ -49,20 +49,20 @@ end
 --- @param color string Hexadecimal color code
 --- @return color_rgb # Table with r, g, b values
 utils.hexToRgb = function (color)
-	local hex = string.gsub(color, "#", "");
+	local hex = string.gsub(color, "#", "")
 
 	if #hex == 3 then
 		return {
 			r = tonumber(string.sub(hex, 1, 1), 16),
 			g = tonumber(string.sub(hex, 2, 2), 16),
 			b = tonumber(string.sub(hex, 3, 3), 16),
-		};
+		}
 	else
 		return {
 			r = tonumber(string.sub(hex, 1, 2), 16),
 			g = tonumber(string.sub(hex, 3, 4), 16),
 			b = tonumber(string.sub(hex, 5, 6), 16),
-		};
+		}
 	end
 end
 --_
@@ -151,4 +151,4 @@ function utils.hsvToRgb(color)
     return { r = math.floor(r), g = math.floor(g), b = math.floor(b) }
 end
 
-return utils;
+return utils
