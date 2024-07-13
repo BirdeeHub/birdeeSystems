@@ -1,4 +1,6 @@
 local utils = require("color_picker.utils");
+local M = {}
+function M.get()
 return {
 	__buf = nil,
 	__win = nil,
@@ -14,8 +16,8 @@ return {
 	---@type color_hsv
 	_color = { h = 0, s = 100, v = 100 },
 
-	---@type fun(_:number, _: color_rgb)
-	_grad_callback = function (_, _) end,
+	---@type fun(n:number, color: color_rgb)
+	_grad_callback = function (n, color) end,
 
 	_close = nil,
 
@@ -304,14 +306,27 @@ return {
 		vim.api.nvim_win_close(win, true);
 	end,
 
+	---arguments are for gradient
+	---@param self table
+	---@param c_x number
+	---@param c_y number
+	---@param offset number
+	---@param onbuf number
+	---@param onwin number
+	---@param x number
+	---@param y number
+	---@param n number
+	---@param color color_rgb|string
+	---@param grad_callback fun(n: number, color: color_rgb)
+	---@overload fun(self: table)
 	init = function (self, c_x, c_y, offset, onbuf, onwin, x, y, n, color, grad_callback)
 		if self.__win and vim.api.nvim_win_is_valid(self.__win) then
 			return;
 		end
 		if type(color) == 'string' then
-			self._color = utils.hexToRgb(color)
+			self._color = utils.rgbToHsv(utils.hexToRgb(color))
 		elseif type(color) == 'table' then
-			self._color = color
+			self._color = utils.rgbToHsv(color)
 		end
 
 		self._grad_callback = grad_callback or function (_, _) end
@@ -411,3 +426,5 @@ return {
 	end
 
 }
+end
+return M

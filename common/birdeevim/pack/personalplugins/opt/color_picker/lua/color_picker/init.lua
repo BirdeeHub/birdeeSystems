@@ -5,8 +5,8 @@
 -- TODO: add cmyk, hsl, and lab color type pickers
 local picker = {};
 
-picker.colorPicker = function() require("color_picker.color"):init() end
-picker.gradientPicker = function() require("color_picker.gradient"):init() end
+picker.colorPicker = function() require("color_picker.color").get():init() end
+picker.gradientPicker = function() require("color_picker.gradient").get():init() end
 picker.hsvGradientPicker = function() require("color_picker.hsvgradient"):init() end
 picker.huePicker = function() require("color_picker.huesatv"):init() end
 
