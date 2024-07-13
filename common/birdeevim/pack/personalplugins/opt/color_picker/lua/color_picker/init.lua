@@ -1,8 +1,8 @@
 local picker = {};
 
-picker.colorPicker = require("color_picker.color")
-picker.gradientPicker = require("color_picker.gradient")
-picker.hsvGradientPicker = require("color_picker.hsvgradient")
-picker.huePicker = require("color_picker.huesatv")
+picker.colorPicker = function() require("color_picker.color"):init() end
+picker.gradientPicker = function() require("color_picker.gradient"):init() end
+picker.hsvGradientPicker = function() require("color_picker.hsvgradient"):init() end
+picker.huePicker = function() require("color_picker.huesatv"):init() end
 
 return picker;
