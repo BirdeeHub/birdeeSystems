@@ -14,6 +14,9 @@ return {
 	---@type color_hsv
 	_color = { h = 0, s = 100, v = 100 },
 
+	---@type fun(_:number, _: color_rgb)
+	_grad_callback = function (_, _) end,
+
 	_close = nil,
 
 	__entries = 20,
@@ -166,6 +169,7 @@ return {
 				self:clear_ns(buf);
 				self:update_hex(n);
 				self:create_ui(buf, n)
+				self._grad_callback(n, utils.hsvToRgb(self._color))
 			end
 		});
 		vim.api.nvim_buf_set_keymap(buf, "n", "z", "", {
@@ -188,6 +192,7 @@ return {
 				self:clear_ns(buf);
 				self:update_hex(n);
 				self:create_ui(buf, n)
+				self._grad_callback(n, utils.hsvToRgb(self._color))
 			end
 		});
 
@@ -211,6 +216,7 @@ return {
 				self:clear_ns(buf);
 				self:update_hex(n);
 				self:create_ui(buf, n)
+				self._grad_callback(n, utils.hsvToRgb(self._color))
 			end
 		})
 		vim.api.nvim_buf_set_keymap(buf, "n", "x", "", {
@@ -233,6 +239,7 @@ return {
 				self:clear_ns(buf);
 				self:update_hex(n);
 				self:create_ui(buf, n);
+				self._grad_callback(n, utils.hsvToRgb(self._color))
 			end
 		});
 	end,
@@ -262,6 +269,7 @@ return {
 					self:clear_ns(buf);
 					self:update_hex(n);
 					self:create_ui(buf, n);
+					self._grad_callback(n, utils.hsvToRgb(self._color))
 				end
 			end
 		});
@@ -296,7 +304,7 @@ return {
 		vim.api.nvim_win_close(win, true);
 	end,
 
-	init = function (self, c_x, c_y, x, y, n, color)
+	init = function (self, c_x, c_y, offset, onbuf, onwin, x, y, n, color, grad_callback)
 		if self.__win and vim.api.nvim_win_is_valid(self.__win) then
 			return;
 		end
@@ -306,8 +314,10 @@ return {
 			self._color = color
 		end
 
-		self.__on = vim.api.nvim_get_current_buf();
-		self.__onwin = vim.api.nvim_get_current_win();
+		self._grad_callback = grad_callback or function (_, _) end
+
+		self.__on = onbuf or vim.api.nvim_get_current_buf();
+		self.__onwin = onwin or vim.api.nvim_get_current_win();
 
 		self._x = c_x or vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[2];
 		x = x or self._x
@@ -315,7 +325,7 @@ return {
 		self._y = c_y or vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1] - 1
 		y = y or self._y - vim.fn.line('w0', self.__onwin);
 
-		local _off = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff;
+		local _off = offset or vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff;
 
 		if self.__buf then
 			self.__win= vim.api.nvim_open_win(self.__buf, true, {
