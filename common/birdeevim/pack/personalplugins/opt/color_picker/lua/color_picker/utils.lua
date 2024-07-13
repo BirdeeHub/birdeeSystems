@@ -24,7 +24,7 @@ utils.getFg = function(color)
 		return "#000000"
 	end
 
-	if brightness > 60 then
+	if brightness > 70 then
 		return "#000000"
 	else
 		return "#FFFFFF"
