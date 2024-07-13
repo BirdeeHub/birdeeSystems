@@ -12,14 +12,12 @@ end
 ---@return string
 utils.getFg = function (color)
 	local brightness
-	---@diagnostic disable: undefined-field
 	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
 		brightness = color.v
 	elseif type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
 		---@cast color color_rgb
 		brightness = utils.rgbToHsv(color).v
 	else
-	---@diagnostic enable: undefined-field
 		return "#000000"
 	end
 
