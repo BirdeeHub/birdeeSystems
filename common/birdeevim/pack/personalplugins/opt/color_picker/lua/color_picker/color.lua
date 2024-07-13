@@ -21,8 +21,6 @@ return {
 	---@type fun(n:number, color: color_rgb)
 	_grad_callback = function (n, color) end,
 
-	_close = nil,
-
 	__entries = 20,
 
 	get_level = function (self, value)
@@ -360,7 +358,7 @@ return {
 			});
 		end
 
-		if not self.__au and not self._close then
+		if not self.__au then
 			self.__au = vim.api.nvim_create_autocmd({ "WinEnter" }, {
 				callback = function (event)
 					if vim.bo[event.buf].filetype == "color_picker" then
@@ -369,22 +367,9 @@ return {
 
 					self.__au = vim.api.nvim_del_autocmd(self.__au)
 
-					self._close = vim.api.nvim_del_autocmd(self._close)
-
 					if vim.api.nvim_win_is_valid(self.__win) then
 						self:close_win(self.__win)
 					end
-
-					vim.api.nvim_buf_clear_namespace(self.__buf, self.__ns, 0, -1);
-				end
-			});
-
-			self._close = vim.api.nvim_create_autocmd({ "WinClosed" }, {
-				buffer = self.__buf,
-				callback = function ()
-					self.__au = vim.api.nvim_del_autocmd(self.__au)
-
-					self._close = vim.api.nvim_del_autocmd(self._close)
 
 					vim.api.nvim_buf_clear_namespace(self.__buf, self.__ns, 0, -1);
 				end
@@ -401,6 +386,8 @@ return {
 		self:add_actions(self.__buf, n or 1)
 
 		self:create_hls(n or 1);
+
+		self._grad_callback(n, self._color)
 	end
 
 }
