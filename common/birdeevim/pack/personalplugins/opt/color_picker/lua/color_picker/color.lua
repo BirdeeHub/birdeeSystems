@@ -6,6 +6,7 @@ return {
 	__win_1 = nil,
 
 	__on = nil,
+	__onwin = nil,
 
 	__ns = vim.api.nvim_create_namespace("colorPicker"),
 	__au = nil,

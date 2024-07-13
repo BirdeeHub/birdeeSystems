@@ -11,6 +11,7 @@ return {
 	__buf_3 = nil,
 	__win_3 = nil,
 	__on = nil,
+	__onwin = nil,
 
 	__ns = vim.api.nvim_create_namespace("gradientPicker"),
 	__au = nil,
