@@ -1,5 +1,5 @@
 -- TODO: add history feature (should store as hex so that it can be easily generalized for other color spaces)
--- TODO: add ability to customize keybinds
+-- TODO: add ability to customize keybinds, and maybe a keybind to show them too
 -- TODO: add CMYK and LAB color type pickers
 local picker = {}
 local rgb = require("color_picker.color").get()
