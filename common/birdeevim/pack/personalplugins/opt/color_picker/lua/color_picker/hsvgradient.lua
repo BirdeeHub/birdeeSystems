@@ -623,9 +623,9 @@ return {
 				border = "rounded"
 			});
 
-			vim.bo[self.__buf_1].filetype = "Gradient_picker"
-			vim.bo[self.__buf_2].filetype = "Gradient_picker"
-			vim.bo[self.__buf_3].filetype = "Gradient_picker"
+			vim.bo[self.__buf_1].filetype = "color_picker"
+			vim.bo[self.__buf_2].filetype = "color_picker"
+			vim.bo[self.__buf_3].filetype = "color_picker"
 
 			vim.api.nvim_buf_set_lines(self.__buf_1, 0, -1, false, {
 				"H: ",
@@ -652,7 +652,7 @@ return {
 		if not self.__au and not self._close_1 and not self._close_2 and not self._close_3 then
 			self.__au = vim.api.nvim_create_autocmd({ "WinEnter" }, {
 				callback = function (event)
-					if vim.bo[event.buf].filetype == "Gradient_picker" then
+					if vim.bo[event.buf].filetype == "color_picker" then
 						return;
 					end
 
