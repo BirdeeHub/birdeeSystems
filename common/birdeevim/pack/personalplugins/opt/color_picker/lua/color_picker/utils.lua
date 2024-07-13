@@ -8,8 +8,8 @@ utils.lerp = function (a, b, t, i)
 	return a + (b - a) * t * (i or 1)
 end
 
----@overload fun(color: color_hsv): string
----@overload fun(color: color_rgb): string
+---@param color color_rgb|color_hsv
+---@return string
 utils.getFg = function (color)
 	local brightness
 	---@diagnostic disable: undefined-field
@@ -31,10 +31,11 @@ utils.getFg = function (color)
 end
 
 ---+ Title: "Turns color tables to hex color codes"
----@overload fun(color: color_hsv): string
----@overload fun(color: color_rgb): string
+---@param color color_rgb|color_hsv
+---@return string
 utils.toStr = function (color)
 	if type(color.h) == "number" and type(color.s) == "number" and type(color.v) == "number" then
+		---@cast color color_hsv
 		color = utils.hsvToRgb(color)
 	end
 	local R = #string.format("%x", color.r) == 1 and "0" .. string.format("%x", color.r) or string.format("%x", color.r)
