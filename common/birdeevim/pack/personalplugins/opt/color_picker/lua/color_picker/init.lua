@@ -1,3 +1,4 @@
+-- NOTE: in this order
 -- TODO: add history feature
 -- TODO: add ability to customize keybinds
 -- TODO: refactor such that 2 pickers can be provided and a gradient view is generated for it.
