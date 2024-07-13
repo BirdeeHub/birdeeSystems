@@ -164,18 +164,8 @@ return {
 		vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "<Enter>", "", {
 			silent = true,
 			callback = function ()
-				local _o = "";
-
-				for c, col in ipairs(self._cache) do
-					_o = _o .. '"' .. col .. '"';
-
-					if c ~= #self._cache then
-						_o = _o .. ", ";
-					end
-				end
-
 				vim.api.nvim_set_current_win(self.__onwin)
-				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { _o });
+				vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { self._cache[self._cache_pos] });
 			end
 		});
 
