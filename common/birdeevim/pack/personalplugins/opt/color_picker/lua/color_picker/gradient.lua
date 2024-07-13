@@ -267,7 +267,7 @@ return {
 				ready = false
 			end
 			self["_color_" .. n] = color
-			if self._color_1 and self._color_2 and not ready then
+			if not ready and self._color_1 and self._color_2 then
 				self:clear_ns(self.__buf_3);
 				self:create_hls();
 				self:create_preview();
