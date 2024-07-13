@@ -18,9 +18,6 @@ return {
 
 	__entries = 20,
 
-	_cache = {},
-	_cache_pos = 1,
-
 	get_level = function (self, field, value)
 		local val_per_lvl
 		if field == "h" then

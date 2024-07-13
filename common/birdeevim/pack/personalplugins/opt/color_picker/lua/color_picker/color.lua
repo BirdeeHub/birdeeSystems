@@ -19,10 +19,6 @@ return {
 	_close_1 = nil,
 
 	__entries = 20,
-	_steps = 10,
-
-	_cache = {},
-	_cache_pos = 1,
 
 	get_level = function (self, value)
 		local val_per_lvl = 255 / self.__entries;
