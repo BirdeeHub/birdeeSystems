@@ -10,3 +10,8 @@ error("Cannot import a meta module")
 ---@field r number
 ---@field g number
 ---@field b number
+
+---@class color_hsl
+---@field h number
+---@field s number
+---@field l number

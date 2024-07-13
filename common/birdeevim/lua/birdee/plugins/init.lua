@@ -24,10 +24,12 @@ require("large_file").setup({
   on_large_file_read_pre = function(ev) end
 })
 
-vim.keymap.set('n', '<leader>cpc', function() require("color_picker").colorPicker() end,{desc = 'color_picker color'})
-vim.keymap.set('n', '<leader>cpg', function() require("color_picker").gradientPicker() end,{desc = 'color_picker gradient'})
-vim.keymap.set('n', '<leader>cpd', function() require("color_picker").hsvGradientPicker() end,{desc = 'color_picker hsv gradient'})
+vim.keymap.set('n', '<leader>cpc', function() require("color_picker").colorPicker() end,{desc = 'color_picker rgb'})
 vim.keymap.set('n', '<leader>cph', function() require("color_picker").huePicker() end,{desc = 'color_picker hsv'})
+vim.keymap.set('n', '<leader>cps', function() require("color_picker").hslPicker() end,{desc = 'color_picker hsl'})
+vim.keymap.set('n', '<leader>cpg', function() require("color_picker").gradientPicker() end,{desc = 'color_picker rgb gradient'})
+vim.keymap.set('n', '<leader>cpd', function() require("color_picker").hsvGradientPicker() end,{desc = 'color_picker hsv gradient'})
+vim.keymap.set('n', '<leader>cpb', function() require("color_picker").hslGradientPicker() end,{desc = 'color_picker hsl gradient'})
 require('lz.n').load({ "color_picker", on_require = "color_picker" })
 
 require('birdee.plugins.oil')
