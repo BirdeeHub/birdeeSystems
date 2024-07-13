@@ -17,7 +17,6 @@ return {
 	_close_1 = nil,
 
 	__entries = 20,
-	_steps = 10,
 
 	_cache = {},
 	_cache_pos = 1,

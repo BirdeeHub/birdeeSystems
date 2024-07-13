@@ -26,6 +26,7 @@ require("large_file").setup({
 
 vim.keymap.set('n', '<leader>cpc', function() require("color_picker").colorPicker:init() end,{desc = 'color_picker color'})
 vim.keymap.set('n', '<leader>cpg', function() require("color_picker").gradientPicker:init() end,{desc = 'color_picker gradient'})
+vim.keymap.set('n', '<leader>cpd', function() require("color_picker").hsvGradientPicker:init() end,{desc = 'color_picker gradient'})
 vim.keymap.set('n', '<leader>cph', function() require("color_picker").huePicker:init() end,{desc = 'color_picker hsv'})
 require('lz.n').load({ "color_picker", on_require = "color_picker" })
 
