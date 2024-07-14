@@ -2,6 +2,8 @@
 -- TODO: add display for history
 -- TODO: add display for keybinds
 -- TODO: add CMYK and LAB color type pickers
+-- TODO: figure out why you can't map h and l instead of left and right
+-- TODO: make a combined all color types picker
 local picker = {}
 
 picker.setup = require("color_picker.config").setup
