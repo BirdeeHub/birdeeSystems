@@ -335,7 +335,9 @@ function M.get()
 				self._history_callback = history_callback
 			end
 
-			self._grad_callback = grad_callback or function(_, _) end
+			if type(grad_callback) == 'function' then
+				self._grad_callback = grad_callback
+			end
 
 			self.__on = onbuf or vim.api.nvim_get_current_buf()
 			self.__onwin = onwin or vim.api.nvim_get_current_win()
