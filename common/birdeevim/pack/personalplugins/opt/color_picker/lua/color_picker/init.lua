@@ -1,4 +1,5 @@
 -- TODO: add ability to restore from history
+-- TODO: add configurable history limit instead of saving forever
 -- TODO: add ability to customize keybinds, and maybe a keybind to show them too
 -- TODO: add CMYK and LAB color type pickers
 local picker = {}
