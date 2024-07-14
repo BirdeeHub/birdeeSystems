@@ -3,6 +3,7 @@
 local utils = require("color_picker.utils")
 local M = {}
 function M.get()
+	local keymaps = require("color_picker.config").config.keybinds
 	return {
 		picker_1 = nil,
 		picker_2 = nil,
@@ -105,8 +106,9 @@ function M.get()
 		end,
 
 		add_switches = function(self, buf)
-			vim.api.nvim_buf_set_keymap(buf, "n", "<Tab>", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.cycle_window, "", {
 				silent = true,
+				desc = "cycle through color picker windows",
 				callback = function()
 					local c_win = vim.api.nvim_get_current_win()
 
@@ -121,16 +123,18 @@ function M.get()
 			})
 		end,
 		add_exit = function(self, buf)
-			vim.api.nvim_buf_set_keymap(buf, "n", "q", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.quit, "", {
 				silent = true,
+				desc = "quit color picker",
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 				end
 			})
 		end,
 		add_actions = function(self, buf)
-			vim.api.nvim_buf_set_keymap(buf, "n", "<Space>", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.write_gradient, "", {
 				silent = true,
+				desc = "write gradient",
 				callback = function()
 					local _o = ""
 
@@ -147,8 +151,9 @@ function M.get()
 					self._history_callback()
 				end
 			})
-			vim.api.nvim_buf_set_keymap(buf, "n", "Y", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.yank_gradient, "", {
 				silent = true,
+				desc = "yank gradient",
 				callback = function()
 					local _o = ""
 
@@ -167,8 +172,9 @@ function M.get()
 			})
 		end,
 		add_grad_control = function(self)
-			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "<left>", "", {
+			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", keymaps.left, "", {
 				silent = true,
+				desc = "decrease gradient selection index",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(self.__win_3)
 
@@ -181,8 +187,9 @@ function M.get()
 					self:create_preview()
 				end
 			})
-			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "z", "", {
+			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", keymaps.jump_l_or_shrink_gradient, "", {
 				silent = true,
+				desc = "shrink gradient selection",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(self.__win_3)
 
@@ -200,8 +207,9 @@ function M.get()
 				end
 			})
 
-			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "<Enter>", "", {
+			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", keymaps.write_selection, "", {
 				silent = true,
+				desc = "write selected gradient value",
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 					vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x,
@@ -209,8 +217,9 @@ function M.get()
 					self._history_callback()
 				end
 			})
-			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "y", "", {
+			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", keymaps.yank, "", {
 				silent = true,
+				desc = "yank selected gradient value",
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 					vim.fn.setreg('+', self._cache[self._cache_pos])
@@ -218,8 +227,9 @@ function M.get()
 				end
 			})
 
-			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "<right>", "", {
+			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", keymaps.right, "", {
 				silent = true,
+				desc = "increase gradient selection index",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(self.__win_3)
 
@@ -232,8 +242,9 @@ function M.get()
 					self:create_preview()
 				end
 			})
-			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "x", "", {
+			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", keymaps.jump_r_or_grow_gradient, "", {
 				silent = true,
+				desc = "grow gradient selection",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(self.__win_3)
 

@@ -1,6 +1,7 @@
 local utils = require("color_picker.utils")
 local M = {}
 function M.get()
+	local keymaps = require("color_picker.config").config.keybinds
 	return {
 		__buf = nil,
 		__win = nil,
@@ -154,8 +155,9 @@ function M.get()
 		end,
 
 		add_movement = function(self, win, buf, n)
-			vim.api.nvim_buf_set_keymap(buf, "n", "<left>", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.left, "", {
 				silent = true,
+				desc = "decrease color channel value",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(win)
 
@@ -177,8 +179,9 @@ function M.get()
 					self._grad_callback(n, utils.hslToRgb(self._color))
 				end
 			})
-			vim.api.nvim_buf_set_keymap(buf, "n", "z", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.jump_l_or_shrink_gradient, "", {
 				silent = true,
+				desc = "decrease color channel value faster",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(win)
 
@@ -201,8 +204,9 @@ function M.get()
 				end
 			})
 
-			vim.api.nvim_buf_set_keymap(buf, "n", "<right>", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.right, "", {
 				silent = true,
+				desc = "increase color channel value",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(win)
 
@@ -224,8 +228,9 @@ function M.get()
 					self._grad_callback(n, utils.hslToRgb(self._color))
 				end
 			})
-			vim.api.nvim_buf_set_keymap(buf, "n", "x", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.jump_r_or_grow_gradient, "", {
 				silent = true,
+				desc = "increase color channel value faster",
 				callback = function()
 					local cursor = vim.api.nvim_win_get_cursor(win)
 
@@ -249,16 +254,18 @@ function M.get()
 			})
 		end,
 		add_exit = function(self, buf)
-			vim.api.nvim_buf_set_keymap(buf, "n", "q", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.quit, "", {
 				silent = true,
+				desc = "quit color picker",
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 				end
 			})
 		end,
 		add_actions = function(self, buf, n)
-			vim.api.nvim_buf_set_keymap(buf, "n", "<Enter>", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.write_selection, "", {
 				silent = true,
+				desc = "write value to buffer",
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 					local colorstr = utils.toStr(self._color)
@@ -266,8 +273,9 @@ function M.get()
 					self._history_callback(colorstr)
 				end
 			})
-			vim.api.nvim_buf_set_keymap(buf, "n", "y", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.yank, "", {
 				silent = true,
+				desc = "yank value to clipboard",
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 					local colorstr = utils.toStr(self._color)
@@ -275,8 +283,9 @@ function M.get()
 					self._history_callback(colorstr)
 				end
 			})
-			vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
+			vim.api.nvim_buf_set_keymap(buf, "n", keymaps.insert, "", {
 				silent = true,
+				desc = "input color hex code",
 				callback = function()
 					local inputcolor = utils.hexToRgb(vim.fn.input('Please input a color code: '))
 					if inputcolor.r <= 255 and inputcolor.g <= 255 and inputcolor.b <= 255 then
