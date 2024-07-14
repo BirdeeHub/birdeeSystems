@@ -22,6 +22,11 @@ function M.get()
 		---@type fun(n:number, color: color_rgb)
 		_grad_callback = function(n, color) end,
 
+		---@type fun(color: string)
+		_history_callback = function(color)
+			vim.list_extend(require('color_picker.history').history, {{ color = color }})
+		end,
+
 		__entries = 20,
 
 		get_level = function(self, value)
@@ -249,14 +254,18 @@ function M.get()
 				silent = true,
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
-					vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { utils.toStr(self._color) })
+					local colorstr = utils.toStr(self._color)
+					vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { colorstr })
+					self._history_callback(colorstr)
 				end
 			})
 			vim.api.nvim_buf_set_keymap(buf, "n", "y", "", {
 				silent = true,
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
-					vim.fn.setreg('+', utils.toStr(self._color))
+					local colorstr = utils.toStr(self._color)
+					vim.fn.setreg('+', colorstr)
+					self._history_callback(colorstr)
 				end
 			})
 			vim.api.nvim_buf_set_keymap(buf, "n", "i", "", {
@@ -302,8 +311,9 @@ function M.get()
 		---@param n number
 		---@param color color_rgb|string
 		---@param grad_callback fun(n: number, color: color_rgb)
+		---@param history_callback fun(color: string)
 		---@overload fun(self: table)
-		init = function(self, c_x, c_y, offset, onbuf, onwin, x, y, n, color, grad_callback)
+		init = function(self, c_x, c_y, offset, onbuf, onwin, x, y, n, color, grad_callback, history_callback)
 			if self.__win and vim.api.nvim_win_is_valid(self.__win) then
 				return
 			end
@@ -311,6 +321,9 @@ function M.get()
 				self._color = utils.hexToRgb(color)
 			elseif type(color) == 'table' then
 				self._color = color
+			end
+			if type(history_callback) == 'function' then
+				self._history_callback = history_callback
 			end
 
 			self._grad_callback = grad_callback or function(_, _) end

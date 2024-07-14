@@ -4,8 +4,8 @@ local utils = require("color_picker.utils")
 local M = {}
 function M.get()
 	return {
-		picker1 = nil,
-		picker2 = nil,
+		picker_1 = nil,
+		picker_2 = nil,
 
 		__buf_3 = nil,
 		__win_3 = nil,
@@ -18,8 +18,12 @@ function M.get()
 		_x = 0,
 		_y = 0,
 
+		---@type color_rgb
 		_color_1 = nil,
+		---@type color_rgb
 		_color_2 = nil,
+
+		_history_callback = nil,
 
 		_close_3 = nil,
 
@@ -48,16 +52,24 @@ function M.get()
 			self._cache = {}
 			for i = 0, self._steps do
 				vim.api.nvim_set_hl(0, "Colors_p_" .. tostring(i + 1), {
-					fg = utils.toStr({ r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i), g = utils.lerp(
-					self._color_1.g, self._color_2.g, self._steps, i), b = utils.lerp(self._color_1.b, self._color_2.b,
-						self._steps, i) }),
+					fg = utils.toStr({
+						r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i),
+						g = utils.lerp(
+							self._color_1.g, self._color_2.g, self._steps, i),
+						b = utils.lerp(self._color_1.b, self._color_2.b,
+							self._steps, i)
+					}),
 					bg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
 				})
 
 				table.insert(self._cache,
-					utils.toStr({ r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i), g = utils.lerp(
-					self._color_1.g, self._color_2.g, self._steps, i), b = utils.lerp(self._color_1.b, self._color_2.b,
-						self._steps, i) }))
+					utils.toStr({
+						r = utils.lerp(self._color_1.r, self._color_2.r, self._steps, i),
+						g = utils.lerp(
+							self._color_1.g, self._color_2.g, self._steps, i),
+						b = utils.lerp(self._color_1.b, self._color_2.b,
+							self._steps, i)
+					}))
 			end
 
 			vim.api.nvim_set_hl(0, "Colors_hex_p", {
@@ -98,12 +110,12 @@ function M.get()
 				callback = function()
 					local c_win = vim.api.nvim_get_current_win()
 
-					if c_win == self.picker1.__win then
-						vim.api.nvim_set_current_win(self.picker2.__win)
-					elseif c_win == self.picker2.__win then
+					if c_win == self.picker_1.__win then
+						vim.api.nvim_set_current_win(self.picker_2.__win)
+					elseif c_win == self.picker_2.__win then
 						vim.api.nvim_set_current_win(self.__win_3)
 					else
-						vim.api.nvim_set_current_win(self.picker1.__win)
+						vim.api.nvim_set_current_win(self.picker_1.__win)
 					end
 				end
 			})
@@ -132,6 +144,7 @@ function M.get()
 
 					vim.api.nvim_set_current_win(self.__onwin)
 					vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x, { _o })
+					self._history_callback()
 				end
 			})
 			vim.api.nvim_buf_set_keymap(buf, "n", "Y", "", {
@@ -149,6 +162,7 @@ function M.get()
 
 					vim.api.nvim_set_current_win(self.__onwin)
 					vim.fn.setreg('+', _o)
+					self._history_callback()
 				end
 			})
 		end,
@@ -192,6 +206,7 @@ function M.get()
 					vim.api.nvim_set_current_win(self.__onwin)
 					vim.api.nvim_buf_set_text(self.__on, self._y, self._x, self._y, self._x,
 						{ self._cache[self._cache_pos] })
+					self._history_callback()
 				end
 			})
 			vim.api.nvim_buf_set_keymap(self.__buf_3, "n", "y", "", {
@@ -199,6 +214,7 @@ function M.get()
 				callback = function()
 					vim.api.nvim_set_current_win(self.__onwin)
 					vim.fn.setreg('+', self._cache[self._cache_pos])
+					self._history_callback()
 				end
 			})
 
@@ -244,15 +260,25 @@ function M.get()
 		end,
 
 		---@param self table
-		---@param picker1 table
-		---@param picker2 table
-		init = function(self, picker1, picker2)
-			if (picker1.__win and picker2.__win and self.__win_3) and (vim.api.nvim_win_is_valid(picker1.__win) or vim.api.nvim_win_is_valid(picker2.__win) or vim.api.nvim_win_is_valid(self.__win_3)) then
+		---@param picker_1 table
+		---@param picker_2 table
+		init = function(self, picker_1, picker_2)
+			if (picker_1.__win and picker_2.__win and self.__win_3) and (vim.api.nvim_win_is_valid(picker_1.__win) or vim.api.nvim_win_is_valid(picker_2.__win) or vim.api.nvim_win_is_valid(self.__win_3)) then
 				return
 			end
 
-			self.picker1 = picker1
-			self.picker2 = picker2
+			self.picker_1 = picker_1
+			self.picker_2 = picker_2
+
+			self._history_callback = function(_)
+				vim.list_extend(require('color_picker.history').history_gradient,
+					{ {
+						colors = { utils.toStr(self._color_1), utils.toStr(self._color_2) },
+						steps = self._steps,
+						selection =
+							self._cache_pos
+					} })
+			end
 
 			self.__on = vim.api.nvim_get_current_buf()
 			self.__onwin = vim.api.nvim_get_current_win()
@@ -312,18 +338,19 @@ function M.get()
 				})
 			end
 
-			picker1:init(self.x, self.y, _off, self.__on, self.__onwin, self._x, Y, 1, self._color_1, grad_callback)
-			picker2:init(self.x, self.y, _off, self.__on, self.__onwin, self._x + self.__entries + 6 + 4, Y, 2,
-				self._color_2, grad_callback)
+			picker_1:init(self.x, self.y, _off, self.__on, self.__onwin, self._x, Y, 1, self._color_1, grad_callback,
+				self._history_callback)
+			picker_2:init(self.x, self.y, _off, self.__on, self.__onwin, self._x + self.__entries + 6 + 4, Y, 2,
+				self._color_2, grad_callback, self._history_callback)
 
 			self:set_options()
 
-			self:add_actions(picker1.__buf)
-			self:add_actions(picker2.__buf)
+			self:add_actions(picker_1.__buf)
+			self:add_actions(picker_2.__buf)
 			self:add_actions(self.__buf_3)
 
-			self:add_switches(picker1.__buf)
-			self:add_switches(picker2.__buf)
+			self:add_switches(picker_1.__buf)
+			self:add_switches(picker_2.__buf)
 			self:add_switches(self.__buf_3)
 
 			self:add_exit(self.__buf_3)
@@ -348,8 +375,8 @@ function M.get()
 				})
 			end
 
-			if vim.api.nvim_win_is_valid(picker1.__win) then
-				vim.api.nvim_set_current_win(picker1.__win)
+			if vim.api.nvim_win_is_valid(picker_1.__win) then
+				vim.api.nvim_set_current_win(picker_1.__win)
 			end
 		end
 	}

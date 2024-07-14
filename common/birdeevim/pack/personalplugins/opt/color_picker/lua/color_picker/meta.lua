@@ -15,3 +15,11 @@ error("Cannot import a meta module")
 ---@field h number
 ---@field s number
 ---@field l number
+
+---@class history_single
+---@field color string
+
+---@class history_gradient
+---@field colors string[]
+---@field steps integer
+---@field selection integer
