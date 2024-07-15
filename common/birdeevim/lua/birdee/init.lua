@@ -4,7 +4,15 @@ require('nixCatsUtils').setup {
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- require('lz.n').register_handler(require("birdee.debug_handler").handler)
-vim.notify = require("notify")
+local ok, notify = pcall(require, "notify")
+if ok then
+  notify.setup({
+    on_open = function(win)
+      vim.api.nvim_win_set_config(win, { focusable = false })
+    end,
+  })
+  vim.notify = require("notify")
+end
 require('lz.n').register_handler(require("birdee.on_require"))
 require("birdee.patcheduiopen")
 require("birdee.opts")
