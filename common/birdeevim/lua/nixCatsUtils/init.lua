@@ -27,7 +27,7 @@ end
 ---allows you to guarantee a boolean is returned, and also declare a different
 ---default value than specified in setup when not using nix to load the config
 ---@overload fun(v: string|table): boolean
----@overload fun(v: string|table, o: boolean): boolean
+---@overload fun(v: string|table, default: boolean): boolean
 function M.enableForCategory(v, default)
   if M.isNixCats or default == nil then
     if nixCats(v) then
@@ -35,6 +35,19 @@ function M.enableForCategory(v, default)
     else
       return false
     end
+  else
+    return default
+  end
+end
+
+---if nix, return value of nixCats(v) else return default
+---Exists to specify a different non_nix_value than the one in setup()
+---@param v any
+---@param default any
+---@return any
+function M.getCatOrDefault(v, default)
+  if M.isNixCats then
+    return nixCats(v)
   else
     return default
   end
