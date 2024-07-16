@@ -320,7 +320,7 @@
     };
     # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
-      general = [ (lp: with lp; [ magick jsregexp ]) ];
+      general = [ (lp: with lp; [ magick ]) ];
     };
   };
 
