@@ -8,7 +8,7 @@ if nixCats('neonixdev') then
       },
       signatureHelp = { enabled = true },
       diagnostics = {
-        globals = { "nixCats" },
+        globals = { "nixCats", "vim" },
         disable = { 'missing-fields' },
       },
       workspace = {
