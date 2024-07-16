@@ -107,17 +107,27 @@ require('lz.n').load({
     else
       leaderCmsg = "[C]ode"
     end
-    require('which-key').register {
-      ['<leader>c'] = { name = leaderCmsg, _ = 'which_key_ignore' },
-      ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-      ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-      ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-      ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-      ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-      ['<leader>m'] = { name = '[M]arkdown', _ = 'which_key_ignore' },
-      ['<leader>F'] = { name = '[F]ormat', _ = 'which_key_ignore' },
-      ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
-      ['<leader><leader>'] = { name = 'buffer commands', _ = 'which_key_ignore' },
-    }
+    require('which-key').add {
+    { "<leader><leader>", group = "buffer commands" },
+    { "<leader><leader>_", hidden = true },
+    { "<leader>F", group = "[F]ormat" },
+    { "<leader>F_", hidden = true },
+    { "<leader>c", group = "[C]ode (and [C]ody)" },
+    { "<leader>c_", hidden = true },
+    { "<leader>d", group = "[D]ocument" },
+    { "<leader>d_", hidden = true },
+    { "<leader>g", group = "[G]it" },
+    { "<leader>g_", hidden = true },
+    { "<leader>h", group = "[H]arpoon" },
+    { "<leader>h_", hidden = true },
+    { "<leader>m", group = "[M]arkdown" },
+    { "<leader>m_", hidden = true },
+    { "<leader>r", group = "[R]ename" },
+    { "<leader>r_", hidden = true },
+    { "<leader>s", group = "[S]earch" },
+    { "<leader>s_", hidden = true },
+    { "<leader>w", group = "[W]orkspace" },
+    { "<leader>w_", hidden = true },
+  }
   end,
 })
