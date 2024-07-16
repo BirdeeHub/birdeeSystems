@@ -162,6 +162,9 @@ require('lz.n').load({
 	-- otter files are deleted on quit or main buffer close
 	write_to_disk = false,
       },
+      verbose = { -- set to false to disable all verbose messages
+	no_code_found = false, -- warn if otter.activate is called, but no injected code was found
+      },
       strip_wrapping_quote_characters = { "'", '"', "`" },
       -- otter may not work the way you expect when entire code blocks are indented (eg. in Org files)
       -- When true, otter handles these cases fully.
