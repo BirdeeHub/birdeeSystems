@@ -11,7 +11,10 @@ if ok then
       vim.api.nvim_win_set_config(win, { focusable = false })
     end,
   })
-  vim.notify = require("notify")
+  vim.notify = notify
+  vim.keymap.set("n", "<Esc>", function()
+      notify.dismiss({ silent = true, })
+  end, { desc = "dismiss notify popup and clear hlsearch" })
 end
 require('lz.n').register_handler(require("birdee.on_require"))
 require("birdee.patcheduiopen")
