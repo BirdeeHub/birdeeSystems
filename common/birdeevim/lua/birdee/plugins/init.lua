@@ -97,7 +97,7 @@ require('lz.n').load({
   enabled = require('nixCatsUtils').enableForCategory('general.other'),
   cmd = { "StartupTime" },
   before = function (_)
-    vim.g.startuptime_exe_path = vim.fn.exepath(nixCats('nixCats_packageName'))
+    vim.g.startuptime_exe_path = vim.fn.exepath(require("nixCatsUtils").getCatOrDefault('nixCats_packageName', "nvim"))
   end,
 })
 
