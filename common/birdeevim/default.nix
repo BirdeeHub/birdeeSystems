@@ -190,7 +190,7 @@
         neorg-telescope
       ];
       otter = [
-        otter-nvim
+        (pkgs.neovimPlugins.otter-nvim.overrideAttrs { pname = "otter.nvim"; })
       ];
       go = [
         nvim-dap-go

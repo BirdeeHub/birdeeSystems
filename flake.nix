@@ -64,6 +64,10 @@
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;
     };
+    "plugins-otter-nvim" = {
+      url = "github:jmbuhr/otter.nvim";
+      flake = false;
+    };
     "plugins-large_file" = {
       url = "github:mireq/large_file";
       flake = false;
