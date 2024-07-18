@@ -1,13 +1,13 @@
 isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
   imports = [];
   options = {
-    birdeeMods.tmux = with lib.types; {
-      enable = lib.mkOption {
+    birdeeMods.tmux = with lib; {
+      enable = mkOption {
         default = false;
-        type = bool;
+        type = types.bool;
         description = "enable birdee's tmux configuration";
       };
-      secureSocket = lib.mkOption {
+      secureSocket = mkOption {
         default = pkgs.stdenv.isLinux;
         type = types.bool;
         description = ''
@@ -17,8 +17,8 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
         '';
       };
     } // (if !isHomeModule then {
-      withUtempter = lib.mkIf (! isHomeModule) (lib.mkOption {
-        description = lib.mdDoc ''
+      withUtempter = mkIf (! isHomeModule) (mkOption {
+        description = mdDoc ''
           Whether to enable libutempter for tmux.
           This is required so that tmux can write to /var/run/utmp (which can be queried with `who` to display currently connected user sessions).
           Note, this will add a guid wrapper for the group utmp!
@@ -33,8 +33,6 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
   in lib.mkIf cfg.enable (let
     # tmuxBoolToStr = value: if value then "on" else "off";
 
-    pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
-
     tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
       if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
         selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
@@ -44,23 +42,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       fi
     '');
 
-    configPlugins = plugins: (with lib;
-      if plugins == [] || ! (builtins.isList plugins) then "" else ''
-        # ============ #
-        # Load plugins #
-        # ------------ #
-
-        ${(concatMapStringsSep "\n\n" (p: ''
-          # ${pluginName p}
-          # ---------------------
-          ${p.extraConfig or ""}
-          run-shell ${if types.package.check p then p.rtp else p.plugin.rtp}
-        '') plugins)}
-        # ============================================== #
-      ''
-    );
-
-    pluginConfigs = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
+    plugins = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
 
     confText = (/* tmux */ ''
       # ============================================= #
@@ -122,8 +104,27 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
       bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
 
-    '') + pluginConfigs + ( /* tmux */ ''
+    '') + plugins + ( /* tmux */ ''
     '');
+
+    configPlugins = plugins: (let
+      pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
+      pluginRTP = p: if lib.types.package.check p then p.rtp else p.plugin.rtp;
+    in
+      if plugins == [] || ! (builtins.isList plugins) then "" else ''
+        # ============ #
+        # Load plugins #
+        # ------------ #
+
+        ${(lib.concatMapStringsSep "\n\n" (p: ''
+          # ${pluginName p}
+          # ---------------------
+          ${p.extraConfig or ""}
+          run-shell ${pluginRTP p}
+        '') plugins)}
+        # ============================================== #
+      ''
+    );
 
   in (if isHomeModule then {
     home.packages = [
