@@ -70,10 +70,10 @@ require('lz.n').load({
   after = function (plugin)
     require('lazydev').setup({
       library = {
-	-- See the configuration section for more details
-	-- Load luvit types when the `vim.uv` word is found
-	-- { path = "luvit-meta/library", words = { "vim%.uv" } },
-	require('nixCats').nixCatsPath .. '/lua',
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        -- { path = "luvit-meta/library", words = { "vim%.uv" } },
+        { path = require('nixCats').nixCatsPath .. '/lua', words = { "nixCats" } },
       },
     })
   end,
