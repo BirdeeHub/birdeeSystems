@@ -42,7 +42,7 @@ end
 
 ---if nix, return value of nixCats(v) else return default
 ---Exists to specify a different non_nix_value than the one in setup()
----@param v any
+---@param v string|table
 ---@param default any
 ---@return any
 function M.getCatOrDefault(v, default)
@@ -56,6 +56,7 @@ end
 ---for conditionally disabling build steps on nix, as they are done via nix
 ---I should probably have named it dontAddIfCats or something.
 ---@overload fun(v: any): any|nil
+---Will return the second value if nix, otherwise the first
 ---@overload fun(v: any, o: any): any
 function M.lazyAdd(v, o)
   if M.isNixCats then
@@ -64,5 +65,10 @@ function M.lazyAdd(v, o)
     return v
   end
 end
+
+---Useful for things such as vim-startuptime which must reference the wrapper's actual path
+---If not using nix, this will simply return vim.v.progpath
+---@type string
+M.packageBinPath = os.getenv('NVIM_WRAPPER_PATH_NIX') or vim.v.progpath
 
 return M
