@@ -33,6 +33,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
       # inputs.neovim-src.follows = "neovim-src";
     };
+    nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     lz-n = {
@@ -131,6 +132,7 @@
       templates = import ./templates inputs;
     }
     // (forEachSystem (system: {
+      app-images = home-modules.birdeeVim.app-images.${system};
       packages =
         home-modules.birdeeVim.packages.${system}
         // (

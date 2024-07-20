@@ -35,6 +35,13 @@
     };
 
     lspsAndRuntimeDeps = with pkgs; {
+      portableExtras = [
+        xclip
+        wl-clipboard
+        git
+        nix
+        coreutils-full
+      ];
       general = {
         core = [
           universal-ctags
@@ -397,7 +404,6 @@
       categories = birdeevim_categories args // {
         test = true;
         # notes = true;
-        startuptime = true;
         lspDebugMode = true;
       };
     };
@@ -458,6 +464,15 @@
         colorscheme = "tokyonight";
       };
     };
+    portableVim = { pkgs, ... }@misc: {
+      settings = birdeevim_settings misc // {
+        extraName = "portableVim";
+      };
+      categories = birdeevim_categories misc // {
+        portableExtras = true;
+        notes = true;
+      };
+    };
     minimalVim = { pkgs, ... }@misc: {
       settings = birdeevim_settings misc // {
         wrapRc = false;
@@ -483,7 +498,9 @@ in
     pkgs = import nixpkgs { inherit system; };
   in {
     packages = utils.mkPackages nixCatsBuilder packageDefinitions defaultPackageName;
-
+    app-images = {
+      portableVim = inputs.nix-appimage.bundlers.${system}.default (nixCatsBuilder "portableVim");
+    };
     devShells = {
       default = pkgs.mkShell {
         name = defaultPackageName;
