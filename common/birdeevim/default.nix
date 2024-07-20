@@ -41,6 +41,7 @@
         git
         nix
         coreutils-full
+        curl
       ];
       general = {
         core = [
