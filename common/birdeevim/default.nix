@@ -472,6 +472,9 @@
       categories = birdeevim_categories misc // {
         portableExtras = true;
         notes = true;
+        AI = false;
+        bitwardenItemIDs = false;
+        bitwarden = false;
       };
     };
     minimalVim = { pkgs, ... }@misc: {
