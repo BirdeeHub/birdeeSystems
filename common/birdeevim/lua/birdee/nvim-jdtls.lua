@@ -22,10 +22,14 @@ function M.setupJDTLS()
       jda_server_jar = vim.fn.glob(jda_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
     else
       jdtls_path = vim.fn.exepath('jdtls')
-      jt_path = nixCats("javaExtras.java-test")
-      jda_path = nixCats("javaExtras.java-debug-adapter")
-      jt_server_jars = vim.fn.glob(jt_path .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
-      jda_server_jar = vim.fn.glob(jda_path .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")
+      if nixCats("javaExtras") then
+        jt_path = nixCats("javaExtras.java-test")
+        jda_path = nixCats("javaExtras.java-debug-adapter")
+        if jt_path and jda_path then
+          jt_server_jars = vim.fn.glob(jt_path .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
+          jda_server_jar = vim.fn.glob(jda_path .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")
+        end
+      end
     end
 
     local operative_system
@@ -45,10 +49,10 @@ function M.setupJDTLS()
 
 
     local bundles = {}
-
-    vim.list_extend(bundles, vim.split(jt_server_jars, "\n"))
-
-    vim.list_extend(bundles, vim.split(jda_server_jar, "\n"))
+    if jt_server_jars and jda_server_jar then
+      vim.list_extend(bundles, vim.split(jt_server_jars, "\n"))
+      vim.list_extend(bundles, vim.split(jda_server_jar, "\n"))
+    end
 
     -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
     local config = {
