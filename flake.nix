@@ -98,10 +98,6 @@
       url = "github:sourcegraph/sg.nvim";
       # inputs.nixpkgs.follows = "nixpkgsNV";
     };
-    "bash-debug-adapter" = {
-      url = "github:rogalmic/vscode-bash-debug";
-      flake = false;
-    };
   };
 
   outputs =

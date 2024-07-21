@@ -16,22 +16,6 @@
         "type": "github"
       }
     },
-    "bash-debug-adapter": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1613339650,
-        "narHash": "sha256-YTMjqSzbtiR23yi344lHEH9Tj5CiX6ni/NIySAmtMSk=",
-        "owner": "rogalmic",
-        "repo": "vscode-bash-debug",
-        "rev": "e9ae6ea07c05ce621d2f25b899b5560d000d9c57",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rogalmic",
-        "repo": "vscode-bash-debug",
-        "type": "github"
-      }
-    },
     "codeium": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -2003,7 +1987,6 @@
     },
     "root": {
       "inputs": {
-        "bash-debug-adapter": "bash-debug-adapter",
         "codeium": "codeium",
         "disko": "disko",
         "flake-utils": "flake-utils_2",
