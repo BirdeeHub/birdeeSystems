@@ -98,14 +98,7 @@
           vscode-langservers-extracted
         ];
         JS = with nodePackages; [
-          (typescript-language-server.overrideAttrs (prev: {
-            patches = [
-              (substituteAll {
-                src = ./overlays/default-fallbackTsserverPath.diff;
-                typescript = "${typescript}/lib/node_modules/typescript/lib/tsserver.js";
-              })
-            ];
-          }))
+          typescript-language-server
           eslint
           prettier
         ];
