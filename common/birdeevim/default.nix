@@ -391,7 +391,6 @@
     rust = true;
     SQL = true;
     C = true;
-    tsserver = pkgs.typescript;
   };
 
   packageDefinitions = {
