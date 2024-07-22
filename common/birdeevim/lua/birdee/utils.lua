@@ -93,6 +93,7 @@ function M.safe_packadd(plugin_names)
   end
   for _, name in ipairs(names) do
     if type(name) == 'string' then
+      ---@diagnostic disable-next-line: param-type-mismatch
       local ok, err = pcall(vim.cmd, 'packadd ' .. name)
       if not ok then
         vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_packadd_list" })
@@ -113,6 +114,7 @@ function M.safe_force_packadd(plugin_names)
   end
   for _, name in ipairs(names) do
     if type(name) == 'string' then
+      ---@diagnostic disable-next-line: param-type-mismatch
       local ok, err = pcall(vim.cmd, 'packadd! ' .. name)
       if not ok then
         vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_force_packadd_list" })
@@ -134,6 +136,7 @@ function M.packadd_with_after_dirs(plugin_names)
   local to_source = {}
   for _, name in ipairs(names) do
     if type(name) == 'string' then
+      ---@diagnostic disable-next-line: param-type-mismatch
       local ok, err = pcall(vim.cmd, 'packadd ' .. name)
       if not ok then
         vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN, { title = "birdee.utils.safe_packadd_list" })
