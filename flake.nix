@@ -129,7 +129,9 @@
       templates = import ./templates inputs;
     }
     // (forEachSystem (system: {
-      app-images = home-modules.birdeeVim.app-images.${system};
+      app-images = home-modules.birdeeVim.app-images.${system} // {
+        minesweeper = inputs.minesweeper.app-images.${system}.default;
+      };
       packages =
         home-modules.birdeeVim.packages.${system}
         // (
