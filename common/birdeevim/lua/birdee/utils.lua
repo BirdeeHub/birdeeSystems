@@ -1,4 +1,7 @@
 local M = {}
+
+---@param file_path string
+---@return boolean existed
 function M.deleteFileIfExists(file_path)
   if vim.fn.filereadable(file_path) == 1 then
     os.remove(file_path)
@@ -15,10 +18,17 @@ function M.split_string(str, delimiter)
   return result
 end
 
+---Requires plenary
+---@param cmd string[]
+---@param cwd string
+---@return table
+---@return unknown
+---@return table
 function M.get_os_command_output(cmd, cwd)
   if type(cmd) ~= "table" then
     print("[get_os_command_output]: cmd has to be a table")
-    return {}
+    ---@diagnostic disable-next-line: return-type-mismatch
+    return {}, nil, nil
   end
   local command = table.remove(cmd, 1)
   local stderr = {}
@@ -71,6 +81,7 @@ function M.authTerminal()
   return session
 end
 
+---@param plugin_names string[]|string
 function M.safe_packadd(plugin_names)
   local names
   if type(plugin_names) == 'table' then
@@ -90,6 +101,7 @@ function M.safe_packadd(plugin_names)
   end
 end
 
+---@param plugin_names string[]|string
 function M.safe_force_packadd(plugin_names)
   local names
   if type(plugin_names) == 'table' then
@@ -109,6 +121,7 @@ function M.safe_force_packadd(plugin_names)
   end
 end
 
+---@param plugin_names string[]|string
 function M.packadd_with_after_dirs(plugin_names)
   local names
   if type(plugin_names) == 'table' then
@@ -145,6 +158,9 @@ function M.packadd_with_after_dirs(plugin_names)
   end
 end
 
+---@param str any
+---@param prefix any
+---@return boolean
 function M.starts_with(str, prefix)
   if str == nil or prefix == nil then
     return false
