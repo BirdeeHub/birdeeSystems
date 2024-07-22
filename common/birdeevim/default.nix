@@ -99,10 +99,12 @@
         ];
         JS = with nodePackages; [
           (typescript-language-server.overrideAttrs (prev: {
-            postInstall = ''
-              ${prev.postInstall or ""}
-              ${pkgs.xorg.lndir}/bin/lndir ${pkgs.typescript} $out
-            '';
+            patches = [
+              (substituteAll {
+                src = ./overlays/default-fallbackTsserverPath.diff;
+                typescript = "${typescript}/lib/node_modules/typescript/lib/tsserver.js";
+              })
+            ];
           }))
           eslint
           prettier
