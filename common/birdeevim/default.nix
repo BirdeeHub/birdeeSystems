@@ -98,7 +98,12 @@
           vscode-langservers-extracted
         ];
         JS = with nodePackages; [
-          typescript-language-server
+          (typescript-language-server.overrideAttrs (prev: {
+            postInstall = ''
+              ${prev.postInstall or ""}
+              ${pkgs.xorg.lndir}/bin/lndir ${pkgs.typescript} $out
+            '';
+          }))
           eslint
           prettier
         ];
@@ -386,6 +391,7 @@
     rust = true;
     SQL = true;
     C = true;
+    tsserver = pkgs.typescript;
   };
 
   packageDefinitions = {
