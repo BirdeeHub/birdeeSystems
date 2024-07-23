@@ -520,7 +520,7 @@ in
     inherit customPackager;
   }
 ) // {
-  overlays = utils.makeOverlays luaPath {
+  overlays = utils.makeOverlaysWithMultiDefault luaPath {
     inherit nixpkgs dependencyOverlays extra_pkg_config;
   } categoryDefinitions packageDefinitions defaultPackageName;
   nixosModules.default = utils.mkNixosModules {
