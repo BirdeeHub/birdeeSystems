@@ -965,16 +965,19 @@
     },
     "minesweeper": {
       "inputs": {
+        "nix-appimage": [
+          "nix-appimage"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1721888626,
-        "narHash": "sha256-yhQfLYymY65d7kGnlVnkxvxhi43aNTGPxtWjOn8D8vk=",
+        "lastModified": 1721890509,
+        "narHash": "sha256-SUUVUWsHBv2gh+diP455pbOYJxFcD4UpQ/P0nekQuSo=",
         "owner": "BirdeeHub",
         "repo": "minesweeper",
-        "rev": "ffc15d0efee2f468ccddb64b0c25e36c09b299b9",
+        "rev": "aa46e9f7271c2ac5087e0800d48725748d44cefc",
         "type": "github"
       },
       "original": {
