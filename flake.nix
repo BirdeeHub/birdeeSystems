@@ -22,7 +22,6 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     minesweeper.url = "github:BirdeeHub/minesweeper/nix";
     minesweeper.inputs.nixpkgs.follows = "nixpkgs";
-    minesweeper.inputs.flake-utils.follows = "flake-utils";
 
     # neovim
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
