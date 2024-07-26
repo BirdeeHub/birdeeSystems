@@ -1,8 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
-  outputs = { self, nixpkgs, ... }@inputs: let
+  outputs = { nixpkgs, ... }@inputs: let
     forEachSystem = (with builtins; systems: f: let
         op = attrs: system: let
           ret = f system;
@@ -16,23 +16,23 @@
          if elem currentSystem systems then []
          else [ currentSystem ] else []))
     ) inputs.nixpkgs.lib.platforms.all;
-  in
-  forEachSystem (system: let
-    pkgs = import nixpkgs { inherit system; };
-    default_package = pkgs.callPackage ./. { inherit inputs; };
-  in{
-    packages = {
-      default = default_package;
+
+    APPNAME = "REPLACE_ME";
+    appOverlay = self: _: {
+      ${APPNAME} = self.callPackage ./. { inherit inputs APPNAME; inherit (self) system; };
     };
-    devShells = {
-      default = pkgs.mkShell {
-        packages = [ default_package ];
-        inputsFrom = [];
-        DEVSHELL = 0;
-        shellHook = ''
-          exec ${pkgs.zsh}/bin/zsh
-        '';
+  in {
+    overlays.default = appOverlay;
+  } // (
+    forEachSystem (system: let
+      pkgs = import nixpkgs { inherit system; overlays = [ appOverlay ]; };
+    in{
+      packages = {
+        default = pkgs.${APPNAME};
       };
-    };
-  });
+      devShells = {
+        default = pkgs.callPackage ./shell.nix { inherit inputs APPNAME system; };
+      };
+    })
+  );
 }

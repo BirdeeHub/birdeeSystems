@@ -1,5 +1,5 @@
-{ pkgs, inputs, lib, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
-  procPath = with pkgs; [
+{ pkgs, APPNAME, inputs, lib, symlinkJoin, writeTextDir, makeWrapper, stdenv, ... }: let
+  APPPATH = with pkgs; [
     coreutils
     findutils
     gnumake
@@ -7,27 +7,40 @@
     gnugrep
     gawk
   ];
-  appname = "REPLACE_ME";
-in
-stdenv.mkDerivation (let
-in {
-  name = "${appname}";
-  src = ./src;
-  buildInputs = with pkgs; [  ];
-  propagatedBuildInputs = with pkgs; [] ++ procPath;
-  nativeBuildInputs = with pkgs; [ makeWrapper ];
-  propagatedNativeBuildInputs = with pkgs; [] ++ procPath;
-  buildPhase = ''
-    source $stdenv/setup
-    mkdir -p $out/bin
-  '';
-  installPhase = '''';
-  postFixup = ''
-    wrapProgram $out/bin/${appname} \
-      --set PATH ${lib.makeBinPath procPath}
-  '';
-  # passthru = { };
-  meta = {
-    mainProgram = "${appname}";
+  APPLINKABLES = with pkgs; [
+  ];
+  APPDRV = stdenv.mkDerivation {
+    name = "${APPNAME}";
+    src = ./src;
+    buildInputs = [];
+    nativeBuildInputs = [ makeWrapper ];
+    buildPhase = ''
+      source $stdenv/setup
+      mkdir -p $out/bin
+    '';
+    installPhase = ''
+    '';
+    postFixup = ''
+      wrapProgram $out/bin/${APPNAME} \
+        --prefix PATH : ${lib.makeBinPath APPPATH} \
+        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath APPLINKABLES}
+    '';
+    # passthru = { };
   };
-})
+  DESKTOP = writeTextDir "share/applications/${APPNAME}.desktop" ''
+    [Desktop Entry]
+    Type=Application
+    Name=${APPNAME}
+    Comment=Launches ${APPNAME}
+    Terminal=false
+    Exec=${APPDRV}/bin/${APPNAME}
+  '';
+in
+symlinkJoin {
+  name = APPNAME;
+  paths = [ APPDRV DESKTOP ];
+  meta = {
+    mainProgram = APPNAME;
+    maintainers = [ lib.maintainers.birdee ];
+  };
+}
