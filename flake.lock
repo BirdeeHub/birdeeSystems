@@ -972,7 +972,7 @@
           "nix-appimage"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsNV"
         ]
       },
       "locked": {
