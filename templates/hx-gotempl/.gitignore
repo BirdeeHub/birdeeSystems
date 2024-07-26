@@ -1,0 +1,8 @@
+/tmp/
+/dist/
+/bin/
+/node_modules/
+/views/**/*_templ.go
+/result
+/static/tailwind.css
+**.gz

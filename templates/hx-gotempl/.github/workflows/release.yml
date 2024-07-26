@@ -1,0 +1,82 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # This will run the workflow on every tag push with versioning format vX.X.X
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build docker packages x86_64-linux
+        run: |
+          mkdir -p ./outputs/docker/x86_64-linux/
+          nix build .#docker.x86_64-linux.default
+          cp result ./outputs/docker/x86_64-linux/64-linux-FOOdBAR_IMAGE
+
+      - name: Build x86_64-linux package
+        run: |
+          mkdir -p ./outputs/packages/x86_64-linux/
+          nix build .#packages.x86_64-linux.default
+          cp result/bin/FOOdBAR ./outputs/packages/x86_64-linux/64-linux-FOOdBAR
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: outputs
+          path: ./outputs
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: outputs
+          path: ./outputs
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASEPAT }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload docker x86_64-linux to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASEPAT }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./outputs/docker/x86_64-linux/64-linux-FOOdBAR_IMAGE
+          asset_name: 64-linux-FOOdBAR_IMAGE
+          asset_content_type: application/octet-stream
+
+      - name: Upload package x86_64-linux to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASEPAT }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./outputs/packages/x86_64-linux/64-linux-FOOdBAR
+          asset_name: 64-linux-FOOdBAR
+          asset_content_type: application/octet-stream
