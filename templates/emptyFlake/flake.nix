@@ -3,19 +3,15 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
   outputs = { nixpkgs, ... }@inputs: let
-    forEachSystem = (with builtins; systems: f: let
-        op = attrs: system: let
-          ret = f system;
-          op = attrs: key: attrs // {
-            ${key} = (attrs.${key} or { })
-            // { ${system} = ret.${key}; };
-          };
-        in foldl' op attrs (attrNames ret);
-      in foldl' op { }
-      (systems ++ (if builtins ? currentSystem then
-         if elem currentSystem systems then []
-         else [ currentSystem ] else []))
-    ) inputs.nixpkgs.lib.platforms.all;
+    forEachSystem = with builtins; f: let # flake-utils.lib.eachSystem
+      op = attrs: system: let
+        ret = f system;
+        op = attrs: key: attrs // {
+          ${key} = (attrs.${key} or { })
+          // { ${system} = ret.${key}; };
+        };
+      in foldl' op attrs (attrNames ret);
+    in foldl' op { } nixpkgs.lib.platforms.all;
 
     APPNAME = "REPLACE_ME";
     appOverlay = self: _: {
