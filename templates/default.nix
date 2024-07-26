@@ -1,4 +1,12 @@
 inputs: {
+  default = {
+    path = ./emptyFlake;
+    description = "an empty flake";
+  };
+  emptyFlake = {
+    path = ./emptyFlake;
+    description = "an empty flake";
+  };
   overlayHub = inputs.nixCats.templates.overlayHub;
   overlayFile = inputs.nixCats.templates.overlayFile;
   gradle = {
@@ -12,10 +20,6 @@ inputs: {
   flakeSchema = {
     path = ./flakeSchema;
     description = "an empty flake schema copy paste";
-  };
-  emptyFlake = {
-    path = ./emptyFlake;
-    description = "an empty flake";
   };
   helloC = {
     path = ./helloC;
