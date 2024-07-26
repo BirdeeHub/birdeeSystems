@@ -106,6 +106,7 @@
       nixpkgs,
       home-manager,
       disko,
+      nix-appimage,
       ...
     }@inputs:
     let
@@ -128,9 +129,11 @@
       templates = import ./templates inputs;
     }
     // (forEachSystem (system: {
-      app-images = home-modules.birdeeVim.app-images.${system} // {
-        minesweeper = inputs.minesweeper.app-images.${system}.default;
-      };
+      app-images = home-modules.birdeeVim.app-images.${system} // (let
+        bundle = nix-appimage.bundlers.${system}.default;
+      in {
+        minesweeper = bundle inputs.minesweeper.packages.${system}.default;
+      });
       packages =
         home-modules.birdeeVim.packages.${system}
         // (
