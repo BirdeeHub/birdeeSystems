@@ -970,11 +970,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1722021001,
-        "narHash": "sha256-NhV9uUAF6lk8uXYg4YNRfg+k+oWwjzWL/L5htOj7i0Q=",
+        "lastModified": 1722023016,
+        "narHash": "sha256-Be2CV/9KR4cxY+qti0xrv1ivYo7PY5olz9hrNBP8uxY=",
         "owner": "BirdeeHub",
         "repo": "minesweeper",
-        "rev": "79513dafa1ee3916edef821e3627f69560c9f59e",
+        "rev": "06474234619f947ee9700b39511fc8aa9603c0d4",
         "type": "github"
       },
       "original": {
