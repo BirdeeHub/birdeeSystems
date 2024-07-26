@@ -26,4 +26,4 @@ inputs: let
 
   };
   overlayList = builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet);
-in overlayList ++ [ inputs.nur.overlay inputs.minesweeper.overlays.minesweeper ]
+in overlayList ++ [ inputs.nur.overlay inputs.minesweeper.overlays.default ]

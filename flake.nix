@@ -20,6 +20,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/acb4f0e9bfa8ca2d6fca5e692307b5c994e7dbda";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    minesweeper.url = "github:BirdeeHub/minesweeper";
+    minesweeper.inputs.nixpkgs.follows = "nixpkgsNV";
+    minesweeper.inputs.flake-utils.follows = "flake-utils";
+    minesweeper.inputs.nix-appimage.follows = "nix-appimage";
 
     # neovim
     nixCats.url = "github:BirdeeHub/nixCats-nvim";

@@ -963,6 +963,32 @@
         "type": "github"
       }
     },
+    "minesweeper": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nix-appimage": [
+          "nix-appimage"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1722015738,
+        "narHash": "sha256-wU6mykHMx6liE0GNQYHShLpRUfJShswOK1X++wDtz0s=",
+        "owner": "BirdeeHub",
+        "repo": "minesweeper",
+        "rev": "5ec9ffa893a6672a42cb47abe250e5825df6e5c9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "minesweeper",
+        "type": "github"
+      }
+    },
     "mk-naked-shell": {
       "flake": false,
       "locked": {
@@ -1941,6 +1967,7 @@
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "lz-n": "lz-n",
+        "minesweeper": "minesweeper",
         "neorg-overlay": "neorg-overlay",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": "nix-appimage",
