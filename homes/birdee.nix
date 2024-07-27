@@ -100,6 +100,7 @@ in {
   };
 
   nix.registry = {
+    nixpkgs.flake = inputs.nixpkgsNV;
     birdeeSystems.flake = self;
     gomod2nix.to = {
       type = "github";
