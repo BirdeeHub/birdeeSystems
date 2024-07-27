@@ -148,7 +148,7 @@
             };
           in
           {
-            inherit (pkgs) dep-tree;
+            inherit (pkgs) dep-tree minesweeper;
           }
         )
         // {
