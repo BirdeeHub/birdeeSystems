@@ -54,7 +54,7 @@
       description = "${APPNAME} is a program that does stuff";
       license = lib.licenses.mit;
       homepage = "https://github.com/BirdeeHub/${APPNAME}";
-      maintainers = lib.mkIf (lib.maintainers ? birdee) [ lib.maintainers.birdee ];
+      maintainers = if lib.maintainers ? birdee then [ lib.maintainers.birdee ] else [];
     };
   };
 in
