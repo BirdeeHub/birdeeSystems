@@ -142,7 +142,7 @@
         home-modules.birdeeVim.packages.${system}
         // (
           let
-            pkgs = import inputs.nixpkgs {
+            pkgs = import inputs.nixpkgsNV {
               inherit system overlays;
               config.allowUnfree = true;
             };
