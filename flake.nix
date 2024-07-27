@@ -131,8 +131,12 @@
     // (forEachSystem (system: {
       app-images = home-modules.birdeeVim.app-images.${system} // (let
         bundle = nix-appimage.bundlers.${system}.default;
+        pkgs = import inputs.nixpkgsNV {
+          inherit system overlays;
+          config.allowUnfree = true;
+        };
       in {
-        minesweeper = bundle inputs.minesweeper.packages.${system}.default;
+        minesweeper = bundle pkgs.minesweeper;
       });
       packages =
         home-modules.birdeeVim.packages.${system}
