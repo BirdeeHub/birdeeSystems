@@ -17,7 +17,7 @@
     appOverlay = final: prev: {
       # any pkgs overrides made here will be inherited in the arguments of default.nix
       # because we used final.callPackage instead of prev.callPackage
-      ${APPNAME} = final.callPackage ./. { inherit inputs APPNAME; inherit (final) system; };
+      ${APPNAME} = final.callPackage ./. ({ inherit APPNAME; } // inputs);
     };
   in {
     overlays.default = appOverlay;
@@ -29,7 +29,10 @@
         default = pkgs.${APPNAME};
       };
       devShells = {
-        default = pkgs.callPackage ./shell.nix { inherit inputs APPNAME system; };
+        default = pkgs.callPackage ./shell.nix ({
+          inherit APPNAME;
+          shellPkg = "${pkgs.zsh}/bin/zsh";
+        } // inputs);
       };
     })
   );
