@@ -3,6 +3,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/default";
+    devenv.url = "github:cachix/devenv";
   };
 
   outputs = { self, nixpkgs, flake-parts, systems, ... }@inputs: let
@@ -12,6 +13,7 @@
     systems = import systems;
     imports = [
       inputs.flake-parts.flakeModules.easyOverlay
+      inputs.devenv.flakeModule
       # e.g. treefmt-nix.flakeModule
     ];
     flake = {
@@ -39,6 +41,21 @@
       packages = {
         default = config.packages.${APPNAME};
         ${APPNAME} = pkgs.callPackage ./. { inherit APPNAME; };
+      };
+      devenv.shells.devenv = {
+        # https://devenv.sh/reference/options/
+        packages = [ config.packages.default ];
+        languages.nix = {
+          enable = true;
+        };
+        languages.java = {
+          enable = true;
+        };
+        env.DEVSHELL = 0;
+
+        enterShell = ''
+          echo "${APPNAME} shell"
+        '';
       };
       devShells = {
         default = pkgs.callPackage ./shell.nix {
