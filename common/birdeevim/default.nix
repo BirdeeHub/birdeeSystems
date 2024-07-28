@@ -323,9 +323,6 @@
         # autopep8
       ]);
     };
-    extraPythonPackages = {
-      python = (_:[]);
-    };
     # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
       general = [ (lp: with lp; [ magick ]) ];
