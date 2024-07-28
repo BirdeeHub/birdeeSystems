@@ -1,7 +1,11 @@
 inputs: {
   default = {
-    path = ./emptyFlake;
-    description = "an empty flake";
+    path = ./flakeParts;
+    description = "an empty flake with flake parts";
+  };
+  flakeParts = {
+    path = ./flakeParts;
+    description = "an empty flake with flake parts";
   };
   emptyFlake = {
     path = ./emptyFlake;
