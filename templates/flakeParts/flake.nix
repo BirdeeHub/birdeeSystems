@@ -36,20 +36,15 @@
       overlayAttrs = {
         ${APPNAME} = config.packages.${APPNAME};
       };
-      devenv.shells.default = {
-        # https://devenv.sh/reference/options/
-        packages = [ config.packages.default ];
-        languages.nix = {
-          enable = true;
-        };
-
-        enterShell = ''
-          echo hello
-        '';
-      };
       packages = {
         default = config.packages.${APPNAME};
         ${APPNAME} = pkgs.callPackage ./. { inherit APPNAME; };
+      };
+      devShells = {
+        default = pkgs.callPackage ./shell.nix {
+          inherit APPNAME;
+          shellPkg = "${pkgs.zsh}/bin/zsh";
+        };
       };
       # etc. ...
     };
