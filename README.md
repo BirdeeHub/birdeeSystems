@@ -33,8 +33,8 @@ monitor management:
 
   If you had this repo as a flake input, you could access those via importing
 
-    inputs.birdeeSystems.home-modules.i3MonMemory
-    inputs.birdeeSystems.system-modules.i3MonMemory
+    inputs.birdeeSystems.homeModules.i3MonMemory
+    inputs.birdeeSystems.nixosModules.i3MonMemory
 
   In fact, all items [specified in this file](./common/default.nix) can be imported in this way in other flakes.
 

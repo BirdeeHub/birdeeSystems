@@ -136,7 +136,7 @@
           # e.g. treefmt-nix.flakeModule
         ];
       flake = {
-        inherit home-modules system-modules;
+        homeModules = home-modules;
         myOverlays = overlays;
         diskoConfigurations = {
           PC_sda_swap = import ./disko/PCs/sda_swap.nix;
@@ -145,6 +145,7 @@
         overlays = home-modules.birdeeVim.overlays // {
           minesweeper = inputs.minesweeper.overlays.default;
         };
+        nixosModules = system-modules;
         templates = import ./templates inputs;
         flakeModules = import ./flakeModules;
       };
