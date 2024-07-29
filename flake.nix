@@ -142,6 +142,9 @@
           PC_sda_swap = import ./disko/PCs/sda_swap.nix;
           PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
         };
+        overlays = home-modules.birdeeVim.overlays // {
+          minesweeper = inputs.minesweeper.overlays.default;
+        };
         templates = import ./templates inputs;
         flakeModules = import ./flakeModules;
       };
