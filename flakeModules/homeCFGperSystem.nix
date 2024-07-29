@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) types mkOption mkMerge;
+  inherit (lib) types mkOption;
   bySystems = systems: f: (let
     genAttrs =
       names:
@@ -26,7 +26,7 @@ in
     perSystem = flake-parts-lib.mkPerSystemOption ({ system, config, ... }: {
       _file = file;
 
-      options.homeCFGps = mkOption {
+      options.homeConfigurations = mkOption {
         type = types.lazyAttrsOf types.unspecified;
         default = { };
       };
@@ -35,7 +35,7 @@ in
 
   config = {
     flake.legacyPackages = bySystems config.systems (system: {
-      homeConfigurations = (config.perSystem system).homeCFGps;
+      inherit (config.perSystem system) homeConfigurations;
     });
   };
 }

@@ -180,7 +180,7 @@
               }
             );
 
-          homeCFGps =
+          homeConfigurations =
             let
               users = import ./userdata pkgs;
             in
@@ -237,7 +237,7 @@
               };
             };
 
-          nixosCFGps =
+          nixosConfigurations =
             let
               users = import ./userdata pkgs;
             in
