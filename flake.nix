@@ -143,6 +143,7 @@
           PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
         };
         overlays = home-modules.birdeeVim.overlays // {
+          dep-tree = import ./overlays/dep-tree "dep-tree" inputs;
           minesweeper = inputs.minesweeper.overlays.default;
         };
         nixosModules = system-modules;
