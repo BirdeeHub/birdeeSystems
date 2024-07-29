@@ -165,11 +165,9 @@
             config = { };
           };
 
-          packages =
-            home-modules.birdeeVim.packages.${system}
-            // {
-                inherit (pkgs) dep-tree minesweeper;
-              };
+          packages = home-modules.birdeeVim.packages.${system} // {
+            inherit (pkgs) dep-tree minesweeper;
+          };
 
           app-images =
             home-modules.birdeeVim.app-images.${system}
