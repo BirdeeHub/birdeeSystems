@@ -257,6 +257,7 @@
                     flake-path
                     ;
                 };
+                inherit system;
                 modules = [
                   home-manager.nixosModules.home-manager
                   disko.nixosModules.disko
@@ -301,6 +302,7 @@
                     flake-path
                     ;
                 };
+                inherit system;
                 modules = [
                   home-manager.nixosModules.home-manager
                   disko.nixosModules.disko
@@ -345,6 +347,7 @@
                     flake-path
                     ;
                 };
+                inherit system;
                 modules = [
                   { nixpkgs.overlays = overlays; }
                   disko.nixosModules.disko
@@ -365,6 +368,7 @@
                     flake-path
                     ;
                 };
+                inherit system;
                 modules = [
                   { nixpkgs.overlays = overlays; }
                   disko.nixosModules.disko
