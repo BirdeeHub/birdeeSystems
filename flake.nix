@@ -159,7 +159,7 @@
           ...
         }:
         {
-          _module.args.pkgs = import nixpkgs {
+          _module.args.pkgs = import inputs.nixpkgsNV {
             inherit system;
             overlays = overlays;
             config = { };
@@ -167,27 +167,15 @@
 
           packages =
             home-modules.birdeeVim.packages.${system}
-            // (
-              let
-                pkgsnew = import inputs.nixpkgsNV {
-                  inherit system overlays;
-                  config.allowUnfree = true;
-                };
-              in
-              {
-                inherit (pkgsnew) dep-tree minesweeper;
-              }
-            );
+            // {
+                inherit (pkgs) dep-tree minesweeper;
+              };
 
           app-images =
             home-modules.birdeeVim.app-images.${system}
             // (
               let
                 bundle = nix-appimage.bundlers.${system}.default;
-                pkgs = import inputs.nixpkgsNV {
-                  inherit system overlays;
-                  config.allowUnfree = true;
-                };
               in
               {
                 minesweeper = bundle pkgs.minesweeper;
@@ -204,7 +192,6 @@
                   username = "birdee";
                   monitorCFG = ./homes/monitors_by_hostname/dustbook;
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     system
@@ -230,7 +217,6 @@
                   username = "birdee";
                   monitorCFG = ./homes/monitors_by_hostname/nestOS;
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     system
@@ -262,7 +248,6 @@
                 specialArgs = {
                   hostname = "nestOS";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
@@ -290,7 +275,6 @@
                         username = "birdee";
                         monitorCFG = ./homes/monitors_by_hostname/nestOS;
                         inherit
-                          nixpkgs
                           stateVersion
                           self
                           inputs
@@ -308,7 +292,6 @@
                 specialArgs = {
                   hostname = "dustbook";
                   inherit
-                    nixpkgs
                     stateVersion
                     users
                     self
@@ -336,7 +319,6 @@
                         username = "birdee";
                         monitorCFG = ./homes/monitors_by_hostname/dustbook;
                         inherit
-                          nixpkgs
                           stateVersion
                           self
                           inputs
@@ -354,7 +336,6 @@
                 specialArgs = {
                   hostname = "nestOS";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
@@ -375,7 +356,6 @@
                 specialArgs = {
                   hostname = "dustbook";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
@@ -396,7 +376,6 @@
                 specialArgs = {
                   hostname = "virtbird";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
@@ -423,7 +402,6 @@
                         username = "birdee";
                         monitorCFG = null;
                         inherit
-                          nixpkgs
                           stateVersion
                           self
                           inputs
@@ -439,7 +417,6 @@
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {
                 specialArgs = {
-                  nixpkgs = inputs.nixpkgsNV;
                   inherit
                     self
                     inputs
