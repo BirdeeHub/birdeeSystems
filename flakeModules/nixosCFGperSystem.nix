@@ -13,14 +13,14 @@ in
   _file = file;
 
   options = {
-    perSystem = flake-parts-lib.mkPerSystemOption ({ system, config, ... }: {
+    perSystem = flake-parts-lib.mkPerSystemOption {
       _file = file;
 
       options.nixosConfigurations = mkOption {
         type = types.lazyAttrsOf types.unspecified;
         default = { };
       };
-    });
+    };
   };
 
   config = {
