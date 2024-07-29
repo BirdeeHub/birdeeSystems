@@ -15,6 +15,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    devenv.url = "github:cachix/devenv";
     flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/acb4f0e9bfa8ca2d6fca5e692307b5c994e7dbda";
@@ -107,6 +109,7 @@
       home-manager,
       disko,
       nix-appimage,
+      flake-parts,
       ...
     }@inputs:
     let
@@ -119,45 +122,80 @@
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
     in
-    {
-      inherit home-modules system-modules;
-      myOverlays = overlays;
-      diskoConfigurations = {
-        PC_sda_swap = import ./disko/PCs/sda_swap.nix;
-        PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
-      };
-      templates = import ./templates inputs;
-    }
-    // (forEachSystem (system: {
-      app-images = home-modules.birdeeVim.app-images.${system} // (let
-        bundle = nix-appimage.bundlers.${system}.default;
-        pkgs = import inputs.nixpkgsNV {
-          inherit system overlays;
-          config.allowUnfree = true;
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = nixpkgs.lib.platforms.all;
+      imports =
+        let
+          myMods = import ./flakeModules;
+        in
+        [
+          inputs.flake-parts.flakeModules.easyOverlay
+          inputs.devenv.flakeModule
+          myMods.nixosCFGperSystem
+          myMods.homeCFGperSystem
+          myMods.appImagePerSystem
+
+          # e.g. treefmt-nix.flakeModule
+        ];
+      flake = {
+        inherit home-modules system-modules;
+        myOverlays = overlays;
+        diskoConfigurations = {
+          PC_sda_swap = import ./disko/PCs/sda_swap.nix;
+          PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
         };
-      in {
-        minesweeper = bundle pkgs.minesweeper;
-      });
-      packages =
-        home-modules.birdeeVim.packages.${system}
-        // (
-          let
-            pkgs = import inputs.nixpkgsNV {
-              inherit system overlays;
-              config.allowUnfree = true;
-            };
-          in
-          {
-            inherit (pkgs) dep-tree minesweeper;
-          }
-        )
-        // {
-          homeConfigurations =
+        templates = import ./templates inputs;
+        flakeModules = import ./flakeModules;
+      };
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          lib,
+          pkgs,
+          system,
+          final,
+          ...
+        }:
+        {
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            overlays = overlays;
+            config = { };
+          };
+
+          packages =
+            home-modules.birdeeVim.packages.${system}
+            // (
+              let
+                pkgsnew = import inputs.nixpkgsNV {
+                  inherit system overlays;
+                  config.allowUnfree = true;
+                };
+              in
+              {
+                inherit (pkgsnew) dep-tree minesweeper;
+              }
+            );
+
+          app-images =
+            home-modules.birdeeVim.app-images.${system}
+            // (
+              let
+                bundle = nix-appimage.bundlers.${system}.default;
+                pkgs = import inputs.nixpkgsNV {
+                  inherit system overlays;
+                  config.allowUnfree = true;
+                };
+              in
+              {
+                minesweeper = bundle pkgs.minesweeper;
+              }
+            );
+
+          homeCFGps =
             let
-              pkgs = import inputs.nixpkgs {
-                inherit system overlays;
-                config.allowUnfree = true;
-              };
               users = import ./userdata pkgs;
             in
             {
@@ -214,12 +252,9 @@
                 ];
               };
             };
-          nixosConfigurations =
+
+          nixosCFGps =
             let
-              pkgs = import inputs.nixpkgs {
-                inherit system overlays;
-                config.allowUnfree = true;
-              };
               users = import ./userdata pkgs;
             in
             {
@@ -277,15 +312,15 @@
                   inherit
                     nixpkgs
                     stateVersion
+                    users
                     self
                     inputs
-                    users
                     system-modules
                     overlays
                     flake-path
                     ;
                 };
-                inherit system;
+                # inherit system;
                 modules = [
                   home-manager.nixosModules.home-manager
                   disko.nixosModules.disko
@@ -307,11 +342,10 @@
                           nixpkgs
                           stateVersion
                           self
-                          system
                           inputs
-                          users
                           home-modules
                           flake-path
+                          users
                           ;
                       };
                       services.displayManager.defaultSession = lib.mkDefault "none+fake";
@@ -427,5 +461,5 @@
               };
             };
         };
-    }));
+    };
 }
