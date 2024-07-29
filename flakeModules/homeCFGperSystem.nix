@@ -6,17 +6,7 @@
 }:
 let
   inherit (lib) types mkOption;
-  bySystems = systems: f: (let
-    genAttrs =
-      names:
-      f:
-      builtins.listToAttrs (map (n: nameValuePair n (f n)) names);
-    nameValuePair =
-      name:
-      value:
-      { inherit name value; };
-  in
-    genAttrs systems (system: f system));
+  inherit (import ./flake-utils.nix) bySystems;
   file = ./homeCFGperSystem.nix;
 in
 {

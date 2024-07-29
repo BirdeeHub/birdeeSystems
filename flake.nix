@@ -115,8 +115,6 @@
     let
       flake-path = "/home/birdee/birdeeSystems";
       stateVersion = "23.05";
-      forEachSystem = (import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all;
-      withEachSystem = (import ./platforms.nix).bySystems nixpkgs.lib.platforms.all;
       overlays = (import ./overlays inputs);
       common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
