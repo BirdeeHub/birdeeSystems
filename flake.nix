@@ -121,6 +121,38 @@
       common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
+
+      HMasModule =
+        {
+          users,
+          monitorCFG ? null,
+          username,
+          hmCFGmodMAIN,
+        }:
+        { lib, ... }:
+        {
+          nixpkgs.overlays = overlayList;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.birdee = hmCFGmodMAIN; # import ./homes/birdee.nix;
+          home-manager.backupFileExtension = "hm-bkp";
+          home-manager.verbose = true;
+          home-manager.extraSpecialArgs = {
+            # username = "birdee";
+            # monitorCFG = ./homes/monitors_by_hostname/dustbook;
+            inherit
+              stateVersion
+              self
+              inputs
+              home-modules
+              flake-path
+              username
+              users
+              ;
+          } // (if monitorCFG == null then {} else { inherit monitorCFG;});
+          services.displayManager.defaultSession = lib.mkDefault "none+fake";
+        };
+
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.platforms.all;
@@ -263,30 +295,12 @@
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/aSUS
-                  (
-                    { lib, ... }:
-                    {
-                      nixpkgs.overlays = overlayList;
-                      home-manager.useGlobalPkgs = true;
-                      home-manager.useUserPackages = true;
-                      home-manager.users.birdee = import ./homes/birdee.nix;
-                      home-manager.backupFileExtension = "hm-bkp";
-                      home-manager.verbose = true;
-                      home-manager.extraSpecialArgs = {
-                        username = "birdee";
-                        monitorCFG = ./homes/monitors_by_hostname/nestOS;
-                        inherit
-                          stateVersion
-                          self
-                          inputs
-                          users
-                          home-modules
-                          flake-path
-                          ;
-                      };
-                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-                    }
-                  )
+                  (HMasModule {
+                    monitorCFG = ./homes/monitors_by_hostname/nestOS;
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "birdee@dustbook" = nixpkgs.lib.nixosSystem {
@@ -307,30 +321,12 @@
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/dustbook
-                  (
-                    { lib, ... }:
-                    {
-                      nixpkgs.overlays = overlayList;
-                      home-manager.useGlobalPkgs = true;
-                      home-manager.useUserPackages = true;
-                      home-manager.users.birdee = import ./homes/birdee.nix;
-                      home-manager.backupFileExtension = "hm-bkp";
-                      home-manager.verbose = true;
-                      home-manager.extraSpecialArgs = {
-                        username = "birdee";
-                        monitorCFG = ./homes/monitors_by_hostname/dustbook;
-                        inherit
-                          stateVersion
-                          self
-                          inputs
-                          home-modules
-                          flake-path
-                          users
-                          ;
-                      };
-                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-                    }
-                  )
+                  (HMasModule {
+                    monitorCFG = ./homes/monitors_by_hostname/dustbook;
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "nestOS" = nixpkgs.lib.nixosSystem {
@@ -389,30 +385,11 @@
                 modules = [
                   home-manager.nixosModules.home-manager
                   ./systems/VMs/qemu
-                  (
-                    { lib, ... }:
-                    {
-                      nixpkgs.overlays = overlayList;
-                      home-manager.useGlobalPkgs = true;
-                      home-manager.useUserPackages = true;
-                      home-manager.users.birdee = import ./homes/birdee.nix;
-                      home-manager.backupFileExtension = "hm-bkp";
-                      home-manager.verbose = true;
-                      home-manager.extraSpecialArgs = {
-                        username = "birdee";
-                        monitorCFG = null;
-                        inherit
-                          stateVersion
-                          self
-                          inputs
-                          users
-                          home-modules
-                          flake-path
-                          ;
-                      };
-                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-                    }
-                  )
+                  (HMasModule {
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {
