@@ -113,6 +113,7 @@
       ...
     }@inputs:
     let
+      # NOTE: setup
       flake-path = "/home/birdee/birdeeSystems";
       stateVersion = "23.05";
       overlaysPre = (import ./overlays inputs);
@@ -121,7 +122,7 @@
       common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
-
+      # factor out declaring home manager as a module for configs that do that
       HMasModule =
         {
           users,
@@ -138,22 +139,23 @@
           home-manager.backupFileExtension = "hm-bkp";
           home-manager.verbose = true;
           home-manager.extraSpecialArgs = {
-            # username = "birdee";
-            # monitorCFG = ./homes/monitors_by_hostname/dustbook;
             inherit
               stateVersion
               self
               inputs
               home-modules
               flake-path
-              username
+              username # username = "birdee";
               users
               ;
-          } // (if monitorCFG == null then {} else { inherit monitorCFG;});
+          } // (if monitorCFG == null then {} else { inherit monitorCFG;}); # monitorCFG = ./homes/monitors_by_hostname/<hostname>;
           services.displayManager.defaultSession = lib.mkDefault "none+fake";
         };
 
     in
+    # NOTE: flake parts definitions
+    # https://flake.parts/options/flake-parts
+    # https://devenv.sh/reference/options
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.platforms.all;
       imports =
