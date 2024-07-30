@@ -14,6 +14,7 @@ mkTransposedPerSystemModule {
     type = types.lazyAttrsOf types.package;
     default = { };
     description = ''
+      perSystem.app-images.<name> = app-images.$${system}.<name>
     '';
   };
   file = ./appImagePerSystem.nix;

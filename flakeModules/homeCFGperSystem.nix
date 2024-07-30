@@ -18,6 +18,9 @@ in
       options.homeConfigurations = mkOption {
         type = types.lazyAttrsOf types.unspecified;
         default = { };
+        description = ''
+          perSystem.homeConfigurations.<name> = legacyPackages.$${system}.homeConfigurations.<name>
+        '';
       };
     };
   };

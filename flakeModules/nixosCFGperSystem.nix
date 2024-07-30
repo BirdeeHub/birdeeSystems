@@ -18,6 +18,9 @@ in
       options.nixosConfigurations = mkOption {
         type = types.lazyAttrsOf types.unspecified;
         default = { };
+        description = ''
+          perSystem.nixosConfigurations.<name> = legacyPackages.$${system}.nixosConfigurations.<name>
+        '';
       };
     };
   };
