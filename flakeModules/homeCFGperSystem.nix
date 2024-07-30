@@ -19,8 +19,8 @@ in
         type = types.lazyAttrsOf types.unspecified;
         default = { };
         description = ''
-          `perSystem.homeConfigurations.<name> = legacyPackages.$${system}.homeConfigurations.<name>`
-          Warning: will conflict with existing `legacyPackages.$${system}.homeConfigurations.<name>` definitions
+          `perSystem.homeConfigurations.<name> = flake.legacyPackages.$${system}.homeConfigurations.<name>`
+          Warning: will conflict with existing `flake.legacyPackages.$${system}.homeConfigurations.<name>` definitions
         '';
       };
     };
