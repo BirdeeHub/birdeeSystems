@@ -25,16 +25,18 @@ with builtins; rec {
              else [ currentSystem ]
           else []));
 
-  bySystems = systems: f:
-    genAttrs systems (system: f system);
+  # REMEMBER: this is just lib.genAttrs so if you have lib, dont use this, it confuses people
+  bySystems = systems: f: (let
+    genAttrs =
+      names:
+      f:
+      listToAttrs (map (n: nameValuePair n (f n)) names);
 
-  genAttrs =
-    names:
-    f:
-    listToAttrs (map (n: nameValuePair n (f n)) names);
+    nameValuePair =
+      name:
+      value:
+      { inherit name value; };
+  in
+    genAttrs systems (system: f system));
 
-  nameValuePair =
-    name:
-    value:
-    { inherit name value; };
 }

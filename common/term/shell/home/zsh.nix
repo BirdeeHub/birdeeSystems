@@ -1,5 +1,6 @@
 {config, pkgs, self, lib, inputs, ... }:
 {
+  _file = ./zsh.nix;
   options = {
     birdeeMods.zsh.enable = lib.mkEnableOption "birdeeZsh";
   };

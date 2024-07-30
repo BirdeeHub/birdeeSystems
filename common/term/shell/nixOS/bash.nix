@@ -1,4 +1,5 @@
 {config, pkgs, inputs, self, lib, ... }: {
+  _file = ./bash.nix;
   options = {
     birdeeMods.bash.enable = lib.mkEnableOption "birdeeBash";
   };

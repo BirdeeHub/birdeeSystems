@@ -1,7 +1,7 @@
-{ config, pkgs, lib, self, flake-path, inputs, stateVersion, users, hostname, system-modules, nixpkgs, ... }: let
+{ config, pkgs, lib, self, modulesPath, flake-path, inputs, stateVersion, users, hostname, system-modules, nixpkgs, ... }: let
 in {
   imports = with system-modules; [
-    "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
+    "${modulesPath}/virtualisation/qemu-vm.nix"
     ../vm.nix
   ];
   config = {

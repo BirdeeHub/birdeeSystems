@@ -15,7 +15,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    devenv.url = "github:cachix/devenv";
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/acb4f0e9bfa8ca2d6fca5e692307b5c994e7dbda";
     disko.url = "github:nix-community/disko";
@@ -50,7 +51,7 @@
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
     };
-    "plugins-fugit2-nvim" = {
+    "plugins-fugit2.nvim" = {
       url = "github:SuperBo/fugit2.nvim";
       flake = false;
     };
@@ -66,7 +67,7 @@
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;
     };
-    "plugins-otter-nvim" = {
+    "plugins-otter.nvim" = {
       url = "github:jmbuhr/otter.nvim";
       flake = false;
     };
@@ -107,57 +108,114 @@
       home-manager,
       disko,
       nix-appimage,
+      flake-parts,
       ...
     }@inputs:
     let
+      # NOTE: setup
       flake-path = "/home/birdee/birdeeSystems";
       stateVersion = "23.05";
-      forEachSystem = (import ./platforms.nix).eachSystem nixpkgs.lib.platforms.all;
-      withEachSystem = (import ./platforms.nix).bySystems nixpkgs.lib.platforms.all;
-      overlays = (import ./overlays inputs);
+      overlaysPre = (import ./overlays inputs);
+      overlayList = overlaysPre.overlayList;
+      overlaySet = overlaysPre.overlaySet;
       common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
-    in
-    {
-      inherit home-modules system-modules;
-      myOverlays = overlays;
-      diskoConfigurations = {
-        PC_sda_swap = import ./disko/PCs/sda_swap.nix;
-        PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
-      };
-      templates = import ./templates inputs;
-    }
-    // (forEachSystem (system: {
-      app-images = home-modules.birdeeVim.app-images.${system} // (let
-        bundle = nix-appimage.bundlers.${system}.default;
-        pkgs = import inputs.nixpkgsNV {
-          inherit system overlays;
-          config.allowUnfree = true;
+      # factor out declaring home manager as a module for configs that do that
+      HMasModule =
+        { users, monitorCFG ? null, username, hmCFGmodMAIN, }:
+        { lib, ... }:
+        {
+          nixpkgs.overlays = overlayList;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.birdee = hmCFGmodMAIN; # import ./homes/birdee.nix;
+          home-manager.backupFileExtension = "hm-bkp";
+          home-manager.verbose = true;
+          home-manager.extraSpecialArgs = {
+            inherit
+              stateVersion
+              self
+              inputs
+              home-modules
+              flake-path
+              username # username = "birdee";
+              users
+              ;
+          } // (if monitorCFG == null then {} else { inherit monitorCFG;}); # monitorCFG = ./homes/monitors_by_hostname/<hostname>;
+          services.displayManager.defaultSession = lib.mkDefault "none+fake";
         };
-      in {
-        minesweeper = bundle pkgs.minesweeper;
-      });
-      packages =
-        home-modules.birdeeVim.packages.${system}
-        // (
-          let
-            pkgs = import inputs.nixpkgsNV {
-              inherit system overlays;
-              config.allowUnfree = true;
+
+    in
+    # NOTE: flake parts definitions
+    # https://flake.parts/options/flake-parts
+    # https://devenv.sh/reference/options
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = nixpkgs.lib.platforms.all;
+      imports =
+        let
+          myMods = import ./flakeModules;
+        in
+        [
+          # inputs.flake-parts.flakeModules.easyOverlay
+          inputs.devenv.flakeModule
+          myMods.nixosCFGperSystem
+          myMods.homeCFGperSystem
+          myMods.appImagePerSystem
+
+          # e.g. treefmt-nix.flakeModule
+        ];
+      flake = {
+        homeModules = home-modules;
+        diskoConfigurations = {
+          PC_sda_swap = import ./disko/PCs/sda_swap.nix;
+          PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
+        };
+        overlays = home-modules.birdeeVim.overlays // overlaySet // { };
+        nixosModules = system-modules;
+        templates = import ./templates inputs;
+        flakeModules = import ./flakeModules;
+      };
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          lib,
+          pkgs,
+          system,
+          # final, # Only with easyOverlay imported
+          ...
+        }:
+        {
+          _module.args.pkgs = import inputs.nixpkgsNV {
+            inherit system;
+            overlays = overlayList;
+            config = {
+              allowUnfree = true;
             };
-          in
-          {
+          };
+
+          # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
+
+          packages = home-modules.birdeeVim.packages.${system} // {
             inherit (pkgs) dep-tree minesweeper;
-          }
-        )
-        // {
+          };
+
+          app-images =
+            home-modules.birdeeVim.app-images.${system}
+            // (
+              let
+                bundle = nix-appimage.bundlers.${system}.default;
+              in
+              {
+                minesweeper = bundle pkgs.minesweeper;
+              }
+            );
+
+          # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
           homeConfigurations =
             let
-              pkgs = import inputs.nixpkgs {
-                inherit system overlays;
-                config.allowUnfree = true;
-              };
               users = import ./userdata pkgs;
             in
             {
@@ -166,7 +224,6 @@
                   username = "birdee";
                   monitorCFG = ./homes/monitors_by_hostname/dustbook;
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     system
@@ -192,7 +249,6 @@
                   username = "birdee";
                   monitorCFG = ./homes/monitors_by_hostname/nestOS;
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     system
@@ -214,12 +270,10 @@
                 ];
               };
             };
+
+          # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
           nixosConfigurations =
             let
-              pkgs = import inputs.nixpkgs {
-                inherit system overlays;
-                config.allowUnfree = true;
-              };
               users = import ./userdata pkgs;
             in
             {
@@ -227,13 +281,11 @@
                 specialArgs = {
                   hostname = "nestOS";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
@@ -243,45 +295,23 @@
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/aSUS
-                  (
-                    { lib, ... }:
-                    {
-                      nixpkgs.overlays = overlays;
-                      home-manager.useGlobalPkgs = true;
-                      home-manager.useUserPackages = true;
-                      home-manager.users.birdee = import ./homes/birdee.nix;
-                      home-manager.backupFileExtension = "hm-bkp";
-                      home-manager.verbose = true;
-                      home-manager.extraSpecialArgs = {
-                        username = "birdee";
-                        monitorCFG = ./homes/monitors_by_hostname/nestOS;
-                        inherit
-                          nixpkgs
-                          stateVersion
-                          self
-                          system
-                          inputs
-                          users
-                          home-modules
-                          flake-path
-                          ;
-                      };
-                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-                    }
-                  )
+                  (HMasModule {
+                    monitorCFG = ./homes/monitors_by_hostname/nestOS;
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "birdee@dustbook" = nixpkgs.lib.nixosSystem {
                 specialArgs = {
                   hostname = "dustbook";
                   inherit
-                    nixpkgs
                     stateVersion
+                    users
                     self
                     inputs
-                    users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
@@ -291,51 +321,29 @@
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/dustbook
-                  (
-                    { lib, ... }:
-                    {
-                      nixpkgs.overlays = overlays;
-                      home-manager.useGlobalPkgs = true;
-                      home-manager.useUserPackages = true;
-                      home-manager.users.birdee = import ./homes/birdee.nix;
-                      home-manager.backupFileExtension = "hm-bkp";
-                      home-manager.verbose = true;
-                      home-manager.extraSpecialArgs = {
-                        username = "birdee";
-                        monitorCFG = ./homes/monitors_by_hostname/dustbook;
-                        inherit
-                          nixpkgs
-                          stateVersion
-                          self
-                          system
-                          inputs
-                          users
-                          home-modules
-                          flake-path
-                          ;
-                      };
-                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-                    }
-                  )
+                  (HMasModule {
+                    monitorCFG = ./homes/monitors_by_hostname/dustbook;
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "nestOS" = nixpkgs.lib.nixosSystem {
                 specialArgs = {
                   hostname = "nestOS";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
                 inherit system;
                 modules = [
-                  { nixpkgs.overlays = overlays; }
+                  { nixpkgs.overlays = overlayList; }
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/aSUS
@@ -345,19 +353,17 @@
                 specialArgs = {
                   hostname = "dustbook";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
                 inherit system;
                 modules = [
-                  { nixpkgs.overlays = overlays; }
+                  { nixpkgs.overlays = overlayList; }
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/dustbook
@@ -367,13 +373,11 @@
                 specialArgs = {
                   hostname = "virtbird";
                   inherit
-                    nixpkgs
                     stateVersion
                     self
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
@@ -381,51 +385,24 @@
                 modules = [
                   home-manager.nixosModules.home-manager
                   ./systems/VMs/qemu
-                  (
-                    { lib, ... }:
-                    {
-                      nixpkgs.overlays = overlays;
-                      home-manager.useGlobalPkgs = true;
-                      home-manager.useUserPackages = true;
-                      home-manager.users.birdee = import ./homes/birdee.nix;
-                      home-manager.backupFileExtension = "hm-bkp";
-                      home-manager.verbose = true;
-                      home-manager.extraSpecialArgs = {
-                        username = "birdee";
-                        monitorCFG = null;
-                        inherit
-                          nixpkgs
-                          stateVersion
-                          self
-                          system
-                          inputs
-                          users
-                          home-modules
-                          flake-path
-                          ;
-                      };
-                      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-                    }
-                  )
+                  (HMasModule {
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {
                 specialArgs = {
-                  nixpkgs = inputs.nixpkgsNV;
-                  inherit
-                    self
-                    inputs
-                    system-modules
-                    overlays
-                    ;
+                  inherit self inputs system-modules;
                 };
                 inherit system;
                 modules = [
-                  { nixpkgs.overlays = overlays; }
+                  { nixpkgs.overlays = overlayList; }
                   ./systems/PCs/installer
                 ];
               };
             };
         };
-    }));
+    };
 }

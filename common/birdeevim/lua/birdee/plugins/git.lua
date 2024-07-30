@@ -19,7 +19,7 @@ require('lz.n').load({
 
 vim.keymap.set("n", "<leader>_", "<cmd>Fugit2<CR>", { noremap = true, desc = 'Fugit2' })
 require('lz.n').load({
-  "fugit2-nvim",
+  "fugit2.nvim",
   cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
   -- event = "",
   -- ft = "",

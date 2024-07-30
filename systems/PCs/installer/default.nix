@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, modulesPath, system-modules, inputs, nixpkgs, ... }: {
+{ config, lib, pkgs, self, modulesPath, system-modules, inputs, ... }: {
   imports = with system-modules; [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     birdeeVim.nixosModules.default
