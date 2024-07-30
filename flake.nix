@@ -123,12 +123,7 @@
       system-modules = common { homeModule = false; };
       # factor out declaring home manager as a module for configs that do that
       HMasModule =
-        {
-          users,
-          monitorCFG ? null,
-          username,
-          hmCFGmodMAIN,
-        }:
+        { users, monitorCFG ? null, username, hmCFGmodMAIN, }:
         { lib, ... }:
         {
           nixpkgs.overlays = overlayList;
