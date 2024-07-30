@@ -129,7 +129,7 @@
           myMods = import ./flakeModules;
         in
         [
-          inputs.flake-parts.flakeModules.easyOverlay
+          # inputs.flake-parts.flakeModules.easyOverlay
           inputs.devenv.flakeModule
           myMods.nixosCFGperSystem
           myMods.homeCFGperSystem
@@ -156,7 +156,7 @@
           lib,
           pkgs,
           system,
-          final,
+          # final, # Only with easyOverlay imported
           ...
         }:
         {
@@ -165,6 +165,8 @@
             overlays = overlayList;
             config = { };
           };
+
+          # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
           packages = home-modules.birdeeVim.packages.${system} // {
             inherit (pkgs) dep-tree minesweeper;
