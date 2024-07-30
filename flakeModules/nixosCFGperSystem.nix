@@ -19,7 +19,8 @@ in
         type = types.lazyAttrsOf types.unspecified;
         default = { };
         description = ''
-          perSystem.nixosConfigurations.<name> = legacyPackages.$${system}.nixosConfigurations.<name>
+          `perSystem.nixosConfigurations.<name> = legacyPackages.$${system}.nixosConfigurations.<name>`
+          Warning: will conflict with existing `legacyPackages.$${system}.nixosConfigurations.<name>` definitions
         '';
       };
     };

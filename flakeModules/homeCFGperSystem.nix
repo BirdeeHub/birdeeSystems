@@ -19,7 +19,8 @@ in
         type = types.lazyAttrsOf types.unspecified;
         default = { };
         description = ''
-          perSystem.homeConfigurations.<name> = legacyPackages.$${system}.homeConfigurations.<name>
+          `perSystem.homeConfigurations.<name> = legacyPackages.$${system}.homeConfigurations.<name>`
+          Warning: will conflict with existing `legacyPackages.$${system}.homeConfigurations.<name>` definitions
         '';
       };
     };
