@@ -1,4 +1,4 @@
-{ config, pkgs, self, inputs, lib, overlays ? [], ... }: let
+{ config, pkgs, self, inputs, lib, ... }: let
   cfg = config.birdeeMods.LD;
 in {
   options = {

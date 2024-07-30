@@ -13,7 +13,7 @@ in
 overlay
 */
 inputs: let 
-  overlaySet = {
+  overlaySetPre = {
 
     # this is how you would add another overlay file
     # for if your customBuildsOverlay gets too long
@@ -25,5 +25,12 @@ inputs: let
     dep-tree = import ./dep-tree;
 
   };
-  overlayList = builtins.attrValues (builtins.mapAttrs (name: value: (value name inputs)) overlaySet);
-in overlayList ++ [ inputs.nur.overlay inputs.minesweeper.overlays.default ]
+  overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
+  overlaySet = overlaySetMapped // {
+    nur = inputs.nur.overlay;
+    minesweeper = inputs.minesweeper.overlays.default;
+  };
+in {
+  inherit overlaySet;
+  overlayList = builtins.attrValues overlaySet;
+}

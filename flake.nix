@@ -115,7 +115,9 @@
     let
       flake-path = "/home/birdee/birdeeSystems";
       stateVersion = "23.05";
-      overlays = (import ./overlays inputs);
+      overlaysPre = (import ./overlays inputs);
+      overlayList = overlaysPre.overlayList;
+      overlaySet = overlaysPre.overlaySet;
       common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
@@ -137,15 +139,11 @@
         ];
       flake = {
         homeModules = home-modules;
-        myOverlays = overlays;
         diskoConfigurations = {
           PC_sda_swap = import ./disko/PCs/sda_swap.nix;
           PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
         };
-        overlays = home-modules.birdeeVim.overlays // {
-          dep-tree = import ./overlays/dep-tree "dep-tree" inputs;
-          minesweeper = inputs.minesweeper.overlays.default;
-        };
+        overlays = home-modules.birdeeVim.overlays // overlaySet // { };
         nixosModules = system-modules;
         templates = import ./templates inputs;
         flakeModules = import ./flakeModules;
@@ -164,7 +162,7 @@
         {
           _module.args.pkgs = import inputs.nixpkgsNV {
             inherit system;
-            overlays = overlays;
+            overlays = overlayList;
             config = { };
           };
 
@@ -254,7 +252,6 @@
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
@@ -267,7 +264,7 @@
                   (
                     { lib, ... }:
                     {
-                      nixpkgs.overlays = overlays;
+                      nixpkgs.overlays = overlayList;
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
                       home-manager.users.birdee = import ./homes/birdee.nix;
@@ -299,7 +296,6 @@
                     self
                     inputs
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
@@ -312,7 +308,7 @@
                   (
                     { lib, ... }:
                     {
-                      nixpkgs.overlays = overlays;
+                      nixpkgs.overlays = overlayList;
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
                       home-manager.users.birdee = import ./homes/birdee.nix;
@@ -344,13 +340,12 @@
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
                 inherit system;
                 modules = [
-                  { nixpkgs.overlays = overlays; }
+                  { nixpkgs.overlays = overlayList; }
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/aSUS
@@ -365,13 +360,12 @@
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
                 inherit system;
                 modules = [
-                  { nixpkgs.overlays = overlays; }
+                  { nixpkgs.overlays = overlayList; }
                   disko.nixosModules.disko
                   ./disko/PCs/sda_swap.nix
                   ./systems/PCs/dustbook
@@ -386,7 +380,6 @@
                     inputs
                     users
                     system-modules
-                    overlays
                     flake-path
                     ;
                 };
@@ -397,7 +390,7 @@
                   (
                     { lib, ... }:
                     {
-                      nixpkgs.overlays = overlays;
+                      nixpkgs.overlays = overlayList;
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
                       home-manager.users.birdee = import ./homes/birdee.nix;
@@ -422,16 +415,11 @@
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {
                 specialArgs = {
-                  inherit
-                    self
-                    inputs
-                    system-modules
-                    overlays
-                    ;
+                  inherit self inputs system-modules;
                 };
                 inherit system;
                 modules = [
-                  { nixpkgs.overlays = overlays; }
+                  { nixpkgs.overlays = overlayList; }
                   ./systems/PCs/installer
                 ];
               };

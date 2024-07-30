@@ -1,4 +1,4 @@
-isHomeModule: { config, pkgs, self, inputs, lib, overlays ? [], ... }: {
+isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
   imports = [
   ];
   options = {
