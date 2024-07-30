@@ -6,7 +6,6 @@
 }:
 let
   inherit (lib) types mkOption;
-  inherit (import ./flake-utils.nix) bySystems;
   file = ./nixosCFGperSystem.nix;
 in
 {
@@ -24,7 +23,7 @@ in
   };
 
   config = {
-    flake.legacyPackages = bySystems config.systems (system: {
+    flake.legacyPackages = lib.genAttrs config.systems (system: {
       inherit (config.perSystem system) nixosConfigurations;
     });
   };
