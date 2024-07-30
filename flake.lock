@@ -2077,7 +2077,7 @@
         "type": "github"
       }
     },
-    "plugins-fugit2-nvim": {
+    "plugins-fugit2.nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1720178940,
@@ -2368,7 +2368,7 @@
         "nixpkgsNV": "nixpkgsNV",
         "nur": "nur",
         "plugins-code-compass": "plugins-code-compass",
-        "plugins-fugit2-nvim": "plugins-fugit2-nvim",
+        "plugins-fugit2.nvim": "plugins-fugit2.nvim",
         "plugins-grapple": "plugins-grapple",
         "plugins-hlargs": "plugins-hlargs",
         "plugins-img-clip": "plugins-img-clip",

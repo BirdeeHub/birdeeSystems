@@ -51,7 +51,7 @@
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
     };
-    "plugins-fugit2-nvim" = {
+    "plugins-fugit2.nvim" = {
       url = "github:SuperBo/fugit2.nvim";
       flake = false;
     };
@@ -67,7 +67,7 @@
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;
     };
-    "plugins-otter-nvim" = {
+    "plugins-otter.nvim" = {
       url = "github:jmbuhr/otter.nvim";
       flake = false;
     };
