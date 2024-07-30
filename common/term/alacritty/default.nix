@@ -32,6 +32,7 @@ isHomeModule:
   '');
 
 in {
+  _file = ./default.nix;
   options = {
     birdeeMods.alacritty = with lib.types; {
       enable = lib.mkEnableOption "alacritty";

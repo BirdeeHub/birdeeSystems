@@ -17,7 +17,6 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     devenv.url = "github:cachix/devenv";
-    flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/acb4f0e9bfa8ca2d6fca5e692307b5c994e7dbda";
     disko.url = "github:nix-community/disko";

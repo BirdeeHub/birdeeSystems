@@ -1,4 +1,5 @@
 isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
+  _file = ./default.nix;
   imports = [
   ];
   options = {

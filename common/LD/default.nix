@@ -1,6 +1,7 @@
 { config, pkgs, self, inputs, lib, ... }: let
   cfg = config.birdeeMods.LD;
 in {
+  _file = ./default.nix;
   options = {
     birdeeMods.LD = with lib.types; {
       enable = lib.mkEnableOption "LD stuff";

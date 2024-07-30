@@ -1,6 +1,7 @@
 isHomeModule: { config, pkgs, self, inputs, lib, ... }: let
   cfg = config.birdeeMods.ranger;
 in {
+  _file = ./default.nix;
   options = {
     birdeeMods.ranger = with lib.types; {
       enable = lib.mkEnableOption "birdee's ranger";

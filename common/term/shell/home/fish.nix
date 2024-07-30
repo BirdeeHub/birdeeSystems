@@ -1,5 +1,6 @@
 {config, pkgs, self, lib, inputs, ... }:
 {
+  _file = ./fish.nix;
   options = {
     birdeeMods.fish.enable = lib.mkEnableOption "birdeeFish";
   };

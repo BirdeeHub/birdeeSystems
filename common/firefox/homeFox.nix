@@ -1,5 +1,6 @@
 {config, pkgs, self, inputs, lib, ... }:
 {
+  _file = ./homeFox.nix;
   options = {
     birdeeMods.firefox.enable = lib.mkEnableOption "birdeeFox";
   };

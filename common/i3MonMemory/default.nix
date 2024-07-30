@@ -2,6 +2,7 @@ home-manager:
 { config, pkgs, lib, ... }: let
   cfg = config.birdeeMods.i3MonMemory;
 in {
+  _file = ./default.nix;
   options = {
     birdeeMods.i3MonMemory = with lib.types; if home-manager then {
       enable = lib.mkEnableOption "an auto-run workspace switcher on monitor hotplug";
