@@ -2189,7 +2189,7 @@
         "type": "github"
       }
     },
-    "plugins-otter-nvim": {
+    "plugins-otter.nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1721645541,
@@ -2375,7 +2375,7 @@
         "plugins-large_file": "plugins-large_file",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",
-        "plugins-otter-nvim": "plugins-otter-nvim",
+        "plugins-otter.nvim": "plugins-otter.nvim",
         "plugins-render-markdown": "plugins-render-markdown",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",

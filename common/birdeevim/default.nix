@@ -7,16 +7,14 @@
     allowUnfree = true;
   };
   inherit (forEachSystem (system: let
-    dependencyOverlays = [ (utils.mergeOverlayLists inputs.nixCats.dependencyOverlays.${system}
-      ((import ./overlays inputs) ++ [
+    dependencyOverlays = (import ./overlays inputs) ++ [
         (utils.sanitizedPluginOverlay inputs)
         # add any flake overlays here.
         inputs.neorg-overlay.overlays.default
         inputs.lz-n.overlays.default
         # inputs.neovim-nightly-overlay.overlays.default
       ] ++ (if (inputs.codeium.overlays ? system)
-        then [ inputs.codeium.overlays.${system}.default ] else [])
-    )) ];
+        then [ inputs.codeium.overlays.${system}.default ] else []);
   in { inherit dependencyOverlays; })) dependencyOverlays;
 
   categoryDefinitions = { pkgs, settings, categories, name, ... }@packageDef: {
