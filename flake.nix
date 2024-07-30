@@ -196,7 +196,9 @@
           _module.args.pkgs = import inputs.nixpkgsNV {
             inherit system;
             overlays = overlayList;
-            config = { };
+            config = {
+              allowUnfree = true;
+            };
           };
 
           # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
