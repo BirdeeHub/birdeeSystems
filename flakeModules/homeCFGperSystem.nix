@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) types mkOption;
+  inherit (lib) types mkOption genAttrs;
   file = ./homeCFGperSystem.nix;
 in
 {
@@ -23,7 +23,7 @@ in
   };
 
   config = {
-    flake.legacyPackages = lib.genAttrs config.systems (system: {
+    flake.legacyPackages = genAttrs config.systems (system: {
       inherit (config.perSystem system) homeConfigurations;
     });
   };
