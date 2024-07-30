@@ -25,6 +25,7 @@ with builtins; rec {
              else [ currentSystem ]
           else []));
 
+  # REMEMBER: this is just lib.genAttrs so if you have lib, dont use this, it confuses people
   bySystems = systems: f: (let
     genAttrs =
       names:
