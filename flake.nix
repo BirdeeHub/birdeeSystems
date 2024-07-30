@@ -217,6 +217,7 @@
               }
             );
 
+          # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
           homeConfigurations =
             let
               users = import ./userdata pkgs;
@@ -274,6 +275,7 @@
               };
             };
 
+          # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
           nixosConfigurations =
             let
               users = import ./userdata pkgs;
