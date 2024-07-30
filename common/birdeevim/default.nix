@@ -9,7 +9,7 @@
   inherit (forEachSystem (system: let
     dependencyOverlays = [ (utils.mergeOverlayLists inputs.nixCats.dependencyOverlays.${system}
       ((import ./overlays inputs) ++ [
-        (utils.standardPluginOverlay inputs)
+        (utils.sanitizedPluginOverlay inputs)
         # add any flake overlays here.
         inputs.neorg-overlay.overlays.default
         inputs.lz-n.overlays.default
