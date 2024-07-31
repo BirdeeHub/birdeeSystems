@@ -166,7 +166,7 @@
           # e.g. treefmt-nix.flakeModule
         ];
       flake = {
-        homeModules = home-modules;
+        homeModules = home-modules // { birdeeVim = home-modules.birdeeVim.homeModule; };
         diskoConfigurations = {
           PC_sda_swap = import ./disko/PCs/sda_swap.nix;
           PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
@@ -175,6 +175,7 @@
         nixosModules = system-modules // { birdeeVim = system-modules.birdeeVim.nixosModules.default; };
         templates = import ./templates inputs;
         flakeModules = import ./flakeModules;
+        birdeeVim = home-modules.birdeeVim;
       };
       perSystem =
         {
