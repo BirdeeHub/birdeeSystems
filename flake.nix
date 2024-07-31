@@ -172,7 +172,7 @@
           PC_sdb_swap = import ./disko/PCs/sdb_swap.nix;
         };
         overlays = home-modules.birdeeVim.overlays // overlaySet // { };
-        nixosModules = system-modules;
+        nixosModules = system-modules // { birdeeVim = system-modules.birdeeVim.nixosModules.default; };
         templates = import ./templates inputs;
         flakeModules = import ./flakeModules;
       };
