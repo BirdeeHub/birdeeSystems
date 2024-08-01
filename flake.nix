@@ -15,6 +15,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils.url = "github:numtide/flake-utils";
+    manix.url = "github:nix-community/manix";
+    manix.inputs.nixpkgs.follows = "nixpkgsNV";
+    manix.inputs.flake-utils.follows = "flake-utils";
     flake-parts.url = "github:hercules-ci/flake-parts";
     devenv.url = "github:cachix/devenv";
     nur.url = "github:nix-community/nur";
@@ -200,7 +204,7 @@
           # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
           packages = home-modules.birdeeVim.packages.${system} // {
-            inherit (pkgs) dep-tree minesweeper;
+            inherit (pkgs) dep-tree minesweeper nops;
           };
 
           app-images =
