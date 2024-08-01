@@ -7,7 +7,7 @@ importName: inputs: (final: prev: let
       })
     ];
   };
-  nopsPKG = { lib, writeShellScriptBin, manix, gnused, coreutils, gnugrep, fzf, findutils, ... }:
+  nops = { lib, writeShellScriptBin, manix, gnused, coreutils, gnugrep, fzf, findutils, ... }:
     writeShellScriptBin "nops" (let
       procPath = [ manix gnused coreutils gnugrep fzf findutils ];
     in /*bash*/''
@@ -15,6 +15,6 @@ importName: inputs: (final: prev: let
     manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
   '');
 in {
-  ${importName} = final.callPackage nopsPKG { };
+  ${importName} = final.callPackage nops { };
   inherit manix;
 })
