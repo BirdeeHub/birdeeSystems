@@ -10,7 +10,7 @@ importName: inputs:
       ];
     };
     nops = { lib, writeShellScriptBin, manix, gnused, gnugrep, fzf, findutils }:
-      writeShellScriptBin "nops" ''
+      writeShellScriptBin importName ''
         export PATH="${lib.makeBinPath [ manix gnused gnugrep fzf findutils ]}:$PATH"
         manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
       '';
