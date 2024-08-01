@@ -47,9 +47,6 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 
 - [display manager:](./common/lightdm/default.nix) lightdm which loads ~/.xsession
 - [window manager:](./common/i3/default.nix) i3 loaded via home manager from .xsession
-
----
-
 - desktop manager: none but I have like half of xfce including the power manager
 - [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim. You can run it with `nix shell github:BirdeeHub/birdeeSystems#noAInvim` and then typing `vi`, `vim`, or `noAInvim`, keep in mind its going to download a lot of lsps and plugins. You should use the noAI one because otherwise it would throw an error because you dont have my key and also it wont download bitwarden cli for you. Also, I can't claim every language setup works perfectly or anything. Especially kotlin. This is not a distribution its mine.
 - [browser:](./common/firefox) firefox
