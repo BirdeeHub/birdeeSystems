@@ -50,7 +50,7 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 - desktop manager: none but I have like half of xfce including the power manager
 - [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim.
   - You can run it with `nix shell github:BirdeeHub/birdeeSystems#noAInvim` and then typing `vi`, `vim`, or `noAInvim`, keep in mind its going to download a lot of lsps and plugins.
-  - You should use the noAI one because you dont have my key and also it wont download bitwarden cli + ai plugins that compile from source for you.
+  - You should use the noAI one because you dont have my key and also it wont download bitwarden cli + ai plugins for you.
   - completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`
   - Also, I can't claim every language setup works perfectly or anything. This is not a distribution its mine.
 - [browser:](./common/firefox) firefox
