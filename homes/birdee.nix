@@ -1,10 +1,4 @@
 { config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
-  nops = pkgs.writeShellScriptBin "nops" (let
-    procPath = with pkgs; [ manix gnused coreutils gnugrep fzf findutils ];
-  in /*bash*/''
-    export PATH="${lib.makeBinPath procPath}:$PATH"
-    manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
-  '');
 in {
   imports = with home-modules; [
     term.alacritty
@@ -156,6 +150,7 @@ in {
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # 
+    nops # manix fzf alias
     dep-tree
     minesweeper
     #
@@ -194,7 +189,6 @@ in {
     nix-output-monitor
     nh
     manix
-    nops # manix fzf alias
     nix-info
     direnv
     steam-run
