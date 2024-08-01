@@ -7,12 +7,12 @@ shift 1
 [ -n "$1" ] && [ "$1" == "up" ] && isUp="-u" && shift 1
 
 prevWD=$(pwd)
-FLAKE=${FLAKE:-$(realpath .)} && export FLAKE &&\
-cd $FLAKE &&\
+FLAKE=${FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} && export FLAKE &&\
+cd "$FLAKE" &&\
 git add .
 cd "$prevWD" &&\
 nix run nixpkgs#nh -- os switch -v $isUp -H "$hostname" -- --show-trace "$@" &&\
 nix run nixpkgs#nh -- home switch -v -b hm_bkp -c "$fullfirst" -- --show-trace "$@" &&\
-cd $FLAKE &&\
+cd "$FLAKE" &&\
 git add .
 cd "$prevWD"
