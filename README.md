@@ -1,10 +1,6 @@
-Just me learning how to use nix. I actually started making nixCats before using nixOS.
+Just me learning how to use nix
 
----
-
-asus rog fx504gd and Mac 9,1
-
-only x86_64-linux
+I wouldn't suggest installing any of the final configurations on your own machine but most stuff is importable separately
 
 ---
 
@@ -38,6 +34,9 @@ monitor management:
 
   In fact, all items [specified in this file](./common/default.nix) can be imported in this way in other flakes.
 
+  There are others too!
+  Use `nix repl` followed by `:lf .` then type `outputs.` and hit `<tab>` to explore all the possible outputs.
+
 ---
 
 common modules are imported via [./common/default.nix](./common/default.nix) into the main [flake.nix](./flake.nix)
@@ -46,12 +45,8 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 
 ---
 
-So I was going to try to do what it says after these links, but then on first install, no way to log in until I install via home manager, and no way to install via home manager without logging in...
-- [display manager:](./common/lightdm/default.nix) lightdm which loads .xsession
+- [display manager:](./common/lightdm/default.nix) lightdm which loads ~/.xsession
 - [window manager:](./common/i3/default.nix) i3 loaded via home manager from .xsession
-
-So instead Im just doing i3 as a system module for now and having default session be none+i3
-rather than trying to handle EVERYTHING about it from home manager
 
 ---
 
@@ -62,6 +57,22 @@ rather than trying to handle EVERYTHING about it from home manager
 - [terminal:](./common/term/alacritty/default.nix) alacritty
 - [shell:](./common/term/shell/home/zsh.nix) zsh with vi mode plugin, themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
 - [tmux:](./common/term/tmux/default.nix) with some keybinds and onedark theme
+
+---
+
+asus rog fx504gd and Mac 9,1
+
+only x86_64-linux
+
+the asus is aSUS or nestOS and the mac is dustbook
+
+If these happen to be your machines, then the configurations will probably work.
+
+Otherwise, just cherry pick stuff or import modules. Its my computer get your own XD
+
+Just dont install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
+with home-manager to install a home-manager config without booting, you wont have a user environment to boot into.
+Pick the combined options or home manager only
 
 ---
 
