@@ -1,7 +1,6 @@
 importName: inputs:
 (
-  final: prev:
-  let
+  final: prev: let
     manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs {
       patches = [
         (prev.substituteAll {
@@ -10,22 +9,12 @@ importName: inputs:
         })
       ];
     };
-    nops = {
-        lib,
-        writeShellScriptBin,
-        manix,
-        gnused,
-        coreutils,
-        gnugrep,
-        fzf,
-        findutils,
-        ...
-      }: writeShellScriptBin "nops" ''
+    nops = { lib, writeShellScriptBin, manix, gnused, coreutils, gnugrep, fzf, findutils }:
+      writeShellScriptBin "nops" ''
         export PATH="${lib.makeBinPath [ manix gnused coreutils gnugrep fzf findutils ]}:$PATH"
         manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
       '';
-  in
-  {
+  in {
     ${importName} = final.callPackage nops { };
     inherit manix;
   }
