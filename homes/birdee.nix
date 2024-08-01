@@ -1,4 +1,10 @@
 { config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
+  nops = pkgs.writeShellScriptBin "nops" (let
+    procPath = with pkgs; [ manix gnused coreutils gnugrep fzf findutils ];
+  in /*bash*/''
+    export PATH="${lib.makeBinPath procPath}:$PATH"
+    manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
+  '');
 in {
   imports = with home-modules; [
     term.alacritty
@@ -138,11 +144,7 @@ in {
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; let
-    nops = writeShellScriptBin "nops" ''
-      ${manix}/bin/manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="${manix}/bin/manix '{}'" | xargs ${manix}/bin/manix
-    '';
-  in [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
