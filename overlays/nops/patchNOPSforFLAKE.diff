@@ -1,0 +1,17 @@
+diff --git a/src/nix/hm-options.nix b/src/nix/hm-options.nix
+index f4985e5..0ecf03e 100644
+--- a/src/nix/hm-options.nix
++++ b/src/nix/hm-options.nix
+@@ -5,10 +5,10 @@
+ }: let
+   hmargs = {
+     inherit release isReleaseBranch pkgs;
+-    lib = import <home-manager/modules/lib/stdlib-extended.nix> pkgs.lib;
++    lib = import "@homeManager@/modules/lib/stdlib-extended.nix" pkgs.lib;
+   };
+ 
+-  docs = import <home-manager/docs> hmargs;
++  docs = import "@homeManager@/docs" hmargs;
+ in
+   (
+     if builtins.isFunction docs
