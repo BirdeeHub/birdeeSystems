@@ -71,6 +71,8 @@ Just dont install the nixos-only configs on a fresh install, because unless you 
 with home-manager to install a home-manager config without booting, you wont have a user environment to boot into.
 Pick the combined options or home manager only
 
+[Build Scripts](./scripts)
+
 ---
 
 to do: change firefox config to use autoconf instead of copying prefs.js raw so that I dont have to reaccept terms and conditions every time I provision firefox from scratch.
