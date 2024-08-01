@@ -4,7 +4,7 @@ importName: inputs:
     manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs {
       patches = [
         (prev.substituteAll {
-          src = ./patchNOPSforFLAKE.diff;
+          src = ./patchManix4Flake.diff;
           homeManager = "${inputs.home-manager}";
         })
       ];
