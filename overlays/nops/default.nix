@@ -15,6 +15,6 @@ importName: inputs: (final: prev: let
     manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
   '');
 in {
-  ${importName} = prev.callPackage nopsPKG { inherit manix; };
+  ${importName} = final.callPackage nopsPKG { };
   inherit manix;
 })
