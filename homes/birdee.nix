@@ -187,6 +187,7 @@ in {
     graphviz-nox
     nix-output-monitor
     nh
+    manix
     nix-info
     direnv
     steam-run
