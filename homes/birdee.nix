@@ -140,8 +140,7 @@ in {
   # environment.
   home.packages = with pkgs; let
     nops = writeShellScriptBin "nops" ''
-      export PATH="$PATH:${manix}/bin"
-      manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
+      ${manix}/bin/manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="${manix}/bin/manix '{}'" | xargs ${manix}/bin/manix
     '';
   in [
     # # Adds the 'hello' command to your environment. It prints a friendly
