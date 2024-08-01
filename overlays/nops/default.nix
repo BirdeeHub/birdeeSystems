@@ -1,12 +1,12 @@
 importName: inputs: (final: prev: let
-  manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs (fAttrs: pAttrs: {
+  manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs {
     patches = [
       (prev.substituteAll {
         src = ./patchNOPSforFLAKE.diff;
         homeManager = "${inputs.home-manager}";
       })
     ];
-  });
+  };
   nopsPKG = { lib, writeShellScriptBin, manix, gnused, coreutils, gnugrep, fzf, findutils, ... }:
   writeShellScriptBin "nops" (let
     procPath = [ manix gnused coreutils gnugrep fzf findutils ];
