@@ -123,4 +123,8 @@ with builtins; rec {
     LuaList = "{ " + catlist + " }";
   in
   LuaList;
+
+  lib = {
+    isDerivation = value: value.type or null == "derivation";
+  };
 }
