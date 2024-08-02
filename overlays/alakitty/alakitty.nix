@@ -4,6 +4,7 @@
   writeText,
   alacritty,
   fontconfig,
+  libGL,
   alacrittyfontpackage ? null,
   nerdfonts,
   nerdfontsfontstrs ? [ "FiraMono" "Go-Mono" ],
@@ -72,7 +73,7 @@ let
 
   alakitty = writeShellScriptBin "alacritty" ''
     export PATH="${newFC}/bin:${lib.makeBinPath extraPATH}:$PATH"
-    export LD_LIBRARY_PATH="${lib.makeLibraryPath extraLIB}:$PATH"
+    export LD_LIBRARY_PATH="${libGL}/bin:${lib.makeLibraryPath extraLIB}:$PATH"
     exec ${final-alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
   '';
 in
