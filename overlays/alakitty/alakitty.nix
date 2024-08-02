@@ -20,6 +20,7 @@
   normal_style ? "Regular",
   size ? "11.0",
   extraPATH ? [],
+  extraLIB ? [],
   extraTOML ? ""
 }:
 let
@@ -71,6 +72,7 @@ let
 
   alakitty = writeShellScriptBin "alacritty" ''
     export PATH="${newFC}/bin:${lib.makeBinPath extraPATH}:$PATH"
+    export LD_LIBRARY_PATH="${lib.makeLibraryPath extraLIB}:$PATH"
     exec ${final-alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
   '';
 in
