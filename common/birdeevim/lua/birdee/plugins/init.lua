@@ -434,19 +434,3 @@ require('lz.n').load({
   end,
 })
 
--- require('lz.n').load({
---   "comment.nvim",
---   -- cmd = { "" },
---   -- event = "DeferredUIEnter",
---   -- ft = "",
---   keys = { "gc", "gb" },
---   -- colorscheme = "",
---   load = function (name)
---     require("birdee.utils").safe_packadd({
---       name,
---     })
---   end,
---   after = function (plugin)
---     require('Comment').setup()
---   end,
--- })
