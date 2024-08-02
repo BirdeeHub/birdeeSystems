@@ -24,6 +24,7 @@ inputs: let
     pinnedVersions = import ./pinnedVersions.nix;
     dep-tree = import ./dep-tree;
     nops = import ./nops;
+    alakitty = import ./alakitty;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;

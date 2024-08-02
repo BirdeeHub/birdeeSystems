@@ -204,7 +204,7 @@
           # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
           packages = home-modules.birdeeVim.packages.${system} // {
-            inherit (pkgs) dep-tree minesweeper nops manix;
+            inherit (pkgs) dep-tree minesweeper nops manix alakitty;
           };
 
           app-images =
