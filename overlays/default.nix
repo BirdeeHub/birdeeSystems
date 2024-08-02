@@ -24,6 +24,7 @@ inputs: let
     pinnedVersions = import ./pinnedVersions.nix;
     dep-tree = import ./dep-tree;
     nops = import ./nops;
+    wezterm = import ./wezterm;
     # alakitty = import ./alakitty;
 
   };

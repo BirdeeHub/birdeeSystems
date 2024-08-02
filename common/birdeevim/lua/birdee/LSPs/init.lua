@@ -26,7 +26,36 @@ if nixCats('neonixdev') then
     filetypes = { 'lua' },
   }
   if require('nixCatsUtils').isNixCats then
-    servers.nixd = {}
+    servers.nixd = {
+      nixd = {
+        nixpkgs = {
+          expr = "import (builtins.getFlake \"" .. nixCats("nixdExtras.nixpkgs") .. "\") { }   ",
+        },
+        formatting = {
+          command = { "nixfmt" }
+        },
+        options = {
+          nixos = {
+            expr = "(builtins.getFlake \"" ..
+            nixCats("nixdExtras.flake-path") ..
+            "\").legacyPackages." ..
+            nixCats("nixdExtras.system") ..
+            ".nixosConfigurations.\"" .. nixCats("nixdExtras.systemCFGname") .. "\".options"
+          },
+          ["home-manager"] = {
+            expr = "(builtins.getFlake \"" ..
+            nixCats("nixdExtras.flake-path") ..
+            "\").legacyPackages." ..
+            nixCats("nixdExtras.system") .. ".homeConfigurations.\"" .. nixCats("nixdExtras.homeCFGname") .. "\".options"
+          }
+        },
+        diagnostic = {
+          suppress = {
+            "sema-escaping-with"
+          }
+        }
+      }
+    }
   else
     servers.rnix = {}
     servers.nil_ls = {}
@@ -225,8 +254,6 @@ function M.get_capabilities()
   return capabilities
 end
 
-
-
 ---------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -245,7 +272,7 @@ require('lz.n').load({
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
-  load = function (name)
+  load = function(name)
     local list = {
       "clangd_extensions.nvim",
       "vim-cmake",
@@ -259,7 +286,7 @@ require('lz.n').load({
     end
     require("birdee.utils").safe_packadd(list)
   end,
-  after = function (plugin)
+  after = function(plugin)
     if nixCats('C') then
       vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
         { desc = 'Run CMake with compile_commands.json' })

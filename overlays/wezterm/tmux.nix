@@ -1,45 +1,7 @@
-isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
-  _file = ./default.nix;
-  imports = [];
-  options = {
-    birdeeMods.tmux = with lib; {
-      enable = mkOption {
-        default = false;
-        type = types.bool;
-        description = "enable birdee's tmux configuration";
-      };
-      alacritty = mkOption {
-        default = true;
-        type = types.bool;
-        description = "enable birdee's tmux configuration";
-      };
-      secureSocket = mkOption {
-        default = pkgs.stdenv.isLinux;
-        type = types.bool;
-        description = ''
-          Store tmux socket under {file}`/run`, which is more
-          secure than {file}`/tmp`, but as a downside it doesn't
-          survive user logout.
-        '';
-      };
-    } // (if !isHomeModule then {
-      withUtempter = mkIf (! isHomeModule) (mkOption {
-        description = mdDoc ''
-          Whether to enable libutempter for tmux.
-          This is required so that tmux can write to /var/run/utmp (which can be queried with `who` to display currently connected user sessions).
-          Note, this will add a guid wrapper for the group utmp!
-        '';
-        default = true;
-        type = types.bool;
-      });
-    } else {});
-  };
-  config = let
-    cfg = config.birdeeMods.tmux;
-  in lib.mkIf cfg.enable (let
-    # tmuxBoolToStr = value: if value then "on" else "off";
+{pkgs, lib, isAlacritty ? false, ... }: let
 
     tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
+      export PATH=${tmux}/bin:$PATH
       if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
         selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
         tmux new-session -At $selected_session
@@ -50,6 +12,7 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
 
     plugins = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
 
+    # tmuxBoolToStr = value: if value then "on" else "off";
     confText = (/* tmux */ ''
       # ============================================= #
       # Start with defaults from the Sensible plugin  #
@@ -58,8 +21,8 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       # ============================================= #
 
       set -g display-panes-colour default
-      set -g default-terminal ${if cfg.alacritty then "alacritty" else "xterm-256color"}
-      set -ga terminal-overrides ${if cfg.alacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''} 
+      set -g default-terminal ${if isAlacritty then "alacritty" else "xterm-256color"}
+      set -ga terminal-overrides ${if isAlacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''} 
 
       set  -g base-index      1
       setw -g pane-base-index 1
@@ -132,34 +95,20 @@ isHomeModule: { config, pkgs, self, inputs, lib, ... }: {
       ''
     );
 
-  in (if isHomeModule then {
-    home.packages = [
-      tx
-      pkgs.tmux
-    ];
-    home.sessionVariables = (lib.mkIf cfg.secureSocket {
-      TMUX_TMPDIR = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}'';
-    });
-    xdg.configFile."tmux/tmux.conf".text = confText;
-  } else {
-    environment = {
-      etc."tmux.conf".text = confText;
-      systemPackages = [
-        tx
-        pkgs.tmux
-      ];
-      variables = (lib.mkIf cfg.secureSocket {
-        TMUX_TMPDIR = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}'';
-      });
-    };
-    security.wrappers = lib.mkIf cfg.withUtempter {
-      utempter = {
-        source = "${pkgs.libutempter}/lib/utempter/utempter";
-        owner = "root";
-        group = "utmp";
-        setuid = false;
-        setgid = true;
-      };
-    };
-  }));
-}
+  tmux = pkgs.writeShellScriptBin "tmux" (/*bash*/''
+    export TMUX_TMPDIR=''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}
+    exec ${pkgs.tmux}/bin/tmux source-file ${pkgs.writeText "tmux.conf" confText} \; $@
+  '');
+
+  # module code to include with root installs
+  # config.security.wrappers = {
+  #   utempter = {
+  #     source = "${pkgs.libutempter}/lib/utempter/utempter";
+  #     owner = "root";
+  #     group = "utmp";
+  #     setuid = false;
+  #     setgid = true;
+  #   };
+  # };
+in
+{ inherit tx tmux; }

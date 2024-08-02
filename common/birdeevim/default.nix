@@ -339,6 +339,13 @@
     java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
     gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
   };
+  extraNixdItems = pkgs: {
+    nixpkgs = inputs.nixpkgsNV.outPath;
+    flake-path = inputs.self.outPath;
+    system = pkgs.system;
+    systemCFGname = "birdee@nestOS";
+    homeCFGname = "birdee@nestOS";
+  };
 
   birdeevim_settings = { pkgs, ... }@misc: {
     # so that it finds my ai auths in ~/.cache/birdeevim
@@ -374,6 +381,7 @@
     neonixdev = true;
     java = true;
     javaExtras = extraJavaItems pkgs;
+    nixdExtras = extraNixdItems pkgs;
     web = true;
     go = true;
     kotlin = true;

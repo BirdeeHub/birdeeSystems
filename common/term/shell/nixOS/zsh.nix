@@ -15,10 +15,6 @@
   in {
     programs.zsh = {
       enable = true;
-      autosuggestions = {
-        enable = true;
-        strategy = [ "history" ];
-      };
       interactiveShellInit = ''
         . ${../compinstallOut}
 
@@ -26,10 +22,12 @@
         HISTFILE=~/.histfile
         HISTSIZE=1000
         SAVEHIST=10000
-        setopt extendedglob
+        setopt extendedglob hist_ignore_all_dups
         unsetopt autocd nomatch
         bindkey -v
         # End of lines configured by zsh-newuser-install
+        ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+        source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         source ${fzfinit}
       '';
