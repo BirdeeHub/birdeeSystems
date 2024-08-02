@@ -427,6 +427,7 @@
         general = true;
         otter = true;
         nix = true;
+        nixdExtras = extraNixdItems pkgs;
         web = true;
         go = true;
         SQL = true;
@@ -460,6 +461,7 @@
         customPlugins = true;
         general = true;
         neonixdev = true;
+        nixdExtras = extraNixdItems pkgs;
         vimagePreview = true;
         AI = true;
         lspDebugMode = false;
