@@ -29,8 +29,8 @@ if nixCats('neonixdev') then
     servers.nixd = {}
   else
     servers.rnix = {}
+    servers.nil_ls = {}
   end
-  servers.nil_ls = {}
 elseif nixCats('nix') then
   servers.nixd = {}
   servers.nil_ls = {}
