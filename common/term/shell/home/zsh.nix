@@ -18,11 +18,12 @@
       shellAliases = {};
       enable = true;
       enableVteIntegration = true;
-      completionInit = (builtins.readFile ../compinstallOut);
-      initExtra = ''
-        HISTFILE=~/.histfile
-        HISTSIZE=1000
-        SAVEHIST=10000
+      initExtra = /*bash*/''
+        . ${../compinstallOut}
+
+        HISTFILE="$HOME/.zsh_history"
+        HISTSIZE="10000"
+        SAVEHIST="10000"
         setopt extendedglob hist_ignore_all_dups
         unsetopt autocd nomatch
         bindkey -v
