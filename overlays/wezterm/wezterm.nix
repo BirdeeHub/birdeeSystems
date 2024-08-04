@@ -32,7 +32,6 @@ let
       fontpkg = "${fontpkg}";
       shellString = [
         "${zsh}/bin/zsh"
-        "-l"
       ] ++ (if txf == null then []
         else ["-c" "${txf}/bin/tx"]
       );
