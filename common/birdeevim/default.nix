@@ -172,6 +172,7 @@
         nvim-web-devicons
         nvim-notify
         plenary-nvim
+        mini-nvim
       ];
     };
 
