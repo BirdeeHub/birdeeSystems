@@ -37,6 +37,10 @@ inputs: {
     path = ./lua-fenster;
     description = "a lua environment with fenster built in it";
   };
+  flakescript = {
+    path = ./flakescript;
+    description = "a tiny flake that outputs an overlay and a package containing a shell script";
+  };
   pythonshell-untested = {
     path = ./pythonshell-untested;
     description = ''a python shell I got from a reddit comment,
