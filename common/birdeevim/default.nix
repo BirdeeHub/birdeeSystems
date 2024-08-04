@@ -357,6 +357,7 @@
     withPython3 = true;
     viAlias = false;
     vimAlias = false;
+    gem_path = ./overlays/ruby_provider;
     unwrappedCfgPath = "${flake-path}/common/birdeevim";
     # nvimSRC = inputs.neovim-src;
     # neovim-unwrapped = pkgs.internalvim.nvim;
