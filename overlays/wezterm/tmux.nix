@@ -23,6 +23,8 @@
       set -g display-panes-colour default
       set -g default-terminal ${if isAlacritty then "alacritty" else "xterm-256color"}
       set -ga terminal-overrides ${if isAlacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''}
+
+      # TODO: stop tmux from unsetting stuff (this doesnt work...)
       ${if noNix then ''set -g update-environment "ZDOTDIR"'' else ""}
 
       set  -g base-index      1

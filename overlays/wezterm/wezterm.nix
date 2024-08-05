@@ -28,22 +28,22 @@ let
 
   extraBin = [ tmuxf ] ++ extraPATH;
 
-  wztrmcfg = let
-    passables = {
-      cfgdir = "${wezCFG}";
-      fontpkg = "${fontpkg}";
-      shellString = [
-        "${zsh}/bin/zsh"
-      ] ++ (lib.optionals (txf != null)
-        ["-c" "exec ${txf}/bin/tx"]
-      );
-      inherit noNix extraPATH;
-      envVars = {
-        TESTINGVAR = "test value";
-        ZDOTDIR = "${newzdotdir}";
-      };
+  passables = {
+    cfgdir = "${wezCFG}";
+    fontpkg = "${fontpkg}";
+    shellString = [
+      "${zsh}/bin/zsh"
+    ] ++ (lib.optionals (txf != null)
+      ["-c" "exec ${txf}/bin/tx"]
+    );
+    inherit noNix extraPATH;
+    envVars = {
+      TESTINGVAR = "test value";
+      ZDOTDIR = "${newzdotdir}";
     };
-  in /*lua*/ ''
+  };
+
+  wztrmcfg = /*lua*/ ''
       package.preload["nixStuff"] = function()
         return ${(import ../../common/util).luaTablePrinter passables}
       end
