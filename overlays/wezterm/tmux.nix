@@ -1,4 +1,4 @@
-{pkgs, lib, isAlacritty ? false, ... }: let
+{pkgs, lib, isAlacritty ? false, noNix ? false, ... }: let
 
     tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
       export PATH=${tmux}/bin:$PATH
@@ -22,7 +22,8 @@
 
       set -g display-panes-colour default
       set -g default-terminal ${if isAlacritty then "alacritty" else "xterm-256color"}
-      set -ga terminal-overrides ${if isAlacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''} 
+      set -ga terminal-overrides ${if isAlacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''}
+      ${if noNix then ''set -g update-environment "ZDOTDIR"'' else ""}
 
       set  -g base-index      1
       setw -g pane-base-index 1
