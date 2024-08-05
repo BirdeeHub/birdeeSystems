@@ -48,8 +48,8 @@ let
       package.cpath = package.cpath .. ';' .. require('nixStuff').cfgdir .. '/?.so;' .. require('nixStuff').cfgdir .. '/?/init.so'
       local wezterm = require 'wezterm'
       wezterm.config_dir = require('nixStuff').cfgdir
-      wezterm.config_file = require('nixStuff').cfgdir .. "/weztermCFG.lua"
-      return require 'weztermCFG'
+      wezterm.config_file = require('nixStuff').cfgdir .. "/wezterm.lua"
+      return require 'init'
     '';
 
   wezCFG = stdenv.mkDerivation {
