@@ -34,7 +34,7 @@ let
     shellString = [
       "${zsh}/bin/zsh"
     ] ++ (lib.optionals (txf != null)
-      ["-c" "exec ${txf}/bin/tx"]
+      []# ["-c" "exec ${txf}/bin/tx"]
     );
     inherit noNix extraPATH;
     envVars = {

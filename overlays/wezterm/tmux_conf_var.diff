@@ -1,0 +1,26 @@
+diff --git a/Makefile.am b/Makefile.am
+index 8e5f72b1..ce614dfc 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -11,7 +11,7 @@ dist_EXTRA_tmux_SOURCES = compat/*.[ch]
+ # Preprocessor flags.
+ AM_CPPFLAGS += @XOPEN_DEFINES@ \
+ 	-DTMUX_VERSION='"@VERSION@"' \
+-	-DTMUX_CONF='"$(sysconfdir)/tmux.conf:~/.tmux.conf:$$XDG_CONFIG_HOME/tmux/tmux.conf:~/.config/tmux/tmux.conf"' \
++	-DTMUX_CONF='"$(sysconfdir)/tmux.conf:@nixTmuxConf@"' \
+ 	-DTMUX_LOCK_CMD='"@DEFAULT_LOCK_CMD@"' \
+ 	-DTMUX_TERM='"@DEFAULT_TERM@"'
+ 
+diff --git a/tmux.c b/tmux.c
+index a9619baf..f8e64f2c 100644
+--- a/tmux.c
++++ b/tmux.c
+@@ -372,6 +372,8 @@ main(int argc, char **argv)
+ 	if (**argv == '-')
+ 		flags = CLIENT_LOGIN;
+ 
++	printf("TMUX_CONF: %s\n", TMUX_CONF);
++
+ 	global_environ = environ_create();
+ 	for (var = environ; *var != NULL; var++)
+ 		environ_put(global_environ, *var, 0);
