@@ -51,7 +51,7 @@ let
       package.cpath = package.cpath .. ';' .. require('nixStuff').cfgdir .. '/?.so'
       local wezterm = require 'wezterm'
       wezterm.config_dir = require('nixStuff').cfgdir
-      wezterm.config_file = require('nixStuff').cfgdir .. "/wezterm.lua"
+      wezterm.config_file = require('nixStuff').cfgdir .. "/init.lua"
       return require 'init'
     '';
 
