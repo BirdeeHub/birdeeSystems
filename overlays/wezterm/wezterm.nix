@@ -33,7 +33,7 @@ let
       shellString = [
         "${zsh}/bin/zsh"
       ] ++ (if txf == null then []
-        else ["-c" "${txf}/bin/tx"]
+        else ["-c" "exec ${txf}/bin/tx"]
       );
       envVars = {
         TESTINGVAR = "test value";
