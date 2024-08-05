@@ -14,6 +14,7 @@ config.color_scheme_dirs = { wezterm.config_dir .. "/colors" }
 config.font_dirs = { fontpkg .. "/share/fonts" }
 config.keys = {}
 config.set_environment_variables = fromnix.envVars
+config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 config.window_padding = {
     left = 0,
     right = -1,
