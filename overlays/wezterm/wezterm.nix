@@ -26,15 +26,18 @@ let
     ];
   };
 
+  extraBin = [ tmuxf ] ++ extraPATH;
+
   wztrmcfg = let
     passables = {
       cfgdir = "${wezCFG}";
       fontpkg = "${fontpkg}";
       shellString = [
         "${zsh}/bin/zsh"
-      ] ++ (if txf == null then []
-        else ["-c" "exec ${txf}/bin/tx"]
+      ] ++ (lib.optionals (txf != null)
+        ["-c" "exec ${txf}/bin/tx"]
       );
+      inherit noNix extraPATH;
       envVars = {
         TESTINGVAR = "test value";
         ZDOTDIR = "${newzdotdir}";
@@ -45,7 +48,7 @@ let
         return ${(import ../../common/util).luaTablePrinter passables}
       end
       package.path = package.path .. ';' .. require('nixStuff').cfgdir .. '/?.lua;' .. require('nixStuff').cfgdir .. '/?/init.lua'
-      package.cpath = package.cpath .. ';' .. require('nixStuff').cfgdir .. '/?.so;' .. require('nixStuff').cfgdir .. '/?/init.so'
+      package.cpath = package.cpath .. ';' .. require('nixStuff').cfgdir .. '/?.so'
       local wezterm = require 'wezterm'
       wezterm.config_dir = require('nixStuff').cfgdir
       wezterm.config_file = require('nixStuff').cfgdir .. "/wezterm.lua"
@@ -63,7 +66,7 @@ let
 
 in
 writeShellScriptBin "wezterm" ''
-  export PATH="${lib.makeBinPath ([ tmuxf ] ++ extraPATH)}:$PATH"
+  export PATH="${lib.makeBinPath extraBin}:$PATH"
   declare -f __bp_install_after_session_init && source '${wezterm}/etc/profile.d/wezterm.sh'
   # export ZDOTDIR="${newzdotdir}"
   exec ${wezterm}/bin/wezterm --config-file ${writeText "init.lua" wztrmcfg} $@
