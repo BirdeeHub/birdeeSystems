@@ -1,7 +1,18 @@
-{pkgs, lib, isAlacritty ? false, noNix ? false, substituteAll, ... }: let
+{pkgs
+, lib
+, substituteAll
+, varnames ? []
+, isAlacritty ? false
+, noNixModules ? false
+, ...
+}: let
 
   # tmuxBoolToStr = value: if value then "on" else "off";
-  confText = pkgs.writeText "tmux.conf" ((/* tmux */ ''
+  TMUXconf = pkgs.writeText "tmux.conf" (let
+    plugins = [
+      pkgs.tmuxPlugins.onedark-theme
+    ];
+  in /* tmux */ ''
     # ============================================= #
     # Start with defaults from the Sensible plugin  #
     # --------------------------------------------- #
@@ -12,7 +23,8 @@
     set -g default-terminal ${if isAlacritty then "alacritty" else "xterm-256color"}
     set -ga terminal-overrides ${if isAlacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''}
 
-    ${if noNix then ''
+    ${if noNixModules then ''
+    set-option -g update-environment "${builtins.concatStringsSep " " varnames}"
     '' else ''''}
 
     set  -g base-index      1
@@ -64,22 +76,21 @@
     bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
     bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
 
-  '') + (configPlugins [ pkgs.tmuxPlugins.onedark-theme ]));
+    ${configPlugins plugins}
+  '');
 
   configPlugins = plugins: (let
     pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
     pluginRTP = p: if lib.types.package.check p then p.rtp else p.plugin.rtp;
   in
     if plugins == [] || ! (builtins.isList plugins) then "" else ''
-      # ============ #
-      # Load plugins #
-      # ------------ #
-
+      # ============================================== #
       ${(lib.concatMapStringsSep "\n\n" (p: ''
         # ${pluginName p}
         # ---------------------
         ${p.extraConfig or ""}
         run-shell ${pluginRTP p}
+        # ---------------------
       '') plugins)}
       # ============================================== #
     ''
@@ -88,18 +99,23 @@
   newTMUX = pkgs.tmux.overrideAttrs (prev: {
     patches = prev.patches ++ [ (substituteAll {
         src = ./tmux_conf_var.diff;
-        nixTmuxConf = confText;
+        nixTmuxConf = TMUXconf;
       })
     ];
   });
 
   tmux = pkgs.writeShellScriptBin "tmux" (/*bash*/''
-    export TMUX_TMPDIR=''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}
+    if ! echo "$PATH" | grep -q "${newTMUX}/bin"; then
+      export PATH="${newTMUX}/bin:$PATH"
+    fi
+    export TMUX_TMPDIR=''${TMUX_TMPDIR:-''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}}
     exec ${newTMUX}/bin/tmux $@
   '');
 
   tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
-    export PATH=${tmux}/bin:$PATH
+    if ! echo "$PATH" | grep -q "${tmux}/bin"; then
+      export PATH="${tmux}/bin:$PATH"
+    fi
     if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
       selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
       exec tmux new-session -At $selected_session

@@ -204,7 +204,7 @@
           # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
           packages = home-modules.birdeeVim.packages.${system} // {
-            wezshterm = pkgs.wezterm.override { noNix = true; };
+            wezshterm = pkgs.wezterm.override { noNixModules = true; extraPATH = [ home-modules.birdeeVim.packages.${system}.portableVim ]; };
             inherit (pkgs) dep-tree minesweeper nops manix wezterm;
           };
 

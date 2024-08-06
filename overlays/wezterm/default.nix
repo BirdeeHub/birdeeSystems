@@ -1,5 +1,5 @@
 importName: inputs: (final: prev: let
   pkgs = import inputs.nixpkgsNV { inherit (prev) system; };
 in {
-  ${importName} = pkgs.callPackage ./wezterm.nix {};
+  ${importName} = pkgs.callPackage ./wez {};
 })

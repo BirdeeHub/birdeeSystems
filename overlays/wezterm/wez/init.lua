@@ -1,7 +1,5 @@
 -- See https://wezfurlong.org/wezterm/
-local fromnix = require('nixStuff')
-local fontpkg = fromnix.fontpkg
-local shellString = fromnix.shellString
+local fromnix = require 'nixStuff'
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
@@ -11,7 +9,7 @@ config.font_size = 10.5
 config.color_scheme = 'Oceanic Next (Gogh)'
 config.font = wezterm.font('FiraMono Nerd Font')
 config.color_scheme_dirs = { wezterm.config_dir .. "/colors" }
-config.font_dirs = { fontpkg .. "/share/fonts" }
+config.font_dirs = fromnix.fontDirs
 config.keys = {}
 config.set_environment_variables = fromnix.envVars
 config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
@@ -21,7 +19,7 @@ config.window_padding = {
     top = 0,
     bottom = -5,
 }
-config.default_prog = shellString
+config.default_prog = fromnix.shellString
 config.adjust_window_size_when_changing_font_size = nil
 config.use_fancy_tab_bar = false
 config.show_tabs_in_tab_bar = false
