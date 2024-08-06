@@ -56,7 +56,6 @@ if nixCats('neonixdev') then
         }
       }
     }
-    servers.nil_ls = {}
   else
     servers.rnix = {}
     servers.nil_ls = {}
@@ -243,7 +242,7 @@ function M.on_attach(_, bufnr)
   -- end
 end
 
-function M.get_capabilities()
+function M.get_capabilities(server_name)
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   if nixCats('general.cmp') then
@@ -294,13 +293,13 @@ require('lz.n').load({
       vim.cmd [[let g:cmake_link_compile_commands = 1]]
     end
     if require('nixCatsUtils').isNixCats then
-      for server_name, _ in pairs(servers) do
+      for server_name, cfg in pairs(servers) do
         require('lspconfig')[server_name].setup({
-          capabilities = M.get_capabilities(),
-          settings = servers[server_name],
-          filetypes = (servers[server_name] or {}).filetypes,
-          cmd = (servers[server_name] or {}).cmd,
-          root_pattern = (servers[server_name] or {}).root_pattern,
+          capabilities = M.get_capabilities(server_name),
+          settings = cfg,
+          filetypes = (cfg or {}).filetypes,
+          cmd = (cfg or {}).cmd,
+          root_pattern = (cfg or {}).root_pattern,
         })
       end
     else
@@ -312,7 +311,7 @@ require('lz.n').load({
       mason_lspconfig.setup_handlers {
         function(server_name)
           require('lspconfig')[server_name].setup {
-            capabilities = M.get_capabilities(),
+            capabilities = M.get_capabilities(server_name),
             settings = servers[server_name],
             filetypes = (servers[server_name] or {}).filetypes,
           }
