@@ -56,6 +56,7 @@ if nixCats('neonixdev') then
         }
       }
     }
+    servers.nil_ls = {}
   else
     servers.rnix = {}
     servers.nil_ls = {}
