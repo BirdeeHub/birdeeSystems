@@ -2,6 +2,8 @@
 /*
 importName: inputs: let
   overlay = self: super: { 
+    ${importName} = SOME_DRV;
+    # or
     ${importName} = {
       # define your overlay derivations here
     };
@@ -13,7 +15,6 @@ overlay
 inputs: let 
   overlaySet = {
 
-    nixCatsBuilds = import ./customBuildsOverlay.nix;
     locked = import ./locked.nix;
     # internalvim = import ./build;
 

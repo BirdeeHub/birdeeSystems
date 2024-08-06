@@ -146,14 +146,19 @@ function M.packadd_with_after_dirs(plugin_names)
     end
   end
   for _, name in pairs(to_source) do
-    local afterpath = require('nixCats').pawsible.allPlugins.opt[name] .. "/after"
-    if vim.fn.isdirectory(afterpath) == 1 then
-      local plugin_dir = afterpath .. "/plugin"
-      if vim.fn.isdirectory(plugin_dir) == 1 then
-        local files = vim.fn.glob(plugin_dir .. "/*", false, true)
-        for _, file in ipairs(files) do
-          if vim.fn.filereadable(file) == 1 then
-            vim.cmd("source " .. file)
+    if vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] ~= nil then
+      -- this line will only work when loaded via nix, so you may want
+      -- to find these paths by scanning packpath
+      -- when no nix if you want to post it. For now this is fine.
+      local afterpath = require('nixCats').pawsible.allPlugins.opt[name] .. "/after"
+      if vim.fn.isdirectory(afterpath) == 1 then
+        local plugin_dir = afterpath .. "/plugin"
+        if vim.fn.isdirectory(plugin_dir) == 1 then
+          local files = vim.fn.glob(plugin_dir .. "/*", false, true)
+          for _, file in ipairs(files) do
+            if vim.fn.filereadable(file) == 1 then
+              vim.cmd("source " .. file)
+            end
           end
         end
       end
