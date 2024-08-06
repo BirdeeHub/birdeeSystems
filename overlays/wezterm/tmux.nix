@@ -86,8 +86,7 @@
     ''
   );
 
-  # TODO: DONT FORGET TO UNCOMMENT WHEN YOU FINALLY GET IT TO SOURCE THE F***ING FILE
-  plugins = configPlugins [ /* pkgs.tmuxPlugins.onedark-theme */ ];
+  plugins = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
 
   newTMUX = pkgs.tmux.overrideAttrs (prev: {
     patches = prev.patches ++ [ (substituteAll {
