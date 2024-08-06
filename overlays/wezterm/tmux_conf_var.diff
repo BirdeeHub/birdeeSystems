@@ -35,6 +35,18 @@ index adac60e1..80f093e2 100644
  	FILE			*f;
  	struct cmd_parse_input	 pi;
  	struct cmd_parse_result	*pr;
+diff --git a/server-client.c b/server-client.c
+index 449a9bcc..b7c1749c 100644
+--- a/server-client.c
++++ b/server-client.c
+@@ -3063,6 +3063,7 @@ server_client_dispatch_identify(struct client *c, struct imsg *imsg)
+ 	 * clients are allowed to continue with their command even if the
+ 	 * config has not been loaded - they might have been run from inside it
+ 	 */
++	printf("I got to the conditional before start_cfg()\n");
+ 	if ((~c->flags & CLIENT_EXIT) &&
+ 	     !cfg_finished &&
+ 	     c == TAILQ_FIRST(&clients))
 diff --git a/tmux.c b/tmux.c
 index a9619baf..9beac465 100644
 --- a/tmux.c
