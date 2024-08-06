@@ -12,22 +12,23 @@ index 8e5f72b1..36cf360e 100644
  	-DTMUX_TERM='"@DEFAULT_TERM@"'
  
 diff --git a/cfg.c b/cfg.c
-index adac60e1..80f093e2 100644
+index adac60e1..43c134e3 100644
 --- a/cfg.c
 +++ b/cfg.c
-@@ -84,6 +84,11 @@ start_cfg(void)
- 		cmdq_append(c, cfg_item);
- 	}
- 
+@@ -64,6 +64,12 @@ cfg_done(__unused struct cmdq_item *item, __unused void *data)
+ void
+ start_cfg(void)
+ {
++	printf("start_cfg called\n");
 + 	printf("cfg_files:\n");
 +	for (u_int i = 0; i < cfg_nfiles; i++) {
 +		printf("%s\n", cfg_files[i]);
 +	}
 +
- 	if (cfg_quiet)
- 		flags = CMD_PARSE_QUIET;
- 	for (i = 0; i < cfg_nfiles; i++)
-@@ -96,6 +101,7 @@ int
+ 	struct client	 *c;
+ 	u_int		  i;
+ 	int		  flags = 0;
+@@ -96,6 +102,7 @@ int
  load_cfg(const char *path, struct client *c, struct cmdq_item *item,
      struct cmd_find_state *current, int flags, struct cmdq_item **new_item)
  {

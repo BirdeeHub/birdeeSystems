@@ -64,8 +64,7 @@
     bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
     bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
 
-  '') + plugins + ( /* tmux */ ''
-  ''));
+  '') + (configPlugins [ pkgs.tmuxPlugins.onedark-theme ]));
 
   configPlugins = plugins: (let
     pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
@@ -85,8 +84,6 @@
       # ============================================== #
     ''
   );
-
-  plugins = configPlugins [ pkgs.tmuxPlugins.onedark-theme ];
 
   newTMUX = pkgs.tmux.overrideAttrs (prev: {
     patches = prev.patches ++ [ (substituteAll {
