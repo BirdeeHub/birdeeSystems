@@ -475,6 +475,7 @@
     portableVim = { pkgs, ... }@misc: {
       settings = birdeevim_settings misc // {
         extraName = "portableVim";
+        aliases = [ "vi" "vim" ];
       };
       categories = birdeevim_categories misc // {
         portableExtras = true;
