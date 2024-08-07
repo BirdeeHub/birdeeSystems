@@ -25,7 +25,7 @@ let
   };
 
   # avoids infinite recursion by only needing the names
-  tmuxf = tmux.override { varnames = (builtins.attrNames passables.envVars); };
+  tmuxf = tmux.override (prev: if prev ? varnames then { varnames = prev.varnames ++ (builtins.attrNames passables.envVars); } else {});
 
   tx = if custom_tmux_launcher_binsh != null then custom_tmux_launcher_binsh else writeShellScriptBin "tx" /*bash*/''
     if ! echo "$PATH" | grep -q "${tmuxf}/bin"; then
