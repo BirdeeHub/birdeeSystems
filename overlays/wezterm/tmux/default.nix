@@ -1,31 +1,23 @@
 {pkgs
 , lib
 , substituteAll
+, tmux
+, new_tmux_conf ? ""
+, sourceSensible ? true
+, pluginSpecs ? null # <-- type list of plugin or spec [ drv1 { plugin = drv2; extraConfig = ""; } ]
 , varnames ? []
 , isAlacritty ? false
-, noNixModules ? false
 , ...
 }: let
 
-  # tmuxBoolToStr = value: if value then "on" else "off";
-  TMUXconf = pkgs.writeText "tmux.conf" (let
-    plugins = [
-      pkgs.tmuxPlugins.onedark-theme
-    ];
-  in /* tmux */ ''
-    # ============================================= #
-    # Start with defaults from the Sensible plugin  #
-    # --------------------------------------------- #
-    run-shell ${pkgs.tmuxPlugins.sensible.rtp}
-    # ============================================= #
+  plugins = if pluginSpecs != null then pluginSpecs else [
+    pkgs.tmuxPlugins.onedark-theme
+  ];
 
+  defaulttmuxopts = /*tmux*/''
     set -g display-panes-colour default
     set -g default-terminal ${if isAlacritty then "alacritty" else "xterm-256color"}
     set -ga terminal-overrides ${if isAlacritty then ''",alacritty:RGB"'' else ''",xterm-256color:RGB"''}
-
-    ${if noNixModules then ''
-    set-option -g update-environment "${builtins.concatStringsSep " " varnames}"
-    '' else ''''}
 
     set  -g base-index      1
     setw -g pane-base-index 1
@@ -75,6 +67,21 @@
     bind -r -N "Move the visible part of the window up" M-j refresh-client -U 10
     bind -r -N "Move the visible part of the window down" M-k refresh-client -D 10
     bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
+  '';
+
+  # tmuxBoolToStr = value: if value then "on" else "off";
+  TMUXconf = pkgs.writeText "tmux.conf" (/* tmux */ (if sourceSensible then ''
+    # ============================================= #
+    # Start with defaults from the Sensible plugin  #
+    # --------------------------------------------- #
+    run-shell ${pkgs.tmuxPlugins.sensible.rtp}
+    # ============================================= #
+
+    '' else "") + (if new_tmux_conf != "" then new_tmux_conf else defaulttmuxopts) + ''
+
+    ${if varnames != [] then ''
+    set-option -g update-environment "${builtins.concatStringsSep " " varnames}"
+    '' else ''''}
 
     ${configPlugins plugins}
   '');
@@ -96,33 +103,23 @@
     ''
   );
 
-  newTMUX = pkgs.tmux.overrideAttrs (prev: {
+  newTMUX = tmux.overrideAttrs (prev: {
     patches = prev.patches ++ [ (substituteAll {
+        # hardcode our config file.
         src = ./tmux_conf_var.diff;
         nixTmuxConf = TMUXconf;
       })
     ];
   });
 
-  tmux = pkgs.writeShellScriptBin "tmux" (/*bash*/''
+  tmuxout = pkgs.writeShellScriptBin "tmux" /*bash*/''
     if ! echo "$PATH" | grep -q "${newTMUX}/bin"; then
+      # If the right tmux isnt in the path, the colorscheme wont work.
       export PATH="${newTMUX}/bin:$PATH"
     fi
     export TMUX_TMPDIR=''${TMUX_TMPDIR:-''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}}
     exec ${newTMUX}/bin/tmux $@
-  '');
-
-  tx = pkgs.writeShellScriptBin "tx" (/*bash*/''
-    if ! echo "$PATH" | grep -q "${tmux}/bin"; then
-      export PATH="${tmux}/bin:$PATH"
-    fi
-    if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
-      selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
-      exec tmux new-session -At $selected_session
-    else
-      exec tmux new-session
-    fi
-  '');
+  '';
 
   # module code to include with root installs
   # config.security.wrappers = {
@@ -135,4 +132,4 @@
   #   };
   # };
 in
-{ inherit tx tmux; }
+tmuxout

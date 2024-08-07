@@ -1,4 +1,5 @@
 with builtins; rec {
+# https://github.com/BirdeeHub/nixCats-nvim/blob/3bdf5eb044af49dbcc0cc542319a334bc2605773/nix/builder/ncTools.nix#L4-L46
   luaTablePrinter = attrSet: let
     luatableformatter = attrSet: let
       nameandstringmap = mapAttrs (n: value: let
