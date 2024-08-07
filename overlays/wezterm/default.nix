@@ -3,5 +3,5 @@ importName: inputs: (final: prev: let
   tmux = pkgs.callPackage ./tmux { isAlacritty = false; };
   zdotdir = pkgs.callPackage ./zdot { };
 in {
-  ${importName} = pkgs.callPackage ./wez { inherit zdotdir tmux; noNixModules = false; };
+  ${importName} = pkgs.callPackage ./wez { inherit zdotdir tmux; wrapZSH = false; };
 })

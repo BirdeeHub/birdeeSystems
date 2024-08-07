@@ -11,7 +11,7 @@
   autotx ? true,
   custom_tmux_launcher_binsh ? null,
   zdotdir ? null,
-  noNixModules ? false,
+  wrapZSH ? false,
   extraPATH ? [ ],
   ...
 }:
@@ -50,9 +50,9 @@ let
       "-c"
       "exec ${tx}/bin/tx"
     ]);
-    inherit noNixModules extraBin;
+    inherit wrapZSH extraBin;
     envVars = {
-    } // (if noNixModules then {
+    } // (if wrapZSH then {
       ZDOTDIR = "${zdotdir}";
     } else {});
   };

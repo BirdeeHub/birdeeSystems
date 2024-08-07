@@ -205,7 +205,7 @@
 
           packages = home-modules.birdeeVim.packages.${system} // {
             wezshterm = pkgs.wezterm.override {
-              noNixModules = true;
+              wrapZSH = true;
               extraPATH = [
                 home-modules.birdeeVim.packages.${system}.portableVim
               ];
