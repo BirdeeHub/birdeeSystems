@@ -29,7 +29,7 @@ if nixCats('neonixdev') then
     servers.nixd = {
       nixd = {
         nixpkgs = {
-          expr = "import (builtins.getFlake \"" .. nixCats("nixdExtras.nixpkgs") .. "\") { }   ",
+          expr = [[import (builtins.getFlake "]] .. nixCats("nixdExtras.nixpkgs") .. [[") { }   ]],
         },
         formatting = {
           command = { "nixfmt" }
