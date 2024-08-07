@@ -35,18 +35,20 @@ if nixCats('neonixdev') then
           command = { "nixfmt" }
         },
         options = {
+          -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
           nixos = {
-            expr = "(builtins.getFlake \"" ..
+            expr = [[(builtins.getFlake "]] ..
             nixCats("nixdExtras.flake-path") ..
-            "\").legacyPackages." ..
+            [[").legacyPackages.]] ..
             nixCats("nixdExtras.system") ..
-            ".nixosConfigurations.\"" .. nixCats("nixdExtras.systemCFGname") .. "\".options"
+            [[.nixosConfigurations."]] .. nixCats("nixdExtras.systemCFGname") .. [[".options]]
           },
+          -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
           ["home-manager"] = {
-            expr = "(builtins.getFlake \"" ..
+            expr = [[(builtins.getFlake "]] ..
             nixCats("nixdExtras.flake-path") ..
-            "\").legacyPackages." ..
-            nixCats("nixdExtras.system") .. ".homeConfigurations.\"" .. nixCats("nixdExtras.homeCFGname") .. "\".options"
+            [[").legacyPackages.]] ..
+            nixCats("nixdExtras.system") .. [[.homeConfigurations."]] .. nixCats("nixdExtras.homeCFGname") .. [[".options]]
           }
         },
         diagnostic = {
