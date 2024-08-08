@@ -397,7 +397,7 @@
     birdeeVim = args: {
       settings =  birdeevim_settings args // {
         wrapRc = true;
-        aliases = [ "vi" ];
+        aliases = [ "vi" "nvim" ];
       };
       categories =  birdeevim_categories args // {
       };
@@ -439,7 +439,7 @@
       settings = birdeevim_settings misc // {
         wrapRc = true;
         extraName = "noAInvim";
-        aliases = [ "vi" "vim" ];
+        aliases = [ "vi" "vim" "nvim" ];
       };
       categories = birdeevim_categories misc // {
         AI = false;
@@ -475,7 +475,7 @@
     portableVim = { pkgs, ... }@misc: {
       settings = birdeevim_settings misc // {
         extraName = "portableVim";
-        aliases = [ "vi" "vim" ];
+        aliases = [ "vi" "vim" "nvim" ];
       };
       categories = birdeevim_categories misc // {
         portableExtras = true;
