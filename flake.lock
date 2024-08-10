@@ -2098,6 +2098,26 @@
         "type": "github"
       }
     },
+    "nsearch": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1723191524,
+        "narHash": "sha256-7i/W+GWcnd+M/WJfeCA/AzHDYZBV8vnqmsTHpS64ejk=",
+        "owner": "niksingh710",
+        "repo": "nsearch",
+        "rev": "6661b4e24f30345ab307964e4fc253ea807ea6f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "niksingh710",
+        "repo": "nsearch",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1723199600,
@@ -2442,6 +2462,7 @@
         "nixpkgs": "nixpkgs_15",
         "nixpkgsLocked": "nixpkgsLocked",
         "nixpkgsNV": "nixpkgsNV",
+        "nsearch": "nsearch",
         "nur": "nur",
         "plugins-code-compass": "plugins-code-compass",
         "plugins-fugit2.nvim": "plugins-fugit2.nvim",

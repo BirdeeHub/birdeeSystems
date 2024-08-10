@@ -190,6 +190,7 @@ in {
     nix-output-monitor
     nh
     manix
+    inputs.nsearch.packages.${system}.default
     nix-info
     direnv
     steam-run
