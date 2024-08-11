@@ -502,14 +502,14 @@
 in
   forEachSystem (system: let
     inherit (utils) baseBuilder;
-    customPackager = baseBuilder luaPath {
+    nixCatsBuilder = baseBuilder luaPath {
       inherit nixpkgs;
       inherit system dependencyOverlays extra_pkg_config;
-    } categoryDefinitions;
-    nixCatsBuilder = customPackager packageDefinitions;
+    } categoryDefinitions packageDefinitions;
+    defaultPackage = nixCatsBuilder defaultPackageName;
     pkgs = import nixpkgs { inherit system; };
   in {
-    packages = utils.mkPackages nixCatsBuilder packageDefinitions defaultPackageName;
+    packages = utils.mkAllWithDefault defaultPackage;
     app-images = {
       portableVim = inputs.nix-appimage.bundlers.${system}.default (nixCatsBuilder "portableVim");
     };
@@ -524,8 +524,6 @@ in
         '';
       };
     };
-
-    inherit customPackager;
   }
 ) // {
   overlays = utils.makeOverlaysWithMultiDefault luaPath {
@@ -539,7 +537,4 @@ in
     inherit nixpkgs;
     inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
   };
-  inherit utils dependencyOverlays categoryDefinitions packageDefinitions;
-  inherit (utils) templates baseBuilder;
-  keepLuaBuilder = utils.baseBuilder luaPath;
 }
