@@ -101,6 +101,7 @@ in {
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgsNV;
+    nixCats.flake = inputs.nixCats;
     home-manager.flake = inputs.home-manager;
     birdeeSystems.flake = self;
     gomod2nix.to = {
