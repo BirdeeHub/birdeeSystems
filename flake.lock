@@ -1484,22 +1484,18 @@
       }
     },
     "nixCats": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgsNV"
-        ]
-      },
       "locked": {
-        "lastModified": 1723536633,
-        "narHash": "sha256-bqP/OGjbfCu60OJ/4tfEFm2YrAyKIF042SkB/S2iYjU=",
+        "dir": "nix",
+        "lastModified": 1723548251,
+        "narHash": "sha256-USmT7lBImgoDds7lvvARyHrIIYY7Ddy6tT756lWhWf0=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "c60a969f4d7e1ff606b7eb48f1e906ffe1d51925",
+        "rev": "06d68b917f78157027eea52aa4f5736b408556ce",
         "type": "github"
       },
       "original": {
+        "dir": "nix",
         "owner": "BirdeeHub",
-        "ref": "testNoStructuredAttrs",
         "repo": "nixCats-nvim",
         "type": "github"
       }
