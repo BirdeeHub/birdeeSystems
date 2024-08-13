@@ -24,8 +24,7 @@ inputs: let
     pinnedVersions = import ./pinnedVersions.nix;
     dep-tree = import ./dep-tree;
     nops = import ./nops;
-    wezterm = import ./wezterm;
-    # alakitty = import ./alakitty;
+    alakazam = import ./alakitty;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
@@ -33,7 +32,4 @@ inputs: let
     nur = inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
   };
-in {
-  inherit overlaySet;
-  overlayList = builtins.attrValues overlaySet;
-}
+in overlaySet

@@ -19,6 +19,8 @@ config.window_padding = {
     top = 0,
     bottom = -5,
 }
+config.window_decorations = "NONE" -- <-- fixes the bars around the tmux but breaks i3 border
+config.window_close_confirmation = 'NeverPrompt'
 config.default_prog = fromnix.shellString
 config.adjust_window_size_when_changing_font_size = nil
 config.use_fancy_tab_bar = false

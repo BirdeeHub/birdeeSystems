@@ -121,9 +121,8 @@
       # NOTE: setup
       flake-path = "/home/birdee/birdeeSystems";
       stateVersion = "23.05";
-      overlaysPre = (import ./overlays inputs);
-      overlayList = overlaysPre.overlayList;
-      overlaySet = overlaysPre.overlaySet;
+      overlaySet = (import ./overlays inputs);
+      overlayList = builtins.attrValues overlaySet;
       common = import ./common { inherit inputs flake-path; };
       home-modules = common { homeModule = true; };
       system-modules = common { homeModule = false; };
@@ -206,13 +205,13 @@
           # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
           packages = home-modules.birdeeVim.packages.${system} // {
-            wezshterm = pkgs.wezterm.override {
+            alakitty = pkgs.alakazam.override {
               wrapZSH = true;
               extraPATH = [
                 home-modules.birdeeVim.packages.${system}.portableVim
               ];
             };
-            inherit (pkgs) dep-tree minesweeper nops manix wezterm;
+            inherit (pkgs) dep-tree minesweeper nops manix alakazam;
           };
 
           app-images =
