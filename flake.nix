@@ -205,13 +205,19 @@
           # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
           packages = home-modules.birdeeVim.packages.${system} // {
+            wezshterm = pkgs.wezterm.override {
+              wrapZSH = true;
+              extraPATH = [
+                home-modules.birdeeVim.packages.${system}.portableVim
+              ];
+            };
             alakitty = pkgs.alakazam.override {
               wrapZSH = true;
               extraPATH = [
                 home-modules.birdeeVim.packages.${system}.portableVim
               ];
             };
-            inherit (pkgs) dep-tree minesweeper nops manix alakazam;
+            inherit (pkgs) dep-tree minesweeper nops manix alakazam wezterm;
           };
 
           app-images =

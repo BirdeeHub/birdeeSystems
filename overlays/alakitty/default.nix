@@ -3,7 +3,7 @@ importName: inputs: final: prev: let
   wrapZSH = false;
   nerdString = "FiraMono";
   autotx = true;
-  tmux = pkgs.callPackage ./tmux { };
+  tmux = pkgs.callPackage ../tmux { };
   extraPATH = [];
 in {
   ${importName} = pkgs.callPackage ./alacat { inherit tmux wrapZSH nerdString autotx extraPATH; };

@@ -25,6 +25,7 @@ inputs: let
     dep-tree = import ./dep-tree;
     nops = import ./nops;
     alakazam = import ./alakitty;
+    wezterm = import ./wezterm;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;

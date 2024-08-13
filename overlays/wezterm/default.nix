@@ -1,7 +1,6 @@
 importName: inputs: (final: prev: let
   pkgs = import inputs.nixpkgsNV { inherit (prev) system; };
-  tmux = pkgs.callPackage ./tmux { isAlacritty = false; };
-  zdotdir = pkgs.callPackage ./zdot { };
+  tmux = pkgs.callPackage ../tmux { };
 in {
-  ${importName} = pkgs.callPackage ./wez { inherit zdotdir tmux; wrapZSH = false; };
+  ${importName} = pkgs.callPackage ./wez { inherit tmux; wrapZSH = false; };
 })
