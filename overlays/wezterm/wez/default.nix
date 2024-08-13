@@ -28,7 +28,7 @@ let
   fzdotdir = if zdotdir != null then zdotdir else callPackage ./zdot { };
 
   tmuxf = tmux.override (prev: {
-    isAlacritty = true;
+    isAlacritty = false;
     passthruvars = if wrapZSH then [ "ZDOTDIR" ] else [];
   });
 

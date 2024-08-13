@@ -1,8 +1,9 @@
 {
   writeText,
+  writeShellScript,
   writeShellScriptBin,
   lib,
-  alacritty,
+  foot,
   fontconfig,
   zsh,
   nerdfonts,
@@ -43,41 +44,18 @@ let
           fi
         '';
 
-  alakitty-toml = # toml
-    ''
-      # https://alacritty.org/config-alacritty.html
-      # [env]
-      # TERM = "xterm-256color"
-
-      [shell]
-      program = "${zsh}/bin/zsh"
-      args = [ "-l"${if autotx then '', "-c", "exec ${tx}/bin/tx"'' else ""} ]
-
-      [font]
-      size = 11.0
-
-      [font.bold]
-      family = "${nerdString} Nerd Font"
-      style = "Bold"
-
-      [font.bold_italic]
-      family = "${nerdString} Nerd Font"
-      style = "Bold Italic"
-
-      [font.italic]
-      family = "${nerdString} Nerd Font"
-      style = "Italic"
-
-      [font.normal]
-      family = "${nerdString} Nerd Font"
-      style = "Regular"
+  footcfg = let
+    shelllaunch = writeShellScript "termshell" (if autotx then ''${zsh}/bin/zsh -l -c "exec ${tx}/bin/tx"'' else ''${zsh}/bin/zsh -l'');
+  in ''
+      shell=${shelllaunch}
+      font=${nerdString} Nerd Font:size=11
 
       ${extraTOML}
     '';
 
-  alakitty = writeShellScriptBin "alacritty" (
+  myfoot = writeShellScriptBin "alacritty" (
     let
-      final-alakitty-toml = writeText "alakitty.toml" alakitty-toml;
+      inafoot = writeText "foot.ini" footcfg;
 
       newDejaVu = {
         minimal = nerdfonts.override { fonts = [ nerdString ]; };
@@ -87,16 +65,16 @@ let
         dejavu_fonts = newDejaVu;
       });
 
-      newAlacritty = alacritty.override (prev: {
+      otherfoot = foot.override (prev: {
         fontconfig = newFC;
       });
     in
     # bash
     ''
-      export PATH=${lib.makeBinPath ([ newFC ] ++ extraPATH)}:$PATH
+      export PATH=${lib.makeBinPath ([ newFC tx tmuxf ] ++ extraPATH)}:$PATH
       ${if wrapZSH then "export ZDOTDIR=${fzdotdir}" else ""}
-      exec ${newAlacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
+      exec ${otherfoot}/bin/foot --config=${inafoot} "$@"
     ''
   );
 in
-alakitty
+myfoot
