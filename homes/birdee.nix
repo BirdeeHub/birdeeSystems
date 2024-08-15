@@ -60,7 +60,7 @@ in {
     spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" (/*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
-    yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m "(auto-msg)" -m "$(git status)" && git push'';
+    yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(git status)" && git push'';
     lsnc = "lsd --color=never";
     la = "lsd -a";
     ll = "lsd -lh";
