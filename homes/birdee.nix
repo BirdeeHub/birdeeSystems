@@ -196,6 +196,7 @@ in {
     nix-info
     direnv
     steam-run
+    # ruffle
     # qemu
     # lxappearance
     qalculate-qt
