@@ -1,3 +1,5 @@
+print(vim.g.testvarcmd)
+
 if os.getenv('WAYLAND_DISPLAY') and vim.fn.exepath('wl-copy') ~= "" then
   vim.g.clipboard = {
       name = 'wl-clipboard',
