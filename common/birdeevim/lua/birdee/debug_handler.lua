@@ -1,38 +1,40 @@
----@type table<string, string>
+---@class lz-n.Plugin: lz.n.Plugin
+---@field is_loaded? boolean
+
+---@type table<string, lz-n.Plugin>
 local states = {}
 
 local M = {
   ---@type lz.n.Handler
   handler = {
     -- this field does nothing but it does stop others from using is_loaded,
-    -- which is good because we overwrite the value in getAllPlugins
+    -- which is good because we are going to write to it.
     spec_field = "is_loaded",
-    ---@param plugin lz.n.Plugin
+    ---@param plugin lz-n.Plugin
     del = function (plugin)
-      states[plugin.name] = plugin.name
+      if not states[plugin.name] then
+        states[plugin.name] = plugin
+      end
+      states[plugin.name].is_loaded = true
     end,
-    add = function(_) end,
+    ---@param plugin lz-n.Plugin
+    add = function(plugin)
+      states[plugin.name] = plugin
+      if plugin.lazy then
+        states[plugin.name].is_loaded = false
+      else
+        states[plugin.name].is_loaded = true
+      end
+    end,
   },
 }
 
 function M.get_all_plugins()
-  local result = vim.deepcopy(require("lz.n.state").plugins)
-  for _, name in pairs(states) do
-    if result[name] ~= nil then
-      ---@diagnostic disable-next-line: inject-field
-      result[name].is_loaded = true
-    end
-  end
-  return result
+  return states
 end
 
 function M.get_a_plugin(name)
-  local result = vim.deepcopy(require("lz.n.state").plugins[name])
-  if result ~= nil and states[name] ~= nil then
-    ---@diagnostic disable-next-line: inject-field
-    result.is_loaded = true
-  end
-  return result
+  return states[name]
 end
 
 return M
