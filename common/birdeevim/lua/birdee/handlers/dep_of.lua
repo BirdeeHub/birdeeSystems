@@ -11,10 +11,10 @@ local M = {
   spec_field = "dep_of",
 }
 
----@class dep_of: lze.Plugin
+---@class p_dep_of: lze.Plugin
 ---@field dep_of? string[]|string
 
----@param plugin dep_of
+---@param plugin p_dep_of
 function M.add(plugin)
   local dep_of = plugin.dep_of
   ---@type string[]
@@ -32,7 +32,7 @@ function M.add(plugin)
   end
 end
 
----@param plugin dep_of
+---@param plugin p_dep_of
 function M.before(plugin)
   if states[plugin.name] ~= nil then
     trigger_load(states[plugin.name])
