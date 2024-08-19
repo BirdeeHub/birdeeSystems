@@ -1,17 +1,17 @@
 ---@type table<string, string[]>
 local states = {}
 
-local trigger_load = require("lz.n").trigger_load
+local trigger_load = require("lze").trigger_load
 
--- NOTE: the handler for lz.n
+-- NOTE: the handler for lze
 
----@class lz.n.DepOfHandler: lz.n.Handler
----@type lz.n.DepOfHandler
+---@class lze.DepOfHandler: lze.Handler
+---@type lze.DepOfHandler
 local M = {
   spec_field = "dep_of",
 }
 
----@class dependaplugin: lz.n.Plugin
+---@class dependaplugin: lze.Plugin
 ---@field dep_of? string[]|string
 
 ---@param plugin dependaplugin
@@ -33,7 +33,7 @@ function M.add(plugin)
 end
 
 ---@param plugin dependaplugin
-function M.del(plugin)
+function M.before(plugin)
   if states[plugin.name] ~= nil then
     trigger_load(states[plugin.name])
     states[plugin.name] = nil

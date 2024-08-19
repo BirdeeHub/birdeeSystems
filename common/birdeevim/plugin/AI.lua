@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "vimplugin-sg.nvim",
   enable = require('nixCatsUtils').enableForCategory('AI', false) and nixCats('nixCats_packageName') ~= "minimal",
   -- cmd = { "" },

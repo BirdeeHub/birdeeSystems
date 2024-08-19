@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "marks.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -48,7 +48,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "gitsigns.nvim",
   -- cmd = { "" },
   -- ft = "",

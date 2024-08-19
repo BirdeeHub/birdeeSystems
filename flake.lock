@@ -481,7 +481,7 @@
     "flake-parts_5": {
       "inputs": {
         "nixpkgs-lib": [
-          "lz-n",
+          "lze",
           "neorocks",
           "neovim-nightly",
           "nixpkgs"
@@ -504,7 +504,7 @@
     "flake-parts_6": {
       "inputs": {
         "nixpkgs-lib": [
-          "lz-n",
+          "lze",
           "neorocks",
           "neovim-nightly",
           "hercules-ci-effects",
@@ -833,13 +833,13 @@
         "flake-compat": "flake-compat_6",
         "gitignore": "gitignore_3",
         "nixpkgs": [
-          "lz-n",
+          "lze",
           "neorocks",
           "neovim-nightly",
           "nixpkgs"
         ],
         "nixpkgs-stable": [
-          "lz-n",
+          "lze",
           "neorocks",
           "neovim-nightly",
           "nixpkgs"
@@ -911,7 +911,7 @@
     "gitignore_2": {
       "inputs": {
         "nixpkgs": [
-          "lz-n",
+          "lze",
           "neorocks",
           "git-hooks",
           "nixpkgs"
@@ -934,7 +934,7 @@
     "gitignore_3": {
       "inputs": {
         "nixpkgs": [
-          "lz-n",
+          "lze",
           "neorocks",
           "neovim-nightly",
           "git-hooks",
@@ -958,7 +958,7 @@
     "gitignore_4": {
       "inputs": {
         "nixpkgs": [
-          "lz-n",
+          "lze",
           "pre-commit-hooks",
           "nixpkgs"
         ]
@@ -1068,7 +1068,7 @@
       "inputs": {
         "flake-parts": "flake-parts_6",
         "nixpkgs": [
-          "lz-n",
+          "lze",
           "neorocks",
           "neovim-nightly",
           "nixpkgs"
@@ -1130,7 +1130,7 @@
         "type": "github"
       }
     },
-    "lz-n": {
+    "lze": {
       "inputs": {
         "flake-parts": "flake-parts_2",
         "gen-luarc": "gen-luarc",
@@ -1141,17 +1141,17 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1723914513,
-        "narHash": "sha256-oA1PJERZPBZ9UScaUiNHO4rmS9Pur76VWGZpFJf4fSI=",
-        "owner": "BirdeeHub",
-        "repo": "lz.n",
-        "rev": "315fe33018a4bf67aa9a790953e1ebe75eabc0c4",
-        "type": "github"
+        "lastModified": 1724049890,
+        "narHash": "sha256-i9B4aik3dA/TNEpy+lD+oTXs4Ud4V4g6l8vEtALU5Vs=",
+        "ref": "refs/heads/master",
+        "rev": "6a69ad4912c12ed026b395ab356b4598d4899425",
+        "revCount": 147,
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lze"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "repo": "lz.n",
-        "type": "github"
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lze"
       }
     },
     "manix": {
@@ -2448,7 +2448,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils_4",
         "home-manager": "home-manager",
-        "lz-n": "lz-n",
+        "lze": "lze",
         "manix": "manix",
         "minesweeper": "minesweeper",
         "neorg-overlay": "neorg-overlay",

@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "nvim-neoclip.lua",
   cmd = { "Telescope" },
   -- event = "",
@@ -83,7 +83,7 @@ require('lz.n').load({
 
 
 
-require('lz.n').load({
+require('lze').load({
   "img-clip",
   cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
   -- event = "",

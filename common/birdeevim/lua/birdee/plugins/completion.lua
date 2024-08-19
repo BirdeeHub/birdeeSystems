@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "nvim-cmp",
   -- cmd = { "" },
   event = { "DeferredUIEnter" },

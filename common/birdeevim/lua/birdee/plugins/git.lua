@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "vim-fugitive",
   cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
     "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
@@ -18,7 +18,7 @@ require('lz.n').load({
 })
 
 vim.keymap.set("n", "<leader>_", "<cmd>Fugit2<CR>", { noremap = true, desc = 'Fugit2' })
-require('lz.n').load({
+require('lze').load({
   "fugit2.nvim",
   cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
   -- event = "",

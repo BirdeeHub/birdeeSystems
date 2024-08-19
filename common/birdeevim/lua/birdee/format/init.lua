@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "conform.nvim",
   -- cmd = { "" },
   -- event = "",
