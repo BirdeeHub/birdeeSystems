@@ -16,6 +16,7 @@ if ok then
       notify.dismiss({ silent = true, })
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
+require('lze').register_handlers(require("lze").default_handlers)
 require('lze').register_handlers(require("birdee.handlers.on_require"))
 require("birdee.patcheduiopen")
 require("birdee.opts")
