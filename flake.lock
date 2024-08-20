@@ -1141,11 +1141,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1724110746,
-        "narHash": "sha256-9rpdbJbShWGLFtZ9PgYgFu9y9bH9nFk/ycVNA5zCc1A=",
+        "lastModified": 1724122871,
+        "narHash": "sha256-7z+2rULxYU/Ce2ccXkmJ+0YcC6eJWGJfaO6J+ZiTQuo=",
         "ref": "refs/heads/master",
-        "rev": "7580c55fdaa408e1d7a6a53564f52d21b691016e",
-        "revCount": 153,
+        "rev": "8225fb761da52118e6dd85e9f84431782dfca02d",
+        "revCount": 157,
         "type": "git",
         "url": "file:/home/birdee/Projects/lze"
       },
