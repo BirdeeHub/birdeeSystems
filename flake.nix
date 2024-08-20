@@ -43,7 +43,6 @@
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     lze = {
-      # url = "github:nvim-neorocks/lz.n";
       url = "github:BirdeeHub/lze";
       # url = "git+file:/home/birdee/Projects/lze";
       inputs.nixpkgs.follows = "nixpkgsNV";
