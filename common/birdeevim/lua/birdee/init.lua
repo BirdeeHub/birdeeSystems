@@ -3,7 +3,6 @@ require('nixCatsUtils').setup {
 }
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- require('lz.n').register_handler(require("birdee.handlers.debug_handler").handler)
 local ok, notify = pcall(require, "notify")
 if ok then
   notify.setup({
@@ -16,7 +15,8 @@ if ok then
       notify.dismiss({ silent = true, })
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
-require('lz.n').register_handler(require("birdee.handlers.on_require"))
+require('lze').register_handlers(require("birdee.handlers.on_require"))
+-- require('lze').register_handlers(require("birdee.handlers.debug_handler").handler)
 require("birdee.patcheduiopen")
 require("birdee.opts")
 require("birdee.keymaps")

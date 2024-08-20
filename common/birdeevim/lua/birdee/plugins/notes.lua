@@ -1,6 +1,6 @@
 if nixCats('notes') then
 
-  require('lz.n').load({
+  require('lze').load({
     "neorg",
     -- cmd = { "" },
     -- event = "",

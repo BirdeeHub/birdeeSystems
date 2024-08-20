@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "nvim-lint",
   -- cmd = { "" },
   event = "BufReadPost",

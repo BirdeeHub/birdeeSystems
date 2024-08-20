@@ -10,7 +10,7 @@
     (utils.sanitizedPluginOverlay inputs)
     # add any flake overlays here.
     inputs.neorg-overlay.overlays.default
-    inputs.lz-n.overlays.default
+    inputs.lze.overlays.default
     # inputs.neovim-nightly-overlay.overlays.default
     (utils.fixSystemizedOverlay inputs.codeium.overlays
       (system: inputs.codeium.overlays.${system}.default)
@@ -154,7 +154,6 @@
     };
 
     startupPlugins = with pkgs.vimPlugins; {
-      inherit lz-n;
       theme = builtins.getAttr categories.colorscheme {
         "onedark" = onedark-nvim;
         "catppuccin" = catppuccin-nvim;
@@ -163,6 +162,7 @@
         "tokyonight-day" = tokyonight-nvim;
       };
       general = with pkgs.neovimPlugins; [
+        lze
         large_file
         oil-nvim
         vim-repeat
@@ -173,6 +173,9 @@
         nvim-notify
         plenary-nvim
         mini-nvim
+      ];
+      other = [
+        nvim-spectre
       ];
     };
 
@@ -278,16 +281,16 @@
           treesj
           vim-sleuth
         ];
-        other = [
-          img-clip
-          nvim-highlight-colors
-          nvim-neoclip-lua
-          which-key-nvim
-          eyeliner-nvim
-          todo-comments-nvim
-          vim-startuptime
-        ];
       };
+      other = with pkgs.neovimPlugins; [
+        img-clip
+        nvim-highlight-colors
+        nvim-neoclip-lua
+        which-key-nvim
+        eyeliner-nvim
+        todo-comments-nvim
+        vim-startuptime
+      ];
     };
 
     environmentVariables = {
@@ -372,9 +375,9 @@
     vimagePreview = true;
     lspDebugMode = false;
     generalBuildInputs = true;
+    other = true;
     theme = true;
     colorscheme = "onedark";
-    lz-n = true;
     debug = true;
     customPlugins = true;
     general = true;
@@ -423,7 +426,7 @@
         generalBuildInputs = true;
         theme = true;
         colorscheme = "onedark";
-        lz-n = true;
+        other = true;
         debug = true;
         customPlugins = true;
         general = true;
@@ -461,13 +464,13 @@
         bitwarden = true;
         generalBuildInputs = true;
         customPlugins = true;
+        other = true;
         general = true;
         neonixdev = true;
         nixdExtras = extraNixdItems pkgs;
         vimagePreview = true;
         AI = true;
         lspDebugMode = false;
-        lz-n = true;
         theme = true;
         colorscheme = "tokyonight";
       };

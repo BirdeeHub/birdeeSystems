@@ -1,7 +1,7 @@
----@class lz-n.Plugin: lz.n.Plugin
+---@class lze.Pluginext: lze.Plugin
 ---@field is_loaded? boolean
 
----@type table<string, lz-n.Plugin>
+---@type table<string, lze.Pluginext>
 local states = {}
 
 local M = {
@@ -10,14 +10,14 @@ local M = {
     -- this field does nothing but it does stop others from using is_loaded,
     -- which is good because we are going to write to it.
     spec_field = "is_loaded",
-    ---@param plugin lz-n.Plugin
-    del = function (plugin)
+    ---@param plugin lze.Pluginext
+    before = function (plugin)
       if not states[plugin.name] then
         states[plugin.name] = plugin
       end
       states[plugin.name].is_loaded = true
     end,
-    ---@param plugin lz-n.Plugin
+    ---@param plugin lze.Pluginext
     add = function(plugin)
       states[plugin.name] = plugin
       if plugin.lazy then

@@ -30,7 +30,20 @@ vim.keymap.set('n', '<leader>cps', function() require("color_picker").hslPicker(
 vim.keymap.set('n', '<leader>cpg', function() require("color_picker").rgbGradientPicker() end,{desc = 'color_picker rgb gradient'})
 vim.keymap.set('n', '<leader>cpd', function() require("color_picker").hsvGradientPicker() end,{desc = 'color_picker hsv gradient'})
 vim.keymap.set('n', '<leader>cpb', function() require("color_picker").hslGradientPicker() end,{desc = 'color_picker hsl gradient'})
-require('lz.n').load({ "color_picker", on_require = "color_picker" })
+require('lze').load({ "color_picker", on_require = "color_picker" })
+
+vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = "Toggle Spectre"
+})
+vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file"
+})
 
 require('birdee.plugins.oil')
 
@@ -56,7 +69,7 @@ require('birdee.plugins.grapple')
 
 require('birdee.plugins.which-key')
 
-require('lz.n').load({
+require('lze').load({
   "lazydev.nvim",
   enabled = require('nixCatsUtils').enableForCategory('neonixdev'),
   cmd = { "LazyDev" },
@@ -79,7 +92,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "vim-sleuth",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -93,7 +106,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "vim-startuptime",
   enabled = require('nixCatsUtils').enableForCategory('general.other'),
   cmd = { "StartupTime" },
@@ -102,7 +115,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "todo-comments.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -119,7 +132,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "otter.nvim",
   enabled = require('nixCatsUtils').enableForCategory('otter'),
   -- cmd = { "" },
@@ -174,7 +187,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "vim-dadbod",
   cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
     "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
@@ -193,7 +206,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "visual-whitespace",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -215,7 +228,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "render-markdown",
   -- cmd = { "" },
   -- event = "",
@@ -237,7 +250,7 @@ vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true,
 vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
 vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
   { noremap = true, desc = 'markdown preview toggle' })
-require('lz.n').load({
+require('lze').load({
   "markdown-preview.nvim",
   enabled = require('nixCatsUtils').enableForCategory('general.markdown'),
   -- cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
@@ -255,7 +268,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "indent-blankline.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -272,7 +285,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "nvim-surround",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -291,7 +304,7 @@ require('lz.n').load({
 
 
 vim.keymap.set('n', '<leader>Ft', [[:TSJToggle<CR>]], { desc = "treesj split/join" })
-require('lz.n').load({
+require('lze').load({
   "treesj",
   cmd = { "TSJToggle" },
   -- event = "",
@@ -336,7 +349,7 @@ require('lz.n').load({
 })
 
 vim.keymap.set('n', '<leader>U', "<cmd>UndotreeToggle<CR>", { desc = "Undo Tree" })
-require('lz.n').load({
+require('lze').load({
   "undotree",
   cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
   -- event = "",
@@ -354,7 +367,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "eyeliner.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -374,7 +387,7 @@ require('lz.n').load({
     }
   end,
 })
-require('lz.n').load({
+require('lze').load({
   "hlargs",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -396,7 +409,7 @@ require('lz.n').load({
   end,
 })
 
-require('lz.n').load({
+require('lze').load({
   "nvim-highlight-colors",
   -- cmd = { "" },
   event = "DeferredUIEnter",

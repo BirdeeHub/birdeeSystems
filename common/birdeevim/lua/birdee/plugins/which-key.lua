@@ -1,4 +1,4 @@
-require('lz.n').load({
+require('lze').load({
   "which-key.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",

@@ -19,7 +19,7 @@
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('lz.n').load({
+require('lze').load({
   "telescope.nvim",
   cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
   -- event = "",

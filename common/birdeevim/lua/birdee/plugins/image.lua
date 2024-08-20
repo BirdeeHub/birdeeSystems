@@ -1,5 +1,5 @@
 if nixCats('vimagePreview') then
-  require('lz.n').load({
+  require('lze').load({
     "image.nvim",
     -- cmd = { "" },
     -- event = "DeferredUIEnter",
