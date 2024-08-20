@@ -1,4 +1,4 @@
----@type table<string, string[]>
+---@type table<string, string[]|false>
 local states = {}
 
 local trigger_load = require("lze").trigger_load
@@ -28,7 +28,12 @@ function M.add(plugin)
     return
   end
   for _, dep in ipairs(needed_by) do
-    vim.list_extend(states[dep], { plugin.name })
+    if states[dep] == nil then
+      states[dep] = {}
+    end
+    if states[dep] ~= false then
+      vim.list_extend(states[dep], { plugin.name })
+    end
   end
 end
 
@@ -36,7 +41,7 @@ end
 function M.before(plugin)
   if states[plugin.name] ~= nil then
     trigger_load(states[plugin.name])
-    states[plugin.name] = nil
+    states[plugin.name] = false
   end
 end
 
