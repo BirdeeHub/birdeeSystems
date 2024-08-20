@@ -28,10 +28,12 @@ function M.add(plugin)
     return
   end
   for _, dep in ipairs(needed_by) do
-    if states[dep] == nil then
-      states[dep] = {}
-    end
-    if states[dep] ~= false then
+    if states[dep] == false then
+      trigger_load(plugin)
+    else
+      if states[dep] == nil then
+        states[dep] = {}
+      end
       vim.list_extend(states[dep], { plugin.name })
     end
   end
