@@ -30,8 +30,7 @@ end
 
 -- NOTE: the handler for lze
 
----@class lze.ReqHandler: lze.Handler
----@type lze.ReqHandler
+---@type lze.Handler
 local M = {
   spec_field = "on_require",
   ---@param plugin lze.Plugin
@@ -58,7 +57,7 @@ function M.add(plugin)
     return
   end
   ---@param mod_path string
-  ---@return lze_plugin|nil
+  ---@return string|nil
   states[plugin.name] = function(mod_path)
     for _, v in ipairs(mod_paths) do
       if starts_with(mod_path, v) then
