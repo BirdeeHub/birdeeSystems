@@ -5,7 +5,7 @@
 local states = {}
 
 local M = {
-  ---@type lz.n.Handler
+  ---@type lze.Handler
   handler = {
     -- this field does nothing but it does stop others from using is_loaded,
     -- which is good because we are going to write to it.
