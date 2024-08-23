@@ -90,12 +90,7 @@ require('lze').load({
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
-  load = function (name)
-    local list = {
-      name,
-    }
-    require("birdee.utils").safe_packadd(list)
-  end,
+  load = require("birdee.utils").safe_packadd,
   after = function (plugin)
     require("img-clip").setup({
       default = {
