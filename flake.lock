@@ -1223,11 +1223,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1724358702,
-        "narHash": "sha256-WTn3leXCdUgSE2X7aadQ7ieF1FL2fDjFd483h/e2kQk=",
+        "lastModified": 1724388467,
+        "narHash": "sha256-g98MXF49aVx6bK6nFNdMjBgppG4T6umPvUiDNTj3Zrc=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "2378f843d686dd1695f34b6c774cc3f8389fb770",
+        "rev": "517ab9bd330829dccd43d747e2ba6fcb66d1387c",
         "type": "github"
       },
       "original": {
