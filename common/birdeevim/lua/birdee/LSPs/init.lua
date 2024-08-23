@@ -57,7 +57,9 @@ if nixCats('neonixdev') then
         }
       }
     }
-    vim.api.nvim_create_user_command("StartNilLSP", function() require('lspconfig').nil_ls.setup({capabilities = require('birdee.LSPs').get_capabilities('nil_ls')}) end, { desc = 'Run nil-ls (when you really need docs for the builtins and nixd refuse)' })
+    vim.api.nvim_create_user_command("StartNilLSP", function()
+      require('lspconfig').nil_ls.setup({ capabilities = require('birdee.LSPs').get_capabilities('nil_ls') })
+    end, { desc = 'Run nil-ls (when you really need docs for the builtins and nixd refuse)' })
   else
     servers.rnix = {}
     servers.nil_ls = {}
