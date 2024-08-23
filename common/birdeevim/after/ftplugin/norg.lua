@@ -1,3 +1,5 @@
 if nixCats('otter') then
-  require('otter').activate(nil, true, true, nil)
+  vim.schedule(function ()
+    require('otter').activate(nil, true, true, nil)
+  end)
 end
