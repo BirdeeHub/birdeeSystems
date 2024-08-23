@@ -6,11 +6,6 @@ if nixCats('vimagePreview') then
     ft = { "norg", "markdown", --[[ "html", "css" ]] },
     -- keys = "",
     -- colorscheme = "",
-    load = function (name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function (plugin)
       -- default config
       require("image").setup({

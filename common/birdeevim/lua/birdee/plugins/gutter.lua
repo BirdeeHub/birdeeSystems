@@ -6,11 +6,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function (name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function (plugin)
       require 'marks'.setup {
         -- whether to map keybinds or not. default true
@@ -55,11 +50,6 @@ require('lze').load({
     event = "DeferredUIEnter",
     -- keys = "",
     -- colorscheme = "",
-    load = function (name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function (plugin)
       require('gitsigns').setup({
         -- See `:help gitsigns.txt`

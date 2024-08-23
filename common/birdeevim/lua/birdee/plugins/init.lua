@@ -84,11 +84,6 @@ require('lze').load({
   ft = "markdown",
   -- keys = {"<leader>mp", "<leader>ms", "<leader>mt", },
   -- colorscheme = "",
-  load = function(name)
-    require("birdee.utils").safe_packadd({
-      name,
-    })
-  end,
   before = function(plugin)
     vim.g.mkdp_auto_close = 0
   end,
@@ -152,11 +147,6 @@ require('lze').load({
       vim.g.undotree_WindowLayout = 1
       vim.g.undotree_SplitWidth = 40
     end,
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
   },
   {
     "lazydev.nvim",
@@ -166,9 +156,6 @@ require('lze').load({
     ft = "lua",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({ name, })
-    end,
     after = function(plugin)
       require('lazydev').setup({
         library = {
@@ -241,11 +228,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function(plugin)
       require("todo-comments").setup({ signs = false })
     end,
@@ -257,11 +239,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function(plugin)
       require("ibl").setup()
     end,
@@ -273,11 +250,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function(plugin)
       require('visual-whitespace').setup({
         highlight = { link = 'Visual' },
@@ -302,11 +274,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function(plugin)
       require('nvim-surround').setup()
     end,
@@ -318,11 +285,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function(plugin)
       -- Highlights unique characters for f/F and t/T motions
       require('eyeliner').setup {
@@ -394,11 +356,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
   },
   {
     "nvim-highlight-colors",
@@ -407,11 +364,6 @@ require('lze').load({
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        name,
-      })
-    end,
     after = function(plugin)
       require("nvim-highlight-colors").setup {
         ---Render style

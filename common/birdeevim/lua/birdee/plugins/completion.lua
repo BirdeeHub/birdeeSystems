@@ -42,17 +42,14 @@ require('lze').load {
   {
     "friendly-snippets",
     dep_of = { "nvim-cmp" },
-    load = require("birdee.utils").safe_packadd,
   },
   {
     "lspkind-nvim",
     dep_of = { "nvim-cmp" },
-    load = require("birdee.utils").safe_packadd,
   },
   {
     "codeium.nvim",
     dep_of = { "nvim-cmp" },
-    load = require("birdee.utils").safe_packadd,
   },
   {
     "luasnip",
@@ -61,9 +58,6 @@ require('lze').load {
     -- keys = "",
     -- colorscheme = "",
     dep_of = { "nvim-cmp" },
-    load = function (name)
-      require("birdee.utils").safe_packadd({ name, })
-    end,
     after = function (plugin)
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
@@ -85,7 +79,6 @@ require('lze').load {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = require("birdee.utils").safe_packadd,
     after = function (plugin)
       -- [[ Configure nvim-cmp ]]
       -- See `:help cmp`
