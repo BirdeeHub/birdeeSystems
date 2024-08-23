@@ -142,7 +142,7 @@ end
 
 ---packadd + after/plugin
 ---@type fun(names: string[]|string)
-M.packadd_with_after_dirs = M.get_new_packadd_func({ "plugin" })
+M.load_w_after_plugin = M.get_new_packadd_func({ "plugin" })
 
 ---@param str any
 ---@param prefix any

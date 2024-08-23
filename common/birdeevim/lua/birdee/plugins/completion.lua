@@ -2,42 +2,42 @@ require('lze').load {
   {
     "cmp-buffer",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-cmdline",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-cmdline-history",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-nvim-lsp",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-nvim-lsp-signature-help",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-nvim-lua",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-path",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp_luasnip",
     on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").packadd_with_after_dirs,
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "friendly-snippets",
