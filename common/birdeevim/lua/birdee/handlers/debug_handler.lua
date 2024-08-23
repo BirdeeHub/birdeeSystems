@@ -17,6 +17,12 @@ local M = {
       end
       states[plugin.name].is_loaded = true
     end,
+    after = function (plugin)
+      if not states[plugin.name] then
+        states[plugin.name] = plugin
+      end
+      states[plugin.name].is_loaded = true
+    end,
     ---@param plugin lze.Pluginext
     add = function(plugin)
       states[plugin.name] = plugin
