@@ -61,6 +61,8 @@ require('birdee.plugins.grapple')
 
 require('birdee.plugins.which-key')
 
+require('birdee.plugins.AI')
+
 require('lze').load({
   {
     "color_picker",
