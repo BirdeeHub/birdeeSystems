@@ -10,7 +10,6 @@ require('lze').load({
     require("birdee.utils").safe_packadd({
       "nvim-cmp",
       "codeium.nvim",
-      "telescope.nvim",
       name,
     })
   end,

@@ -271,6 +271,7 @@ require('lze').load({
   "nvim-lspconfig",
   -- cmd = { "" },
   event = "BufReadPre",
+  dep_of = { "otter.nvim" },
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
@@ -279,7 +280,6 @@ require('lze').load({
       "clangd_extensions.nvim",
       "vim-cmake",
       "cmp-nvim-lsp",
-      "telescope.nvim",
       name,
     }
     if not require('nixCatsUtils').isNixCats then

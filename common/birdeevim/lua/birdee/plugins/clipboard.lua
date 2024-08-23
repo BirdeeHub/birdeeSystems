@@ -2,16 +2,7 @@ require('lze').load({
   {
     "nvim-neoclip.lua",
     cmd = { "Telescope" },
-    -- event = "",
-    -- ft = "",
     keys = { "<leader>sm", "<leader>sc", "<leader>ss" },
-    -- colorscheme = "",
-    load = function (name)
-      require("birdee.utils").safe_packadd({
-        "telescope.nvim",
-        name,
-      })
-    end,
     after = function (plugin)
       require('neoclip').setup({
         history = 1000,

@@ -24,17 +24,6 @@ require("large_file").setup({
   on_large_file_read_pre = function(ev) end
 })
 
-vim.keymap.set('n', '<leader>cpc', function() require("color_picker").rgbPicker() end, { desc = 'color_picker rgb' })
-vim.keymap.set('n', '<leader>cph', function() require("color_picker").hsvPicker() end, { desc = 'color_picker hsv' })
-vim.keymap.set('n', '<leader>cps', function() require("color_picker").hslPicker() end, { desc = 'color_picker hsl' })
-vim.keymap.set('n', '<leader>cpg', function() require("color_picker").rgbGradientPicker() end,
-  { desc = 'color_picker rgb gradient' })
-vim.keymap.set('n', '<leader>cpd', function() require("color_picker").hsvGradientPicker() end,
-  { desc = 'color_picker hsv gradient' })
-vim.keymap.set('n', '<leader>cpb', function() require("color_picker").hslGradientPicker() end,
-  { desc = 'color_picker hsl gradient' })
-require('lze').load({ "color_picker", on_require = "color_picker" })
-
 vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
   desc = "Toggle Spectre"
 })
@@ -72,77 +61,71 @@ require('birdee.plugins.grapple')
 
 require('birdee.plugins.which-key')
 
-vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview <CR>', { noremap = true, desc = 'markdown preview' })
-vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop <CR>', { noremap = true, desc = 'markdown preview stop' })
-vim.keymap.set('n', '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>',
-  { noremap = true, desc = 'markdown preview toggle' })
 require('lze').load({
-  "markdown-preview.nvim",
-  enabled = require('nixCatsUtils').enableForCategory('general.markdown'),
-  -- cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
-  -- event = "",
-  ft = "markdown",
-  -- keys = {"<leader>mp", "<leader>ms", "<leader>mt", },
-  -- colorscheme = "",
-  before = function(plugin)
-    vim.g.mkdp_auto_close = 0
-  end,
-})
+  {
+    "color_picker",
+    keys = {
+      { "<leader>cpc", function() require("color_picker").rgbPicker() end, mode = { 'n', }, desc = "color_picker rgb" },
+      { "<leader>cph", function() require("color_picker").hsvPicker() end, mode = { 'n', }, desc = "color_picker hsv" },
+      { "<leader>cps", function() require("color_picker").hslPicker() end, mode = { 'n', }, desc = "color_picker hsl" },
+      { "<leader>cpg", function() require("color_picker").rgbGradientPicker() end, mode = { 'n', }, desc = "color_picker rgb gradient" },
+      { "<leader>cpd", function() require("color_picker").hsvGradientPicker() end, mode = { 'n', }, desc = "color_picker hsv gradient" },
+      { "<leader>cpb", function() require("color_picker").hslGradientPicker() end, mode = { 'n', }, desc = "color_picker hsl gradient" },
+    },
+    on_require = "color_picker",
+  },
+  {
+    "markdown-preview.nvim",
+    enabled = require('nixCatsUtils').enableForCategory('general.markdown'),
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
+    ft = "markdown",
+    keys = {
+      {"<leader>mp", "<cmd>MarkdownPreview <CR>", mode = {"n"}, noremap = true, desc = "markdown preview"},
+      {"<leader>ms", "<cmd>MarkdownPreviewStop <CR>", mode = {"n"}, noremap = true, desc = "markdown preview stop"},
+      {"<leader>mt", "<cmd>MarkdownPreviewToggle <CR>", mode = {"n"}, noremap = true, desc = "markdown preview toggle"},
+    },
+    before = function(plugin)
+      vim.g.mkdp_auto_close = 0
+    end,
+  },
+  {
+    "treesj",
+    cmd = { "TSJToggle" },
+    keys = { { "<leader>Ft", ":TSJToggle<CR>", mode = { "n" }, desc = "treesj split/join" }, },
+    after = function(plugin)
+      local tsj = require('treesj')
 
-vim.keymap.set('n', '<leader>Ft', [[:TSJToggle<CR>]], { desc = "treesj split/join" })
-require('lze').load({
-  "treesj",
-  cmd = { "TSJToggle" },
-  -- event = "",
-  -- ft = "",
-  -- keys = "",
-  -- colorscheme = "",
-  load = function(name)
-    require("birdee.utils").safe_packadd({
-      "nvim-treesitter",
-      name,
-    })
-  end,
-  after = function(plugin)
-    local tsj = require('treesj')
+      -- local langs = {--[[ configuration for languages ]]}
 
-    -- local langs = {--[[ configuration for languages ]]}
-
-    tsj.setup({
-      ---@type boolean Use default keymaps (<space>m - toggle, <space>j - join, <space>s - split)
-      use_default_keymaps = true,
-      ---@type boolean Node with syntax error will not be formatted
-      check_syntax_error = true,
-      ---If line after join will be longer than max value,
-      ---@type number If line after join will be longer than max value, node will not be formatted
-      max_join_length = 120,
-      ---Cursor behavior:
-      ---hold - cursor follows the node/place on which it was called
-      ---start - cursor jumps to the first symbol of the node being formatted
-      ---end - cursor jumps to the last symbol of the node being formatted
-      ---@type 'hold'|'start'|'end'
-      cursor_behavior = 'hold',
-      ---@type boolean Notify about possible problems or not
-      notify = true,
-      ---@type boolean Use `dot` for repeat action
-      dot_repeat = true,
-      ---@type nil|function Callback for treesj error handler. func (err_text, level, ...other_text)
-      on_error = nil,
-      ---@type table Presets for languages
-      -- langs = langs, -- See the default presets in lua/treesj/langs
-    })
-  end,
-})
-
-vim.keymap.set('n', '<leader>U', "<cmd>UndotreeToggle<CR>", { desc = "Undo Tree" })
-require('lze').load({
+      tsj.setup({
+        ---@type boolean Use default keymaps (<space>m - toggle, <space>j - join, <space>s - split)
+        use_default_keymaps = true,
+        ---@type boolean Node with syntax error will not be formatted
+        check_syntax_error = true,
+        ---If line after join will be longer than max value,
+        ---@type number If line after join will be longer than max value, node will not be formatted
+        max_join_length = 120,
+        ---Cursor behavior:
+        ---hold - cursor follows the node/place on which it was called
+        ---start - cursor jumps to the first symbol of the node being formatted
+        ---end - cursor jumps to the last symbol of the node being formatted
+        ---@type 'hold'|'start'|'end'
+        cursor_behavior = 'hold',
+        ---@type boolean Notify about possible problems or not
+        notify = true,
+        ---@type boolean Use `dot` for repeat action
+        dot_repeat = true,
+        ---@type nil|function Callback for treesj error handler. func (err_text, level, ...other_text)
+        on_error = nil,
+        ---@type table Presets for languages
+        -- langs = langs, -- See the default presets in lua/treesj/langs
+      })
+    end,
+  },
   {
     "undotree",
     cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
-    -- event = "",
-    -- ft = "",
-    -- keys = "<leader>U",
-    -- colorscheme = "",
+    keys = { { "<leader>U", "<cmd>UndotreeToggle<CR>", mode = { "n" }, desc = "Undo Tree" }, },
     before = function(_)
       vim.g.undotree_WindowLayout = 1
       vim.g.undotree_SplitWidth = 40
@@ -152,10 +135,7 @@ require('lze').load({
     "lazydev.nvim",
     enabled = require('nixCatsUtils').enableForCategory('neonixdev'),
     cmd = { "LazyDev" },
-    -- event = "DeferredUIEnter",
     ft = "lua",
-    -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       require('lazydev').setup({
         library = {
@@ -170,19 +150,9 @@ require('lze').load({
   {
     "otter.nvim",
     enabled = require('nixCatsUtils').enableForCategory('otter'),
-    -- cmd = { "" },
     -- event = "DeferredUIEnter",
     on_require = { "otter" },
     -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
-    -- keys = "",
-    -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        "nvim-lspconfig",
-        "nvim-treesitter",
-        name,
-      })
-    end,
     after = function(plugin)
       local otter = require 'otter'
       otter.setup {
@@ -223,33 +193,21 @@ require('lze').load({
   },
   {
     "todo-comments.nvim",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       require("todo-comments").setup({ signs = false })
     end,
   },
   {
     "indent-blankline.nvim",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       require("ibl").setup()
     end,
   },
   {
     "visual-whitespace",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       require('visual-whitespace').setup({
         highlight = { link = 'Visual' },
@@ -269,22 +227,16 @@ require('lze').load({
   },
   {
     "nvim-surround",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
     -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       require('nvim-surround').setup()
     end,
   },
   {
     "eyeliner.nvim",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
     -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       -- Highlights unique characters for f/F and t/T motions
       require('eyeliner').setup {
@@ -295,17 +247,7 @@ require('lze').load({
   },
   {
     "render-markdown",
-    -- cmd = { "" },
-    -- event = "",
     ft = "markdown",
-    -- keys = "",
-    -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        "nvim-treesitter",
-        name,
-      })
-    end,
     after = function(plugin)
       require('render-markdown').setup({})
     end,
@@ -314,10 +256,6 @@ require('lze').load({
     "vim-dadbod",
     cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
       "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
-    -- event = "",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     load = function(name)
       require("birdee.utils").safe_packadd({
         name,
@@ -330,17 +268,7 @@ require('lze').load({
   },
   {
     "hlargs",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
-    load = function(name)
-      require("birdee.utils").safe_packadd({
-        "nvim-treesitter",
-        name,
-      })
-    end,
     after = function(plugin)
       require('hlargs').setup({
         color = '#32a88f',
@@ -351,19 +279,12 @@ require('lze').load({
   },
   {
     "vim-sleuth",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
   },
   {
     "nvim-highlight-colors",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
     -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function(plugin)
       require("nvim-highlight-colors").setup {
         ---Render style
