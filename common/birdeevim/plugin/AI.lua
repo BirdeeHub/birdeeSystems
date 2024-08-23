@@ -8,7 +8,6 @@ require('lze').load({
   -- colorscheme = "",
   load = function (name)
     require("birdee.utils").safe_packadd({
-      "nvim-cmp",
       "codeium.nvim",
       name,
     })
@@ -87,6 +86,8 @@ require('lze').load({
           end
         end
       end
+
+      if (nixCats('AI')) then require("codeium").setup() end
 
       vim.cmd([[command! ClearSGAuth lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json'))]])
       vim.cmd([[command! ClearCodeiumAuth lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json'))]])

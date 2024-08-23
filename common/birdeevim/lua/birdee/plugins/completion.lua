@@ -78,6 +78,7 @@ require('lze').load {
     event = { "DeferredUIEnter" },
     -- ft = "",
     -- keys = "",
+    dep_of = { "vimplugin-sg.nvim" },
     -- colorscheme = "",
     after = function (plugin)
       -- [[ Configure nvim-cmp ]]
@@ -214,8 +215,6 @@ require('lze').load {
           { name = "neorg" },
         },
       })
-
-      if (nixCats('AI')) then require("codeium").setup() end
     end,
   },
 }
