@@ -13,7 +13,7 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-require("large_file").setup({
+require("large_file").setup {
   size_limit = 4 * 1024 * 1024, -- 4 MB
   buffer_options = {
     swapfile = false,
@@ -22,7 +22,7 @@ require("large_file").setup({
     undolevels = -1,
   },
   on_large_file_read_pre = function(ev) end
-})
+}
 
 vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
   desc = "Toggle Spectre"
@@ -65,7 +65,7 @@ require('birdee.plugins.which-key')
 
 require('birdee.plugins.AI')
 
-require('lze').load({
+require('lze').load {
   {
     "color_picker",
     keys = {
@@ -314,4 +314,4 @@ require('lze').load({
       }
     end,
   },
-})
+}

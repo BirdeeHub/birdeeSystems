@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   {
     "marks.nvim",
     event = "DeferredUIEnter",
@@ -126,4 +126,4 @@ require('lze').load({
       vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
     end,
   },
-})
+}

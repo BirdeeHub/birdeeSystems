@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   "vimplugin-sg.nvim",
   enable = require('nixCatsUtils').enableForCategory('AI', false),
   -- cmd = { "" },
@@ -92,4 +92,4 @@ require('lze').load({
     vim.cmd([[command! ClearCodeiumAuth lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json'))]])
     vim.cmd([[command! ClearBitwardenData lua print(require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json'))]])
   end,
-})
+}

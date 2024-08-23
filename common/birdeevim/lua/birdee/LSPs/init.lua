@@ -269,7 +269,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 ---------------------------------------------------------------------------------
 
-require('lze').load({
+require('lze').load {
   "nvim-lspconfig",
   -- cmd = { "" },
   event = "BufReadPre",
@@ -325,6 +325,6 @@ require('lze').load({
       }
     end
   end,
-})
+}
 
 return M

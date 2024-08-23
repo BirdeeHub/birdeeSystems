@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   "lualine.nvim",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -123,4 +123,4 @@ require('lze').load({
       extensions = {}
     })
   end,
-})
+}

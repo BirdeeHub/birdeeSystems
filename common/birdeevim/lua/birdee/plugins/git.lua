@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   {
     "vim-fugitive",
     cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
@@ -205,4 +205,4 @@ require('lze').load({
 
     end,
   },
-})
+}

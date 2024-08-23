@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   "conform.nvim",
   -- cmd = { "" },
   -- event = "",
@@ -42,4 +42,4 @@ require('lze').load({
 
     -- vim.keymap.set("n", "<leader>Fm", "<cmd>Format<CR>", { noremap = true, desc = '[F]or[m]at (lsp)' })
   end,
-})
+}

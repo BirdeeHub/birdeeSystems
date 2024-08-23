@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   "nvim-dap",
   -- cmd = { "" },
   -- event = "",
@@ -161,4 +161,4 @@ require('lze').load({
     end
 
   end,
-})
+}

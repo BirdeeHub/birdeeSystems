@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   "nvim-treesitter",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -82,4 +82,4 @@ require('lze').load({
       }
     end, 0)
   end,
-})
+}

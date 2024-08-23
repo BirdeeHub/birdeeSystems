@@ -1,4 +1,4 @@
-require('lze').load({
+require('lze').load {
   "grapple",
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -77,4 +77,4 @@ require('lze').load({
     vim.keymap.set("n", "<M-0>", function() grapple_select(10) end,
       { noremap = true, silent = true, desc = "Grapple Select index 10" })
   end,
-})
+}

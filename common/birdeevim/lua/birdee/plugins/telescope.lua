@@ -19,7 +19,7 @@
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('lze').load({
+require('lze').load {
   "telescope.nvim",
   cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
   dep_of = { "nvim-neoclip.lua", "vimplugin-sg.nvim", "fugit2.nvim", "nvim-lspconfig", "neorg" },
@@ -152,4 +152,4 @@ require('lze').load({
     vim.keymap.set('n', '<leader>sb', '<cmd>Telescope git_file_history<CR>', { desc = '[S]earch [B]ackup history' })
     vim.keymap.set('n', '<leader>sM', '<cmd>Telescope notify<CR>', { desc = '[S]earch [M]essage' })
   end,
-})
+}
