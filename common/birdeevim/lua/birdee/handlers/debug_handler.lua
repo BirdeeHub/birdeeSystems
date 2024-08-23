@@ -1,5 +1,7 @@
 ---@class lze.Pluginext: lze.Plugin
----@field is_loaded? boolean
+---@field after_loaded? boolean
+---@field before_loaded? boolean
+---@field pre_loaded? boolean
 
 ---@type table<string, lze.Pluginext>
 local states = {}
@@ -7,29 +9,29 @@ local states = {}
 local M = {
   ---@type lze.Handler
   handler = {
-    -- this field does nothing but it does stop others from using is_loaded,
-    -- which is good because we are going to write to it.
-    spec_field = "is_loaded",
+    -- throwaway field because it is required
+    spec_field = "debug_handler_field",
     ---@param plugin lze.Pluginext
     before = function (plugin)
       if not states[plugin.name] then
         states[plugin.name] = plugin
       end
-      states[plugin.name].is_loaded = true
+      states[plugin.name].before_loaded = true
     end,
+    ---@param plugin lze.Pluginext
     after = function (plugin)
       if not states[plugin.name] then
         states[plugin.name] = plugin
       end
-      states[plugin.name].is_loaded = true
+      states[plugin.name].after_loaded = true
     end,
     ---@param plugin lze.Pluginext
     add = function(plugin)
       states[plugin.name] = plugin
       if plugin.lazy then
-        states[plugin.name].is_loaded = false
+        states[plugin.name].pre_loaded = false
       else
-        states[plugin.name].is_loaded = true
+        states[plugin.name].pre_loaded = true
       end
     end,
   },
