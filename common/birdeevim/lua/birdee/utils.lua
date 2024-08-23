@@ -125,20 +125,22 @@ function M.safe_force_packadd(plugin_names)
   end
 end
 
-local get_new_packadd_func = function ()
+---@param dirs string[]
+---@return fun(names: string[]|string)
+M.get_new_packadd_func = function(dirs)
   local new_load = function(name)
-      local ok, err = pcall(vim.cmd, 'packadd ' .. name)
-      if not ok then
-        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN,
-          { title = "birdee.utils.safe_force_packadd_list" })
-        return nil
-      end
-      return require("nixCats").pawsible.allPlugins.opt[name]
+    local ok, err = pcall(vim.cmd, 'packadd ' .. name)
+    if not ok then
+      vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN,
+        { title = "birdee.utils.safe_force_packadd_list" })
+      return nil
+    end
+    return require("nixCats").pawsible.allPlugins.opt[name]
   end
-  return require("lze").make_load_with_after({"plugin"}, new_load)
+  return require("lze").make_load_with_after(dirs, new_load)
 end
 
-M.packadd_with_after_dirs = get_new_packadd_func()
+M.packadd_with_after_dirs = M.get_new_packadd_func({ "plugin" })
 
 ---@param str any
 ---@param prefix any
