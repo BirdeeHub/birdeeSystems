@@ -298,6 +298,7 @@ require('lze').load({
       for server_name, cfg in pairs(servers) do
         require('lspconfig')[server_name].setup({
           capabilities = M.get_capabilities(server_name),
+          -- on_attach = M.on_attach,
           settings = cfg,
           filetypes = (cfg or {}).filetypes,
           cmd = (cfg or {}).cmd,
@@ -314,6 +315,7 @@ require('lze').load({
         function(server_name)
           require('lspconfig')[server_name].setup {
             capabilities = M.get_capabilities(server_name),
+            -- on_attach = M.on_attach,
             settings = servers[server_name],
             filetypes = (servers[server_name] or {}).filetypes,
           }
