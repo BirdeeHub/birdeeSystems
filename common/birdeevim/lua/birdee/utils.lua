@@ -133,7 +133,6 @@ M.get_new_packadd_func = function(dirs)
     if not ok then
       vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN,
         { title = "birdee.utils.safe_force_packadd_list" })
-      return nil
     end
     return require("nixCats").pawsible.allPlugins.opt[name]
   end
