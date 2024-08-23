@@ -35,14 +35,12 @@ local M = {
       end
     end,
   },
+  get_all_plugins = function()
+    return states
+  end,
+  get_a_plugin = function(name)
+    return states[name]
+  end,
 }
-
-function M.get_all_plugins()
-  return states
-end
-
-function M.get_a_plugin(name)
-  return states[name]
-end
 
 return M
