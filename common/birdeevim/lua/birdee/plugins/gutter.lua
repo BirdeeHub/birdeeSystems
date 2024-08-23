@@ -1,8 +1,8 @@
 require('lze').load({
   {
     "marks.nvim",
-    -- cmd = { "" },
     event = "DeferredUIEnter",
+    -- cmd = { "" },
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
@@ -45,9 +45,9 @@ require('lze').load({
   },
   {
     "gitsigns.nvim",
+    event = "DeferredUIEnter",
     -- cmd = { "" },
     -- ft = "",
-    event = "DeferredUIEnter",
     -- keys = "",
     -- colorscheme = "",
     after = function (plugin)

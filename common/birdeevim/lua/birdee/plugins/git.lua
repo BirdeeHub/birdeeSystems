@@ -1,11 +1,28 @@
-vim.keymap.set("n", "<leader>_", "<cmd>Fugit2<CR>", { noremap = true, desc = 'Fugit2' })
 require('lze').load({
+  {
+    "vim-fugitive",
+    cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
+      "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
+      "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
+      "DiffviewRefresh", "DiffviewFileHistory", },
+    -- event = "",
+    -- ft = "",
+    -- keys = "",
+    -- colorscheme = "",
+    load = function (name)
+      require("birdee.utils").safe_packadd({
+        name,
+        "vim-rhubarb",
+        "diffview.nvim",
+      })
+    end,
+  },
   {
     "fugit2.nvim",
     cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
     -- event = "",
     -- ft = "",
-    -- keys = "",
+    keys = { { "<leader>_", "<cmd>Fugit2<CR>", mode = { "n" }, noremap = true, desc = "Fugit2" } },
     -- colorscheme = "",
     load = function (name)
       require("birdee.utils").safe_packadd({
@@ -186,24 +203,6 @@ require('lze').load({
           external_diffview = true,
       })
 
-    end,
-  },
-  {
-    "vim-fugitive",
-    cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
-      "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
-      "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
-      "DiffviewRefresh", "DiffviewFileHistory", },
-    -- event = "",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
-    load = function (name)
-      require("birdee.utils").safe_packadd({
-        name,
-        "vim-rhubarb",
-        "diffview.nvim",
-      })
     end,
   },
 })

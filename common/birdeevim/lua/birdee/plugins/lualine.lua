@@ -8,7 +8,6 @@ require('lze').load({
   load = function (name)
     require("birdee.utils").safe_packadd({
       name,
-      "grapple",
       "lualine-lsp-progress",
     })
   end,

@@ -2,7 +2,7 @@ require('lze').load({
   "nvim-treesitter",
   -- cmd = { "" },
   event = "DeferredUIEnter",
-  dep_of = { "treesj", "otter.nvim", "hlargs", "render-markdown" },
+  dep_of = { "treesj", "otter.nvim", "hlargs", "render-markdown", "neorg" },
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",

@@ -2,6 +2,7 @@ require('lze').load({
   "grapple",
   -- cmd = { "" },
   event = "DeferredUIEnter",
+  dep_of = { "lualine.nvim" },
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
