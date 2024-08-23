@@ -140,6 +140,8 @@ M.get_new_packadd_func = function(dirs)
   return require("lze").make_load_with_after(dirs, new_load)
 end
 
+---packadd + after/plugin
+---@type fun(names: string[]|string)
 M.packadd_with_after_dirs = M.get_new_packadd_func({ "plugin" })
 
 ---@param str any
