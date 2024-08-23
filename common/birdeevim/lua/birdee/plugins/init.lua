@@ -39,25 +39,27 @@ vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search(
 
 require('birdee.plugins.oil')
 
+-- NOTE: all plugins beyond this point are lazily loaded.
+
 require('birdee.plugins.telescope')
 
 require('birdee.plugins.nestsitter')
 
 require('birdee.plugins.completion')
 
+require('birdee.plugins.grapple')
+
 require('birdee.plugins.lualine')
 
 require('birdee.plugins.git')
+
+require('birdee.plugins.gutter')
 
 require('birdee.plugins.clipboard')
 
 require('birdee.plugins.image')
 
 require('birdee.plugins.notes')
-
-require('birdee.plugins.gutter')
-
-require('birdee.plugins.grapple')
 
 require('birdee.plugins.which-key')
 
