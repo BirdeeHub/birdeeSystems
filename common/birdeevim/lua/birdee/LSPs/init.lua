@@ -156,7 +156,14 @@ if nixCats('web.tailwindcss') then
 end
 if nixCats('web.JS') then
   servers.tsserver = {
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
     -- init_options = {
     --   tsserver = {
     --     path = nixCats('tsserver') .. "/lib/node_modules/typescript/lib",
