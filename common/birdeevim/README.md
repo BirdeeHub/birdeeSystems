@@ -1,3 +1,7 @@
+> [!NOTE]
+> THIS IS NOT A DISTRIBUTION! IT IS MINE.
+> If you have an issue using it, provide an actionable fix, or get your own XD
+
 see:
 
 [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
@@ -37,6 +41,5 @@ Regardless of how it came to be, I like my new version a lot. It does a lot of t
 > [!NOTE]
 > Keep in mind downloading my config is going to download a lot of lsps and plugins.
 > You should use the noAI one because otherwise it would throw an error because you dont have my key and also it wont download bitwarden cli for you.
-> Also, I can't claim every language setup works perfectly or anything. Especially kotlin. This is not a distribution its mine.
 
 (completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`, you have been warned.)
