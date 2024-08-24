@@ -4,7 +4,6 @@ require('lze').load {
   enable = catUtils.enableForCategory('AI', false),
   cmd = { "CodyToggle", "CodyAsk", },
   event = "InsertEnter",
-  -- ft = "",
   keys = {
     {
       "<leader>cs",
