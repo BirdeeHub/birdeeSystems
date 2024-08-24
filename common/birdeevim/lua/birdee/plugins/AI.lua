@@ -1,5 +1,5 @@
 require('lze').load {
-  "vimplugin-sg.nvim",
+  "codeium.nvim",
   enable = require('nixCatsUtils').enableForCategory('AI', false),
   -- cmd = { "" },
   event = "DeferredUIEnter",
@@ -8,8 +8,8 @@ require('lze').load {
   -- colorscheme = "",
   load = function (name)
     require("birdee.utils").safe_packadd({
-      "codeium.nvim",
       name,
+      "vimplugin-sg.nvim",
     })
   end,
   after = function (plugin)

@@ -48,10 +48,6 @@ require('lze').load {
     dep_of = { "nvim-cmp" },
   },
   {
-    "codeium.nvim",
-    dep_of = { "nvim-cmp" },
-  },
-  {
     "luasnip",
     -- cmd = { "" },
     -- ft = "",
@@ -78,7 +74,7 @@ require('lze').load {
     event = { "DeferredUIEnter" },
     -- ft = "",
     -- keys = "",
-    dep_of = { "vimplugin-sg.nvim" },
+    dep_of = { "codeium.nvim" },
     -- colorscheme = "",
     after = function (plugin)
       -- [[ Configure nvim-cmp ]]

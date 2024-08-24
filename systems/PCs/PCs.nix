@@ -135,7 +135,7 @@ in {
   services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   security.rtkit.enable = true;

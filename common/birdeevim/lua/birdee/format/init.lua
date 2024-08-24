@@ -5,11 +5,6 @@ require('lze').load {
   -- ft = "",
   keys = "<leader>FF",
   -- colorscheme = "",
-  load = function (name)
-    require("birdee.utils").safe_packadd({
-      name,
-    })
-  end,
   after = function (plugin)
     local conform = require("conform")
 

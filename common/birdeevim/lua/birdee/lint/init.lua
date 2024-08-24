@@ -5,11 +5,6 @@ require('lze').load {
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
-  load = function (name)
-    require("birdee.utils").safe_packadd({
-      name,
-    })
-  end,
   after = function (plugin)
     require('lint').linters_by_ft = {
       -- markdown = {'vale',},

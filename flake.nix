@@ -7,8 +7,8 @@
 
   inputs = {
     # system
-    nixpkgs.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
-    # nixpkgsNV.url = "git+file:/home/birdee/Projects/nixpkgs?branch=nvimrubyup";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgsNV.url = "git+file:/home/birdee/Projects/nixpkgs?branch=REPLACE_ME";
     nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
@@ -22,7 +22,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     devenv.url = "github:cachix/devenv";
     nur.url = "github:nix-community/nur";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/acb4f0e9bfa8ca2d6fca5e692307b5c994e7dbda";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nsearch.url = "github:niksingh710/nsearch";

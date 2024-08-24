@@ -56,12 +56,12 @@ in {
     mesa
   ];
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-    package = pkgs.virtualbox;
-    # users.extraGroups.vboxusers.members = [ "birdee" ];
-  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  #   package = pkgs.virtualbox;
+  #   # users.extraGroups.vboxusers.members = [ "birdee" ];
+  # };
 
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
@@ -71,7 +71,7 @@ in {
   #Nouveau doesn't work at all on this model.
   boot.kernelParams = [ "nouveau.modeset=0" /* "nvidia-drm.modeset=1" */ ];
   nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     vaapiVdpau
   ];
   services.asusd.enable = true;
@@ -86,10 +86,10 @@ in {
   };
 
   # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    # driSupport = true;
+    enable32Bit = true;
     # setLdLibraryPath = true;
   };
   boot.blacklistedKernelModules = [ "nouveau"];

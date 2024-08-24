@@ -22,7 +22,7 @@
 require('lze').load {
   "telescope.nvim",
   cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
-  dep_of = { "nvim-neoclip.lua", "vimplugin-sg.nvim", "fugit2.nvim", "nvim-lspconfig", "neorg" },
+  dep_of = { "nvim-neoclip.lua", "codeium.nvim", "fugit2.nvim", "nvim-lspconfig", "neorg" },
   -- event = "",
   -- ft = "",
   keys = {
