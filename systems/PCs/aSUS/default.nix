@@ -56,12 +56,12 @@ in {
     mesa
   ];
 
-  # virtualisation.virtualbox.host = {
-  #   enable = true;
-  #   enableExtensionPack = true;
-  #   package = pkgs.virtualbox;
-  #   # users.extraGroups.vboxusers.members = [ "birdee" ];
-  # };
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+    package = pkgs.virtualbox;
+    # users.extraGroups.vboxusers.members = [ "birdee" ];
+  };
 
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;

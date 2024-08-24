@@ -4,7 +4,7 @@ importName: inputs: let
       inherit (self) system;
     };
   in {
-    virtualbox = pkgs.virtualbox;
+    # virtualbox = pkgs.virtualbox;
     qalculate-qt = pkgs.qalculate-qt;
   });
 in
