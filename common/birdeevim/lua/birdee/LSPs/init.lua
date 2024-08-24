@@ -1,3 +1,4 @@
+local catUtils = require('nixCatsUtils')
 local servers = {}
 if nixCats('neonixdev') then
   servers.lua_ls = {
@@ -25,7 +26,7 @@ if nixCats('neonixdev') then
     },
     filetypes = { 'lua' },
   }
-  if require('nixCatsUtils').isNixCats then
+  if catUtils.isNixCats then
     servers.nixd = {
       nixd = {
         nixpkgs = {
@@ -206,7 +207,7 @@ end
 --------------------------------------------------------------------------------------------------------------------
 
 
-if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
+if (catUtils.isNixCats and nixCats('lspDebugMode')) then
   vim.lsp.set_log_level("debug")
 end
 
@@ -270,61 +271,44 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---------------------------------------------------------------------------------
 
 require('lze').load {
-  "nvim-lspconfig",
-  -- cmd = { "" },
-  event = "BufReadPre",
-  dep_of = { "otter.nvim" },
-  -- ft = "",
-  -- keys = "",
-  -- colorscheme = "",
-  load = function(name)
-    local list = {
-      "clangd_extensions.nvim",
-      "vim-cmake",
-      "cmp-nvim-lsp",
-      name,
-    }
-    if not require('nixCatsUtils').isNixCats then
-      list[#list + 1] = "mason.nvim"
-      list[#list + 1] = "mason-lspconfig"
-    end
-    require("birdee.utils").safe_packadd(list)
-  end,
-  after = function(plugin)
-    if nixCats('C') then
-      vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
-        { desc = 'Run CMake with compile_commands.json' })
-      vim.cmd [[let g:cmake_link_compile_commands = 1]]
-    end
-    if require('nixCatsUtils').isNixCats then
-      for server_name, cfg in pairs(servers) do
-        require('lspconfig')[server_name].setup({
-          capabilities = M.get_capabilities(server_name),
-          -- on_attach = M.on_attach,
-          settings = cfg,
-          filetypes = (cfg or {}).filetypes,
-          cmd = (cfg or {}).cmd,
-          root_pattern = (cfg or {}).root_pattern,
-        })
-      end
-    else
-      require('mason').setup()
-      local mason_lspconfig = require 'mason-lspconfig'
-      mason_lspconfig.setup {
-        ensure_installed = vim.tbl_keys(servers),
-      }
-      mason_lspconfig.setup_handlers {
-        function(server_name)
-          require('lspconfig')[server_name].setup {
+  {
+    "nvim-lspconfig",
+    event = "BufReadPre",
+    dep_of = { "otter.nvim", },
+    load = (catUtils.isNixCats and nil) or function(name)
+      require("birdee.utils").safe_packadd({ name, "mason.nvim", "mason-lspconfig" })
+    end,
+    after = function(plugin)
+      if catUtils.isNixCats then
+        for server_name, cfg in pairs(servers) do
+          require('lspconfig')[server_name].setup({
             capabilities = M.get_capabilities(server_name),
             -- on_attach = M.on_attach,
-            settings = servers[server_name],
-            filetypes = (servers[server_name] or {}).filetypes,
-          }
-        end,
-      }
-    end
-  end,
+            settings = cfg,
+            filetypes = (cfg or {}).filetypes,
+            cmd = (cfg or {}).cmd,
+            root_pattern = (cfg or {}).root_pattern,
+          })
+        end
+      else
+        require('mason').setup()
+        local mason_lspconfig = require 'mason-lspconfig'
+        mason_lspconfig.setup {
+          ensure_installed = vim.tbl_keys(servers),
+        }
+        mason_lspconfig.setup_handlers {
+          function(server_name)
+            require('lspconfig')[server_name].setup {
+              capabilities = M.get_capabilities(server_name),
+              -- on_attach = M.on_attach,
+              settings = servers[server_name],
+              filetypes = (servers[server_name] or {}).filetypes,
+            }
+          end,
+        }
+      end
+    end,
+  }
 }
 
 return M

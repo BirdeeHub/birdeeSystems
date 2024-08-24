@@ -17,6 +17,7 @@ require('lze').load {
   {
     "cmp-nvim-lsp",
     on_plugin = { "nvim-cmp" },
+    dep_of = { "nvim-lspconfig" },
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
@@ -46,6 +47,10 @@ require('lze').load {
   {
     "lspkind-nvim",
     dep_of = { "nvim-cmp" },
+  },
+  {
+    "clangd_extensions.nvim",
+    dep_of = { "nvim-lspconfig", "nvim-cmp" },
   },
   {
     "luasnip",

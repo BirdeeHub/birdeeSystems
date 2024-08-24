@@ -196,6 +196,31 @@ require('lze').load {
     end,
   },
   {
+    "vim-cmake",
+    ft = { "cmake" },
+    cmd = {
+      "CMakeGenerate",
+      "CMakeClean",
+      "CMakeBuild",
+      "CMakeInstall",
+      "CMakeRun",
+      "CMakeTest",
+      "CMakeSwitch",
+      "CMakeOpen",
+      "CMakeClose",
+      "CMakeToggle",
+      "CMakeCloseOverlay",
+      "CMakeStop",
+    },
+    after = function(plugin)
+      if nixCats('C') then
+        vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
+          { desc = 'Run CMake with compile_commands.json' })
+        vim.cmd [[let g:cmake_link_compile_commands = 1]]
+      end
+    end,
+  },
+  {
     "todo-comments.nvim",
     event = "DeferredUIEnter",
     after = function(plugin)
