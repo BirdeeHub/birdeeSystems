@@ -1,7 +1,8 @@
+local catUtils = require('nixCatsUtils')
 require('lze').load {
   "image.nvim",
   ft = { "norg", "markdown", --[[ "html", "css" ]] },
-  enabled = require('nixCatsUtils').enableForCategory('vimagePreview', false),
+  enabled = catUtils.enableForCategory('vimagePreview', false),
   -- cmd = { "" },
   -- event = "DeferredUIEnter",
   -- keys = "",

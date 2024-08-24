@@ -1,6 +1,7 @@
+local catUtils = require('nixCatsUtils')
 require('lze').load {
   "neorg",
-  enabled = require('nixCatsUtils').enableForCategory('notes', false),
+  enabled = catUtils.enableForCategory('notes', false),
   -- cmd = { "" },
   -- event = "",
   ft = "norg",

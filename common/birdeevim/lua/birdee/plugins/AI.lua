@@ -1,10 +1,33 @@
+local catUtils = require('nixCatsUtils')
 require('lze').load {
   "codeium.nvim",
-  enable = require('nixCatsUtils').enableForCategory('AI', false),
-  -- cmd = { "" },
-  event = "DeferredUIEnter",
+  enable = catUtils.enableForCategory('AI', false),
+  cmd = { "CodyToggle", "CodyAsk", },
+  event = "InsertEnter",
   -- ft = "",
-  -- keys = "",
+  keys = {
+    {
+      "<leader>cs",
+      function() require('sg.extensions.telescope').fuzzy_search_results() end,
+      mode = {"n"},
+      noremap = true,
+      desc = "cody search",
+    },
+    {
+      "<leader>cc",
+      [[<cmd>CodyToggle<CR>]],
+      mode = {"n"},
+      noremap = true,
+      desc = "CodyChat",
+    },
+    {
+      "<leader>cc",
+      [[:CodyAsk ]],
+      mode = {"v"},
+      noremap = true,
+      desc = "CodyAsk",
+    },
+  },
   -- colorscheme = "",
   load = function (name)
     require("birdee.utils").safe_packadd({
@@ -14,7 +37,7 @@ require('lze').load {
   end,
   after = function (plugin)
     local bitwardenAuth = nixCats('bitwardenItemIDs')
-    if not require('nixCatsUtils').isNixCats then bitwardenAuth = false end
+    if not catUtils.isNixCats then bitwardenAuth = false end
 
     -- TEMPORARY SO IT STOPS ASKING ME
     bitwardenAuth = nil
@@ -49,12 +72,6 @@ require('lze').load {
           -- end
       end
     end
-    require("sg").setup({
-      enable_cody = true,
-    })
-    vim.keymap.set('n', '<leader>cs', require('sg.extensions.telescope').fuzzy_search_results, { noremap = true, desc = 'cody search' })
-    vim.keymap.set('n', '<leader>cc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
-    vim.keymap.set('v', '<leader>cc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
 
     if vim.fn.filereadable(codeiumAuthFile) == 0 then
       local keyPath = vim.fn.expand("$HOME") .. "/.secrets/codeiumToken"
@@ -85,6 +102,10 @@ require('lze').load {
         end
       end
     end
+
+    require("sg").setup({
+      enable_cody = true,
+    })
 
     require("codeium").setup()
 

@@ -77,6 +77,7 @@ require('lze').load {
     "nvim-cmp",
     -- cmd = { "" },
     event = { "DeferredUIEnter" },
+    on_require = { "cmp" },
     -- ft = "",
     -- keys = "",
     dep_of = { "codeium.nvim" },

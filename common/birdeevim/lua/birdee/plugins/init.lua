@@ -1,5 +1,6 @@
+local catUtils = require('nixCatsUtils')
 local colorschemer = nixCats('colorscheme') -- also schemes lualine
-if not require('nixCatsUtils').isNixCats then
+if not catUtils.isNixCats then
   colorschemer = 'onedark'
 end
 if colorschemer == 'onedark' then
@@ -80,7 +81,7 @@ require('lze').load {
   },
   {
     "markdown-preview.nvim",
-    enabled = require('nixCatsUtils').enableForCategory('general.markdown'),
+    enabled = catUtils.enableForCategory('general.markdown'),
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     ft = "markdown",
     keys = {
@@ -137,7 +138,7 @@ require('lze').load {
   },
   {
     "lazydev.nvim",
-    enabled = require('nixCatsUtils').enableForCategory('neonixdev'),
+    enabled = catUtils.enableForCategory('neonixdev'),
     cmd = { "LazyDev" },
     ft = "lua",
     after = function(plugin)
@@ -153,7 +154,7 @@ require('lze').load {
   },
   {
     "otter.nvim",
-    enabled = require('nixCatsUtils').enableForCategory('otter'),
+    enabled = catUtils.enableForCategory('otter'),
     -- event = "DeferredUIEnter",
     on_require = { "otter" },
     -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
@@ -248,7 +249,7 @@ require('lze').load {
   },
   {
     "vim-startuptime",
-    enabled = require('nixCatsUtils').enableForCategory('general.other'),
+    enabled = catUtils.enableForCategory('general.other'),
     cmd = { "StartupTime" },
     before = function(_)
       vim.g.startuptime_exe_path = require("nixCatsUtils").packageBinPath
