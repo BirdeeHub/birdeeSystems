@@ -1,5 +1,7 @@
 -- NOTE: This code is from
 -- https://github.com/OXY2DEV/colors.nvim/tree/main/lua/colors
+-- or, well, it is, but I took the parts that actually do the color picking out of it,
+-- and made it be able to recieve multiple types of pickers to make a gradient out of.
 local utils = require("color_picker.utils")
 local M = {}
 function M.get()
