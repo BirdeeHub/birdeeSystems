@@ -206,19 +206,16 @@
             footy = pkgs.foot.override {
               wrapZSH = true;
               extraPATH = [
-                home-modules.birdeeVim.packages.${system}.portableVim
               ];
             };
             wezshterm = pkgs.wezterm.override {
               wrapZSH = true;
               extraPATH = [
-                home-modules.birdeeVim.packages.${system}.portableVim
               ];
             };
             alakitty = pkgs.alakazam.override {
               wrapZSH = true;
               extraPATH = [
-                home-modules.birdeeVim.packages.${system}.portableVim
               ];
             };
             inherit (pkgs) dep-tree minesweeper nops manix alakazam wezterm foot;
