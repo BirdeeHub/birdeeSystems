@@ -12,11 +12,15 @@ This neovim config is based on this template:
 
 You can run it with `nix shell github:BirdeeHub/birdeeSystems#noAInvim` and then typing `vi`, `vim`, or `noAInvim`.
 
+You can run one with just go, web, and nix stuff with `nix shell github:BirdeeHub/birdeeSystems#vigo` and then typing `vigo`.
+
 > [!NOTE]
 > Keep in mind downloading my config is going to download a lot of lsps and plugins.
-> You should use the noAI one because otherwise it would throw an error because you dont have my key and also it wont download bitwarden cli for you.
+> You should use the noAI or go one because otherwise it would throw an error because you dont have my key and also it wont download bitwarden cli for you.
 
-(completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`, you have been warned.)
+
+> [!WARNING]
+> (completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`, you have been warned.)
 
 ---
 
