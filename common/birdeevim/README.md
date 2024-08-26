@@ -41,4 +41,4 @@ Regardless of how it came to be, I like my new version a lot. It does a lot of t
 
 [`lze`](https://github.com/BirdeeHub/lze) is still pending review to be added to nixpkgs, but can already be downloaded from luarocks, added as a flake, or just downloaded and added to the rtp somehow.
 
-If you want to see what [`lze`](https://github.com/BirdeeHub/lze) looks like, most of the plugins are defined in [this directory](./lua/birdee/plugins)
+If you want to see what [`lze`](https://github.com/BirdeeHub/lze) looks like, most of my plugins are defined in [this directory](./lua/birdee/plugins)
