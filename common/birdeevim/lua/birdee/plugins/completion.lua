@@ -1,43 +1,7 @@
-require('lze').load {
-  {
-    "cmp-buffer",
-    on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
-  {
-    "cmp-cmdline",
-    on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
-  {
-    "cmp-cmdline-history",
-    on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
+require('lz.n').load {
   {
     "cmp-nvim-lsp",
-    on_plugin = { "nvim-cmp" },
     dep_of = { "nvim-lspconfig" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
-  {
-    "cmp-nvim-lsp-signature-help",
-    on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
-  {
-    "cmp-nvim-lua",
-    on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
-  {
-    "cmp-path",
-    on_plugin = { "nvim-cmp" },
-    load = require("birdee.utils").load_w_after_plugin,
-  },
-  {
-    "cmp_luasnip",
-    on_plugin = { "nvim-cmp" },
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
@@ -85,6 +49,16 @@ require('lze').load {
     after = function (plugin)
       -- [[ Configure nvim-cmp ]]
       -- See `:help cmp`
+      require('lz.n').trigger_load("cmp-nvim-lsp", "dep_of")
+      require("birdee.utils").load_w_after_plugin({
+        "cmp-buffer",
+        "cmp-cmdline",
+        "cmp-cmdline-history",
+        "cmp-nvim-lsp-signature-help",
+        "cmp-nvim-lua",
+        "cmp-path",
+        "cmp_luasnip",
+      })
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'

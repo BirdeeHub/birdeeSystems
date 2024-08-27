@@ -1,5 +1,5 @@
 local catUtils = require('nixCatsUtils')
-require('lze').load {
+require('lz.n').load {
   "neorg",
   enabled = catUtils.enableForCategory('notes', false),
   -- cmd = { "" },

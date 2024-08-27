@@ -1,5 +1,5 @@
 local catUtils = require('nixCatsUtils')
-require('lze').load {
+require('lz.n').load {
   "image.nvim",
   ft = { "norg", "markdown", --[[ "html", "css" ]] },
   enabled = catUtils.enableForCategory('vimagePreview', false),

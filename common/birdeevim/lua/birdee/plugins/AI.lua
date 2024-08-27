@@ -1,5 +1,5 @@
 local catUtils = require('nixCatsUtils')
-require('lze').load {
+require('lz.n').load {
   "codeium.nvim",
   enable = catUtils.enableForCategory('AI', false),
   cmd = { "CodyToggle", "CodyAsk", },

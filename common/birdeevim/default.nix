@@ -10,7 +10,7 @@
     (utils.sanitizedPluginOverlay inputs)
     # add any flake overlays here.
     inputs.neorg-overlay.overlays.default
-    inputs.lze.overlays.default
+    inputs.lz-n.overlays.default
     # inputs.neovim-nightly-overlay.overlays.default
     (utils.fixSystemizedOverlay inputs.codeium.overlays
       (system: inputs.codeium.overlays.${system}.default)
@@ -162,7 +162,7 @@
         "tokyonight-day" = tokyonight-nvim;
       };
       general = with pkgs.neovimPlugins; [
-        lze
+        lz-n
         large_file
         oil-nvim
         vim-repeat

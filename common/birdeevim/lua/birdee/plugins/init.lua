@@ -66,7 +66,7 @@ require('birdee.plugins.which-key')
 
 require('birdee.plugins.AI')
 
-require('lze').load {
+require('lz.n').load {
   {
     "color_picker",
     keys = {

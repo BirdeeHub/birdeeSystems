@@ -15,16 +15,11 @@ if ok then
       notify.dismiss({ silent = true, })
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
-vim.g.lze = {
+vim.g.lz_n = {
   load = require('birdee.utils').safe_packadd,
 }
-require('lze').register_handlers({
-  require("birdee.handlers.on_require"),
-  {
-    enabled = false,
-    handler = require("birdee.handlers.debug_handler").handler
-  },
-})
+require('lz.n').register_handler(require("birdee.handlers.on_require"))
+require('lz.n').register_handler(require("birdee.handlers.dep_of"))
 require("birdee.patcheduiopen")
 require("birdee.opts")
 require("birdee.keymaps")

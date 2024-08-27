@@ -42,9 +42,9 @@
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
-    lze = {
-      url = "github:BirdeeHub/lze";
-      # url = "git+file:/home/birdee/Projects/lze";
+    lz-n = {
+      # url = "git+file:/home/birdee/Projects/lz.n";
+      url = "github:nvim-neorocks/lz.n";
       inputs.nixpkgs.follows = "nixpkgsNV";
     };
     "plugins-hlargs" = {
