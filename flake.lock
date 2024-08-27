@@ -1223,17 +1223,17 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1724664645,
-        "narHash": "sha256-hg91qCMgmqUhTiS4Nz0EyDCZbIH84RubUa18PtJ4jUA=",
-        "owner": "BirdeeHub",
-        "repo": "lze",
-        "rev": "893f761a816eea64bd4dd1b5fafdfed51fae826d",
-        "type": "github"
+        "lastModified": 1724735239,
+        "narHash": "sha256-mC6Ye06AdnlMVfRPVrNSiI4hKIVs76oXv+xkWokJ21w=",
+        "ref": "refs/heads/somethingelse",
+        "rev": "a687789f951d2f85c025ea0293be251f853bc326",
+        "revCount": 2,
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lze"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "repo": "lze",
-        "type": "github"
+        "type": "git",
+        "url": "file:/home/birdee/Projects/lze"
       }
     },
     "manix": {
