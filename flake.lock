@@ -1242,16 +1242,17 @@
         "vimcats": "vimcats"
       },
       "locked": {
-        "dirtyRev": "8b6af27dc621060992ab2cd4610c7a8faa198aab-dirty",
-        "dirtyShortRev": "8b6af27-dirty",
         "lastModified": 1724701028,
-        "narHash": "sha256-qVADUordarqjS5E1XB/pDjShTIezdOFomy1LzdYMPmo=",
-        "type": "git",
-        "url": "file:/home/birdee/Projects/lz.n"
+        "narHash": "sha256-exntPYPvR0Zj7bztuipj7XeFRDtWLxHa0TMDGaNja90=",
+        "owner": "nvim-neorocks",
+        "repo": "lz.n",
+        "rev": "8b6af27dc621060992ab2cd4610c7a8faa198aab",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/lz.n"
+        "owner": "nvim-neorocks",
+        "repo": "lz.n",
+        "type": "github"
       }
     },
     "manix": {

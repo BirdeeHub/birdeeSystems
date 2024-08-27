@@ -10,9 +10,7 @@ local trigger_load = require("lz.n").trigger_load
 local M = {
     spec_field = "dep_of",
     lookup = function(name)
-        local res = pending[name]
-        pending[name] = nil
-        return res
+        return pending[name]
     end,
 }
 
@@ -52,13 +50,12 @@ function M.del(plugin)
     states[plugin] = false
     if to_run ~= nil and to_run ~= false then
         local final = vim.iter(to_run):map(function(name)
-            return pending[name]
+            local to_load = pending[name]
+            pending[name] = nil
+            return to_load
         end):filter(function (p)
             return p ~= nil
         end):totable()
-        print(plugin, vim.inspect(vim.iter(final):map(function (pl)
-            return pl.name
-        end):totable()))
         trigger_load(final, "dep_of")
     end
 end
