@@ -28,17 +28,6 @@ It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which is my 
 
 [`lze`](https://github.com/BirdeeHub/lze)'s plugin spec is a valid superset of the [`lz.n`](https://github.com/nvim-neorocks/lz.n) plugin spec.
 
-Meaning if you use [rocks-lazy.nvim](https://github.com/nvim-neorocks/rocks-lazy.nvim) you could do something like `package.loaded['lz.n'] = require('lze')`
-and it would work exactly as if it was lz.n because as of writing this, rocks-lazy simply translates stuff from the rocks toml file
-into the plugin spec.
+I will be transferring back to lz.n
 
-That being said there are things in this repo using [`lze`](https://github.com/BirdeeHub/lze) that would not be possible using [`lz.n`](https://github.com/nvim-neorocks/lz.n).
-And also lze does not officially support rocks-lazy.nvim either.
-
-[`lze`](https://github.com/BirdeeHub/lze) does not aim to be the same as [`lz.n`](https://github.com/nvim-neorocks/lz.n), and as such, a large portion of its codebase is different.
-
-Regardless of how it came to be, I like my new version a lot. It does a lot of things I feel it always should have done.
-
-[`lze`](https://github.com/BirdeeHub/lze) is still pending review to be added to nixpkgs, but can already be downloaded from luarocks, added as a flake, or just downloaded and added to the rtp somehow.
-
-If you want to see what [`lze`](https://github.com/BirdeeHub/lze) looks like, most of my plugins are defined in [this directory](./lua/birdee/plugins)
+Why? Because I was confidently incorrect.
