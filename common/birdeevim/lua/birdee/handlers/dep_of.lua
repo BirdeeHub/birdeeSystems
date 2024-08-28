@@ -48,16 +48,16 @@ end
 function M.del(plugin)
     local to_run = states[plugin]
     states[plugin] = false
-    if to_run ~= nil and to_run ~= false then
-        local final = vim.iter(to_run):map(function(name)
-            local to_load = pending[name]
-            pending[name] = nil
-            return to_load
-        end):filter(function (p)
-            return p ~= nil
-        end):totable()
-        trigger_load(final, "dep_of")
-    end
+    ---@param name string
+    vim.iter(to_run or {}):each(function(name)
+      -- NOTE: this handler might cause a pending plugin to be loaded
+      -- and removed from this handler while we're iterating.
+      -- So we have to check pending before each call to trigger_load
+      if pending[name] then
+        trigger_load(pending[name], "dep_of")
+        pending[name] = nil
+      end
+    end)
 end
 
 return M
