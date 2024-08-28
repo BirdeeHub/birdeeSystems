@@ -43,9 +43,9 @@
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     plugins-lze = {
+      url = "github:BirdeeHub/lze";
       # url = "git+file:/home/birdee/Projects/lze";
       flake = false;
-      url = "github:BirdeeHub/lze";
       # inputs.nixpkgs.follows = "nixpkgsNV";
     };
     "plugins-hlargs" = {
