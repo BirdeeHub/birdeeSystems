@@ -33,9 +33,9 @@ end
 ---@type lze.Handler
 local M = {
   spec_field = "on_require",
-  ---@param plugin lze.Plugin
-  before = function (plugin)
-    states[plugin.name] = nil
+  ---@param name string
+  before = function (name)
+    states[name] = nil
   end,
 }
 

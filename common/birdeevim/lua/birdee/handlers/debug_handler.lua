@@ -11,19 +11,11 @@ local M = {
   handler = {
     -- throwaway field because it is required
     spec_field = "debug_handler_field",
-    ---@param plugin lze.Pluginext
-    before = function (plugin)
-      if not states[plugin.name] then
-        states[plugin.name] = plugin
-      end
-      states[plugin.name].before_loaded = true
+    before = function (name)
+      states[name].before_loaded = true
     end,
-    ---@param plugin lze.Pluginext
-    after = function (plugin)
-      if not states[plugin.name] then
-        states[plugin.name] = plugin
-      end
-      states[plugin.name].after_loaded = true
+    after = function (name)
+      states[name].after_loaded = true
     end,
     ---@param plugin lze.Pluginext
     add = function(plugin)
