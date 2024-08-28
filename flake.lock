@@ -1225,15 +1225,15 @@
       "locked": {
         "lastModified": 1724735239,
         "narHash": "sha256-mC6Ye06AdnlMVfRPVrNSiI4hKIVs76oXv+xkWokJ21w=",
-        "ref": "refs/heads/somethingelse",
+        "owner": "BirdeeHub",
+        "repo": "lze",
         "rev": "a687789f951d2f85c025ea0293be251f853bc326",
-        "revCount": 2,
-        "type": "git",
-        "url": "file:/home/birdee/Projects/lze"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/lze"
+        "owner": "BirdeeHub",
+        "repo": "lze",
+        "type": "github"
       }
     },
     "manix": {
