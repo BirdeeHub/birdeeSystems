@@ -62,28 +62,31 @@ in {
     package = pkgs.virtualbox;
     # users.extraGroups.vboxusers.members = [ "birdee" ];
   };
+  # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #Nouveau doesn't work at all on this model.
-  boot.kernelParams = [ "nouveau.modeset=0" /* "nvidia-drm.modeset=1" */ ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.extraPackages = with pkgs; [
-    vaapiVdpau
-  ];
   services.asusd.enable = true;
   services.asusd.enableUserService = true;
 
-  hardware.nvidia.modesetting.enable = true;
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
-  hardware.nvidia.prime = {
-    sync.enable = true;
-    nvidiaBusId = "PCI:01:00:0";   # Found with lspci | grep VGA
-    intelBusId = "PCI:00:02:0";   # Found with lspci | grep VGA
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  #Nouveau doesn't work at all on this model.
+  boot.kernelParams = [ "nouveau.modeset=0" /* "nvidia-drm.modeset=1" */ ];
+  boot.blacklistedKernelModules = [ "nouveau"];
+
+  nixpkgs.config.nvidia.acceptLicense = true;
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
+    prime = {
+      sync.enable = true;
+      nvidiaBusId = "PCI:01:00:0";   # Found with lspci | grep VGA
+      intelBusId = "PCI:00:02:0";   # Found with lspci | grep VGA
+    };
   };
+
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
 
   # Enable OpenGL
   hardware.graphics = {
@@ -91,8 +94,9 @@ in {
     # driSupport = true;
     enable32Bit = true;
     # setLdLibraryPath = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+    ];
   };
-  boot.blacklistedKernelModules = [ "nouveau"];
 
-  # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 }
