@@ -20,14 +20,6 @@ local function call(mod_path)
   return false
 end
 
--- this is probably the most naive way to check if this is a submodule or not
-local function starts_with(str, prefix)
-  if str == nil or prefix == nil then
-    return false
-  end
-  return string.sub(str, 1, string.len(prefix)) == prefix
-end
-
 -- NOTE: the handler for lze
 
 ---@type lze.Handler
@@ -60,7 +52,7 @@ function M.add(plugin)
   ---@return string|nil
   states[plugin.name] = function(mod_path)
     for _, v in ipairs(mod_paths) do
-      if starts_with(mod_path, v) then
+      if vim.startswith(mod_path, v) then
         return plugin.name
       end
     end

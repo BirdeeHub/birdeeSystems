@@ -230,14 +230,4 @@ end
 ---@type fun(names: string[]|string)
 M.load_w_after_plugin = M.get_new_packadd_func({ "plugin" })
 
----@param str any
----@param prefix any
----@return boolean
-function M.starts_with(str, prefix)
-  if str == nil or prefix == nil then
-    return false
-  end
-  return string.sub(str, 1, string.len(prefix)) == prefix
-end
-
 return M
