@@ -48,15 +48,11 @@ end
 function M.del(plugin)
     local to_run = states[plugin]
     states[plugin] = false
-    if to_run ~= nil and to_run ~= false then
-        local final = vim.iter(to_run):map(function(name)
-            local to_load = pending[name]
-            pending[name] = nil
-            return to_load
-        end):filter(function (p)
-            return p ~= nil
-        end):totable()
-        trigger_load(final, "dep_of")
+    for _, name in ipairs(to_run or {}) do
+      if pending[name] then
+        trigger_load(pending[name])
+        pending[name] = nil
+      end
     end
 end
 
