@@ -1,4 +1,4 @@
-require('lze').load {
+return {
   {
     "nvim-neoclip.lua",
     cmd = { "Telescope" },

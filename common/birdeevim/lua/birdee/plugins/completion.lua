@@ -1,4 +1,4 @@
-require('lze').load {
+return {
   {
     "cmp-buffer",
     on_plugin = { "nvim-cmp" },

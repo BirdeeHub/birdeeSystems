@@ -40,33 +40,53 @@ vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search(
 
 require('birdee.plugins.oil')
 
--- NOTE: all plugins beyond this point are lazily loaded.
+-- NOTE: everything else is lazily loaded
 
-require('birdee.plugins.telescope')
+-- decided to actually make use of the import feature of lze
+-- which does not automatically include the entire directory.
+-- because otherwise you could not choose the order
+-- of startup programs without using priority,
+-- or have files that are not imported within the directory
 
-require('birdee.plugins.nestsitter')
-
-require('birdee.plugins.completion')
-
-require('birdee.plugins.grapple')
-
-require('birdee.plugins.lualine')
-
-require('birdee.plugins.git')
-
-require('birdee.plugins.gutter')
-
-require('birdee.plugins.clipboard')
-
-require('birdee.plugins.image')
-
-require('birdee.plugins.notes')
-
-require('birdee.plugins.which-key')
-
-require('birdee.plugins.AI')
+-- personally though I don't use lze to load startup plugins because... why...
 
 require('lze').load {
+  {
+    import = "birdee.plugins.telescope",
+  },
+  {
+    import = "birdee.plugins.nestsitter",
+  },
+  {
+    import = "birdee.plugins.completion",
+  },
+  {
+    import = "birdee.plugins.grapple",
+  },
+  {
+    import = "birdee.plugins.lualine",
+  },
+  {
+    import = "birdee.plugins.git",
+  },
+  {
+    import = "birdee.plugins.gutter",
+  },
+  {
+    import = "birdee.plugins.clipboard",
+  },
+  {
+    import = "birdee.plugins.image",
+  },
+  {
+    import = "birdee.plugins.notes",
+  },
+  {
+    import = "birdee.plugins.which-key",
+  },
+  {
+    import = "birdee.plugins.AI",
+  },
   {
     "color_picker",
     keys = {
