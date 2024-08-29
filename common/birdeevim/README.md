@@ -32,6 +32,6 @@ It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which has a 
 
 - Does it work completely differently from lz.n despite having more or less
 the same spec fields?
-  - Yes, although it shares some handler code.
+  - Yes, although it shares some handler code where they parse their field from the spec.
 
 - Has it been released yet? No, although it might be eventually.
