@@ -8,7 +8,6 @@ local called = {}
 local M = {
     spec_field = "dep_of",
     lookup = states.lookup_plugin
-,
 }
 
 ---@param plugin lz.n.Plugin
@@ -41,8 +40,8 @@ function M.del(pname)
     if states.has_pending_plugins(pname) then
         states.each_pending(pname,
             function (p)
-                trigger_load(p)
                 states.del(p.name)
+                trigger_load(p)
             end
         )
     end
