@@ -1,17 +1,14 @@
----@type table<string, string[]|false>
-local states = {}
----@type table<string, lz.n.Plugin[]>
-local pending = {}
-
 local trigger_load = require("lz.n").trigger_load
+local states = require("lz.n.handler.state").new()
+---@type table<string, true>
+local called = {}
 
 ---@type lz.n.Handler
 ---@diagnostic disable-next-line: missing-fields
 local M = {
     spec_field = "dep_of",
-    lookup = function(name)
-        return pending[name]
-    end,
+    lookup = states.lookup_plugin
+,
 }
 
 ---@param plugin lz.n.Plugin
@@ -29,34 +26,51 @@ function M.add(plugin)
         return
     end
     for _, name in ipairs(needed_by) do
-        if states[name] == false then
+        if called[name] == true then
             trigger_load(plugin)
-            pending[plugin.name] = nil
             return
         end
     end
     for _, name in ipairs(needed_by) do
-        if states[name] == nil then
-            states[name] = {}
-        end
-        vim.list_extend(states[name], { plugin.name })
+        states.insert(name, plugin)
     end
-    pending[plugin.name] = plugin
 end
 
----@param plugin lz.n.Plugin
-function M.del(plugin)
-    local to_run = states[plugin]
-    states[plugin] = false
-    for _, name in ipairs(to_run or {}) do
-      if pending[name] then
-        trigger_load(pending[name])
-        pending[name] = nil
-      end
+---@param pname string
+function M.del(pname)
+    if states.has_pending_plugins(pname) then
+        states.each_pending(pname,
+            function (p)
+                trigger_load(p)
+                states.del(p.name)
+            end
+        )
     end
 end
 
 return M
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---@mod lz.n.types lz.n type definitions
 

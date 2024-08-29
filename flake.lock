@@ -1242,11 +1242,11 @@
         "vimcats": "vimcats"
       },
       "locked": {
-        "lastModified": 1724839282,
-        "narHash": "sha256-bRoQKVJggI1GibDweQQ29KS3hyFuQrcXiOXCqfapXVE=",
+        "lastModified": 1724873809,
+        "narHash": "sha256-7U70H1ru+8J1M8bLo0OeFj7pUab49C4T3Wb/mTM3fF4=",
         "owner": "nvim-neorocks",
         "repo": "lz.n",
-        "rev": "3a42bc96e8a7270b67143d57bf943a52c0e6af8e",
+        "rev": "5c0aa4cb5fb49bcf2a1ae5b8917cb8f2ac77ca31",
         "type": "github"
       },
       "original": {
