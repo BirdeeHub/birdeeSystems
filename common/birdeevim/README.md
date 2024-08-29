@@ -26,7 +26,10 @@ You can run one with just go, web, and nix stuff with `nix shell github:BirdeeHu
 
 It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which has a very similar plugin spec to [`lz.n`](https://github.com/nvim-neorocks/lz.n).
 
-Is it better than lz.n? No not really.
+- Is it better than lz.n? No not really.
 
-Is it different from lz.n despite having more or less
-the same spec fields? Yes.
+- Is it faster? No its basically the same.
+
+- Does it work completely differently from lz.n despite having more or less
+the same spec fields?
+  - Yes, although it shares some handler code.
