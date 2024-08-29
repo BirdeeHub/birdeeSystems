@@ -4,8 +4,8 @@
 ---@class lz.n.ReqPlugin: lz.n.Plugin
 ---@field on_require string[]
 
----@type table<string, lz.n.ReqPlugin>
-local pending = {}
+---@type lz.n.handler.State
+local state = require("lz.n.handler.state").new()
 
 ---@type lz.n.Handler
 local M = {
@@ -15,15 +15,10 @@ local M = {
         if not plugin.on_require then
             return
         end
-        pending[plugin.name] = plugin
+        state.insert(plugin)
     end,
-    ---@param name string
-    del = function(name)
-        pending[name] = nil
-    end,
-    lookup = function(name)
-        return pending[name]
-    end,
+    del = state.del,
+    lookup = state.lookup_plugin,
 }
 
 local trigger_load = require("lz.n").trigger_load
@@ -32,35 +27,27 @@ local trigger_load = require("lz.n").trigger_load
 ---@param mod_path string
 ---@return boolean
 local function call(mod_path)
-    ---@type lz.n.ReqPlugin[]
-    local plugins = vim.iter(pending):fold(
-        {},
-        ---@param acc lz.n.ReqPlugin[]
-        ---@param plugin lz.n.ReqPlugin
-        function(acc, _, plugin)
-            local on_req = plugin.on_require
-            ---@type string[]
-            local mod_paths = {}
-            if type(on_req) == "table" then
-                ---@cast on_req string[]
-                mod_paths = on_req
-            elseif type(on_req) == "string" then
-                mod_paths = { on_req }
-            end
-            local has_mod = vim.iter(mod_paths):any(function(path)
-                return vim.startswith(mod_path, path)
-            end)
-            if has_mod then
-                table.insert(acc, plugin)
-            end
-            return acc
+    local triggered_load = false
+    ---@param plugin lz.n.ReqPlugin
+    state.each_pending(function(plugin)
+        local on_req = plugin.on_require
+        ---@type string[]
+        local mod_paths = {}
+        if type(on_req) == "table" then
+            ---@cast on_req string[]
+            mod_paths = on_req
+        elseif type(on_req) == "string" then
+            mod_paths = { on_req }
         end
-    )
-    if not vim.tbl_isempty(plugins) then
-        trigger_load(plugins)
-        return true
-    end
-    return false
+        local has_mod = vim.iter(mod_paths):any(function(path)
+            return vim.startswith(mod_path, path)
+        end)
+        if has_mod then
+            trigger_load(plugin)
+            triggered_load = true
+        end
+    end)
+    return triggered_load
 end
 
 --- Override `require` to search for plugins to lazy-load.
