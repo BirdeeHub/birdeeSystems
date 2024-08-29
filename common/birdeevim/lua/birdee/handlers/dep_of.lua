@@ -37,6 +37,7 @@ end
 
 ---@param pname string
 function M.del(pname)
+    states.del(pname)
     if states.has_pending_plugins(pname) then
         states.each_pending(pname,
             function (p)
