@@ -24,10 +24,8 @@ You can run one with just go, web, and nix stuff with `nix shell github:BirdeeHu
 
 ---
 
-It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which is my fork of [`lz.n`](https://github.com/nvim-neorocks/lz.n).
+It uses [`lze`](https://github.com/BirdeeHub/lze) which has a very similar plugin spec to [`lz.n`](https://github.com/nvim-neorocks/lz.n).
 
-[`lze`](https://github.com/BirdeeHub/lze)'s plugin spec is a valid superset of the [`lz.n`](https://github.com/nvim-neorocks/lz.n) plugin spec.
+I will be transferring back to lz.n (I think)
 
-I will be transferring back to lz.n
-
-Why? Because I was confidently incorrect.
+Why? Because I was confidently incorrect (I think)
