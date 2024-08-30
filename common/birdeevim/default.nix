@@ -177,6 +177,12 @@
       other = [
         nvim-spectre
       ];
+      lua = [
+        luvit-meta
+      ];
+      neonixdev = [
+        luvit-meta
+      ];
     };
 
     optionalPlugins = with pkgs.vimPlugins; {
