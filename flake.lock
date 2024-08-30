@@ -1057,16 +1057,17 @@
     "nixCats": {
       "locked": {
         "dir": "nix",
-        "lastModified": 1724719822,
-        "narHash": "sha256-6uR7kkpEjofLz0v+ftt5GJ+EUldQV7vszu2gZo9bYN0=",
+        "lastModified": 1725014961,
+        "narHash": "sha256-uFcBFQYt3rtQj5y3sHKflcJbcyKFg+1+8SRpgUG7hPY=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "d65f8f697f64aeeeac9424a8d8c2fc14de2c34d8",
+        "rev": "48d2cb1e33266ed44cad9bb0f7992a8c80a9db8a",
         "type": "github"
       },
       "original": {
         "dir": "nix",
         "owner": "BirdeeHub",
+        "ref": "deprecations",
         "repo": "nixCats-nvim",
         "type": "github"
       }
