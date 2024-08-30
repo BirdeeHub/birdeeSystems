@@ -3,7 +3,9 @@ require('lze').load {
   -- cmd = { "" },
   -- event = "",
   -- ft = "",
-  keys = "<leader>FF",
+  keys = {
+    { "<leader>FF", desc = "[F]ormat [F]ile" },
+  },
   -- colorscheme = "",
   after = function (plugin)
     local conform = require("conform")

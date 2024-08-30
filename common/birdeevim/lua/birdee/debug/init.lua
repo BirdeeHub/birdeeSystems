@@ -3,7 +3,15 @@ require('lze').load {
   -- cmd = { "" },
   -- event = "",
   -- ft = "",
-  keys = { "<F5>", "<F1>", "<F2>", "<F3>", "<leader>b", "<leader>B", "<F7>" },
+  keys = {
+    { "<F5>", desc = "Debug: Start/Continue" },
+    { "<F1>", desc = "Debug: Step Into" },
+    { "<F2>", desc = "Debug: Step Over" },
+    { "<F3>", desc = "Debug: Step Out" },
+    { "<leader>b", desc = "Debug: Toggle Breakpoint" },
+    { "<leader>B", desc = "Debug: Set Breakpoint" },
+    { "<F7>", desc = "Debug: See last session result." },
+  },
   -- colorscheme = "",
   load = function (name)
     require("birdee.utils").safe_packadd({
