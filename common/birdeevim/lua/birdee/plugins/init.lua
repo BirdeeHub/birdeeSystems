@@ -1,7 +1,6 @@
-local isNixCats, cats = pcall(require, 'nixCats')
 local catUtils = require('nixCatsUtils')
 local colorschemer = nixCats('colorscheme') -- also schemes lualine
-if not isNixCats then
+if not catUtils.isNixCats then
   colorschemer = 'onedark'
 end
 if colorschemer == 'onedark' then
@@ -167,7 +166,7 @@ require('lze').load {
         library = {
           -- See the configuration section for more details
           -- Load luvit types when the `vim.uv` word is found
-          { words = { "vim%.uv" }, path = isNixCats and cats.pawsible.allPlugins.start["luvit-meta"] .. "/library" or "luvit-meta/library" },
+          { words = { "vim%.uv" }, path = (require('nixCats').pawsible.allPlugins.start["luvit-meta"] or "luvit-meta") .. "/library" },
           { words = { "nixCats" }, path = require('nixCats').nixCatsPath .. '/lua' },
         },
       })
