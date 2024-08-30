@@ -1673,11 +1673,11 @@
     "plugins-lze": {
       "flake": false,
       "locked": {
-        "lastModified": 1724969660,
-        "narHash": "sha256-A0lDUmdyOgOkOGQHxk4AbUr2qy8JIOea2N3onKBFTzc=",
+        "lastModified": 1724978728,
+        "narHash": "sha256-GgXBiUXwGYwAUPrOp03SimN8sHGHayPRJZccfkO56pA=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "1f26e532900a66c412a8774c490d8e73d5094490",
+        "rev": "1503d3b6eb656f05db816f37dfca3e36b49942aa",
         "type": "github"
       },
       "original": {
