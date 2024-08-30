@@ -1,7 +1,7 @@
 ---@class lze.Pluginext: lze.Plugin
 ---@field after_loaded? boolean
 ---@field before_loaded? boolean
----@field pre_loaded? boolean
+---@field at_startup? boolean
 
 ---@type table<string, lze.Pluginext>
 local states = {}
@@ -21,9 +21,9 @@ local M = {
     add = function(plugin)
       states[plugin.name] = plugin
       if plugin.lazy then
-        states[plugin.name].pre_loaded = false
+        states[plugin.name].at_startup = false
       else
-        states[plugin.name].pre_loaded = true
+        states[plugin.name].at_startup = true
       end
     end,
   },
