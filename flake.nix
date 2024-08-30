@@ -31,8 +31,7 @@
     minesweeper.inputs.nixpkgs.follows = "nixpkgsNV";
 
     # neovim
-    # nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
-    nixCats.url = "github:BirdeeHub/nixCats-nvim/deprecations?dir=nix";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
     # nixCats.url = "git+file:/home/birdee/Projects/nixCats-nvim?dir=nix";
     # neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
     neovim-nightly-overlay = {
