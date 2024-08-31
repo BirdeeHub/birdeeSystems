@@ -18,13 +18,13 @@ end
 vim.g.lze = {
   load = require('birdee.utils').safe_packadd,
 }
-require('lze').register_handlers({
-  require("birdee.handlers.on_require"),
+require("lze").register_handlers(require('lze.x'))
+require('lze').register_handlers(
   {
     enabled = false,
     handler = require("birdee.handlers.debug_handler").handler
-  },
-})
+  }
+)
 require("birdee.patcheduiopen")
 require("birdee.opts")
 require("birdee.keymaps")
