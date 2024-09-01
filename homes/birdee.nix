@@ -89,7 +89,6 @@ in {
   };
 
   nix.settings = {
-    access-tokens = "!include ~/.secrets/gitoke";
     # bash-prompt-prefix = "✓";
     # substituters = [
     #   "https://nix-community.cachix.org"
@@ -98,6 +97,9 @@ in {
     #   "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     # ];
   };
+  nix.extraOptions = ''
+    !include /home/birdee/.secrets/gitoke
+  '';
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgsNV;

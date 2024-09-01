@@ -97,7 +97,7 @@
         ];
         JS = with nodePackages; [
           typescript-language-server
-          eslint
+          # eslint
           prettier
         ];
       };
@@ -174,6 +174,7 @@
         plenary-nvim
         mini-nvim
       ];
+      treesitter = builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
       other = [
         nvim-spectre
       ];
@@ -265,15 +266,6 @@
           telescope-nvim
           telescope-fzf-native-nvim
           telescope-ui-select-nvim
-          # treesitter
-          nvim-treesitter-textobjects
-          nvim-treesitter.withAllGrammars
-          # (nvim-treesitter.withPlugins (
-          #   plugins: with plugins; [
-          #     nix
-          #     lua
-          #   ]
-          # ))
           nvim-lspconfig
           lualine-lsp-progress
           lualine-nvim
@@ -296,6 +288,10 @@
         eyeliner-nvim
         todo-comments-nvim
         vim-startuptime
+      ];
+      treesitter = with pkgs.vimPlugins; [
+        nvim-treesitter-textobjects
+        nvim-treesitter
       ];
     };
 
@@ -372,7 +368,18 @@
     # nvimSRC = inputs.neovim-src;
     # neovim-unwrapped = pkgs.internalvim.nvim;
     neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
+    #   preConfigure = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
+    #     substituteInPlace src/nvim/CMakeLists.txt --replace "    util" ""
+    #   '';
+    #   treesitter-parsers = {};
+    # });
+    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim.overrideAttrs (prev: {
+    #   preConfigure = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
+    #     substituteInPlace src/nvim/CMakeLists.txt --replace "    util" ""
+    #   '';
+    #   treesitter-parsers = {};
+    # });
   };
   birdeevim_categories = { pkgs, ... }@misc: {
     inherit bitwardenItemIDs;
@@ -389,6 +396,8 @@
     general = true;
     otter = true;
     bash = true;
+    notes = true;
+    treesitter = true;
     neonixdev = true;
     java = true;
     javaExtras = extraJavaItems pkgs;
@@ -436,6 +445,7 @@
         debug = true;
         customPlugins = true;
         general = true;
+        treesitter = true;
         otter = true;
         nix = true;
         nixdExtras = extraNixdItems pkgs;
@@ -473,6 +483,7 @@
         other = true;
         general = true;
         neonixdev = true;
+        treesitter = true;
         nixdExtras = extraNixdItems pkgs;
         vimagePreview = true;
         AI = true;
