@@ -51,42 +51,18 @@ require('birdee.plugins.oil')
 -- personally though I don't use lze to load startup plugins because... why...
 
 require('lze').load {
-  {
-    import = "birdee.plugins.telescope",
-  },
-  {
-    import = "birdee.plugins.nestsitter",
-  },
-  {
-    import = "birdee.plugins.completion",
-  },
-  {
-    import = "birdee.plugins.grapple",
-  },
-  {
-    import = "birdee.plugins.lualine",
-  },
-  {
-    import = "birdee.plugins.git",
-  },
-  {
-    import = "birdee.plugins.gutter",
-  },
-  {
-    import = "birdee.plugins.clipboard",
-  },
-  {
-    import = "birdee.plugins.image",
-  },
-  {
-    import = "birdee.plugins.notes",
-  },
-  {
-    import = "birdee.plugins.which-key",
-  },
-  {
-    import = "birdee.plugins.AI",
-  },
+  { import = "birdee.plugins.telescope", },
+  { import = "birdee.plugins.nestsitter", },
+  { import = "birdee.plugins.completion", },
+  { import = "birdee.plugins.grapple", },
+  { import = "birdee.plugins.lualine", },
+  { import = "birdee.plugins.git", },
+  { import = "birdee.plugins.gutter", },
+  { import = "birdee.plugins.clipboard", },
+  { import = "birdee.plugins.image", },
+  { import = "birdee.plugins.notes", },
+  { import = "birdee.plugins.which-key", },
+  { import = "birdee.plugins.AI", },
   {
     "color_picker",
     keys = {
