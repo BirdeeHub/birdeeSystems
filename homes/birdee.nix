@@ -168,6 +168,7 @@ in {
     metasploit
     bettercap
     openvpn
+    openconnect
     snort
     ghidra
 

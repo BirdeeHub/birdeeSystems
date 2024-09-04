@@ -10,7 +10,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgsNV.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
     nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixpkgsNV.url = "github:PerchunPak/nixpkgs/fix-treesitter-duplicate-grammar";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
