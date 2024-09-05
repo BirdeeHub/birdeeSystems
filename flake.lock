@@ -1130,6 +1130,22 @@
         "type": "github"
       }
     },
+    "harper-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1725487461,
+        "narHash": "sha256-sjaQMECQbEA145BkNvc1DFEOt+FqlQt9FDCxmugjabc=",
+        "owner": "elijah-potter",
+        "repo": "harper",
+        "rev": "ccf14d1535c2f1450b42027afac2a8446f98e11d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elijah-potter",
+        "repo": "harper",
+        "type": "github"
+      }
+    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": "flake-parts_6",
@@ -2544,6 +2560,7 @@
         "disko": "disko",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils_4",
+        "harper-src": "harper-src",
         "home-manager": "home-manager",
         "lze": "lze",
         "manix": "manix",

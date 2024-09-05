@@ -17,6 +17,7 @@ inputs: let
 
     locked = import ./locked.nix;
     # internalvim = import ./build;
+    harper = import ./harper.nix;
 
   };
 in

@@ -146,6 +146,9 @@ end
 
 if nixCats('general.markdown') then
   servers.marksman = {}
+  servers.harper_ls = {
+    ["harper-ls"] = {},
+  }
 end
 
 if nixCats('web.templ') then

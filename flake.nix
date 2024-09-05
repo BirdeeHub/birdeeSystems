@@ -49,6 +49,10 @@
       inputs.nixpkgs.follows = "nixpkgsNV";
       # flake = false;
     };
+    harper-src = {
+      url = "github:elijah-potter/harper";
+      flake = false;
+    };
     "plugins-hlargs" = {
       url = "github:m-demare/hlargs.nvim";
       flake = false;

@@ -54,6 +54,7 @@
         markdown = [
           marksman
           python311Packages.pylatexenc
+          harper
         ];
       };
       bitwarden = [
