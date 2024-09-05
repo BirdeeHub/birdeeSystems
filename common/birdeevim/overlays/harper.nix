@@ -10,7 +10,7 @@ importName: inputs: let
     cargoHash = "sha256-HUiL5fSjn1wAeGzfOEFb7TprKEm9RuBS6qbj7AUp0Q8=";
 
     meta = {
-      description = "Fast line-oriented regex search tool, similar to ag and ack";
+      description = "The Grammar Checker for Developers";
       homepage = "https://github.com/elijah-potter/harper";
       license = pkgs.lib.licenses.asl20;
       maintainers = [ ];
