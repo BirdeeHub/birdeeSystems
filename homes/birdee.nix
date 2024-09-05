@@ -186,8 +186,9 @@ in {
     qbittorrent
     galculator
     gparted
-    ntfs3g
     exfatprogs
+    exfat
+    ntfs3g
     lm_sensors
     psensor
     btop
