@@ -56,13 +56,25 @@ in {
     mesa
   ];
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-    package = pkgs.virtualbox;
-    # users.extraGroups.vboxusers.members = [ "birdee" ];
-  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  #   package = pkgs.virtualbox;
+  #   # users.extraGroups.vboxusers.members = [ "birdee" ];
+  # };
   # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
+
+  virtualisation.vmware.host.enable = true;
+  virtualisation.vmware.host.package = pkgs.vmware-workstation.override (prev: let
+    new_pkgs = import inputs.nixpkgsLocked {
+      inherit (pkgs) system overlays config;
+    };
+  in { gdbm = new_pkgs.gdbm; });
+  # virtualisation.vmware.host.extraConfig = ''
+  #   # Allow unsupported device's OpenGL and Vulkan acceleration for guest vGPU
+  #   mks.gl.allowUnsupportedDrivers = "TRUE"
+  #   mks.vk.allowUnsupportedDevices = "TRUE"
+  # '';
 
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
