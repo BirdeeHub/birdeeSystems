@@ -61,7 +61,6 @@
         bitwarden-cli
       ];
       AI = with inputs; [
-        codeium.packages.${system}.codeium-lsp
         sg-nvim.packages.${system}.default
       ];
       java = [
@@ -353,6 +352,18 @@
     systemCFGname = "birdee@nestOS";
     homeCFGname = "birdee@nestOS";
   };
+  AIextras = pkgs: {
+    # NOTE: codeium table gets deep extended into codeium settings.
+    codeium = {
+      tools = {
+        uname = "${pkgs.coreutils}/bin/uname";
+        uuidgen = "${pkgs.util-linux}/bin/uuidgen";
+        curl = "${pkgs.curl}/bin/curl";
+        gzip = "${pkgs.gzip}/bin/gzip";
+        language_server = "${inputs.codeium.packages.${pkgs.system}.codeium-lsp}/bin/codeium-lsp";
+      };
+    };
+  };
 
   birdeevim_settings = { pkgs, ... }@misc: {
     # so that it finds my ai auths in ~/.cache/birdeevim
@@ -386,6 +397,7 @@
     inherit bitwardenItemIDs;
     bitwarden = true;
     AI = true;
+    AIextras = AIextras pkgs;
     vimagePreview = true;
     lspDebugMode = false;
     generalBuildInputs = true;
@@ -488,6 +500,7 @@
         nixdExtras = extraNixdItems pkgs;
         vimagePreview = true;
         AI = true;
+        AIextras = AIextras pkgs;
         lspDebugMode = false;
         theme = true;
         colorscheme = "tokyonight";
