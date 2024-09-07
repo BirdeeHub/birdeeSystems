@@ -148,6 +148,7 @@ if nixCats('general.markdown') then
   servers.marksman = {}
   servers.harper_ls = {
     ["harper-ls"] = {},
+    filetypes = { "markdown", "norg" },
   }
 end
 
