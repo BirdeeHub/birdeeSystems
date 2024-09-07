@@ -15,7 +15,9 @@ rec {
     birdee = {
       extraConfig = {
         core = {
+          autoSetupRemote = "true";
           fsmonitor = "true";
+          # pager = "${pkgs.delta}";
         };
       };
       userName = "BirdeeHub";

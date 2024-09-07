@@ -187,7 +187,6 @@ in {
     galculator
     gparted
     exfatprogs
-    exfat
     ntfs3g
     lm_sensors
     psensor
