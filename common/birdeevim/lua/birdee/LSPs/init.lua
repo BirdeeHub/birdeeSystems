@@ -168,11 +168,6 @@ if nixCats('web.JS') then
       "typescriptreact",
       "typescript.tsx",
     },
-    -- init_options = {
-    --   tsserver = {
-    --     path = nixCats('tsserver') .. "/lib/node_modules/typescript/lib",
-    --   }
-    -- }
   }
 end
 if nixCats('web.HTMX') then
