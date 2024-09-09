@@ -57,11 +57,8 @@
           harper
         ];
       };
-      bitwarden = [
+      AI = [
         bitwarden-cli
-      ];
-      AI = with inputs; [
-        sg-nvim.packages.${system}.default
       ];
       java = [
         jdt-language-server
@@ -220,7 +217,6 @@
       ];
       AI = [
         codeium-nvim
-        inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
       ];
       debug = [
         nvim-dap
@@ -333,13 +329,6 @@
     };
   };
 
-  # just to select the right thing out of bitwarden. 
-  # Don't get excited its just a UUID
-  # Also they arent valid anymore
-  bitwardenItemIDs = {
-    codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
-    cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
-  };
   extraJavaItems = pkgs: {
     java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
     java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
@@ -353,6 +342,7 @@
     homeCFGname = "birdee@nestOS";
   };
   AIextras = pkgs: {
+    codeium_bitwarden_uuid = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
     # NOTE: codeium table gets deep extended into codeium settings.
     codeium = {
       tools = {
@@ -394,8 +384,6 @@
     # });
   };
   birdeevim_categories = { pkgs, ... }@misc: {
-    inherit bitwardenItemIDs;
-    bitwarden = true;
     AI = true;
     AIextras = AIextras pkgs;
     vimagePreview = true;
@@ -475,8 +463,6 @@
       };
       categories = birdeevim_categories misc // {
         AI = false;
-        bitwardenItemIDs = false;
-        bitwarden = false;
       };
     };
     notesVim = { pkgs, ... }@misc: {
@@ -487,10 +473,8 @@
         aliases = [ "note" ];
       };
       categories = {
-        inherit bitwardenItemIDs;
         notes = true;
         otter = true;
-        bitwarden = true;
         generalBuildInputs = true;
         customPlugins = true;
         other = true;
@@ -515,8 +499,6 @@
         portableExtras = true;
         notes = true;
         AI = false;
-        bitwardenItemIDs = false;
-        bitwarden = false;
       };
     };
     minimalVim = { pkgs, ... }@misc: {

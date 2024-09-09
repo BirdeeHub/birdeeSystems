@@ -39,9 +39,9 @@ in {
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
+    i3MonMemory.enable = true;
     alacritty.enable = true;
     lightdm.enable = true;
-    i3MonMemory.enable = true;
     LD.enable = true;
   };
   # nix.extraOptions = ''
@@ -166,9 +166,9 @@ in {
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      serif = [ "GoMono Nerd Font Mono" ];
+      serif = [ "GoMono Nerd Font Mono" "FiraCode" ];
       sansSerif = [ "FiraCode Nerd Font Mono" "FiraCode" ];
-      monospace = [ "FiraCode Nerd Font Mono" ];
+      monospace = [ "FiraCode Nerd Font Mono"  "FiraCode" ];
       emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
     };
   };

@@ -8,8 +8,10 @@
   inputs = {
     # system
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgsNV.url = "git+file:/home/birdee/Projects/nixpkgs?branch=fixGrammars";
     # nixpkgsNV.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
-    nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgsNV.url = "github:PerchunPak/nixpkgs/fix-treesitter-duplicate-grammar";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -48,6 +50,10 @@
       # url = "git+file:/home/birdee/Projects/lze";
       inputs.nixpkgs.follows = "nixpkgsNV";
       # flake = false;
+    };
+    codeium = {
+      url = "github:Exafunction/codeium.nvim";
+      # inputs.nixpkgs.follows = "nixpkgsNV";
     };
     "plugins-hlargs" = {
       url = "github:m-demare/hlargs.nvim";
@@ -96,14 +102,6 @@
     "plugins-img-clip" = {
       url = "github:HakonHarnes/img-clip.nvim";
       flake = false;
-    };
-    codeium = {
-      url = "github:Exafunction/codeium.nvim";
-      # inputs.nixpkgs.follows = "nixpkgsNV";
-    };
-    sg-nvim = {
-      url = "github:sourcegraph/sg.nvim";
-      # inputs.nixpkgs.follows = "nixpkgsNV";
     };
   };
 
@@ -390,6 +388,29 @@
                   ./systems/PCs/dustbook
                 ];
               };
+              "vmware-vm" = nixpkgs.lib.nixosSystem {
+                specialArgs = {
+                  hostname = "virtbird";
+                  inherit
+                    stateVersion
+                    self
+                    inputs
+                    users
+                    system-modules
+                    flake-path
+                    ;
+                };
+                inherit system;
+                modules = [
+                  home-manager.nixosModules.home-manager
+                  ./systems/VMs/vmware
+                  (HMasModule {
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
+                ];
+              };
               "my-qemu-vm" = nixpkgs.lib.nixosSystem {
                 specialArgs = {
                   hostname = "virtbird";
@@ -411,6 +432,16 @@
                     inherit users;
                     hmCFGmodMAIN = import ./homes/birdee.nix;
                   })
+                ];
+              };
+              "installer_min" = inputs.nixpkgsNV.lib.nixosSystem {
+                specialArgs = {
+                  inherit self inputs system-modules;
+                };
+                inherit system;
+                modules = [
+                  { nixpkgs.overlays = overlayList; }
+                  ./systems/PCs/installer_min
                 ];
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {
