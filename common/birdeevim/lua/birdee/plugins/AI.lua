@@ -18,9 +18,6 @@ return {
     after = function (plugin)
       local bitwardenAuth = nixCats('AIextras.codeium_bitwarden_uuid')
       if not catUtils.isNixCats then bitwardenAuth = false end
-      -- NOTE: TEMPORARY SO IT STOPS ASKING ME
-      -- I always forget to keep it up to date in my password manager apparently
-      bitwardenAuth = nil
 
       local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
       local codeiumAuthFile = codeiumDir .. '/' .. 'config.json'
