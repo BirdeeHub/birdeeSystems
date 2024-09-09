@@ -25,9 +25,13 @@ return {
       local codeiumAuthInvalid = vim.fn.filereadable(codeiumAuthFile) == 0
 
       local session
+      local ok
       if bitwardenAuth then
         if codeiumAuthInvalid then
-          session = require("birdee.utils").authTerminal()
+          session, ok = require("birdee.utils").authTerminal()
+          if not ok then
+            bitwardenAuth = false
+          end
         end
       end
       if codeiumAuthInvalid then

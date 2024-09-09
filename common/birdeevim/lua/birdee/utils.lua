@@ -48,6 +48,7 @@ end
 function M.authTerminal()
   local session
   local handle
+  local ok = false
   handle = io.popen([[bw login --check ]], "r")
   if handle then
     session = handle:read("*l")
@@ -61,6 +62,7 @@ function M.authTerminal()
       if handle then
         session = handle:read("*l")
         handle:close()
+        ok = true
       end
     else
       local email = vim.fn.inputsecret('Enter email: ')
@@ -75,10 +77,11 @@ function M.authTerminal()
       if handle then
         session = handle:read("*l")
         handle:close()
+        ok = true
       end
     end
   end
-  return session
+  return session, ok
 end
 
 ---@param plugin_names string[]|string
