@@ -285,7 +285,7 @@
         todo-comments-nvim
         vim-startuptime
       ];
-      treesitter = with pkgs.vimPlugins; [
+      treesitter = [
         nvim-treesitter-textobjects
         nvim-treesitter
       ];
