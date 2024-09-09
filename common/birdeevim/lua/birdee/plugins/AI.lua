@@ -14,7 +14,6 @@ return {
         desc = "[c]odeium [c]hat",
       },
     },
-    -- colorscheme = "",
     after = function (plugin)
       local bitwardenAuth = nixCats('AIextras.codeium_bitwarden_uuid')
       if not catUtils.isNixCats then bitwardenAuth = false end
