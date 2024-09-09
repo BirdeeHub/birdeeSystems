@@ -1610,16 +1610,18 @@
     },
     "nixpkgsNV": {
       "locked": {
-        "dirtyRev": "b4390ce8470655d153bcdb47da613d3017414a79-dirty",
-        "dirtyShortRev": "b4390ce84706-dirty",
-        "lastModified": 1725820700,
-        "narHash": "sha256-ZwjD81uQSKhQqMm3QqSyhvFbf+BPDVyBo7xd6mse9ts=",
-        "type": "git",
-        "url": "file:/home/birdee/Projects/nixpkgs?branch=fixGrammars"
+        "lastModified": 1725816686,
+        "narHash": "sha256-0Kq2MkQ/sQX1rhWJ/ySBBQlBJBUK8mPMDcuDhhdBkSU=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "add0443ee587a0c44f22793b8c8649a0dbc3bb00",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/nixpkgs?branch=fixGrammars"
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_10": {
