@@ -463,6 +463,7 @@
       };
       categories = birdeevim_categories misc // {
         AI = false;
+        AIextras = false;
       };
     };
     notesVim = { pkgs, ... }@misc: {
@@ -499,6 +500,7 @@
         portableExtras = true;
         notes = true;
         AI = false;
+        AIextras = false;
       };
     };
     minimalVim = { pkgs, ... }@misc: {
