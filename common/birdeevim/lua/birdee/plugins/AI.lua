@@ -21,12 +21,15 @@ return {
       local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
       local codeiumAuthFile = codeiumDir .. '/' .. 'config.json'
 
+      local localKeyPath = vim.fn.expand("$HOME") .. "/.secrets/codeium"
+      local havelocalkey = vim.fn.filereadable(localKeyPath) == 1
+
       local codeiumAuthInvalid = vim.fn.filereadable(codeiumAuthFile) == 0
 
       local session
       local ok
       if bitwardenAuth then
-        if codeiumAuthInvalid then
+        if codeiumAuthInvalid and not havelocalkey then
           local bw_secret = vim.fn.expand("$HOME") .. "/.secrets/bw"
           local result = nil
           if vim.fn.filereadable(bw_secret) == 1 then
@@ -43,14 +46,13 @@ return {
         end
       end
       if codeiumAuthInvalid then
-        local keyPath = vim.fn.expand("$HOME") .. "/.secrets/codeium"
-        if (bitwardenAuth or vim.fn.filereadable(keyPath) == 1) then
+        if (bitwardenAuth or havelocalkey) then
           local result
           local handle
-          if bitwardenAuth then
+          if havelocalkey then
+            handle = io.open(localKeyPath, "r")
+          elseif bitwardenAuth then
             handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth, "r")
-          else
-            handle = io.open(keyPath, "r")
           end
           if handle then
             result = handle:read("*l")

@@ -138,7 +138,7 @@ return {
           { name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
           -- { name = 'cmp_tabnine' },
           { name = 'path' },
-          { name = 'codeium' },
+          { name = 'codeium', enabled = require('nixCatsUtils').enableForCategory('AI', false) },
           { name = 'buffer' },
         },
         enabled = function()
@@ -167,7 +167,7 @@ return {
           { name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
           -- { name = 'cmp_tabnine' },
           { name = 'path' },
-          { name = 'codeium' },
+          { name = 'codeium', enabled = require('nixCatsUtils').enableForCategory('AI', false) },
           { name = 'buffer' },
         },
         {
