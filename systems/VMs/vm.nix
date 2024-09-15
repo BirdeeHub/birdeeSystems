@@ -68,10 +68,14 @@ in {
 
   # Bootloader.
   boot.loader.timeout = 3;
-  boot.loader.systemd-boot.editor = false;
-  boot.loader.systemd-boot.configurationLimit = 50;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  # boot.loader.grub.efiSupport = true;
+  boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.efiInstallAsRemovable = true;
+  # boot.loader.systemd-boot.editor = false;
+  # boot.loader.systemd-boot.configurationLimit = 50;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
