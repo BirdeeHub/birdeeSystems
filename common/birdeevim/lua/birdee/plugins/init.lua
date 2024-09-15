@@ -38,6 +38,10 @@ vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search(
   desc = "Search on current file"
 })
 
+if nixCats('rust') then
+  -- rustaceanvim setup if any
+end
+
 require('birdee.plugins.oil')
 
 -- NOTE: everything else is lazily loaded

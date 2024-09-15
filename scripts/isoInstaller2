@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-system=$1
-nix build .#legacyPackages.${system}.nixosConfigurations.installer_min.config.system.build.isoImage
-# sudo dd if=./result/iso/something.iso of=/dev/sdd bs=1M status=progress

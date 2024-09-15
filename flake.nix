@@ -434,14 +434,28 @@
                   })
                 ];
               };
-              "installer_min" = inputs.nixpkgsNV.lib.nixosSystem {
+              "installer_mine" = inputs.nixpkgsNV.lib.nixosSystem {
                 specialArgs = {
-                  inherit self inputs system-modules;
+                  hostname = "installer_mine";
+                  inherit
+                    stateVersion
+                    self
+                    inputs
+                    users
+                    system-modules
+                    flake-path
+                    ;
                 };
                 inherit system;
                 modules = [
                   { nixpkgs.overlays = overlayList; }
-                  ./systems/PCs/installer_min
+                  ./systems/PCs/installer_mine
+                  home-manager.nixosModules.home-manager
+                  (HMasModule {
+                    username = "birdee";
+                    inherit users;
+                    hmCFGmodMAIN = import ./homes/birdee.nix;
+                  })
                 ];
               };
               "installer" = inputs.nixpkgsNV.lib.nixosSystem {

@@ -22,15 +22,15 @@ in {
   };
 
   users.users.birdee = {
-      name = "birdee";
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      description = "";
-      extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
-      initialPassword = "test";
-      # this is packages for nixOS user config.
-      # packages = []; # empty because that is managed by home-manager
-    };
+    name = "birdee";
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    description = "";
+    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+    initialPassword = "test";
+    # this is packages for nixOS user config.
+    # packages = []; # empty because that is managed by home-manager
+  };
   birdeeMods = {
     # i3.enable = true;
     # i3.tmuxDefault = true;
@@ -129,7 +129,6 @@ in {
   services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   security.rtkit.enable = true;

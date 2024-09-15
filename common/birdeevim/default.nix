@@ -178,6 +178,9 @@
       lua = [
         luvit-meta
       ];
+      rust = [
+        rustaceanvim
+      ];
       neonixdev = [
         luvit-meta
       ];

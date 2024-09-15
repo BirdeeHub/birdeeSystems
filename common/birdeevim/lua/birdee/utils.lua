@@ -45,7 +45,7 @@ function M.get_os_command_output(cmd, cwd)
   return stdout, ret, stderr
 end
 
-function M.authTerminal()
+function M.authTerminal(api_client_secret)
   local session
   local handle
   local ok = false
@@ -67,7 +67,7 @@ function M.authTerminal()
     else
       local email = vim.fn.inputsecret('Enter email: ')
       local pass = vim.fn.inputsecret('Enter password: ')
-      local client_secret = vim.fn.inputsecret('Enter api key client_secret: ')
+      local client_secret = api_client_secret or vim.fn.inputsecret('Enter api key client_secret: ')
       handle = io.popen([[bw login --raw --quiet ]] .. email .. " " .. pass .. ">/dev/null 2>&1", "w")
       if handle then
         handle:write(client_secret)

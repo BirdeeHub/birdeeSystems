@@ -15,8 +15,6 @@
     i3.enable = true;
     i3.tmuxDefault = true;
     zsh.enable = true;
-    bash.enable = true;
-    fish.enable = true;
     i3MonMemory.enable = true;
     alacritty.enable = true;
     lightdm.enable = true;

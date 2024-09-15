@@ -27,7 +27,16 @@ return {
       local ok
       if bitwardenAuth then
         if codeiumAuthInvalid then
-          session, ok = require("birdee.utils").authTerminal()
+          local bw_secret = vim.fn.expand("$HOME") .. "/.secrets/bw"
+          local result = nil
+          if vim.fn.filereadable(bw_secret) == 1 then
+            local handle = io.open(bw_secret, "r")
+            if handle then
+              result = handle:read("*l")
+              handle:close()
+            end
+          end
+          session, ok = require("birdee.utils").authTerminal(result)
           if not ok then
             bitwardenAuth = false
           end
