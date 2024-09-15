@@ -46,10 +46,10 @@ in {
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
 
-  services.flatpak.enable = true;
+  # services.flatpak.enable = true;
 
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
-  virtualisation.libvirtd.enable = true;
+  # virtualisation.libvirtd.enable = true;
 
   services.clamav.daemon.enable = true;
   services.clamav.updater.enable = true;
@@ -125,8 +125,8 @@ in {
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
+  # services.printing.enable = true;
+  # services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -177,8 +177,6 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    hplip
-    qemu
     fuse
     fuse3
     parted
@@ -198,7 +196,6 @@ in {
     nvme-cli
     unzip
     zip
-    vagrant
     exfat
     exfatprogs
     lshw
