@@ -144,8 +144,9 @@
               flake-path
               username # username = "birdee";
               users
+              monitorCFG
               ;
-          } // (if monitorCFG == null then {} else { inherit monitorCFG;}); # monitorCFG = ./homes/monitors_by_hostname/<hostname>;
+          }; # monitorCFG = ./homes/monitors_by_hostname/<hostname>;
           services.displayManager.defaultSession = lib.mkDefault "none+fake";
         };
 
