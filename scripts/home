@@ -8,7 +8,7 @@ FLAKE=${FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} && export FL
 cd "$FLAKE" &&\
 git add .
 cd "$prevWD" &&\
-nix run nixpkgs#nh -- home switch -v -b hm_bkp $isUp -c "$cfgOutput" -- --show-trace "$@" &&\
+nix --extra-experimental-features "nix-command flakes" run nixpkgs#nh -- home switch -v -b hm_bkp $isUp -c "$cfgOutput" -- --show-trace "$@" &&\
 cd "$FLAKE" &&\
 git add .
 cd "$prevWD"

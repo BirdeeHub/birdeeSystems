@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-IFS='@' read -ra parts <<< "$1"
-hostname="${parts[1]}"
-
-git add . &&\
-[ -n $2 ] && [ "$2" == "-up" ] &&\
-nix --experimental-features flakes --extra-experimental-features nix-command flake update
-sudo nixos-rebuild switch --show-trace --flake .#$hostname &&\
-nix --experimental-features flakes --extra-experimental-features nix-command run home-manager -- switch -b hm_bkp --show-trace --flake .#$1
