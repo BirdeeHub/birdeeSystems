@@ -3,6 +3,7 @@ in {
   imports = with system-modules; [
     "${modulesPath}/virtualisation/vmware-guest.nix"
     ../vm.nix
+    ./hardware-configuration.nix
   ];
   config = {
     environment.shellAliases = {

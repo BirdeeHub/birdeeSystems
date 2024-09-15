@@ -26,7 +26,7 @@ in {
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "";
-    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     initialPassword = "test";
     # this is packages for nixOS user config.
     # packages = []; # empty because that is managed by home-manager
@@ -48,7 +48,7 @@ in {
 
   # services.flatpak.enable = true;
 
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  boot.kernelModules = [ "kvm" ];
   # virtualisation.libvirtd.enable = true;
 
   services.clamav.daemon.enable = true;
