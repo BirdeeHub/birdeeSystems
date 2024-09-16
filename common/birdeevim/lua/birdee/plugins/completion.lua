@@ -75,15 +75,16 @@ return {
       local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'
 
+      local T_C = nixCats('tabCompletionKeys')
       local key_mappings = {
         ['<C-p>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'c', 'i' }),
         ['<C-n>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'c', 'i' }),
         ['<M-c>'] = cmp.mapping(cmp.mapping.complete({}), { 'c', 'i', 's' }),
-        ['<M-l>'] = cmp.mapping(cmp.mapping.confirm({
+        [ T_C and '<cr>' or '<M-l>'] = cmp.mapping(cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         }), { 'c', 'i', 's' }),
-        ['<M-j>'] = cmp.mapping(function(fallback)
+        [ T_C and '<tab>' or '<M-j>' ] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           elseif luasnip.expand_or_locally_jumpable() then
@@ -92,7 +93,7 @@ return {
             fallback()
           end
         end, { 'c', 'i', 's' }),
-        ['<M-k>'] = cmp.mapping(function(fallback)
+        [ T_C and '<s-tab>' or '<M-k>' ] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           elseif luasnip.locally_jumpable(-1) then

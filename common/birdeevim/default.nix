@@ -458,6 +458,18 @@
         SQL = true;
       };
     };
+    nvim_for_u = { pkgs, ... }@misc: {
+      settings = birdeevim_settings misc // {
+        wrapRc = true;
+        extraName = "nvim_for_u";
+        aliases = [ "vi" "vim" "nvim" ];
+      };
+      categories = birdeevim_categories misc // {
+        AI = false;
+        AIextras = false;
+        tabCompletionKeys = true;
+      };
+    };
     noAInvim = { pkgs, ... }@misc: {
       settings = birdeevim_settings misc // {
         wrapRc = true;
