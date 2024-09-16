@@ -10,9 +10,7 @@ This neovim config is based on this template:
 
 [nixCats-nvim#nixExpressionFlakeOutputs](https://github.com/BirdeeHub/nixCats-nvim/tree/main/nix/templates/nixExpressionFlakeOutputs)
 
-You can run it with `nix shell github:BirdeeHub/birdeeSystems#noAInvim` and then typing `vi`, `vim`, or `noAInvim`.
-
-You can run one with just go, web, and nix stuff with `nix shell github:BirdeeHub/birdeeSystems#vigo` and then typing `vigo`.
+You can run it with `nix shell github:BirdeeHub/birdeeSystems#nvim_for_u` and then typing `vi`, `vim`, `nvim`, or `nvim_for_u`.
 
 > [!NOTE]
 > Keep in mind downloading my config is going to download a lot of lsps and plugins.
@@ -20,7 +18,9 @@ You can run one with just go, web, and nix stuff with `nix shell github:BirdeeHu
 
 
 > [!WARNING]
-> (completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`, you have been warned.)
+> in the non-mentioned outputs,
+> completion keys are `<M-h>` = `<esc>`, `<M-j>` = `next`, `<M-k>` = `previous`, `<M-l>` = `accept`.
+> You have been warned.
 
 ---
 
@@ -34,4 +34,4 @@ It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which has a 
 the same spec fields?
   - Yes, although it shares some handler code where they parse their field from the spec.
 
-- Has it been released yet? No, although it might be eventually.
+`lze` is my take on `lz.n`
