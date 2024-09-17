@@ -53,9 +53,6 @@ in {
   services.thermald.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages;
-  hardware.opengl.extraPackages = with pkgs; [
-    vaapiVdpau libva
-  ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.nvidia.modesetting.enable = true;
   services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
@@ -67,10 +64,12 @@ in {
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
   # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau libva
+    ];
   };
 
   # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
