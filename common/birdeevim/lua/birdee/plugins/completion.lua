@@ -80,7 +80,7 @@ return {
         ['<C-p>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'c', 'i' }),
         ['<C-n>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'c', 'i' }),
         ['<M-c>'] = cmp.mapping(cmp.mapping.complete({}), { 'c', 'i', 's' }),
-        [ T_C and '<cr>' or '<M-l>'] = cmp.mapping(cmp.mapping.confirm({
+        [ T_C and '<c-space>' or '<M-l>'] = cmp.mapping(cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         }), { 'c', 'i', 's' }),
@@ -183,7 +183,7 @@ return {
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
-        mapping = T_C and cmp.mapping.preset.cmdline() or cmp.mapping.preset.cmdline(key_mappings),
+        mapping = cmp.mapping.preset.cmdline(key_mappings),
         sources = {
           { name = 'nvim_lsp_document_symbol' --[[ , keyword_length = 3  ]] },
           { name = 'buffer' },
@@ -196,7 +196,7 @@ return {
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(':', {
-        mapping = T_C and cmp.mapping.preset.cmdline() or cmp.mapping.preset.cmdline(key_mappings),
+        mapping = cmp.mapping.preset.cmdline(key_mappings),
         sources = cmp.config.sources {
           { name = 'cmdline' },
           -- { name = 'cmdline_history' },
