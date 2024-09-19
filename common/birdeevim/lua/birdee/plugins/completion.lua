@@ -183,7 +183,7 @@ return {
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
-        mapping = T_C and nil or cmp.mapping.preset.cmdline(key_mappings),
+        mapping = T_C and cmp.mapping.preset.cmdline() or cmp.mapping.preset.cmdline(key_mappings),
         sources = {
           { name = 'nvim_lsp_document_symbol' --[[ , keyword_length = 3  ]] },
           { name = 'buffer' },
@@ -196,7 +196,7 @@ return {
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(':', {
-        mapping = T_C and nil or cmp.mapping.preset.cmdline(key_mappings),
+        mapping = T_C and cmp.mapping.preset.cmdline() or cmp.mapping.preset.cmdline(key_mappings),
         sources = cmp.config.sources {
           { name = 'cmdline' },
           -- { name = 'cmdline_history' },
