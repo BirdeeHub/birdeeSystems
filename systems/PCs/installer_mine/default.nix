@@ -1,27 +1,36 @@
-{ config, lib, pkgs, self, modulesPath, system-modules, inputs, ... }: {
+{ config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, ... }: let
+  tx = pkgs.writeShellScriptBin "tx" ''
+    if ! echo "$PATH" | grep -q "${pkgs.tmux}/bin"; then
+      export PATH=${pkgs.tmux}/bin:$PATH
+    fi
+    if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
+      selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
+      exec tmux new-session -At $selected_session
+    else
+      exec tmux new-session
+    fi
+  '';
+  # TODO: if you use zsh it prompts you to set it up every time...
+  # change it back to zsh when you make it have an empty .zshrc for user
+  login_shell = "fish";
+
+in {
   imports = with system-modules; [
-    "${modulesPath}/installer/cd-dvd/installation-cd-graphical-base.nix"
-    i3
-    birdeeVim.nixosModules.default
+    "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+    ./minimal-graphical-base.nix
     shell.bash
-    shell.zsh
-    shell.fish
-    term.alacritty
-    lightdm
-    i3MonMemory
-    LD
+    shell.${login_shell}
+    ranger
+    birdeeVim.nixosModules.default
   ];
-  birdeeMods = {
-    i3.enable = true;
-    i3.tmuxDefault = true;
-    zsh.enable = true;
-    i3MonMemory.enable = true;
-    alacritty.enable = true;
-    lightdm.enable = true;
-    LD.enable = true;
+
+  # TODO: make a more minimal config for this later so you can include it...
+  birdeeVim = {
+    enable = ! is_minimal;
+    packageNames = [ "noAInvim" ];
   };
 
-  boot.kernelModules = [ "kvm-intel" "wl" ];
+  boot.kernelModules = [ "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   # Allow unfree packages
@@ -29,28 +38,34 @@
   # Allow flakes and new command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  environment.shellAliases = {
+  environment.shellAliases = let
+  in {
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
-      hostname=$1
+      output=$1
       username=$2
-      sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$hostname
-      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
+      sudo disko --mode disko --flake github:BirdeeHub/birdeeSystems#$output
+      sudo nixos-install --show-trace --flake github:BirdeeHub/birdeeSystems#$output
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username
+      mkdir -p /mnt/home/$username/birdeeSystems
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
+      sudo chmod -R go-rwx /mnt/home/$username/birdeeSystems
+      sudo chown -R $username:users /mnt/home/$username/birdeeSystems
     ''}";
-    disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
-      sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
+    birdeeOS-disko = "${pkgs.writeShellScript "birdeeOS-disko" ''
+      output=$1
+      sudo disko --mode disko --flake github:BirdeeHub/birdeeSystems#$output
     ''}";
-    install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
-      hostname=$1
+    birdeeOS-install = "${pkgs.writeShellScript "birdeeOS-install" ''
+      output=$1
       username=$2
-      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
+      sudo nixos-install --show-trace --flake github:BirdeeHub/birdeeSystems#$output
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username
+      mkdir -p /mnt/home/$username/birdeeSystems
       git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
+      sudo chmod -R go-rwx /mnt/home/$username/birdeeSystems
+      sudo chown -R $username:users /mnt/home/$username/birdeeSystems
     ''}";
     lsnc = "lsd --color=never";
     la = "ls -a";
@@ -62,86 +77,73 @@
     { source = "${self}/secrets"; target = "/secrets";}
   ];
 
-  isoImage.isoBaseName = "birdeeSystems_installer";
+  isoImage.isoBaseName = "birdeeOS_installer";
 
-  users.defaultUserShell = pkgs.zsh;
+  toppings = {
+    ${login_shell}.enable = true;
+    bash.enable = true;
+    ranger = {
+      enable = true;
+      withoutDragon = true;
+    };
+  };
+
+  services.xserver.enable = true;
+  services.xserver.desktopManager.session = (let
+    alakitty = pkgs.callPackage ./alatoml.nix {
+      maximize_program = inputs.maximizer.packages.${pkgs.system}.default;
+      inherit tx;
+      shellStr = "${pkgs.${login_shell}}/bin/${login_shell}";
+    };
+  in [
+    { name = "alacritty";
+      start = /*bash*/ ''
+        ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --primary --preferred
+        ${pkgs.alacritty}/bin/alacritty --config-file ${alakitty} &
+        waitPID=$!
+      '';
+    }
+  ]);
+
+  services.displayManager.defaultSession = "alacritty";
+
+  users.defaultUserShell = pkgs.${login_shell};
 
   fonts.packages = with pkgs; [
-    openmoji-color
-    noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+    (nerdfonts.override { fonts = [ "FiraMono" ]; })
   ];
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      serif = [ "GoMono Nerd Font Mono" ];
-      sansSerif = [ "FiraCode Nerd Font Mono" ];
-      monospace = [ "FiraCode Nerd Font Mono" ];
-      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
+      serif = [ "FiraMono Nerd Font" ];
+      sansSerif = [ "FiraMono Nerd Font" ];
+      monospace = [ "FiraMono Nerd Font" ];
     };
   };
   fonts.fontDir.enable = true;
 
-  birdeeVim = {
-    enable = true;
-    packageNames = [ "noAInvim" ];
-  };
-
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
-  environment.systemPackages = (let
-    ranger = pkgs.stdenv.mkDerivation (let
-      rifle = ''${pkgs.ranger}/bin/rifle'';
-      ranger_commands = pkgs.writeText "nixRangerRC.conf" (let
-        dragon = ''${pkgs.xdragon}/bin/dragon'';
-      in ''
-        map <C-Y> shell ${dragon} -a -x %p
-        map y<C-Y> shell ${dragon} --all-compact -x %p
-        set mouse_enabled!
-        map ps shell echo "$(xclip -o) ." | xargs cp -r
-      '');
-      rangerBinScript = pkgs.writeScript "ranger" ''
-        #!${pkgs.bash}/bin/bash
-        ${pkgs.ranger}/bin/ranger --cmd='source ${ranger_commands}' "$@"
-      '';
-      ranger_desktop = pkgs.writeText "ranger.desktop" (/*desktop*/''
-        [Desktop Entry]
-        Type=Application
-        Name=ranger
-        Comment=Launches the ranger file manager
-        Icon=utilities-terminal
-        Terminal=false
-        Exec=alacritty -e ranger
-        Categories=ConsoleOnly;System;FileTools;FileManager
-        MimeType=inode/directory;
-        Keywords=File;Manager;Browser;Explorer;Launcher;Vi;Vim;Python
-      '');
-    in {
-      name = "ranger";
-      builder = pkgs.writeText "builder.sh" (/*bash*/''
-        source $stdenv/setup
-        mkdir -p $out/bin
-        mkdir -p $out/share/applications
-        cp ${rangerBinScript} $out/bin/ranger
-        cp ${rifle} $out/bin/rifle
-        cp ${ranger_desktop} $out/share/applications/ranger.desktop
-      '');
-    });
-  in with pkgs; [
-    ranger
+  environment.systemPackages = with pkgs; [
+    inputs.disko.packages.${system}.default
+    tmux
+    tx
     git
-    xsel
-    ntfs3g
     findutils
-    exfat
-    clamav
-    chkrootkit
-    lynis
-    exfatprogs
-    _7zz
-    lshw
+    coreutils
     xclip
-    dislocker
+  ] ++ (if is_minimal then [ pkgs.neovim ] else with pkgs; [
   ]);
+
+  # for xterm instead, these should be useful
+  # services.xserver.displayManager.sessionCommands = /*bash*/ ''
+  #   ${pkgs.xorg.xrdb}/bin/xrdb -merge ${pkgs.writeText "Xresources" ''
+  #     XTerm*termName: xterm-256color
+  #     XTerm*faceName: FiraMono Nerd Font
+  #     XTerm*faceSize: 12
+  #     XTerm*background: black
+  #     XTerm*foreground: white
+  #   ''}
+  # '';
 
 }

@@ -31,6 +31,8 @@
     nsearch.inputs.nixpkgs.follows = "nixpkgs";
     minesweeper.url = "github:BirdeeHub/minesweeper";
     minesweeper.inputs.nixpkgs.follows = "nixpkgsNV";
+    maximizer.url = "github:BirdeeHub/maximizer";
+    maximizer.inputs.nixpkgs.follows = "nixpkgs";
 
     # neovim
     nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
@@ -438,6 +440,7 @@
               "installer_mine" = inputs.nixpkgsNV.lib.nixosSystem {
                 specialArgs = {
                   hostname = "installer_mine";
+                  is_minimal = true;
                   inherit
                     stateVersion
                     self
