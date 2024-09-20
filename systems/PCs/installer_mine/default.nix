@@ -150,6 +150,8 @@ in {
   #     XTerm*faceSize: 12
   #     XTerm*background: black
   #     XTerm*foreground: white
+  #     XTerm*loginShell: true
+  #     XTerm*shell: /path/to/your/shell
   #   ''}
   # '';
 

@@ -5,6 +5,7 @@ in {
   options = {
     birdeeMods.ranger = with lib.types; {
       enable = lib.mkEnableOption "birdee's ranger";
+      withoutDragon = lib.mkEnableOption "smaller ranger without x-dragon";
     };
   };
   config = lib.mkIf cfg.enable (let
@@ -12,11 +13,12 @@ in {
       rifle = ''${pkgs.ranger}/bin/rifle'';
       ranger_commands = pkgs.writeText "nixRangerRC.conf" (let
         dragon = ''${pkgs.xdragon}/bin/dragon'';
-      in ''
+      in (if cfg.withoutDragon then "" else ''
         map <C-Y> shell ${dragon} -a -x %p
         map y<C-Y> shell ${dragon} --all-compact -x %p
+      '') + ''
         set mouse_enabled!
-        map ps shell echo "$(xclip -o) ." | xargs cp -r
+        map ps shell echo "$(xclip -o) ." | ${pkgs.findutils}/bin/xargs cp -r
       '');
       rangerBinScript = pkgs.writeScript "ranger" ''
         #!${pkgs.bash}/bin/bash
