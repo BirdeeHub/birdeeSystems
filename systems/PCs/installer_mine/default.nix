@@ -1,4 +1,10 @@
 { config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, ... }: let
+  # TODO: ! is_minimal should also include calamares installer, i3, and a browser,
+  # and also disk utilities so that you dont have to nix shell them all
+
+  # TODO: THIS GETS THE WRONG VERSION OF TMUX
+  # SWAP AWAY FROM USING TMUX MODULE TO USING OVERLAY
+  # FOR YOUR SYSTEM CONFIG
   tx = pkgs.writeShellScriptBin "tx" ''
     if ! echo "$PATH" | grep -q "${pkgs.tmux}/bin"; then
       export PATH=${pkgs.tmux}/bin:$PATH
@@ -25,6 +31,7 @@ in {
   ];
 
   # TODO: make a more minimal config for this later so you can include it...
+  # still make non minimal install noAInvim
   birdeeVim = {
     enable = ! is_minimal;
     packageNames = [ "noAInvim" ];
@@ -79,7 +86,7 @@ in {
 
   isoImage.isoBaseName = "birdeeOS_installer";
 
-  toppings = {
+  birdeeMods = {
     ${login_shell}.enable = true;
     bash.enable = true;
     ranger = {
