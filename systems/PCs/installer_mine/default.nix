@@ -1,5 +1,5 @@
 { config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, ... }: let
-  # TODO: ! is_minimal should also include calamares installer, i3, and a browser,
+  # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 
   # TODO: THIS GETS THE WRONG VERSION OF TMUX
