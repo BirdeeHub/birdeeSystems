@@ -1108,6 +1108,26 @@
         "type": "github"
       }
     },
+    "maximizer": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1726825435,
+        "narHash": "sha256-gFseBQ2G58vyBbBG7FY9RR1Q53tUiw12byfHKmtG1sw=",
+        "owner": "BirdeeHub",
+        "repo": "maximizer",
+        "rev": "29bc916bc09a10dd87a9a394acf1ba7311a422d7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "maximizer",
+        "type": "github"
+      }
+    },
     "minesweeper": {
       "inputs": {
         "nixpkgs": [
@@ -2213,6 +2233,7 @@
         "home-manager": "home-manager",
         "lze": "lze",
         "manix": "manix",
+        "maximizer": "maximizer",
         "minesweeper": "minesweeper",
         "neorg-overlay": "neorg-overlay",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
