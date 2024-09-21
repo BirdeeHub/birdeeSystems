@@ -21,9 +21,9 @@
     forAllSys = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
     extraOverlays = [];
     overlayMyNeovim = prev: final: {
-      valuesToPass = {
-      };
       myNeovim = let
+        valuesToPass = {
+        };
         luaRC = final.writeText "init.lua" /*lua*/''
           -- create require('nixvals') table
           package.preload["nixvals"] = function()
