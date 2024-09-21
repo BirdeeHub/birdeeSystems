@@ -9,7 +9,7 @@ return {
     -- keys = "",
     -- colorscheme = "",
     load = function (name)
-      require("birdee.utils").safe_packadd({
+      require("birdee.utils").load_w_after_plugin({
         "norg-grammar",
         "neorg-telescope",
         name,

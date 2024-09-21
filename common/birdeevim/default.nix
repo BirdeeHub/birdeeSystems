@@ -328,7 +328,7 @@
     };
     # populates $LUA_PATH and $LUA_CPATH
     extraLuaPackages = {
-      vimagePreview = [ (lp: with lp; [ magick ]) ];
+      # vimagePreview = [ (lp: with lp; [ magick ]) ];
     };
   };
 
