@@ -17,32 +17,19 @@
     };
     nixToLua.url = "github:BirdeeHub/nixToLua";
   };
-  outputs = { nixpkgs, neovim-nightly, nixToLua, ...}: let
+  outputs = { nixpkgs, neovim-nightly, nixToLua, ...}@inputs: let
     forAllSys = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
     extraOverlays = [];
     overlayMyNeovim = prev: final: {
       myNeovim = let
-        valuesToPass = {
-        };
-        luaRC = final.writeText "init.lua" /*lua*/''
-          -- create require('nixvals') table
-          package.preload["nixvals"] = function()
-            return ${nixToLua.prettyNoModify valuesToPass}
-          end
-          -- load current directory as config directory
-          vim.opt.rtp:remove(vim.fn.stdpath("config"))
-          vim.opt.packpath:remove(vim.fn.stdpath("config"))
-          vim.opt.rtp:remove(vim.fn.stdpath("config") .. "/after")
-          vim.opt.rtp:prepend(${./.})
-          vim.opt.packpath:prepend(${./.})
-          vim.opt.rtp:append(${./.} .. "/after")
-          -- require lua/my_config
-          require("my_config")
-        '';
+        mkCFG = path: nixvals: let
+          luaRC = final.writeText "init.lua" ((import ./utils.nix).mkCFG nixToLua.prettyNoModify path nixvals);
+        in ''lua dofile("${luaRC}")'';
       in
       final.wrapNeovim final.neovim {
         configure = {
-          customRC = ''lua dofile("${luaRC}")'';
+          customRC = mkCFG ./. {
+          };
           packages.all.start = with final.vimPlugins; [ 
             nvim-treesitter.withAllGrammars
           ];
@@ -66,7 +53,7 @@
   in 
   {
     packages = forAllSys (system: let
-      configuredNvimOverlay = extraOverlays ++ [ overlayMyNeovim ];
+      configuredNvimOverlay = [ ((import ./utils.nix).ezPluginOverlay inputs) ] ++ extraOverlays ++ [ overlayMyNeovim ];
       pkgs = import nixpkgs {
         inherit system;
         overlays = configuredNvimOverlay;
