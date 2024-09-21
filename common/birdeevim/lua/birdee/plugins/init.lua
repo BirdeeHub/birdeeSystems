@@ -145,7 +145,7 @@ require('lze').load {
       require('lazydev').setup({
         library = {
           { words = { "vim%.uv", "vim%.loop" }, path = (require('nixCats').pawsible.allPlugins.start["luvit-meta"] or "luvit-meta") .. "/library" },
-          { words = { "nixCats" }, path = require('nixCats').nixCatsPath .. '/lua' },
+          { words = { "nixCats" }, path = (require('nixCats').nixCatsPath or "") .. '/lua' },
         },
       })
     end,
