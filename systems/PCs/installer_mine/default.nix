@@ -2,15 +2,16 @@
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 
+  final_tmux = pkgs.tmux.override (prev: {
+    term_string = if use_alacritty then "alacritty" else "xterm-256color";
+  });
+
   tx = pkgs.writeShellScriptBin "tx" ''
-    if ! echo "$PATH" | grep -q "${pkgs.tmux}/bin"; then
-      export PATH=${pkgs.tmux}/bin:$PATH
-    fi
-    if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
-      selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
-      exec tmux new-session -At $selected_session
+    if [[ $(${final_tmux}/bin/tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
+      selected_session=$(${final_tmux}/bin/tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
+      ${final_tmux}/bin/tmux new-session -At $selected_session
     else
-      exec tmux new-session
+      ${final_tmux}/bin/tmux new-session
     fi
   '';
   nerd_font_string = "FiraMono";
@@ -37,7 +38,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     inputs.disko.packages.${system}.default
-    tmux
+    final_tmux
     tx
     git
     findutils
