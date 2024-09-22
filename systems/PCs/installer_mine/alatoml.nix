@@ -1,56 +1,48 @@
-{ callPackage
-, writeText
+{ writeText
 , writeShellScript
+, zsh
 , tx ? null
 , shellStr ? null
 , extraToml ? ""
-, maximize_program ? null
+, font_string ? "FiraMono Nerd Font"
+, maximizer ? null
 , ...
-}: let
-  alakitty-toml = { zsh, xorg, ... }: let
+}:
+writeText "alacritty.toml" (let
+  shelly = if shellStr == null then "${zsh}/bin/zsh" else shellStr;
+  launchScript = writeShellScript "mysh" /*bash*/ ''
+    ${if maximizer == null then "" else "${maximizer} Alacritty > /dev/null 2>&1 &"}
+    exec ${if tx == null then "${shelly} -l" else "${tx}/bin/tx"}
+  '';
+in /*toml*/''
+  # https://alacritty.org/config-alacritty.html
+  # [env]
+  # TERM = "xterm-256color"
 
-    shelly = if shellStr == null then "${zsh}/bin/zsh" else shellStr;
+  [shell]
+  program = "${launchScript}"
 
-    resizer = if maximize_program == null then "" else "${maximize_program}/bin/maximize_program Alacritty > /dev/null 2>&1 &";
+  [window]
+  startup_mode = "Fullscreen"
 
-    launchScript = writeShellScript "mysh" /*bash*/ ''
-      ${resizer}
-      exec ${if tx == null then "${shelly} -l" else "${tx}/bin/tx"}
-    '';
+  [font]
+  size = 11.0
 
-  in (/*toml*/''
-    # https://alacritty.org/config-alacritty.html
-    # [env]
-    # TERM = "xterm-256color"
+  [font.bold]
+  family = "${font_string}"
+  style = "Bold"
 
-    [shell]
-    program = "${launchScript}"
+  [font.bold_italic]
+  family = "${font_string}"
+  style = "Bold Italic"
 
-    [window]
-    startup_mode = "Fullscreen"
+  [font.italic]
+  family = "${font_string}"
+  style = "Italic"
 
-    [font]
-    size = 11.0
+  [font.normal]
+  family = "${font_string}"
+  style = "Regular"
 
-    [font.bold]
-    family = "FiraMono Nerd Font"
-    style = "Bold"
-
-    [font.bold_italic]
-    family = "FiraMono Nerd Font"
-    style = "Bold Italic"
-
-    [font.italic]
-    family = "FiraMono Nerd Font"
-    style = "Italic"
-
-    [font.normal]
-    family = "FiraMono Nerd Font"
-    style = "Regular"
-  '');
-
-in
-writeText "alacritty.toml" (builtins.concatStringsSep "\n" [
-  (callPackage alakitty-toml { })
-  extraToml
-])
+  ${extraToml}
+'')

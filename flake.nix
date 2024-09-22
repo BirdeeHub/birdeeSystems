@@ -221,7 +221,7 @@
               extraPATH = [
               ];
             };
-            inherit (pkgs) dep-tree minesweeper nops manix alakazam wezterm foot;
+            inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot;
           };
 
           app-images =
@@ -441,6 +441,7 @@
                 specialArgs = {
                   hostname = "installer_mine";
                   is_minimal = true;
+                  use_alacritty = true;
                   inherit
                     stateVersion
                     self

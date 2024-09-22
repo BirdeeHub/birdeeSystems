@@ -24,6 +24,7 @@ inputs: let
     pinnedVersions = import ./pinnedVersions.nix;
     dep-tree = import ./dep-tree;
     nops = import ./nops;
+    tmux = import ./tmux;
     alakazam = import ./alakitty;
     wezterm = import ./wezterm;
     foot = import ./foot;

@@ -1,10 +1,7 @@
-{ config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, ... }: let
+{ config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, use_alacritty ? true, ... }: let
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 
-  # TODO: THIS GETS THE WRONG VERSION OF TMUX
-  # SWAP AWAY FROM USING TMUX MODULE TO USING OVERLAY
-  # FOR YOUR SYSTEM CONFIG
   tx = pkgs.writeShellScriptBin "tx" ''
     if ! echo "$PATH" | grep -q "${pkgs.tmux}/bin"; then
       export PATH=${pkgs.tmux}/bin:$PATH
@@ -16,34 +13,47 @@
       exec tmux new-session
     fi
   '';
-  # TODO: if you use zsh it prompts you to set it up every time...
-  # change it back to zsh when you make it have an empty .zshrc for user
-  login_shell = "fish";
+  nerd_font_string = "FiraMono";
+  font_string = "${nerd_font_string} Nerd Font";
+  login_shell = "zsh";
 
 in {
   imports = with system-modules; [
     "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     ./minimal-graphical-base.nix
-    shell.bash
     shell.${login_shell}
     ranger
-    birdeeVim.nixosModules.default
+  ] ++ (lib.optional (login_shell != "bash") system-modules.shell.bash);
+
+  birdeeMods = {
+    ${login_shell}.enable = true;
+    ranger = {
+      enable = true;
+      withoutDragon = true;
+    };
+  } // (lib.optionalAttrs (login_shell != "bash") {
+    bash.enable = true;
+  });
+
+  environment.systemPackages = with pkgs; [
+    inputs.disko.packages.${system}.default
+    tmux
+    tx
+    git
+    findutils
+    coreutils
+    xclip
+  ] ++ (if is_minimal then [
+    pkgs.neovim
+  ] else with pkgs; [
+    # todo make a version that counts as minimal to include above
+    system-modules.birdeeVim.packages.${system}.noAInvim
+  ]);
+
+  isoImage.isoBaseName = "birdeeOS_installer";
+  isoImage.contents = lib.mkIf (builtins.isPath "${self}/secrets") [
+    { source = "${self}/secrets"; target = "/secrets";}
   ];
-
-  # TODO: make a more minimal config for this later so you can include it...
-  # still make non minimal install noAInvim
-  birdeeVim = {
-    enable = ! is_minimal;
-    packageNames = [ "noAInvim" ];
-  };
-
-  boot.kernelModules = [ "wl" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  # Allow flakes and new command
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.shellAliases = let
   in {
@@ -74,85 +84,78 @@ in {
       sudo chmod -R go-rwx /mnt/home/$username/birdeeSystems
       sudo chown -R $username:users /mnt/home/$username/birdeeSystems
     ''}";
-    lsnc = "lsd --color=never";
+    lsnc = "ls --color=never";
     la = "ls -a";
     ll = "ls -l";
     l  = "ls -alh";
   };
 
-  isoImage.contents = lib.mkIf (builtins.isPath "${self}/secrets") [
-    { source = "${self}/secrets"; target = "/secrets";}
-  ];
-
-  isoImage.isoBaseName = "birdeeOS_installer";
-
-  birdeeMods = {
-    ${login_shell}.enable = true;
-    bash.enable = true;
-    ranger = {
-      enable = true;
-      withoutDragon = true;
-    };
-  };
-
-  services.xserver.enable = true;
-  services.xserver.desktopManager.session = (let
-    alakitty = pkgs.callPackage ./alatoml.nix {
-      maximize_program = inputs.maximizer.packages.${pkgs.system}.default;
-      inherit tx;
-      shellStr = "${pkgs.${login_shell}}/bin/${login_shell}";
-    };
-  in [
-    { name = "alacritty";
-      start = /*bash*/ ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --primary --preferred
-        ${pkgs.alacritty}/bin/alacritty --config-file ${alakitty} &
-        waitPID=$!
-      '';
-    }
-  ]);
-
-  services.displayManager.defaultSession = "alacritty";
+  boot.kernelModules = [ "wl" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  services.libinput.enable = true;
+  services.libinput.touchpad.disableWhileTyping = true;
 
   users.defaultUserShell = pkgs.${login_shell};
+  system.activationScripts.silencezsh.text = ''
+    [ ! -e "/home/nixos/.zshrc" ] && echo "# dummy file" > /home/nixos/.zshrc
+  '';
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraMono" ]; })
+    (nerdfonts.override { fonts = lib.optionals (nerd_font_string != "") [ nerd_font_string ]; })
   ];
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      serif = [ "FiraMono Nerd Font" ];
-      sansSerif = [ "FiraMono Nerd Font" ];
-      monospace = [ "FiraMono Nerd Font" ];
+      serif = [ font_string ];
+      sansSerif = [ font_string ];
+      monospace = [ font_string ];
     };
   };
   fonts.fontDir.enable = true;
 
-  services.libinput.enable = true;
-  services.libinput.touchpad.disableWhileTyping = true;
-  environment.systemPackages = with pkgs; [
-    inputs.disko.packages.${system}.default
-    tmux
-    tx
-    git
-    findutils
-    coreutils
-    xclip
-  ] ++ (if is_minimal then [ pkgs.neovim ] else with pkgs; [
-  ]);
-
-  # for xterm instead, these should be useful
-  # services.xserver.displayManager.sessionCommands = /*bash*/ ''
-  #   ${pkgs.xorg.xrdb}/bin/xrdb -merge ${pkgs.writeText "Xresources" ''
-  #     XTerm*termName: xterm-256color
-  #     XTerm*faceName: FiraMono Nerd Font
-  #     XTerm*faceSize: 12
-  #     XTerm*background: black
-  #     XTerm*foreground: white
-  #     XTerm*loginShell: true
-  #     XTerm*shell: /path/to/your/shell
-  #   ''}
-  # '';
+  services.xserver.enable = true;
+  services.displayManager.defaultSession = if use_alacritty then "alacritty" else "xterm-installer";
+  services.xserver.desktopManager.session = let
+    alacritty_dm = (let
+      alakitty = pkgs.callPackage ./alatoml.nix {
+        maximizer = "${inputs.maximizer.packages.${pkgs.system}.default}/bin/maximize_program";
+        inherit tx font_string;
+        shellStr = "${pkgs.${login_shell}}/bin/${login_shell}";
+      };
+    in [
+      { name = "alacritty";
+        start = /*bash*/ ''
+          ${pkgs.alacritty}/bin/alacritty --config-file ${alakitty} &
+          waitPID=$!
+        '';
+      }
+    ]);
+    xterm_dm = (let
+      maximizer = "${inputs.maximizer.packages.${pkgs.system}.default}/bin/maximize_program";
+      launchScript = pkgs.writeShellScript "mysh" /*bash*/ ''
+        ${maximizer} xterm > /dev/null 2>&1 &
+        exec ${tx}/bin/tx
+      '';
+    in [
+      { name = "xterm-installer";
+        start = /*bash*/ ''
+          ${pkgs.xorg.xrdb}/bin/xrdb -merge ${pkgs.writeText "Xresources" ''
+            xterm*termName: xterm-256color
+            xterm*faceName: ${font_string}
+            xterm*faceSize: 12
+            xterm*background: black
+            xterm*foreground: white
+            xterm*title: xterm
+            xterm*loginShell: true
+          ''}
+          ${pkgs.xterm}/bin/xterm -name xterm -e ${launchScript} &
+          waitPID=$!
+        '';
+      }
+    ]);
+  in
+  if use_alacritty then alacritty_dm else xterm_dm;
 
 }
