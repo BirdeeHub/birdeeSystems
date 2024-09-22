@@ -1,12 +1,15 @@
-{pkgs
-, lib
+{ lib
 , substituteAll
 , tmux
+, stdenv
+, tmuxPlugins
+, writeShellScriptBin
+, writeText
 
 # Store tmux socket under {file}`/run`, which is more
 # secure than {file}`/tmp`, but as a downside it doesn't
 # survive user logout.
-, secureSocket ? true
+, secureSocket ? stdenv.isLinux
 
 # Start with defaults from the Sensible plugin
 , sourceSensible ? true
@@ -23,9 +26,10 @@
 }: let
 
   plugins = if pluginSpecs != null then pluginSpecs else [
-    pkgs.tmuxPlugins.onedark-theme
+    tmuxPlugins.onedark-theme
   ];
 
+  # tmuxBoolToStr = value: if value then "on" else "off";
   defaulttmuxopts = /*tmux*/''
     set -g display-panes-colour default
     set -g default-terminal ${term_string}
@@ -84,13 +88,11 @@
     bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
   '';
 
-
-  # tmuxBoolToStr = value: if value then "on" else "off";
-  TMUXconf = pkgs.writeText "tmux.conf" (/* tmux */ (if sourceSensible then ''
+  TMUXconf = writeText "tmux.conf" (/* tmux */ (if sourceSensible then ''
     # ============================================= #
     # Start with defaults from the Sensible plugin  #
     # --------------------------------------------- #
-    run-shell ${pkgs.tmuxPlugins.sensible.rtp}
+    run-shell ${tmuxPlugins.sensible.rtp}
     # ============================================= #
 
     '' else "") + ''
@@ -106,6 +108,13 @@
 
     ${configPlugins plugins}
   '');
+
+  addGlobalVars = set: let
+    listed = builtins.attrValues (builtins.mapAttrs (k: v: ''set-environment -g ${k} "${v}"'') set);
+  in builtins.concatStringsSep "\n" listed;
+
+  addPassthruVars = ptv: lib.optionalString (ptv != [])
+    ''set-option -g update-environment "${builtins.concatStringsSep " " ptv}"'';
 
   configPlugins = plugins: (let
     pluginName = p: if lib.types.package.check p then p.pname else p.plugin.pname;
@@ -124,13 +133,6 @@
     ''
   );
 
-  addGlobalVars = set: let
-    listed = builtins.attrValues (builtins.mapAttrs (k: v: ''set-environment -g ${k} "${v}"'') set);
-  in builtins.concatStringsSep "\n" listed;
-
-  addPassthruVars = ptv: lib.optionalString (ptv != [])
-    ''set-option -g update-environment "${builtins.concatStringsSep " " ptv}"'';
-
   newTMUX = tmux.overrideAttrs (prev: {
     patches = prev.patches ++ [ (substituteAll {
         # hardcode our config file.
@@ -143,9 +145,9 @@
   userrunsocket = lib.optionalString secureSocket # bash
     ''export TMUX_TMPDIR=''${TMUX_TMPDIR:-''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}}'';
 
-  tmuxout = pkgs.writeShellScriptBin "tmux" /*bash*/''
+  tmuxout = writeShellScriptBin "tmux" /*bash*/''
+    # If the right tmux isnt in the path, the colorscheme wont work.
     if ! echo "$PATH" | grep -q "${newTMUX}/bin"; then
-      # If the right tmux isnt in the path, the colorscheme wont work.
       export PATH="${newTMUX}/bin:$PATH"
     fi
     ${userrunsocket}
