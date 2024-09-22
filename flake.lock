@@ -1071,11 +1071,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1726971992,
-        "narHash": "sha256-vbZZXwRWYgvmwk4wcN+ooBLk1j0ZcfLxUzrEQrxBtIQ=",
+        "lastModified": 1727146349,
+        "narHash": "sha256-/yoISin6eTsTfI/27Kvxt+8OVBVl2RI28KcBRFm3jSg=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "47d455105290d7839502d9201d3706e9c25fcba6",
+        "rev": "ee8546bcb55ff8d6f307e6639f0cdb17302a457c",
         "type": "github"
       },
       "original": {
@@ -1407,6 +1407,21 @@
         "dir": "nix",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
+        "type": "github"
+      }
+    },
+    "nixToLua": {
+      "locked": {
+        "lastModified": 1725372212,
+        "narHash": "sha256-k6UTLB9FKJD+0b3xmXV/6+VX+YB0rCrLA0JPitczuQ4=",
+        "owner": "BirdeeHub",
+        "repo": "nixtoLua",
+        "rev": "90f7efd85ff86abef5440e803321948a074b0da9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixtoLua",
         "type": "github"
       }
     },
@@ -2239,6 +2254,7 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": "nix-appimage",
         "nixCats": "nixCats",
+        "nixToLua": "nixToLua",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_15",
         "nixpkgsLocked": "nixpkgsLocked",

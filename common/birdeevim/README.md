@@ -14,8 +14,7 @@ You can run it with `nix shell github:BirdeeHub/birdeeSystems#nvim_for_u` and th
 
 > [!NOTE]
 > Keep in mind downloading my config is going to download a lot of lsps and plugins.
-> You should use the noAI or go one because otherwise it would throw an error because you dont have my key and also it wont download bitwarden cli for you.
-
+> You should use the nvim_for_u one because you dont have my key so you dont need the AI plugins, and it has more normal autocomplete keybinds
 
 > [!WARNING]
 > in the non-mentioned outputs,
@@ -25,8 +24,6 @@ You can run it with `nix shell github:BirdeeHub/birdeeSystems#nvim_for_u` and th
 ---
 
 It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which has a very similar plugin spec to [`lz.n`](https://github.com/nvim-neorocks/lz.n).
-
-- Is it better than lz.n? No not really.
 
 - Is it faster? No its basically the same.
 

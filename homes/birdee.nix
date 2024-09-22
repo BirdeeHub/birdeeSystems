@@ -1,13 +1,13 @@
 { config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
-    term.alacritty
-    term.tmux
+    alacritty
+    tmux
     shell.bash
     shell.zsh
     shell.fish
     firefox
-    birdeeVim.homeModule
+    birdeeVim
     ranger
     thunar
     i3

@@ -6,14 +6,15 @@
 in {
   imports = with system-modules; [
     i3
-    birdeeVim.nixosModules.default
-    term.alacritty
+    birdeeVim
+    alacritty
     shell.bash
     shell.zsh
     shell.fish
     lightdm
     i3MonMemory
     LD
+    VPNWRCCDC
   ];
 
   birdeeVim = {
@@ -22,7 +23,6 @@ in {
   };
 
   nix.settings = {
-    access-tokens = "!include /home/birdee/.secrets/gitoke";
     # bash-prompt-prefix = "✓";
     # substituters = [
     #   "https://nix-community.cachix.org"
@@ -31,9 +31,16 @@ in {
     #   "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     # ];
   };
+  nix.extraOptions = ''
+    !include /home/birdee/.secrets/gitoke
+  '';
+  # nix.extraOptions = ''
+  #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
+  # '';
 
   users.users = users.users;
   birdeeMods = {
+    vpnwrccdc.enable = false;
     i3.enable = true;
     i3.tmuxDefault = true;
     zsh.enable = true;
@@ -44,9 +51,6 @@ in {
     lightdm.enable = true;
     LD.enable = true;
   };
-  # nix.extraOptions = ''
-  #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
-  # '';
 
   services.flatpak.enable = true;
   services.ollama = {

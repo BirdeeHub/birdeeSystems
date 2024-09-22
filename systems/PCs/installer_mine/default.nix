@@ -56,34 +56,36 @@ in {
     { source = "${self}/secrets"; target = "/secrets";}
   ];
 
-  environment.shellAliases = let
-  in {
+  environment.shellAliases = {
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
       output=$1
       username=$2
-      sudo disko --mode disko --flake github:BirdeeHub/birdeeSystems#$output
-      sudo nixos-install --show-trace --flake github:BirdeeHub/birdeeSystems#$output
+      repo=''${3:-"birdeeSystems"}
+      sudo disko --mode disko --flake github:BirdeeHub/$repo#$output
+      sudo nixos-install --show-trace --flake github:BirdeeHub/$repo#$output
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username/birdeeSystems
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
-      sudo chmod -R go-rwx /mnt/home/$username/birdeeSystems
-      sudo chown -R $username:users /mnt/home/$username/birdeeSystems
+      mkdir -p /mnt/home/$username/$repo
+      git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
+      sudo chmod -R go-rwx /mnt/home/$username/$repo
+      sudo chown -R $username:users /mnt/home/$username/$repo
     ''}";
     birdeeOS-disko = "${pkgs.writeShellScript "birdeeOS-disko" ''
       output=$1
-      sudo disko --mode disko --flake github:BirdeeHub/birdeeSystems#$output
+      repo=''${2:-"birdeeSystems"}
+      sudo disko --mode disko --flake github:BirdeeHub/$repo#$output
     ''}";
     birdeeOS-install = "${pkgs.writeShellScript "birdeeOS-install" ''
       output=$1
       username=$2
-      sudo nixos-install --show-trace --flake github:BirdeeHub/birdeeSystems#$output
+      repo=''${3:-"birdeeSystems"}
+      sudo nixos-install --show-trace --flake github:BirdeeHub/$repo#$output
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username/birdeeSystems
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
-      sudo chmod -R go-rwx /mnt/home/$username/birdeeSystems
-      sudo chown -R $username:users /mnt/home/$username/birdeeSystems
+      mkdir -p /mnt/home/$username/$repo
+      git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
+      sudo chmod -R go-rwx /mnt/home/$username/$repo
+      sudo chown -R $username:users /mnt/home/$username/$repo
     ''}";
     lsnc = "ls --color=never";
     la = "ls -a";

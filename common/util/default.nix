@@ -1,4 +1,4 @@
-with builtins; rec {
+inputs: with builtins; rec {
 
   linkFarmPair =
     name:
@@ -82,48 +82,28 @@ with builtins; rec {
     in launcher;
   in arguments.pkgs.callPackage mkLuaAppWcallPackage arguments;
 
-  luaTablePrinter = attrSet: let
-    luatableformatter = attrSet: let
-      nameandstringmap = mapAttrs (n: value: let
-          name = ''[ [[${n}]] ]'';
+  eachSystem = with builtins; systems: f:
+    let
+      # Merge together the outputs for all systems.
+      op = attrs: system:
+        let
+          ret = f system;
+          op = attrs: key: attrs //
+              {
+                ${key} = (attrs.${key} or { })
+                  // { ${system} = ret.${key}; };
+              }
+          ;
         in
-        if value == true then "${name} = true"
-        else if value == false then "${name} = false"
-        else if value == null then "${name} = nil"
-        else if lib.isDerivation value then "${name} = [[${value}]]"
-        else if isList value then "${name} = ${luaListPrinter value}"
-        else if isAttrs value then "${name} = ${luaTablePrinter value}"
-        else "${name} = [[${toString value}]]"
-      ) attrSet;
-      resultList = attrValues nameandstringmap;
-      resultString = concatStringsSep ", " resultList;
+        foldl' op attrs (attrNames ret);
     in
-    resultString;
-    catset = luatableformatter attrSet;
-    LuaTable = "{ " + catset + " }";
-  in
-  LuaTable;
+    foldl' op { }
+      (systems
+        ++ # add the current system if --impure is used
+          (if builtins ? currentSystem then
+             if elem currentSystem systems
+             then []
+             else [ currentSystem ]
+          else []));
 
-  luaListPrinter = theList: let
-    lualistformatter = theList: let
-      stringlist = map (value:
-        if value == true then "true"
-        else if value == false then "false"
-        else if value == null then "nil"
-        else if lib.isDerivation value then "[[${value}]]"
-        else if isList value then "${luaListPrinter value}"
-        else if isAttrs value then "${luaTablePrinter value}"
-        else "[[${toString value}]]"
-      ) theList;
-      resultString = concatStringsSep ", " stringlist;
-    in
-    resultString;
-    catlist = lualistformatter theList;
-    LuaList = "{ " + catlist + " }";
-  in
-  LuaList;
-
-  lib = {
-    isDerivation = value: value.type or null == "derivation";
-  };
 }
