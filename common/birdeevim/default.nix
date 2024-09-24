@@ -1,4 +1,4 @@
-{inputs, flake-path ? "/home/birdee/birdeeSystems", ... }@attrs: let
+{inputs, birdeeutils, flake-path ? "/home/birdee/birdeeSystems", ... }@attrs: let
   inherit (inputs.nixCats) utils;
   nixpkgs = inputs.nixpkgsNV;
   luaPath = "${./.}";

@@ -4,77 +4,6 @@ inputs: with builtins; rec {
     name:
     path:
     { inherit name path; };
-  
-  mkRecBuilder = { src ? "$src", outdir ? "$out", action ? "cp $1 $2", ... }: /* bash */''
-    source $stdenv/setup
-    builder_file_action() {
-      ${action}
-    }
-    dirloop() {
-      local dir=$1
-      local outdir=$2
-      local action=$3
-      local file=""
-      mkdir -p "$outdir"
-      for file in "$dir"/*; do
-        if [ -d "$file" ]; then
-          dirloop "$file" "$outdir/$(basename "$file")" $action
-        else
-          $action "$file" "$outdir"
-        fi
-      done
-    }
-    dirloop ${src} ${outdir} builder_file_action
-  '';
-
-  mkLuaApp = arguments: let
-    mkLuaAppWcallPackage = {
-      pkgs
-      , lib
-      , writeShellScriptBin
-      , writeShellScript
-      , writeText
-      , stdenv
-      # args below:
-      , appname
-      , procPath
-      , luaEnv
-      , source
-      , extra_launcher_lua ? ""
-      , extra_launcher_commands ? ""
-      , args ? []
-      , to_bin ? true
-      , ...
-    }: let
-      luaFileAction = /*bash*/''
-        local file=$1
-        local outdir=$2
-        if [[ $file == *.lua ]]; then
-          ${luaEnv}/bin/luac -o "$outdir/$(basename "$file" .lua).luac" "$file"
-        else
-          cp "$file" "$outdir"
-        fi
-      '';
-      app = stdenv.mkDerivation {
-        name = "${appname}";
-        src = source;
-        phases = [ "buildPhase" ];
-        buildPhase = mkRecBuilder { action = luaFileAction; };
-      };
-      launcher = let
-        main = writeText "main.lua" /* lua */ ''
-          package.path = package.path .. [[;${app}/?.luac;${app}/?/init.luac;./?.luac;./?/init.luac]]
-          package.cpath = package.cpath .. [[;${app}/?.luac;${app}/?/init.luac;./?.luac;./?/init.luac]]
-          ${extra_launcher_lua}
-          dofile("${app}/init.luac")
-        '';
-      in (if to_bin then writeShellScriptBin else writeShellScript) "${appname}" ''
-        export PATH=${lib.makeBinPath procPath}
-        ${extra_launcher_commands}
-        ${luaEnv}/bin/lua ${main} "${concatStringsSep " " (map (v: ''"${v}"'') args)}" "$@"
-      '';
-    in launcher;
-  in arguments.pkgs.callPackage mkLuaAppWcallPackage arguments;
 
   eachSystem = with builtins; systems: f:
     let
@@ -99,5 +28,89 @@ inputs: with builtins; rec {
              then []
              else [ currentSystem ]
           else []));
+  
+  mkRecBuilder = { src ? "$src", outdir ? "$out", action ? "cp $1 $2", ... }: /* bash */''
+    runHook preBuild
+    builder_file_action() {
+      ${action}
+    }
+    dirloop() {
+      local dir=$1
+      local outdir=$2
+      local action=$3
+      local file=""
+      mkdir -p "$outdir"
+      for file in "$dir"/*; do
+        if [ -d "$file" ]; then
+          dirloop "$file" "$outdir/$(basename "$file")" $action
+        else
+          $action "$file" "$outdir"
+        fi
+      done
+    }
+    dirloop ${src} ${outdir} builder_file_action
+    runHook postBuild
+  '';
+
+  compile_lua_dir = { drvname ? "REPLACE_ME", source, luaEnv, mkDerivation, ... }: let
+    luaFileAction = /*bash*/''
+      local file=$1
+      local outdir=$2
+      if [[ $file == *.lua ]]; then
+        if [ -e "${luaEnv}/bin/luajit" ]; then
+          ${luaEnv}/bin/luajit -b "$file" "$outdir/$(basename "$file")" || cp -f "$file" "$outdir"
+        else
+          ${luaEnv}/bin/luac -o "$outdir/$(basename "$file")" "$file" || cp -f "$file" "$outdir"
+        fi
+      else
+        cp -f "$file" "$outdir"
+      fi
+    '';
+    app = mkDerivation {
+      name = drvname;
+      src = source;
+      dontUnpack = true;
+      buildPhase = mkRecBuilder { action = luaFileAction; };
+    };
+  in app;
+
+  mkLuaApp = callPackage: arguments: let
+    mkLuaAppWcallPackage = {
+      lib
+      , writeShellScriptBin
+      , writeShellScript
+      , writeText
+      , stdenv
+      , luajit
+      # args below:
+      , source
+      , luaEnv ? luajit
+      , appname ? "REPLACE_ME"
+      , procPath ? []
+      , extra_launcher_lua ? ""
+      , extra_launcher_commands ? ""
+      , args ? []
+      , to_bin ? true
+      , ...
+    }: let
+      app = compile_lua_dir { drvname = appname; inherit source luaEnv; inherit (stdenv) mkDerivation; };
+      launcher = let
+        main = writeText "main.lua" /* lua */ ''
+          package.path = package.path .. [[;${app}/?.lua;${app}/?/init.lua]]
+          package.cpath = package.cpath .. [[;${app}/?.lua;${app}/?/init.lua]]
+          ${extra_launcher_lua}
+          dofile("${app}/init.lua")
+        '';
+      in (if to_bin then writeShellScriptBin else writeShellScript) "${appname}" ''
+        export PATH=${lib.makeBinPath procPath}
+        ${extra_launcher_commands}
+        if [ -e "${luaEnv}/bin/luajit" ]; then
+          ${luaEnv}/bin/luajit ${main} ${concatStringsSep " " (map (v: ''"${v}"'') args)} "$@"
+        else
+          ${luaEnv}/bin/lua ${main} ${concatStringsSep " " (map (v: ''"${v}"'') args)} "$@"
+        fi
+      '';
+    in launcher;
+  in callPackage mkLuaAppWcallPackage arguments;
 
 }

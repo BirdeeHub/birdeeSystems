@@ -1,6 +1,6 @@
 { inputs, flake-path, ... }: let
   birdeeutils = import ./util inputs;
-  birdeeVim = import ./birdeevim { inherit inputs flake-path; };
+  birdeeVim = import ./birdeevim { inherit inputs flake-path birdeeutils; };
 in {
   inherit birdeeVim birdeeutils;
   hub = { HM ? true
