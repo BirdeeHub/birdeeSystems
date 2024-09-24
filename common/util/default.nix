@@ -82,8 +82,8 @@ inputs: with builtins; rec {
       , luajit
       # args below:
       , source
-      , luaEnv ? luajit
       , appname ? "REPLACE_ME"
+      , luaEnv ? luajit
       , procPath ? []
       , libPath ? []
       , extra_launcher_commands ? ""
