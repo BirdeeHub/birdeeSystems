@@ -14,15 +14,14 @@
       procPath = with pkgs; [ i3 xorg.xrandr gawk ];
       luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
       luaProg = stdenv.mkDerivation {
-        name = "${appname}";
-        src = ./.;
+        name = appname;
+        src = ./${appname}.lua;
+        phases = [ "buildPhase" ];
         buildPhase = ''
-          source $stdenv/setup
-          ${luaEnv}/bin/luac -o $out ./${appname}.lua
+          ${luaEnv}/bin/luac -o $out $src
         '';
-        meta = { mainProgram = "${appname}"; };
       };
-      launcher = writeShellScript "${appname}" ''
+      launcher = writeShellScript appname ''
         export PATH=${lib.makeBinPath procPath}
         ${luaEnv}/bin/lua ${luaProg} "${xrandrOthersSH}" "${xrandrPrimarySH}"''
             + (if userJsonCache == null then "" else '' "${userJsonCache}"'');

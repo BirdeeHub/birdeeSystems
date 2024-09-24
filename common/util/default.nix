@@ -101,7 +101,7 @@ inputs: with builtins; rec {
           ${extra_launcher_lua}
           dofile("${app}/init.lua")
         '';
-      in (if to_bin then writeShellScriptBin else writeShellScript) "${appname}" ''
+      in (if to_bin then writeShellScriptBin else writeShellScript) appname ''
         export PATH=${lib.makeBinPath procPath}
         ${extra_launcher_commands}
         if [ -e "${luaEnv}/bin/luajit" ]; then
