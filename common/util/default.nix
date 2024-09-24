@@ -52,7 +52,7 @@ inputs: with builtins; rec {
     runHook postBuild
   '';
 
-  compile_lua_dir = { drvname ? "REPLACE_ME", source, luaEnv, mkDerivation, ... }: let
+  compile_lua_dir = { drvname ? "REPLACE_ME", source, luaEnv, src ? "$src", outdir ? "$out", mkDerivation, ... }: let
     luaFileAction = /*bash*/''
       local file=$1
       local outdir=$2
@@ -70,16 +70,14 @@ inputs: with builtins; rec {
       name = drvname;
       src = source;
       dontUnpack = true;
-      buildPhase = mkRecBuilder { action = luaFileAction; };
+      buildPhase = mkRecBuilder { action = luaFileAction; inherit src outdir; };
     };
   in app;
 
   mkLuaApp = callPackage: arguments: let
     mkLuaAppWcallPackage = {
       lib
-      , writeShellScriptBin
-      , writeShellScript
-      , writeText
+      , bash
       , stdenv
       , luajit
       # args below:
@@ -87,30 +85,40 @@ inputs: with builtins; rec {
       , luaEnv ? luajit
       , appname ? "REPLACE_ME"
       , procPath ? []
-      , extra_launcher_lua ? ""
+      , libPath ? []
       , extra_launcher_commands ? ""
       , args ? []
-      , to_bin ? true
       , ...
     }: let
-      app = compile_lua_dir { drvname = appname; inherit source luaEnv; inherit (stdenv) mkDerivation; };
-      launcher = let
-        main = writeText "main.lua" /* lua */ ''
-          package.path = package.path .. [[;${app}/?.lua;${app}/?/init.lua]]
-          package.cpath = package.cpath .. [[;${app}/?.lua;${app}/?/init.lua]]
-          ${extra_launcher_lua}
-          dofile("${app}/init.lua")
+      outdir = "$out/lua/${appname}";
+      app_prime = compile_lua_dir {
+        drvname = appname;
+        inherit outdir source luaEnv;
+        inherit (stdenv) mkDerivation;
+      };
+      in app_prime.overrideAttrs {
+        installPhase = let
+          luapath = luaEnv.pkgs.luaLib.genLuaPathAbsStr luaEnv;
+          luacpath = luaEnv.pkgs.luaLib.genLuaCPathAbsStr luaEnv;
+        in /*bash*/ ''
+          runHook preInstall
+          cat > $out/bin/${appname} <<EOFTAG
+          #!${bash}/bin/bash
+          export PATH=${lib.makeBinPath procPath}
+          export LD_LIBRARY_PATH=${lib.makeLibraryPath libPath}
+          export LUA_PATH="${outdir}/?.lua;${outdir}/?/init.lua;${luapath}"
+          export LUA_CPATH="${outdir}/?.lua;${outdir}/?/init.lua;${luacpath}"
+          ${extra_launcher_commands}
+          if [ -e "${luaEnv}/bin/luajit" ]; then
+            exec ${luaEnv}/bin/luajit ${outdir}/init.lua ${concatStringsSep " " (map (v: ''"${v}"'') args)} "$@"
+          else
+            exec ${luaEnv}/bin/lua ${outdir}/init.lua ${concatStringsSep " " (map (v: ''"${v}"'') args)} "$@"
+          fi
+          EOFTAG
+          chmod +x $out/bin/${appname}
+          runHook postInstall
         '';
-      in (if to_bin then writeShellScriptBin else writeShellScript) appname ''
-        export PATH=${lib.makeBinPath procPath}
-        ${extra_launcher_commands}
-        if [ -e "${luaEnv}/bin/luajit" ]; then
-          ${luaEnv}/bin/luajit ${main} ${concatStringsSep " " (map (v: ''"${v}"'') args)} "$@"
-        else
-          ${luaEnv}/bin/lua ${main} ${concatStringsSep " " (map (v: ''"${v}"'') args)} "$@"
-        fi
-      '';
-    in launcher;
+      };
   in callPackage mkLuaAppWcallPackage arguments;
 
 }
