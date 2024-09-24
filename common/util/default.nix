@@ -5,12 +5,6 @@ inputs: with builtins; rec {
     path:
     { inherit name path; };
   
-  mkScriptAliases = packageSet: concatStringsSep "\n" (mapAttrs (name: value: ''
-      ${name}() {
-        ${value}/bin/${name} "$@"
-      }
-  '') packageSet);
-
   mkRecBuilder = { src ? "$src", outdir ? "$out", action ? "cp $1 $2", ... }: /* bash */''
     source $stdenv/setup
     builder_file_action() {
