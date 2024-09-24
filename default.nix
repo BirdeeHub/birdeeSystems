@@ -365,7 +365,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             inherit system;
             modules = [
               { nixpkgs.overlays = overlayList; }
-              ./systems/PCs/installer_mine
+              ./systems/installers/installer_mine
               # home-manager.nixosModules.home-manager
               # (HMasModule {
               #   username = "birdee";
@@ -382,7 +382,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             inherit system;
             modules = [
               { nixpkgs.overlays = overlayList; }
-              ./systems/PCs/installer
+              ./systems/installers/installer
             ];
           };
         };
