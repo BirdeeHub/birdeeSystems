@@ -21,8 +21,7 @@
       };
       checks.default = (pkgs.${APPNAME}.override {
         extraLuaPackages = (lp: with lp; [ busted luassert ]);
-      }).overrideAttrs
-      (final: prev:{
+      }).overrideAttrs (final: prev: {
         name = "test-${APPNAME}";
         src = ./.;
         doCheck = true;
