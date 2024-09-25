@@ -61,8 +61,8 @@ local function draw_image(window, x, y, image_buffer, image_width, image_height)
 end
 
 -- Load the image
-local dirname = './' .. (debug.getinfo(1, 'S').source:match('^@?(.*[/\\])') or '') ---@type string
-local image_path = dirname .. 'assets/uv.ppm'
+local dirname = (debug.getinfo(1, 'S').source:match('^@?(.*[/\\])') or '') ---@type string
+local image_path = dirname .. 'uv.ppm'
 local image_buffer, image_width, image_height = load_image(image_path)
 
 -- Open a window
