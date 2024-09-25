@@ -113,7 +113,7 @@ inputs: with builtins; rec {
       , ...
     }: let
       compiled = compile_lua_dir {
-        name = "${APPNAME}-compiled";
+        name = APPNAME;
         inherit (stdenv) mkDerivation;
         inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR;
       };
