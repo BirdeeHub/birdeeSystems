@@ -1,13 +1,5 @@
-{ pkgs, inputs, lib, writeText, makeWrapper, writeShellScript, stdenv, ... }: let
-  procPath = with pkgs; [
-    coreutils
-    findutils
-    gnumake
-    gnused
-    gnugrep
-    gawk
-  ];
-  luaEnv = pkgs.lua5_2.withPackages (lpkgs: with lpkgs; [
+{ pkgs, inputs, mkLuaApp, APPNAME, ... }: let
+  lua_packages = (lpkgs: with lpkgs; [
     luafilesystem
     cjson
     busted
@@ -16,33 +8,45 @@
     cqueues
     stdlib
   ]);
-  appname = "REPLACE_ME";
+  lua_interpreter = pkgs.luajit;
+  final_package = let
+    lua_package = {
+    lib
+    , coreutils
+    , findutils
+    , gnumake
+    , gnused
+    , gnugrep
+    , gawk
+    , callPackage
+
+    , APPNAME ? "REPLACE_ME"
+    , lua_packages ? (_:[])
+    , extraLuaPackages ? (_:[])
+    , lua_interpreter
+    , extraWrapperArgs ? []
+    , ...
+    }: let
+      procPath = [
+        coreutils
+        findutils
+        gnumake
+        gnused
+        gnugrep
+        gawk
+      ];
+      libPath = [];
+      built_package = mkLuaApp callPackage {
+        inherit extraLuaPackages APPNAME lua_interpreter lua_packages;
+        wrapperArgs = [
+          ''--prefix PATH ';' ${lib.makeBinPath procPath}''
+          ''--prefix LD_LIBRARY_PATH ';' ${lib.makeLibraryPath libPath}''
+        ] ++ extraWrapperArgs;
+        APP_SRC = ./lua;
+      };
+    in
+    built_package;
+  in
+  pkgs.callPackage lua_package { inherit lua_packages lua_interpreter APPNAME; };
 in
-stdenv.mkDerivation (let
-  launcher = writeShellScript "${appname}" ''
-    ${luaEnv}/bin/lua ${./src/${appname}.lua} "$@"
-  '';
-in {
-  name = "${appname}";
-  src = ./.;
-  buildInputs = with pkgs; [  ];
-  propagatedBuildInputs = with pkgs; [ luaEnv ] ++ procPath;
-  nativeBuildInputs = with pkgs; [ makeWrapper ];
-  propagatedNativeBuildInputs = with pkgs; [  ];
-  buildPhase = ''
-    source $stdenv/setup
-    mkdir -p $out/bin
-    mkdir -p $out/lib
-    cp ${launcher} $out/bin/${appname}
-    cp -r ./* $out/lib/
-  '';
-  installPhase = '''';
-  postFixup = ''
-    wrapProgram $out/bin/${appname} \
-      --set PATH ${lib.makeBinPath procPath}
-  '';
-  passthru = { inherit luaEnv; };
-  meta = {
-    mainProgram = "${appname}";
-  };
-})
+final_package
