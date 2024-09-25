@@ -42,6 +42,7 @@
           ''--prefix LD_LIBRARY_PATH ';' ${lib.makeLibraryPath libPath}''
         ] ++ extraWrapperArgs;
         LUA_SRC = ./lua;
+        CPATH_DIR = null;
       };
     in
     built_package;
