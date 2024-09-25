@@ -19,16 +19,20 @@
       packages = {
         default = pkgs.${APPNAME};
       };
-      checks.default = (pkgs.${APPNAME}.override {
-        extraLuaPackages = (lp: with lp; [ busted luassert ]);
-      }).overrideAttrs (final: prev: {
+      checks.default = let
+        luaEnv = (pkgs.${APPNAME}.override { extraLuaPackages = (lp: with lp; [ busted luassert ]); }).luaEnv;
+      in pkgs.stdenv.mkDerivation {
         name = "test-${APPNAME}";
         src = ./.;
         doCheck = true;
-        checkPhase = ''
-          ${final.passthru.luaEnv}/bin/busted $src
+        dontUnpack = true;
+        buildPhase = ''
+          mkdir -p $out
         '';
-      });
+        checkPhase = ''
+          ${luaEnv}/bin/busted ${./.}
+        '';
+      };
       devShells = {
         default = pkgs.mkShell {
           packages = [ (pkgs.${APPNAME}.override (prev: { extraLuaPackages = (lp: with lp; [ busted luassert ]); })).luaEnv ];
