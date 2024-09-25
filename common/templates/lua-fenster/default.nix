@@ -56,7 +56,7 @@
           ''--prefix PATH ';' ${lib.makeBinPath procPath}''
           ''--prefix LD_LIBRARY_PATH ';' ${lib.makeLibraryPath libPath}''
         ] ++ extraWrapperArgs;
-        APP_SRC = ./lua;
+        LUA_SRC = ./lua;
       };
     in
     built_package;

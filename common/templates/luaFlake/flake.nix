@@ -21,7 +21,7 @@
       };
       devShells = {
         default = pkgs.mkShell {
-          packages = [ pkgs.${APPNAME}.lua.env ];
+          packages = [ pkgs.${APPNAME}.luaEnv ];
           inputsFrom = [];
           DEVSHELL = 0;
           shellHook = ''

@@ -52,7 +52,16 @@ inputs: with builtins; rec {
     dirloop ${src} ${outdir} builder_file_action
   '';
 
-  compile_lua_dir = { name ? "REPLACE_ME", lua_interpreter, src, outdir ? "$out", mkDerivation, ... }: let
+  compile_lua_dir = {
+    name ? "REPLACE_ME",
+    LUA_SRC,
+    CPATH_DIR ? null,
+    lua_interpreter,
+    lua_packages ? (_:[]),
+    extraLuaPackages ? (_:[]),
+    mkDerivation,
+    ...
+    }: let
     luaFileAction = /*bash*/''
       local file=$1
       local outdir=$2
@@ -60,7 +69,7 @@ inputs: with builtins; rec {
       echo "$@" "$(basename "$file")"
       if [[ "$file" == *.lua ]]; then
         if [ -e "${lua_interpreter}/bin/luajit" ]; then
-          ${lua_interpreter}/bin/luajit -b "$file" "$outdir/$(basename "$file")" || cp -f "$file" "$outdir"
+          ${lua_interpreter}/bin/luajit -b "$file" -d "$outdir/$(basename "$file")" || cp -f "$file" "$outdir"
         else
           ${lua_interpreter}/bin/luac -o "$outdir/$(basename "$file")" "$file" || cp -f "$file" "$outdir"
         fi
@@ -68,15 +77,24 @@ inputs: with builtins; rec {
         cp -f "$file" "$outdir"
       fi
     '';
-    app = mkDerivation {
-      inherit src name;
+    app = mkDerivation (finalAttrs: (let
+      env_path = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaPathSearchPaths));
+      env_cpath = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaCPathSearchPaths));
+    in {
+      inherit name;
+      src = LUA_SRC;
       dontUnpack = true;
+      propagatedBuildInputs = (lua_packages lua_interpreter.pkgs) ++ (extraLuaPackages lua_interpreter.pkgs);
       buildPhase = ''
         runHook preBuild
-        ${mkRecBuilder { action = luaFileAction; src = "$src"; inherit outdir; }}
+        ${mkRecBuilder { action = luaFileAction; src = "$src"; outdir = "$out/${env_path}"; }}
+        ${if CPATH_DIR == null then "" else ''
+          mkdir -p $out/${env_cpath}
+          cp -r ${CPATH_DIR}/* $out/${env_cpath}
+        ''}
         runHook postBuild
       '';
-    };
+    }));
   in lua_interpreter.pkgs.luaLib.toLuaModule app;
 
   mkLuaApp = callPackage: arguments: let
@@ -85,7 +103,8 @@ inputs: with builtins; rec {
       , makeWrapper
       , lua5_2
       # args below:
-      , APP_SRC
+      , LUA_SRC
+      , CPATH_DIR ? null
       , lua_interpreter ? lua5_2
       , lua_packages ? (_:[])
       , extraLuaPackages ? (_:[])
@@ -93,34 +112,23 @@ inputs: with builtins; rec {
       , wrapperArgs ? []
       , ...
     }: let
-      compiled = compile_lua_dir (let
-        env_path = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaPathSearchPaths));
-      in {
+      compiled = compile_lua_dir {
         name = "${APPNAME}-compiled";
-        src = APP_SRC;
-        outdir = "$out/${env_path}";
-        inherit lua_interpreter;
         inherit (stdenv) mkDerivation;
-      });
-      app_final = stdenv.mkDerivation (finalAttrs: {
+        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR;
+      };
+      app_final = stdenv.mkDerivation (let
+        luaEnv = compiled.luaModule.withPackages (_: [ compiled ]);
+      in {
         name = APPNAME;
         src = compiled;
         nativeBuildInputs = [ makeWrapper ];
-        propagatedBuildInputs = lua_packages lua_interpreter.pkgs ++ [ compiled ];
-        passthru = let
-          withPackages = lpf: lua_interpreter.buildEnv.override (prev: {
-            extraLibs = finalAttrs.propagatedBuildInputs ++ (lpf lua_interpreter.pkgs);
-          });
-        in {
-          lua = {
-            inherit withPackages;
-            env = withPackages extraLuaPackages;
-          };
-          luaModules = lua_interpreter;
-          requiredLuaModules = finalAttrs.propagatedBuildInputs ++ (extraLuaPackages lua_interpreter.pkgs);
+        propagatedBuildInputs = [ compiled ];
+        passthru = {
+          inherit luaEnv;
         };
-        buildPhase = let
-          binarypath = if builtins.pathExists "${finalAttrs.passthru.lua.env}/bin/luajit" then "${finalAttrs.passthru.lua.env}/bin/luajit" else "${finalAttrs.passthru.lua.env}/bin/lua";
+        installPhase = let
+          binarypath = if builtins.pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
         in /*bash*/''
           runHook preBuild
           mkdir -p $out/bin
@@ -136,7 +144,7 @@ inputs: with builtins; rec {
         '';
       });
     in
-    app_final;
+    lua_interpreter.pkgs.luaLib.toLuaModule app_final;
   in callPackage mkLuaAppWcallPackage arguments;
 
 }
