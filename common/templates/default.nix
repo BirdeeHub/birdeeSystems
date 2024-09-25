@@ -35,6 +35,10 @@ inputs: {
     path = ./lua-fenster;
     description = "a lua environment with fenster built in it";
   };
+  luaFlake = {
+    path = ./luaFlake;
+    description = "an empty flake for a compiled lua application";
+  };
   flakescript = {
     path = ./flakescript;
     description = "a tiny flake that outputs an overlay and a package containing a shell script";
