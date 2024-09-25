@@ -127,7 +127,7 @@ inputs: with builtins; rec {
         passthru = {
           inherit luaEnv;
         };
-        installPhase = let
+        buildPhase = let
           binarypath = if builtins.pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
         in /*bash*/''
           runHook preBuild
