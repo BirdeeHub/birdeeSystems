@@ -2,7 +2,6 @@
   lua_packages = (lpkgs: with lpkgs; [
     luafilesystem
     cjson
-    busted
     inspect
     http
     cqueues
