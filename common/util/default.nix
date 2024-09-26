@@ -60,6 +60,7 @@ inputs: with builtins; rec {
     lua_packages ? (_:[]),
     extraLuaPackages ? (_:[]),
     miscNixVals ? {},
+    toLua ? null,
     mkDerivation,
     ...
     }: let
@@ -79,9 +80,9 @@ inputs: with builtins; rec {
       fi
     '';
     app = mkDerivation (finalAttrs: (let
-      env_path = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaPathSearchPaths));
-      env_cpath = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaCPathSearchPaths));
-      nixluavals = inputs.nixToLua.prettyNoModify miscNixVals;
+      env_path = head (split "[\/][?]" (head lua_interpreter.LuaPathSearchPaths));
+      env_cpath = head (split "[\/][?]" (head lua_interpreter.LuaCPathSearchPaths));
+      nixluavals = if isFunction toLua then toLua miscNixVals else "";
     in {
       inherit name;
       src = LUA_SRC;
@@ -114,12 +115,13 @@ inputs: with builtins; rec {
       , APPNAME ? "REPLACE_ME"
       , wrapperArgs ? []
       , miscNixVals ? {}
+      , toLua ? null
       , ...
     }: let
       compiled = compile_lua_dir {
         name = APPNAME;
         inherit (stdenv) mkDerivation;
-        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals;
+        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals toLua;
       };
       app_final = stdenv.mkDerivation (let
         luaEnv = compiled.luaModule.withPackages (_: [ compiled ]);
@@ -132,7 +134,7 @@ inputs: with builtins; rec {
           inherit luaEnv;
         };
         buildPhase = let
-          binarypath = if builtins.pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
+          binarypath = if pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
         in /*bash*/''
           runHook preBuild
           mkdir -p $out/bin
@@ -149,6 +151,6 @@ inputs: with builtins; rec {
       });
     in
     lua_interpreter.pkgs.luaLib.toLuaModule app_final;
-  in callPackage mkLuaAppWcallPackage arguments;
+  in callPackage mkLuaAppWcallPackage (arguments // { toLua = inputs.nixToLua.prettyNoModify; });
 
 }
