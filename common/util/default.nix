@@ -79,12 +79,11 @@ inputs: with builtins; rec {
         cp -f "$file" "$outdir"
       fi
     '';
-    app = mkDerivation (finalAttrs: (let
-      env_path = head (split "[\/][?]" (head lua_interpreter.LuaPathSearchPaths));
-      env_cpath = head (split "[\/][?]" (head lua_interpreter.LuaCPathSearchPaths));
-      nixluavals = if isFunction toLua then toLua miscNixVals else "";
-      mknixluavals = ''echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
-    in {
+    env_path = head (split "[\/][?]" (head lua_interpreter.LuaPathSearchPaths));
+    env_cpath = head (split "[\/][?]" (head lua_interpreter.LuaCPathSearchPaths));
+    nixluavals = if isFunction toLua then toLua miscNixVals else "";
+    mknixluavals = ''echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
+    app = mkDerivation (finalAttrs: {
       inherit name;
       src = LUA_SRC;
       dontUnpack = true;
@@ -99,7 +98,7 @@ inputs: with builtins; rec {
         ''}
         runHook postBuild
       '';
-    }));
+    });
   in lua_interpreter.pkgs.luaLib.toLuaModule app;
 
   mkLuaApp = callPackage: arguments: let
