@@ -110,6 +110,7 @@ inputs: with builtins; rec {
       , extraLuaPackages ? (_:[])
       , APPNAME ? "REPLACE_ME"
       , wrapperArgs ? []
+      , miscNixVals ? {}
       , ...
     }: let
       compiled = compile_lua_dir {
@@ -134,6 +135,9 @@ inputs: with builtins; rec {
           mkdir -p $out/bin
           cat > $out/bin/${APPNAME} <<EOFTAG_LUA
           #!${binarypath}
+          package.preload[ [[NIX_${APPNAME}_VALUES]] ] = function()
+            return ${inputs.nixToLua.prettyNoModify miscNixVals}
+          end
           require([[${APPNAME}]])
           EOFTAG_LUA
           chmod +x $out/bin/${APPNAME}
