@@ -22,5 +22,5 @@ in {
   alacritty = import ./alacritty args;
   tmux = import ./tmux args;
   shell = import ./shell args;
-  VPNWRCCDC = import (systemOnly ./VPNWRCCDC) args;
+  aliasNetwork = import (systemOnly ./aliasNetwork) args;
 }

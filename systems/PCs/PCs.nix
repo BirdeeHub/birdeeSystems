@@ -14,7 +14,7 @@ in {
     lightdm
     i3MonMemory
     LD
-    VPNWRCCDC
+    aliasNetwork
   ];
 
   birdeeVim = {
@@ -40,7 +40,7 @@ in {
 
   users.users = users.users;
   birdeeMods = {
-    vpnwrccdc.enable = false;
+    aliasNetwork.enable = false;
     i3.enable = true;
     i3.tmuxDefault = true;
     zsh.enable = true;

@@ -1,22 +1,22 @@
 { moduleNamespace, inputs, ... }:
 { config, pkgs, lib, ... }: let
-  cfg = config.${moduleNamespace}.vpnwrccdc;
+  cfg = config.${moduleNamespace}.aliasNetwork;
 in {
   options = {
     ${moduleNamespace} = {
-      vpnwrccdc = {
-        enable = lib.mkEnableOption "fix ip tables";
+      aliasNetwork = {
+        enable = lib.mkEnableOption "alias network to different subnet";
       };
     };
   };
   config = lib.mkIf cfg.enable (let
   in {
-    networking.dhcpcd.extraConfig = ''
-      interface tun0
-      metric 42
-      gateway
-    '';
-    networking.networkmanager.dhcp = "dhcpcd";
+    # networking.dhcpcd.extraConfig = ''
+    #   interface tun0
+    #   metric 42
+    #   gateway
+    # '';
+    # networking.networkmanager.dhcp = "dhcpcd";
     # networking.nftables.enable = true;
     # networking.nftables.tables = {
     #   wrccdc = {
@@ -35,8 +35,7 @@ in {
     #     family = "inet";  # Use "inet" for IPv4
     #   };
     # };
-
-    networking.networkmanager.insertNameservers = [ "10.0.0.2" ];
+    # networking.networkmanager.insertNameservers = [ "10.0.0.2" ];
 
   });
 }
