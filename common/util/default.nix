@@ -59,6 +59,7 @@ inputs: with builtins; rec {
     lua_interpreter,
     lua_packages ? (_:[]),
     extraLuaPackages ? (_:[]),
+    miscNixVals ? {},
     mkDerivation,
     ...
     }: let
@@ -80,6 +81,7 @@ inputs: with builtins; rec {
     app = mkDerivation (finalAttrs: (let
       env_path = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaPathSearchPaths));
       env_cpath = builtins.head (builtins.split "[\/][?]" (builtins.head lua_interpreter.LuaCPathSearchPaths));
+      nixluavals = inputs.nixToLua.prettyNoModify miscNixVals;
     in {
       inherit name;
       src = LUA_SRC;
@@ -88,6 +90,7 @@ inputs: with builtins; rec {
       buildPhase = ''
         runHook preBuild
         ${mkRecBuilder { action = luaFileAction; src = "$src"; outdir = "$out/${env_path}"; }}
+        echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES
         ${if CPATH_DIR == null then "" else ''
           mkdir -p $out/${env_cpath}
           cp -r ${CPATH_DIR}/* $out/${env_cpath}
@@ -116,7 +119,7 @@ inputs: with builtins; rec {
       compiled = compile_lua_dir {
         name = APPNAME;
         inherit (stdenv) mkDerivation;
-        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR;
+        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals;
       };
       app_final = stdenv.mkDerivation (let
         luaEnv = compiled.luaModule.withPackages (_: [ compiled ]);
@@ -135,9 +138,6 @@ inputs: with builtins; rec {
           mkdir -p $out/bin
           cat > $out/bin/${APPNAME} <<EOFTAG_LUA
           #!${binarypath}
-          package.preload[ [[NIX_${APPNAME}_VALUES]] ] = function()
-            return ${inputs.nixToLua.prettyNoModify miscNixVals}
-          end
           require([[${APPNAME}]])
           EOFTAG_LUA
           chmod +x $out/bin/${APPNAME}
