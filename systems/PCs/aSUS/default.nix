@@ -15,6 +15,13 @@ in {
   birdeeMods = {
   };
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
+
+  boot.kernelModules = [ "kvm-intel" ];
+
   environment.shellAliases = {
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
       export FLAKE="${flake-path}";

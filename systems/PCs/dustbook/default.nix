@@ -26,6 +26,8 @@ in {
     '';
   };
 
+  boot.kernelModules = [ "kvm-intel" ];
+
   environment.systemPackages = let
   in
   with pkgs; [
