@@ -133,29 +133,57 @@ in {
       # gnome.adwaita-icon-theme
     ]);
 
+    xresources = pkgs.writeText "Xresources" ''
+      XTerm*termName: xterm-256color
+      XTerm*faceName: FiraMono Nerd Font
+      XTerm*faceSize: 12
+      XTerm*background: black
+      XTerm*foreground: white
+      XTerm*title: XTerm
+      XTerm*loginShell: true
+    '';
+
+    xtraSesCMDs = ''
+      ${pkgs.xorg.xrdb}/bin/xrdb -merge ${xresources}
+
+      ${if cfg.extraSessionCommands == null then "" else cfg.extraSessionCommands}
+    '';
+
   in (if homeManager then {
 
     xsession.enable = true;
     xsession.scriptPath = ".xsession";
     xsession.initExtra = ''${lib.optionalString cfg.updateDbusEnvironment ''
       ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all || true
-    ''}'' + (if cfg.extraSessionCommands == null then "" else cfg.extraSessionCommands);
+    ''}
+      ${xtraSesCMDs}
+    '';
     xsession.windowManager.i3 = {
       enable = true;
       config = null;
       extraConfig = i3Config;
     };
 
+    # home.activation = {
+    #   myActivationAction = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    #     run ln -s $VERBOSE_ARG \
+    #       ${builtins.toPath ./link-me-directly} $HOME
+    #   '';
+    # };
+
     home.packages = i3packagesList;
 
   } else {
+
+    # system.activationScripts.something.text = ''
+    # '';
 
     services.displayManager.defaultSession = lib.mkOverride 1001 "none+i3";
     services.xserver.windowManager.i3 = {
       enable = true;
       updateSessionEnvironment = cfg.updateDbusEnvironment;
       configFile = "${ pkgs.writeText "config" i3Config }";
-      extraSessionCommands = lib.mkIf (cfg.extraSessionCommands != null) cfg.extraSessionCommands;
+      extraSessionCommands = xtraSesCMDs;
     };
     environment.systemPackages = i3packagesList;
     # services.xserver.updateDbusEnvironment = cfg.updateDbusEnvironment;

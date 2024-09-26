@@ -104,7 +104,8 @@ inputs: with builtins; rec {
 
   mkLuaApp = callPackage: arguments: let
     mkLuaAppWcallPackage = {
-      stdenv
+      lib
+      , stdenv
       , makeWrapper
       , lua5_2
       # args below:
@@ -119,7 +120,7 @@ inputs: with builtins; rec {
       , toLua ? null
       , ...
     }: let
-      compiled = compile_lua_dir {
+      compiled = lib.makeOverridable compile_lua_dir {
         name = APPNAME;
         inherit (stdenv) mkDerivation;
         inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals toLua;
@@ -133,6 +134,7 @@ inputs: with builtins; rec {
         propagatedBuildInputs = [ compiled ];
         passthru = {
           inherit luaEnv;
+          unwrapped = compiled;
         };
         buildPhase = let
           binarypath = if pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
