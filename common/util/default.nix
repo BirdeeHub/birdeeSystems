@@ -83,6 +83,7 @@ inputs: with builtins; rec {
       env_path = head (split "[\/][?]" (head lua_interpreter.LuaPathSearchPaths));
       env_cpath = head (split "[\/][?]" (head lua_interpreter.LuaCPathSearchPaths));
       nixluavals = if isFunction toLua then toLua miscNixVals else "";
+      mknixluavals = ''echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
     in {
       inherit name;
       src = LUA_SRC;
@@ -91,7 +92,7 @@ inputs: with builtins; rec {
       buildPhase = ''
         runHook preBuild
         ${mkRecBuilder { action = luaFileAction; src = "$src"; outdir = "$out/${env_path}"; }}
-        echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES.lua
+        ${if isFunction toLua then mknixluavals else ""}
         ${if CPATH_DIR == null then "" else ''
           mkdir -p $out/${env_cpath}
           cp -r ${CPATH_DIR}/* $out/${env_cpath}
