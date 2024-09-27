@@ -19,18 +19,9 @@ in {
     # networking.networkmanager.dhcp = "dhcpcd";
     # networking.nftables.enable = true;
     # networking.nftables.tables = {
-    #   wrccdc = {
+    #   sdnsorddns = {
     #     content = ''
-    #       chain prerouting {
-    #         type filter hook prerouting priority 0;
-    #         ip saddr 10.3.3.127 accept
-    #         counter drop
-    #       }
-    #
-    #       chain output {
-    #         type filter hook output priority 0;
-    #         accept
-    #       }
+    #       Stuff to go in the sdnsorddns table
     #     '';
     #     family = "inet";  # Use "inet" for IPv4
     #   };
