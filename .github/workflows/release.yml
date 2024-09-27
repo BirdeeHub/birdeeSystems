@@ -1,0 +1,67 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*.*.*' # This will run the workflow on every tag push with versioning format vX.X.X
+
+jobs:
+  build_linux_86:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix # This is pretty unnecessary after removing the app image output but Im keeping it
+        uses: cachix/install-nix-action@v27 # It honestly really made me laugh when I saw "Install Nix" "Build jar file" in the list XD
+        with: # and even with that, the windows one can take longer still XD
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build iso
+        run: |
+          ./scripts/isoInstaller x86_64-linux installer_mine
+          mkdir -p ./outputs/linux_86
+          cp ./result/iso/*.iso ./outputs/linux_86/birdeeSystems_installer.iso
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs_linux_86
+          path: ./outputs
+
+  release:
+    needs: build_linux_86
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: outputs_linux_86
+          path: ./outputs
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./outputs/linux_86/birdeeSystems_installer.iso
+          asset_name: birdeeSystems_installer_linux_86.iso
+          asset_content_type: application/octet-stream
