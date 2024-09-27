@@ -151,7 +151,7 @@ require('lze').load {
     end,
   },
   {
-    "otter.nvim",
+    "otter-nvim",
     enabled = catUtils.enableForCategory('otter'),
     -- event = "DeferredUIEnter",
     on_require = { "otter" },

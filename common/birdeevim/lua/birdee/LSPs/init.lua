@@ -159,7 +159,7 @@ if nixCats('web.tailwindcss') then
   servers.tailwindcss = {}
 end
 if nixCats('web.JS') then
-  servers.tsserver = {
+  servers.ts_ls = {
     filetypes = {
       "javascript",
       "javascriptreact",
@@ -280,7 +280,7 @@ require('lze').load {
   {
     "nvim-lspconfig",
     event = "FileType",
-    dep_of = { "otter.nvim", },
+    dep_of = { "otter-nvim", },
     load = (catUtils.isNixCats and nil) or function(name)
       require("birdee.utils").safe_packadd({ name, "mason.nvim", "mason-lspconfig" })
     end,

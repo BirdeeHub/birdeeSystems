@@ -45,8 +45,9 @@ return {
     dep_of = { "nvim-cmp" },
   },
   {
-    "lspkind-nvim",
+    "lspkind.nvim",
     dep_of = { "nvim-cmp" },
+    load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "clangd_extensions.nvim",

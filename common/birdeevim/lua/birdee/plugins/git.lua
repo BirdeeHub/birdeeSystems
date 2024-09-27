@@ -18,7 +18,7 @@ return {
     end,
   },
   {
-    "fugit2.nvim",
+    "fugit2-nvim",
     cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
     -- event = "",
     -- ft = "",

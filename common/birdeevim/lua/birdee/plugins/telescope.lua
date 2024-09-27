@@ -23,7 +23,7 @@ return {
   {
     "telescope.nvim",
     cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
-    dep_of = { "nvim-neoclip.lua", "fugit2.nvim", "nvim-lspconfig", "neorg" },
+    dep_of = { "nvim-neoclip.lua", "fugit2-nvim", "nvim-lspconfig", "neorg" },
     -- event = "",
     -- ft = "",
     keys = {

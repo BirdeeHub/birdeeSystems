@@ -14,7 +14,7 @@
     # nixpkgsNV.url = "git+file:/home/birdee/Projects/nixpkgs?branch=fixGrammars";
     # nixpkgsNV.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
     nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixpkgsNV.url = "github:PerchunPak/nixpkgs/fix-treesitter-duplicate-grammar";
+    # nixpkgsNV.url = "github:PerchunPak/nixpkgs/end-nvim-treesitter-queries-saga";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -69,7 +69,7 @@
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
     };
-    "plugins-fugit2.nvim" = {
+    "plugins-fugit2-nvim" = {
       url = "github:SuperBo/fugit2.nvim";
       flake = false;
     };
@@ -85,7 +85,7 @@
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;
     };
-    "plugins-otter.nvim" = {
+    "plugins-otter-nvim" = {
       url = "github:jmbuhr/otter.nvim";
       flake = false;
     };

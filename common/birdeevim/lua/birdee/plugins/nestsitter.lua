@@ -3,7 +3,7 @@ return {
     "nvim-treesitter",
     -- cmd = { "" },
     event = "DeferredUIEnter",
-    dep_of = { "treesj", "otter.nvim", "hlargs", "render-markdown", "neorg" },
+    dep_of = { "treesj", "otter-nvim", "hlargs", "render-markdown", "neorg" },
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
