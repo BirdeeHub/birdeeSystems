@@ -43,6 +43,10 @@ inputs: {
     path = ./flakescript;
     description = "a tiny flake that outputs an overlay and a package containing a shell script";
   };
+  nvim_bug_report = {
+    path = ./nvim_bug_report;
+    description = "nixCatsless nvim template for nixpkgs bug reports";
+  };
   pythonshell-untested = {
     path = ./pythonshell-untested;
     description = ''a python shell I got from a reddit comment,
