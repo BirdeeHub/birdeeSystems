@@ -45,7 +45,11 @@ inputs: {
   };
   nvim_bug_report = {
     path = ./nvim_bug_report;
-    description = "nixCatsless nvim template for nixpkgs bug reports";
+    description = "nixCatsless nvim template for nixpkgs bug reports that loads a dir";
+  };
+  nvim_bug_report_min = {
+    path = ./nvim_bug_report_min;
+    description = "minimal nixCatsless nvim template for nixpkgs bug reports";
   };
   pythonshell-untested = {
     path = ./pythonshell-untested;
