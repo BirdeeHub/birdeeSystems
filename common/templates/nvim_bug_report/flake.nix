@@ -20,13 +20,13 @@
   outputs = { nixpkgs, neovim-nightly, nixToLua, ...}@inputs: let
     forAllSys = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
     extraOverlays = [];
-    overlayMyNeovim = prev: final: {
+    overlayMyNeovim = nvim: prev: final: {
       myNeovim = let
         mkCFG = path: nixvals: let
           luaRC = final.writeText "init.lua" ((import ./utils.nix).mkCFG nixToLua.prettyNoModify path nixvals);
         in ''lua dofile("${luaRC}")'';
       in
-      final.wrapNeovim final.neovim {
+      final.wrapNeovim (if nvim != null then nvim else final.neovim-unwrapped) {
         configure = {
           customRC = mkCFG ./. {
           };
@@ -53,14 +53,15 @@
   in 
   {
     packages = forAllSys (system: let
-      configuredNvimOverlay = [ ((import ./utils.nix).ezPluginOverlay inputs) ] ++ extraOverlays ++ [ overlayMyNeovim ];
+      configuredNvimOverlay = [ ((import ./utils.nix).ezPluginOverlay inputs) ] ++ extraOverlays ++ [ (overlayMyNeovim null) ];
+      configuredNvimNightlyOverlay = [ ((import ./utils.nix).ezPluginOverlay inputs) ] ++ extraOverlays ++ [ (overlayMyNeovim neovim-nightly.packages.${system}.neovim) ];
       pkgs = import nixpkgs {
         inherit system;
         overlays = configuredNvimOverlay;
       };
       pkgs_nightly = import nixpkgs {
         inherit system;
-        overlays = [ neovim-nightly.overlays.default ] ++ configuredNvimOverlay;
+        overlays = configuredNvimNightlyOverlay;
       };
     in
     {
