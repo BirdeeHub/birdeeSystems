@@ -137,6 +137,7 @@ in {
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
+  services.printing.webInterface = false;
 
   # Enable sound with pipewire.
   # sound.enable = true;

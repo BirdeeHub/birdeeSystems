@@ -27,6 +27,35 @@ in {
     #   };
     # };
     # networking.networkmanager.insertNameservers = [ "10.0.0.2" ];
+    # networking = {
+    #   nftables = {
+    #     enable = true;
+    #     ruleset = ''
+    #         table ip nat {
+    #           chain PREROUTING {
+    #             type nat hook prerouting priority dstnat; policy accept;
+    #             iifname "ens3" tcp dport 80 dnat to 10.100.0.3:80
+    #           }
+    #         }
+    #     '';
+    #   };
+    #   firewall = {
+    #     enable = true;
+    #     allowedTCPPorts = [ 80 ];
+    #   };
+    #   nat = {
+    #     enable = true;
+    #     internalInterfaces = [ "ens3" ];
+    #     externalInterface = "wg0";
+    #     forwardPorts = [
+    #       {
+    #         sourcePort = 80;
+    #         proto = "tcp";
+    #         destination = "10.100.0.3:80";
+    #       }
+    #     ];
+    #   };
+    # };
 
   });
 }
