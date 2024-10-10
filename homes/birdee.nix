@@ -61,6 +61,8 @@ in {
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     '')}'';
     yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(git status)" && git push'';
+    scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
+    exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
     lsnc = "lsd --color=never";
     la = "lsd -a";
     ll = "lsd -lh";
