@@ -177,7 +177,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             };
             inherit pkgs;
             modules = [
-              ./homes/birdee.nix
+              ./homes/main
               (
                 { pkgs, ... }:
                 {
@@ -218,7 +218,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
                 monitorCFG = ./homes/monitors_by_hostname/nestOS;
                 username = "birdee";
                 inherit users;
-                hmCFGmodMAIN = import ./homes/birdee.nix;
+                hmCFGmodMAIN = import ./homes/main;
               })
             ];
           };

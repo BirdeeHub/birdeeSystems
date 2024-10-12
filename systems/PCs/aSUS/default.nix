@@ -12,9 +12,6 @@ in {
     ../PCs.nix
   ];
 
-  birdeeMods = {
-  };
-
   services.ollama = {
     enable = true;
     acceleration = "cuda";
