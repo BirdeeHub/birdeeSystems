@@ -47,19 +47,22 @@ in {
   };
 
   home.shellAliases = {
-    flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" (/*bash*/''
+    flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
       git add . && nix flake update && nom build --show-trace $target && git add .; $@
-    '')}'';
-    spkgname = ''${pkgs.writeShellScript "searchCLIname" (/*bash*/''
+    ''}'';
+    spkgname = ''${pkgs.writeShellScript "searchCLIname" /*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -n "$@"
-    '')}'';
-    spkgprog = ''${pkgs.writeShellScript "searchCLIprog" (/*bash*/''
+    ''}'';
+    spkgprog = ''${pkgs.writeShellScript "searchCLIprog" /*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_programs:("$@")"
-    '')}'';
-    spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" (/*bash*/''
+    ''}'';
+    spkgdesc = ''${pkgs.writeShellScript "searchCLIdesc" /*bash*/''
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
-    '')}'';
+    ''}'';
+    autorepl = ''${pkgs.writeShellScript "autorepl" ''
+      nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgsNV.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }'
+    ''}'';
     yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(git status)" && git push'';
     scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
     exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
