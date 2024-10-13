@@ -1396,11 +1396,11 @@
     "nixCats": {
       "locked": {
         "dir": "nix",
-        "lastModified": 1728841494,
-        "narHash": "sha256-txtzCDMF1MnJVM6XWS5mDj/RdS+FWQg8xRZIfCCXkNM=",
+        "lastModified": 1728862490,
+        "narHash": "sha256-p8d/XNap3Ba1Ptx1DjKERjAbKiOooMz8+RyamCtE9A4=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "a5525adae47d81553729175b70507d3e245d2933",
+        "rev": "36909050ba55ad8b00493f19ae20ef79ca81fffc",
         "type": "github"
       },
       "original": {
