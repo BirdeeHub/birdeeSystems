@@ -99,6 +99,10 @@
         ];
       };
       rust = [
+        rustc
+        rustfmt
+        cargo
+        clippy
         rust-analyzer
       ];
       lua = [
