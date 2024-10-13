@@ -134,7 +134,7 @@
   );
 
   newTMUX = tmux.overrideAttrs (prev: {
-    patches = prev.patches ++ [ (substituteAll {
+    patches = (lib.optionals (prev ? patches) prev.patches) ++ [ (substituteAll {
         # hardcode our config file.
         src = ./tmux_conf_var.diff;
         nixTmuxConf = TMUXconf;
