@@ -204,11 +204,11 @@ if nixCats('C') then
   servers.cmake = {}
 end
 
--- NOTE: rustaceanvim takes care of this
--- if nixCats('rust') then
---   servers.rust_analyzer = {}
--- end
+if nixCats('rust') then
+  -- NOTE: rustaceanvim takes care of: `servers.rust_analyzer = {}`
 
+  -- rustaceanvim setup if any
+end
 
 --------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------

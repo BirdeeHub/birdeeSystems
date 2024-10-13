@@ -101,6 +101,7 @@
       rust = [
         rustc
         rustfmt
+        lldb
         cargo
         clippy
         rust-analyzer
