@@ -23,25 +23,26 @@ return {
   {
     "telescope.nvim",
     cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
-    dep_of = { "nvim-neoclip.lua", "fugit2-nvim", "nvim-lspconfig", "neorg" },
+    dep_of = { "nvim-neoclip.lua", "fugit2-nvim", "neorg" },
+    on_require = { "telescope", },
     -- event = "",
     -- ft = "",
     keys = {
-      "<leader>sp",
-      "<leader>sn",
-      "<leader>/",
-      "<leader><leader>s",
-      "<leader>s.",
-      "<leader>sr",
-      "<leader>sd",
-      "<leader>sg",
-      "<leader>sw",
-      "<leader>ss",
-      "<leader>sf",
-      "<leader>sk",
-      "<leader>sh",
-      "<leader>sM",
-      "<leader>sb",
+      { "<leader>sn", mode = {"n"}, desc = '[S]earch [N]ix config files', },
+      { "<leader>sM", mode = {"n"}, desc = '[S]earch [M]essage', },
+      { "<leader>sb", mode = {"n"}, desc = '[S]earch [B]ackup history', },
+      { "<leader>sp", mode = {"n"}, desc = '[S]earch git [P]roject root', },
+      { "<leader>/", mode = {"n"}, desc = '[/] Fuzzily search in current buffer', },
+      { "<leader><leader>s", mode = {"n"}, desc = '[ ] Find existing buffers', },
+      { "<leader>s.", mode = {"n"}, desc = '[S]earch Recent Files ("." for repeat)', },
+      { "<leader>sr", mode = {"n"}, desc = '[S]earch [R]esume', },
+      { "<leader>sd", mode = {"n"}, desc = '[S]earch [D]iagnostics', },
+      { "<leader>sg", mode = {"n"}, desc = '[S]earch by [G]rep', },
+      { "<leader>sw", mode = {"n"}, desc = '[S]earch current [W]ord', },
+      { "<leader>ss", mode = {"n"}, desc = '[S]earch [S]elect Telescope', },
+      { "<leader>sf", mode = {"n"}, desc = '[S]earch [F]iles', },
+      { "<leader>sk", mode = {"n"}, desc = '[S]earch [K]eymaps', },
+      { "<leader>sh", mode = {"n"}, desc = '[S]earch [H]elp', },
     },
     -- colorscheme = "",
     load = function (name)
@@ -150,7 +151,7 @@ return {
 
       require("telescope").load_extension("notify")
       require("telescope").load_extension("git_file_history")
-      vim.keymap.set('n', '<leader>sb', '<cmd>Telescope git_file_history<CR>', { desc = '[S]earch [B]ackup history' })
+      vim.keymap.set('n', '<leader>sb', '<cmd>Telescope git_file_history<CR>', { desc = '[S]earch [B]ackup (git commit) history' })
       vim.keymap.set('n', '<leader>sM', '<cmd>Telescope notify<CR>', { desc = '[S]earch [M]essage' })
     end,
   },
