@@ -52,7 +52,7 @@ return {
               name = "[Neorg]",
             },
           },
-          ["core.manoeuvre"] = {},
+          -- ["core.manoeuvre"] = {},
           -- ["core.presenter"] = {
           --   config = {
           --     zen_mode = "",
