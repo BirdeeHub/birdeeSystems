@@ -22,8 +22,10 @@ in /*bash*/''
   MOST_RECENT='${MOST_RECENT}'
   CACHEDIR='${CACHEDIR}'
   cleanup() {
-    [[ -d '${MOST_RECENT}' ]] && chmod -R ${dir_perms} '${MOST_RECENT}' && \
-        find '${MOST_RECENT}' -type f -exec chmod ${file_perms} {} \;
+    [[ -d '${MOST_RECENT}' ]] && {
+      chmod -R ${dir_perms} '${MOST_RECENT}'
+      find '${MOST_RECENT}' -type f -exec chmod ${file_perms} {} \;
+    }
     [[ -f '${MOST_RECENT}' ]] && chmod ${file_perms} '${MOST_RECENT}'
     [[ -e '${CACHEDIR}' ]] && {
       chmod -R ${dir_perms} '${CACHEDIR}'
