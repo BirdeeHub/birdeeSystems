@@ -1,5 +1,4 @@
-local M = {}
-M.for_cat = {
+return {
     spec_field = "for_cat",
     modify = function(plugin)
         if type(plugin.for_cat) == "table" then
@@ -18,4 +17,3 @@ M.for_cat = {
         return plugin
     end,
 }
-return M
