@@ -254,7 +254,6 @@ require('lze').load {
   {
     "vim-startuptime",
     for_cat = "other",
-    enabled = catUtils.enableForCategory('general.other'),
     cmd = { "StartupTime" },
     before = function(_)
       vim.g.startuptime_event_width = 0
