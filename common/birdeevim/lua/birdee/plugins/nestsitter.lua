@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter",
+    for_cat = "treesitter",
     -- cmd = { "" },
     event = "DeferredUIEnter",
     dep_of = { "treesj", "otter-nvim", "hlargs", "render-markdown", "neorg" },

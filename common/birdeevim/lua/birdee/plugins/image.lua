@@ -2,8 +2,8 @@ local catUtils = require('nixCatsUtils')
 return {
   {
     "image.nvim",
+    for_cat = { cat = "vimagePreview", default = false },
     ft = { "norg", "markdown", --[[ "html", "css" ]] },
-    enabled = catUtils.enableForCategory('vimagePreview', false),
     -- cmd = { "" },
     -- event = "DeferredUIEnter",
     -- keys = "",

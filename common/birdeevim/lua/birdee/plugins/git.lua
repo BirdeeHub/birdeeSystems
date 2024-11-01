@@ -1,6 +1,7 @@
 return {
   {
     "vim-fugitive",
+    for_cat = "general.git",
     cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
       "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
       "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
@@ -19,6 +20,7 @@ return {
   },
   {
     "fugit2-nvim",
+    for_cat = "general.git",
     cmd = { "Fugit2", "Fugit2Diff", "Fugit2Blame", "Fugit2Graph", },
     -- event = "",
     -- ft = "",

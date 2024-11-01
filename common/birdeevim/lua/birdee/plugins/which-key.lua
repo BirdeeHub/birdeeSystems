@@ -2,6 +2,7 @@ return {
   {
     "which-key.nvim",
     -- cmd = { "" },
+    for_cat = "other",
     event = "DeferredUIEnter",
     -- ft = "",
     -- keys = "",

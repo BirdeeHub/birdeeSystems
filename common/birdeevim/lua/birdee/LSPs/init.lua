@@ -304,6 +304,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('lze').load {
   {
     "nvim-lspconfig",
+    for_cat = "general.core",
     event = "FileType",
     dep_of = { "otter-nvim", },
     load = (catUtils.isNixCats and nil) or function(name)

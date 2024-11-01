@@ -1,6 +1,7 @@
 return {
   {
     "lualine.nvim",
+    for_cat = "general.core",
     -- cmd = { "" },
     event = "DeferredUIEnter",
     -- ft = "",

@@ -1,5 +1,6 @@
 require('lze').load {
   "nvim-dap",
+  for_cat = "debug",
   -- cmd = { "" },
   -- event = "",
   -- ft = "",
@@ -115,7 +116,6 @@ require('lze').load {
     end
     if nixCats('elixir') then
       -- dont know if this works
-      local dap = require "dap"
       dap.adapters.elixir = {
           type = 'executable',
           command = vim.fn.exepath('elixir-debug-adapter')
@@ -143,7 +143,6 @@ require('lze').load {
     end
     if nixCats('bash') then
       -- doesnt work
-      local dap = require "dap"
       dap.adapters.sh = {
           type = 'executable',
           command = vim.fn.exepath('bashdb')

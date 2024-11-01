@@ -1,6 +1,7 @@
 return {
   {
     "marks.nvim",
+    for_cat = "general.core",
     event = "DeferredUIEnter",
     -- cmd = { "" },
     -- ft = "",
@@ -45,6 +46,7 @@ return {
   },
   {
     "gitsigns.nvim",
+    for_cat = "general.core",
     event = "DeferredUIEnter",
     -- cmd = { "" },
     -- ft = "",

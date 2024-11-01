@@ -1,5 +1,6 @@
 require('lze').load {
   "nvim-lint",
+  for_cat = "general.core",
   -- cmd = { "" },
   event = "FileType",
   -- ft = "",

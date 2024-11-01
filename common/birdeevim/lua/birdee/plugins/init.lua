@@ -14,31 +14,37 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-require("large_file").setup {
-  size_limit = 4 * 1024 * 1024, -- 4 MB
-  buffer_options = {
-    swapfile = false,
-    bufhidden = 'unload',
-    buftype = 'nowrite',
-    undolevels = -1,
-  },
-  on_large_file_read_pre = function(ev) end
-}
+if nixCats('general') then
+  require("large_file").setup {
+    size_limit = 4 * 1024 * 1024, -- 4 MB
+    buffer_options = {
+      swapfile = false,
+      bufhidden = 'unload',
+      buftype = 'nowrite',
+      undolevels = -1,
+    },
+    on_large_file_read_pre = function(ev) end
+  }
+end
 
-vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = "Toggle Spectre"
-})
-vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = "Search current word"
-})
-vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = "Search current word"
-})
-vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = "Search on current file"
-})
+if nixCats('other') then
+  vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = "Toggle Spectre"
+  })
+  vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+  })
+  vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+  })
+  vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file"
+  })
+end
 
-require('birdee.plugins.oil')
+if nixCats('general') then
+  require('birdee.plugins.oil')
+end
 
 -- NOTE: everything else is lazily loaded
 
@@ -77,7 +83,7 @@ require('lze').load {
   },
   {
     "markdown-preview.nvim",
-    enabled = catUtils.enableForCategory('general.markdown'),
+    for_cat = "general.markdown",
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     ft = "markdown",
     keys = {
@@ -91,6 +97,7 @@ require('lze').load {
   },
   {
     "treesj",
+    for_cat = "general.core",
     cmd = { "TSJToggle" },
     keys = { { "<leader>Ft", ":TSJToggle<CR>", mode = { "n" }, desc = "treesj split/join" }, },
     after = function(plugin)
@@ -125,6 +132,7 @@ require('lze').load {
   },
   {
     "undotree",
+    for_cat = "general.core",
     cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
     keys = { { "<leader>U", "<cmd>UndotreeToggle<CR>", mode = { "n" }, desc = "Undo Tree" }, },
     before = function(_)
@@ -134,7 +142,7 @@ require('lze').load {
   },
   {
     "lazydev.nvim",
-    enabled = catUtils.enableForCategory('neonixdev'),
+    for_cat = "neonixdev",
     cmd = { "LazyDev" },
     ft = "lua",
     after = function(plugin)
@@ -148,7 +156,7 @@ require('lze').load {
   },
   {
     "otter-nvim",
-    enabled = catUtils.enableForCategory('otter'),
+    for_cat = "otter",
     -- event = "DeferredUIEnter",
     on_require = { "otter" },
     -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
@@ -192,6 +200,7 @@ require('lze').load {
   },
   {
     "vim-cmake",
+    for_cat = "C",
     ft = { "cmake" },
     cmd = {
       "CMakeGenerate",
@@ -208,15 +217,14 @@ require('lze').load {
       "CMakeStop",
     },
     after = function(plugin)
-      if nixCats('C') then
-        vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
-          { desc = 'Run CMake with compile_commands.json' })
-        vim.cmd [[let g:cmake_link_compile_commands = 1]]
-      end
+      vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
+        { desc = 'Run CMake with compile_commands.json' })
+      vim.cmd [[let g:cmake_link_compile_commands = 1]]
     end,
   },
   {
     "todo-comments.nvim",
+    for_cat = "other",
     event = "DeferredUIEnter",
     after = function(plugin)
       require("todo-comments").setup({ signs = false })
@@ -224,6 +232,7 @@ require('lze').load {
   },
   {
     "indent-blankline.nvim",
+    for_cat = "general.core",
     event = "DeferredUIEnter",
     after = function(plugin)
       require("ibl").setup()
@@ -231,6 +240,7 @@ require('lze').load {
   },
   {
     "visual-whitespace",
+    for_cat = "general.StdPlugOver",
     event = "DeferredUIEnter",
     after = function(plugin)
       require('visual-whitespace').setup({
@@ -243,6 +253,7 @@ require('lze').load {
   },
   {
     "vim-startuptime",
+    for_cat = "other",
     enabled = catUtils.enableForCategory('general.other'),
     cmd = { "StartupTime" },
     before = function(_)
@@ -253,6 +264,7 @@ require('lze').load {
   },
   {
     "nvim-surround",
+    for_cat = "general.core",
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(plugin)
@@ -261,6 +273,7 @@ require('lze').load {
   },
   {
     "eyeliner.nvim",
+    for_cat = "other",
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(plugin)
@@ -273,6 +286,7 @@ require('lze').load {
   },
   {
     "render-markdown",
+    for_cat = "general.StdPlugOver",
     ft = "markdown",
     after = function(plugin)
       require('render-markdown').setup({})
@@ -280,6 +294,7 @@ require('lze').load {
   },
   {
     "vim-dadbod",
+    for_cat = "SQL",
     cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
       "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
     load = function(name)
@@ -294,6 +309,7 @@ require('lze').load {
   },
   {
     "hlargs",
+    for_cat = "general.StdPlugOver",
     event = "DeferredUIEnter",
     after = function(plugin)
       require('hlargs').setup({
@@ -305,10 +321,12 @@ require('lze').load {
   },
   {
     "vim-sleuth",
+    for_cat = "general.core",
     event = "DeferredUIEnter",
   },
   {
     "nvim-highlight-colors",
+    for_cat = "other",
     event = "DeferredUIEnter",
     -- ft = "",
     after = function(plugin)

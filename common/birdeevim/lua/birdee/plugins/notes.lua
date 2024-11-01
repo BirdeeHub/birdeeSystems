@@ -1,8 +1,7 @@
-local catUtils = require('nixCatsUtils')
 return {
   {
     "neorg",
-    enabled = catUtils.enableForCategory('notes', false),
+    for_cat = { cat = 'notes', default = false },
     -- cmd = { "" },
     -- event = "",
     ft = "norg",

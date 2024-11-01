@@ -2,7 +2,7 @@ local catUtils = require('nixCatsUtils')
 return {
   {
     "codeium.nvim",
-    enabled = catUtils.enableForCategory('AI', false),
+    for_cat = { cat = 'AI', default = false },
     cmd = { "Codeium" },
     event = "InsertEnter",
     keys = {

@@ -24,6 +24,10 @@ require('lze').register_handlers({
     enabled = false,
     handler = require("birdee.handlers.debug_handler").handler
   },
+  {
+    enabled = true,
+    handler = require("birdee.handlers.for_cat").handler
+  },
 })
 require("birdee.patcheduiopen")
 require("birdee.opts")

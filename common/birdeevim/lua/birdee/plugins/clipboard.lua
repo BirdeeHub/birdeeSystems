@@ -1,6 +1,7 @@
 return {
   {
     "nvim-neoclip.lua",
+    for_cat = "other",
     cmd = { "Telescope" },
     keys = { "<leader>sm", "<leader>sc", "<leader>ss" },
     after = function (plugin)
@@ -74,6 +75,7 @@ return {
   },
   {
     "img-clip",
+    for_cat = "other",
     cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     -- event = "",
     -- ft = "",
