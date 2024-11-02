@@ -1,4 +1,4 @@
-{ mkRecBuilder, inputs, ... }: with builtins; {
+{ mkRecBuilder, inputs, ... }: with builtins; rec {
   compile_lua_dir = {
     name ? "REPLACE_ME",
     LUA_SRC,
