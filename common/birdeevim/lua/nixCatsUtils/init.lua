@@ -1,6 +1,8 @@
 local M = {}
 
--- these 3 files are intended to be independent. You will likely want at least something in this one,
+-- This directory is the luaUtils template.
+-- the other 3 files are intended to be independent, but may depend on this one.
+-- You will likely want at least something in this one,
 -- but unless you use lazy.nvm or want to use pckr or rocks when not on nix, you wont need the other 2
 
 ---@type boolean
@@ -30,7 +32,6 @@ function M.setup(v)
           allPlugins = {
             start = {},
             opt = {},
-            treesitter_grammars = {},
             ts_grammar_path = nil,
           },
         },

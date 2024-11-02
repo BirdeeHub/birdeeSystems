@@ -26,7 +26,7 @@ require('lze').register_handlers({
   },
   {
     enabled = true,
-    handler = require("birdee.handlers.for_cat")
+    handler = require("nixCatsUtils.lzUtils").for_cat
   },
 })
 require("birdee.patcheduiopen")
@@ -34,7 +34,8 @@ require("birdee.opts")
 require("birdee.keymaps")
 require("birdee.clippy")
 if nixCats('nixCats_packageName') ~= "minimalVim" then
-  require('nixCatsUtils.catPacker')
+  -- TODO: this in another file and require here.
+  -- require('nixCatsUtils.catPacker').setup({ your plugins })
   require("birdee.plugins")
   require("birdee.LSPs")
   if nixCats('debug') then
