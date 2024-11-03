@@ -1071,11 +1071,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1730604326,
-        "narHash": "sha256-pkWvrrw0ZsRBLOfkKXFTv26Foai22etHWFGM85mfeag=",
+        "lastModified": 1730627426,
+        "narHash": "sha256-akCAIIs4/if5ToqorQYEcPYvwZ8nsIdcr3sRpsGtMJE=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "5f78b92de5df91565e9b7d707567487eede3b020",
+        "rev": "1f92e369e4cc4ebf6cef11c4d1fecf3832de170b",
         "type": "github"
       },
       "original": {
