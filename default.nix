@@ -215,7 +215,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               # diskoCFG.PCs.sda_swap
               ./systems/PCs/lenny
               (HMasModule {
-                # monitorCFG = ./homes/monitors_by_hostname/nestOS;
+                monitorCFG = ./homes/monitors_by_hostname/lenny;
                 username = "birdee";
                 inherit users;
                 hmCFGmodMAIN = import ./homes/main;
