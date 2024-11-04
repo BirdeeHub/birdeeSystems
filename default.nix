@@ -194,6 +194,34 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           users = userdata pkgs;
         in
         {
+          "birdee@lenny" = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              hostname = "lenny";
+              my_pkgs = packages_func system;
+              inherit
+                stateVersion
+                self
+                inputs
+                users
+                system-modules
+                flake-path
+                birdeeutils
+                ;
+            };
+            inherit system;
+            modules = [
+              home-manager.nixosModules.home-manager
+              # disko.nixosModules.disko
+              # diskoCFG.PCs.sda_swap
+              ./systems/PCs/lenny
+              (HMasModule {
+                # monitorCFG = ./homes/monitors_by_hostname/nestOS;
+                username = "birdee";
+                inherit users;
+                hmCFGmodMAIN = import ./homes/main;
+              })
+            ];
+          };
           "birdee@nestOS" = nixpkgs.lib.nixosSystem {
             specialArgs = {
               hostname = "nestOS";
