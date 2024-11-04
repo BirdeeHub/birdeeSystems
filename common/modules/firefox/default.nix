@@ -25,7 +25,6 @@ in {
           user-agent-string-switcher
           tampermonkey
           unpaywall
-          mullvad
           ninja-cookie
           ublock-origin
           languagetool
