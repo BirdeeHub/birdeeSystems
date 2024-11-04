@@ -69,6 +69,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "vmware-vm" = diskoCFG.VMs.vmware_bios;
       "birdee@nestOS" = diskoCFG.PCs.sda_swap;
       "birdee@dustbook" = diskoCFG.PCs.sda_swap;
+      "birdee@lenny" = diskoCFG.PCs.nvme0n1_swap;
     };
     overlays = overlaySet // birdeeVim.overlays // { };
     nixosModules = system-modules;
