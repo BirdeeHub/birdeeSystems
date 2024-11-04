@@ -211,8 +211,8 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             inherit system;
             modules = [
               home-manager.nixosModules.home-manager
-              # disko.nixosModules.disko
-              # diskoCFG.PCs.sda_swap
+              disko.nixosModules.disko
+              diskoCFG.PCs.nvme0n1_swap
               ./systems/PCs/lenny
               (HMasModule {
                 monitorCFG = ./homes/monitors_by_hostname/lenny;
