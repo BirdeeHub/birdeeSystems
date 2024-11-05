@@ -32,13 +32,14 @@
         inherit userJsonCache xrandrPrimarySH xrandrOthersSH;
     };
 
-    i3notifyMon = (pkgs.writeShellScript "runi3xrandrMemory.sh" ''
-        ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname ${triggerFile})"
-        ${pkgs.inotify-tools}/bin/inotifywait -e close_write -m "$(${pkgs.coreutils}/bin/dirname ${triggerFile})" |
+    i3notifyMon = pkgs.writeShellScript "runi3xrandrMemory.sh" ''
+        export PATH="${pkgs.lib.makeBinPath (with pkgs; [ bash coreutils inotify-tools ])}:$PATH"
+        mkdir -p "$(dirname ${triggerFile})"
+        inotifywait -e close_write -m "$(dirname ${triggerFile})" |
         while read -r directory events filename; do
-            if [ "$filename" = "$(${pkgs.coreutils}/bin/basename ${triggerFile})" ]; then
-                ${pkgs.bash}/bin/bash -c '${i3MonMemory}'
+            if [ "$filename" == "$(basename ${triggerFile})" ]; then
+                bash -c '${i3MonMemory}'
             fi
         done
-    '');
+    '';
 in i3notifyMon

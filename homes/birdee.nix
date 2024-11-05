@@ -40,6 +40,10 @@ in {
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
 
+  nix.nixPath = [
+    "nixpkgs=${inputs.nixpkgsNV}"
+  ];
+
   nix.gc = {
     automatic = true;
     frequency = "weekly";

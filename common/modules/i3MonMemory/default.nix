@@ -72,6 +72,11 @@ in {
         echoes "$RANDOM" to /tmp/i3monsMemory/i3xrandrTriggerFile on udev rule trigger.
         This serves as the trigger mechanism for the user level services.
       '');
+      trigger = lib.mkOption {
+        default = "udev";
+        type = lib.types.enum [ "udev" "Xlog" ];
+        description = "type of system level trigger";
+      };
     };
   };
 
@@ -106,13 +111,26 @@ in {
     };
 
     udevAction = pkgs.writeShellScript "i3xrandrMemoryUDEV.sh" ''
-      mkdir -p /tmp/i3monsMemory/
+      mkdir -p "$(dirname '${triggerFile}')"
       echo "$RANDOM" > ${triggerFile}
     '';
 
+    XlogNotify = pkgs.writeShellScript "i3xrandrMemoryXlog.sh" ''
+      export PATH="${pkgs.lib.makeBinPath (with pkgs; [ bash coreutils inotify-tools ])}:$PATH"
+      LAST_LINES=$(wc -l < /var/log/X.0.log)
+      inotifywait -e modify -m /var/log |
+      while read -r directory events filename; do
+        if [ "$filename" = "X.0.log" ]; then
+          NEW_CONTENT="$(tail -n +"$((LAST_LINES+1))" /var/log/X.0.log)"
+          LAST_LINES=$(wc -l < /var/log/X.0.log)
+          if echo "$NEW_CONTENT" | grep -E "GPU-[0-9].*: (connected|disconnected)"; then
+            bash -c '${udevAction}'
+          fi
+        fi
+      done
+    '';
 
-  in (if homeManager
-  then {
+  in (if homeManager then {
     systemd.user.services.i3xrandrMemory = {
       Unit = {
         Description = "i3MemoryMon";
@@ -141,9 +159,17 @@ in {
 
       Install.WantedBy = [ "graphical-session.target" "default.target" ];
     };
-  }
-  else {
-    services.udev = {
+  } else {
+    systemd.services.i3MonTrigger = lib.mkIf (cfg.trigger == "Xlog") {
+      description = "Writes to a triggerFile, triggering i3MonMemory";
+      wantedBy = [ "graphical-session.target" "default.target" ];
+      after = [ "graphical-session.target" "default.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.bash}/bin/bash ${XlogNotify}";
+        Restart = "always";
+      };
+    };
+    services.udev = lib.mkIf (cfg.trigger == "udev") {
       enable = true;
       extraRules = ''
         ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${udevAction}"

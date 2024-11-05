@@ -11,6 +11,8 @@ in {
 
   boot.kernelModules = [ "kvm-amd" ];
 
+  birdeeMods.i3MonMemory.trigger = "Xlog";
+
   environment.shellAliases = {
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
       export FLAKE="${flake-path}";
