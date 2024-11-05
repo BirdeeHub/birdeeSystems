@@ -198,7 +198,6 @@ in {
     exfatprogs
     ntfs3g
     lm_sensors
-    psensor
     btop
     graphviz-nox
     nix-output-monitor

@@ -7,7 +7,7 @@
     # [env]
     # TERM = "xterm-256color"
 
-    [shell]
+    [terminal.shell]
     program = "${pkgs.zsh}/bin/zsh"
     args = [ "-l" ]
 
@@ -45,9 +45,10 @@ in {
     };
   };
   config = lib.mkIf cfg.enable (let
+    newpkgs = import inputs.nixpkgsNV { inherit (pkgs) system overlays; };
     final-alakitty-toml = pkgs.writeText "alacritty.toml" alakitty-toml;
     alakitty = pkgs.writeShellScriptBin "alacritty" ''
-      exec ${pkgs.alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
+      exec ${newpkgs.alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
     '';
   in (if homeManager then {
     home.packages = [ alakitty ];

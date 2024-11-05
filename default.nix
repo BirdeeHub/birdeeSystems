@@ -195,7 +195,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           users = userdata pkgs;
         in
         {
-          "birdee@lenny" = nixpkgs.lib.nixosSystem {
+          "birdee@lenny" = inputs.nixpkgsNV.lib.nixosSystem {
             specialArgs = {
               hostname = "lenny";
               my_pkgs = packages_func system;
