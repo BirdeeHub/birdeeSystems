@@ -15,6 +15,8 @@ in {
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
 
+  virtualisation.vmware.host.enable = true;
+
   boot.kernelModules = [ "kvm-amd" ];
 
   birdeeMods.i3MonMemory.trigger = "Xlog";
