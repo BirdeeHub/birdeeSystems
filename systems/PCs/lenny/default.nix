@@ -7,7 +7,13 @@ in {
   imports = with system-modules; [
     ./hardware-configuration.nix
     ../PCs.nix
+    inputs.nixos-hardware-new.nixosModules.common-cpu-amd
+    inputs.nixos-hardware-new.nixosModules.common-pc-laptop
+    inputs.nixos-hardware-new.nixosModules.common-pc-laptop-ssd
   ];
+
+  services.thermald.enable = true;
+  services.auto-cpufreq.enable = true;
 
   boot.kernelModules = [ "kvm-amd" ];
 
@@ -48,6 +54,7 @@ in {
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
   };
 
   # Load nvidia driver for Xorg and Wayland
