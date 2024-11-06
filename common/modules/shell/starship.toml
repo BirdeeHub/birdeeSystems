@@ -87,8 +87,8 @@ $time\
 $status\
 $os\
 $container\
-$shell\
 $line_break\
+$shell\
 $character"""
 
 [username]
@@ -102,6 +102,9 @@ format = '[$ssh_symbol$hostname]($style): '
 
 [shell]
 disabled = false
+bash_indicator = "b"
+fish_indicator = "f"
+zsh_indicator = "z"
 
 [battery]
 disabled = false
