@@ -13,14 +13,17 @@ rec {
   };
   git = {
     birdee = {
+      enable = true;
       extraConfig = {
+        init.defaultBranch = "master";
         core = {
-          autoSetupRemote = "true";
-          fsmonitor = "true";
+          autoSetupRemote = true;
+          fsmonitor = true;
           # pager = "${pkgs.delta}";
         };
+        user.name = "BirdeeHub";
+        user.email = "birdee@localhost";
       };
-      userName = "BirdeeHub";
     };
   };
   homeManager = {
