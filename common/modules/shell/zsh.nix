@@ -4,7 +4,13 @@
 in {
   _file = ./zsh.nix;
   options = {
-    ${moduleNamespace}.zsh.enable = lib.mkEnableOption "birdeeZsh";
+    ${moduleNamespace}.zsh = {
+      enable = lib.mkEnableOption "birdeeZsh";
+      themer = lib.mkOption {
+        default = "stars";
+        type = lib.types.enum [ "stars" "OMP" ];
+      };
+    };
   };
   config = lib.mkIf cfg.enable (let
     fzfinit = pkgs.stdenv.mkDerivation {
@@ -14,6 +20,12 @@ in {
         ${pkgs.fzf}/bin/fzf --zsh > $out
       '';
     };
+    themestr = if cfg.themer == "stars" then ''
+        export STARSHIP_CONFIG='${./starship.toml}'
+        eval "$(${pkgs.starship}/bin/starship init zsh)"
+    '' else ''
+        eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./atomic-emodipt.omp.json})"
+    '';
   in if homeManager then {
     programs.zsh = {
       shellAliases = {};
@@ -32,9 +44,7 @@ in {
         source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         source ${fzfinit}
-        # eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./atomic-emodipt.omp.json})"
-        export STARSHIP_CONFIG='${./starship.toml}'
-        eval "$(${pkgs.starship}/bin/starship init zsh)"
+        ${themestr}
       '';
     };
   } else {
@@ -55,9 +65,7 @@ in {
         source ${fzfinit}
       '';
       promptInit = /*bash*/''
-        # eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./atomic-emodipt.omp.json})"
-        export STARSHIP_CONFIG='${./starship.toml}'
-        eval "$(${pkgs.starship}/bin/starship init zsh)"
+        ${themestr}
       '';
     };
   });
