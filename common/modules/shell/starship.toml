@@ -101,6 +101,7 @@ ssh_symbol = " "
 format = '[$ssh_symbol$hostname]($style): '
 
 [directory]
+read_only = " 󰌾"
 truncation_length = 255
 # truncation_symbol = '…/'
 truncate_to_repo = false
@@ -174,9 +175,6 @@ symbol = " "
 
 [dart]
 symbol = " "
-
-[directory]
-read_only = " 󰌾"
 
 [docker_context]
 symbol = " "
