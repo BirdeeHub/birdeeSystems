@@ -93,10 +93,12 @@ $character"""
 
 [username]
 show_always = true
+format = '[$user]($style)@'
 
 [hostname]
 ssh_only = false
 ssh_symbol = " "
+format = '[$ssh_symbol$hostname]($style): '
 
 [shell]
 disabled = false
@@ -118,6 +120,24 @@ style = 'bold yellow'
 [[battery.display]]
 threshold = 100
 style = 'green'
+
+[os]
+disabled = false
+
+[fill]
+symbol = ' '
+
+[git_status]
+disabled = false
+format = '([\[$all_status$ahead_behind\]]($style) )'
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+staged = '[++$count](green)'
+
+[git_metrics]
+disabled = false
+only_nonzero_diffs = true
 
 [aws]
 symbol = "  "
