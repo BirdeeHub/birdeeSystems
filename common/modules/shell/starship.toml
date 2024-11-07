@@ -85,10 +85,10 @@ $custom\
 $cmd_duration\
 $jobs\
 $battery\
-$time\
-$status\
 $os\
 $container\
+$time\
+$status\
 $line_break\
 $character"""
 
