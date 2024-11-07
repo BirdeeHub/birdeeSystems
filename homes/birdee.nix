@@ -181,6 +181,7 @@ in {
     openconnect
     snort
     ghidra
+    nth
 
     fira-code
     openmoji-color

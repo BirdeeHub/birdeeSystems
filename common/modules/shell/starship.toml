@@ -159,7 +159,7 @@ disabled = false
 use_12hr = false
 style = "bold yellow"
 format = '[\[ $time \]]($style) '
-time_format = '%Y-%m-%d %a %H:%M:%S'
+time_format = '%H:%M:%S'
 #utc_time_offset = '-5'
 time_range = '00:00:00-23:59:59'
 
