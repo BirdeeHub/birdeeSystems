@@ -19,7 +19,7 @@
 
   inputs = {
     # system
-    nixpkgs.url = "github:nixos/nixpkgs/cf28ee258fd5f9a52de6b9865cdb93a1f96d09b7";
+    nixpkgs.url = "github:nixos/nixpkgs/ae815cee91b417be55d43781eb4b73ae1ecc396c";
     # nixpkgsNV.url = "git+file:/home/birdee/temp/testgrammars/nixpkgs?branch=end-nvim-treesitter-queries-saga";
     # nixpkgsNV.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
     nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
