@@ -1,11 +1,6 @@
 format = """
-$username\
-$hostname\
-$localip\
-$shlvl\
-$singularity\
-$kubernetes\
-$directory\
+$shell\
+$sudo\
 $vcsh\
 $fossil_branch\
 $fossil_metrics\
@@ -15,10 +10,18 @@ $git_state\
 $git_metrics\
 $git_status\
 $hg_branch\
-$fill\
 $pijul_channel\
 $docker_context\
 $package\
+$line_break\
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$fill\
 $c\
 $cmake\
 $cobol\
@@ -79,7 +82,6 @@ $direnv\
 $env_var\
 $crystal\
 $custom\
-$sudo\
 $cmd_duration\
 $jobs\
 $battery\
@@ -88,7 +90,6 @@ $status\
 $os\
 $container\
 $line_break\
-$shell\
 $character"""
 
 [username]
@@ -109,9 +110,13 @@ use_logical_path = false
 
 [shell]
 disabled = false
-bash_indicator = "b"
-fish_indicator = "f"
-zsh_indicator = "z"
+# bash_indicator = "b"
+# fish_indicator = "f"
+# zsh_indicator = "z"
+
+[sudo]
+disabled = false
+format = '[$symbol]($style)'
 
 [battery]
 disabled = false
@@ -192,6 +197,7 @@ symbol = " "
 symbol = " "
 
 [git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
 symbol = " "
 
 [git_commit]
