@@ -27,15 +27,21 @@ in {
         ${pkgs.oh-my-posh}/bin/oh-my-posh init fish --config ${./atomic-emodipt.omp.json} | source
     '';
   in if homeManager then {
+    home.packages = [ pkgs.carapace ];
     programs.fish = {
       enable = true;
       interactiveShellInit = ''
         fish_vi_key_bindings
         ${themestr}
+        export CARAPACE_BRIDGES='fish,inshellisense' # optional
+        mkdir -p ~/.config/fish/completions
+        ${pkgs.carapace}/bin/carapace --list | awk '{print $1}' | xargs -I{} touch ~/.config/fish/completions/{}.fish # disable auto-loaded completions (#185)
+        ${pkgs.carapace}/bin/carapace _carapace fish | source
         source ${fzfinit}
       '';
     };
   } else {
+    environment.systemPackages = [ pkgs.carapace ];
     programs.fish = {
       enable = true;
       interactiveShellInit = ''
@@ -43,6 +49,10 @@ in {
       '';
       promptInit = ''
         ${themestr}
+        export CARAPACE_BRIDGES='fish,inshellisense' # optional
+        mkdir -p ~/.config/fish/completions
+        ${pkgs.carapace}/bin/carapace --list | awk '{print $1}' | xargs -I{} touch ~/.config/fish/completions/{}.fish # disable auto-loaded completions (#185)
+        ${pkgs.carapace}/bin/carapace _carapace fish | source
         source ${fzfinit}
       '';
     };

@@ -27,17 +27,23 @@ in {
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init bash --config ${./atomic-emodipt.omp.json})"
     '';
   in if homeManager then {
+    home.packages = [ pkgs.carapace ];
     programs.bash = {
       enableVteIntegration = true;
       initExtra = ''
         ${themestr}
+        export CARAPACE_BRIDGES='bash,inshellisense' # optional
+        source <(${pkgs.carapace}/bin/carapace _carapace bash)
         source ${fzfinit}
       '';
     };
   } else {
+    environment.systemPackages = [ pkgs.carapace ];
     programs.bash = {
       promptInit = ''
         ${themestr}
+        export CARAPACE_BRIDGES='bash,inshellisense' # optional
+        source <(${pkgs.carapace}/bin/carapace _carapace bash)
         source ${fzfinit}
       '';
     };

@@ -27,6 +27,7 @@ in {
         eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./atomic-emodipt.omp.json})"
     '';
   in if homeManager then {
+    home.packages = [ pkgs.carapace ];
     programs.zsh = {
       shellAliases = {};
       enable = true;
@@ -43,11 +44,15 @@ in {
         ZSH_AUTOSUGGEST_STRATEGY=(history completion)
         source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+        export CARAPACE_BRIDGES='zsh,inshellisense' # optional
+        zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+        source <(${pkgs.carapace}/bin/carapace _carapace zsh)
         source ${fzfinit}
         ${themestr}
       '';
     };
   } else {
+    environment.systemPackages = [ pkgs.carapace ];
     programs.zsh = {
       enable = true;
       interactiveShellInit = /*bash*/''
@@ -62,6 +67,9 @@ in {
         ZSH_AUTOSUGGEST_STRATEGY=(history completion)
         source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+        export CARAPACE_BRIDGES='zsh,inshellisense' # optional
+        zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+        source <(${pkgs.carapace}/bin/carapace _carapace zsh)
         source ${fzfinit}
       '';
       promptInit = /*bash*/''
