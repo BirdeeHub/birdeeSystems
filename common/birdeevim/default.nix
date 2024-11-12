@@ -377,7 +377,7 @@
     unwrappedCfgPath = "${flake-path}/common/birdeevim";
     # nvimSRC = inputs.neovim-src;
     # neovim-unwrapped = pkgs.internalvim.nvim;
-    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
     # neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
     #   preConfigure = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
     #     substituteInPlace src/nvim/CMakeLists.txt --replace "    util" ""
@@ -427,6 +427,18 @@
         aliases = [ "vi" "nvim" ];
       };
       categories =  birdeevim_categories args // {
+      };
+    };
+    nightlytest = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
+        wrapRc = false;
+        aliases = [ "tvim" ];
+        neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+      };
+      categories = birdeevim_categories args // {
+        test = true;
+        notes = true;
+        lspDebugMode = true;
       };
     };
     testvim = args: {
