@@ -14,8 +14,8 @@ in {
 
   services.thermald.enable = true;
 
-  # I think this being true is what causes it to randomly turn off when you unplug it or close it sometimes?
-  # TODO: test what happens with it false.
+  # WARNING: NEVER ENABLE THIS FOR THIS MACHINE
+  # It will randomly turn off when you unplug it!!
   services.auto-cpufreq.enable = false;
 
   virtualisation.vmware.host.enable = true;
