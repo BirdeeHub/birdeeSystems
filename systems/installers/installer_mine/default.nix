@@ -20,8 +20,9 @@
 
 in {
   imports = with system-modules; [
-    "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
-    ./minimal-graphical-base.nix
+    "${modulesPath}/installer/cd-dvd/installation-cd-graphical-base.nix"
+    # "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+    # ./minimal-graphical-base.nix
     shell.${login_shell}
     ranger
   ] ++ (lib.optional (login_shell != "bash") system-modules.shell.bash);
