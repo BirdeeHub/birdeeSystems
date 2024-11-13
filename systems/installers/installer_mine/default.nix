@@ -72,7 +72,7 @@ in {
       username=$2
       repo=''${3:-"birdeeSystems"}
       sudo disko --mode disko --flake github:BirdeeHub/$repo#$output
-      sudo nixos-install --show-trace --flake github:BirdeeHub/$repo#$output
+      sudo nixos-install -v --show-trace --flake github:BirdeeHub/$repo#$output
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
       mkdir -p /mnt/home/$username/$repo
@@ -89,7 +89,7 @@ in {
       output=$1
       username=$2
       repo=''${3:-"birdeeSystems"}
-      sudo nixos-install --show-trace --flake github:BirdeeHub/$repo#$output
+      sudo nixos-install -v --show-trace --flake github:BirdeeHub/$repo#$output
       echo "please set password for user $username"
       sudo passwd --root /mnt $username
       mkdir -p /mnt/home/$username/$repo
