@@ -6,5 +6,6 @@
   };
   VMs = {
     vmware_bios = import ./VMs/vmware_bios.nix;
+    noswap_bios = import ./VMs/noswap_bios.nix;
   };
 }

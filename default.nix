@@ -66,7 +66,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       sdb_swap = diskoCFG.PCs.sdb_swap;
       dustbook = diskoCFG.PCs.sda_swap;
       nestOS = diskoCFG.PCs.sda_swap;
-      "vmware-vm" = diskoCFG.VMs.vmware_bios;
+      "vmware-vm" = diskoCFG.VMs.noswap_bios;
       "birdee@nestOS" = diskoCFG.PCs.sda_swap;
       "birdee@dustbook" = diskoCFG.PCs.sda_swap;
       "birdee@lenny" = diskoCFG.PCs.nvme0n1_swap;
@@ -323,9 +323,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               ./systems/PCs/dustbook
             ];
           };
-          "vmware-vm" = nixpkgs.lib.nixosSystem {
+          "vmware-vm" = nixpkgs.lib.nixosSystem (let
+            hostname = "vmware-vm";
+          in {
             specialArgs = {
-              hostname = "virtbird";
               my_pkgs = packages_func system;
               inherit
                 stateVersion
@@ -335,21 +336,22 @@ flake-parts.lib.mkFlake { inherit inputs; } {
                 system-modules
                 flake-path
                 birdeeutils
+                hostname
                 ;
             };
             inherit system;
             modules = [
               home-manager.nixosModules.home-manager
               disko.nixosModules.disko
-              diskoCFG.VMs.vmware_bios
-              ./systems/VMs/vmware
+              self.diskoConfigurations.${hostname}
+              ./systems/VMs/${hostname}
               (HMasModule {
                 username = "birdee";
                 inherit users;
                 hmCFGmodMAIN = import ./homes/birdee.nix;
               })
             ];
-          };
+          });
           "my-qemu-vm" = nixpkgs.lib.nixosSystem {
             specialArgs = {
               hostname = "virtbird";

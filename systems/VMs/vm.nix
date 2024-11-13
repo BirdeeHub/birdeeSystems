@@ -66,11 +66,17 @@ in {
     l  = "lsd -alh";
   };
 
+  swapDevices = let
+    GB = v: v*1024;
+  in [ {
+    device = "/var/lib/swapfile";
+    size = GB 3;
+  } ];
+
   # Bootloader.
   boot.loader.timeout = 3;
   boot.loader.grub.enable = true;
   # boot.loader.grub.efiSupport = true;
-  boot.loader.grub.device = "/dev/sda";
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.systemd-boot.editor = false;
   # boot.loader.systemd-boot.configurationLimit = 50;
