@@ -66,7 +66,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       sdb_swap = diskoCFG.PCs.sdb_swap;
       dustbook = diskoCFG.PCs.sda_swap;
       nestOS = diskoCFG.PCs.sda_swap;
-      "vmware-vm" = diskoCFG.VMs.noswap_bios;
+      "virtbird" = diskoCFG.VMs.noswap_bios;
       "birdee@nestOS" = diskoCFG.PCs.sda_swap;
       "birdee@dustbook" = diskoCFG.PCs.sda_swap;
       "birdee@lenny" = diskoCFG.PCs.nvme0n1_swap;
@@ -323,8 +323,8 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               ./systems/PCs/dustbook
             ];
           };
-          "vmware-vm" = nixpkgs.lib.nixosSystem (let
-            hostname = "vmware-vm";
+          "virtbird" = nixpkgs.lib.nixosSystem (let
+            hostname = "virtbird";
           in {
             specialArgs = {
               my_pkgs = packages_func system;
