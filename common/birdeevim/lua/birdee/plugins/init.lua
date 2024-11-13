@@ -148,8 +148,8 @@ require('lze').load {
     after = function(plugin)
       require('lazydev').setup({
         library = {
-          { words = { "uv", "vim%.uv", "vim%.loop" }, path = (require('nixCats').pawsible.allPlugins.start["luvit-meta"] or "luvit-meta") .. "/library" },
-          { words = { "nixCats" }, path = (require('nixCats').nixCatsPath or "") .. '/lua' },
+          { words = { "uv", "vim%.uv", "vim%.loop" }, path = (nixCats.pawsible({"allPlugins", "start", "luvit-meta"}) or "luvit-meta") .. "/library" },
+          { words = { "nixCats" }, path = (nixCats.nixCatsPath or "") .. '/lua' },
         },
       })
     end,
