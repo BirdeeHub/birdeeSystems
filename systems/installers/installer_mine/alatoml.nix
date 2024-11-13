@@ -19,7 +19,7 @@ in /*toml*/''
   # [env]
   # TERM = "xterm-256color"
 
-  [shell]
+  [terminal.shell]
   program = "${launchScript}"
 
   [window]
