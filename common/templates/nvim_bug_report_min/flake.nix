@@ -13,7 +13,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { nixpkgs, neovim-nightly, nixToLua, ...}@inputs: let
+  outputs = { nixpkgs, neovim-nightly, ...}@inputs: let
     forAllSys = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
     extraOverlays = [];
     overlayMyNeovim = nvim: prev: final: {
