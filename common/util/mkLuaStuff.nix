@@ -100,6 +100,6 @@
       });
     in
     lua_interpreter.pkgs.luaLib.toLuaModule app_final;
-  in callPackage mkLuaAppWcallPackage (arguments // { toLua = inputs.nixToLua.prettyNoModify; });
+  in callPackage mkLuaAppWcallPackage (arguments // { toLua = inputs.nixToLua.toLua; });
 
 }

@@ -23,7 +23,7 @@
     overlayMyNeovim = nvim: prev: final: {
       myNeovim = let
         mkCFG = path: nixvals: let
-          luaRC = final.writeText "init.lua" ((import ./utils.nix).mkCFG nixToLua.prettyNoModify path nixvals);
+          luaRC = final.writeText "init.lua" ((import ./utils.nix).mkCFG nixToLua.toLua path nixvals);
         in ''lua dofile("${luaRC}")'';
       in
       final.wrapNeovim (if nvim != null then nvim else final.neovim-unwrapped) {
