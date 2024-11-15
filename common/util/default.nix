@@ -57,4 +57,6 @@ inputs: with builtins; rec {
 
   inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs; }) compile_lua_dir mkLuaApp;
 
+  inherit (inputs.nixToLua) mkEnum;
+
 }
