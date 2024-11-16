@@ -1493,11 +1493,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1731746833,
-        "narHash": "sha256-grr3mkEle/LfU5rJl6/TWSB83G3eZRmhcjIKckF1UeU=",
+        "lastModified": 1731747652,
+        "narHash": "sha256-UpF3ldHN+WP2ZCuUSDWcPC7gF8y2HezG+1Uo1GpoE2g=",
         "ref": "refs/heads/main",
-        "rev": "c030bbe3abaefdcc3e215fce33e40dd99bbd10bd",
-        "revCount": 627,
+        "rev": "a111dd51cb8190c6a3c176fd0b89e16994632c54",
+        "revCount": 628,
         "type": "git",
         "url": "file:/home/birdee/Projects/nixCats-nvim"
       },
