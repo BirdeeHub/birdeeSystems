@@ -9,6 +9,7 @@
   dependencyOverlays = (import ./overlays inputs) ++ [
     (utils.sanitizedPluginOverlay inputs)
     # add any flake overlays here.
+    # TODO: put it back after https://github.com/nvim-neorg/nixpkgs-neorg-overlay/pull/11
     # inputs.neorg-overlay.overlays.default
     inputs.lze.overlays.default
     # inputs.neovim-nightly-overlay.overlays.default
