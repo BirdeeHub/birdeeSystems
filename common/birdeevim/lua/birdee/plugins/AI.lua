@@ -15,7 +15,7 @@ return {
       },
     },
     after = function (plugin)
-      local bitwardenAuth = nixCats('AIextras.codeium_bitwarden_uuid')
+      local bitwardenAuth = nixCats.extra('AIextras.codeium_bitwarden_uuid')
       if not catUtils.isNixCats then bitwardenAuth = false end
 
       local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
@@ -80,11 +80,11 @@ return {
         enable_chat = true,
       }
 
-      if nixCats('AIextras.codeium') then
+      if nixCats.extra('AIextras.codeium') then
         require("codeium").setup(vim.tbl_deep_extend(
           "force",
           codeium_settings,
-          nixCats('AIextras.codeium')
+          nixCats.extra('AIextras.codeium')
         ))
       else
         require("codeium").setup(codeium_settings)

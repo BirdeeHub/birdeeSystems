@@ -14,7 +14,7 @@ return {
       })
     end,
     after = function (plugin)
-      local colorschemer = nixCats('colorscheme') -- also schemes lualine
+      local colorschemer = nixCats.extra('colorscheme') -- also schemes lualine
       if not require('nixCatsUtils').isNixCats then
         colorschemer = 'onedark'
       end

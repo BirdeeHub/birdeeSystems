@@ -30,7 +30,7 @@ if nixCats('neonixdev') then
     servers.nixd = {
       nixd = {
         nixpkgs = {
-          expr = [[import (builtins.getFlake "]] .. nixCats("nixdExtras.nixpkgs") .. [[") { }   ]],
+          expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
         },
         formatting = {
           command = { "nixfmt" }
@@ -39,16 +39,16 @@ if nixCats('neonixdev') then
           -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
           nixos = {
             expr = [[(builtins.getFlake "]] ..
-              nixCats("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
-              nixCats("nixdExtras.system") .. [[.nixosConfigurations."]] ..
-              nixCats("nixdExtras.systemCFGname") .. [[".options]]
+              nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
+              nixCats.extra("nixdExtras.system") .. [[.nixosConfigurations."]] ..
+              nixCats.extra("nixdExtras.systemCFGname") .. [[".options]]
           },
           -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
           ["home-manager"] = {
             expr = [[(builtins.getFlake "]] ..
-              nixCats("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
-              nixCats("nixdExtras.system") .. [[.homeConfigurations."]] ..
-              nixCats("nixdExtras.homeCFGname") .. [[".options]]
+              nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
+              nixCats.extra("nixdExtras.system") .. [[.homeConfigurations."]] ..
+              nixCats.extra("nixdExtras.homeCFGname") .. [[".options]]
           }
         },
         diagnostic = {
@@ -108,7 +108,7 @@ end
 if nixCats('java') or nixCats('kotlin') then
   servers.gradle_ls = {
     root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },
-    cmd = { nixCats("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
+    cmd = { nixCats.extra("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
     filetypes = { "kotlin", "java" },
   }
 end

@@ -22,9 +22,9 @@ function M.setupJDTLS()
       jda_server_jar = vim.fn.glob(jda_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
     else
       jdtls_path = vim.fn.exepath('jdtls')
-      if nixCats("javaExtras") then
-        jt_path = nixCats("javaExtras.java-test")
-        jda_path = nixCats("javaExtras.java-debug-adapter")
+      if nixCats.extra("javaExtras") then
+        jt_path = nixCats.extra("javaExtras.java-test")
+        jda_path = nixCats.extra("javaExtras.java-debug-adapter")
         if jt_path and jda_path then
           jt_server_jars = vim.fn.glob(jt_path .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
           jda_server_jar = vim.fn.glob(jda_path .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")

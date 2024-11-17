@@ -17,7 +17,7 @@
     )
   ];
 
-  categoryDefinitions = { pkgs, settings, categories, name, ... }@packageDef: {
+  categoryDefinitions = { pkgs, settings, categories, name, extra, mkNvimPlugin, ... }@packageDef: {
 
     propagatedBuildInputs = {
       generalBuildInputs = with pkgs; [
@@ -156,7 +156,7 @@
     };
 
     startupPlugins = with pkgs.vimPlugins; {
-      theme = builtins.getAttr categories.colorscheme {
+      theme = builtins.getAttr (extra.colorscheme or "onedark") {
         "onedark" = onedark-nvim;
         "catppuccin" = catppuccin-nvim;
         "catppuccin-mocha" = catppuccin-nvim;
@@ -176,7 +176,6 @@
         plenary-nvim
         mini-nvim
       ];
-      treesitter = builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
       other = [
         nvim-spectre
       ];
@@ -295,7 +294,7 @@
       ];
       treesitter = [
         nvim-treesitter-textobjects
-        nvim-treesitter
+        nvim-treesitter.withAllGrammars
       ];
     };
 
@@ -337,32 +336,6 @@
     };
   };
 
-  extraJavaItems = pkgs: {
-    java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
-    java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
-    gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
-  };
-  extraNixdItems = pkgs: {
-    nixpkgs = inputs.nixpkgsNV.outPath;
-    flake-path = inputs.self.outPath;
-    system = pkgs.system;
-    systemCFGname = "birdee@nestOS";
-    homeCFGname = "birdee@nestOS";
-  };
-  AIextras = pkgs: {
-    codeium_bitwarden_uuid = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
-    # NOTE: codeium table gets deep extended into codeium settings.
-    codeium = {
-      tools = {
-        uname = "${pkgs.coreutils}/bin/uname";
-        uuidgen = "${pkgs.util-linux}/bin/uuidgen";
-        curl = "${pkgs.curl}/bin/curl";
-        gzip = "${pkgs.gzip}/bin/gzip";
-        language_server = "${inputs.codeium.packages.${pkgs.system}.codeium-lsp}/bin/codeium-lsp";
-      };
-    };
-  };
-
   birdeevim_settings = { pkgs, ... }@misc: {
     # so that it finds my ai auths in ~/.cache/birdeevim
     extraName = "birdeevim";
@@ -393,13 +366,11 @@
   };
   birdeevim_categories = { pkgs, ... }@misc: {
     AI = true;
-    AIextras = AIextras pkgs;
     vimagePreview = true;
     lspDebugMode = false;
     generalBuildInputs = true;
     other = true;
     theme = true;
-    colorscheme = "onedark";
     debug = true;
     customPlugins = true;
     general = true;
@@ -409,8 +380,6 @@
     treesitter = true;
     neonixdev = true;
     java = true;
-    javaExtras = extraJavaItems pkgs;
-    nixdExtras = extraNixdItems pkgs;
     web = true;
     go = true;
     kotlin = true;
@@ -418,6 +387,34 @@
     rust = true;
     SQL = true;
     C = true;
+  };
+  birdeevim_extra = { pkgs, ... }@misc: {
+    colorscheme = "onedark";
+    javaExtras = {
+      java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
+      java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+      gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
+    };
+    nixdExtras = {
+      nixpkgs = inputs.nixpkgsNV.outPath;
+      flake-path = inputs.self.outPath;
+      system = pkgs.system;
+      systemCFGname = "birdee@nestOS";
+      homeCFGname = "birdee@nestOS";
+    };
+    AIextras = {
+      codeium_bitwarden_uuid = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
+      # NOTE: codeium table gets deep extended into codeium settings.
+      codeium = {
+        tools = {
+          uname = "${pkgs.coreutils}/bin/uname";
+          uuidgen = "${pkgs.util-linux}/bin/uuidgen";
+          curl = "${pkgs.curl}/bin/curl";
+          gzip = "${pkgs.gzip}/bin/gzip";
+          language_server = "${inputs.codeium.packages.${pkgs.system}.codeium-lsp}/bin/codeium-lsp";
+        };
+      };
+    };
   };
 
   packageDefinitions = {
@@ -427,6 +424,8 @@
         aliases = [ "vi" "nvim" ];
       };
       categories =  birdeevim_categories args // {
+      };
+      extra = birdeevim_extra args // {
       };
     };
     nightlytest = { pkgs, ... }@args: {
@@ -440,6 +439,8 @@
         notes = true;
         lspDebugMode = true;
       };
+      extra = birdeevim_extra args // {
+      };
     };
     testvim = args: {
       settings = birdeevim_settings args // {
@@ -451,9 +452,11 @@
         # notes = true;
         lspDebugMode = true;
       };
+      extra = birdeevim_extra args // {
+      };
     };
-    vigo = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
+    vigo = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
         wrapRc = true;
         extraName = "vigo";
         # aliases = [ "vigo" ];
@@ -461,7 +464,6 @@
       categories = {
         generalBuildInputs = true;
         theme = true;
-        colorscheme = "onedark";
         other = true;
         debug = true;
         customPlugins = true;
@@ -469,37 +471,43 @@
         treesitter = true;
         otter = true;
         nix = true;
-        nixdExtras = extraNixdItems pkgs;
         web = true;
         go = true;
         SQL = true;
       };
+      extra = {
+        inherit (birdeevim_extra args) nixdExtras;
+      };
     };
-    nvim_for_u = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
+    nvim_for_u = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
         wrapRc = true;
         extraName = "nvim_for_u";
         aliases = [ "vi" "vim" "nvim" ];
       };
-      categories = birdeevim_categories misc // {
+      categories = birdeevim_categories args // {
         AI = false;
-        AIextras = false;
         tabCompletionKeys = true;
       };
+      extra = birdeevim_extra args // {
+        AIextras = null;
+      };
     };
-    noAInvim = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
+    noAInvim = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
         wrapRc = true;
         extraName = "noAInvim";
         aliases = [ "vi" "vim" "nvim" ];
       };
-      categories = birdeevim_categories misc // {
+      categories = birdeevim_categories args // {
         AI = false;
-        AIextras = false;
+      };
+      extra = birdeevim_extra args // {
+        AIextras = null;
       };
     };
-    notesVim = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
+    notesVim = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
         configDirName = "birdeevim";
         withRuby = false;
         extraName = "notesVim";
@@ -514,29 +522,32 @@
         general = true;
         neonixdev = true;
         treesitter = true;
-        nixdExtras = extraNixdItems pkgs;
         vimagePreview = true;
         AI = true;
-        AIextras = AIextras pkgs;
         lspDebugMode = false;
         theme = true;
+      };
+      extra = birdeevim_extra args // {
         colorscheme = "tokyonight";
+        javaExtras = null;
       };
     };
-    portableVim = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
+    portableVim = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
         extraName = "portableVim";
         aliases = [ "vi" "vim" "nvim" ];
       };
-      categories = birdeevim_categories misc // {
+      categories = birdeevim_categories args // {
         portableExtras = true;
         notes = true;
         AI = false;
-        AIextras = false;
+      };
+      extra = birdeevim_extra args // {
+        AIextras = null;
       };
     };
-    minimalVim = { pkgs, ... }@misc: {
-      settings = birdeevim_settings misc // {
+    minimalVim = { pkgs, ... }@args: {
+      settings = birdeevim_settings args // {
         wrapRc = false;
         aliases = null;
         extraName = "minimalVim";
@@ -545,6 +556,7 @@
         withPython3 = false;
       };
       categories = {};
+      extra = {};
     };
   };
 

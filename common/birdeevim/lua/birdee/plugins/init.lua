@@ -1,5 +1,5 @@
 local catUtils = require('nixCatsUtils')
-local colorschemer = nixCats('colorscheme') -- also schemes lualine
+local colorschemer = nixCats.extra('colorscheme') -- also schemes lualine
 if not catUtils.isNixCats then
   colorschemer = 'onedark'
 end
