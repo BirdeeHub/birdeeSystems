@@ -1493,17 +1493,17 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1731755120,
-        "narHash": "sha256-pP+9lxEENqxMc5O8NUfu6ZVFLutgSzytESDWNyPrjjo=",
-        "ref": "refs/heads/main",
-        "rev": "997b16bd96112034aa6dde06c2e33b9a31344c92",
-        "revCount": 630,
-        "type": "git",
-        "url": "file:/home/birdee/Projects/nixCats-nvim"
+        "lastModified": 1731807243,
+        "narHash": "sha256-vo10EaW3Knd6ZsIrnqcQJIBrezZad0cERtRCmV+Ik5I=",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "rev": "62109bf6a2f723782b9f48038418a719f05a5518",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/nixCats-nvim"
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "type": "github"
       }
     },
     "nixToLua": {
