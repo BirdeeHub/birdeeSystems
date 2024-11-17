@@ -62,11 +62,11 @@
       ];
       java = [
         jdt-language-server
-      ] ++ (if categories ? kotlin && categories.kotlin then [] else []);
+      ] ++ (if categories.kotlin or false then [] else []);
       kotlin = [
         kotlin-language-server
         ktlint
-      ] ++ (if categories ? java && categories.java then [] else []);
+      ] ++ (if categories.java or false then [] else []);
       go = [
         gopls
         delve
