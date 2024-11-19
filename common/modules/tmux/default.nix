@@ -26,7 +26,7 @@ in {
         '';
       };
     } // (if !homeManager then {
-      withUtempter = mkIf (! homeManager) (mkOption {
+      withUtempter = mkOption {
         description = mdDoc ''
           Whether to enable libutempter for tmux.
           This is required so that tmux can write to /var/run/utmp (which can be queried with `who` to display currently connected user sessions).
@@ -34,7 +34,7 @@ in {
         '';
         default = true;
         type = types.bool;
-      });
+      };
     } else {});
   };
   config = lib.mkIf cfg.enable (let
