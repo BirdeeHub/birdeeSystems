@@ -325,6 +325,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           };
           "virtbird" = nixpkgs.lib.nixosSystem (let
             hostname = "virtbird";
+            username = "birdee";
           in {
             specialArgs = {
               my_pkgs = packages_func system;
@@ -337,19 +338,20 @@ flake-parts.lib.mkFlake { inherit inputs; } {
                 flake-path
                 birdeeutils
                 hostname
+                username
                 ;
             };
             inherit system;
             modules = [
-              home-manager.nixosModules.home-manager
+              # home-manager.nixosModules.home-manager
               disko.nixosModules.disko
               self.diskoConfigurations.${hostname}
               ./systems/VMs/${hostname}
-              (HMasModule {
-                username = "birdee";
-                inherit users;
-                hmCFGmodMAIN = import ./homes/birdee.nix;
-              })
+              # (HMasModule {
+              #   username = "birdee";
+              #   inherit users;
+              #   hmCFGmodMAIN = import ./homes/birdee.nix;
+              # })
             ];
           });
           "my-qemu-vm" = nixpkgs.lib.nixosSystem {

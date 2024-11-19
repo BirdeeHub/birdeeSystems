@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ config, pkgs, self, inputs, stateVersion, users, hostname, username, system-modules, ... }: let
 in {
   imports = with system-modules; [
     i3
@@ -21,19 +21,12 @@ in {
     packageNames = [ "noAInvim" ];
   };
 
-  users.users.birdee = {
-    name = "birdee";
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    description = "";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    initialPassword = "test";
-    # this is packages for nixOS user config.
-    # packages = []; # empty because that is managed by home-manager
-  };
+  programs.git = users.git.${username};
+
+  users.users = users.users;
   birdeeMods = {
-    # i3.enable = true;
-    # i3.tmuxDefault = true;
+    i3.enable = true;
+    i3.tmuxDefault = true;
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
@@ -202,6 +195,7 @@ in {
     nix-info
     pciutils
     lm_sensors
+    chromium
     usbutils
     nvme-cli
     unzip
