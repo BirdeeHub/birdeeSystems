@@ -14,6 +14,7 @@ in {
     lightdm
     i3MonMemory
     LD
+    tmux
   ];
 
   birdeeVim = {
@@ -34,6 +35,7 @@ in {
     lightdm.enable = true;
     i3MonMemory.enable = true;
     LD.enable = true;
+    tmux.enable = true;
   };
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
