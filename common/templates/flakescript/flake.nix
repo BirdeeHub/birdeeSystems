@@ -4,7 +4,7 @@
     APPNAME = "MyScript";
   in {
     overlays.default = final: prev: {
-      ${APPNAME} = prev.writeShellScriptBin "${APPNAME}" ''
+      ${APPNAME} = prev.writeShellScriptBin APPNAME ''
         echo "Running '${APPNAME}'..."
       '';
     };
