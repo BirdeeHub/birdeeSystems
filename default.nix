@@ -344,6 +344,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             inherit system;
             modules = [
               # home-manager.nixosModules.home-manager
+              { nixpkgs.overlays = overlayList; }
               disko.nixosModules.disko
               self.diskoConfigurations.${hostname}
               ./systems/VMs/${hostname}
