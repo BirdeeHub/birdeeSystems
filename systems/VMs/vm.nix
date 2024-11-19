@@ -21,7 +21,7 @@ in {
     packageNames = [ "noAInvim" ];
   };
 
-  programs.git = users.git.${username};
+  programs.git = (users.git false).${username};
 
   users.users = users.users;
   birdeeMods = {

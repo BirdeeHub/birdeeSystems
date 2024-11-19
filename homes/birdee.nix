@@ -17,7 +17,7 @@ in {
   # manage.
   home.username = username;
   home.homeDirectory = lib.mkDefault users.homeManager.${username}.homeDirectory;
-  programs.git = users.git.${username};
+  programs.git = (users.git true).${username};
 
   birdeeVim = {
     enable = true;

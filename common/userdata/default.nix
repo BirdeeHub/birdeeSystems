@@ -11,10 +11,10 @@ rec {
       # packages = []; # empty because that is managed by home-manager
     };
   };
-  git = {
+  git = HM: {
     birdee = {
       enable = true;
-      extraConfig = {
+      ${if HM then "extraConfig" else "config"} = {
         init.defaultBranch = "master";
         core = {
           autoSetupRemote = true;
