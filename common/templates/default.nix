@@ -31,6 +31,10 @@ inputs: {
     path = ./hx-gotempl;
     description = "an empty go + templ + htmx flake template";
   };
+  crabby = {
+    path = ./crabby;
+    description = "helloworld rust with nix flake";
+  };
   lua-fenster = {
     path = ./lua-fenster;
     description = "a lua environment with fenster built in it";
