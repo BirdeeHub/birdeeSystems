@@ -11,7 +11,7 @@
       '';
     in {
       default = myscript;
-      ${APPNAME} = self.packages.${system}.${APPNAME};
+      ${APPNAME} = self.packages.${system}.default;
     });
   };
 }
