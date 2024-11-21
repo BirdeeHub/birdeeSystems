@@ -25,10 +25,8 @@ You can run it with `nix shell github:BirdeeHub/birdeeSystems#nvim_for_u` and th
 
 It uses [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, which has a very similar plugin spec to [`lz.n`](https://github.com/nvim-neorocks/lz.n).
 
-- Is it faster? No its basically the same.
-
-- Does it work completely differently from lz.n despite having more or less
-the same spec fields?
-  - Yes, although it shares some handler code where they parse their field from the spec.
-
 `lze` is my take on `lz.n`
+
+I like it better, as it allows me to write custom handlers with less overhead and complexity without losing any of its capabilities.
+
+It is not slower, nor is it really any faster. It just works differently.
