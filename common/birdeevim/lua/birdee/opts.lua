@@ -34,7 +34,7 @@ vim.o.expandtab = true
 
 -- stops line wrapping from being confusing
 vim.o.wrap = true
--- vim.o.linebreak = true
+vim.o.linebreak = true
 vim.o.breakindent = true
 
 -- Save undo history
