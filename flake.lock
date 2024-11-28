@@ -1288,15 +1288,15 @@
         "norg-meta": "norg-meta"
       },
       "locked": {
-        "lastModified": 1731841906,
-        "narHash": "sha256-rUtaN7ixulzMKCpoMkVpvc60pehHpi4JNWxeNSNNwYU=",
-        "owner": "BirdeeHub",
+        "lastModified": 1732792819,
+        "narHash": "sha256-PAvZKA90AUBLrszIKMRkI3z/Dt9nceZILMh0cpT4rgw=",
+        "owner": "nvim-neorg",
         "repo": "nixpkgs-neorg-overlay",
-        "rev": "9557ac5d478e82974012e53044f1f856a69fee13",
+        "rev": "7629fcf6e7147ad092de0a07b3f4ce327172e154",
         "type": "github"
       },
       "original": {
-        "owner": "BirdeeHub",
+        "owner": "nvim-neorg",
         "repo": "nixpkgs-neorg-overlay",
         "type": "github"
       }

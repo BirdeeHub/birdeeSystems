@@ -59,8 +59,8 @@
     };
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
-    neorg-overlay.url = "github:BirdeeHub/nixpkgs-neorg-overlay";
-    # neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    # neorg-overlay.url = "github:BirdeeHub/nixpkgs-neorg-overlay";
+    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     lze = {
     # plugins-lze = {
       url = "github:BirdeeHub/lze";
