@@ -54,10 +54,6 @@ in {
   };
 
   services.flatpak.enable = true;
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-  };
 
   virtualisation.libvirtd.enable = true;
 

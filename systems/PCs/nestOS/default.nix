@@ -8,17 +8,37 @@ in {
     ./hardware-configuration.nix
     ../PCs.nix
     inputs.nixos-hardware-new.nixosModules.common-cpu-amd
+    inputs.nixos-hardware-new.nixosModules.common-gpu-amd
     inputs.nixos-hardware-new.nixosModules.common-pc-laptop
     inputs.nixos-hardware-new.nixosModules.common-pc-laptop-ssd
   ];
+
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+  };
+
+  systemd.tmpfiles.rules = 
+  let
+    rocmEnv = pkgs.symlinkJoin {
+      name = "rocm-combined";
+      paths = with pkgs.rocmPackages; [
+        rocblas
+        hipblas
+        clr
+      ];
+    };
+  in [
+    "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+  ];
+
+  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
 
   services.thermald.enable = true;
 
   services.auto-cpufreq.enable = true;
 
   virtualisation.vmware.host.enable = true;
-
-  # birdeeMods.i3MonMemory.trigger = "Xlog";
 
   environment.shellAliases = {
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
@@ -33,12 +53,6 @@ in {
       export FLAKE="${flake-path}";
       exec ${self}/scripts/both "$@"
     ''}'';
-  };
-
-  # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
   };
 
 }
