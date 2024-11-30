@@ -32,6 +32,8 @@ in {
     "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
   ];
 
+  services.asusd.enable = true;
+
   hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
 
   services.thermald.enable = true;
