@@ -65,11 +65,11 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       sda_swap = diskoCFG.PCs.sda_swap;
       sdb_swap = diskoCFG.PCs.sdb_swap;
       dustbook = diskoCFG.PCs.sda_swap;
-      nestOS = diskoCFG.PCs.sda_swap;
+      aSUS = diskoCFG.PCs.sda_swap;
       "virtbird" = diskoCFG.VMs.noswap_bios;
-      "birdee@nestOS" = diskoCFG.PCs.sda_swap;
+      "birdee@aSUS" = diskoCFG.PCs.sda_swap;
       "birdee@dustbook" = diskoCFG.PCs.sda_swap;
-      "birdee@lenny" = diskoCFG.PCs.nvme0n1_swap;
+      "birdee@nestOS" = diskoCFG.PCs.nvme0n1_swap;
     };
     overlays = overlaySet // birdeeVim.overlays // { };
     nixosModules = system-modules;
@@ -160,10 +160,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               )
             ];
           };
-          "birdee@nestOS" = home-manager.lib.homeManagerConfiguration {
+          "birdee@aSUS" = home-manager.lib.homeManagerConfiguration {
             extraSpecialArgs = {
               username = "birdee";
-              monitorCFG = ./homes/monitors_by_hostname/nestOS;
+              monitorCFG = ./homes/monitors_by_hostname/aSUS;
               my_pkgs = packages_func system;
               inherit
                 stateVersion
@@ -195,9 +195,9 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           users = userdata pkgs;
         in
         {
-          "birdee@lenny" = inputs.nixpkgsNV.lib.nixosSystem {
+          "birdee@nestOS" = inputs.nixpkgsNV.lib.nixosSystem {
             specialArgs = {
-              hostname = "lenny";
+              hostname = "nestOS";
               my_pkgs = packages_func system;
               inherit
                 stateVersion
@@ -214,18 +214,18 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               home-manager.nixosModules.home-manager
               disko.nixosModules.disko
               diskoCFG.PCs.nvme0n1_swap
-              ./systems/PCs/lenny
+              ./systems/PCs/nestOS
               (HMasModule {
-                monitorCFG = ./homes/monitors_by_hostname/lenny;
+                monitorCFG = ./homes/monitors_by_hostname/nestOS;
                 username = "birdee";
                 inherit users;
                 hmCFGmodMAIN = import ./homes/main;
               })
             ];
           };
-          "birdee@nestOS" = nixpkgs.lib.nixosSystem {
+          "birdee@aSUS" = nixpkgs.lib.nixosSystem {
             specialArgs = {
-              hostname = "nestOS";
+              hostname = "aSUS";
               my_pkgs = packages_func system;
               inherit
                 stateVersion
@@ -244,7 +244,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               diskoCFG.PCs.sda_swap
               ./systems/PCs/aSUS
               (HMasModule {
-                monitorCFG = ./homes/monitors_by_hostname/nestOS;
+                monitorCFG = ./homes/monitors_by_hostname/aSUS;
                 username = "birdee";
                 inherit users;
                 hmCFGmodMAIN = import ./homes/main;
@@ -279,9 +279,9 @@ flake-parts.lib.mkFlake { inherit inputs; } {
               })
             ];
           };
-          "nestOS" = nixpkgs.lib.nixosSystem {
+          "aSUS" = nixpkgs.lib.nixosSystem {
             specialArgs = {
-              hostname = "nestOS";
+              hostname = "aSUS";
               my_pkgs = packages_func system;
               inherit
                 stateVersion
