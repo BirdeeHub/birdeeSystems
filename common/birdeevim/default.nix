@@ -176,6 +176,7 @@
         nvim-notify
         plenary-nvim
         mini-nvim
+        snacks-nvim
       ];
       other = [
         nvim-spectre

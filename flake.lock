@@ -2325,6 +2325,22 @@
         "type": "github"
       }
     },
+    "plugins-snacks-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733060741,
+        "narHash": "sha256-Sy550H0l6lRjZupaE+RnB7ldyzd8kQruro23hc0kuNk=",
+        "owner": "folke",
+        "repo": "snacks.nvim",
+        "rev": "d023bf70344ed4f5f53885384df4bc2dceb4ea49",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "snacks.nvim",
+        "type": "github"
+      }
+    },
     "plugins-telescope-git-file-history": {
       "flake": false,
       "locked": {
@@ -2502,6 +2518,7 @@
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",
         "plugins-otter-nvim": "plugins-otter-nvim",
         "plugins-render-markdown": "plugins-render-markdown",
+        "plugins-snacks-nvim": "plugins-snacks-nvim",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "templ": "templ"

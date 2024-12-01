@@ -76,6 +76,10 @@
       url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
+    "plugins-snacks-nvim" = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
     "plugins-render-markdown" = {
       url = "github:MeanderingProgrammer/markdown.nvim";
       flake = false;
