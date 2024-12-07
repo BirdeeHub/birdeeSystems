@@ -116,7 +116,7 @@ in {
   '';
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = lib.optionals (nerd_font_string != "") [ nerd_font_string ]; })
+    nerd-fonts.fira-mono
   ];
   fonts.fontconfig = {
     enable = true;

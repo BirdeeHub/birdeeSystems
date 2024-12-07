@@ -19,11 +19,11 @@ in {
   home.homeDirectory = lib.mkDefault users.homeManager.${username}.homeDirectory;
   programs.git = (users.git true).${username};
 
-  birdeeVim = {
-    enable = true;
-    packageNames = [ "birdeeVim" "notesVim" "testvim" "nightlytest" ];
-  };
   birdeeMods = {
+    birdeeVim = {
+      enable = true;
+      packageNames = [ "birdeeVim" "notesVim" "testvim" "nightlytest" ];
+    };
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
@@ -186,7 +186,7 @@ in {
     fira-code
     openmoji-color
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+    nerd-fonts.go-mono
 
     dislocker
     ueberzugpp

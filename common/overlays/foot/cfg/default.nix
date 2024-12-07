@@ -1,4 +1,5 @@
 {
+  pkgs,
   writeText,
   writeShellScript,
   writeShellScriptBin,
@@ -6,7 +7,6 @@
   foot,
   fontconfig,
   zsh,
-  nerdfonts,
   nerdString ? "FiraMono",
   callPackage,
   wrapZSH ? false,
@@ -56,7 +56,7 @@ let
       inafoot = writeText "foot.ini" footcfg;
 
       newDejaVu = {
-        minimal = nerdfonts.override { fonts = [ nerdString ]; };
+        minimal = pkgs.nerd-fonts.fira-mono;
       };
 
       newFC = fontconfig.override (prev: {

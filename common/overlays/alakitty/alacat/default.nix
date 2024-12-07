@@ -1,11 +1,11 @@
 {
+  pkgs,
   writeText,
   writeShellScriptBin,
   lib,
   alacritty,
   fontconfig,
   zsh,
-  nerdfonts,
   nerdString ? "FiraMono",
   wrapZSH ? false,
   extraTOML ? "",
@@ -77,7 +77,7 @@ let
       final-alakitty-toml = writeText "alakitty.toml" alakitty-toml;
 
       newDejaVu = {
-        minimal = nerdfonts.override { fonts = [ nerdString ]; };
+        minimal = pkgs.nerd-fonts.fira-code;
       };
 
       newFC = fontconfig.override (prev: {

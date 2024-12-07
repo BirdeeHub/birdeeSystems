@@ -17,15 +17,15 @@ in {
     tmux
   ];
 
-  birdeeVim = {
-    enable = true;
-    packageNames = [ "noAInvim" ];
-  };
 
   programs.git = (users.git false).${username};
 
   users.users = users.users;
   birdeeMods = {
+    birdeeVim = {
+      enable = true;
+      packageNames = [ "noAInvim" ];
+    };
     i3.enable = true;
     i3.tmuxDefault = true;
     zsh.enable = true;
@@ -159,7 +159,8 @@ in {
     fira-code
     openmoji-color
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+    nerd-fonts.fira-mono
+    nerd-fonts.go-mono
   ];
   fonts.fontconfig = {
     enable = true;

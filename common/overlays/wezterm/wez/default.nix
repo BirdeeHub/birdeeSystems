@@ -1,12 +1,11 @@
 {
+  pkgs,
   lib,
   stdenv,
   writeShellScriptBin,
   writeText,
   wezterm,
   zsh,
-  nerdfonts,
-  callPackage,
   nerdString ? "FiraMono",
 
   tmux,
@@ -19,11 +18,7 @@
 }:
 let
 
-  nerdpkg = nerdfonts.override {
-    fonts = [
-      nerdString
-    ];
-  };
+  nerdpkg = pkgs.nerd-fonts.fira-mono;
 
   tmuxf = tmux.override (prev: {
     term_string = "xterm-256color";

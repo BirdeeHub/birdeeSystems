@@ -180,6 +180,7 @@
       ];
       other = [
         nvim-spectre
+        # (pkgs.neovimUtils.grammarToPlugin (pkgs.tree-sitter-grammars.tree-sitter-nu.overrideAttrs (p: { installQueries = true; })))
       ];
       lua = [
         luvit-meta
@@ -190,6 +191,7 @@
       neonixdev = [
         luvit-meta
       ];
+      treesitter = builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
     };
 
     optionalPlugins = with pkgs.vimPlugins; {
@@ -296,7 +298,7 @@
       ];
       treesitter = [
         nvim-treesitter-textobjects
-        nvim-treesitter.withAllGrammars
+        nvim-treesitter
       ];
     };
 
@@ -596,9 +598,11 @@ in
   nixosModules.default = utils.mkNixosModules {
     inherit nixpkgs;
     inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
+    moduleNamespace = [ "birdeeMods" defaultPackageName ];
   };
   homeModule = utils.mkHomeModules {
     inherit nixpkgs;
     inherit defaultPackageName dependencyOverlays luaPath categoryDefinitions packageDefinitions;
+    moduleNamespace = [ "birdeeMods" defaultPackageName ];
   };
 }

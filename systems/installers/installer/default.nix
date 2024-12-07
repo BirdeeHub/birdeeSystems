@@ -61,7 +61,8 @@
   fonts.packages = with pkgs; [
     openmoji-color
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+    nerd-fonts.fira-mono
+    nerd-fonts.go-mono
   ];
   fonts.fontconfig = {
     enable = true;

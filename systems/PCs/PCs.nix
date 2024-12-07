@@ -17,11 +17,6 @@ in {
     aliasNetwork
   ];
 
-  birdeeVim = {
-    enable = true;
-    packageNames = [ "noAInvim" ];
-  };
-
   nix.settings = {
     # bash-prompt-prefix = "✓";
     extra-trusted-substituters = [
@@ -41,6 +36,10 @@ in {
 
   users.users = users.users;
   birdeeMods = {
+    birdeeVim = {
+      enable = true;
+      packageNames = [ "noAInvim" ];
+    };
     aliasNetwork.enable = false;
     i3.enable = true;
     i3.tmuxDefault = true;
@@ -162,7 +161,8 @@ in {
     fira-code
     openmoji-color
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraMono" "Go-Mono" ]; })
+    nerd-fonts.fira-mono
+    nerd-fonts.go-mono
   ];
   fonts.fontconfig = {
     enable = true;
