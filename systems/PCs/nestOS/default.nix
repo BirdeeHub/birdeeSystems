@@ -34,7 +34,8 @@ in {
 
   services.asusd.enable = true;
 
-  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd vulkan-tools mesa ];
+  environment.systemPackages = with pkgs; [ vulkan-tools mesa vulkan-headers ];
 
   services.thermald.enable = true;
 
