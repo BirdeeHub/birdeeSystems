@@ -49,7 +49,7 @@
     nixToLua.url = "github:BirdeeHub/nixtoLua";
 
     # neovim
-    nixCats.url = "github:BirdeeHub/nixCats-nvim/dev";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     # nixCats.url = "git+file:/home/birdee/Projects/nixCats-nvim";
     # neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
     neovim-nightly-overlay = {
