@@ -171,6 +171,7 @@ in {
 
     ffuf
     kdenlive
+    blender
     nmap
     sqlmap
     burpsuite
