@@ -32,7 +32,7 @@ in {
     "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
   ];
 
-  services.asusd.enable = true;
+  services.asusd.enable = false;
 
   hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd vulkan-tools mesa ];
   environment.systemPackages = with pkgs; [ vulkan-tools mesa vulkan-headers ];
