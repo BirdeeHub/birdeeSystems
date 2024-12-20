@@ -228,6 +228,7 @@ in {
     sqlite-interactive
     rustup
     rustycli
+    evcxr
 
     clisp
 
