@@ -35,7 +35,7 @@ overlay
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
   overlaySet = overlaySetMapped // {
-    nur = inputs.nur.overlay;
+    nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
   };
 in overlaySet
