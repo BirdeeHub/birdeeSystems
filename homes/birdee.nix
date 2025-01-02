@@ -240,8 +240,8 @@ in {
     steam
     heroic
     lutris
-    wine
-    # wine64
+    wineWowPackages.stable
+    winetricks
     python3
     distrobox
     lazygit
