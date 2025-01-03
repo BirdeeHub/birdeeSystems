@@ -219,6 +219,10 @@ in {
     discord
     docker-compose
     peek
+    obs-studio
+    obs-do
+    obs-cli
+    obs-cmd
     gnumake
     cmake
     # gccgo just have a dev shell for c....
