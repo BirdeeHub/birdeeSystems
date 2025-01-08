@@ -177,6 +177,7 @@ in {
     burpsuite
     zap
     metasploit
+    yt-dlp
     bettercap
     openvpn
     openconnect
