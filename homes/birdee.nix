@@ -169,6 +169,8 @@ in {
     minesweeper
     #
 
+    yt-dlp
+
     ffuf
     kdenlive
     nmap
