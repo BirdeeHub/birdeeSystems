@@ -17,7 +17,7 @@
       shift 2
       echo "$@" "$(basename "$file")"
       if [[ "$file" == *.lua ]]; then
-        if [ -e "${lua_interpreter}/bin/luajit" ]; then
+        if [ "${lua_interpreter.luaAttr}" == "luajit"* ]; then
           ${lua_interpreter}/bin/luajit -b "$file" -d "$outdir/$(basename "$file")" || cp -f "$file" "$outdir"
         else
           ${lua_interpreter}/bin/luac -o "$outdir/$(basename "$file")" "$file" || cp -f "$file" "$outdir"
@@ -82,13 +82,11 @@
           inherit luaEnv;
           unwrapped = compiled;
         };
-        buildPhase = let
-          binarypath = if pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
-        in /*bash*/''
+        buildPhase = /*bash*/''
           runHook preBuild
           mkdir -p $out/bin
           cat > $out/bin/${APPNAME} <<EOFTAG_LUA
-          #!${binarypath}
+          #!${luaEnv.interpreter}
           require([[${APPNAME}]])
           EOFTAG_LUA
           chmod +x $out/bin/${APPNAME}
