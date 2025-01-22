@@ -181,7 +181,6 @@ in {
     bettercap
     openvpn
     openconnect
-    snort
     ghidra
     nth
 

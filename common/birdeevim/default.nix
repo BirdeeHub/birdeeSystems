@@ -326,7 +326,7 @@
         py.python-lsp-server
         # py.python-lsp-black
         py.pytest
-        py.pylint
+        (py.pylint.overrideAttrs { doCheck = false; })
         # python-lsp-ruff
         # pyls-flake8
         # pylsp-rope
