@@ -1,4 +1,4 @@
-{ mkRecBuilder, inputs, ... }: with builtins; rec {
+{ mkRecBuilder, inputs, pipe, ... }: with builtins; rec {
   compile_lua_dir = {
     name ? "REPLACE_ME",
     LUA_SRC,
@@ -26,8 +26,8 @@
         cp -f "$file" "$outdir"
       fi
     '';
-    env_path = head (split "[\/][?]" (head lua_interpreter.LuaPathSearchPaths));
-    env_cpath = head (split "[\/][?]" (head lua_interpreter.LuaCPathSearchPaths));
+    env_path = pipe lua_interpreter.LuaPathSearchPaths [ head (split "[\/][?]") head ];
+    env_cpath = pipe lua_interpreter.LuaCPathSearchPaths [ head (split "[\/][?]") head ];
     nixluavals = if isFunction toLua then toLua miscNixVals else "";
     mknixluavals = ''echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
     app = mkDerivation (finalAttrs: {
