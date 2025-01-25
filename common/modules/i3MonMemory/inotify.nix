@@ -21,10 +21,10 @@
       src = ./${appname}.lua;
       phases = [ "buildPhase" ];
       buildPhase = let
-        launcher = lib.escapeShellArg "package.preload[ [[nixinfo]] ] = function() return ${nixToLua.uglyLua toPass} end";
+        nixinfo = "package.preload[ [[nixinfo]] ] = function() return ${nixToLua.uglyLua toPass} end";
       in /*bash*/''
         TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
-        echo ${launcher} > "$TEMPFILE";
+        echo ${lib.escapeShellArg nixinfo} > "$TEMPFILE";
         cat $src >> "$TEMPFILE"
         ${luaEnv}/bin/luac -o "$TEMPOUTFILE" "$TEMPFILE"
         echo '#!${luaEnv.interpreter}' > $out
