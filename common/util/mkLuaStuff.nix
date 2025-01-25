@@ -18,9 +18,9 @@
       echo "$@" "$(basename "$file")"
       if [[ "$file" == *.lua ]]; then
         if [ -e "${lua_interpreter}/bin/luajit" ]; then
-          ${lua_interpreter}/bin/luajit -b "$file" -d "$outdir/$(basename "$file")" || cp -f "$file" "$outdir"
+          ${lua_interpreter}/bin/luajit -b -d -s "$file" "$outdir/$(basename "$file")" || cp -f "$file" "$outdir"
         else
-          ${lua_interpreter}/bin/luac -o "$outdir/$(basename "$file")" "$file" || cp -f "$file" "$outdir"
+          ${lua_interpreter}/bin/luac -s -o "$outdir/$(basename "$file")" "$file" || cp -f "$file" "$outdir"
         fi
       else
         cp -f "$file" "$outdir"
