@@ -38,13 +38,15 @@
     inherit userJsonCache xrandrPrimarySH xrandrOthersSH;
   };
 
+  luaProgPath = with pkgs; [ i3 xorg.xrandr gawk ];
+
   i3notifyMon = pkgs.writeShellScript "runi3xrandrMemory.sh" ''
     PATH="${pkgs.lib.makeBinPath (with pkgs; [ bash coreutils inotify-tools ])}"
     mkdir -p "$(dirname ${triggerFile})"
     inotifywait -e close_write -m "$(dirname ${triggerFile})" |
     while read -r directory events filename; do
       if [ "$filename" == "$(basename ${triggerFile})" ]; then
-        bash -c 'PATH=${pkgs.lib.makeBinPath (with pkgs; [ i3 xorg.xrandr gawk ])} ${i3MonMemory}'
+        bash -c 'PATH=${pkgs.lib.makeBinPath luaProgPath} ${i3MonMemory}'
       fi
     done
   '';
