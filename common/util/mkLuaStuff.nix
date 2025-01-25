@@ -7,7 +7,7 @@
     lua_packages ? (_:[]),
     extraLuaPackages ? (_:[]),
     miscNixVals ? {},
-    toLua ? null,
+    toLua ? inputs.nixToLua.toLua,
     mkDerivation,
     ...
     }: let
@@ -63,7 +63,7 @@
       , APPNAME ? "REPLACE_ME"
       , wrapperArgs ? []
       , miscNixVals ? {}
-      , toLua ? null
+      , toLua ? inputs.nixToLua.toLua
       , ...
     }: let
       compiled = lib.makeOverridable compile_lua_dir {
@@ -87,7 +87,7 @@
           mkdir -p $out/bin
           cat > $out/bin/${APPNAME} <<EOFTAG_LUA
           #!${luaEnv.interpreter}
-          require([[${APPNAME}]])
+          require(${toLua APPNAME})
           EOFTAG_LUA
           chmod +x $out/bin/${APPNAME}
           runHook postBuild
@@ -98,6 +98,6 @@
       });
     in
     lua_interpreter.pkgs.luaLib.toLuaModule app_final;
-  in callPackage mkLuaAppWcallPackage (arguments // { toLua = inputs.nixToLua.toLua; });
+  in callPackage mkLuaAppWcallPackage arguments;
 
 }

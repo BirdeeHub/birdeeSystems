@@ -36,9 +36,10 @@ function table.remove_values(OG, rmv)
 end
 
 -- get config values and cache path
-local newmonConfig = arg[1]
-local alwaysRunConfig = arg[2]
-local basecachepath = arg[3] or ((os.getenv('XDG_CACHE_HOME')
+local nixinfo = require "nixinfo"
+local newmonConfig = nixinfo.newmon
+local alwaysRunConfig = nixinfo.always_run
+local basecachepath = nixinfo.json_cache or ((os.getenv('XDG_CACHE_HOME')
     or os.getenv('HOME') .. '/.cache' or '/tmp') .. "/i3MonMemory/")
 local userJsonCache = basecachepath .. os.getenv('USER') .."/userJsonCache.json"
 

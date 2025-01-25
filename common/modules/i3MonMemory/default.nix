@@ -91,8 +91,8 @@ in {
       fi
     ''
     + (if cfg.monitorScriptDir != null
-        && builtins.pathExists ("${cfg.monitorScriptDir}/${scriptName}")
-      then builtins.readFile ("${cfg.monitorScriptDir}/${scriptName}")
+        && builtins.pathExists "${cfg.monitorScriptDir}/${scriptName}"
+      then builtins.readFile "${cfg.monitorScriptDir}/${scriptName}"
       else builtins.readFile ./defaults/${scriptName})));
 
     xrandrPrimarySH = mkUserXrandrScript "Xprimary.sh";
@@ -108,6 +108,7 @@ in {
 
     inotifyScript = import ./inotify.nix {
       inherit pkgs triggerFile xrandrOthersSH xrandrPrimarySH;
+      inherit (inputs) nixToLua;
     };
 
     udevAction = pkgs.writeShellScript "i3xrandrMemoryUDEV.sh" ''
