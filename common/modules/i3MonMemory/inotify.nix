@@ -1,5 +1,4 @@
 { pkgs, ... }@args: let
-
   i3luaMon = {
     appname
     , userJsonCache ? null
@@ -53,5 +52,4 @@
       done
     '';
   in i3notifyMon;
-
 in pkgs.callPackage i3luaMon (args // { appname = "i3luaMon"; })
