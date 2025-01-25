@@ -24,11 +24,16 @@
         nixinfo = "package.preload[ [[nixinfo]] ] = function() return ${nixToLua.uglyLua toPass} end";
       in /*bash*/''
         TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
+        cleanup() {
+          rm -f "$TEMPFILE" "$TEMPOUTFILE" || true
+        }
+        trap cleanup EXIT
         echo ${lib.escapeShellArg nixinfo} > "$TEMPFILE";
         cat $src >> "$TEMPFILE"
         ${luaEnv}/bin/luac -o "$TEMPOUTFILE" "$TEMPFILE"
         echo '#!${luaEnv.interpreter}' > $out
         cat "$TEMPOUTFILE" >> $out
+        cleanup
         chmod +x $out
       '';
     };
