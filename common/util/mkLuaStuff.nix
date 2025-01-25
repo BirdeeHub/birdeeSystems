@@ -7,10 +7,10 @@
     lua_packages ? (_:[]),
     extraLuaPackages ? (_:[]),
     miscNixVals ? {},
-    toLua ? inputs.nixToLua.toLua,
     mkDerivation,
     ...
     }: let
+    inherit (inputs.nixToLua) toLua;
     luaFileAction = /*bash*/''
       local file=$1
       local outdir=$2
@@ -63,9 +63,9 @@
       , APPNAME ? "REPLACE_ME"
       , wrapperArgs ? []
       , miscNixVals ? {}
-      , toLua ? inputs.nixToLua.toLua
       , ...
     }: let
+      inherit (inputs.nixToLua) toLua;
       compiled = lib.makeOverridable compile_lua_dir {
         name = APPNAME;
         inherit (stdenv) mkDerivation;
