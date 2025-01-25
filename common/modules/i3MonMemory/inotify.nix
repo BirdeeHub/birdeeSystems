@@ -30,7 +30,7 @@
         TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
         cat ${launcher} $src > "$TEMPFILE"
         ${luaEnv}/bin/luac -o "$TEMPOUTFILE" "$TEMPFILE"
-        echo "#!${luaEnv.interpreter}" > $out
+        echo '#!${luaEnv.interpreter}' > $out
         cat "$TEMPOUTFILE" >> $out
         chmod +x $out
       '';
