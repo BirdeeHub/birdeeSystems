@@ -6,7 +6,7 @@
     , xrandrOthersSH
     , xrandrPrimarySH
     , lua5_2
-    , writeScript
+    , writeText
     , stdenv
     , ...
   }: let
@@ -17,21 +17,25 @@
         newmon = xrandrOthersSH;
     };
     luaProg = stdenv.mkDerivation {
-      name = appname + ".lua";
+      name = appname;
       src = ./${appname}.lua;
       phases = [ "buildPhase" ];
-      buildPhase = ''
-        ${luaEnv}/bin/luac -o $out $src
+      buildPhase = let
+        launcher = writeText appname /*lua*/''
+          package.preload["nixinfo"] = function()
+            return ${nixToLua.toLua toPass}
+          end
+        '';
+      in /*bash*/''
+        TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
+        cat ${launcher} $src > "$TEMPFILE"
+        ${luaEnv}/bin/luac -o "$TEMPOUTFILE" "$TEMPFILE"
+        echo "#!${luaEnv.interpreter}" > $out
+        cat "$TEMPOUTFILE" >> $out
+        chmod +x $out
       '';
     };
-    launcher = writeScript appname /*lua*/''
-      #!${luaEnv.interpreter}
-      package.preload["nixinfo"] = function()
-        return ${nixToLua.toLua toPass}
-      end
-      dofile(${nixToLua.toLua luaProg})
-    '';
-  in launcher;
+  in luaProg;
 
   i3MonMemory = pkgs.callPackage i3luaMon {
     appname = "i3luaMon";
