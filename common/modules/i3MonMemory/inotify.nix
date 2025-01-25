@@ -1,30 +1,31 @@
-{ pkgs, ... }@args: let
-  i3luaMon = {
-    appname
+{ pkgs, nixToLua, ... }@args: let
+  luaMon = {
+    pkgs
+    , lib
+    , stdenv
+    , writeShellScript
+
+    , appname
     , userJsonCache ? null
     , xrandrOthersSH
     , xrandrPrimarySH
     , triggerFile
-    , nixToLua
-    , pkgs
-    , lua5_2
-    , lib
-    , stdenv
-    , writeShellScript
+    , lua ? pkgs.lua5_2
+    , luaProgPath ? (with pkgs; [ i3 xorg.xrandr gawk ])
+    , extraLuaPackages ? (lpkgs: with lpkgs; [ luafilesystem cjson ])
+    , toPass ? {
+      json_cache = userJsonCache;
+      always_run = xrandrPrimarySH;
+      newmon = xrandrOthersSH;
+    }
     , ...
   }: let
-    luaEnv = lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
-    luaProgPath = with pkgs; [ i3 xorg.xrandr gawk ];
-    toPass = {
-        json_cache = userJsonCache;
-        always_run = xrandrPrimarySH;
-        newmon = xrandrOthersSH;
-    };
     luaProg = stdenv.mkDerivation {
       name = appname;
       src = ./${appname}.lua;
       phases = [ "buildPhase" ];
       buildPhase = let
+        luaEnv = lua.withPackages extraLuaPackages;
         nixinfo = "package.preload[ [[nixinfo]] ] = function() return ${nixToLua.uglyLua toPass} end";
       in /*bash*/''
         TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
@@ -34,7 +35,11 @@
         trap cleanup EXIT
         echo ${lib.escapeShellArg nixinfo} > "$TEMPFILE";
         cat $src >> "$TEMPFILE"
-        ${luaEnv}/bin/luac -s -o "$TEMPOUTFILE" "$TEMPFILE"
+        if [ -e "${luaEnv}/bin/luajit" ]; then
+          ${luaEnv}/bin/luajit -b -d -s "$TEMPFILE" "$TEMPOUTFILE"
+        else
+          ${luaEnv}/bin/luac -s -o "$TEMPOUTFILE" "$TEMPFILE"
+        fi
         echo '#!${luaEnv.interpreter}' > $out
         cat "$TEMPOUTFILE" >> $out
         cleanup
@@ -52,4 +57,4 @@
       done
     '';
   in i3notifyMon;
-in pkgs.callPackage i3luaMon (args // { appname = "i3luaMon"; })
+in pkgs.callPackage luaMon (args // { appname = "i3luaMon"; })
