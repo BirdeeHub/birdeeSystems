@@ -5,4 +5,4 @@ FLAKE=${FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} && export FL
 cd "$FLAKE" &&\
 git add . &&\
 cd "$prevWD" &&\
-nixos-rebuild build-vm --flake "$FLAKE#$1"
+nixos-rebuild --extra-experimental-features "nix-command flakes pipe-operators" build-vm --flake "$FLAKE#$1"

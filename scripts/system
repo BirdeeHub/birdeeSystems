@@ -6,9 +6,9 @@
 prevWD=$(pwd)
 FLAKE=${FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} && export FLAKE &&\
 cd "$FLAKE" &&\
-nix --extra-experimental-features "nix-command flakes" run nixpkgs#git -- add .
+nix --extra-experimental-features "nix-command flakes pipe-operators" run nixpkgs#git -- add .
 cd "$prevWD" &&\
-nix --extra-experimental-features "nix-command flakes" run nixpkgs#nh -- os switch -v $isUp -H "$hostname" -- --show-trace "$@" &&\
+nix --extra-experimental-features "nix-command flakes pipe-operators" run nixpkgs#nh -- os switch -v $isUp -H "$hostname" -- --show-trace "$@" &&\
 cd "$FLAKE" &&\
-nix --extra-experimental-features "nix-command flakes" run nixpkgs#git -- add .
+nix --extra-experimental-features "nix-command flakes pipe-operators" run nixpkgs#git -- add .
 cd "$prevWD"
