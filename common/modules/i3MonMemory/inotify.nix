@@ -1,16 +1,21 @@
-{ pkgs, triggerFile, userJsonCache ? null, xrandrPrimarySH, xrandrOthersSH, nixToLua, ... }: let
+{ pkgs, ... }@args: let
 
   i3luaMon = {
     appname
     , userJsonCache ? null
     , xrandrOthersSH
     , xrandrPrimarySH
+    , triggerFile
+    , nixToLua
+    , pkgs
     , lua5_2
     , lib
     , stdenv
+    , writeShellScript
     , ...
   }: let
     luaEnv = lua5_2.withPackages (lpkgs: with lpkgs; [ luafilesystem cjson ]);
+    luaProgPath = with pkgs; [ i3 xorg.xrandr gawk ];
     toPass = {
         json_cache = userJsonCache;
         always_run = xrandrPrimarySH;
@@ -37,23 +42,16 @@
         chmod +x $out
       '';
     };
-  in luaProg;
+    i3notifyMon = writeShellScript "runi3xrandrMemory.sh" ''
+      PATH="${lib.makeBinPath (with pkgs; [ bash coreutils inotify-tools ])}"
+      mkdir -p "$(dirname ${triggerFile})"
+      inotifywait -e close_write -m "$(dirname ${triggerFile})" |
+      while read -r directory events filename; do
+        if [ "$filename" == "$(basename ${triggerFile})" ]; then
+          bash -c 'PATH=${lib.makeBinPath luaProgPath} ${luaProg}'
+        fi
+      done
+    '';
+  in i3notifyMon;
 
-  i3MonMemory = pkgs.callPackage i3luaMon {
-    appname = "i3luaMon";
-    inherit userJsonCache xrandrPrimarySH xrandrOthersSH;
-  };
-
-  luaProgPath = with pkgs; [ i3 xorg.xrandr gawk ];
-
-  i3notifyMon = pkgs.writeShellScript "runi3xrandrMemory.sh" ''
-    PATH="${pkgs.lib.makeBinPath (with pkgs; [ bash coreutils inotify-tools ])}"
-    mkdir -p "$(dirname ${triggerFile})"
-    inotifywait -e close_write -m "$(dirname ${triggerFile})" |
-    while read -r directory events filename; do
-      if [ "$filename" == "$(basename ${triggerFile})" ]; then
-        bash -c 'PATH=${pkgs.lib.makeBinPath luaProgPath} ${i3MonMemory}'
-      fi
-    done
-  '';
-in i3notifyMon
+in pkgs.callPackage i3luaMon (args // { appname = "i3luaMon"; })
