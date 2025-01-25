@@ -6,7 +6,7 @@
     , xrandrOthersSH
     , xrandrPrimarySH
     , lua5_2
-    , writeText
+    , lib
     , stdenv
     , ...
   }: let
@@ -21,14 +21,11 @@
       src = ./${appname}.lua;
       phases = [ "buildPhase" ];
       buildPhase = let
-        launcher = writeText appname /*lua*/''
-          package.preload["nixinfo"] = function()
-            return ${nixToLua.toLua toPass}
-          end
-        '';
+        launcher = lib.escapeShellArg "package.preload[ [[nixinfo]] ] = function() return ${nixToLua.uglyLua toPass} end";
       in /*bash*/''
         TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
-        cat ${launcher} $src > "$TEMPFILE"
+        echo ${launcher} > "$TEMPFILE";
+        cat $src >> "$TEMPFILE"
         ${luaEnv}/bin/luac -o "$TEMPOUTFILE" "$TEMPFILE"
         echo '#!${luaEnv.interpreter}' > $out
         cat "$TEMPOUTFILE" >> $out

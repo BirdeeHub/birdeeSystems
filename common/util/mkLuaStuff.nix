@@ -85,10 +85,8 @@
         buildPhase = /*bash*/''
           runHook preBuild
           mkdir -p $out/bin
-          cat > $out/bin/${APPNAME} <<EOFTAG_LUA
-          #!${luaEnv.interpreter}
-          require(${toLua APPNAME})
-          EOFTAG_LUA
+          echo '#!${luaEnv.interpreter}' > $out/bin/${APPNAME}
+          echo ${lib.escapeShellArg "require(${toLua APPNAME})"} >> $out/bin/${APPNAME}
           chmod +x $out/bin/${APPNAME}
           runHook postBuild
         '';
