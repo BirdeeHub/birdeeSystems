@@ -13,7 +13,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # Allow flakes and new command
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+  nix.settings.show-trace = true;
 
   environment.shellAliases = {
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''

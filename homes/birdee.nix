@@ -40,16 +40,6 @@ in {
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
 
-  nix.nixPath = [
-    "nixpkgs=${inputs.nixpkgsNV}"
-  ];
-
-  nix.gc = {
-    automatic = true;
-    frequency = "weekly";
-    options = "-d";
-  };
-
   home.shellAliases = {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
@@ -99,6 +89,9 @@ in {
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
+    experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+    auto-optimise-store = true;
+    show-trace = true;
     extra-trusted-substituters = [
       "https://nix-community.cachix.org"
     ];
@@ -109,7 +102,14 @@ in {
   nix.extraOptions = ''
     !include /home/birdee/.secrets/gitoke
   '';
-
+  nix.nixPath = [
+    "nixpkgs=${inputs.nixpkgsNV}"
+  ];
+  nix.gc = {
+    automatic = true;
+    frequency = "weekly";
+    options = "-d";
+  };
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgsNV;
     nixCats.flake = inputs.nixCats;

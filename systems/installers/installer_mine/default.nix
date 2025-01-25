@@ -106,7 +106,8 @@ in {
   boot.kernelModules = [ "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+  nix.settings.show-trace = true;
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
 
