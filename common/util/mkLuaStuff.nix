@@ -82,13 +82,11 @@
           inherit luaEnv;
           unwrapped = compiled;
         };
-        buildPhase = let
-          binarypath = if pathExists "${luaEnv}/bin/luajit" then "${luaEnv}/bin/luajit" else "${luaEnv}/bin/lua";
-        in /*bash*/''
+        buildPhase = /*bash*/''
           runHook preBuild
           mkdir -p $out/bin
           cat > $out/bin/${APPNAME} <<EOFTAG_LUA
-          #!${binarypath}
+          #!${luaEnv.interpreter}
           require([[${APPNAME}]])
           EOFTAG_LUA
           chmod +x $out/bin/${APPNAME}
