@@ -35,7 +35,7 @@
         trap cleanup EXIT
         echo ${lib.escapeShellArg nixinfo} > "$TEMPFILE";
         cat $src >> "$TEMPFILE"
-        ${luaEnv}/bin/luac -o "$TEMPOUTFILE" "$TEMPFILE"
+        ${luaEnv}/bin/luac -s -o "$TEMPOUTFILE" "$TEMPFILE"
         echo '#!${luaEnv.interpreter}' > $out
         cat "$TEMPOUTFILE" >> $out
         cleanup
