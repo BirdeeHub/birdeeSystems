@@ -18,7 +18,6 @@ end
 vim.g.lze = {
   load = require('birdee.utils').safe_packadd,
 }
-require("lze").register_handlers(require('lze.x'))
 require('lze').register_handlers({
   {
     enabled = false,
