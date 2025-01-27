@@ -13,29 +13,22 @@ in {
     inputs.nixos-hardware-new.nixosModules.common-pc-laptop-ssd
   ];
 
+  services.nextjs-ollama-llm-ui.enable = true;
   services.ollama = {
     enable = true;
     acceleration = "rocm";
+    rocmOverrideGfx = "11.0.2";
+    loadModels = [ "deepseek-r1:14b" "llama3.1" ];
   };
 
-  systemd.tmpfiles.rules = 
-  let
-    rocmEnv = pkgs.symlinkJoin {
-      name = "rocm-combined";
-      paths = with pkgs.rocmPackages; [
-        rocblas
-        hipblas
-        clr
-      ];
-    };
-  in [
-    "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
   services.asusd.enable = false;
 
-  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd vulkan-tools mesa ];
-  environment.systemPackages = with pkgs; [ vulkan-tools mesa vulkan-headers ];
+  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd rocmPackages.clr amdvlk vulkan-tools mesa ];
+  environment.systemPackages = with pkgs; [ vulkan-tools mesa clinfo vulkan-headers radeontools mesa-demos rocmPackages.rocminfo ];
 
   services.thermald.enable = true;
 
