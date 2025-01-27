@@ -13,7 +13,6 @@ in {
     inputs.nixos-hardware-new.nixosModules.common-pc-laptop-ssd
   ];
 
-  services.nextjs-ollama-llm-ui.enable = true;
   services.ollama = {
     enable = true;
     acceleration = "rocm";
