@@ -132,4 +132,15 @@ end
 ---@type fun(names: string[]|string)
 M.load_w_after_plugin = require('nixCatsUtils.lzUtils').make_load_with_after({ "plugin" })
 
+function M.lazy_require(moduleName)
+  return setmetatable({}, {
+    __index = function(_, key)
+      return function(...)
+        local module = require(moduleName)
+        return module[key](...)
+      end
+    end,
+  })
+end
+
 return M
