@@ -45,6 +45,10 @@ in {
         default = ./misc/DogAteHomework.png;
         type = nullOr path;
       };
+      cputemppath = lib.mkOption {
+        default = "/sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input";
+        type = str;
+      };
     };
   };
   config = lib.mkIf cfg.enable (let
@@ -90,7 +94,7 @@ in {
         rm $cache
       '')}'';
       i3status = (pkgs.writeShellScriptBin "i3status" ''
-        exec ${pkgs.i3status}/bin/i3status --config ${pkgs.writeText "i3bar" (pkgs.callPackage ./i3bar.nix {})} "$@"
+        exec ${pkgs.i3status}/bin/i3status --config ${pkgs.writeText "i3bar" (pkgs.callPackage ./i3bar.nix {inherit (cfg) cputemppath;})} "$@"
       '');
       i3lock = (pkgs.writeShellScriptBin "i3lock" ''
         exec ${pkgs.i3lock}/bin/i3lock -t -i ${cfg.lockerBackground} "$@"

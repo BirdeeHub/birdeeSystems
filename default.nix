@@ -178,7 +178,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             };
             inherit pkgs;
             modules = [
-              ./homes/main
+              ./homes/birdee.nix
               (
                 { pkgs, ... }:
                 {
@@ -247,7 +247,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
                 monitorCFG = ./homes/monitors_by_hostname/aSUS;
                 username = "birdee";
                 inherit users;
-                hmCFGmodMAIN = import ./homes/main;
+                hmCFGmodMAIN = import ./homes/birdee.nix;
               })
             ];
           };

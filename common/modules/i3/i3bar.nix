@@ -1,4 +1,6 @@
-{}: ''
+{
+    cputemppath ? "/sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input"
+}: ''
 order += "load"
 order += "cpu_usage"
 order += "cpu_temperature 0"
@@ -58,6 +60,6 @@ wireless wlo1 {
 }
 cpu_temperature 0 {
         format = "%degrees °C"
-        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input"
+        path = "${cputemppath}"
 }
 ''
