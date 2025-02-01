@@ -17,7 +17,7 @@ in {
     enable = true;
     acceleration = "rocm";
     rocmOverrideGfx = "11.0.2";
-    loadModels = [ "deepseek-r1:14b" "llama3.1" ];
+    loadModels = [ "llama3.1" ];
   };
 
   systemd.tmpfiles.rules = [
