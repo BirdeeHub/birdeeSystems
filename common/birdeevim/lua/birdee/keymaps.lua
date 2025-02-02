@@ -3,7 +3,6 @@
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.api.nvim_set_keymap('', '<M-h>', '<Esc>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>t', [[:terminal<CR>]], { desc = 'open terminal in current buffer' })
 vim.api.nvim_set_keymap('t', '<M-h>', '<C-\\><C-n>', { noremap = true, silent = true, desc = "escape terminal mode" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = 'Moves Line Down' })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = 'Moves Line Up' })
