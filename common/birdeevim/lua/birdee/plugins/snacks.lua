@@ -17,7 +17,7 @@ return {
         words = { enabled = false, },
         lazygit = { enabled = true, },
       })
-      vim.keymap.set('n', '<leader>t', function() Snacks.terminal() end, { desc = 'open terminal in current buffer' })
+      vim.keymap.set('n', '<leader>t', function() Snacks.terminal() end, { desc = 'open snacks terminal' })
       vim.keymap.set({"n"},"<leader>_", function() Snacks.lazygit.open() end, { desc = 'LazyGit' })
     end,
   }
