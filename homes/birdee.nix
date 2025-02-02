@@ -183,6 +183,7 @@ in {
     openconnect
     ghidra
     nth
+    xh
 
     fira-code
     openmoji-color
