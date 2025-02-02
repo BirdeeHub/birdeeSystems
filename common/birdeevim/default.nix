@@ -22,6 +22,44 @@
 
     sharedLibraries = {};
 
+    environmentVariables = {
+      test = {
+        BIRDTVAR = "It worked!";
+      };
+    };
+
+    extraWrapperArgs = {
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
+      test = [
+        # '' --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.libgit2 ]}"''
+      ];
+    };
+
+    # python.withPackages or lua.withPackages
+    # vim.g.python3_host_prog
+    # :!nvim-python3
+    extraPython3Packages = {
+      python = (py:[
+        py.debugpy
+        py.pylsp-mypy
+        py.pyls-isort
+        py.python-lsp-server
+        # py.python-lsp-black
+        py.pytest
+        (py.pylint.overrideAttrs { doCheck = false; })
+        # python-lsp-ruff
+        # pyls-flake8
+        # pylsp-rope
+        # yapf
+        # autopep8
+      ]);
+    };
+
+    # populates $LUA_PATH and $LUA_CPATH
+    extraLuaPackages = {
+      # vimagePreview = [ (lp: with lp; [ magick ]) ];
+    };
+
     lspsAndRuntimeDeps = with pkgs; {
       portableExtras = [
         xclip
@@ -287,43 +325,6 @@
         nvim-treesitter-textobjects
         nvim-treesitter
       ];
-    };
-
-    environmentVariables = {
-      test = {
-        BIRDTVAR = "It worked!";
-      };
-    };
-
-    extraWrapperArgs = {
-    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
-      test = [
-        # '' --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.libgit2 ]}"''
-      ];
-    };
-
-    # python.withPackages or lua.withPackages
-    # vim.g.python3_host_prog
-    # :!nvim-python3
-    extraPython3Packages = {
-      python = (py:[
-        py.debugpy
-        py.pylsp-mypy
-        py.pyls-isort
-        py.python-lsp-server
-        # py.python-lsp-black
-        py.pytest
-        (py.pylint.overrideAttrs { doCheck = false; })
-        # python-lsp-ruff
-        # pyls-flake8
-        # pylsp-rope
-        # yapf
-        # autopep8
-      ]);
-    };
-    # populates $LUA_PATH and $LUA_CPATH
-    extraLuaPackages = {
-      # vimagePreview = [ (lp: with lp; [ magick ]) ];
     };
   };
 
