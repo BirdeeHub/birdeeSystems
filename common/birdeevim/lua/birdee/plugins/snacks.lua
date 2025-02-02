@@ -34,6 +34,7 @@ return {
       })
       vim.keymap.set('n', '<c-\\>', function() Snacks.terminal() end, { desc = 'open snacks terminal' })
       vim.keymap.set({"n"},"<leader>_", function() Snacks.lazygit.open() end, { desc = 'LazyGit' })
+      vim.keymap.set({"n"},"<leader>gc", function() Snacks.lazygit.log() end, { desc = 'Lazy[G]it [C]ommit log' })
     end,
   }
 }
