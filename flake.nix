@@ -100,10 +100,6 @@
       url = "github:jmbuhr/otter.nvim";
       flake = false;
     };
-    "plugins-large_file" = {
-      url = "github:mireq/large_file";
-      flake = false;
-    };
     "plugins-code-compass" = {
       url = "github:emmanueltouzery/code-compass.nvim";
       flake = false;

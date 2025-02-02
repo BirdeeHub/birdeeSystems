@@ -1353,11 +1353,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1738491630,
-        "narHash": "sha256-F1WC4+IRUeMGkesrhJS4hzXT4TzjudcIQXtbDJRXHB8=",
+        "lastModified": 1738495323,
+        "narHash": "sha256-/pGSrl8+y/GAANzgTFgNQI9t6nQdTTHUWHLZ6UP+yNk=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "f0c887d2acffa0f736f1057f5feb2bef73ad3a62",
+        "rev": "46cc00ca599d2170184fa944d63831066bac45cd",
         "type": "github"
       },
       "original": {
@@ -1955,22 +1955,6 @@
         "type": "github"
       }
     },
-    "plugins-large_file": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711288079,
-        "narHash": "sha256-0yxPl242N5pi4CvR1TsD+yzkps2Ej9pAHXWOMRoOazk=",
-        "owner": "mireq",
-        "repo": "large_file",
-        "rev": "d9740134f80994d56f50e2931ba9307f49e420dc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mireq",
-        "repo": "large_file",
-        "type": "github"
-      }
-    },
     "plugins-nvim-luaref": {
       "flake": false,
       "locked": {
@@ -2032,22 +2016,6 @@
       "original": {
         "owner": "MeanderingProgrammer",
         "repo": "markdown.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-snacks-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1738486209,
-        "narHash": "sha256-DtQViJ3Wj5Du+Cx3wc6crt4HRiSKqdQ4oBEPHaPfgnc=",
-        "owner": "folke",
-        "repo": "snacks.nvim",
-        "rev": "72826a72de93f49b2446c691e3bef04df1a44dde",
-        "type": "github"
-      },
-      "original": {
-        "owner": "folke",
-        "repo": "snacks.nvim",
         "type": "github"
       }
     },
@@ -2132,12 +2100,10 @@
         "plugins-grapple": "plugins-grapple",
         "plugins-hlargs": "plugins-hlargs",
         "plugins-img-clip": "plugins-img-clip",
-        "plugins-large_file": "plugins-large_file",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-nvim-tinygit": "plugins-nvim-tinygit",
         "plugins-otter-nvim": "plugins-otter-nvim",
         "plugins-render-markdown": "plugins-render-markdown",
-        "plugins-snacks-nvim": "plugins-snacks-nvim",
         "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "templ": "templ"

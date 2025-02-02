@@ -14,19 +14,6 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-if nixCats('general') then
-  require("large_file").setup {
-    size_limit = 4 * 1024 * 1024, -- 4 MB
-    buffer_options = {
-      swapfile = false,
-      bufhidden = 'unload',
-      buftype = 'nowrite',
-      undolevels = -1,
-    },
-    on_large_file_read_pre = function(ev) end
-  }
-end
-
 if nixCats('other') then
   vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
     desc = "Toggle Spectre"
@@ -57,12 +44,12 @@ end
 -- personally though I don't use lze to load startup plugins because... why...
 
 require('lze').load {
+  { import = "birdee.plugins.snacks", },
   { import = "birdee.plugins.telescope", },
   { import = "birdee.plugins.nestsitter", },
   { import = "birdee.plugins.completion", },
   { import = "birdee.plugins.grapple", },
   { import = "birdee.plugins.lualine", },
-  { import = "birdee.plugins.git", },
   { import = "birdee.plugins.gutter", },
   { import = "birdee.plugins.clipboard", },
   { import = "birdee.plugins.image", },
@@ -196,6 +183,25 @@ require('lze').load {
         -- When true, otter handles these cases fully.
         handle_leading_whitespace = false,
       }
+    end,
+  },
+  {
+    "vim-fugitive",
+    for_cat = "general.git",
+    cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
+      "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
+      "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
+      "DiffviewRefresh", "DiffviewFileHistory", },
+    -- event = "",
+    -- ft = "",
+    -- keys = "",
+    -- colorscheme = "",
+    load = function (name)
+      require("birdee.utils").safe_packadd({
+        name,
+        "vim-rhubarb",
+        "diffview.nvim",
+      })
     end,
   },
   {

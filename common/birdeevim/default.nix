@@ -49,6 +49,9 @@
           fd
           ast-grep
         ];
+        git = [
+          lazygit
+        ];
         other = [
           sqlite
         ];
@@ -166,7 +169,6 @@
       };
       general = with pkgs.neovimPlugins; [
         lze
-        large_file
         oil-nvim
         vim-repeat
         nvim-luaref
@@ -261,10 +263,6 @@
         ];
         git = [
           telescope-git-file-history
-          fugit2-nvim
-          nvim-tinygit
-          dressing-nvim
-          diffview-nvim
           vim-rhubarb
           vim-fugitive
         ];
