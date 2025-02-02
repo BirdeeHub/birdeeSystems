@@ -20,20 +20,14 @@
 
   categoryDefinitions = { pkgs, settings, categories, name, extra, mkNvimPlugin, ... }@packageDef: {
 
-    sharedLibraries = {};
-
     environmentVariables = {
       test = {
         BIRDTVAR = "It worked!";
       };
     };
-
-    extraWrapperArgs = {
+    sharedLibraries = {};
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
-      test = [
-        # '' --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.libgit2 ]}"''
-      ];
-    };
+    extraWrapperArgs = {};
 
     # python.withPackages or lua.withPackages
     # vim.g.python3_host_prog
