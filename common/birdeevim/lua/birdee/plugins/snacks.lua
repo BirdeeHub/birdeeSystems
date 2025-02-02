@@ -12,6 +12,7 @@ return {
         picker = { enabled = true, },
         notifier = { enabled = false, },
         quickfile = { enabled = true, },
+        terminal = { enabled = true, },
         scroll = { enabled = false, },
         statuscolumn = { enabled = false, },
         words = { enabled = false, },
