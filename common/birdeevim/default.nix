@@ -20,18 +20,7 @@
 
   categoryDefinitions = { pkgs, settings, categories, name, extra, mkNvimPlugin, ... }@packageDef: {
 
-    propagatedBuildInputs = {
-      generalBuildInputs = with pkgs; [
-      ];
-    };
-
-    sharedLibraries = {
-      general = {
-        git = with pkgs; [
-          libgit2
-        ];
-      };
-    };
+    sharedLibraries = {};
 
     lspsAndRuntimeDeps = with pkgs; {
       portableExtras = [
@@ -370,7 +359,6 @@
     AI = true;
     vimagePreview = true;
     lspDebugMode = false;
-    generalBuildInputs = true;
     other = true;
     theme = true;
     debug = true;
@@ -464,7 +452,6 @@
         # aliases = [ "vigo" ];
       };
       categories = {
-        generalBuildInputs = true;
         theme = true;
         other = true;
         debug = true;
@@ -518,7 +505,6 @@
       categories = {
         notes = true;
         otter = true;
-        generalBuildInputs = true;
         customPlugins = true;
         other = true;
         general = true;
