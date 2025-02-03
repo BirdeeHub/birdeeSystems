@@ -127,12 +127,10 @@
         ];
       };
       rust = [
-        rustc
-        rustfmt
+        (extra.rust.toolchain or inputs.fenix.packages.${system}.latest.toolchain)
+        rustup
+        llvmPackages.bintools
         lldb
-        cargo
-        clippy
-        rust-analyzer
       ];
       lua = [
         lua-language-server
@@ -212,7 +210,7 @@
         luvit-meta
       ];
       rust = [
-        rustaceanvim
+        (rustaceanvim.overrideAttrs { src = inputs.rustacean-src; })
       ];
       neonixdev = [
         luvit-meta

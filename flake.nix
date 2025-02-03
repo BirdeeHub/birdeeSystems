@@ -47,6 +47,7 @@
     maximizer.url = "github:BirdeeHub/maximizer";
     maximizer.inputs.nixpkgs.follows = "nixpkgs";
     nixToLua.url = "github:BirdeeHub/nixtoLua";
+    fenix.url = "github:nix-community/fenix";
 
     # neovim
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
@@ -85,6 +86,10 @@
     };
     "plugins-visual-whitespace" = {
       url = "github:mcauley-penney/visual-whitespace.nvim";
+      flake = false;
+    };
+    rustacean-src = {
+      url = "git+file:/home/birdee/Projects/rustaceanvim";
       flake = false;
     };
   };
