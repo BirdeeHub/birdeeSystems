@@ -89,7 +89,7 @@
       flake = false;
     };
     rustacean-src = {
-      url = "git+file:/home/birdee/Projects/rustaceanvim";
+      url = "github:mrcjkb/rustaceanvim";
       flake = false;
     };
   };

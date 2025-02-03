@@ -2047,17 +2047,17 @@
     "rustacean-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1738600295,
-        "narHash": "sha256-TmGJ6qJnzEM52tLjuiJR+cAoCHlaoJflYVBRtOYRZsE=",
-        "ref": "refs/heads/master",
-        "rev": "ce1be8cb52f4bfb7581896576a23ec8640c07420",
-        "revCount": 1049,
-        "type": "git",
-        "url": "file:/home/birdee/Projects/rustaceanvim"
+        "lastModified": 1738603179,
+        "narHash": "sha256-T/hz2WP62AdgDtzkP4Bcx7enpDqPjvYAjEJE/ThtNCc=",
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
+        "rev": "f03035fa03ccb36cd26d0792c946fbacba1d1a39",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/rustaceanvim"
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
+        "type": "github"
       }
     },
     "systems": {
