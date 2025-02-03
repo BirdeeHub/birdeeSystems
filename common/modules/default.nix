@@ -23,4 +23,5 @@ in {
   tmux = import ./tmux args;
   shell = import ./shell args;
   aliasNetwork = import (systemOnly ./aliasNetwork) args;
+  old_modules_compat = import ./old_modules_compat args;
 }
