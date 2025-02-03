@@ -74,7 +74,7 @@ return {
     end,
   },
   {
-    "img-clip",
+    "img-clip.nvim",
     for_cat = "other",
     cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     -- event = "",

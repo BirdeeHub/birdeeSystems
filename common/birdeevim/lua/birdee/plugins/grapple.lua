@@ -1,6 +1,6 @@
 return {
   {
-    "grapple",
+    "grapple.nvim",
     for_cat = "general.StdPlugOver",
     -- cmd = { "" },
     event = "DeferredUIEnter",

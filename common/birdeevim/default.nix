@@ -238,7 +238,7 @@
         neorg-telescope
       ];
       otter = [
-        pkgs.neovimPlugins.otter-nvim
+        otter-nvim
       ];
       go = [
         nvim-dap-go
@@ -262,10 +262,10 @@
           markdown-preview-nvim
         ];
         StdPlugOver = [
-          grapple
+          grapple-nvim
           hlargs
           visual-whitespace
-          render-markdown
+          render-markdown-nvim
         ];
         cmp = [
           # cmp stuff
@@ -307,7 +307,7 @@
         ];
       };
       other = with pkgs.neovimPlugins; [
-        img-clip
+        img-clip-nvim
         nvim-highlight-colors
         nvim-neoclip-lua
         which-key-nvim

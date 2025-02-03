@@ -142,7 +142,7 @@ require('lze').load {
     end,
   },
   {
-    "otter-nvim",
+    "otter.nvim",
     for_cat = "otter",
     -- event = "DeferredUIEnter",
     on_require = { "otter" },

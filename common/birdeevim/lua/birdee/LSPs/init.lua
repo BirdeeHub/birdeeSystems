@@ -310,7 +310,7 @@ require('lze').load {
     "nvim-lspconfig",
     for_cat = "general.core",
     event = "FileType",
-    dep_of = { "otter-nvim", },
+    dep_of = { "otter.nvim", },
     load = (catUtils.isNixCats and nil) or function(name)
       require("birdee.utils").safe_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
     end,

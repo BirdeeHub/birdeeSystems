@@ -59,7 +59,6 @@
     };
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
-    # neorg-overlay.url = "github:BirdeeHub/nixpkgs-neorg-overlay";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     lze = {
     # plugins-lze = {
@@ -76,18 +75,6 @@
       url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
-    "plugins-render-markdown" = {
-      url = "github:MeanderingProgrammer/markdown.nvim";
-      flake = false;
-    };
-    "plugins-fugit2-nvim" = {
-      url = "github:SuperBo/fugit2.nvim";
-      flake = false;
-    };
-    "plugins-nvim-tinygit" = {
-      url = "github:chrisgrieser/nvim-tinygit";
-      flake = false;
-    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
@@ -96,24 +83,8 @@
       url = "github:isak102/telescope-git-file-history.nvim";
       flake = false;
     };
-    "plugins-otter-nvim" = {
-      url = "github:jmbuhr/otter.nvim";
-      flake = false;
-    };
-    "plugins-code-compass" = {
-      url = "github:emmanueltouzery/code-compass.nvim";
-      flake = false;
-    };
     "plugins-visual-whitespace" = {
       url = "github:mcauley-penney/visual-whitespace.nvim";
-      flake = false;
-    };
-    "plugins-grapple" = {
-      url = "github:cbochs/grapple.nvim";
-      flake = false;
-    };
-    "plugins-img-clip" = {
-      url = "github:HakonHarnes/img-clip.nvim";
       flake = false;
     };
   };

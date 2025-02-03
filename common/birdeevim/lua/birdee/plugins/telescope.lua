@@ -58,7 +58,7 @@ return {
     "telescope.nvim",
     for_cat = "general.core",
     cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
-    dep_of = { "nvim-neoclip.lua", "fugit2-nvim", "neorg" },
+    dep_of = { "nvim-neoclip.lua", "neorg" },
     on_require = { "telescope", },
     -- event = "",
     -- ft = "",
