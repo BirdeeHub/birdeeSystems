@@ -187,7 +187,7 @@ require('lze').load {
   },
   {
     "vim-fugitive",
-    for_cat = "general.git",
+    for_cat = "general.core",
     cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
       "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
       "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
@@ -264,7 +264,7 @@ require('lze').load {
     before = function(_)
       vim.g.startuptime_event_width = 0
       vim.g.startuptime_tries = 10
-      vim.g.startuptime_exe_path = require("nixCatsUtils").packageBinPath
+      vim.g.startuptime_exe_path = nixCats.packageBinPath
     end,
   },
   {
@@ -290,8 +290,8 @@ require('lze').load {
     end,
   },
   {
-    "render-markdown",
-    for_cat = "general.StdPlugOver",
+    "render-markdown.nvim",
+    for_cat = "general.markdown",
     ft = "markdown",
     after = function(plugin)
       require('render-markdown').setup({})

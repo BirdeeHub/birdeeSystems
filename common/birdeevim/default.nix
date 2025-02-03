@@ -9,7 +9,6 @@
   dependencyOverlays = (import ./overlays inputs) ++ [
     (utils.sanitizedPluginOverlay inputs)
     # add any flake overlays here.
-    # TODO: put it back after https://github.com/nvim-neorg/nixpkgs-neorg-overlay/pull/11
     inputs.neorg-overlay.overlays.default
     inputs.lze.overlays.default
     # inputs.neovim-nightly-overlay.overlays.default
@@ -19,6 +18,12 @@
   ];
 
   categoryDefinitions = { pkgs, settings, categories, name, extra, mkNvimPlugin, ... }@packageDef: {
+
+    extraCats = {
+      notes = [
+        [ "telescope" ]
+      ];
+    };
 
     environmentVariables = {
       test = {
@@ -69,8 +74,6 @@
           ripgrep
           fd
           ast-grep
-        ];
-        git = [
           lazygit
         ];
         other = [
@@ -188,11 +191,11 @@
         "tokyonight" = tokyonight-nvim;
         "tokyonight-day" = tokyonight-nvim;
       };
-      general = with pkgs.neovimPlugins; [
+      general = [
         lze
         oil-nvim
         vim-repeat
-        nvim-luaref
+        pkgs.neovimPlugins.nvim-luaref
         nvim-nio
         nui-nvim
         nvim-web-devicons
@@ -257,15 +260,32 @@
         nvim-dap-ui
         nvim-dap-virtual-text
       ];
+      other = [
+        img-clip-nvim
+        nvim-highlight-colors
+        nvim-neoclip-lua
+        which-key-nvim
+        eyeliner-nvim
+        todo-comments-nvim
+        vim-startuptime
+        grapple-nvim
+        pkgs.neovimPlugins.hlargs
+        pkgs.neovimPlugins.visual-whitespace
+      ];
+      treesitter = [
+        nvim-treesitter-textobjects
+        nvim-treesitter
+      ];
+      telescope = [
+        telescope-nvim
+        telescope-fzf-native-nvim
+        telescope-ui-select-nvim
+        pkgs.neovimPlugins.telescope-git-file-history
+      ];
       general = with pkgs.neovimPlugins; {
         markdown = [
-          markdown-preview-nvim
-        ];
-        StdPlugOver = [
-          grapple-nvim
-          hlargs
-          visual-whitespace
           render-markdown-nvim
+          markdown-preview-nvim
         ];
         cmp = [
           # cmp stuff
@@ -282,16 +302,9 @@
           cmp-cmdline-history
           lspkind-nvim
         ];
-        git = [
-          telescope-git-file-history
+        core = [
           vim-rhubarb
           vim-fugitive
-        ];
-        core = [
-          # telescope
-          telescope-nvim
-          telescope-fzf-native-nvim
-          telescope-ui-select-nvim
           nvim-lspconfig
           lualine-lsp-progress
           lualine-nvim
@@ -306,19 +319,6 @@
           vim-sleuth
         ];
       };
-      other = with pkgs.neovimPlugins; [
-        img-clip-nvim
-        nvim-highlight-colors
-        nvim-neoclip-lua
-        which-key-nvim
-        eyeliner-nvim
-        todo-comments-nvim
-        vim-startuptime
-      ];
-      treesitter = [
-        nvim-treesitter-textobjects
-        nvim-treesitter
-      ];
     };
   };
 
@@ -359,6 +359,7 @@
     debug = true;
     customPlugins = true;
     general = true;
+    telescope = true;
     otter = true;
     bash = true;
     notes = true;
@@ -452,6 +453,7 @@
         debug = true;
         customPlugins = true;
         general = true;
+        telescope = true;
         treesitter = true;
         otter = true;
         nix = true;
@@ -504,6 +506,7 @@
         other = true;
         general = true;
         neonixdev = true;
+        telescope = true;
         treesitter = true;
         vimagePreview = true;
         AI = true;
