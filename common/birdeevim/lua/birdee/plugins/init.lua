@@ -246,7 +246,7 @@ require('lze').load {
   },
   {
     "visual-whitespace",
-    for_cat = "general.StdPlugOver",
+    for_cat = "other",
     event = "DeferredUIEnter",
     after = function(plugin)
       require('visual-whitespace').setup({
@@ -314,7 +314,7 @@ require('lze').load {
   },
   {
     "hlargs",
-    for_cat = "general.StdPlugOver",
+    for_cat = "other",
     event = "DeferredUIEnter",
     after = function(plugin)
       require('hlargs').setup({
