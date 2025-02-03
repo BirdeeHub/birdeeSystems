@@ -61,6 +61,10 @@
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+
+    #NOTE: until unstable gets your PR to rustaceanvim:
+    rustaceanvim.url = "github:mrcjkb/rustaceanvim";
+
     lze = {
     # plugins-lze = {
       url = "github:BirdeeHub/lze";
@@ -86,10 +90,6 @@
     };
     "plugins-visual-whitespace" = {
       url = "github:mcauley-penney/visual-whitespace.nvim";
-      flake = false;
-    };
-    rustacean-src = {
-      url = "github:mrcjkb/rustaceanvim";
       flake = false;
     };
   };

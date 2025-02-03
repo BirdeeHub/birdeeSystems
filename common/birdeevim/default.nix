@@ -210,7 +210,7 @@
         luvit-meta
       ];
       rust = [
-        (rustaceanvim.overrideAttrs { src = inputs.rustacean-src; })
+        inputs.rustaceanvim.packages.${pkgs.system}.default
       ];
       neonixdev = [
         luvit-meta
