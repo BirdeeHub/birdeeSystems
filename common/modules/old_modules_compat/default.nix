@@ -1,10 +1,10 @@
 { moduleNamespace, homeManager, inputs, ... }:
 { config, pkgs, lib, ... }: let
-  cfg = config.${moduleNamespace}.ranger;
+  cfg = config.${moduleNamespace}.old_modules_compat;
 in {
   _file = ./default.nix;
   options = {
-    ${moduleNamespace}.ranger = with lib.types; {
+    ${moduleNamespace}.old_modules_compat = with lib.types; {
       enable = lib.mkEnableOption "aliases for new options for things on old channels";
     };
   };
