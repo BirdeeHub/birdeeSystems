@@ -10,13 +10,13 @@ require('snacks').setup({
   -- dim = { enabled = true, },
   -- explorer = { enabled = true, },
   -- input = { enabled = true, },
-  -- profiler = { enabled = true, },
   -- scratch = { enabled = true, },
   -- layout = { enabled = true, },
   -- zen = { enabled = true, },
   -- scroll = { enabled = true, },
-  --
   -- quickfile = { enabled = true, },
+
+  -- profiler = { enabled = true, },
   -- notifier = { enabled = true, },
   -- notify = { enabled = true, },
   -- scope = { enable = true, },
