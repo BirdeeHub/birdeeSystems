@@ -33,6 +33,10 @@ if nixCats('general') then
   require('birdee.plugins.oil')
 end
 
+if nixCats('general') then
+  require('birdee.plugins.snacks')
+end
+
 -- NOTE: everything else is lazily loaded
 
 -- decided to actually make use of the import feature of lze

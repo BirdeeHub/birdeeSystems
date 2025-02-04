@@ -1,3 +1,6 @@
+--NOTE: I dont use this, I use the snacks.nvim gitbrowse
+-- I just dont want to delete it because
+-- it has some git commands I always forget when I need them, and easy gsub examples in it.
 local M = {}
 
 local function get_git_url_info(branch, local_path, select_start, select_end)
@@ -82,6 +85,21 @@ end
 
 function M.git_url_to_clipboard(desired_branch, local_path, select_start, select_end)
 	vim.fn.setreg("+", M.get_git_remote_url(desired_branch, local_path, select_start, select_end))
+end
+
+M.setup = function()
+	vim.api.nvim_create_user_command('CopyGithubLink', function(args)
+		local branch = (args.fargs or {})[1]
+		local path = (args.fargs or {})[2]
+		if branch ~= nil then
+			branch = branch:sub(2, -2)
+		end
+		if path ~= nil then
+			path = path:sub(2, -2)
+		end
+		M.git_url_to_clipboard(branch, path, args.line1, args.line2)
+	end, { range = true })
+	vim.keymap.set('', '<leader>gl', function() M.git_url_to_clipboard() end, { desc = 'Get git link' })
 end
 
 return M

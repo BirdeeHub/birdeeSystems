@@ -31,6 +31,8 @@ require('lze').register_handlers({
 require("birdee.patcheduiopen")
 require("birdee.opts")
 require("birdee.keymaps")
+--NOTE: I dont use this, I use the snacks.nvim gitbrowse
+-- require('birdee.git-remote-url').setup()
 require("birdee.clippy")
 if nixCats('nixCats_packageName') ~= "minimalVim" then
   -- TODO: this in another file and require here.

@@ -41,6 +41,20 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 vim.keymap.set('n', '<leader>lh', function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, { desc = 'Toggle inlay hints' })
 
+vim.keymap.set('n', '<leader><leader>g', function()
+  local count = vim.v.count
+  if count > 0 then
+    vim.cmd('buffer ' .. count)
+  else
+    print("No buffer number provided")
+  end
+end, { noremap = true, silent = true, desc = 'Go to buffer by number [num]<keybind>', })
+
+--TODO: get this to ask you your sudo password
+vim.api.nvim_create_user_command('Swq', function(args)
+    vim.cmd([[w !sudo tee %]])
+end, {})
+
 -- these 3 jankily fix which-key related errors for some reason
 -- I disabled them via which-key options now.
 -- vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
@@ -53,14 +67,3 @@ if nixCats('notes') then
     [["ad:let @a = substitute(@a, '\\(favicon-.\\{-}\\)\\(\\.com\\|\\.org\\|\\.net\\|\\.edu\\|\\.gov\\|\\.mil\\|\\.int\\|\\.io\\|\\.co\\|\\.ai\\|\\.ly\\|\\.me\\|\\.tv\\|\\.info\\|\\.co\\.uk\\|\\.de\\|\\.jp\\|\\.cn\\|\\.au\\|\\.fr\\|\\.it\\|\\.es\\|\\.br\\|\\.gay\\)', 'https:\/\/', 'g')<CR>dd:while substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') != @a | let @a = substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') | endwhile<CR>"ap]],
     { desc = 'fix the links in copies from phind' })
 end
-
-vim.keymap.set('', '<leader>gl', function() require('birdee.git-remote-url').git_url_to_clipboard() end, { desc = 'Get git link' })
-
-vim.keymap.set('n', '<leader><leader>g', function()
-  local count = vim.v.count
-  if count > 0 then
-    vim.cmd('buffer ' .. count)
-  else
-    print("No buffer number provided")
-  end
-end, { noremap = true, silent = true, desc = 'Go to buffer by number [num]<keybind>', })
