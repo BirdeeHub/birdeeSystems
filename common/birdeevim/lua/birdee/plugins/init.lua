@@ -48,7 +48,6 @@ end
 -- personally though I don't use lze to load startup plugins because... why...
 
 require('lze').load {
-  { import = "birdee.plugins.snacks", },
   { import = "birdee.plugins.telescope", },
   { import = "birdee.plugins.nestsitter", },
   { import = "birdee.plugins.completion", },
