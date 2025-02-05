@@ -9,7 +9,6 @@ return function (plugin)
     ---@param rhs string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.
     ---@param opts? vim.keymap.set.Opts
     set = function(mode, lhs, rhs, opts)
-      opts = opts or {}
       if require("lze").state(plugin_name) == false then
         vim.keymap.set(mode, lhs, rhs, opts)
         return
@@ -29,12 +28,7 @@ return function (plugin)
       require("lze.h.keys").add({
         name = plugin_name,
         keys = {
-          ---@diagnostic disable-next-line: assign-type-mismatch
-          vim.tbl_deep_extend("force", opts, {
-            [1] = lhs,
-            [2] = rhs,
-            mode = mode,
-          }),
+          require("lzextras.src.key2spec")(mode, lhs, rhs, opts),
         },
       })
     end
