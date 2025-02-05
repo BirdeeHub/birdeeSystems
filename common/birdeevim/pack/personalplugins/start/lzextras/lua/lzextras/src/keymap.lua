@@ -1,3 +1,4 @@
+local key2spec = require("lzextras.src.key2spec")
 return function (plugin)
   local plugin_name = type(plugin) == "table" and (plugin.name or plugin[1]) or plugin
   if type(plugin) == "table" then
@@ -28,7 +29,7 @@ return function (plugin)
       require("lze.h.keys").add({
         name = plugin_name,
         keys = {
-          require("lzextras.src.key2spec")(mode, lhs, rhs, opts),
+          key2spec(mode, lhs, rhs, opts),
         },
       })
     end
