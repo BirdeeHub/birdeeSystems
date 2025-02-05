@@ -33,10 +33,6 @@ if nixCats('general') then
   require('birdee.plugins.oil')
 end
 
-if nixCats('general') then
-  require('birdee.plugins.snacks')
-end
-
 -- NOTE: everything else is lazily loaded
 
 -- decided to actually make use of the import feature of lze
@@ -48,6 +44,7 @@ end
 -- personally though I don't use lze to load startup plugins because... why...
 
 require('lze').load {
+  { import = "birdee.plugins.snacks", },
   { import = "birdee.plugins.telescope", },
   { import = "birdee.plugins.nestsitter", },
   { import = "birdee.plugins.completion", },
