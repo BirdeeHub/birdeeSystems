@@ -21,7 +21,7 @@ vim.g.lze = {
 require('lze').register_handlers({
   {
     enabled = false,
-    handler = require("birdee.handlers.debug_handler").handler
+    handler = require("lzextras").debug.handler
   },
   {
     enabled = true,
