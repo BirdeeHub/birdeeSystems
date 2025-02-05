@@ -1,10 +1,22 @@
+--[[
+  This directory is the luaUtils template.
+  You can choose what things from it that you would like to use.
+  And then delete the rest.
+  Everything in this directory is optional.
+--]]
+
 local M = {}
 
--- This directory is the luaUtils template.
--- the other 3 files are intended to be independent, but may depend on this one.
--- You will likely want at least something in this one,
--- and if you use lze or lz.n you should check out lzUtils.lua
--- but unless you use lazy.nvm or want to use pckr or rocks when not on nix, you wont need the other 2
+--[[
+  This file is for making your config still work WITHOUT nixCats.
+  When you don't use nixCats to load your config,
+  you wont have the nixCats plugin.
+
+  The setup function defined here defines a mock nixCats plugin when nixCats wasnt used to load the config.
+  This will help avoid indexing errors when the nixCats plugin doesnt exist.
+
+  NOTE: If you only ever use nixCats to load your config, you don't need this file.
+--]]
 
 ---@type boolean
 M.isNixCats = vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] ~= nil
@@ -48,7 +60,6 @@ function M.setup(v)
         get = function(_) return nixCats_default_value end,
         cats = mk_with_meta({
           nixCats_config_location = vim.fn.stdpath('config'),
-          configDirName = os.getenv("NVIM_APPNAME") or "nvim",
           wrapRc = false,
         }),
         settings = mk_with_meta({
@@ -57,6 +68,7 @@ function M.setup(v)
           wrapRc = false,
         }),
         petShop = mk_with_meta({}),
+        extra = mk_with_meta({}),
         pawsible = mk_with_meta({
           allPlugins = {
             start = {},
