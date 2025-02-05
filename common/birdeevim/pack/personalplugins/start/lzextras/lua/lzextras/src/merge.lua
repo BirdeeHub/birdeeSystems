@@ -1,6 +1,11 @@
 ---@class lzextras.MergePlugin: lze.Plugin
 ---@field merge? any
 
+local function is_enabled(spec)
+    local disabled = spec.enabled == false or (type(spec.enabled) == "function" and not spec.enabled())
+    return not disabled
+end
+
 ---@type table<string, lze.Plugin>
 local states = {}
 
@@ -11,7 +16,7 @@ local M = {
     -- modify is only called when a plugin's field is not nil
     ---@param plugin lzextras.MergePlugin
     modify = function(plugin)
-      if not plugin.merge then
+      if not plugin.merge and not is_enabled(plugin) then
         return plugin
       end
       local pname = plugin.name
