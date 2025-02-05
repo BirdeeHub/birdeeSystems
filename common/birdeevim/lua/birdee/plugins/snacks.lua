@@ -36,7 +36,7 @@ require('snacks').setup({
       hl = 'Hlargs',
     },
     chunk = {
-      enabled = true,
+      -- enabled = true,
       hl = 'Hlargs',
     }
   },
