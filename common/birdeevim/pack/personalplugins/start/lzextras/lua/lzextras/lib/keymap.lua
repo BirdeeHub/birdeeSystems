@@ -3,7 +3,7 @@ return function (plugin)
   if type(plugin) == "table" then
     require('lze').load(plugin)
   end
-  local keymap = {
+  return {
     ---@param mode string|string[] Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
     ---@param lhs string           Left-hand side |{lhs}| of the mapping.
     ---@param rhs string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.
@@ -39,5 +39,4 @@ return function (plugin)
       })
     end
   }
-  return keymap
 end
