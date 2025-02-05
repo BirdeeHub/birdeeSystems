@@ -1,27 +1,20 @@
----@class lze.Pluginext: lze.Plugin
----@field merge? boolean
----@field opts? boolean
-
--- TODO: use modify to bounce everything mergeable
--- by setting enabled = false
--- hold them here until trigger is called
--- merge duplicates coming in.
--- when trigger is called, lze.load all at once
-
----@type table<string, lze.Pluginext>
+---@type table<string, lze.Plugin>
 local states = {}
 
 local M = {
-  trgger = function() end,
   ---@type lze.Handler
   handler = {
     spec_field = "merge",
     -- modify is only called when a plugin's field is not nil
+    ---@param plugin lze.Plugin
     modify = function(plugin)
-      plugin.enabled = false
-      return plugin
+      states[plugin.name] = vim.tbl_deep_extend('force',states[plugin.name] or {}, plugin)
+      return { name = plugin.name, enabled = false }
     end
-  }
+  },
+  trigger = function()
+    require('lze').load(vim.tbl_values(states))
+  end,
 }
 
 return M
