@@ -1,12 +1,7 @@
 ---@class lzextras.MergePlugin: lze.Plugin
 ---@field merge? any
 
-local function is_enabled(spec)
-    local disabled = spec.enabled == false or (type(spec.enabled) == "function" and not spec.enabled())
-    return not disabled
-end
-
----@type table<string, lze.Plugin>
+---@type table<string, lzextras.MergePlugin>
 local states = {}
 
 local M = {
@@ -31,8 +26,8 @@ local M = {
         return plugin
       end
       states[pname] = vim.tbl_deep_extend('force',states[pname] or {}, plugin)
-      plugin.enabled = false
-      return plugin
+      states[pname].merge = nil
+      return { name = plugin.name, enabled = false }
     end
   },
   trigger = function()
