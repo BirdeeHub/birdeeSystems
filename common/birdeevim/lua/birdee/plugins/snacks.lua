@@ -22,7 +22,7 @@ return {
       -- rather than disabling them.
       -- for some reason, they are still required
       -- when you do { enabled = false }
-      require('snacks').setup({
+      Snacks.setup({
         -- dashboard = { enabled = true, },
         -- debug = { enabled = true, },
         -- bufdelete = { enabled = true, },
