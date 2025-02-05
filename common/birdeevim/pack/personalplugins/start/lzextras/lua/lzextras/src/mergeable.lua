@@ -6,6 +6,9 @@
 -- hold them here until trigger is called
 -- merge duplicates coming in.
 
+---@type table<string, lze.Pluginext>
+local states = {}
+
 local M = {
   trgger = function() end,
   ---@type lze.Handler
