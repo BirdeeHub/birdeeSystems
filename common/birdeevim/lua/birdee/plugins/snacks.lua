@@ -61,7 +61,7 @@ return {
         },
         statuscolumn = {
           left = { "mark", "git" }, -- priority of signs on the left (high to low)
-          right = { "fold", "sign" }, -- priority of signs on the right (high to low)
+          right = { "sign", "fold" }, -- priority of signs on the right (high to low)
           folds = {
             open = false, -- show open fold icons
             git_hl = false, -- use Git Signs hl for fold icons
