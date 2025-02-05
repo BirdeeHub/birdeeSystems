@@ -13,7 +13,7 @@
 local lzextras = {}
 
 return setmetatable(lzextras,{
-    __index = function(_, k)
-        return require('lzextras.src.'.. k)
-    end,
+  __index = function(_, k)
+    return require('lzextras.src.'.. k)
+  end,
 })
