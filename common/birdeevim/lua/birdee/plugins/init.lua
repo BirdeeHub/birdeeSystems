@@ -29,6 +29,13 @@ if nixCats('other') then
   })
 end
 
+vim.keymap.set({ 'n', }, "<leader>cpc", function() require("color_picker").rgbPicker() end, { desc = "color_picker rgb" })
+vim.keymap.set({ 'n', }, "<leader>cph", function() require("color_picker").hsvPicker() end, { desc = "color_picker hsv" })
+vim.keymap.set({ 'n', }, "<leader>cps", function() require("color_picker").hslPicker() end, { desc = "color_picker hsl" })
+vim.keymap.set({ 'n', }, "<leader>cpg", function() require("color_picker").rgbGradientPicker() end, { desc = "color_picker rgb gradient" })
+vim.keymap.set({ 'n', }, "<leader>cpd", function() require("color_picker").hsvGradientPicker() end, { desc = "color_picker hsv gradient" })
+vim.keymap.set({ 'n', }, "<leader>cpb", function() require("color_picker").hslGradientPicker() end, { desc = "color_picker hsl gradient"})
+
 if nixCats('general') then
   require('birdee.plugins.oil')
 end
@@ -56,18 +63,6 @@ require('lze').load {
   { import = "birdee.plugins.notes", },
   { import = "birdee.plugins.which-key", },
   { import = "birdee.plugins.AI", },
-  {
-    "color_picker",
-    keys = {
-      { "<leader>cpc", function() require("color_picker").rgbPicker() end, mode = { 'n', }, desc = "color_picker rgb" },
-      { "<leader>cph", function() require("color_picker").hsvPicker() end, mode = { 'n', }, desc = "color_picker hsv" },
-      { "<leader>cps", function() require("color_picker").hslPicker() end, mode = { 'n', }, desc = "color_picker hsl" },
-      { "<leader>cpg", function() require("color_picker").rgbGradientPicker() end, mode = { 'n', }, desc = "color_picker rgb gradient" },
-      { "<leader>cpd", function() require("color_picker").hsvGradientPicker() end, mode = { 'n', }, desc = "color_picker hsv gradient" },
-      { "<leader>cpb", function() require("color_picker").hslGradientPicker() end, mode = { 'n', }, desc = "color_picker hsl gradient" },
-    },
-    on_require = "color_picker",
-  },
   {
     "markdown-preview.nvim",
     for_cat = "general.markdown",
