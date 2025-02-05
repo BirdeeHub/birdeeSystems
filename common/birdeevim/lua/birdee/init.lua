@@ -20,10 +20,6 @@ vim.g.lze = {
 }
 require('lze').register_handlers({
   {
-    enabled = false,
-    handler = require("lzextras").debug.handler
-  },
-  {
     enabled = true,
     handler = require("nixCatsUtils.lzUtils").for_cat
   },
