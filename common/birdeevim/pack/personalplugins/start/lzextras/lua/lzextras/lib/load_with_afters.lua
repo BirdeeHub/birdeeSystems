@@ -44,7 +44,6 @@ return function (dirs, load)
                 if type(path) == "string" then
                     table.insert(to_source, { name = name, path = path })
                 else
-                    ---@diagnostic disable-next-line: param-type-mismatch
                     local ok, err = pcall(vim.cmd.packadd, name)
                     if ok then
                         table.insert(to_source, { name = name, path = nil })
