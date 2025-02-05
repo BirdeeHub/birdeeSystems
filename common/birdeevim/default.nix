@@ -308,7 +308,6 @@
           lualine-nvim
           gitsigns-nvim
           marks-nvim
-          indent-blankline-nvim
           nvim-lint
           conform-nvim
           undotree

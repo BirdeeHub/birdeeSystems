@@ -17,22 +17,42 @@ require('snacks').setup({
   -- scroll = { enabled = true, },
   -- notifier = { enabled = true, },
   -- notify = { enabled = true, },
-
-  -- profiler = { enabled = true, },
-  -- scope = { enable = true, },
-  -- indent = { enabled = true, },
-  -- statuscolumn = { enabled = true, },
   -- win = { enabled = true, },
-  -- toggle = { enabled = true, },
   -- picker = { enabled = true, },
-  -- words = { enabled = true, },
+  -- profiler = { enabled = true, },
+  -- toggle = { enabled = true, },
   -- rename = { enabled = true, },
+  -- words = { enabled = true, },
 
   gitbrowse = { enabled = true, },
   lazygit = { enabled = true, },
   bigfile = { enabled = true, },
   git = { enabled = true, },
   terminal = { enabled = true, },
+  scope = { enabled = true, },
+  indent = {
+    enabled = true,
+    scope = {
+      hl = 'Hlargs',
+    },
+    chunk = {
+      enabled = true,
+      hl = 'Hlargs',
+    }
+  },
+  statuscolumn = {
+    left = { "mark", "git" }, -- priority of signs on the left (high to low)
+    right = { "fold", "sign" }, -- priority of signs on the right (high to low)
+    folds = {
+      open = false, -- show open fold icons
+      git_hl = false, -- use Git Signs hl for fold icons
+    },
+    git = {
+      -- patterns to match Git signs
+      patterns = { "GitSign", "MiniDiffSign" },
+    },
+    refresh = 50, -- refresh at most every 50ms
+  },
 })
 vim.keymap.set({'n'}, '<c-\\>', function() Snacks.terminal() end, { desc = 'open snacks terminal' })
 vim.keymap.set({"n"},"<leader>_", function() Snacks.lazygit.open() end, { desc = 'LazyGit' })
