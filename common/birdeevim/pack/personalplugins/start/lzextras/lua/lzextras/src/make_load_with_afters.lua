@@ -54,7 +54,7 @@ return function (dirs, load)
                                 .. '" failed, and path provided by custom load function (if provided) was not a string\n'
                                 .. err,
                             vim.log.levels.WARN,
-                            { title = "lzeextras.lib.load_with_after" }
+                            { title = "lzextras.make_load_with_after" }
                         )
                     end
                 end
@@ -62,7 +62,7 @@ return function (dirs, load)
                 vim.notify(
                     "plugin name was not a string and was instead of value:\n" .. vim.inspect(name),
                     vim.log.levels.WARN,
-                    { title = "lzeextras.lib.load_with_after" }
+                    { title = "lzextras.make_load_with_after" }
                 )
             end
         end

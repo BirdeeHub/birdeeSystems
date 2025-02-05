@@ -23,7 +23,7 @@ return function (plugin)
         -- in the command spec of another plugin.
         -- Will re evaluate how I feel about this later after testing and stuff
         vim.notify('setting keybind for "' .. plugin_name .. '" failed, no corresponding lze spec loaded',
-          vim.log.levels.WARN, { title = "lzextras.lib.keymap.set" })
+          vim.log.levels.WARN, { title = "lzextras.keymap.set" })
         return
       end
       require("lze.h.keys").add({

@@ -14,8 +14,19 @@ local M = {
       if not plugin.merge then
         return plugin
       end
-      states[plugin.name] = vim.tbl_deep_extend('force',states[plugin.name] or {}, plugin)
-      return { name = plugin.name, enabled = false }
+      local pname = plugin.name
+      local pstate = require('lze').state(pname)
+      if pstate then
+        vim.notify('Failed to merge: "' .. pname .. '". Immutable spec already exists',
+          vim.log.levels.WARN, { title = "lzextras.merge" })
+        return plugin
+      elseif pstate == false and not (plugin.allow_again or states[pname].allow_again) then
+        vim.notify('Failed to merge: "' .. pname .. '". Spec already loaded',
+          vim.log.levels.WARN, { title = "lzextras.merge" })
+        return plugin
+      end
+      states[pname] = vim.tbl_deep_extend('force',states[pname] or {}, plugin)
+      return { name = pname, enabled = false }
     end
   },
   trigger = function()
