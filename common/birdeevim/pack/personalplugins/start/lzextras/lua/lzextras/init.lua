@@ -1,8 +1,12 @@
-local M = {}
+---@class lzextras
+---@field key2spec fun(): any
+---@field keymap fun(): any
+---@field debug fun(): any
+---@field make_load_with_afters fun(): any
+local lzextras = {}
 
-M.keymap = require("lzextras.lib.keymap")
-M.key2spec = require("lzextras.lib.key2spec")
-M.debug = require("lzextras.h.debug")
-M.load_with_afters = require("lzextras.lib.load_with_afters")
-
-return M
+return setmetatable(lzextras,{
+    __index = function(_, k)
+        return require('lzextras.src.'.. k)
+    end,
+})
