@@ -29,6 +29,7 @@ if nixCats('other') then
   })
 end
 
+-- NOTE: This is already lazy. It doesnt require it until you use the keybinding
 vim.keymap.set({ 'n', }, "<leader>cpc", function() require("color_picker").rgbPicker() end, { desc = "color_picker rgb" })
 vim.keymap.set({ 'n', }, "<leader>cph", function() require("color_picker").hsvPicker() end, { desc = "color_picker hsv" })
 vim.keymap.set({ 'n', }, "<leader>cps", function() require("color_picker").hslPicker() end, { desc = "color_picker hsl" })
