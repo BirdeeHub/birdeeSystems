@@ -13,7 +13,9 @@ local M = {
     end
   },
   trigger = function()
-    require('lze').load(vim.tbl_values(states))
+    if states ~= {} then
+      require('lze').load(vim.tbl_values(states))
+    end
   end,
 }
 
