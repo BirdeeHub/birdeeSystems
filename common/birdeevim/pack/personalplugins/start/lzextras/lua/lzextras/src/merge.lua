@@ -16,7 +16,7 @@ local M = {
     -- modify is only called when a plugin's field is not nil
     ---@param plugin lzextras.MergePlugin
     modify = function(plugin)
-      if not plugin.merge and not is_enabled(plugin) then
+      if not plugin.merge then
         return plugin
       end
       local pname = plugin.name
