@@ -25,7 +25,7 @@ local M = {
           vim.log.levels.ERROR, { title = "lzextras.merge" })
         return plugin
       end
-      states[pname] = vim.tbl_deep_extend('force',states[pname] or {}, vim.deepcopy(plugin))
+      states[pname] = vim.tbl_deep_extend('force',states[pname] or {}, plugin)
       plugin.enabled = false
       return plugin
     end
