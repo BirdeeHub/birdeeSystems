@@ -18,11 +18,11 @@ local M = {
       local pstate = require('lze').state(pname)
       if pstate then
         vim.notify('Failed to merge: "' .. pname .. '". Immutable spec already exists',
-          vim.log.levels.WARN, { title = "lzextras.merge" })
+          vim.log.levels.ERROR, { title = "lzextras.merge" })
         return plugin
       elseif pstate == false and not (plugin.allow_again or states[pname].allow_again) then
         vim.notify('Failed to merge: "' .. pname .. '". Spec already loaded',
-          vim.log.levels.WARN, { title = "lzextras.merge" })
+          vim.log.levels.ERROR, { title = "lzextras.merge" })
         return plugin
       end
       states[pname] = vim.tbl_deep_extend('force',states[pname] or {}, plugin)
