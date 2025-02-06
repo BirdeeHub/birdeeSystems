@@ -12,6 +12,15 @@ if os.getenv('WAYLAND_DISPLAY') and vim.fn.exepath('wl-copy') ~= "" then
       cache_enabled = 1,
   }
 end
+vim.filetype.add {
+  extension = {
+    templ = "templ",
+    tmpl = "templ",
+    ebnf = "EBNF",
+    bnf = "EBNF",
+    EBNF = "EBNF",
+  }
+}
 require('nixCatsUtils').setup {
   non_nix_value = true,
 }
