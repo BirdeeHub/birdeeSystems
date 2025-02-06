@@ -26,8 +26,8 @@ local M = {
       elseif oldfttype == "table" and #ftlist > 0 then
         plugin.ft = ftlist
       else
-        vim.notify('lsp spec for "' .. plugin.name .. '" failed, no filetypes specified',
-          vim.log.levels.ERROR, { title = "lzextras.lsp" })
+        vim.notify('lsp spec for "' .. plugin.name .. '" may never trigger, no plugin.lsp.filetypes specified',
+          vim.log.levels.WARN, { title = "lzextras.lsp" })
       end
       return plugin
     end,
