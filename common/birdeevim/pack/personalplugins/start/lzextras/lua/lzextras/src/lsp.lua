@@ -19,16 +19,10 @@ local M = {
       plugin.load = function(name)
         require('lspconfig')[name].setup(lspfield)
       end
-      local ftlist = lspfield.filetypes
-      local oldfttype = type(ftlist)
-      if oldfttype == "string" then
-        plugin.ft = ftlist
-      elseif oldfttype == "table" and #ftlist > 0 then
-        plugin.ft = ftlist
-      else
-        vim.notify('lsp spec for "' .. plugin.name .. '" may never trigger, no plugin.lsp.filetypes specified',
-          vim.log.levels.WARN, { title = "lzextras.lsp" })
-      end
+      local newftlist = type(lspfield.filetypes) == "table" and lspfield.filetypes or { lspfield.filetypes }
+      local oldftlist = type(plugin.ft) == "table" and plugin.ft or { plugin.ft }
+      ---@diagnostic disable-next-line: param-type-mismatch
+      plugin.ft = vim.list_extend(newftlist, oldftlist)
       return plugin
     end,
   },
