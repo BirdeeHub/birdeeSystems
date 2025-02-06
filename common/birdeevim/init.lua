@@ -1,5 +1,3 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 if os.getenv('WAYLAND_DISPLAY') and vim.fn.exepath('wl-copy') ~= "" then
   vim.g.clipboard = {
       name = 'wl-clipboard',
@@ -23,6 +21,8 @@ vim.filetype.add {
     EBNF = "EBNF",
   }
 }
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 require('nixCatsUtils').setup {
   non_nix_value = true,
 }
