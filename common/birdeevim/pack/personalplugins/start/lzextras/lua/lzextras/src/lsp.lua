@@ -19,8 +19,8 @@ local M = {
       plugin.load = function(name)
         require('lspconfig')[name].setup(lspfield)
       end
-      local newftlist = type(lspfield.filetypes) == "table" and lspfield.filetypes or { lspfield.filetypes }
-      local oldftlist = type(plugin.ft) == "table" and plugin.ft or { plugin.ft }
+      local newftlist = type(lspfield.filetypes) == "string" and { lspfield.filetypes } or lspfield.filetypes
+      local oldftlist = type(plugin.ft) == "string" and { plugin.ft } or plugin.ft
       ---@diagnostic disable-next-line: param-type-mismatch
       plugin.ft = vim.list_extend(newftlist, oldftlist)
       return plugin
