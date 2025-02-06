@@ -191,6 +191,7 @@
       };
       general = [
         lze
+        inputs.lzextras.packages.${pkgs.system}.default
         oil-nvim
         vim-repeat
         pkgs.neovimPlugins.nvim-luaref

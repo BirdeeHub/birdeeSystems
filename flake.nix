@@ -72,6 +72,14 @@
       inputs.nixpkgs.follows = "nixpkgsNV";
       # flake = false;
     };
+    lzextras = {
+    # plugins-lzextras = {
+      url = "github:BirdeeHub/lzextras";
+      # url = "git+file:/home/birdee/Projects/lzextras";
+      inputs.nixpkgs.follows = "nixpkgsNV";
+      inputs.lze.follows = "lze";
+      # flake = false;
+    };
     codeium = {
       url = "github:Exafunction/codeium.nvim";
       # inputs.nixpkgs.follows = "nixpkgsNV";
