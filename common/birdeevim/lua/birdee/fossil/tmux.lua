@@ -14,7 +14,7 @@ if global_config.tmux_autoclose_windows then
 
     vim.api.nvim_create_autocmd("VimLeave", {
         callback = function()
-            require("birdee.tmux").clear_all()
+            require("birdee.fossil.tmux").clear_all()
         end,
         group = grapple_tmux_group,
     })
@@ -138,6 +138,20 @@ function M.valid_index(idx)
         return false
     end
     return true
+end
+
+local function convertToIntegerOrString(value)
+    local number = tonumber(value)
+    if number and number % 1 == 0 then
+        return math.floor(number)
+    else
+        return value
+    end
+end
+
+---if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
+function M.grapple_tmux(value)
+    M.gotoTerminal(convertToIntegerOrString(value))
 end
 
 return M

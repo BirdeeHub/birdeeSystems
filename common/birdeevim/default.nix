@@ -199,6 +199,7 @@
         nui-nvim
         nvim-web-devicons
         nvim-notify
+        nvim-lspconfig
         plenary-nvim
         mini-nvim
         snacks-nvim
@@ -304,7 +305,6 @@
         core = [
           vim-rhubarb
           vim-fugitive
-          nvim-lspconfig
           lualine-lsp-progress
           lualine-nvim
           gitsigns-nvim

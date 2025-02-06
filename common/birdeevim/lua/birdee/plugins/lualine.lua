@@ -8,7 +8,7 @@ return {
     -- keys = "",
     -- colorscheme = "",
     load = function (name)
-      require("birdee.utils").safe_packadd({
+      require("birdee.utils").multi_packadd({
         name,
         "lualine-lsp-progress",
       })

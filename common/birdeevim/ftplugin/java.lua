@@ -1,1 +1,1 @@
-require("birdee.nvim-jdtls").setupJDTLS()
+require("birdee.LSPs.nvim-jdtls").setupJDTLS()

@@ -311,8 +311,8 @@ require('lze').load {
     for_cat = "general.core",
     event = "FileType",
     dep_of = { "otter.nvim", },
-    load = (catUtils.isNixCats and nil) or function(name)
-      require("birdee.utils").safe_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
+    load = (catUtils.isNixCats and function(name) vim.cmd.packadd(name)end) or function(name)
+      require("birdee.utils").multi_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
     end,
     after = function(plugin)
       if catUtils.isNixCats then

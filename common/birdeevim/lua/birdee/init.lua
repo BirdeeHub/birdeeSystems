@@ -1,36 +1,33 @@
-require('nixCatsUtils').setup {
-  non_nix_value = true,
-}
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-local ok, notify = pcall(require, "notify")
-if ok then
-  notify.setup({
-    on_open = function(win)
-      vim.api.nvim_win_set_config(win, { focusable = false })
-    end,
+if vim.g.vscode == nil then
+  local ok, notify = pcall(require, "notify")
+  if ok then
+    notify.setup({
+      on_open = function(win)
+        vim.api.nvim_win_set_config(win, { focusable = false })
+      end,
+    })
+    vim.notify = notify
+    vim.keymap.set("n", "<Esc>", function()
+        notify.dismiss({ silent = true, })
+    end, { desc = "dismiss notify popup and clear hlsearch" })
+  end
+  vim.g.lze = {
+    load = vim.cmd.packadd,
+  }
+  require('lze').register_handlers({
+    {
+      enabled = true,
+      handler = require("nixCatsUtils.lzUtils").for_cat
+    },
   })
-  vim.notify = notify
-  vim.keymap.set("n", "<Esc>", function()
-      notify.dismiss({ silent = true, })
-  end, { desc = "dismiss notify popup and clear hlsearch" })
 end
-vim.g.lze = {
-  load = require('birdee.utils').safe_packadd,
-}
-require('lze').register_handlers({
-  {
-    enabled = true,
-    handler = require("nixCatsUtils.lzUtils").for_cat
-  },
-})
+
 require("birdee.patcheduiopen")
 require("birdee.opts")
 require("birdee.keymaps")
---NOTE: I dont use this, I use the snacks.nvim gitbrowse
--- require('birdee.git-remote-url').setup()
 require("birdee.clippy")
-if nixCats('nixCats_packageName') ~= "minimalVim" then
+
+if vim.g.vscode == nil then
   -- TODO: this in another file and require here.
   -- require('nixCatsUtils.catPacker').setup({ your plugins })
   require("birdee.plugins")

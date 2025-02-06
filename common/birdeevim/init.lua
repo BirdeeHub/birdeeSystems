@@ -12,9 +12,9 @@ if os.getenv('WAYLAND_DISPLAY') and vim.fn.exepath('wl-copy') ~= "" then
       cache_enabled = 1,
   }
 end
-if vim.g.vscode == nil then
-  require("birdee")
-else
-  -- a stripped down version for embedding
-  require('vscody')
-end
+require('nixCatsUtils').setup {
+  non_nix_value = true,
+}
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+require('birdee')

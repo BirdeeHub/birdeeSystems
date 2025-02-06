@@ -41,16 +41,6 @@ if nixCats('general') then
   require('birdee.plugins.oil')
 end
 
--- NOTE: everything else is lazily loaded
-
--- decided to actually make use of the import feature of lze
--- which does not automatically include the entire directory.
--- because otherwise you could not choose the order
--- of startup programs without using priority,
--- or have files that are not imported within the directory
-
--- personally though I don't use lze to load startup plugins because... why...
-
 require('lze').load {
   { import = "birdee.plugins.snacks", },
   { import = "birdee.plugins.telescope", },
@@ -193,7 +183,7 @@ require('lze').load {
     -- keys = "",
     -- colorscheme = "",
     load = function (name)
-      require("birdee.utils").safe_packadd({
+      require("birdee.utils").multi_packadd({
         name,
         "vim-rhubarb",
         "diffview.nvim",
@@ -299,7 +289,7 @@ require('lze').load {
     cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
       "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
     load = function(name)
-      require("birdee.utils").safe_packadd({
+      require("birdee.utils").multi_packadd({
         name,
         "vim-dadbod-ui",
       })

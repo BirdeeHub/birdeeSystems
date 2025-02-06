@@ -9,15 +9,6 @@ return {
     -- keys = "",
     -- colorscheme = "",
     after = function (plugin)
-      local function convertToIntegerOrString(value)
-        local number = tonumber(value)
-        if number and number % 1 == 0 then
-          return math.floor(number)     -- Optionally, you can use math.floor() to ensure it's an integer
-        else
-          return value
-        end
-      end
-
       local function grapple_default_select(path)
         if vim.startswith(path, "oil://") then
           require("oil").open(path)
@@ -27,7 +18,7 @@ return {
           -- remove tmux:// prefix
           local name = string.sub(path, 8)
           -- if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
-          require("birdee.tmux").gotoTerminal(convertToIntegerOrString(name))
+          require("birdee.fossil.tmux").grapple_tmux(name)
         else
           vim.cmd.edit(path)
         end

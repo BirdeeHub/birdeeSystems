@@ -85,46 +85,12 @@ function M.authTerminal(api_client_secret)
 end
 
 ---@param plugin_names string[]|string
-function M.safe_packadd(plugin_names)
-  local names
-  if type(plugin_names) == 'table' then
-    names = plugin_names
-  elseif type(plugin_names) == 'string' then
-    names = { plugin_names }
-  else
-    return
-  end
+function M.multi_packadd(plugin_names)
+  local names = type(plugin_names) == 'string' and { plugin_names } or plugin_names or {}
+  ---@diagnostic disable-next-line: param-type-mismatch
   for _, name in ipairs(names) do
-    if type(name) == 'string' then
-      ---@diagnostic disable-next-line: param-type-mismatch
-      local ok, err = pcall(vim.cmd, 'packadd ' .. name)
-      if not ok then
-        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN,
-          { title = "birdee.utils.safe_packadd_list" })
-      end
-    end
-  end
-end
-
----@param plugin_names string[]|string
-function M.safe_force_packadd(plugin_names)
-  local names
-  if type(plugin_names) == 'table' then
-    names = plugin_names
-  elseif type(plugin_names) == 'string' then
-    names = { plugin_names }
-  else
-    return
-  end
-  for _, name in ipairs(names) do
-    if type(name) == 'string' then
-      ---@diagnostic disable-next-line: param-type-mismatch
-      local ok, err = pcall(vim.cmd, 'packadd! ' .. name)
-      if not ok then
-        vim.notify('packadd ' .. name .. ' failed: ' .. err, vim.log.levels.WARN,
-          { title = "birdee.utils.safe_force_packadd_list" })
-      end
-    end
+    ---@diagnostic disable-next-line: param-type-mismatch
+    vim.cmd.packadd(name)
   end
 end
 
@@ -132,6 +98,7 @@ end
 ---@type fun(names: string[]|string)
 M.load_w_after_plugin = require('nixCatsUtils.lzUtils').make_load_with_after({ "plugin" })
 
+---@type fun(moduleName: string): any
 function M.lazy_require(moduleName)
   return setmetatable({}, {
     __index = function(_, key)

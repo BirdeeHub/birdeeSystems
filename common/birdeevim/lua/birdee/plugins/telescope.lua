@@ -95,7 +95,7 @@ return {
     },
     -- colorscheme = "",
     load = function (name)
-      require("birdee.utils").safe_packadd({
+      require("birdee.utils").multi_packadd({
         name,
         "telescope-fzf-native.nvim",
         "vim-fugitive",
