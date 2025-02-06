@@ -1,7 +1,6 @@
 ---@class lzextras.LspPlugin: lze.Plugin
 ---@field lsp? any
 
--- TODO: make a handler for lspconfig specs
 local M = {
   ---@type lze.Handler
   handler = {
