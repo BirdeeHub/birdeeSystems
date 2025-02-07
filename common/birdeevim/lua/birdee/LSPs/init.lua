@@ -204,11 +204,7 @@ if nixCats('C') then
   servers.cmake = {}
 end
 
-if nixCats('rust') then
-  -- NOTE: rustaceanvim takes care of: `servers.rust_analyzer = {}`
-
-  -- rustaceanvim setup if any
-end
+-- NOTE: rustaceanvim takes care of: `servers.rust_analyzer = {}`
 
 --------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------
@@ -235,7 +231,7 @@ function M.on_attach(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  
+
   if nixCats('general.core') then
     -- NOTE: why are these functions that call the telescope builtin?
     -- because otherwise they would load telescope eagerly when this is defined.
