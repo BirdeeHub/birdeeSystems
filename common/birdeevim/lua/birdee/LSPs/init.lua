@@ -101,7 +101,9 @@ require('lze').register_handlers(require('lzextras').lsp {
       else
         require("birdee.utils").multi_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
         require('mason').setup()
-        require('mason-lspconfig').setup()
+        require('mason-lspconfig').setup({
+          automatic_installation = true,
+        })
       end
     end,
     lsp = function(plugin)
@@ -156,7 +158,7 @@ require('lze').load {
   },
   {
     "nixd",
-    enabled = nixCats('nix') or nixCats('neonixdev'),
+    enabled = nixCats('nix') or nixCats('neonixdev') and catUtils.isNixCats,
     lsp = {
       nixd = {
         nixpkgs = {
