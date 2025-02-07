@@ -160,7 +160,7 @@ require('lze').load {
     "nixd",
     enabled = catUtils.isNixCats and nixCats('nix') or nixCats('neonixdev'),
     lsp = {
-      filetypes = { 'nix' },
+      -- filetypes = { 'nix' },
       nixd = {
         nixpkgs = {
           expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
