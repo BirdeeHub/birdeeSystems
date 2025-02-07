@@ -171,17 +171,11 @@ require('lze').load {
         options = {
           -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
           nixos = {
-            expr = [[(builtins.getFlake "]] ..
-              nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
-              nixCats.extra("nixdExtras.system") .. [[.nixosConfigurations."]] ..
-              nixCats.extra("nixdExtras.systemCFGname") .. [[".options]]
+            expr = nixCats.extra("nixdExtras.nixos_options") or nil
           },
           -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
           ["home-manager"] = {
-            expr = [[(builtins.getFlake "]] ..
-              nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
-              nixCats.extra("nixdExtras.system") .. [[.homeConfigurations."]] ..
-              nixCats.extra("nixdExtras.homeCFGname") .. [[".options]]
+            expr = nixCats.extra("nixdExtras.home_manager_options") or nil
           }
         },
         diagnostic = {

@@ -381,10 +381,8 @@
     };
     nixdExtras = {
       nixpkgs = inputs.nixpkgsNV.outPath;
-      flake-path = inputs.self.outPath;
-      system = pkgs.system;
-      systemCFGname = "birdee@nestOS";
-      homeCFGname = "birdee@nestOS";
+      nixos_options = ''(builtins.getFlake "${inputs.self.outPath}").legacyPackages.${pkgs.system}.nixosConfigurations."birdee@nestOS".options'';
+      home_manager_options = ''(builtins.getFlake "${inputs.self.outPath}").legacyPackages.${pkgs.system}.homeConfigurations."birdee@nestOS".options'';
     };
     AIextras = {
       codeium_bitwarden_uuid = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
