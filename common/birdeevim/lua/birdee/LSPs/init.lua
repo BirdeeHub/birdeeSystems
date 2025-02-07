@@ -95,6 +95,15 @@ require('lze').register_handlers(require('lzextras').lsp {
     "nvim-lspconfig",
     for_cat = "general.core",
     on_require = { "lspconfig" },
+    load = function(name)
+      if catUtils.isNixCats then
+        vim.cmd.packadd(name)
+      else
+        require("birdee.utils").multi_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
+        require('mason').setup()
+        require('mason-lspconfig').setup()
+      end
+    end,
     lsp = function(plugin)
       local server_name = plugin.name
       local cfg = plugin.lsp
@@ -115,7 +124,7 @@ if catUtils.isNixCats then
     require('lspconfig').nil_ls.setup({ capabilities = require('birdee.LSPs').get_capabilities('nil_ls') })
   end, { desc = 'Run nil-ls (when you really need docs for the builtins and nixd refuse)' })
 end
-local servers = {
+require('lze').load {
   {
     "lua_ls",
     enabled = nixCats('lua') or nixCats('neonixdev'),
@@ -357,27 +366,6 @@ local servers = {
         },
       },
     },
-  },
-}
-
-require('lze').load(servers)
-require('lze').load {
-  {
-    "mason.nvim",
-    enabled = not catUtils.isNixCats,
-    load = function(name)
-      require("birdee.utils").multi_packadd({ name, "mason-lspconfig.nvim" })
-    end,
-    after = function(plugin)
-      require('mason').setup()
-      local to_install = {}
-      for _, v in ipairs(servers) do
-        table.insert(to_install, v.name)
-      end
-      require('mason-lspconfig').setup {
-        ensure_installed = to_install,
-      }
-    end
   },
 }
 
