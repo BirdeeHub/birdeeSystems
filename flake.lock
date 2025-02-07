@@ -1986,17 +1986,17 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1738897172,
-        "narHash": "sha256-v8qJAaOl9Dbi8kNRIjOZGVtaeiicmfNVjRUvL0o6qR0=",
-        "ref": "refs/heads/master",
-        "rev": "c76bc2c885ec02ac53f0b2889b6c9d1601d163a5",
-        "revCount": 174,
-        "type": "git",
-        "url": "file:/home/birdee/Projects/lze"
+        "lastModified": 1738900558,
+        "narHash": "sha256-+qLfCPZ895OWPRxN4EXbWZoyWpptUdi46ic6wIszns8=",
+        "owner": "BirdeeHub",
+        "repo": "lze",
+        "rev": "2267ca7829569ee5624e8c258b5fee713056742c",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/lze"
+        "owner": "BirdeeHub",
+        "repo": "lze",
+        "type": "github"
       }
     },
     "lzextras": {
