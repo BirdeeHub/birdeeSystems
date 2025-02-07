@@ -1986,11 +1986,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1738900558,
-        "narHash": "sha256-+qLfCPZ895OWPRxN4EXbWZoyWpptUdi46ic6wIszns8=",
+        "lastModified": 1738902017,
+        "narHash": "sha256-KjX+rZEGP/iZn32A/00CftsxKyUf7hCCwje78geh4IU=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "2267ca7829569ee5624e8c258b5fee713056742c",
+        "rev": "90b26175c02b71499721e574602b9ee6641bb23f",
         "type": "github"
       },
       "original": {
