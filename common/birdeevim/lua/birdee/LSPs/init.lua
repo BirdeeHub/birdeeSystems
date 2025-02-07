@@ -160,7 +160,7 @@ require('lze').load {
     "nixd",
     enabled = catUtils.isNixCats and nixCats('nix') or nixCats('neonixdev'),
     lsp = {
-      -- filetypes = { 'nix' },
+      filetypes = { 'nix' },
       nixd = {
         nixpkgs = {
           expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
@@ -195,17 +195,22 @@ require('lze').load {
   {
     "rnix",
     enabled = not catUtils.isNixCats,
-    lsp = {},
+    lsp = {
+      filetypes = { "nix" },
+    },
   },
   {
     "nil_ls",
     enabled = not catUtils.isNixCats,
-    lsp = {},
+    lsp = {
+      filetypes = { "nix" },
+    },
   },
   {
     "elixirls",
     for_cat = "elixir",
     lsp = {
+      filetypes = { "elixir", "eelixir", "heex", "surface" },
       cmd = { "elixir-ls" },
     }
   },
@@ -221,7 +226,7 @@ require('lze').load {
         workspace = { checkThirdParty = true },
         telemetry = { enabled = false },
       },
-      -- filetypes = { 'kotlin' },
+      filetypes = { 'kotlin' },
       -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
     }
   },
@@ -229,7 +234,7 @@ require('lze').load {
     "jdtls",
     for_cat = 'java',
     lsp = {
-      -- filetypes = { 'java', 'kotlin' },
+      filetypes = { 'java', 'kotlin' },
     }
   },
   {
@@ -244,13 +249,15 @@ require('lze').load {
   {
     "bashls",
     for_cat = "bash",
-    lsp = {}
+    lsp = {
+      filetypes = { "bash", "sh" },
+    },
   },
   {
     "gopls",
     for_cat = "go",
     lsp = {
-      -- filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
+      filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", },
     },
   },
   -- {"pyright", lsp = {}, },
@@ -258,6 +265,7 @@ require('lze').load {
     "pylsp",
     for_cat = "python",
     lsp = {
+      filetypes = { "python" },
       pylsp = {
         plugins = {
           -- formatter options
@@ -281,7 +289,9 @@ require('lze').load {
   {
     "marksman",
     for_cat = "general.markdown",
-    lsp = {},
+    lsp = {
+      filetypes = { "markdown", "markdown.mdx" },
+    },
   },
   {
     "harper_ls",
@@ -294,12 +304,16 @@ require('lze').load {
   {
     "templ",
     for_cat = "web.templ",
-    lsp = {},
+    lsp = {
+      filetypes = { "templ" },
+    },
   },
   {
     "tailwindcss",
     for_cat = "web.tailwindcss",
-    lsp = {},
+    lsp = {
+      filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "gohtmltmpl", "haml", "handlebars", "hbs", "html", "htmlangular", "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte", "templ" },
+    },
   },
   {
     "ts_ls",
@@ -319,6 +333,7 @@ require('lze').load {
     "clangd",
     for_cat = "C",
     lsp = {
+      filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
       -- unneded thanks to clangd_extensions-nvim I think
       -- clangd_config = {
       --   init_options = {
@@ -330,27 +345,37 @@ require('lze').load {
   {
     "cmake",
     for_cat = "C",
-    lsp = {},
+    lsp = {
+      filetypes = { "cmake" },
+    },
   },
   {
     "htmx",
     for_cat = "web.HTMX",
-    lsp = {},
+    lsp = {
+      filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "gohtmltmpl", "haml", "handlebars", "hbs", "html", "htmlangular", "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte", "templ" },
+    },
   },
   {
     "cssls",
     for_cat = "web.HTML",
-    lsp = {},
+    lsp = {
+      filetypes = { "css", "scss", "less" },
+    },
   },
   {
     "eslint",
     for_cat = "web.HTML",
-    lsp = {},
+    lsp = {
+      filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
+    },
   },
   {
     "jsonls",
     for_cat = "web.HTML",
-    lsp = {},
+    lsp = {
+      filetypes = { "json", "jsonc" },
+    },
   },
   {
     "html",
