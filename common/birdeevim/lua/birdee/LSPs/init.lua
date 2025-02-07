@@ -253,10 +253,10 @@ require('lze').load {
       -- filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
     },
   },
+  -- {"pyright", lsp = {}, },
   {
     "pylsp",
     for_cat = "python",
-  -- servers.pyright = {},
     lsp = {
       pylsp = {
         plugins = {
