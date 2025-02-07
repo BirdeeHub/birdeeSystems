@@ -11,6 +11,10 @@ if vim.g.vscode == nil then
         notify.dismiss({ silent = true, })
     end, { desc = "dismiss notify popup and clear hlsearch" })
   end
+  vim.g.lze = {
+    load = vim.cmd.packadd,
+    verbose = true,
+  }
   require('lze').register_handlers({
     {
       enabled = true,
