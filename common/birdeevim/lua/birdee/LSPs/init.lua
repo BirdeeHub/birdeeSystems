@@ -339,3 +339,6 @@ require('lze').load {
     },
   },
 }
+
+-- NOTE: gets filetypes = {}, for server name in + register and puts it into the + register, overwriting server name.
+-- :lua vim.fn.setreg([[+]],"filetypes = " .. vim.inspect(require('lspconfig')[vim.fn.getreg("+")].config_def.default_config.filetypes) .. ",")
