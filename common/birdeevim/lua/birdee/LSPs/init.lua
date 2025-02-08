@@ -39,7 +39,7 @@ require('lze').register_handlers(require('lzextras').lsp {
       require('lspconfig')[server_name].setup({
         capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(server_name),
         on_attach = require('birdee.LSPs.caps_and_attach').on_attach,
-        settings = cfg,
+        settings = (cfg or {}).settings,
         filetypes = (cfg or {}).filetypes,
         cmd = (cfg or {}).cmd,
         root_pattern = (cfg or {}).root_pattern,
@@ -58,27 +58,29 @@ require('lze').load {
     "lua_ls",
     enabled = nixCats('lua') or nixCats('neonixdev'),
     lsp = {
-      Lua = {
-        runtime = { version = 'LuaJIT' },
-        formatters = {
-          ignoreComments = true,
-        },
-        signatureHelp = { enabled = true },
-        diagnostics = {
-          globals = { "nixCats", "vim", "make_test" },
-          disable = { 'missing-fields' },
-        },
-        workspace = {
-          checkThirdParty = false,
-          library = {
-            -- '${3rd}/luv/library',
-            -- unpack(vim.api.nvim_get_runtime_file('', true)),
+      settings = {
+        Lua = {
+          runtime = { version = 'LuaJIT' },
+          formatters = {
+            ignoreComments = true,
           },
+          signatureHelp = { enabled = true },
+          diagnostics = {
+            globals = { "nixCats", "vim", "make_test" },
+            disable = { 'missing-fields' },
+          },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              -- '${3rd}/luv/library',
+              -- unpack(vim.api.nvim_get_runtime_file('', true)),
+            },
+          },
+          completion = {
+            callSnippet = 'Replace',
+          },
+          telemetry = { enabled = false },
         },
-        completion = {
-          callSnippet = 'Replace',
-        },
-        telemetry = { enabled = false },
       },
       filetypes = { 'lua' },
     },
@@ -88,29 +90,31 @@ require('lze').load {
     enabled = catUtils.isNixCats and nixCats('nix') or nixCats('neonixdev'),
     lsp = {
       filetypes = { 'nix' },
-      nixd = {
-        nixpkgs = {
-          expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
-        },
-        formatting = {
-          command = { "nixfmt" }
-        },
-        options = {
-          -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
-          nixos = {
-            expr = nixCats.extra("nixdExtras.nixos_options") or nil
+      settings = {
+        nixd = {
+          nixpkgs = {
+            expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
           },
-          -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
-          ["home-manager"] = {
-            expr = nixCats.extra("nixdExtras.home_manager_options") or nil
-          }
-        },
-        diagnostic = {
-          suppress = {
-            "sema-escaping-with"
+          formatting = {
+            command = { "nixfmt" }
+          },
+          options = {
+            -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
+            nixos = {
+              expr = nixCats.extra("nixdExtras.nixos_options") or nil
+            },
+            -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
+            ["home-manager"] = {
+              expr = nixCats.extra("nixdExtras.home_manager_options") or nil
+            }
+          },
+          diagnostic = {
+            suppress = {
+              "sema-escaping-with"
+            }
           }
         }
-      }
+      },
     },
   },
   {
@@ -139,13 +143,15 @@ require('lze').load {
     "kotlin_language_server",
     for_cat = 'kotlin',
     lsp = {
-      kotlin = {
-        formatters = {
-          ignoreComments = true,
+      settings = {
+        kotlin = {
+          formatters = {
+            ignoreComments = true,
+          },
+          signatureHelp = { enabled = true },
+          workspace = { checkThirdParty = true },
+          telemetry = { enabled = false },
         },
-        signatureHelp = { enabled = true },
-        workspace = { checkThirdParty = true },
-        telemetry = { enabled = false },
       },
       filetypes = { 'kotlin' },
       -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
@@ -187,22 +193,24 @@ require('lze').load {
     for_cat = "python",
     lsp = {
       filetypes = { "python" },
-      pylsp = {
-        plugins = {
-          -- formatter options
-          black = { enabled = false },
-          autopep8 = { enabled = false },
-          yapf = { enabled = false },
-          -- linter options
-          pylint = { enabled = true, executable = "pylint" },
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-          -- type checker
-          pylsp_mypy = { enabled = true },
-          -- auto-completion options
-          jedi_completion = { fuzzy = true },
-          -- import sorting
-          pyls_isort = { enabled = true },
+      settings = {
+        pylsp = {
+          plugins = {
+            -- formatter options
+            black = { enabled = false },
+            autopep8 = { enabled = false },
+            yapf = { enabled = false },
+            -- linter options
+            pylint = { enabled = true, executable = "pylint" },
+            pyflakes = { enabled = false },
+            pycodestyle = { enabled = false },
+            -- type checker
+            pylsp_mypy = { enabled = true },
+            -- auto-completion options
+            jedi_completion = { fuzzy = true },
+            -- import sorting
+            pyls_isort = { enabled = true },
+          },
         },
       },
     }
@@ -218,7 +226,9 @@ require('lze').load {
     "harper_ls",
     for_cat = "general.markdown",
     lsp = {
-      ["harper-ls"] = {},
+      settings = {
+        ["harper-ls"] = {},
+      },
       filetypes = { "markdown", "norg" },
     },
   },
@@ -303,15 +313,17 @@ require('lze').load {
     for_cat = "web.HTML",
     lsp = {
       filetypes = { 'html', 'twig', 'hbs', 'templ' },
-      html = {
-        format = {
-          templating = true,
-          wrapLineLength = 120,
-          wrapAttributes = 'auto',
-        },
-        hover = {
-          documentation = true,
-          references = true,
+      settings = {
+        html = {
+          format = {
+            templating = true,
+            wrapLineLength = 120,
+            wrapAttributes = 'auto',
+          },
+          hover = {
+            documentation = true,
+            references = true,
+          },
         },
       },
     },
