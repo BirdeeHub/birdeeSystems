@@ -1986,11 +1986,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1738902017,
-        "narHash": "sha256-KjX+rZEGP/iZn32A/00CftsxKyUf7hCCwje78geh4IU=",
+        "lastModified": 1738984133,
+        "narHash": "sha256-a8Ocs513UlqxB1JvZykwb9ijKGV2EsAJfunC5uzIm3c=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "90b26175c02b71499721e574602b9ee6641bb23f",
+        "rev": "cfb54dc54d4002e8ad6285d5d44f1eeaf05af9aa",
         "type": "github"
       },
       "original": {
@@ -2013,11 +2013,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1738923453,
-        "narHash": "sha256-4MDo81TJXli9Yg9ms2Xm2kjmI/PR1REomffPLhu0YHw=",
+        "lastModified": 1738976414,
+        "narHash": "sha256-gaKkpHzGQKFRWbs6l2kc1TIuC0PjCgKNV38mxiLEtOk=",
         "owner": "BirdeeHub",
         "repo": "lzextras",
-        "rev": "d309e19457a3b851b05e9e71cd54ba646a6e93dd",
+        "rev": "f4bb0889404e4ac470bb6a3e345db61642191219",
         "type": "github"
       },
       "original": {
