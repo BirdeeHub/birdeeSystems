@@ -20,13 +20,11 @@ require('lze').register_handlers(require('lzextras').lsp {
     enabled = not catUtils.isNixCats,
     dep_of = { "nvim-lspconfig" },
     load = function(name)
-      require("birdee.utils").multi_packadd({ name, "mason-lspconfig.nvim" })
+      require("birdee.utils").multi_packadd { name, "mason-lspconfig.nvim" }
     end,
     after = function(name)
       require('mason').setup()
-      require('mason-lspconfig').setup({
-        automatic_installation = true,
-      })
+      require('mason-lspconfig').setup { automatic_installation = true, }
     end,
   },
   {
