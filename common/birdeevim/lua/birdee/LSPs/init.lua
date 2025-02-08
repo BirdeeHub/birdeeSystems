@@ -34,12 +34,10 @@ require('lze').register_handlers(require('lzextras').lsp {
     for_cat = "general.core",
     on_require = { "lspconfig" },
     lsp = function(plugin)
-      local server_name = plugin.name
-      local cfg = plugin.lsp
-      require('lspconfig')[server_name].setup(vim.tbl_extend("force",{
-        capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(server_name),
+      require('lspconfig')[plugin.name].setup(vim.tbl_extend("force",{
+        capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(plugin.name),
         on_attach = require('birdee.LSPs.caps_and_attach').on_attach,
-      }, cfg))
+      }, plugin.lsp or {}))
     end,
   },
 })
