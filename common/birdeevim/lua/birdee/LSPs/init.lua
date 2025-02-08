@@ -9,8 +9,6 @@ require('lze').load {
     dep_of = { "nvim-lspconfig" },
     load = function(name)
       require("birdee.utils").multi_packadd { name, "mason-lspconfig.nvim" }
-    end,
-    after = function(name)
       require('mason').setup()
       require('mason-lspconfig').setup { automatic_installation = true, }
     end,
