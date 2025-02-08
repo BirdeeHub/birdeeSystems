@@ -2013,11 +2013,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1739000103,
-        "narHash": "sha256-c3JnGVYTyLP7AnhX0e9rayV5iAoF9CjnVa4id5SFfdw=",
+        "lastModified": 1739000994,
+        "narHash": "sha256-9m+QclwFPwV+ugsJr92/yGV3i8E10qK2zZN7XVVIQgw=",
         "owner": "BirdeeHub",
         "repo": "lzextras",
-        "rev": "856f8f395ef1b36fd3ee82eae92c4b1442e9efb3",
+        "rev": "aa61ce8a377d23fde00897f7290c2cfbd469b6a3",
         "type": "github"
       },
       "original": {
