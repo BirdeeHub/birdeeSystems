@@ -20,6 +20,10 @@ if vim.g.vscode == nil then
       enabled = true,
       handler = require("nixCatsUtils.lzUtils").for_cat
     },
+    {
+      enabled = true,
+      handler = require('lzextras').lsp,
+    },
   })
 end
 
