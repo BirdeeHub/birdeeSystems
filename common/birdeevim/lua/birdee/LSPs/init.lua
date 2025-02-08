@@ -55,6 +55,20 @@ if catUtils.isNixCats then
 end
 require('lze').load {
   {
+    "lazydev.nvim",
+    for_cat = "neonixdev",
+    cmd = { "LazyDev" },
+    ft = "lua",
+    after = function(plugin)
+      require('lazydev').setup({
+        library = {
+          { words = { "uv", "vim%.uv", "vim%.loop" }, path = (nixCats.pawsible({"allPlugins", "start", "luvit-meta"}) or "luvit-meta") .. "/library" },
+          { words = { "nixCats" }, path = (nixCats.nixCatsPath or "") .. '/lua' },
+        },
+      })
+    end,
+  },
+  {
     "lua_ls",
     enabled = nixCats('lua') or nixCats('neonixdev'),
     lsp = {
