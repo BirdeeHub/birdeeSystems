@@ -5,6 +5,7 @@
 { config, pkgs, lib, self, flake-path, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
+    old_modules_compat
     ../PCs.nix
     inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
     inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
@@ -18,21 +19,13 @@ in {
   #   # users.extraGroups.vboxusers.members = [ "birdee" ];
   # };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      nerd-fonts = {
-        go-mono = prev.nerdfonts.override { fonts = [ "Go-Mono" ]; };
-        fira-mono = prev.nerdfonts.override { fonts = [ "FiraMono" ]; };
-      };
-    })
-  ];
-
   birdeeMods = {
     lightdm.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
         Xft.dpi: 80
       ''}
     '';
+    old_modules_compat.enable = true;
   };
 
   boot.kernelModules = [ "kvm-intel" ];
