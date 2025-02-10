@@ -25,6 +25,7 @@ in {
   ];
 
   services.asusd.enable = false;
+  nix.settings.experimental-features = [ "pipe-operators" ];
 
   hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd rocmPackages.clr amdvlk vulkan-tools mesa ];
   environment.systemPackages = with pkgs; [ vulkan-tools mesa clinfo vulkan-headers radeontools mesa-demos rocmPackages.rocminfo ];

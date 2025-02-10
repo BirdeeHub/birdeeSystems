@@ -18,6 +18,15 @@ in {
   #   # users.extraGroups.vboxusers.members = [ "birdee" ];
   # };
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      nerd-fonts = {
+        go-mono = prev.nerdfonts.override { fonts = [ "Go-Mono" ]; };
+        fira-mono = prev.nerdfonts.override { fonts = [ "FiraMono" ]; };
+      };
+    })
+  ];
+
   birdeeMods = {
     lightdm.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
