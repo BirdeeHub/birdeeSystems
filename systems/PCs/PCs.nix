@@ -109,7 +109,7 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # Allow flakes and new command
-  nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.show-trace = true;
   nix.settings.auto-optimise-store = true;
 

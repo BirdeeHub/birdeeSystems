@@ -5,6 +5,7 @@
 { config, pkgs, lib, self, flake-path, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
+    old_modules_compat
     ../PCs.nix
     inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
     inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
@@ -24,6 +25,7 @@ in {
         Xft.dpi: 80
       ''}
     '';
+    old_modules_compat.enable = true;
   };
 
   boot.kernelModules = [ "kvm-intel" ];

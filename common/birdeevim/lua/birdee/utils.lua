@@ -96,7 +96,14 @@ end
 
 ---packadd + after/plugin
 ---@type fun(names: string[]|string)
-M.load_w_after_plugin = require('nixCatsUtils.lzUtils').make_load_with_after({ "plugin" })
+M.load_w_after_plugin = require('lzextras').make_load_with_afters({ "plugin" }, function(name)
+  local path = vim.tbl_get(package.loaded, "nixCats", "pawsible", "allPlugins", "opt", name)
+  if path then
+    vim.cmd.packadd(name)
+    return path
+  end
+  return nil -- nil will make it default to normal behavior
+end)
 
 ---@type fun(moduleName: string): any
 function M.lazy_require(moduleName)

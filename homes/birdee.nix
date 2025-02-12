@@ -89,7 +89,7 @@ in {
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
-    experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+    experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
     show-trace = true;
     extra-trusted-substituters = [

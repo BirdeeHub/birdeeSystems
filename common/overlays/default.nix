@@ -23,6 +23,8 @@ overlay
     # except this one which outputs wherever it needs to.
     pinnedVersions = import ./pinnedVersions.nix;
 
+    nerd-fonts-compat = import ./nerd-fonts-compat.nix;
+
     dep-tree = import ./dep-tree;
     nops = import ./nops;
     tmux = import ./tmux;

@@ -98,7 +98,7 @@ function M.setupJDTLS()
         workspace_dir,
       },
 
-      capabilities = require('birdee.LSPs').get_capabilities(),
+      capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(),
 
       -- 💀
       -- This is the default if not provided, you can remove it. Or adjust as needed.

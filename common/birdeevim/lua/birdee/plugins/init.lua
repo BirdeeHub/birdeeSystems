@@ -114,20 +114,6 @@ require('lze').load {
     end,
   },
   {
-    "lazydev.nvim",
-    for_cat = "neonixdev",
-    cmd = { "LazyDev" },
-    ft = "lua",
-    after = function(plugin)
-      require('lazydev').setup({
-        library = {
-          { words = { "uv", "vim%.uv", "vim%.loop" }, path = (nixCats.pawsible({"allPlugins", "start", "luvit-meta"}) or "luvit-meta") .. "/library" },
-          { words = { "nixCats" }, path = (nixCats.nixCatsPath or "") .. '/lua' },
-        },
-      })
-    end,
-  },
-  {
     "otter.nvim",
     for_cat = "otter",
     -- event = "DeferredUIEnter",
