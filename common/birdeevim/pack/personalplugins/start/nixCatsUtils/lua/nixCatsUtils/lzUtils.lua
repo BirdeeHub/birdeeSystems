@@ -28,7 +28,7 @@ M.for_cat = {
             else
                 plugin.enabled = (nixCats(plugin.for_cat) and true) or false
             end
-        else
+        elseif type(plugin.for_cat) == "string" then
             plugin.enabled = (nixCats(plugin.for_cat) and true) or false
         end
         return plugin
