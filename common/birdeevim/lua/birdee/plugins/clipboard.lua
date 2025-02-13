@@ -3,7 +3,10 @@ return {
     "nvim-neoclip.lua",
     for_cat = "other",
     cmd = { "Telescope" },
-    keys = { "<leader>sm", "<leader>sc", "<leader>ss" },
+    keys = {
+      {"<leader>sc", function() require('telescope').extensions.neoclip['default']() end, mode = { 'n' }, silent = true, noremap = true, desc = "[s]earch [c]liphist" },
+      {"<leader>sm", function() require('telescope').extensions.macroscope['default']() end, mode = { "n" }, silent = true, noremap = true, desc = "[s]earch [m]acro history" },
+    },
     after = function (plugin)
       require('neoclip').setup({
         history = 1000,
@@ -67,10 +70,6 @@ return {
           },
         },
       })
-      vim.keymap.set("n", "<leader>sc", function() require('telescope').extensions.neoclip['default']() end,
-        { silent = true, noremap = true, desc = "[s]earch [c]liphist" })
-      vim.keymap.set("n", "<leader>sm", function() require('telescope').extensions.macroscope['default']() end,
-        { silent = true, noremap = true, desc = "[s]earch [m]acro history" })
     end,
   },
   {

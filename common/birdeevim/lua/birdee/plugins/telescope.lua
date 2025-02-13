@@ -66,7 +66,7 @@ return {
       { "<leader>sn", function()
         require('telescope.builtin').find_files { cwd = vim.fn.expand('$HOME') .. "/birdeeSystems" }
       end, mode = {"n"}, desc = '[S]earch [N]ix config files', },
-      { "<leader>sM", '<cmd>Telescope notify<CR>', mode = {"n"}, desc = '[S]earch [M]essage', },
+      -- { "<leader>sM", '<cmd>Telescope notify<CR>', mode = {"n"}, desc = '[S]earch [M]essage', },
       { "<leader>sb", '<cmd>Telescope git_file_history<CR>', mode = {"n"}, desc = '[S]earch [B]ackup history', },
       { "<leader>sp",live_grep_git_root, mode = {"n"}, desc = '[S]earch git [P]roject root', },
       { "<leader>/", function()
@@ -124,7 +124,7 @@ return {
       -- Enable telescope extensions, if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require("telescope").load_extension, "notify")
+      -- pcall(require("telescope").load_extension, "notify")
       pcall(require("telescope").load_extension, "git_file_history")
 
       vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})

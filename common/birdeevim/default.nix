@@ -198,7 +198,6 @@
         nvim-nio
         nui-nvim
         nvim-web-devicons
-        nvim-notify
         plenary-nvim
         mini-nvim
         snacks-nvim

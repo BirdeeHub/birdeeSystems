@@ -6,6 +6,11 @@
 -- also shut up I dont care
 ---@diagnostic disable-next-line: invisible
 require('snacks').bigfile.setup()
+vim.notify = function(msg, level, o)
+  vim.notify = Snacks.notifier.notify
+  return Snacks.notifier.notify(msg, level, o)
+end
+vim.keymap.set({ 'n' }, '<Esc>', function() Snacks.notifier.hide() end, { desc = 'dismiss notify popup' })
 
 return {
   {
@@ -16,6 +21,7 @@ return {
       {"<leader>_", function() Snacks.lazygit.open() end, mode = {"n"}, desc = 'LazyGit' },
       {"<leader>gc", function() Snacks.lazygit.log() end, mode = {"n"}, desc = 'Lazy[G]it [C]ommit log' },
       {"<leader>gl", function() Snacks.gitbrowse.open() end, mode = {"n"}, desc = '[G]oto git [L]ink' },
+      {"<leader>sM", function() Snacks.notifier.show_history() end, mode = {"n"}, desc = '[S]earch [M]essages' },
     },
     event = { 'DeferredUIEnter' },
     after = function(_)
@@ -24,34 +30,33 @@ return {
       -- for some reason, they are still required
       -- when you do { enabled = false }
       Snacks.setup({
-        -- dashboard = { enabled = true, },
-        -- debug = { enabled = true, },
-        -- bufdelete = { enabled = true, },
-        -- dim = { enabled = true, },
-        -- explorer = { enabled = true, },
-        -- quickfile = { enabled = true, },
-        -- bigfile = { enabled = true, },
-        -- input = { enabled = true, },
-        -- scratch = { enabled = true, },
-        -- layout = { enabled = true, },
-        -- zen = { enabled = true, },
-        -- scroll = { enabled = true, },
-        -- notifier = { enabled = true, },
-        -- notify = { enabled = true, },
-        -- win = { enabled = true, },
-        -- picker = { enabled = true, },
-        -- profiler = { enabled = true, },
-        -- toggle = { enabled = true, },
-        -- rename = { enabled = true, },
-        -- words = { enabled = true, },
+        -- dashboard = {},
+        -- debug = {},
+        -- bufdelete = {},
+        -- dim = {},
+        -- explorer = {},
+        -- quickfile = {},
+        -- bigfile = {},
+        -- input = {},
+        -- scratch = {},
+        -- layout = {},
+        -- zen = {},
+        -- scroll = {},
+        -- notifier = {},
+        -- notify = {},
+        -- win = {},
+        -- picker = {},
+        -- profiler = {},
+        -- toggle = {},
+        -- rename = {},
+        -- words = {},
 
-        gitbrowse = { enabled = true, },
-        lazygit = { enabled = true, },
-        git = { enabled = true, },
-        terminal = { enabled = true, },
-        scope = { enabled = true, },
+        gitbrowse = {},
+        lazygit = {},
+        git = {},
+        terminal = {},
+        scope = {},
         indent = {
-          enabled = true,
           scope = {
             hl = 'Hlargs',
           },
