@@ -4,8 +4,12 @@ return {
     for_cat = "other",
     cmd = { "Telescope" },
     keys = {
-      {"<leader>sc", function() require('telescope').extensions.neoclip['default']() end, mode = { 'n' }, silent = true, noremap = true, desc = "[s]earch [c]liphist" },
-      {"<leader>sm", function() require('telescope').extensions.macroscope['default']() end, mode = { "n" }, silent = true, noremap = true, desc = "[s]earch [m]acro history" },
+      {"<leader>sc", function()
+        require('telescope').extensions.neoclip['default']()
+      end, mode = { 'n' }, silent = true, noremap = true, desc = "[s]earch [c]liphist" },
+      {"<leader>sm", function()
+        require('telescope').extensions.macroscope['default']()
+      end, mode = { "n" }, silent = true, noremap = true, desc = "[s]earch [m]acro history" },
     },
     after = function (plugin)
       require('neoclip').setup({

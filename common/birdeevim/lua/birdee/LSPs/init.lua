@@ -85,7 +85,7 @@ require('lze').load {
     enabled = catUtils.isNixCats and (nixCats('nix') or nixCats('neonixdev')),
     after = function(_)
       vim.api.nvim_create_user_command("StartNilLSP", function()
-        require('lspconfig').nil_ls.setup({ capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities('nil_ls') })
+        require('lspconfig').nil_ls.setup { capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities('nil_ls') }
       end, { desc = 'Run nil-ls (when you really need docs for the builtins and nixd refuse)' })
     end,
     lsp = {
