@@ -208,14 +208,6 @@ require('lze').load {
       require("todo-comments").setup({ signs = false })
     end,
   },
-  -- {
-  --   "indent-blankline.nvim",
-  --   for_cat = "general.core",
-  --   event = "DeferredUIEnter",
-  --   after = function(plugin)
-  --     require("ibl").setup()
-  --   end,
-  -- },
   {
     "visual-whitespace",
     for_cat = "other",
@@ -331,4 +323,12 @@ require('lze').load {
       }
     end,
   },
+  -- {
+  --   "indent-blankline.nvim",
+  --   for_cat = "general.core",
+  --   event = "DeferredUIEnter",
+  --   after = function(plugin)
+  --     require("ibl").setup()
+  --   end,
+  -- },
 }
