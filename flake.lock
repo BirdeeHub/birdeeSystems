@@ -1986,11 +1986,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1740008281,
-        "narHash": "sha256-g57D+up+xy3H34EXQCfieNyJcvVIg91OrYaL8tTIisM=",
+        "lastModified": 1740037901,
+        "narHash": "sha256-jTOte3gonmq4XOPetGToSrVPm949vGsckJG7jagoq+I=",
         "owner": "BirdeeHub",
         "repo": "lze",
-        "rev": "ef6a03163f6ca1b94c879cd451d9211b687fee87",
+        "rev": "ea4b3e712f7a0b126dba5f7237c9486aaf7d6698",
         "type": "github"
       },
       "original": {
@@ -2444,15 +2444,16 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1738991100,
-        "narHash": "sha256-smTBsgrpagQrPWnOSq4wcz1Q1UJ4denBNPmBAJN2Ol4=",
+        "lastModified": 1740041098,
+        "narHash": "sha256-P7RL4ANvQD0YBeS3OpP2Ib1CN8umfEA8/jhZEz4Yuzw=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "54e2cc42dbefb9e152d9584794f5d8d94a20a534",
+        "rev": "82759c1e738f62256c9f378af409a62bbc73c198",
         "type": "github"
       },
       "original": {
         "owner": "BirdeeHub",
+        "ref": "lzextras",
         "repo": "nixCats-nvim",
         "type": "github"
       }
