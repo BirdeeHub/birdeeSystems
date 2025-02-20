@@ -14,8 +14,6 @@
 --   load = vim.cmd.packadd,
 --   verbose = true,
 -- }
--- TODO: this in another file and require here.
--- require('nixCatsUtils.catPacker').setup({ your plugins })
 require("birdee.plugins")
 require("birdee.LSPs")
 if nixCats('debug') then
