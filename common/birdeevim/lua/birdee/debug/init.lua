@@ -1,4 +1,4 @@
-require('lze').load {
+lze.load {
   "nvim-dap",
   for_cat = "debug",
   -- cmd = { "" },

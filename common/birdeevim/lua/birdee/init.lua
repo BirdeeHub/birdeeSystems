@@ -20,7 +20,7 @@ if vim.g.vscode == nil then
   --   load = vim.cmd.packadd,
   --   verbose = true,
   -- }
-  require('lze').register_handlers({
+  lze.register_handlers({
     {
       enabled = true,
       handler = require("nixCatsUtils.lzUtils").for_cat

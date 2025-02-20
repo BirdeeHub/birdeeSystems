@@ -1,4 +1,4 @@
-require('lze').load {
+lze.load {
   "conform.nvim",
   for_cat = "general.core",
   -- cmd = { "" },

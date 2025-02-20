@@ -1,4 +1,4 @@
-require('lze').load {
+lze.load {
   "nvim-lint",
   for_cat = "general.core",
   -- cmd = { "" },
