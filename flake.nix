@@ -62,9 +62,6 @@
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
 
-    #NOTE: until unstable gets your PR to rustaceanvim:
-    rustaceanvim.url = "github:mrcjkb/rustaceanvim";
-
     lze = {
     # plugins-lze = {
       url = "github:BirdeeHub/lze";

@@ -19,7 +19,6 @@ in {
           privacy-badger
           wappalyzer
           bitwarden
-          search-by-image
           foxyproxy-standard
           web-archives
           user-agent-string-switcher

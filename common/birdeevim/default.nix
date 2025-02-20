@@ -39,12 +39,12 @@
     # :!nvim-python3
     extraPython3Packages = {
       python = (py:[
-        py.debugpy
-        py.pylsp-mypy
-        py.pyls-isort
-        py.python-lsp-server
+        (py.debugpy.overrideAttrs { doCheck = false; })
+        (py.pylsp-mypy.overrideAttrs { doCheck = false; })
+        (py.pyls-isort.overrideAttrs { doCheck = false; })
+        (py.python-lsp-server.overrideAttrs { doCheck = false; })
         # py.python-lsp-black
-        py.pytest
+        (py.pytest.overrideAttrs { doCheck = false; })
         (py.pylint.overrideAttrs { doCheck = false; })
         # python-lsp-ruff
         # pyls-flake8
@@ -157,9 +157,9 @@
       ];
       python = with python311Packages; [
         # jedi-language-server
-        python-lsp-server
-        debugpy
-        pytest
+        (python-lsp-server.overrideAttrs { doCheck = false; })
+        (debugpy.overrideAttrs { doCheck = false; })
+        (pytest.overrideAttrs { doCheck = false; })
         # pylint
         # python-lsp-ruff
         # pyls-flake8
@@ -210,7 +210,7 @@
         luvit-meta
       ];
       rust = [
-        inputs.rustaceanvim.packages.${pkgs.system}.default
+        rustaceanvim
       ];
       neonixdev = [
         luvit-meta
