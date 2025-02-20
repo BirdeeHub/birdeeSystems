@@ -53,6 +53,7 @@ require('lze').load {
     "lua_ls",
     enabled = nixCats('lua') or nixCats('neonixdev'),
     lsp = {
+      filetypes = { 'lua' },
       settings = {
         Lua = {
           runtime = { version = 'LuaJIT' },
@@ -77,7 +78,6 @@ require('lze').load {
           telemetry = { enabled = false },
         },
       },
-      filetypes = { 'lua' },
     },
   },
   {
@@ -143,6 +143,8 @@ require('lze').load {
     "kotlin_language_server",
     for_cat = 'kotlin',
     lsp = {
+      filetypes = { 'kotlin' },
+      -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
       settings = {
         kotlin = {
           formatters = {
@@ -153,8 +155,6 @@ require('lze').load {
           telemetry = { enabled = false },
         },
       },
-      filetypes = { 'kotlin' },
-      -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
     }
   },
   {
@@ -168,9 +168,9 @@ require('lze').load {
     "gradle_ls",
     enabled = nixCats('java') or nixCats('kotlin'),
     lsp = {
+      filetypes = { "kotlin", "java" },
       root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },
       cmd = { nixCats.extra("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
-      filetypes = { "kotlin", "java" },
     }
   },
   {
@@ -226,10 +226,10 @@ require('lze').load {
     "harper_ls",
     for_cat = "general.markdown",
     lsp = {
+      filetypes = { "markdown", "norg" },
       settings = {
         ["harper-ls"] = {},
       },
-      filetypes = { "markdown", "norg" },
     },
   },
   {
