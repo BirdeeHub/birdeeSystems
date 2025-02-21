@@ -67,3 +67,38 @@ if nixCats('notes') then
     [["ad:let @a = substitute(@a, '\\(favicon-.\\{-}\\)\\(\\.com\\|\\.org\\|\\.net\\|\\.edu\\|\\.gov\\|\\.mil\\|\\.int\\|\\.io\\|\\.co\\|\\.ai\\|\\.ly\\|\\.me\\|\\.tv\\|\\.info\\|\\.co\\.uk\\|\\.de\\|\\.jp\\|\\.cn\\|\\.au\\|\\.fr\\|\\.it\\|\\.es\\|\\.br\\|\\.gay\\)', 'https:\/\/', 'g')<CR>dd:while substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') != @a | let @a = substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') | endwhile<CR>"ap]],
     { desc = 'fix the links in copies from phind' })
 end
+
+-- kickstart.nvim starts you with this.
+-- But it constantly clobbers your system clipboard whenever you delete anything.
+
+-- Sync clipboard between OS and Neovim.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+-- vim.o.clipboard = 'unnamedplus'
+
+-- So, meet clippy.lua
+
+vim.keymap.set({ "n", "v", "x" }, '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Yank to clipboard' })
+vim.keymap.set({ "n", "v", "x" }, '<leader>Y', '"+yy', { noremap = true, silent = true, desc = 'Yank line to clipboard' })
+vim.keymap.set({ "n" }, 'v<C-a>', 'gg0vG$', { noremap = true, silent = true, desc = 'Select all' })
+vim.keymap.set({ "n", "v", "x" }, '<leader>p', '"+p', { noremap = true, silent = true, desc = 'Paste from clipboard' })
+vim.keymap.set('i', '<C-p>', '<C-r><C-p>+',
+  { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
+
+-- vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
+
+
+-- so, my normal mode <leader>y randomly didnt accept motions.
+-- If that ever happens to you, comment out the normal one for normal mode, then uncomment this keymap and the function below it.
+-- A full purge of all previous config files installed via pacman fixed it for me, as the pacman config was the one that had that problem.
+-- I thought I was cool, but apparently I was doing a workaround to restore default behavior.
+
+
+-- vim.keymap.set("n", '<leader>y', [[:set opfunc=Yank_to_clipboard<CR>g@]], { silent = true, desc = 'Yank to clipboard (accepts motions)' })
+-- vim.cmd([[
+--   function! Yank_to_clipboard(type)
+--     silent exec 'normal! `[v`]"+y'
+--     silent exec 'let @/=@"'
+--   endfunction
+--   " nmap <silent> <leader>y :set opfunc=Yank_to_clipboard<CR>g@
+-- ]])
