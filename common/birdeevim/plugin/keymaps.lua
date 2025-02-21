@@ -55,19 +55,6 @@ vim.api.nvim_create_user_command('Swq', function(args)
     vim.cmd([[w !sudo tee %]])
 end, {})
 
--- these 3 jankily fix which-key related errors for some reason
--- I disabled them via which-key options now.
--- vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
--- vim.keymap.set({"n", "v", "x"}, '"', '"', { desc = '+registers'})
--- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- dont worry about it.... it saved me some time in the end
-if nixCats('notes') then
-  vim.keymap.set({ 'v', 'x' }, '<leader>Fp',
-    [["ad:let @a = substitute(@a, '\\(favicon-.\\{-}\\)\\(\\.com\\|\\.org\\|\\.net\\|\\.edu\\|\\.gov\\|\\.mil\\|\\.int\\|\\.io\\|\\.co\\|\\.ai\\|\\.ly\\|\\.me\\|\\.tv\\|\\.info\\|\\.co\\.uk\\|\\.de\\|\\.jp\\|\\.cn\\|\\.au\\|\\.fr\\|\\.it\\|\\.es\\|\\.br\\|\\.gay\\)', 'https:\/\/', 'g')<CR>dd:while substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') != @a | let @a = substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') | endwhile<CR>"ap]],
-    { desc = 'fix the links in copies from phind' })
-end
-
 -- kickstart.nvim starts you with this.
 -- But it constantly clobbers your system clipboard whenever you delete anything.
 
