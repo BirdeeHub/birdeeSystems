@@ -1,6 +1,6 @@
 local M ={}
 function M.setupJDTLS()
-  if not require('nixCatsUtils').isNixCats then
+  if not require('nixCatsUtils').isNixCats and vim.g.vscode ~= nil and nixCats('java') then
     vim.cmd([[packadd nvim-jdtls]])
     local ok, jdtls = pcall(require, "jdtls")
     if not ok then
