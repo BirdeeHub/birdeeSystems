@@ -1,4 +1,3 @@
-local catUtils = require('nixCatsUtils')
 return {
   {
     "image.nvim",
