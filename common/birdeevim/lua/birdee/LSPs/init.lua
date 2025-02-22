@@ -17,9 +17,6 @@ return {
     "nvim-lspconfig",
     for_cat = "general.core",
     on_require = { "lspconfig" },
-    before = function(plugin)
-      vim.diagnostic.config { virtual_lines = true, }
-    end,
     lsp = function(plugin)
       require('lspconfig')[plugin.name].setup(vim.tbl_extend("force",{
         capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(plugin.name),
