@@ -14,7 +14,7 @@ return {
         desc = "[c]odeium [c]hat",
       },
     },
-    after = function (plugin)
+    after = function (_)
       local bitwardenAuth = nixCats.extra('AIextras.codeium_bitwarden_uuid')
       if not catUtils.isNixCats then bitwardenAuth = false end
 

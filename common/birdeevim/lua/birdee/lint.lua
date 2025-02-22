@@ -6,7 +6,7 @@ return {
   -- ft = "",
   -- keys = "",
   -- colorscheme = "",
-  after = function (plugin)
+  after = function (_)
     require('lint').linters_by_ft = {
       -- markdown = {'vale',},
       kotlin = { 'ktlint' },

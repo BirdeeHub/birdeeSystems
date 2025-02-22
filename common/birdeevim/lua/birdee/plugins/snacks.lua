@@ -6,6 +6,7 @@
 -- also shut up I dont care
 ---@diagnostic disable-next-line: invisible
 require('snacks').bigfile.setup()
+---@diagnostic disable-next-line: duplicate-set-field
 vim.notify = function(msg, level, o)
   vim.notify = Snacks.notifier.notify
   return Snacks.notifier.notify(msg, level, o)

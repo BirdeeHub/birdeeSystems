@@ -8,7 +8,7 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       local function grapple_default_select(path)
         if vim.startswith(path, "oil://") then
           require("oil").open(path)

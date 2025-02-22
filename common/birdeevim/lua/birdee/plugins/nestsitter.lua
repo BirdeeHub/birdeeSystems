@@ -14,7 +14,7 @@ return {
         "nvim-treesitter-textobjects",
       })
     end,
-    after = function (plugin)
+    after = function (_)
 
       -- [[ Configure Treesitter ]]
       -- See `:help nvim-treesitter`

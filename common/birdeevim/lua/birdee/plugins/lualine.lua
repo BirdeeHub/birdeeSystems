@@ -13,7 +13,7 @@ return {
         "lualine-lsp-progress",
       })
     end,
-    after = function (plugin)
+    after = function (_)
       local colorschemer = nixCats.extra('colorscheme') -- also schemes lualine
       if not require('nixCatsUtils').isNixCats then
         colorschemer = 'onedark'

@@ -56,7 +56,7 @@ return {
   {
     "luasnip",
     dep_of = { "nvim-cmp" },
-    after = function (plugin)
+    after = function (_)
       require('birdee.snippets')
     end,
   },
@@ -69,7 +69,7 @@ return {
     -- keys = "",
     dep_of = { "codeium.nvim" },
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       -- [[ Configure nvim-cmp ]]
       -- See `:help cmp`
       local cmp = require 'cmp'

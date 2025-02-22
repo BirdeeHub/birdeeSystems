@@ -8,7 +8,7 @@ return {
     { "<leader>FF", desc = "[F]ormat [F]ile" },
   },
   -- colorscheme = "",
-  after = function (plugin)
+  after = function (_)
     local conform = require("conform")
 
     conform.setup({

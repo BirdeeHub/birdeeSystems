@@ -3,7 +3,7 @@ return {
     "nvim-dap-python",
     for_cat = { cat = 'debug.python', default = false },
     on_plugin = { "nvim-dap", },
-    after = function(plugin)
+    after = function(_)
       require('dap-python').setup(vim.g.python3_host_prog)
     end,
   },
@@ -11,7 +11,7 @@ return {
     "nvim-dap-go",
     for_cat = { cat = 'debug.go', default = false },
     on_plugin = { "nvim-dap", },
-    after = function(plugin)
+    after = function(_)
       require("dap-go").setup()
     end,
   },
@@ -38,7 +38,7 @@ return {
         "nvim-dap-virtual-text",
       })
     end,
-    after = function (plugin)
+    after = function (_)
       local dap = require 'dap'
       local dapui = require 'dapui'
 

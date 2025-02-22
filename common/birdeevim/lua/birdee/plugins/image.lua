@@ -7,7 +7,7 @@ return {
     -- event = "DeferredUIEnter",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       -- default config
       require("image").setup({
         backend = "ueberzug",

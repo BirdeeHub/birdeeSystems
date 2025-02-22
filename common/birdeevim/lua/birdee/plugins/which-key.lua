@@ -7,7 +7,7 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       require('which-key').setup({})
       local leaderCmsg
       if nixCats('AI') then

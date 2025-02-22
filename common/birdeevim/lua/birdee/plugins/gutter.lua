@@ -7,7 +7,7 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       require 'marks'.setup {
         -- whether to map keybinds or not. default true
         -- default_mappings = true,
@@ -52,7 +52,7 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       require('gitsigns').setup({
         -- See `:help gitsigns.txt`
         signs = {

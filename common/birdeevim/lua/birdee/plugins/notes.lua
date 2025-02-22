@@ -14,7 +14,7 @@ return {
         name,
       })
     end,
-    after = function (plugin)
+    after = function (_)
       require('neorg').setup {
         load = {
           ["core.defaults"] = {},

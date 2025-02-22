@@ -11,7 +11,7 @@ return {
         require('telescope').extensions.macroscope['default']()
       end, mode = { "n" }, silent = true, noremap = true, desc = "[s]earch [m]acro history" },
     },
-    after = function (plugin)
+    after = function (_)
       require('neoclip').setup({
         history = 1000,
         enable_persistent_history = false,
@@ -84,7 +84,7 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function (_)
       require("img-clip").setup({
         default = {
           -- file and directory options
