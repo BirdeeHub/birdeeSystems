@@ -37,7 +37,7 @@ return {
     for_cat = "neonixdev",
     cmd = { "LazyDev" },
     ft = "lua",
-    after = function(plugin)
+    after = function(_)
       require('lazydev').setup({
         library = {
           { words = { "uv", "vim%.uv", "vim%.loop" }, path = (nixCats.pawsible({"allPlugins", "start", "luvit-meta"}) or "luvit-meta") .. "/library" },
