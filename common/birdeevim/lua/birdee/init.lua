@@ -1,3 +1,9 @@
+-- TODO: this in another file and require here.
+-- require('birdee.non_nix_download').setup({ your plugins })
+require('lze').register_handlers {
+    require("nixCatsUtils.lzUtils").for_cat,
+    require('lzextras').lsp,
+}
 -- local ok, notify = pcall(require, "notify")
 -- if ok then
 --   notify.setup({
