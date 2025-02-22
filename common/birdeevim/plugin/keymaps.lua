@@ -40,7 +40,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 local current_virt_lines_value = false
 vim.keymap.set('n', '<leader>tv', function()
   current_virt_lines_value = not current_virt_lines_value
-  vim.diagnostic.config { virtual_lines = current_virt_lines_value, }
+  vim.diagnostic.config {
+    virtual_text = not current_virt_lines_value,
+    virtual_lines = current_virt_lines_value,
+  }
 end, { desc = 'Toggle virtual lines' })
 
 
