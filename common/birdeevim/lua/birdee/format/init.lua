@@ -1,4 +1,4 @@
-lze.load {
+return {
   "conform.nvim",
   for_cat = "general.core",
   -- cmd = { "" },

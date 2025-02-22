@@ -1,4 +1,4 @@
-lze.load {
+return {
   {
     "nvim-dap-python",
     for_cat = { cat = 'debug.python', default = false },

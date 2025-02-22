@@ -14,10 +14,10 @@
 --   load = vim.cmd.packadd,
 --   verbose = true,
 -- }
-require("birdee.plugins")
-require("birdee.LSPs")
-if nixCats('debug') then
-  require("birdee.debug")
-end
-require("birdee.format")
-require("birdee.lint")
+require('lze').load {
+  { import = "birdee.plugins" },
+  { import = "birdee.LSPs" },
+  { import = "birdee.debug", enabled = nixCats('debug') },
+  { import = "birdee.format" },
+  { import = "birdee.lint" },
+}

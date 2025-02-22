@@ -1,4 +1,4 @@
-lze.load {
+return {
   "nvim-lint",
   for_cat = "general.core",
   -- cmd = { "" },

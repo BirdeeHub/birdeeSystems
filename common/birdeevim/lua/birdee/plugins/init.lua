@@ -41,7 +41,7 @@ if nixCats('general') then
   require('birdee.plugins.oil')
 end
 
-lze.load {
+return {
   { import = "birdee.plugins.snacks", },
   { import = "birdee.plugins.telescope", },
   { import = "birdee.plugins.nestsitter", },

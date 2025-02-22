@@ -2,7 +2,7 @@ local catUtils = require('nixCatsUtils')
 if (catUtils.isNixCats and nixCats('lspDebugMode')) then
   vim.lsp.set_log_level("debug")
 end
-lze.load {
+return {
   {
     "mason.nvim",
     enabled = not catUtils.isNixCats,
@@ -45,7 +45,6 @@ lze.load {
         library = {
           { words = { "uv", "vim%.uv", "vim%.loop" }, path = (nixCats.pawsible({"allPlugins", "start", "luvit-meta"}) or "luvit-meta") .. "/library" },
           { words = { "nixCats" }, path = (nixCats.nixCatsPath or "") .. '/lua' },
-          { words = { "lze" }, path = (nixCats.pawsible({"allPlugins", "start", "lze"}) or "lze") .. '/lua' },
         },
       })
     end,
