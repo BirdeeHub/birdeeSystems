@@ -64,7 +64,7 @@ return {
       {"<leader>ms", "<cmd>MarkdownPreviewStop <CR>", mode = {"n"}, noremap = true, desc = "markdown preview stop"},
       {"<leader>mt", "<cmd>MarkdownPreviewToggle <CR>", mode = {"n"}, noremap = true, desc = "markdown preview toggle"},
     },
-    before = function(plugin)
+    before = function(_)
       vim.g.mkdp_auto_close = 0
     end,
   },
@@ -73,7 +73,7 @@ return {
     for_cat = "general.core",
     cmd = { "TSJToggle" },
     keys = { { "<leader>Ft", ":TSJToggle<CR>", mode = { "n" }, desc = "treesj split/join" }, },
-    after = function(plugin)
+    after = function(_)
       local tsj = require('treesj')
 
       -- local langs = {--[[ configuration for languages ]]}
@@ -119,7 +119,7 @@ return {
     -- event = "DeferredUIEnter",
     on_require = { "otter" },
     -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
-    after = function(plugin)
+    after = function(_)
       local otter = require 'otter'
       otter.setup {
         lsp = {
@@ -194,7 +194,7 @@ return {
       "CMakeCloseOverlay",
       "CMakeStop",
     },
-    after = function(plugin)
+    after = function(_)
       vim.api.nvim_create_user_command('BirdeeCMake', [[:CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<CR>]],
         { desc = 'Run CMake with compile_commands.json' })
       vim.cmd [[let g:cmake_link_compile_commands = 1]]
@@ -204,7 +204,7 @@ return {
     "todo-comments.nvim",
     for_cat = "other",
     event = "DeferredUIEnter",
-    after = function(plugin)
+    after = function(_)
       require("todo-comments").setup({ signs = false })
     end,
   },
@@ -212,7 +212,7 @@ return {
     "visual-whitespace",
     for_cat = "other",
     event = "DeferredUIEnter",
-    after = function(plugin)
+    after = function(_)
       require('visual-whitespace').setup({
         highlight = { link = 'Visual' },
         space_char = '·',
@@ -236,7 +236,7 @@ return {
     for_cat = "general.core",
     event = "DeferredUIEnter",
     -- keys = "",
-    after = function(plugin)
+    after = function(_)
       require('nvim-surround').setup()
     end,
   },
@@ -245,7 +245,7 @@ return {
     for_cat = "other",
     event = "DeferredUIEnter",
     -- keys = "",
-    after = function(plugin)
+    after = function(_)
       -- Highlights unique characters for f/F and t/T motions
       require('eyeliner').setup {
         highlight_on_key = true, -- show highlights only after key press
@@ -257,7 +257,7 @@ return {
     "render-markdown.nvim",
     for_cat = "general.markdown",
     ft = "markdown",
-    after = function(plugin)
+    after = function(_)
       require('render-markdown').setup({})
     end,
   },
@@ -273,14 +273,14 @@ return {
       })
       require("birdee.utils").load_w_after_plugin("vim-dadbod-completion")
     end,
-    after = function(plugin)
+    after = function(_)
     end,
   },
   {
     "hlargs",
     for_cat = "other",
     event = "DeferredUIEnter",
-    after = function(plugin)
+    after = function(_)
       require('hlargs').setup({
         color = '#32a88f',
       })
@@ -298,7 +298,7 @@ return {
     for_cat = "other",
     event = "DeferredUIEnter",
     -- ft = "",
-    after = function(plugin)
+    after = function(_)
       require("nvim-highlight-colors").setup {
         ---Render style
         ---@usage 'background'|'foreground'|'virtual'
