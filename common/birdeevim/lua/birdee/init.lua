@@ -19,6 +19,8 @@ require('lze').register_handlers {
 -- vim.g.lze = {
 --   load = vim.cmd.packadd,
 --   verbose = true,
+--   default_priority = 50,
+--   without_default_handlers = false,
 -- }
 require('lze').load {
   { import = "birdee.plugins" },
