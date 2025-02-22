@@ -3,7 +3,6 @@ lze.load {
     "nvim-dap-python",
     for_cat = { cat = 'debug.python', default = false },
     on_plugin = { "nvim-dap", },
-    on_require = { "dap" },
     after = function(plugin)
       require('dap-python').setup(vim.g.python3_host_prog)
     end,
@@ -22,6 +21,7 @@ lze.load {
     -- cmd = { "" },
     -- event = "",
     -- ft = "",
+    on_require = { "dap" },
     keys = {
       { "<F5>", desc = "Debug: Start/Continue" },
       { "<F1>", desc = "Debug: Step Into" },
