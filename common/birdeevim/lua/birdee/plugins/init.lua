@@ -45,7 +45,7 @@ return {
   { import = "birdee.plugins.snacks", },
   { import = "birdee.plugins.telescope", },
   { import = "birdee.plugins.nestsitter", },
-  { import = "birdee.plugins.completion", },
+  { import = "birdee.plugins.completion", enabled = nixCats('general.cmp'), },
   { import = "birdee.plugins.grapple", },
   { import = "birdee.plugins.lualine", },
   { import = "birdee.plugins.gutter", },

@@ -2,72 +2,60 @@ return {
   {
     "cmp-buffer",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-cmdline",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-cmdline-history",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-nvim-lsp",
     on_plugin = { "nvim-cmp" },
     dep_of = { "nvim-lspconfig" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-nvim-lsp-signature-help",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-nvim-lua",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp-path",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "cmp_luasnip",
     on_plugin = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "friendly-snippets",
     dep_of = { "nvim-cmp" },
-    for_cat = "general.cmp",
   },
   {
     "lspkind.nvim",
     dep_of = { "nvim-cmp" },
-    for_cat = "general.cmp",
     load = require("birdee.utils").load_w_after_plugin,
   },
   {
     "clangd_extensions.nvim",
     dep_of = { "nvim-lspconfig", "nvim-cmp" },
-    for_cat = "general.cmp",
   },
   {
     "luasnip",
     dep_of = { "nvim-cmp" },
-    for_cat = "general.cmp",
     after = function (plugin)
       require('birdee.snippets')
     end,
@@ -75,7 +63,6 @@ return {
   {
     "nvim-cmp",
     -- cmd = { "" },
-    for_cat = "general.cmp",
     event = { "DeferredUIEnter" },
     on_require = { "cmp" },
     -- ft = "",
