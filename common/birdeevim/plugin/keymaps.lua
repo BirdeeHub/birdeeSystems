@@ -37,7 +37,12 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' }) -- now included by default
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
 local current_virt_lines_value = false
+vim.diagnostic.config {
+  virtual_text = not current_virt_lines_value,
+  virtual_lines = current_virt_lines_value,
+}
 vim.keymap.set('n', '<leader>tv', function()
   current_virt_lines_value = not current_virt_lines_value
   vim.diagnostic.config {
