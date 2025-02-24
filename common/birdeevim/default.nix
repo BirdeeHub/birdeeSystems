@@ -331,6 +331,7 @@
     vimAlias = false;
     gem_path = ./overlays/ruby_provider;
     unwrappedCfgPath = "${flake-path}/common/birdeevim";
+    moduleNamespace = [ "birdeeMods" defaultPackageName ];
     # nvimSRC = inputs.neovim-src;
     # neovim-unwrapped = pkgs.internalvim.nvim;
     neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
