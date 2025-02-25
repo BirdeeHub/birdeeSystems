@@ -11,7 +11,7 @@
     # add any flake overlays here.
     inputs.neorg-overlay.overlays.default
     inputs.lze.overlays.default
-    # inputs.neovim-nightly-overlay.overlays.default
+    inputs.neovim-nightly-overlay.overlays.default
     (utils.fixSystemizedOverlay inputs.codeium.overlays
       (system: inputs.codeium.overlays.${system}.default)
     )
@@ -334,7 +334,7 @@
     moduleNamespace = [ "birdeeMods" defaultPackageName ];
     # nvimSRC = inputs.neovim-src;
     # neovim-unwrapped = pkgs.internalvim.nvim;
-    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
     # neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
     #   preConfigure = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
     #     substituteInPlace src/nvim/CMakeLists.txt --replace "    util" ""
