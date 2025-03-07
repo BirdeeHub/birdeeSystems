@@ -122,7 +122,7 @@
         ];
         JS = with nodePackages; [
           typescript-language-server
-          # eslint
+          eslint
           prettier
         ];
       };
