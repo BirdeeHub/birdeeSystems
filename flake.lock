@@ -1511,11 +1511,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1741339261,
-        "narHash": "sha256-F1JsNxPOQCCokggtGUClhsIP+yH7uiHaZIUNvtUAwyY=",
+        "lastModified": 1741341491,
+        "narHash": "sha256-Aw0yZy8+cHBuGw90WiiFASjzDVkNgyGQb+icsq9kfL0=",
         "owner": "BirdeeHub",
         "repo": "lzextras",
-        "rev": "4110f59653ecbd803cbbbc4c30da4d358a8f2377",
+        "rev": "e45e194ab6f53ff48c242b3797ca1cc3bd764d4a",
         "type": "github"
       },
       "original": {
