@@ -64,7 +64,7 @@
 
     lze = {
     # plugins-lze = {
-      url = "github:BirdeeHub/lze";
+      url = "github:BirdeeHub/lze/testing";
       # url = "git+file:/home/birdee/Projects/lze";
       inputs.nixpkgs.follows = "nixpkgsNV";
       # flake = false;

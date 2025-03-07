@@ -222,24 +222,23 @@ return {
   {
     "harper_ls",
     for_cat = "general.markdown",
-    -- TODO: why ft do loop when ft opened directly on ONLY this one...
+    lsp = {
+      filetypes = { "markdown", "norg" },
+      settings = {
+        ["harper-ls"] = {},
+      },
+    },
     -- ft = { "markdown", "norg" },
-    -- lsp = {
-    --   filetypes = { "markdown", "norg" },
-    --   settings = {
-    --     ["harper-ls"] = {},
-    --   },
-    -- },
-    load = function(name)
-      require('lspconfig')[name].setup {
-        capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(name),
-        on_attach = require('birdee.LSPs.caps_and_attach').on_attach,
-        filetypes = { "markdown", "norg" },
-        settings = {
-          ["harper-ls"] = {},
-        },
-      }
-    end,
+    -- load = function(name)
+    --   require('lspconfig')[name].setup {
+    --     capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(name),
+    --     on_attach = require('birdee.LSPs.caps_and_attach').on_attach,
+    --     filetypes = { "markdown", "norg" },
+    --     settings = {
+    --       ["harper-ls"] = {},
+    --     },
+    --   }
+    -- end,
   },
   {
     "templ",
