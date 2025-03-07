@@ -228,17 +228,6 @@ return {
         ["harper-ls"] = {},
       },
     },
-    -- ft = { "markdown", "norg" },
-    -- load = function(name)
-    --   require('lspconfig')[name].setup {
-    --     capabilities = require('birdee.LSPs.caps_and_attach').get_capabilities(name),
-    --     on_attach = require('birdee.LSPs.caps_and_attach').on_attach,
-    --     filetypes = { "markdown", "norg" },
-    --     settings = {
-    --       ["harper-ls"] = {},
-    --     },
-    --   }
-    -- end,
   },
   {
     "templ",
