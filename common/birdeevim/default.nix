@@ -39,6 +39,7 @@
     # :!nvim-python3
     extraPython3Packages = {
       python = (py:[
+        # NOTE: check disabled because they take SO LONG OMG
         (py.debugpy.overrideAttrs { doCheck = false; })
         (py.pylsp-mypy.overrideAttrs { doCheck = false; })
         (py.pyls-isort.overrideAttrs { doCheck = false; })
