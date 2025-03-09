@@ -50,7 +50,7 @@
     fenix.url = "github:nix-community/fenix";
 
     # neovim
-    nixCats.url = "github:BirdeeHub/nixCats-nvim/maybeExtraCats";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     # nixCats.url = "git+file:/home/birdee/Projects/nixCats-nvim";
     # neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
     neovim-nightly-overlay = {

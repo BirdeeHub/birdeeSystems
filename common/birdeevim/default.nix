@@ -75,7 +75,9 @@
           ripgrep
           fd
           ast-grep
-          lazygit
+          (pkgs.writeShellScriptBin "lazygit" ''
+            exec ${pkgs.lazygit}/bin/lazygit --use-config-file ${pkgs.writeText "lazygit_config.yml" ""} "$@"
+          '')
         ];
         other = [
           sqlite
