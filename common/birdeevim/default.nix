@@ -75,9 +75,7 @@
           ripgrep
           fd
           ast-grep
-          (pkgs.writeShellScriptBin "lazygit" ''
-            exec ${pkgs.lazygit}/bin/lazygit --use-config-file ${pkgs.writeText "lazygit_config.yml" ""} "$@"
-          '')
+          lazygit
         ];
         other = [
           sqlite
@@ -203,7 +201,7 @@
         nvim-web-devicons
         plenary-nvim
         mini-nvim
-        snacks-nvim
+        pkgs.neovimPlugins.snacks-nvim
       ];
       other = [
         nvim-spectre

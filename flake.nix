@@ -97,6 +97,10 @@
       url = "github:mcauley-penney/visual-whitespace.nvim";
       flake = false;
     };
+    "plugins-snacks.nvim" = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
   };
   outputs = inputs: import ./. inputs;
 }
