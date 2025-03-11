@@ -10,7 +10,8 @@ It is a comprehensive format for importing your regular nvim configuration direc
 
 While still allowing you do have as many configs in 1 file, flake, or module as you want for all the cool direnv stuff.
 
-- editor: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
+- editor: [birdeevim](https://github.com/BirdeeHub/birdeevim)
+- uses: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
 
 ---
 
@@ -48,7 +49,7 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 - [display manager:](./common/modules/lightdm/default.nix) lightdm which loads ~/.xsession
 - [window manager:](./common/modules/i3/default.nix) i3 loaded via home manager from .xsession
 - desktop manager: none but I have like half of xfce including the power manager
-- [text editor:](./common/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim.
+- [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim.
   - You can run it with `nix shell github:BirdeeHub/birdeeSystems#noAInvim` and then typing `vi`, `vim`, or `noAInvim`, keep in mind its going to download a lot of lsps and plugins.
   - You should use the noAI one because you dont have my key and also it wont download bitwarden cli + ai plugins for you.
   - completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`
