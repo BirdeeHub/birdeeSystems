@@ -12,6 +12,7 @@
   moduleNamespace = "birdeeMods";
   args = { inherit inputs moduleNamespace homeManager birdeeutils; };
 in {
+  birdeevim = import ./birdeevim args;
   LD = import (systemOnly ./LD) args;
   firefox = import (homeOnly ./firefox) args;
   thunar = import (homeOnly ./thunar) args;

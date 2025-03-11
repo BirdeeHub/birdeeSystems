@@ -58,7 +58,7 @@ in {
     pkgs.neovim
   ] else with pkgs; [
     # todo make a version that counts as minimal to include above
-    system-modules.birdeeVim.packages.${system}.noAInvim
+    system-modules.birdeevim.packages.${system}.noAInvim
   ]);
 
   isoImage.isoBaseName = "birdeeOS_installer";

@@ -11,8 +11,8 @@ let
   # NOTE: setup
   flake-path = "/home/birdee/birdeeSystems";
   stateVersion = "23.05";
-  common = import ./common { inherit inputs flake-path; };
-  inherit (common) birdeeVim birdeeutils;
+  common = import ./common { inherit inputs; };
+  inherit (common) birdeeutils;
   my_common_hub = common.hub {};
   inherit (my_common_hub) system-modules home-modules overlaySet flakeModules diskoCFG templates userdata;
   packages_func = my_common_hub.packages;
@@ -71,10 +71,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "birdee@dustbook" = diskoCFG.PCs.sda_swap;
       "birdee@nestOS" = diskoCFG.PCs.nvme0n1_swap;
     };
-    overlays = overlaySet // birdeeVim.overlays // { };
+    overlays = overlaySet // { };
     nixosModules = system-modules;
     homeModules = home-modules;
-    inherit birdeeVim flakeModules templates birdeeutils;
+    inherit flakeModules templates birdeeutils;
   };
   perSystem = {
       config,
@@ -114,18 +114,14 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           ];
         };
         inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot;
+        birdeevim = self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim;
       };
 
-      app-images =
-        birdeeVim.app-images.${system}
-        // (
-          let
-            bundle = nix-appimage.bundlers.${system}.default;
-          in
-          {
-            minesweeper = bundle pkgs.minesweeper;
-          }
-        );
+      app-images = let
+        bundle = nix-appimage.bundlers.${system}.default;
+      in {
+        minesweeper = bundle pkgs.minesweeper;
+      };
 
       # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
       homeConfigurations =

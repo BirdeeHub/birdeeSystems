@@ -6,7 +6,7 @@
 in {
   imports = with system-modules; [
     i3
-    birdeeVim
+    birdeevim
     alacritty
     shell.bash
     shell.zsh
@@ -36,7 +36,7 @@ in {
 
   users.users = users.users;
   birdeeMods = {
-    birdeeVim = {
+    birdeevim = {
       enable = true;
       packageNames = [ "noAInvim" ];
     };

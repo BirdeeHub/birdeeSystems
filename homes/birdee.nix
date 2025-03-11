@@ -7,7 +7,7 @@ in {
     shell.zsh
     shell.fish
     firefox
-    birdeeVim
+    birdeevim
     ranger
     thunar
     i3
@@ -20,9 +20,9 @@ in {
   programs.git = (users.git true).${username};
 
   birdeeMods = {
-    birdeeVim = {
+    birdeevim = {
       enable = true;
-      packageNames = [ "birdeeVim" "notesVim" "testvim" "nightlytest" ];
+      packageNames = [ "birdeevim" "notesVim" "testvim" "nightlytest" ];
     };
     zsh.enable = true;
     bash.enable = true;
@@ -82,7 +82,9 @@ in {
     ''}'';
   };
   home.sessionVariables = {
-    EDITOR = "birdeeVim";
+    EDITOR = let
+      nvimpkg = config.birdeevim.out.packages.birdeevim;
+    in "${nvimpkg}/bin/${nvimpkg.nixCats_packageName}";
     XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
     JAVA_HOME = "${pkgs.jdk}";
   };
@@ -112,7 +114,7 @@ in {
   };
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgsNV;
-    nixCats.flake = inputs.nixCats;
+    nixCats.flake = inputs.birdeevim.inputs.nixCats;
     home-manager.flake = inputs.home-manager;
     birdeeSystems.flake = self;
     gomod2nix.to = {

@@ -48,59 +48,12 @@
     maximizer.inputs.nixpkgs.follows = "nixpkgs";
     nixToLua.url = "github:BirdeeHub/nixtoLua";
     fenix.url = "github:nix-community/fenix";
-
-    # neovim
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    # nixCats.url = "git+file:/home/birdee/Projects/nixCats-nvim";
-    # neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      # inputs.nixpkgs.follows = "nixpkgsNV";
-      # inputs.neovim-src.follows = "neovim-src";
-    };
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
-    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
 
-    lze = {
-    # plugins-lze = {
-      url = "github:BirdeeHub/lze";
-      # url = "git+file:/home/birdee/Projects/lze";
-      inputs.nixpkgs.follows = "nixpkgsNV";
-      # flake = false;
-    };
-    lzextras = {
-    # plugins-lzextras = {
-      url = "github:BirdeeHub/lzextras";
-      # url = "git+file:/home/birdee/Projects/lzextras";
-      inputs.lze.follows = "lze";
-      inputs.nixpkgs.follows = "nixpkgsNV";
-      # flake = false;
-    };
-    codeium = {
-      url = "github:Exafunction/codeium.nvim";
-      # inputs.nixpkgs.follows = "nixpkgsNV";
-    };
-    "plugins-hlargs" = {
-      url = "github:m-demare/hlargs.nvim";
-      flake = false;
-    };
-    "plugins-nvim-luaref" = {
-      url = "github:milisims/nvim-luaref";
-      flake = false;
-    };
-    "plugins-telescope-git-file-history" = {
-      url = "github:isak102/telescope-git-file-history.nvim";
-      flake = false;
-    };
-    "plugins-visual-whitespace" = {
-      url = "github:mcauley-penney/visual-whitespace.nvim";
-      flake = false;
-    };
-    "plugins-snacks.nvim" = {
-      url = "github:folke/snacks.nvim";
-      flake = false;
-    };
+    # neovim
+    birdeevim.url = "github:BirdeeHub/birdeevim";
+    # birdeevim.url = "git+file:/home/birdee/.birdeevim";
   };
   outputs = inputs: import ./. inputs;
 }
