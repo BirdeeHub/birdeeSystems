@@ -72,8 +72,12 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "birdee@nestOS" = diskoCFG.PCs.nvme0n1_swap;
     };
     overlays = overlaySet // { };
-    nixosModules = system-modules;
-    homeModules = home-modules;
+    nixosModules = system-modules // {
+      birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.nixosModule;
+    };
+    homeModules = home-modules // {
+      birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.homeModule;
+    };
     inherit flakeModules templates birdeeutils;
   };
   perSystem = {
@@ -114,8 +118,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           ];
         };
         inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot;
-        birdeevim = self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim;
-      };
+      } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
       app-images = let
         bundle = nix-appimage.bundlers.${system}.default;

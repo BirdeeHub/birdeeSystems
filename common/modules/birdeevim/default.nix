@@ -17,6 +17,9 @@ in {
   config = {
     birdeevim = let
       replacements = builtins.mapAttrs (n: _: { pkgs, ... }: {
+        settings = {
+          moduleNamespace = [ moduleNamespace n ];
+        };
         extra = {
           nixdExtras = {
             nixos_options = ''(builtins.getFlake "${inputs.self.outPath}").legacyPackages.${pkgs.system}.nixosConfigurations."birdee@nestOS".options'';
