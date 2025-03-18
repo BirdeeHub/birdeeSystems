@@ -7,6 +7,22 @@ inputs: with builtins; rec {
 
   pipe = foldl' (x: f: f x);
 
+  pickyRecUpdateUntil = {
+    pred ? (path: lh: rh: ! isAttrs lh || ! isAttrs rh),
+    pick ? (path: l: r: r)
+  }: lhs: rhs: let
+    f = attrPath:
+      zipAttrsWith (n: values:
+        let here = attrPath ++ [n]; in
+        if length values == 1 then
+          head values
+        else if pred here (elemAt values 1) (head values) then
+          pick here (elemAt values 1) (head values)
+        else
+          f here values
+      );
+  in f [] [rhs lhs];
+
   eachSystem = systems: f: let
     # get function result and insert system variable
     op = attrs: system: let
