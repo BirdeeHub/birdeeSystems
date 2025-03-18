@@ -22,8 +22,7 @@ in {
         };
         extra = {
           nixdExtras = {
-            nixos_options = ''(builtins.getFlake "${inputs.self.outPath}").legacyPackages.${pkgs.system}.nixosConfigurations."birdee@nestOS".options'';
-            home_manager_options = ''(builtins.getFlake "${inputs.self.outPath}").legacyPackages.${pkgs.system}.homeConfigurations."birdee@dustbook".options'';
+            flake-path = ''${inputs.self.outPath}'';
           };
         };
       }) inputs.birdeevim.packages.${pkgs.system}.default.packageDefinitions;
