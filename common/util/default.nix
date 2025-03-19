@@ -17,19 +17,21 @@ inputs: with builtins; rec {
 
   hasOutPath = value: value.outPath or null != null;
 
+  birdIsAttrs = v: isAttrs v.value && ! isDerivation v.value && ! isFunctor v.value && ! hasOutPath v.value;
+
   recAttrsToList = here: flip pipe [
     (mapAttrsToList (n: value: {
       path = here ++ [n];
       inherit value;
     }))
-    (foldl' (a: v: if isAttrs v.value && ! isDerivation v.value && ! isFunctor v.value && ! hasOutPath v.value
+    (foldl' (a: v: if birdIsAttrs
       then a ++ (recAttrsToList v.path v.value)
       else a ++ [v]
     ) [])
   ];
 
   pickyRecUpdateUntil = {
-    pred ? (path: lh: rh: ! isAttrs lh || ! isAttrs rh),
+    pred ? (path: lh: rh: ! birdIsAttrs lh || ! birdIsAttrs rh),
     pick ? (path: l: r: r)
   }: lhs: rhs: let
     f = attrPath:
