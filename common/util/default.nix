@@ -7,6 +7,27 @@ inputs: with builtins; rec {
 
   pipe = foldl' (x: f: f x);
 
+  flip = f: a: b: f b a;
+
+  mapAttrsToList = f: attrs: map (name: f name attrs.${name}) (attrNames attrs);
+
+  isDerivation = value: value.type or null == "derivation";
+
+  isFunctor = value: isFunction (value.__functor or null);
+
+  hasOutPath = value: value.outPath or null != null;
+
+  recAttrsToList = here: flip pipe [
+    (mapAttrsToList (n: value: {
+      path = here ++ [n];
+      inherit value;
+    }))
+    (foldl' (a: v: if isAttrs v.value && ! isDerivation v.value && ! isFunctor v.value && ! hasOutPath v.value
+      then a ++ (recAttrsToList v.path v.value)
+      else a ++ [v]
+    ) [])
+  ];
+
   pickyRecUpdateUntil = {
     pred ? (path: lh: rh: ! isAttrs lh || ! isAttrs rh),
     pick ? (path: l: r: r)
