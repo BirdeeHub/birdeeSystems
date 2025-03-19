@@ -19,11 +19,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1742304572,
-        "narHash": "sha256-sUKcSJBUswArA69J+prctTjpqm8komzzScJPfV5gkpU=",
+        "lastModified": 1742344165,
+        "narHash": "sha256-Qi22Uqp4R3vVyJD5APK8ddejr41Hrw3Nwmoy1Rq3GOs=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "fe40cf7dddd0d1b9ad536a84d3756968d9bb63d5",
+        "rev": "80cec22f4aff6a95a434b7731894d8ca130d341e",
         "type": "github"
       },
       "original": {
@@ -1014,11 +1014,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1742304492,
-        "narHash": "sha256-nD6dxjV12pfkvML2w5chabhFsebVs8uJNaQKB6hF+8o=",
+        "lastModified": 1742344062,
+        "narHash": "sha256-glG1YAzD7AXHA4MltZs5iPMQm+PqyHr5Gjob/89HOwQ=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "db1dc25055be356c75243a4257225dbc00bb20cb",
+        "rev": "26592c43c179c396bed96992bd26da2ad683caa2",
         "type": "github"
       },
       "original": {
