@@ -24,7 +24,7 @@ inputs: with builtins; rec {
       path = here ++ [n];
       inherit value;
     }))
-    (foldl' (a: v: if birdIsAttrs
+    (foldl' (a: v: if birdIsAttrs v.value
       then a ++ (recAttrsToList v.path v.value)
       else a ++ [v]
     ) [])
