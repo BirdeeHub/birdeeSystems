@@ -58,7 +58,9 @@ in {
       exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgsNV.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
     ''}'';
     yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(git status)" && git push'';
+
     yoloAI = ''git add . && git commit -m "$(ollama run llama3.1 "generate a silly commit message. reply with ONLY the commit message and nothing else. Don't wrap the entire reply in any sort of surrounding characters (using surrounding characters internally is fine)")" -m '(auto-msg llama3.1)' -m "$(git status)" && git push'';
+
     scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
     exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
     lsnc = "lsd --color=never";
