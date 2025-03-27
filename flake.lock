@@ -14,16 +14,15 @@
         "plugins-lzextras": "plugins-lzextras",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
-        "plugins-telescope-git-file-history": "plugins-telescope-git-file-history",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1743110868,
-        "narHash": "sha256-DtYZ01FS5P27t9e4LZ4uu+4NBevtYHnIkBpLrTw6gUU=",
+        "lastModified": 1743113352,
+        "narHash": "sha256-UEfB1OFLRGmraFBfO5vgfPO5I3P5Xy33/+soQJkKRYY=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "a5035ee934f34259b23ed903d72b9f66c90f8b9e",
+        "rev": "0bfa1eb95e6020e054d1f15cc6fa46bd6855d50f",
         "type": "github"
       },
       "original": {
@@ -1577,22 +1576,6 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "snacks.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-telescope-git-file-history": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1727128584,
-        "narHash": "sha256-rf5orEKvsS7gRcUb3+USmCK2SD84xusGU1xIIW8Ntyw=",
-        "owner": "isak102",
-        "repo": "telescope-git-file-history.nvim",
-        "rev": "c27d99ba88ec5f0b6d2b9f9bc67dd3d14c610b25",
-        "type": "github"
-      },
-      "original": {
-        "owner": "isak102",
-        "repo": "telescope-git-file-history.nvim",
         "type": "github"
       }
     },
