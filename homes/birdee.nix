@@ -40,7 +40,14 @@ in {
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
 
-  home.shellAliases = {
+  home.shellAliases = let
+    prompt = pkgs.writeShellScript "prompt" /*bash*/''
+      ollama run llama3.1 'generate a silly commit message. reply with ONLY the commit message and nothing else. Do not wrap the entire reply in any sort of surrounding characters such as quotes, parentheses, brackets, etc.'
+      echo '(auto-msg llama3.1)'
+      ${pkgs.git}/bin/git status
+      echo "$@"
+    '';
+  in {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
       git add . && nix flake update && nom build --show-trace $target && git add .; $@
@@ -58,7 +65,8 @@ in {
       exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgsNV.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
     ''}'';
     yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(git status)" && git push'';
-    yoloAI = ''git add . && git commit -m "$(ollama run llama3.1 'generate a silly commit message. reply with ONLY the commit message and nothing else. Do not wrap the entire reply in any sort of surrounding characters such as quotes, parentheses, brackets, etc. (using surrounding characters internally within the message is fine)')" -m '(auto-msg llama3.1)' -m "$(git status)" && git push'';
+    yoloAI = ''git add . && git commit -m "$(${prompt})" && git push'';
+    ai-msg = ''${prompt}'';
     scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
     exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
     lsnc = "lsd --color=never";
