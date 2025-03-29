@@ -19,11 +19,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1743221875,
-        "narHash": "sha256-ZPgwT3veWJXjFt3MEj3imVlMP9NTrBOejrah3A4/Qhg=",
+        "lastModified": 1743263780,
+        "narHash": "sha256-O9VE6lLKrPU8O5YOP1c1rusAYVQQ3hkxi+CU4AlJKZ4=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "923d43902b566dd174d63267b211117003b94ba1",
+        "rev": "5ad6c20c2e3adffc130cd3c0278acdf112b3f197",
         "type": "github"
       },
       "original": {
@@ -1014,11 +1014,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1743207292,
-        "narHash": "sha256-Hf23aM/FRGCvT/oNyPUZ2kw9j2ptpkBo3UzdO2kORXs=",
+        "lastModified": 1743259182,
+        "narHash": "sha256-SwNzOCcLQarlSiaJTsx0AlH+psiIwVpNBftr4W4cXp4=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "7cf13e3215570450a432cf32a5ae7dd82a4f63e1",
+        "rev": "91a407bc4b3dbff1707a13e251a0b176d7ee32d1",
         "type": "github"
       },
       "original": {
@@ -1551,11 +1551,11 @@
     "plugins-nvim-lspconfig": {
       "flake": false,
       "locked": {
-        "lastModified": 1743080180,
-        "narHash": "sha256-PS7DWFXYNOEQiWjtB+bfNBBfsaI3UXQRU/1G6qIlc+4=",
+        "lastModified": 1743263640,
+        "narHash": "sha256-l9ONeRyr2GBShRH6rWGCV+Gke/PY8wUada8PLE45qUM=",
         "owner": "neovim",
         "repo": "nvim-lspconfig",
-        "rev": "85e0dd26b710e834a105d679200d01e326a3d2b0",
+        "rev": "0a1ac55d7d4ec2b2ed9616dfc5406791234d1d2b",
         "type": "github"
       },
       "original": {
