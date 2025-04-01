@@ -181,7 +181,7 @@ in {
     #
 
     ffuf
-    kdenlive
+    kdePackages.kdenlive
     blender
     nmap
     sqlmap

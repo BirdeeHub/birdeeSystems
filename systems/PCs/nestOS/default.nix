@@ -34,7 +34,7 @@ in {
 
   services.auto-cpufreq.enable = true;
 
-  virtualisation.vmware.host.enable = true;
+  # virtualisation.vmware.host.enable = true;
 
   environment.shellAliases = {
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''

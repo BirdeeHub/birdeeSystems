@@ -15,7 +15,7 @@ in {
         name = "birdee";
         id = 0;
         extraConfig = builtins.readFile ./prefs.js;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           privacy-badger
           wappalyzer
           bitwarden
