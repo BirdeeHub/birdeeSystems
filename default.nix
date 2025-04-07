@@ -348,6 +348,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "my-qemu-vm" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           hostname = "virtbird";
+          username = "birdee";
           my_pkgs = packages_func system;
           inherit
             stateVersion
