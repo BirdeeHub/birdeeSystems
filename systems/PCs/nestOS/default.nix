@@ -17,7 +17,7 @@ in {
     enable = true;
     acceleration = "rocm";
     rocmOverrideGfx = "11.0.2";
-    loadModels = [ "llama3.1" ];
+    loadModels = [ "qwen2.5-coder:14b" ];
   };
 
   systemd.tmpfiles.rules = [
