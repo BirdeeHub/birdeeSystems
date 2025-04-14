@@ -41,9 +41,10 @@ in {
   };
 
   home.shellAliases = let
+    model = "qwen2.5-coder:7b";
     prompt = pkgs.writeShellScript "prompt" /*bash*/''
-      ollama run llama3.1 'generate a silly commit message. reply with ONLY the commit message and nothing else. Do not wrap the entire reply in any sort of surrounding characters such as quotes, parentheses, brackets, etc.'
-      echo '(auto-msg llama3.1)'
+      ollama run ${model} 'generate a silly commit message. reply with ONLY the commit message and nothing else. Do not wrap the entire reply in any sort of surrounding characters such as quotes, parentheses, brackets, etc.'
+      echo '(auto-msg ${model})'
       ${pkgs.git}/bin/git status
       echo "$@"
     '';
