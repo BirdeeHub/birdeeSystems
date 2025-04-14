@@ -47,7 +47,6 @@
     maximizer.url = "github:BirdeeHub/maximizer";
     maximizer.inputs.nixpkgs.follows = "nixpkgs";
     nixToLua.url = "github:BirdeeHub/nixtoLua";
-    fenix.url = "github:nix-community/fenix";
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
 

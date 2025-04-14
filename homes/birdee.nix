@@ -243,8 +243,6 @@ in {
     gotools
     go-tools
     sqlite-interactive
-    rustup
-    rustycli
     evcxr
 
     clisp
