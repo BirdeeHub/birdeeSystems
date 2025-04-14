@@ -12,17 +12,18 @@
         "plugins-lzextras": "plugins-lzextras",
         "plugins-nvim-lspconfig": "plugins-nvim-lspconfig",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
+        "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "templ": "templ",
         "windsurf": "windsurf"
       },
       "locked": {
-        "lastModified": 1744637823,
-        "narHash": "sha256-qcGySAeQ+ui1fPmWpJhcbM9WJMWfqJ6iZk3NqXwsPfM=",
+        "lastModified": 1744638630,
+        "narHash": "sha256-AD/eAA4yLUVp6pOzFpLTfO0bkvRG9Z3Kche7wVANhms=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "2bf3a2a3bf7ef53dc6013be875528a50f9566fa3",
+        "rev": "5b40daac52caea6fc1059dd80e8bbe6f387f7f50",
         "type": "github"
       },
       "original": {
@@ -1365,6 +1366,22 @@
       "original": {
         "owner": "milisims",
         "repo": "nvim-luaref",
+        "type": "github"
+      }
+    },
+    "plugins-rustaceanvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744149229,
+        "narHash": "sha256-ci/N6hrM7L+dCNGrSsq2SPSwt/7sc3JLVz2guX51mSc=",
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
+        "rev": "3f327d15a3c1ed48b1e1087e16873a28a39768c2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
         "type": "github"
       }
     },
