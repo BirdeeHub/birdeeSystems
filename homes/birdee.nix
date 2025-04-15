@@ -44,7 +44,17 @@ in {
     model = "qwen2.5-coder:7b";
     prompt = pkgs.writeShellScript "prompt" /*bash*/''
       model=''${1:-'${model}'}
-      prompt='Generate a silly commit message. Reply with ONLY the commit message and nothing else. DO NOT wrap the entire reply in any sort of surrounding characters such as quotes, parentheses, brackets, etc.'
+      prompt='
+      Generate a silly commit message. Follow these rules:
+
+      Rules:
+      - Output ONLY the message — no quotes, no formatting, no explanation.
+      - Do NOT use any Twitter-style hashtags (#).
+      - Do NOT start with "Refactored the code".
+      - Do NOT wrap the reply in quotes, parentheses, or brackets.
+      - The output should be raw, like: Fixed the flux capacitor again
+
+      Now reply with just the message.'
       prompt=''${2:-$prompt}
       ollama run "$model" "$prompt"
       echo "(auto-msg $model)"
