@@ -62,19 +62,12 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 
 ---
 
-asus rog fx504gd and Mac 9,1
-
 only x86_64-linux
 
-the asus is aSUS or nestOS and the mac is dustbook
+Just cherry pick stuff or import modules if you want to copy something. Its my computer get your own XD
 
-If these happen to be your machines, then the configurations will probably work.
-
-Otherwise, just cherry pick stuff or import modules. Its my computer get your own XD
-
-Just dont install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
+Dont install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
 with home-manager to install a home-manager config without booting, you wont have a user environment to boot into.
-Pick the combined options or home manager only
 
 [Build Scripts](./scripts)
 
