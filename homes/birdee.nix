@@ -22,7 +22,7 @@ in {
   birdeeMods = {
     birdeevim = {
       enable = true;
-      packageNames = [ "birdeevim" "notesVim" "testvim" "nightlytest" ];
+      packageNames = [ "birdeevim" "testvim" "nightlytest" ];
     };
     zsh.enable = true;
     bash.enable = true;
