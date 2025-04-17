@@ -19,11 +19,11 @@
         "windsurf": "windsurf"
       },
       "locked": {
-        "lastModified": 1744870198,
-        "narHash": "sha256-GNRQbAwH3rpxmQEeDN7OoN7psHL2S5mswm90e0RU77g=",
+        "lastModified": 1744871025,
+        "narHash": "sha256-WbOnrUte9nYiiXeW2s5EecAYv5oc+MRqGmwEtzP6TBQ=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "b083de8e9da0ffb826dc91de03ab440ea0553d70",
+        "rev": "8210fed2066e731ea40a19871d13de70aa47274a",
         "type": "github"
       },
       "original": {
@@ -768,11 +768,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1744870179,
-        "narHash": "sha256-2kysKx6yFKtNcwNlLVnLVZwn2e6e+vJaW4LkhhLd5O8=",
+        "lastModified": 1744871007,
+        "narHash": "sha256-RbMC6LcwoQIRrGhBNlcT816URyRWTiRvF/QZJPOj9N4=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "0787a77b0d375733ec5213e224258a8b675e658a",
+        "rev": "c03cf9366ea64f4ea2e1be793770fb5fce11750e",
         "type": "github"
       },
       "original": {
