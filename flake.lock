@@ -19,11 +19,11 @@
         "windsurf": "windsurf"
       },
       "locked": {
-        "lastModified": 1744871025,
-        "narHash": "sha256-WbOnrUte9nYiiXeW2s5EecAYv5oc+MRqGmwEtzP6TBQ=",
+        "lastModified": 1744885687,
+        "narHash": "sha256-rzvGwHKUcWlqR7eIJljXrfrAHXHcW/Ngr2LEwJc2NZA=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "8210fed2066e731ea40a19871d13de70aa47274a",
+        "rev": "e07a59331649b3a77f21557c75c2e68a69a2e982",
         "type": "github"
       },
       "original": {
