@@ -25,6 +25,9 @@ in {
             # flake-path = ''${inputs.self.outPath}'';
           };
         };
+        categories = lib.mkIf (n == "birdeevim") {
+          kotlin = true;
+        };
       }) inputs.birdeevim.packages.${pkgs.system}.default.packageDefinitions;
     in {
       inherit (cfg) enable packageNames;
