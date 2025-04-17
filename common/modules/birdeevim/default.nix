@@ -14,7 +14,7 @@ in {
       };
     };
   };
-  config = {
+  config = lib.mkIf cfg.enable ({
     birdeevim = let
       replacements = builtins.mapAttrs (n: _: { pkgs, ... }: {
         settings = {
@@ -30,6 +30,16 @@ in {
       inherit (cfg) enable packageNames;
       packageDefinitions.replace = replacements;
       # packageDefinitions.merge = merges;
+      dontInstall = true;
     };
-  };
+  } // (let
+    finalpkgs = lib.pipe config.birdeevim.out.packages [
+      builtins.attrValues
+      (map (p: p.overrideAttrs { nativeBuildInputs = [ pkgs.makeBinaryWrapper ]; }))
+    ];
+  in if homeManager then {
+    home.packages = finalpkgs;
+  } else {
+    environment.systemPackages = finalpkgs;
+  }));
 }
