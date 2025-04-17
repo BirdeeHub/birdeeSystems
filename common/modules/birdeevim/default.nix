@@ -33,7 +33,7 @@ in {
       dontInstall = true;
     };
   } // (let
-    finalpkgs = lib.pipe config.birdeevim.out.packages [
+    finalpkgs = lib.pipe (config.birdeevim.out.packages or {}) [
       builtins.attrValues
       (map (p: p.overrideAttrs { nativeBuildInputs = [ pkgs.makeBinaryWrapper ]; }))
     ];
