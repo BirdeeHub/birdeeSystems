@@ -22,7 +22,7 @@ in {
         };
         extra = {
           nixdExtras = {
-            flake-path = ''${inputs.self.outPath}'';
+            # flake-path = ''${inputs.self.outPath}'';
           };
         };
       }) inputs.birdeevim.packages.${pkgs.system}.default.packageDefinitions;
