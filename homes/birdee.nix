@@ -103,10 +103,12 @@ in {
       exec ${self}/scripts/both "$@"
     ''}'';
   };
-  home.sessionVariables = {
-    EDITOR = let
-      nvimpkg = config.birdeevim.out.packages.birdeevim;
-    in "${nvimpkg}/bin/${nvimpkg.nixCats_packageName}";
+  home.sessionVariables = let
+    nvimpkg = config.birdeevim.out.packages.birdeevim;
+    nvimpath = "${nvimpkg}/bin/${nvimpkg.nixCats_packageName}";
+  in {
+    EDITOR = nvimpath;
+    MANPAGER = "${nvimpath} +Man!";
     XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
     JAVA_HOME = "${pkgs.jdk}";
   };
