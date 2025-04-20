@@ -18,11 +18,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1745177111,
-        "narHash": "sha256-Wv9MtynIojhtVIXiIjsOaOnTaDnFpWduZiKlH+z/pso=",
+        "lastModified": 1745179867,
+        "narHash": "sha256-4NfPS51N0C/tc4v3nIFu+Xnp1iXwdpXbjcPpfkr+vXE=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "0ab172c07ed4936da6872b8f5eb27cf97555d4c4",
+        "rev": "663646f9054f076b2c455d16125b0e901fa3681d",
         "type": "github"
       },
       "original": {
@@ -749,11 +749,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1745175255,
-        "narHash": "sha256-DrDEJqac6Vy+O0qt7zIGHY38jcEqffTm8BhWQLPB7/k=",
+        "lastModified": 1745179811,
+        "narHash": "sha256-vSe5uGFdj/wr5Dx+brkQ2D0++jA3nPfKjLrc16cNs7s=",
         "ref": "refs/heads/main",
-        "rev": "c11f47779c2873eb9e14476680b298074f035b43",
-        "revCount": 1167,
+        "rev": "cce4dd87a84d483bbd13629fac9bb8a3527608a3",
+        "revCount": 1170,
         "type": "git",
         "url": "file:/home/birdee/Projects/nixCats-nvim"
       },
