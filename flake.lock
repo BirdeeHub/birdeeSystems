@@ -3,6 +3,8 @@
     "birdeevim": {
       "inputs": {
         "fenix": "fenix",
+        "makeBinWrap": "makeBinWrap",
+        "makeShellWrap": "makeShellWrap",
         "neorg-overlay": "neorg-overlay",
         "nix-appimage": "nix-appimage",
         "nixCats": "nixCats",
@@ -18,11 +20,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1745190037,
-        "narHash": "sha256-VRBNZDlUJm+W2eilZ/xDLr4lKzZrbVg+0MaE5vMyW/s=",
+        "lastModified": 1745216606,
+        "narHash": "sha256-Kgdn0fGcuOiwHkbau/5JvBLJkG0GGOXPNHZkDBcZSd0=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "d28f599887153f1f4fbd0e74fa22ae9ccaf0c68c",
+        "rev": "043a25c69fa6ed8562fe9bd1cd5b8557e592dc03",
         "type": "github"
       },
       "original": {
@@ -534,6 +536,38 @@
       "original": {
         "owner": "libgit2",
         "repo": "libgit2",
+        "type": "github"
+      }
+    },
+    "makeBinWrap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745195412,
+        "narHash": "sha256-ln21DovEV/P3QYsbzN6pfv14aTec+6NLG+2cLu0Dq3w=",
+        "owner": "BirdeeHub",
+        "repo": "testBinWrapper",
+        "rev": "0dbb0fd8cbf746f21316296f1bfb39c2139a25ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "testBinWrapper",
+        "type": "github"
+      }
+    },
+    "makeShellWrap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745215752,
+        "narHash": "sha256-OBJIkqG847lc7TlfuFJ86LSVsgohaRizAI4qcWSN13g=",
+        "owner": "BirdeeHub",
+        "repo": "testShellWrapper",
+        "rev": "96ac2a027dc394e54a89011ca14de6efc8ff0b5c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "testShellWrapper",
         "type": "github"
       }
     },
