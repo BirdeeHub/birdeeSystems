@@ -22,6 +22,10 @@ in {
     extra-trusted-substituters = [
       "https://nix-community.cachix.org"
     ];
+    experimental-features = [ "nix-command" "flakes" ];
+    show-trace = true;
+    auto-optimise-store = true;
+    flake-registry = "";
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
@@ -33,6 +37,9 @@ in {
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   users.users = users.users;
   birdeeMods = {
@@ -105,13 +112,6 @@ in {
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  # Allow flakes and new command
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.show-trace = true;
-  nix.settings.auto-optimise-store = true;
 
   nix.gc = {
     automatic = true;

@@ -117,6 +117,7 @@ in {
     # bash-prompt-prefix = "✓";
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
+    flake-registry = "";
     show-trace = true;
     extra-trusted-substituters = [
       "https://nix-community.cachix.org"
