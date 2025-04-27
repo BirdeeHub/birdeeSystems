@@ -1,4 +1,5 @@
 **/result
+**/repl-result-out
 **/.luarc.json
 /secrets
 **/*.qcow2
