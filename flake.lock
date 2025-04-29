@@ -16,14 +16,15 @@
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
+        "shelua": "shelua",
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1745802238,
-        "narHash": "sha256-sHScFnkce++GrkMDLxb9VjHzszo9P59EBSud7Y8XXwM=",
+        "lastModified": 1745918715,
+        "narHash": "sha256-XxDAadAn9a5II/3PHzBM0PSUyDKNd7KzX7It+tX0fhY=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "03c49215a7180f2ce5631e458f2b6c007ee689c8",
+        "rev": "47d141976c7cc2f9d494fe74505bc48e6c876dde",
         "type": "github"
       },
       "original": {
@@ -615,6 +616,21 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "minesweeper",
+        "type": "github"
+      }
+    },
+    "n2l": {
+      "locked": {
+        "lastModified": 1745878523,
+        "narHash": "sha256-hzDMLJNk5e7J5sh/e2Tkhco0A048Tu06cLa3QY3sH+E=",
+        "owner": "BirdeeHub",
+        "repo": "nixToLua",
+        "rev": "42cc3d283baf6c66ec71fd97eea9dde1ca6b0b67",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixToLua",
         "type": "github"
       }
     },
@@ -1401,6 +1417,28 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "shelua": {
+      "inputs": {
+        "n2l": "n2l",
+        "nixpkgs": [
+          "birdeevim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745917613,
+        "narHash": "sha256-+Son8Tx4a/xAdnP6zW70J/VDCPPpIx/MMkTz215Gljo=",
+        "owner": "BirdeeHub",
+        "repo": "shelua",
+        "rev": "92e4d1bce1e1d57508dbbe0524b910e4683aef6f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "shelua",
         "type": "github"
       }
     },
