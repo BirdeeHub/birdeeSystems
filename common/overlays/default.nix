@@ -39,5 +39,6 @@ overlay
   overlaySet = overlaySetMapped // {
     nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
+    shelua = inputs.shelua.overlays.default;
   };
 in overlaySet

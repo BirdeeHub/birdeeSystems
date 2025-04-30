@@ -1401,6 +1401,7 @@
         "nixpkgsNV": "nixpkgsNV",
         "nsearch": "nsearch",
         "nur": "nur",
+        "shelua": "shelua",
         "templ": "templ_2"
       }
     },
@@ -1418,6 +1419,29 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "shelua": {
+      "inputs": {
+        "n2l": [
+          "nixToLua"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745985473,
+        "narHash": "sha256-mkrfEC/ka2qzLbu5xfRO4VviJvJurXOxd61qmOQ+FlQ=",
+        "owner": "BirdeeHub",
+        "repo": "shelua",
+        "rev": "18eec756386cf9a013caaf905345a51e9f5ba1bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "shelua",
         "type": "github"
       }
     },
