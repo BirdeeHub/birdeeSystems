@@ -1432,11 +1432,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745985473,
-        "narHash": "sha256-mkrfEC/ka2qzLbu5xfRO4VviJvJurXOxd61qmOQ+FlQ=",
+        "lastModified": 1746338073,
+        "narHash": "sha256-bJiFXeIBxMv11pUB5ed/Fsu86jBbQElN5U2985lBJgM=",
         "owner": "BirdeeHub",
         "repo": "shelua",
-        "rev": "18eec756386cf9a013caaf905345a51e9f5ba1bc",
+        "rev": "180f594809a0aa0bd1e3975c3f4e18e336b16bff",
         "type": "github"
       },
       "original": {
