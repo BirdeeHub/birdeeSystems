@@ -1,9 +1,9 @@
 { lib
-, substituteAll
 , tmux
 , stdenv
 , tmuxPlugins
-, writeShellScriptBin
+, runCommand
+, makeWrapper
 , writeText
 
 # Store tmux socket under {file}`/run`, which is more
@@ -22,6 +22,7 @@
 , extraConfig ? ""
 , new_tmux_opts ? ""
 , new_tmux_keys ? ""
+, extraWrapperArgs ? []
 , ...
 }: let
 
@@ -133,25 +134,22 @@
     ''
   );
 
-  newTMUX = tmux.overrideAttrs (prev: {
-    patches = (lib.optionals (prev ? patches) prev.patches) ++ [ (substituteAll {
-        # hardcode our config file.
-        src = ./tmux_conf_var.diff;
-        nixTmuxConf = TMUXconf;
-      })
-    ];
-  });
+  wrapperArgs = [
+    "${tmux}/bin/tmux"
+    "${placeholder "out"}/bin/tmux"
+    "--inherit-argv0"
+    "--add-flags"
+    "-f ${TMUXconf}"
+  ] ++ lib.optionals secureSocket [
+    "--run"
+    ''export TMUX_TMPDIR=''${TMUX_TMPDIR:-''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}}''
+  ] ++ extraWrapperArgs;
 
-  userrunsocket = lib.optionalString secureSocket # bash
-    ''export TMUX_TMPDIR=''${TMUX_TMPDIR:-''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}}'';
-
-  tmuxout = writeShellScriptBin "tmux" /*bash*/''
-    # If the right tmux isnt in the path, the colorscheme wont work.
-    if ! echo "$PATH" | grep -q "${newTMUX}/bin"; then
-      export PATH="${newTMUX}/bin:$PATH"
-    fi
-    ${userrunsocket}
-    exec ${newTMUX}/bin/tmux $@
+  tmuxout = runCommand "tmux" {
+    nativeBuildInputs = [ makeWrapper ];
+  } /*bash*/''
+    mkdir -p $out/bin
+    makeWrapper ${lib.escapeShellArgs wrapperArgs}
   '';
 
   # module code to include with root installs
