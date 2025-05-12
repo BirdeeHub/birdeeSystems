@@ -145,13 +145,6 @@
     ''export TMUX_TMPDIR=''${TMUX_TMPDIR:-''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}}''
   ] ++ extraWrapperArgs;
 
-  tmuxout = runCommand "tmux" {
-    nativeBuildInputs = [ makeWrapper ];
-  } /*bash*/''
-    mkdir -p $out/bin
-    makeWrapper ${lib.escapeShellArgs wrapperArgs}
-  '';
-
   # module code to include with root installs
   # config.security.wrappers = {
   #   utempter = {
@@ -163,4 +156,9 @@
   #   };
   # };
 in
-tmuxout
+runCommand "tmux" {
+  nativeBuildInputs = [ makeWrapper ];
+} /*bash*/''
+  mkdir -p $out/bin
+  makeWrapper ${lib.escapeShellArgs wrapperArgs}
+''
