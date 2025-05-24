@@ -20,11 +20,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1747914326,
-        "narHash": "sha256-4GJHZbqYmxWEcT9Dh1ckaJjVr5Frs47OmIfwuroPV4U=",
+        "lastModified": 1748066056,
+        "narHash": "sha256-v7C3e6x5+jYhs6w0AgdbFpWe8Uqw/K4hSuYkh25UauM=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "0db60b2ef562a79460846752d863f4a270a2fd99",
+        "rev": "2e85dcdbac84c4e18bd3ce4eb71dcb82ce3ab5a4",
         "type": "github"
       },
       "original": {
@@ -1522,11 +1522,11 @@
     "plugins-shelua": {
       "flake": false,
       "locked": {
-        "lastModified": 1747063789,
-        "narHash": "sha256-nePEz9In7FHsxhENp2YprhVdFKBhazxvD5GU3qVngVQ=",
+        "lastModified": 1748065874,
+        "narHash": "sha256-wQBzot8hgev3AKljehswaRvrB0xkHANERvL8T5SzrBo=",
         "owner": "BirdeeHub",
         "repo": "shelua",
-        "rev": "3f21d6be262ee075439e1c9a15808fd8ee7ccbc6",
+        "rev": "994260ae182d076a51956bb89801fce0ff09692c",
         "type": "github"
       },
       "original": {
@@ -1618,11 +1618,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747679978,
-        "narHash": "sha256-o1t9Zem68jHnZJ7x8g9PtxZQxwXRC+JTPwO5nkRLEOQ=",
+        "lastModified": 1748065874,
+        "narHash": "sha256-wQBzot8hgev3AKljehswaRvrB0xkHANERvL8T5SzrBo=",
         "owner": "BirdeeHub",
         "repo": "shelua",
-        "rev": "ab80bb6ffba9b3909ad251c554af2ef45575a0c9",
+        "rev": "994260ae182d076a51956bb89801fce0ff09692c",
         "type": "github"
       },
       "original": {
