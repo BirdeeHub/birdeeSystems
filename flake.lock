@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "antifennel": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1727278697,
+        "narHash": "sha256-XynKKDyykyPM4z2ZLp9Oy8KFlEZG2iHXKMkajaS/DaE=",
+        "owner": "~technomancy",
+        "repo": "antifennel",
+        "rev": "a135f016414517ecb624bad26b39ed56d256beaa",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~technomancy",
+        "repo": "antifennel",
+        "type": "sourcehut"
+      }
+    },
     "birdeevim": {
       "inputs": {
         "fenix": "fenix",
@@ -20,11 +36,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1748183838,
-        "narHash": "sha256-Jwo9YH4BGAUlV8ZCg5QhKo5Akn/KsFozh6kQ/JT1OSc=",
+        "lastModified": 1748185905,
+        "narHash": "sha256-s465AwGX8ZJZz8XhlET3kne5EGUCd9OiH0CouGasfTo=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "4be4eaa90b7acda99d905c5ce363072403cd58c9",
+        "rev": "f048b877ebe65eb4aa42b93f99ecbc9bbe3ed160",
         "type": "github"
       },
       "original": {
@@ -1569,6 +1585,7 @@
     },
     "root": {
       "inputs": {
+        "antifennel": "antifennel",
         "birdeevim": "birdeevim",
         "devenv": "devenv",
         "disko": "disko",

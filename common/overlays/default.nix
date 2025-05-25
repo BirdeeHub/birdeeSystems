@@ -30,6 +30,7 @@ overlay
     tmux = import ./tmux;
 
     # work in progress?
+    antifennel = import ./antifennel;
     alakazam = import ./alakitty;
     wezterm = import ./wezterm;
     foot = import ./foot;

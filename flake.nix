@@ -53,6 +53,11 @@
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
 
+    antifennel = {
+      url = "sourcehut:~technomancy/antifennel";
+      flake = false;
+    };
+
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";

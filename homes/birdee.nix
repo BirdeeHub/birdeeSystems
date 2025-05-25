@@ -194,6 +194,7 @@ in {
     nops # manix fzf alias
     dep-tree
     minesweeper
+    antifennel
     #
 
     ffuf
