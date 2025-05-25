@@ -2,21 +2,15 @@
   stdenv,
   inputs,
   luajit,
+  luapkgs ? luajit.pkgs,
   pandoc,
-  makeBinaryWrapper,
-  lib,
   ...
 }: stdenv.mkDerivation {
   name = "antifennel";
   src = inputs.antifennel;
-  nativeBuildInputs = [ makeBinaryWrapper luajit pandoc ];
-  # dontUnpack = true;
+  nativeBuildInputs = [ luapkgs.lua pandoc ];
+  LUA = luapkgs.lua.interpreter;
   installPhase = ''
-    mkdir -p $out/bin
-    cp -r ./antifennel $out/bin
-  '';
-  postFixup = ''
-    wrapProgram $out/bin/antifennel \
-      --prefix PATH : ${lib.makeBinPath [luajit]}
+    make install PREFIX=$out
   '';
 }
