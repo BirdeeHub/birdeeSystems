@@ -9,7 +9,7 @@
 }: stdenv.mkDerivation {
   name = "antifennel";
   src = inputs.antifennel;
-  patches = [ ./interpreter.patch ];
+  patches = [ ./shebang.patch ];
   nativeBuildInputs = [ pandoc ];
   LUA = luapkgs.lua.interpreter;
   installPhase = ''
