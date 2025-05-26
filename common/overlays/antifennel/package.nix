@@ -10,7 +10,7 @@
   name = "antifennel";
   src = inputs.antifennel;
   patches = [ ./interpreter.patch ];
-  nativeBuildInputs = [ luapkgs.lua pandoc ];
+  nativeBuildInputs = [ pandoc ];
   LUA = luapkgs.lua.interpreter;
   installPhase = ''
     make install PREFIX=$out
