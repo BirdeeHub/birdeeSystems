@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   inputs,
   luajit,
@@ -6,7 +7,8 @@
   pandoc,
   fennel-ls,
   ...
-}: stdenv.mkDerivation {
+}:
+stdenv.mkDerivation rec {
   name = "antifennel";
   src = inputs.antifennel;
   patches = [ ./shebang.patch ];
@@ -15,5 +17,16 @@
   installPhase = ''
     make install PREFIX=$out
   '';
-  checkInputs = [ luapkgs.luacheck fennel-ls ];
+  checkInputs = [
+    luapkgs.luacheck
+    fennel-ls
+  ];
+  meta = {
+    mainProgram = name;
+    description = "fennel decompiler which produces fennel code from lua code";
+    homepage = "https://git.sr.ht/~technomancy/antifennel";
+    changelog = "https://git.sr.ht/~technomancy/antifennel/tree/${src.rev}/item/changelog.md";
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ birdee ];
+  };
 }
