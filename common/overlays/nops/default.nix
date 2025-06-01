@@ -3,8 +3,7 @@ importName: inputs:
   final: prev: let
     manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs {
       patches = [
-        (prev.substituteAll {
-          src = ./patchManix4Flake.diff;
+        (prev.replaceVars ./patchManix4Flake.diff {
           homeManager = "${inputs.home-manager}";
         })
       ];

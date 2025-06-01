@@ -313,7 +313,7 @@ in {
     slack
     zoom-us
     remmina
-    ventoy-full
+    # ventoy-full
 
     # stinky
     jdk
