@@ -24,6 +24,7 @@
         "nix-appimage": "nix-appimage",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_7",
+        "plugins-fn_finder": "plugins-fn_finder",
         "plugins-hlargs": "plugins-hlargs",
         "plugins-lze": "plugins-lze",
         "plugins-lzextras": "plugins-lzextras",
@@ -36,11 +37,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1748832246,
-        "narHash": "sha256-RyAqlQo1qpmbjsVvRZugVrAy8cph29uRJTuPHZR0dck=",
+        "lastModified": 1748832748,
+        "narHash": "sha256-qEn6yT4Kh8Fx4FhzdYyeju6DA4sDLzCreWIpxQl/kYY=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "fc777ff92ce64a7c5e44e2e90b1d3b89c8e7ad57",
+        "rev": "2a8494f800977ac9c7eada556174fd2195d3a880",
         "type": "github"
       },
       "original": {
@@ -1436,6 +1437,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "nur",
+        "type": "github"
+      }
+    },
+    "plugins-fn_finder": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748832416,
+        "narHash": "sha256-bSXE0XDy5GcZXwp0CfHOh/Ob7t7naTWHDCv1xgJ2SHQ=",
+        "owner": "BirdeeHub",
+        "repo": "fn_finder",
+        "rev": "970661bc3b6b5a8abb44773091bfe0da16f91f74",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "fn_finder",
         "type": "github"
       }
     },
