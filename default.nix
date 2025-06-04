@@ -116,7 +116,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         extraPATH = [
         ];
       };
-      inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot antifennel;
+      inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot antifennel luakitkat;
     } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
     app-images = let

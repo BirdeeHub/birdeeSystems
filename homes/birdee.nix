@@ -198,7 +198,7 @@ in {
     antifennel
     #
 
-    luakit
+    luakitkat
     ffuf
     kdePackages.kdenlive
     blender
