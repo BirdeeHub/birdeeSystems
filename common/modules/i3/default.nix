@@ -158,6 +158,7 @@ in {
     xsession.enable = true;
     xsession.scriptPath = ".xsession";
     xsession.initExtra = ''${lib.optionalString cfg.updateDbusEnvironment ''
+      systemctl --user import-environment PATH DISPLAY XAUTHORITY DESKTOP_SESSION XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_RUNTIME_DIR XDG_SESSION_ID DBUS_SESSION_BUS_ADDRESS || true
       ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all || true
     ''}
       ${xtraSesCMDs}
