@@ -37,6 +37,7 @@ in {
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
+  security.pam.services.i3lock = {};
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
