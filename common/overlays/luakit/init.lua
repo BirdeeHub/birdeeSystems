@@ -37,7 +37,7 @@ local lousy = require "lousy"
 
 -- Load users theme
 -- ("$XDG_CONFIG_HOME/luakit/theme.lua" or "/etc/xdg/luakit/theme.lua")
-lousy.theme.init(nixInfo.outDir .. "/lua/birdee/theme.lua")
+lousy.theme.init(nixInfo.outDir .. "/theme.lua")
 assert(lousy.theme.get(), "failed to load theme")
 
 -- Load users window class

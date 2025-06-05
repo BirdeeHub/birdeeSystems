@@ -34,7 +34,7 @@ overlay
     alakazam = import ./alakitty;
     wezterm = import ./wezterm;
     foot = import ./foot;
-    luakitkat = import ./luakit;
+    luakitkat = import ./luakit birdeeutils;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
