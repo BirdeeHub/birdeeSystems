@@ -5,7 +5,6 @@
   stdenv,
   luajit,
   makeBinaryWrapper,
-  writeText,
   ...
 }: stdenv.mkDerivation (final: {
   name = "luakitkat";
@@ -14,13 +13,20 @@
   passthru = {
     luaEnv = luajit.withPackages (lp: []);
     wrapperArgs = [];
+    outDir = "${placeholder "out"}";
   };
+  passAsFile = [ "nixInfo" ];
+  nixInfo = "
+    package.preload.nixInfo = function(...) return ${inputs.nixToLua.uglyLua final.passthru} end
+    require('birdee')
+  ";
   buildPhase = ''
     mkdir -p $out/lua
     ln -s $src/* $out/lua
+    { [ -e "$nixInfoPath" ] && cat "$nixInfoPath" || echo "$nixInfo"; } > ${lib.escapeShellArg "${placeholder "out"}/rc.lua"}
     makeWrapper ${luakit}/bin/luakit $out/bin/luakit --inherit-argv0 \
     ${lib.escapeShellArgs ([
-      "--add-flag" "-c" "--add-flag" "${writeText "rc" "require('birdee')"}"
+      "--add-flag" "-c" "--add-flag" "${placeholder "out"}/rc.lua"
       "--prefix" "LUA_PATH" ";" (luajit.pkgs.luaLib.genLuaPathAbsStr final.passthru.luaEnv)
       "--prefix" "LUA_CPATH" ";" (luajit.pkgs.luaLib.genLuaCPathAbsStr final.passthru.luaEnv)
       "--prefix" "LUA_PATH" ";" "${placeholder "out"}/lua/?.lua;${placeholder "out"}/lua/?/init.lua"

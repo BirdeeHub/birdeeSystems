@@ -2,6 +2,8 @@
 -- luakit configuration file, more information at https://luakit.github.io/ --
 ------------------------------------------------------------------------------
 
+_G.nixInfo = require("nixInfo")
+
 require "lfs"
 
 -- Check for lua configuration files that will never be loaded because they are
@@ -35,7 +37,7 @@ local lousy = require "lousy"
 
 -- Load users theme
 -- ("$XDG_CONFIG_HOME/luakit/theme.lua" or "/etc/xdg/luakit/theme.lua")
-lousy.theme.init(lousy.util.find_config("theme.lua"))
+lousy.theme.init(nixInfo.outDir .. "/lua/birdee/theme.lua")
 assert(lousy.theme.get(), "failed to load theme")
 
 -- Load users window class
