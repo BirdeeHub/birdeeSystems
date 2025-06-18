@@ -131,7 +131,7 @@ in {
     !include /home/birdee/.secrets/gitoke
   '';
   nix.nixPath = [
-    "nixpkgs=${inputs.nixpkgsNV}"
+    "nixpkgs=${builtins.path { path = inputs.nixpkgsNV; }}"
   ];
   nix.gc = {
     automatic = true;
