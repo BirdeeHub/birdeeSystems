@@ -19,6 +19,7 @@
     "birdeevim": {
       "inputs": {
         "fenix": "fenix",
+        "kotlin-lsp": "kotlin-lsp",
         "neorg-overlay": "neorg-overlay",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": "nix-appimage",
@@ -37,11 +38,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1750595094,
-        "narHash": "sha256-GJAUx8jKZWghZ5Cxu7sb+R8mpYKrVZJvKrQd7BonXaQ=",
+        "lastModified": 1750691262,
+        "narHash": "sha256-UfyFDCJLAQqM8LavKz1TEDj8ssP4XFOAA5m8AzJUpbE=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "d58290dec4751365e0fad087778b9fbf645443dc",
+        "rev": "e6ea3dbdb68be1318b700708f03995b62f7d36a4",
         "type": "github"
       },
       "original": {
@@ -684,6 +685,19 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "kotlin-lsp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748277964,
+        "narHash": "sha256-yplwz3SQzUIYaOoqkvPEy8nQ5p3U/e1O49WNxaE7p9Y=",
+        "type": "tarball",
+        "url": "https://download-cdn.jetbrains.com/kotlin-lsp/0.252.17811/kotlin-0.252.17811.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://download-cdn.jetbrains.com/kotlin-lsp/0.252.17811/kotlin-0.252.17811.zip"
       }
     },
     "libgit2": {
