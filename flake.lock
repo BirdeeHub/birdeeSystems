@@ -19,7 +19,6 @@
     "birdeevim": {
       "inputs": {
         "fenix": "fenix",
-        "kotlin-lsp": "kotlin-lsp",
         "neorg-overlay": "neorg-overlay",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": "nix-appimage",
@@ -29,6 +28,7 @@
         "plugins-hlargs": "plugins-hlargs",
         "plugins-lze": "plugins-lze",
         "plugins-lzextras": "plugins-lzextras",
+        "plugins-nvim-aider": "plugins-nvim-aider",
         "plugins-nvim-lspconfig": "plugins-nvim-lspconfig",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-rustaceanvim": "plugins-rustaceanvim",
@@ -38,11 +38,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1750802523,
-        "narHash": "sha256-0uN++6pX5fJ7f/kfmVPbwOYp8Ft+OqjPoXP930dC26A=",
+        "lastModified": 1752088756,
+        "narHash": "sha256-3z6a8p3MWuVh1nYJzkpBAx4oyWk2SuLIzKN0NLnzhNg=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "d22c85ea8fcda5280d7f32136dbde39043ffbd50",
+        "rev": "8703d99ce2cc8f70c16fa4f0b2fb114ca2906710",
         "type": "github"
       },
       "original": {
@@ -685,19 +685,6 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
-      }
-    },
-    "kotlin-lsp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1748277964,
-        "narHash": "sha256-yplwz3SQzUIYaOoqkvPEy8nQ5p3U/e1O49WNxaE7p9Y=",
-        "type": "tarball",
-        "url": "https://download-cdn.jetbrains.com/kotlin-lsp/0.252.17811/kotlin-0.252.17811.zip"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://download-cdn.jetbrains.com/kotlin-lsp/0.252.17811/kotlin-0.252.17811.zip"
       }
     },
     "libgit2": {
@@ -1515,6 +1502,22 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "lzextras",
+        "type": "github"
+      }
+    },
+    "plugins-nvim-aider": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748584414,
+        "narHash": "sha256-oVqH/IKzMIsPfGkivz8AWZKg1snJtw6/54owMqqcg+Y=",
+        "owner": "GeorgesAlkhouri",
+        "repo": "nvim-aider",
+        "rev": "e15ea121074e774e436eb2223929fde7a01d4f52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GeorgesAlkhouri",
+        "repo": "nvim-aider",
         "type": "github"
       }
     },
