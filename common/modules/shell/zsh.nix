@@ -13,13 +13,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable (let
-    fzfinit = pkgs.stdenv.mkDerivation {
-      name = "fzfinit";
-      builder = pkgs.writeText "builder.sh" /* bash */ ''
-        source $stdenv/setup
-        ${pkgs.fzf}/bin/fzf --zsh > $out
-      '';
-    };
+    fzfinit = pkgs.runCommand "fzfinit" {} "${pkgs.fzf}/bin/fzf --zsh > $out";
     themestr = if cfg.themer == "stars" then ''
         export STARSHIP_CONFIG='${./starship.toml}'
         eval "$(${pkgs.starship}/bin/starship init zsh)"
