@@ -2061,11 +2061,11 @@
         "wezterm": "wezterm"
       },
       "locked": {
-        "lastModified": 1752199557,
-        "narHash": "sha256-Vb/UjoXoZOgArho89BM969pW5AzFUrwha69jWeQ1V6k=",
+        "lastModified": 1752207406,
+        "narHash": "sha256-+0gs/4stiaN1wy+Pm0pUGR8CxEWsCZGgwUgm+yUTz6Q=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "7d505ebde4a1f2e3e54d160e7f7640539d61eb9d",
+        "rev": "c67ea15cb2766df464274135e2cb4fb4409d8c81",
         "type": "github"
       },
       "original": {
