@@ -56,7 +56,7 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
   - Also, I can't claim every language setup works perfectly or anything. This is not a distribution its mine.
 - [browser:](./common/modules/firefox) firefox
 - [file manager:](./common/modules/ranger/default.nix) ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
-- [terminal:](./common/modules/alacritty/default.nix) alacritty
+- [terminal:](https://github.com/BirdeeHub/wezterm_bundle) wezterm
 - [shell:](./common/modules/shell/home/zsh.nix) zsh with vi mode plugin, themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
 - [tmux:](./common/overlays/tmux) with some keybinds and onedark theme
 

@@ -27,12 +27,10 @@ overlay
 
     dep-tree = import ./dep-tree;
     nops = import ./nops;
-    tmux = import ./tmux;
 
     # work in progress?
     antifennel = import ./antifennel;
     alakazam = import ./alakitty;
-    wezterm = import ./wezterm;
     foot = import ./foot;
     luakitkat = import ./luakit birdeeutils;
 
@@ -42,5 +40,14 @@ overlay
     nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
     shelua = inputs.shelua.overlays.default;
+    wezterm = final: prev: {
+      wezterm = inputs.wezterm_bundle.packages.${final.system}.wezterm.override {
+        autotx = false;
+        wrapZSH = false;
+      };
+    };
+    tmux = final: prev: {
+      tmux = inputs.wezterm_bundle.packages.${final.system}.tmux;
+    };
   };
 in overlaySet

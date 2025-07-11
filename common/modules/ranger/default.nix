@@ -4,9 +4,13 @@
 in {
   _file = ./default.nix;
   options = {
-    ${moduleNamespace}.ranger = with lib.types; {
+    ${moduleNamespace}.ranger = {
       enable = lib.mkEnableOption "birdee's ranger";
       withoutDragon = lib.mkEnableOption "smaller ranger without x-dragon";
+      terminal = lib.mkOption {
+        default = "${pkgs.wezterm}/bin/wezterm";
+        type = lib.types.str;
+      };
     };
   };
   config = lib.mkIf cfg.enable (let
@@ -32,7 +36,7 @@ in {
         Comment=Launches the ranger file manager
         Icon=utilities-terminal
         Terminal=false
-        Exec=alacritty -e ranger
+        Exec=${cfg.terminal} -e ranger
         Categories=ConsoleOnly;System;FileTools;FileManager
         MimeType=inode/directory;
         Keywords=File;Manager;Browser;Explorer;Launcher;Vi;Vim;Python

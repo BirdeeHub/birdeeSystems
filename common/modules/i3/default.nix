@@ -10,20 +10,25 @@ in {
       enable = lib.mkEnableOption "birdee's i3 configuration";
       dmenu = {
         terminalStr = lib.mkOption {
-          default = ''alacritty'';
+          default = ''${pkgs.wezterm}/bin/wezterm'';
           type = str;
         };
       };
-      terminalStr = lib.mkOption {
-        default = ''alacritty'';
+      tmuxTerminalStr = lib.mkOption {
+        default = ''${pkgs.wezterm.override { autotx = true; }}/bin/wezterm'';
         type = str;
+        description = "mod + enter";
+      };
+      tmuxlessTerm = lib.mkOption {
+        default = ''${pkgs.wezterm}/bin/wezterm'';
+        type = str;
+        description = "mod + shift + enter";
       };
       extraSessionCommands = lib.mkOption {
         default = null;
         type = nullOr str;
       };
       updateDbusEnvironment = lib.mkEnableOption "updating of dbus session environment";
-      tmuxDefault = lib.mkEnableOption "swap tmux default alacritty to mod+enter from mod+shift+enter";
       defaultLockerEnabled = lib.mkOption {
         default = true;
         type = bool;
@@ -65,14 +70,11 @@ in {
         fehBG = (pkgs.writeShellScript "fehBG" (if cfg.background != null then ''
           exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${cfg.background} "$@"
         '' else "exit 0"));
-        termCMD = if cfg.tmuxDefault then ''${cfg.terminalStr} -e tx'' else ''${cfg.terminalStr}'';
-        xtraTermCMD = if cfg.tmuxDefault then ''${cfg.terminalStr}'' else ''${cfg.terminalStr} -e tx'';
       in ''
           set $monMover ${monMover}
           set $fehBG ${fehBG}
-          set $termCMD ${termCMD}
-          set $xtraTermCMD ${xtraTermCMD}
-          set $termSTR ${cfg.terminalStr}
+          set $termCMD ${cfg.tmuxTerminalStr}
+          set $termSTR ${cfg.tmuxlessTerm}
           ${cfg.prependedConfig}
         '' + builtins.readFile ./config + (if cfg.defaultLockerEnabled then ''
           exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork

@@ -7,7 +7,6 @@ in {
   imports = with system-modules; [
     i3
     birdeevim
-    alacritty
     shell.bash
     shell.zsh
     shell.fish
@@ -50,12 +49,10 @@ in {
     };
     aliasNetwork.enable = false;
     i3.enable = true;
-    i3.tmuxDefault = true;
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
     i3MonMemory.enable = true;
-    alacritty.enable = true;
     lightdm.enable = true;
     LD.enable = true;
   };
@@ -188,6 +185,7 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wezterm
     hplip
     qemu
     fuse

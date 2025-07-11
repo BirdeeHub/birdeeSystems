@@ -65,7 +65,7 @@ tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec $termCMD
-bindsym $mod+Shift+Return exec $xtraTermCMD
+bindsym $mod+Shift+Return exec $termSTR
 
 # kill focused window
 bindsym $mod+Shift+q kill

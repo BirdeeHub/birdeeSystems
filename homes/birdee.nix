@@ -1,7 +1,6 @@
 { config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
-    alacritty
     tmux
     shell.bash
     shell.zsh
@@ -27,7 +26,6 @@ in {
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
-    alacritty.enable = true;
     tmux.enable = true;
     firefox.enable = true;
     thunar.enable = true;
@@ -35,7 +33,6 @@ in {
       enable = true;
     };
     i3.enable = true;
-    i3.tmuxDefault = true;
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = monitorCFG;
@@ -196,6 +193,7 @@ in {
     dep-tree
     minesweeper
     antifennel
+    wezterm
     #
 
     luakitkat

@@ -13,6 +13,10 @@ in {
         description = lib.mdDoc "List of thunar plugins to install.";
         example = lib.literalExpression "with pkgs.xfce; [ thunar-archive-plugin thunar-volman ]";
       };
+      terminal = lib.mkOption {
+        default = "${pkgs.wezterm}/bin/wezterm";
+        type = lib.types.str;
+      };
       enableCustomActions = lib.mkOption {
         default = true;
         type = lib.types.bool;
@@ -31,7 +35,7 @@ in {
             <icon>utilities-terminal</icon>
             <name>Open Terminal Here</name>
             <submenu></submenu>
-            <command>alacritty --working-directory %f</command>
+            <command>${cfg.terminal} --working-directory %f</command>
             <description></description>
             <range></range>
             <patterns>*</patterns>

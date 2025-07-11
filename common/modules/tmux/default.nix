@@ -12,7 +12,7 @@ in {
         description = "enable birdee's tmux configuration";
       };
       term_string = mkOption {
-        default = "alacritty";
+        default = "xterm-256color"; # "alacritty";
         type = types.str;
         description = "TERM";
       };
@@ -40,8 +40,7 @@ in {
   config = lib.mkIf cfg.enable (let
     # tmuxBoolToStr = value: if value then "on" else "off";
 
-    # relies on the tmux overlay being present
-    final_tmux = pkgs.tmux.override {
+    final_tmux = inputs.wezterm_bundle.packages.${pkgs.system}.tmux.override {
       term_string = cfg.term_string;
       secureSocket = cfg.secureSocket;
     };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, use_alacritty ? true, ... }: let
+{ config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, use_alacritty ? false, ... }: let
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 

@@ -106,16 +106,12 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         extraPATH = [
         ];
       };
-      wezshterm = pkgs.wezterm.override {
-        wrapZSH = true;
-        extraPATH = [
-        ];
-      };
       alakitty = pkgs.alakazam.override {
         wrapZSH = true;
         extraPATH = [
         ];
       };
+      wezshterm = inputs.wezterm_bundle.${system}.default;
       inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot antifennel luakitkat;
     } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
@@ -375,7 +371,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         specialArgs = {
           hostname = "installer_mine";
           is_minimal = true;
-          use_alacritty = true;
+          use_alacritty = false;
           my_pkgs = packages_func system;
           inherit
             stateVersion

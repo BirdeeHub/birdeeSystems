@@ -52,11 +52,13 @@
     shelua.inputs.n2l.follows = "nixToLua";
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
-
     antifennel = {
       url = "sourcehut:~technomancy/antifennel";
       flake = false;
     };
+
+    # also has tmux config
+    wezterm_bundle.url = "github:BirdeeHub/wezterm_bundle";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";

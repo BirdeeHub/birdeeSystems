@@ -26,7 +26,7 @@ in {
       shellAliases = {};
       enable = true;
       enableVteIntegration = true;
-      initExtra = /*bash*/''
+      initContent = /*bash*/''
         . ${./compinstallOut}
 
         HISTFILE="$HOME/.zsh_history"
