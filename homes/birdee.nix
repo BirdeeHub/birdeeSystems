@@ -213,6 +213,8 @@ in {
     nth
     xh
 
+    jimtcl
+
     fira-code
     openmoji-color
     noto-fonts-emoji
