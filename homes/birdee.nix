@@ -194,6 +194,7 @@ in {
     minesweeper
     antifennel
     wezterm
+    opencode
     #
 
     luakitkat
