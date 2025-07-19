@@ -31,6 +31,7 @@
         "plugins-nvim-aider": "plugins-nvim-aider",
         "plugins-nvim-lspconfig": "plugins-nvim-lspconfig",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
+        "plugins-opencode-nvim": "plugins-opencode-nvim",
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-shelua": "plugins-shelua",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
@@ -38,11 +39,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1752404537,
-        "narHash": "sha256-V7PFoPYvwfGiLcLxRAuLAztOnM4dRgxKlkudkhcf7rM=",
+        "lastModified": 1752914605,
+        "narHash": "sha256-EsQwJb6Rg37+EVA7oBJOhiNFxFykUnKdLyU+Z4skAkE=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "1883e20f5121dc3c7ee743ca326059c494da0365",
+        "rev": "f537120eb186c2ef3334837f455c1bd3506b755b",
         "type": "github"
       },
       "original": {
@@ -1666,6 +1667,22 @@
       "original": {
         "owner": "milisims",
         "repo": "nvim-luaref",
+        "type": "github"
+      }
+    },
+    "plugins-opencode-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752904323,
+        "narHash": "sha256-wlet4ADO6td17Kf8T5tZ/Dtfe6PJBRmJeNqMSF/jNPs=",
+        "owner": "NickvanDyke",
+        "repo": "opencode.nvim",
+        "rev": "8925974499bc396d7c8875e741e9e2eff8748bc7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NickvanDyke",
+        "repo": "opencode.nvim",
         "type": "github"
       }
     },
