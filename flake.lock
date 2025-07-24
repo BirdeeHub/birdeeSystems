@@ -39,11 +39,11 @@
         "templ": "templ"
       },
       "locked": {
-        "lastModified": 1752914605,
-        "narHash": "sha256-EsQwJb6Rg37+EVA7oBJOhiNFxFykUnKdLyU+Z4skAkE=",
+        "lastModified": 1753332373,
+        "narHash": "sha256-VizIgSvOdeTEGlYoBbDlO/I1Xu9rDVPeGqep9FkyPt0=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "f537120eb186c2ef3334837f455c1bd3506b755b",
+        "rev": "ea24587c02bbea51218388b42ca361cc53b47581",
         "type": "github"
       },
       "original": {
