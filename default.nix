@@ -112,7 +112,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       wezshterm = inputs.wezterm_bundle.${system}.default;
-      inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot antifennel luakitkat;
+      inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm foot antifennel luakitkat opencode;
     } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
     app-images = let
