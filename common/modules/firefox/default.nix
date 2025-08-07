@@ -24,7 +24,6 @@ in {
           user-agent-string-switcher
           tampermonkey
           unpaywall
-          ninja-cookie
           ublock-origin
           languagetool
           maya-dark

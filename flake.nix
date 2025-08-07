@@ -56,6 +56,11 @@
       url = "sourcehut:~technomancy/antifennel";
       flake = false;
     };
+    nixpkgs-ollama.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    ollama = {
+      url = "github:ollama/ollama";
+      flake = false;
+    };
 
     # also has tmux config
     wezterm_bundle.url = "github:BirdeeHub/wezterm_bundle";

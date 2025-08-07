@@ -1142,6 +1142,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/072a6db25e947df2f31aab9eccd0ab75d5b2da11.tar.gz"
       }
     },
+    "nixpkgs-ollama": {
+      "locked": {
+        "lastModified": 1754393734,
+        "narHash": "sha256-fbnmAwTQkuXHKBlcL5Nq1sMAzd3GFqCOQgEQw6Hy0Ak=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a683adc19ff5228af548c6539dbc3440509bfed3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1748693115,
@@ -1558,6 +1574,22 @@
         "type": "github"
       }
     },
+    "ollama": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754532143,
+        "narHash": "sha256-nOhjZd7IJpd/Jnz7i4leysDLO/29lM2e8Cwj8kjr3hs=",
+        "owner": "ollama",
+        "repo": "ollama",
+        "rev": "aa9d889522b016f16d8a87994c2b577e3e9ade7c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ollama",
+        "repo": "ollama",
+        "type": "github"
+      }
+    },
     "plugins-fn_finder": {
       "flake": false,
       "locked": {
@@ -1767,10 +1799,12 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-hardware-new": "nixos-hardware-new",
         "nixpkgs": "nixpkgs_14",
+        "nixpkgs-ollama": "nixpkgs-ollama",
         "nixpkgsLocked": "nixpkgsLocked",
         "nixpkgsNV": "nixpkgsNV",
         "nsearch": "nsearch",
         "nur": "nur",
+        "ollama": "ollama",
         "shelua": "shelua",
         "templ": "templ_2",
         "wezterm_bundle": "wezterm_bundle"

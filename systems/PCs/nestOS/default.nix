@@ -17,7 +17,12 @@ in {
     enable = true;
     acceleration = "rocm";
     rocmOverrideGfx = "11.0.2";
-    loadModels = [ "qwen2.5-coder:7b" "qwen2.5-coder:14b" ];
+    package = (import inputs.nixpkgs-ollama { inherit (pkgs) system overlays; }).ollama.overrideAttrs {
+      src = inputs.ollama;
+      version = "0.11.3";
+      vendorHash = "sha256-SlaDsu001TUW+t9WRp7LqxUSQSGDF1Lqu9M1bgILoX4=";
+    };
+    loadModels = [ "qwen2.5-coder:7b" "gpt-oss:20b" ];
   };
 
   systemd.tmpfiles.rules = [
