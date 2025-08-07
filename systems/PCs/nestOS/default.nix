@@ -22,7 +22,7 @@ in {
       version = "0.11.3";
       vendorHash = "sha256-SlaDsu001TUW+t9WRp7LqxUSQSGDF1Lqu9M1bgILoX4=";
     };
-    loadModels = [ "qwen2.5-coder:7b" "gpt-oss:20b" ];
+    loadModels = [ "qwen2.5-coder:7b" "gpt-oss:20b" "qwen3:14b" "qwen3:8b" ];
   };
 
   systemd.tmpfiles.rules = [
