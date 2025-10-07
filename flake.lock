@@ -36,14 +36,15 @@
         "plugins-shelua": "plugins-shelua",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
-        "templ": "templ"
+        "templ": "templ",
+        "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1758267330,
-        "narHash": "sha256-I3I7aJ5VzwGp9FGfEjXjY8BEE8JZDy9FRhJcyR9OzEM=",
+        "lastModified": 1759438177,
+        "narHash": "sha256-2trMNrfdwhjD1ifKZDewB0LNpw6/JhElYHGQW6Eja78=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "06dc0076f6a0241bbadf307d5859cf46eee5fb04",
+        "rev": "b09038861e3da14bf4593ca4db7bd54721b03b4f",
         "type": "github"
       },
       "original": {
@@ -1988,6 +1989,27 @@
       "original": {
         "owner": "a-h",
         "repo": "templ",
+        "type": "github"
+      }
+    },
+    "tomlua": {
+      "inputs": {
+        "nixpkgs": [
+          "birdeevim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759326799,
+        "narHash": "sha256-GadmtfM0ay1HiX2ARR+mE+ojmBlTQZybn5nAPYL+NGI=",
+        "owner": "BirdeeHub",
+        "repo": "tomlua",
+        "rev": "f09f1130fcc2553e3c3ff5e24cef1f225afa7004",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "tomlua",
         "type": "github"
       }
     },

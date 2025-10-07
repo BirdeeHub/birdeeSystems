@@ -92,4 +92,44 @@ inputs: with builtins; rec {
 
   inherit (inputs.nixToLua) mkEnum;
 
+  addLuarocksTree = /*bash*/ ''
+    # addPathForLuarocksTree "luarocks" LUA_PATH "$LUAROCKS_TREE_PATH"
+    # addPathForLuarocksTree "luarocks" LUA_CPATH "$LUAROCKS_TREE_PATH"
+    # addPathForLuarocksTree "luarocks" PATH "$LUAROCKS_TREE_PATH"
+    addPathForLuarocksTree() {
+      local luarocks_cmd="$1"
+      local which_path="$2"
+      local tree="$3"
+      if [[ "$tree" != /* ]]; then
+        echo "Error: luarocks tree '$tree' must be an absolute path" >&2
+        return 1
+      fi
+      local pathcmd
+      case "$which_path" in
+        LUA_PATH) pathcmd=--lr-path ;;
+        LUA_CPATH) pathcmd=--lr-cpath ;;
+        PATH) pathcmd=--lr-bin ;;
+        *)
+          echo "Error: unsupported second arg '$which_path'. Supported: LUA_PATH, LUA_CPATH, PATH" >&2
+          return 1
+          ;;
+      esac
+      # split path to entries
+      local IFS_split=';'
+      [[ "$which_path" == PATH ]] && IFS_split=':'
+      local entries entry
+      IFS="$IFS_split" read -ra entries <<< "$("$luarocks_cmd" path --tree="$tree" $pathcmd)"
+      # find our new entries and add them to relevant variable
+      for entry in "''${entries[@]}"; do
+        if [[ "$entry" == "$tree"* ]]; then
+          case "$which_path" in
+            LUA_PATH) export LUA_PATH="''${LUA_PATH:+$LUA_PATH$IFS_split}$entry" ;;
+            LUA_CPATH) export LUA_CPATH="''${LUA_CPATH:+$LUA_CPATH$IFS_split}$entry" ;;
+            PATH) export PATH="''${PATH:+$PATH$IFS_split}$entry" ;;
+          esac
+        fi
+      done
+    }
+  '';
+
 }
