@@ -104,7 +104,7 @@ inputs: with builtins; rec {
         echo "Error: luarocks tree '$tree' must be an absolute path" >&2
         return 1
       fi
-      local pathcmd entries entry
+      local pathcmd entry
       case "$which_path" in
         LUA_PATH) pathcmd=--lr-path ;;
         LUA_CPATH) pathcmd=--lr-cpath ;;
@@ -114,18 +114,16 @@ inputs: with builtins; rec {
           return 1
           ;;
       esac
-      # split path to entries
       local oldIFS="$IFS"
       local IFS_split=';'
       [[ "$which_path" == PATH ]] && IFS_split=':'
-      IFS="$IFS_split" read -ra entries <<< "$("$luarocks_cmd" path --tree="$tree" $pathcmd)"
-      IFS="$oldIFS"
       # find our new entries and add them to relevant variable
-      for entry in "''${entries[@]}"; do
+      while IFS="$IFS_split" read -r entry; do
         if [[ "$entry" == "$tree"* ]]; then
           export $which_path="''${!which_path:+''${!which_path}$IFS_split}$entry"
         fi
-      done
+      done <<< "$("$luarocks_cmd" path --tree="$tree" $pathcmd)"
+      IFS="$oldIFS"
     }
   '';
 
