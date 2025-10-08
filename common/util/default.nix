@@ -115,9 +115,11 @@ inputs: with builtins; rec {
           ;;
       esac
       # split path to entries
+      local oldIFS="$IFS"
       local IFS_split=';'
       [[ "$which_path" == PATH ]] && IFS_split=':'
       IFS="$IFS_split" read -ra entries <<< "$("$luarocks_cmd" path --tree="$tree" $pathcmd)"
+      IFS="$oldIFS"
       # find our new entries and add them to relevant variable
       for entry in "''${entries[@]}"; do
         if [[ "$entry" == "$tree"* ]]; then
