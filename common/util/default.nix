@@ -93,9 +93,9 @@ inputs: with builtins; rec {
   inherit (inputs.nixToLua) mkEnum;
 
   addLuarocksTree = /*bash*/ ''
-    # addPathForLuarocksTree "luarocks" LUA_PATH "$LUAROCKS_TREE_PATH"
-    # addPathForLuarocksTree "luarocks" LUA_CPATH "$LUAROCKS_TREE_PATH"
-    # addPathForLuarocksTree "luarocks" PATH "$LUAROCKS_TREE_PATH"
+    # addPathForLuarocksTree luarocks LUA_PATH "$LUAROCKS_TREE_PATH"
+    # addPathForLuarocksTree luarocks LUA_CPATH "$LUAROCKS_TREE_PATH"
+    # addPathForLuarocksTree luarocks PATH "$LUAROCKS_TREE_PATH"
     addPathForLuarocksTree() {
       local luarocks_cmd="$1"
       local which_path="$2"
@@ -114,16 +114,16 @@ inputs: with builtins; rec {
           return 1
           ;;
       esac
-      local oldIFS="$IFS"
       local IFS_split=';'
       [[ "$which_path" == PATH ]] && IFS_split=':'
-      # find our new entries and add them to relevant variable
+      # IFS applies only to read, no need to reset
       while IFS="$IFS_split" read -r entry; do
         if [[ "$entry" == "$tree"* ]]; then
+          # ''${var:+""} If var is not empty, return right side.
+          # ''${!var} Get value of var2 whose name is in var
           export $which_path="''${!which_path:+''${!which_path}$IFS_split}$entry"
         fi
       done <<< "$("$luarocks_cmd" path --tree="$tree" $pathcmd)"
-      IFS="$oldIFS"
     }
   '';
 
