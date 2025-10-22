@@ -12,6 +12,13 @@
 #include <windows.h>
 #endif
 
+// you can import from arg -DEMBEDDED_LUA_H="/somepath"
+// like this:
+
+// #define STR(x) #x
+// #define XSTR(x) STR(x)
+// #include XSTR(EMBEDDED_LUA_H)
+
 static bool set_env(lua_State *L, const char *key, const char *val) {
 #ifdef _WIN32
     return SetEnvironmentVariable(key, val) != 0;
@@ -263,7 +270,7 @@ static int embed_add(lua_State *L) {
 
 static int embed_new(lua_State *L) {
     static const char *EMBED_USEAGE_MESSAGE = "invalid argument #%d, expected %s.\nUseage:\n"
-        "local embed = require('tomlua.luaembed')(c_func_name?: string, loader?: fun(name, path) -> function, table_by_default?: bool)\n"
+        "local embed = require('embed')(c_func_name?: string, loader?: fun(name, path) -> function, table_by_default?: bool)\n"
         "embed.add(modname: string, path: string, c_func_name?: string, make_table?: bool)\n"
         "embed.run(output_file: string, header_name_or_to_append?: bool|string)\n";
     {
