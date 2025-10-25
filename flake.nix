@@ -27,7 +27,7 @@
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgsNV";
     };
     flake-utils.url = "github:numtide/flake-utils";
     manix.url = "github:nix-community/manix";
@@ -64,6 +64,7 @@
 
     # also has tmux config
     wezterm_bundle.url = "github:BirdeeHub/wezterm_bundle";
+    wezterm_bundle.inputs.nixpkgs.follows = "nixpkgsNV";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";

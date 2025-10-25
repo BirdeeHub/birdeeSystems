@@ -11,5 +11,8 @@ in {
   config = lib.mkIf cfg.enable (let
   in if homeManager then {
   } else {
+  } // {
+    nix.gc.frequency = config.nix.gc.dates;
+    hardware.pulseaudio = config.services.pulseaudio;
   });
 }

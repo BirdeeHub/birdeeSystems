@@ -76,23 +76,23 @@ let
     let
       final-alakitty-toml = writeText "alakitty.toml" alakitty-toml;
 
-      newDejaVu = {
-        minimal = pkgs.nerd-fonts.fira-code;
-      };
+      # newDejaVu = {
+      #   minimal = pkgs.nerdfonts.fira-code;
+      # };
+      #
+      # newFC = fontconfig.override (prev: {
+      #   dejavu_fonts = newDejaVu;
+      # });
 
-      newFC = fontconfig.override (prev: {
-        dejavu_fonts = newDejaVu;
-      });
-
-      newAlacritty = alacritty.override (prev: {
-        fontconfig = newFC;
-      });
+      # newAlacritty = alacritty.override (prev: {
+      #   fontconfig = newFC;
+      # });
     in
     # bash
     ''
-      export PATH=${lib.makeBinPath ([ newFC ] ++ extraPATH)}:$PATH
+      export PATH=${lib.makeBinPath (extraPATH)}:$PATH
       ${if wrapZSH && zdotdir != null then "export ZDOTDIR=${zdotdir}" else ""}
-      exec ${newAlacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
+      exec ${alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
     ''
   );
 in

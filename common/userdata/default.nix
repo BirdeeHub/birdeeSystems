@@ -14,7 +14,7 @@ rec {
   git = HM: {
     birdee = {
       enable = true;
-      ${if HM then "extraConfig" else "config"} = {
+      ${if HM then "settings" else "config"} = {
         init.defaultBranch = "master";
         core = {
           autoSetupRemote = true;

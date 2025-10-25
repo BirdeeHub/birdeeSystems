@@ -25,7 +25,7 @@ in {
         Xft.dpi: 80
       ''}
     '';
-    old_modules_compat.enable = true;
+    # old_modules_compat.enable = true;
   };
 
   boot.kernelModules = [ "kvm-intel" ];

@@ -135,8 +135,8 @@ in {
 
   # Enable sound with pipewire.
   # sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.enable = false;
+  services.pulseaudio.package = pkgs.pulseaudioFull;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -222,7 +222,7 @@ in {
     xsel
     git
     ntfs3g
-    dislocker
+    # dislocker
     man-pages
     man-pages-posix
   ]);

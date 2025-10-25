@@ -85,7 +85,7 @@ in {
     ll = "lsd -lh";
     l  = "lsd -alh";
     yeet = "rm -rf";
-    dugood = ''${pkgs.writeShellScript "dugood" ''du -hd1 $@ | sort -hr''}'';
+    dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
 
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
@@ -132,7 +132,7 @@ in {
   ];
   nix.gc = {
     automatic = true;
-    frequency = "weekly";
+    dates = "weekly";
     options = "-d";
   };
   nix.registry = {
@@ -221,7 +221,7 @@ in {
     noto-fonts-emoji
     nerd-fonts.go-mono
 
-    dislocker
+    # dislocker
     ueberzugpp
     vlc
     nix-tree
