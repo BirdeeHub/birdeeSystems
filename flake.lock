@@ -42,11 +42,11 @@
         "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1761492857,
-        "narHash": "sha256-vfcrGRwPrEO0VqmPTZw2cfTzN7ea6wEu2mseX7tx5AA=",
+        "lastModified": 1761498236,
+        "narHash": "sha256-Tfag2T0wutSLOjfoKBNbDotZko2FgtSohwRa/95FPaA=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "52eaa7c9ed5f82a270f8f3b756edaf58cb61b7fd",
+        "rev": "2509130fbb3a19ff8d28ab85b287dd27425e2021",
         "type": "github"
       },
       "original": {
