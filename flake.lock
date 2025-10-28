@@ -24,6 +24,7 @@
         "nix-appimage": "nix-appimage",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_7",
+        "plugins-argmark": "plugins-argmark",
         "plugins-fn_finder": "plugins-fn_finder",
         "plugins-hlargs": "plugins-hlargs",
         "plugins-lze": "plugins-lze",
@@ -42,11 +43,11 @@
         "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1761558103,
-        "narHash": "sha256-Zy895Ar1Boct7LKaESYWrSbKDFUOSTV5FJu0bce25pc=",
+        "lastModified": 1761688301,
+        "narHash": "sha256-4dScoTS/D0eRptOc/9P17gfwr6tt+/TJMVXQIaz8jLI=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "f0bf14bfd62defb881dacf3ffabf618f883fc72f",
+        "rev": "9b5242b30b5acc7859c1dfe9ed08e43863b0ce22",
         "type": "github"
       },
       "original": {
@@ -1556,6 +1557,22 @@
       "original": {
         "owner": "ollama",
         "repo": "ollama",
+        "type": "github"
+      }
+    },
+    "plugins-argmark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761688253,
+        "narHash": "sha256-MAVTCUgmwQZS3Nx+78gbQqbbN5dBHsZYX16halqjQQo=",
+        "owner": "BirdeeHub",
+        "repo": "argmark",
+        "rev": "73410077319a0aab2bbe9e02d21f34799ea7af66",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "argmark",
         "type": "github"
       }
     },
