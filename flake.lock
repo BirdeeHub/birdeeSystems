@@ -43,11 +43,11 @@
         "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1761728425,
-        "narHash": "sha256-g5IMza8Fkp+VlJ+Bg629Nran8z4tdHaAyWhIuo8WhvE=",
+        "lastModified": 1761733265,
+        "narHash": "sha256-nOybnQEFw3z++rC9HZkjz7wZSnc21zBjmxrIcO43f7g=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "c983c663c4806a75fa6fd8d64188feb1d820a51f",
+        "rev": "aad618c7f3d136831d0810760e3f704597f12c12",
         "type": "github"
       },
       "original": {
@@ -1009,11 +1009,11 @@
     },
     "nixCats": {
       "locked": {
-        "lastModified": 1759730664,
-        "narHash": "sha256-boRlBQ/c4CaHsK/z04QL6+t81mcar37Io94HBX2GflY=",
+        "lastModified": 1761732732,
+        "narHash": "sha256-AP3KzTaFXFLjWWXysSnVTXUaGuC3hkUQZSlxUdGsLSs=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "77dffad8235eb77684fcb7599487c8e9f23d5b8f",
+        "rev": "6307455a6ccceadb9f873fc51d4cf7cd39bdace5",
         "type": "github"
       },
       "original": {
