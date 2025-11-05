@@ -2048,11 +2048,11 @@
         "tmux-navigate-src": "tmux-navigate-src"
       },
       "locked": {
-        "lastModified": 1762341709,
-        "narHash": "sha256-RPu8r3Gy+7zk9zusP5S86dSEL0OgG8kxbcRRdQDk30s=",
+        "lastModified": 1762343201,
+        "narHash": "sha256-Xo5QaenYSe6yDcS7rcyL1nyDHZXYGivGKYUnYeXrBzo=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "ca2e7c653e91d4e6758b16c84c77214c0c335f3c",
+        "rev": "a65ff667ac23a942abee34a988e79ae8731db3ba",
         "type": "github"
       },
       "original": {
