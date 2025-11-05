@@ -36,6 +36,7 @@
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-shelua": "plugins-shelua",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
+        "plugins-tmux-navigate": "plugins-tmux-navigate",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "roc": "roc",
         "scooter": "scooter",
@@ -43,11 +44,11 @@
         "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1762305529,
-        "narHash": "sha256-uW67DxMbZ+mR5HlMIjDsjxAp4TpyoXt7uVd6BehLISc=",
+        "lastModified": 1762308250,
+        "narHash": "sha256-15lvdHy5grnN15vCi1fCD9eJ0BXSHiFL8BIJnoTk120=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "df3c384d4154c5b7f3916b935dfddadac257be5a",
+        "rev": "954f3a5a60f1879c6793d27445a3c56e1edbfe9d",
         "type": "github"
       },
       "original": {
@@ -1639,6 +1640,22 @@
       "original": {
         "owner": "folke",
         "repo": "snacks.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-tmux-navigate": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1665505688,
+        "narHash": "sha256-Rn/rIbFx2zCyzvLZmbf7q1nF97Yi9dONUDv1QDcscxo=",
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "rev": "27c83cd229bceff55e6318cce7945995623a6106",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
         "type": "github"
       }
     },
