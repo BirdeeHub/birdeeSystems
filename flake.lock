@@ -43,11 +43,11 @@
         "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1762304682,
-        "narHash": "sha256-CeRhCgOv89Lmln8Q9ICQ1jw4zTLDNkS3mJrZcWc2KPU=",
+        "lastModified": 1762305529,
+        "narHash": "sha256-uW67DxMbZ+mR5HlMIjDsjxAp4TpyoXt7uVd6BehLISc=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "9082f2429d1db4a1b3b04455cec94aa7bbcafdd9",
+        "rev": "df3c384d4154c5b7f3916b935dfddadac257be5a",
         "type": "github"
       },
       "original": {
@@ -1453,11 +1453,11 @@
     "plugins-argmark": {
       "flake": false,
       "locked": {
-        "lastModified": 1762303383,
-        "narHash": "sha256-qpVaVZIJzwrAN9W43W/Kd359oBwn+6edwuzWNva0QD0=",
+        "lastModified": 1762305486,
+        "narHash": "sha256-n4msk2ZFVfio5+9+LUGmTru4s11xuwnrZxPlXKXOYF4=",
         "owner": "BirdeeHub",
         "repo": "argmark",
-        "rev": "3824b472d913e7a1b06cc7d875d0f6e58d6784cf",
+        "rev": "abe66e41a12c000b425f6ee156931c4714b3919e",
         "type": "github"
       },
       "original": {
