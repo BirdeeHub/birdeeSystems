@@ -64,6 +64,7 @@
 
     # also has tmux config
     wezterm_bundle.url = "github:BirdeeHub/wezterm_bundle";
+    # wezterm_bundle.url = "git+file:/home/birdee/Projects/wezterm_bundle";
     wezterm_bundle.inputs.nixpkgs.follows = "nixpkgsNV";
 
     # neovim
