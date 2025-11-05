@@ -36,6 +36,7 @@
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-shelua": "plugins-shelua",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
+        "plugins-tmux-navigate": "plugins-tmux-navigate",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "roc": "roc",
         "scooter": "scooter",
@@ -43,11 +44,11 @@
         "tomlua": "tomlua"
       },
       "locked": {
-        "lastModified": 1762305529,
-        "narHash": "sha256-uW67DxMbZ+mR5HlMIjDsjxAp4TpyoXt7uVd6BehLISc=",
+        "lastModified": 1762340176,
+        "narHash": "sha256-gToXK2JxPG05575ZpSlIw0qN4lHedfx0HIuSiIGWMH0=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "df3c384d4154c5b7f3916b935dfddadac257be5a",
+        "rev": "f60c482826952be5daa3ef3f522e4b3f12de0aad",
         "type": "github"
       },
       "original": {
@@ -1642,6 +1643,22 @@
         "type": "github"
       }
     },
+    "plugins-tmux-navigate": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1665505688,
+        "narHash": "sha256-Rn/rIbFx2zCyzvLZmbf7q1nF97Yi9dONUDv1QDcscxo=",
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "rev": "27c83cd229bceff55e6318cce7945995623a6106",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "type": "github"
+      }
+    },
     "plugins-visual-whitespace": {
       "flake": false,
       "locked": {
@@ -1940,6 +1957,22 @@
         "type": "github"
       }
     },
+    "tmux-navigate-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1665505688,
+        "narHash": "sha256-Rn/rIbFx2zCyzvLZmbf7q1nF97Yi9dONUDv1QDcscxo=",
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "rev": "27c83cd229bceff55e6318cce7945995623a6106",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "type": "github"
+      }
+    },
     "tomlua": {
       "inputs": {
         "nixpkgs": [
@@ -2011,14 +2044,15 @@
         "nixToLua": "nixToLua_2",
         "nixpkgs": [
           "nixpkgsNV"
-        ]
+        ],
+        "tmux-navigate-src": "tmux-navigate-src"
       },
       "locked": {
-        "lastModified": 1761476137,
-        "narHash": "sha256-cw+Z1FWpgvFl6v5Mw3e4W63jDTycQ9SbnjnBjyHjcr4=",
+        "lastModified": 1762340650,
+        "narHash": "sha256-MWeMlJv1USvDCjzvrPDbgAbnXP5O8/ZeRfhD8EZkT5M=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "3a223e7a12b25f4413736c22ab927c8bb483cca2",
+        "rev": "8a530c07465564a2d0d1b8fad37dd16058cd1bc1",
         "type": "github"
       },
       "original": {
