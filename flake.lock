@@ -2032,11 +2032,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1762495748,
-        "narHash": "sha256-Q3efeEVnVOgyHIzrGc4e626uAG1cyZVTxGz28cdJSrI=",
+        "lastModified": 1762497251,
+        "narHash": "sha256-LE16PaJZSQHY1YcE2Ze1A+LFqvh4w+zkmKq1CYdkKEk=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "0979934466fed8a515c3cb7826be8a86a1230685",
+        "rev": "2b33b6754445d6010d29d17fea0a36e8d58936cf",
         "type": "github"
       },
       "original": {
@@ -2053,11 +2053,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762495578,
-        "narHash": "sha256-VloUhyEVS05VtxP5YZAY0oLsmH7qSffJ45dPYpvE5lQ=",
+        "lastModified": 1762497176,
+        "narHash": "sha256-kv/19Ffm0VRXtwNEUooCjtnM6GX/ONfJzUd7Z1Vvf1Y=",
         "owner": "BirdeeHub",
         "repo": "wrappers",
-        "rev": "4289c632882e64e83b77eb3e1190399ee83e1245",
+        "rev": "a3477433499473725f7c192774f562e6f625ca86",
         "type": "github"
       },
       "original": {
