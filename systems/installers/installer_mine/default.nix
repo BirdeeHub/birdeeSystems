@@ -2,18 +2,10 @@
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 
-  final_tmux = pkgs.tmux.override (prev: {
-    term_string = if use_alacritty then "alacritty" else "xterm-256color";
-  });
+  final_tmux = pkgs.tmux.wrap {
+    terminal = if use_alacritty then "alacritty" else "xterm-256color";
+  };
 
-  tx = pkgs.writeShellScriptBin "tx" ''
-    if [[ $(${final_tmux}/bin/tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
-      selected_session=$(${final_tmux}/bin/tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
-      ${final_tmux}/bin/tmux new-session -At $selected_session
-    else
-      ${final_tmux}/bin/tmux new-session
-    fi
-  '';
   nerd_font_string = "FiraMono";
   font_string = "${nerd_font_string} Nerd Font";
   login_shell = "zsh";
@@ -49,7 +41,6 @@ in {
   environment.systemPackages = with pkgs; [
     inputs.disko.packages.${system}.default
     final_tmux
-    tx
     git
     findutils
     coreutils
@@ -135,7 +126,8 @@ in {
     alacritty_dm = (let
       alakitty = pkgs.callPackage ./alatoml.nix {
         maximizer = "${inputs.maximizer.packages.${pkgs.system}.default}/bin/maximize_program";
-        inherit tx font_string;
+        inherit font_string;
+        tx = final_tmux;
         shellStr = "${pkgs.${login_shell}}/bin/${login_shell}";
       };
     in [
@@ -150,7 +142,7 @@ in {
       maximizer = "${inputs.maximizer.packages.${pkgs.system}.default}/bin/maximize_program";
       launchScript = pkgs.writeShellScript "mysh" /*bash*/ ''
         ${maximizer} xterm > /dev/null 2>&1 &
-        exec ${tx}/bin/tx
+        exec ${final_tmux}/bin/tx
       '';
     in [
       { name = "xterm-installer";

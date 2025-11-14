@@ -12,33 +12,15 @@
   autotx ? true,
   zdotdir ? null,
   tmux,
-  custom_tx_script ? null,
   extraPATH ? [ ],
   ...
 }@args:
 let
 
-  tmuxf = tmux.override (prev: {
-    term_string = "alacritty";
-    passthruvars = (if prev ? passthruvars then prev.passthruvars else []) ++ (if wrapZSH && zdotdir != null then [ "ZDOTDIR" ] else []);
-  });
-
-  tx =
-    if custom_tx_script != null then
-      custom_tx_script
-    else
-      writeShellScriptBin "tx" # bash
-        ''
-          if ! echo "$PATH" | grep -q "${tmuxf}/bin"; then
-            export PATH=${tmuxf}/bin:$PATH
-          fi
-          if [[ $(tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
-            selected_session=$(tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
-            exec tmux new-session -At $selected_session
-          else
-            exec tmux new-session
-          fi
-        '';
+  tmuxf = tmux.wrap {
+    terminal = "alacritty";
+    updateEnvironment = (if wrapZSH && zdotdir != null then [ "ZDOTDIR" ] else []);
+  };
 
   alakitty-toml = # toml
     ''
@@ -48,7 +30,7 @@ let
 
       [shell]
       program = "${zsh}/bin/zsh"
-      args = [ "-l"${if autotx then '', "-c", "exec ${tx}/bin/tx"'' else ""} ]
+      args = [ "-l"${if autotx then '', "-c", "exec ${tmuxf}/bin/tx"'' else ""} ]
 
       [font]
       size = 11.0
@@ -90,7 +72,7 @@ let
     in
     # bash
     ''
-      export PATH=${lib.makeBinPath (extraPATH)}:$PATH
+      export PATH=${lib.makeBinPath extraPATH}:$PATH
       ${if wrapZSH && zdotdir != null then "export ZDOTDIR=${zdotdir}" else ""}
       exec ${alacritty}/bin/alacritty --config-file ${final-alakitty-toml} "$@"
     ''

@@ -15,7 +15,7 @@ in {
         };
       };
       tmuxTerminalStr = lib.mkOption {
-        default = ''${pkgs.wezterm.override { autotx = true; }}/bin/wezterm'';
+        default = ''${pkgs.wezterm.wrap { withLauncher = true; }}/bin/wezterm'';
         type = str;
         description = "mod + enter";
       };

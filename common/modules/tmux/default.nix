@@ -38,31 +38,17 @@ in {
     } else {});
   };
   config = lib.mkIf cfg.enable (let
-    # tmuxBoolToStr = value: if value then "on" else "off";
-
-    final_tmux = inputs.wezterm_bundle.packages.${pkgs.system}.tmux.override {
-      term_string = cfg.term_string;
+    final_tmux = inputs.wezterm_bundle.packages.${pkgs.system}.tmux.wrap {
+      terminal = cfg.term_string;
       secureSocket = cfg.secureSocket;
     };
-
-    tx = pkgs.writeShellScriptBin "tx" /*bash*/''
-      if [[ $(${final_tmux}/bin/tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
-        selected_session=$(${final_tmux}/bin/tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
-        ${final_tmux}/bin/tmux new-session -At $selected_session
-      else
-        ${final_tmux}/bin/tmux new-session
-      fi
-    '';
-
   in (if homeManager then {
     home.packages = [
-      tx
       final_tmux
     ];
   } else {
     environment = {
       systemPackages = [
-        tx
         final_tmux
       ];
     };

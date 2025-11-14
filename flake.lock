@@ -927,21 +927,6 @@
         "type": "github"
       }
     },
-    "nixToLua_2": {
-      "locked": {
-        "lastModified": 1748756411,
-        "narHash": "sha256-jmfRRsxCVV+/2KnDVrMG/RBKFOARDpSrYICqQ6vnSjw=",
-        "owner": "BirdeeHub",
-        "repo": "nixToLua",
-        "rev": "a701038ccfe76833f678e3c643a2b0f4291c1cea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "nixToLua",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1724575805,
@@ -2024,7 +2009,6 @@
     },
     "wezterm_bundle": {
       "inputs": {
-        "nixToLua": "nixToLua_2",
         "nixpkgs": [
           "nixpkgsNV"
         ],
@@ -2032,11 +2016,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1763038018,
-        "narHash": "sha256-oYnkopZn5QbD8W135Nq5sRi7wJGChV1RVHQOMDq4uzA=",
+        "lastModified": 1763105953,
+        "narHash": "sha256-5b9loAr1DiGerL9KGbZxQ+QyjmRedKZmgjqnKi64pE4=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "566c35d8f89957080e86dbdc4744ee85f9aecfcd",
+        "rev": "4eaeb4629527ffe900e2236eeabe74ba20d726e4",
         "type": "github"
       },
       "original": {
@@ -2053,11 +2037,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763035695,
-        "narHash": "sha256-6lIzfAnqO8OB2gt6ab2JOZo+Ff/w3uHNwOOG3ugpQ74=",
+        "lastModified": 1763104682,
+        "narHash": "sha256-DU6ugyP/a9HsPBApH9thweeTkuzvLs1fNzcC+zIGJ3A=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "6eb237592ccf5ff33f8b41379fe080a7246e7dac",
+        "rev": "9f4759bc6c66743cf7743b58aeb0856a1ab0ad37",
         "type": "github"
       },
       "original": {

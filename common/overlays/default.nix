@@ -31,7 +31,6 @@ overlay
     # work in progress?
     antifennel = import ./antifennel;
     alakazam = import ./alakitty;
-    foot = import ./foot;
     luakitkat = import ./luakit birdeeutils;
     opencode = import ./opencode.nix;
 
@@ -42,10 +41,10 @@ overlay
     minesweeper = inputs.minesweeper.overlays.default;
     shelua = inputs.shelua.overlays.default;
     wezterm = final: prev: {
-      wezterm = inputs.wezterm_bundle.packages.${final.system}.wezterm.override {
-        autotx = false;
-        wrapZSH = false;
-      };
+      wezterm = inputs.wezterm_bundle.packages.${final.system}.wezterm.wrap ({lib, ...}: {
+        withLauncher = lib.mkDefault false;
+        wrapZSH = lib.mkDefault false;
+      });
     };
     tmux = final: prev: {
       tmux = inputs.wezterm_bundle.packages.${final.system}.tmux;
