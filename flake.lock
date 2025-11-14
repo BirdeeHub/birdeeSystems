@@ -1210,6 +1210,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_18": {
+      "locked": {
+        "lastModified": 1762596750,
+        "narHash": "sha256-rXXuz51Bq7DHBlfIjN7jO8Bu3du5TV+3DSADBX7/9YQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b6a8526db03f735b89dd5ff348f53f752e7ddc8e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1762156382,
@@ -1689,7 +1705,8 @@
         "ollama": "ollama",
         "shelua": "shelua",
         "templ": "templ_2",
-        "wezterm_bundle": "wezterm_bundle"
+        "wezterm_bundle": "wezterm_bundle",
+        "wrappers": "wrappers_2"
       }
     },
     "rust-analyzer-src": {
@@ -2016,11 +2033,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1763127358,
-        "narHash": "sha256-zT/K4ulEt/LYRfwda+oXQGdR0C23Xv9HmSH8fWh34hc=",
+        "lastModified": 1763128516,
+        "narHash": "sha256-Z0X6AeAsR2v+zvcR6Ta189a1ajfvF01eJhNrW1e8zrg=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "93ada5fc535433928ac0458569121f880c2ae2ed",
+        "rev": "788f11090739d8fc11e135e81c3ca107629cdfb0",
         "type": "github"
       },
       "original": {
@@ -2035,6 +2052,24 @@
           "wezterm_bundle",
           "nixpkgs"
         ]
+      },
+      "locked": {
+        "lastModified": 1763127019,
+        "narHash": "sha256-yBjqjnSpRhyLEh52h5IXkc/APb00g8cvPuVWCxD5u+A=",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "rev": "c8226eea20b53634a3de320f22fd20eb036bb1fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "type": "github"
+      }
+    },
+    "wrappers_2": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_18"
       },
       "locked": {
         "lastModified": 1763127019,

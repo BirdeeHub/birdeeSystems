@@ -67,6 +67,8 @@
     # wezterm_bundle.url = "git+file:/home/birdee/Projects/wezterm_bundle";
     wezterm_bundle.inputs.nixpkgs.follows = "nixpkgsNV";
 
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";

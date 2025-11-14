@@ -138,6 +138,7 @@ in {
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgsNV;
     nixCats.flake = inputs.birdeevim.inputs.nixCats;
+    wrappers.flake = inputs.wrappers;
     home-manager.flake = inputs.home-manager;
     birdeeSystems.flake = self;
     gomod2nix.to = {
