@@ -89,15 +89,15 @@ in {
     run = "nohup xdg-open";
 
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
-      export FLAKE="${flake-path}";
+      export NH_FLAKE="${flake-path}";
       exec ${self}/scripts/system "$@"
     ''}'';
     me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
-      export FLAKE="${flake-path}";
+      export NH_FLAKE="${flake-path}";
       exec ${self}/scripts/home "$@"
     ''}'';
     me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
-      export FLAKE="${flake-path}";
+      export NH_FLAKE="${flake-path}";
       exec ${self}/scripts/both "$@"
     ''}'';
   };

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 prevWD=$(pwd)
-FLAKE=${FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} && export FLAKE &&\
-cd "$FLAKE" &&\
+NH_FLAKE=${NH_FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} && export NH_FLAKE &&\
+cd "$NH_FLAKE" &&\
 git add . &&\
 cd "$prevWD" &&\
-nixos-rebuild --extra-experimental-features "nix-command flakes pipe-operators" build-vm --flake "$FLAKE#$1"
+nixos-rebuild --extra-experimental-features "nix-command flakes pipe-operators" build-vm --flake "$NH_FLAKE#$1"

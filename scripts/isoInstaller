@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 system=$1
 installername=$2
-FLAKE=${FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} &&\
-nix --extra-experimental-features "nix-command flakes pipe-operators" build "$FLAKE#legacyPackages.${system}.nixosConfigurations.${installername}.config.system.build.isoImage"
+NH_FLAKE=${NH_FLAKE:-"$(realpath "$(dirname "$(readlink -f "$0")")")/.."} &&\
+nix --extra-experimental-features "nix-command flakes pipe-operators" build "$NH_FLAKE#legacyPackages.${system}.nixosConfigurations.${installername}.config.system.build.isoImage"
 # sudo dd if=./result/iso/something.iso of=/dev/sdd bs=1M status=progress
