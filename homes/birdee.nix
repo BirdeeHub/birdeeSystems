@@ -87,6 +87,7 @@ in {
     yeet = "rm -rf";
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
+    find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
 
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
       export NH_FLAKE="${flake-path}";
