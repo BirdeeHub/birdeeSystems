@@ -21,8 +21,8 @@ rec {
           fsmonitor = true;
           # pager = "${pkgs.delta}";
         };
-        user.name = "BirdeeHub";
-        user.email = "birdee@localhost";
+        user.name = "Birdee";
+        user.email = "<85372418+BirdeeHub@users.noreply.github.com>";
       };
     };
   };
