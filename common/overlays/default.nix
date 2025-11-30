@@ -30,7 +30,7 @@ overlay
 
     # work in progress?
     antifennel = import ./antifennel;
-    alakazam = import ./alakitty;
+    alakitty = import ./alakitty;
     luakitkat = import ./luakit birdeeutils;
     opencode = import ./opencode.nix;
 

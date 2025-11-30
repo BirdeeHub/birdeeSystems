@@ -20,7 +20,6 @@ in {
   i3 = import ./i3 args;
   i3MonMemory = import ./i3MonMemory args;
   lightdm = import (systemOnly ./lightdm) args;
-  alacritty = import ./alacritty args;
   tmux = import ./tmux args;
   shell = import ./shell args;
   aliasNetwork = import (systemOnly ./aliasNetwork) args;

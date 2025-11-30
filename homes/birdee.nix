@@ -1,7 +1,6 @@
 { config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, my_pkgs, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
-    tmux
     shell.bash
     shell.zsh
     shell.fish
@@ -25,7 +24,6 @@ in {
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
-    tmux.enable = true;
     firefox.enable = true;
     thunar.enable = true;
     ranger = {
@@ -196,6 +194,7 @@ in {
     antifennel
     wezterm
     opencode
+    tmux
     #
 
     luakitkat

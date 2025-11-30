@@ -101,13 +101,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
     packages = (packages_func system) // {
-      alakitty = pkgs.alakazam.override {
-        wrapZSH = true;
-        extraPATH = [
-        ];
-      };
-      wezshterm = inputs.wezterm_bundle.${system}.default;
-      inherit (pkgs) dep-tree minesweeper nops manix tmux alakazam wezterm antifennel luakitkat opencode;
+      inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakitkat opencode;
     } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
     app-images = let

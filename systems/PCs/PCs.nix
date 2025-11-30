@@ -9,6 +9,7 @@ in {
     birdeevim
     shell.bash
     shell.zsh
+    inputs.wezterm_bundle.wrapperModules.tmux.nixosModule
     shell.fish
     lightdm
     i3MonMemory
@@ -188,6 +189,7 @@ in {
     wezterm
     hplip
     qemu
+    tmux
     fuse
     fuse3
     parted
