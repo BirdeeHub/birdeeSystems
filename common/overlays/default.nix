@@ -37,7 +37,11 @@ overlay
     antifennel = import ./antifennel;
 
     # wrapper modules
-    git_with_config = import ./git.nix;
+    git_with_config = importName: inputs: final: prev: let
+      pkgs = import inputs.wrappers.inputs.nixpkgs { inherit (prev.stdenv.hostPlatform) system; };
+    in {
+      ${importName} = inputs.self.wrapperModules.git.wrap { inherit pkgs; };
+    };
     ranger = wrapmod;
     luakit = wrapmod;
     opencode = wrapmod;
