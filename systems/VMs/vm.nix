@@ -13,7 +13,7 @@ in {
     lightdm
     i3MonMemory
     LD
-    tmux
+    inputs.wezterm_bundle.wrapperModules.tmux.nixosModule
   ];
 
 
@@ -30,7 +30,6 @@ in {
     lightdm.enable = true;
     i3MonMemory.enable = true;
     LD.enable = true;
-    tmux.enable = true;
   };
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
@@ -180,6 +179,7 @@ in {
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wezterm
+    tmux
     fuse
     fuse3
     parted

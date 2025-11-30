@@ -6,7 +6,6 @@ in {
     shell.fish
     firefox
     birdeevim
-    ranger
     thunar
     i3
     i3MonMemory
@@ -26,9 +25,6 @@ in {
     fish.enable = true;
     firefox.enable = true;
     thunar.enable = true;
-    ranger = {
-      enable = true;
-    };
     i3.enable = true;
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
@@ -192,6 +188,7 @@ in {
     dep-tree
     minesweeper
     antifennel
+    ranger
     wezterm
     opencode
     tmux

@@ -40,14 +40,17 @@
         "roc": "roc",
         "scooter": "scooter",
         "templ": "templ",
-        "tomlua": "tomlua"
+        "tomlua": "tomlua",
+        "wrappers": [
+          "wrappers"
+        ]
       },
       "locked": {
-        "lastModified": 1763227139,
-        "narHash": "sha256-nFbMRXJO7cyH93Ifwxgi9TVp+ar7U22KGWoS6mTdWPY=",
+        "lastModified": 1764477423,
+        "narHash": "sha256-fq4SYK7BgdGnT0oQpoDkbNdJx4ymTu8AWhlmXbPmi4Q=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "e6e90681bea95e156003dcd5324f02bf06b53a30",
+        "rev": "5a3081c63ac9244a7f17e4f0704cf0e21af09252",
         "type": "github"
       },
       "original": {
@@ -1706,7 +1709,7 @@
         "shelua": "shelua",
         "templ": "templ_2",
         "wezterm_bundle": "wezterm_bundle",
-        "wrappers": "wrappers_2"
+        "wrappers": "wrappers"
       }
     },
     "rust-analyzer-src": {
@@ -2030,14 +2033,16 @@
           "nixpkgsNV"
         ],
         "tmux-navigate-src": "tmux-navigate-src",
-        "wrappers": "wrappers"
+        "wrappers": [
+          "wrappers"
+        ]
       },
       "locked": {
-        "lastModified": 1764473187,
-        "narHash": "sha256-xP1dV7fvcCAyb4Br8g3tOULBKpYM8TLCFEpx8Dc791I=",
+        "lastModified": 1764477325,
+        "narHash": "sha256-gIpratykTs8zKs1rXEGfI22mYtroiJCLZ1+BjXYwJiU=",
         "owner": "BirdeeHub",
         "repo": "wezterm_bundle",
-        "rev": "785f2f83f23697eba179638794ec6c35a46ba091",
+        "rev": "09ddddacfa7586c55b75d558233649c4c2cbc67b",
         "type": "github"
       },
       "original": {
@@ -2047,27 +2052,6 @@
       }
     },
     "wrappers": {
-      "inputs": {
-        "nixpkgs": [
-          "wezterm_bundle",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764448798,
-        "narHash": "sha256-cQ6+w6DSLCUSwe7Ioqi/8vgcBJV6VxjxQ6huRX88sQA=",
-        "owner": "BirdeeHub",
-        "repo": "nix-wrapper-modules",
-        "rev": "df73044ec6edec3694a3764f3aa201320af59ef3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "nix-wrapper-modules",
-        "type": "github"
-      }
-    },
-    "wrappers_2": {
       "inputs": {
         "nixpkgs": "nixpkgs_18"
       },

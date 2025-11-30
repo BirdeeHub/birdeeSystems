@@ -205,6 +205,7 @@ in {
     nix-info
     pciutils
     lm_sensors
+    ranger
     usbutils
     nvme-cli
     unzip

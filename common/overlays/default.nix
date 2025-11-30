@@ -27,12 +27,13 @@ overlay
 
     dep-tree = import ./dep-tree;
     nops = import ./nops;
-
-    # work in progress?
     antifennel = import ./antifennel;
+
+    # wrapper modules
     alakitty = import ./alakitty;
+    ranger = import ./ranger;
     luakitkat = import ./luakit birdeeutils;
-    opencode = import ./opencode.nix;
+    opencode = import ./opencode;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;

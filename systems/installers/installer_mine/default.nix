@@ -5,6 +5,9 @@
   final_tmux = pkgs.tmux.wrap {
     terminal = if use_alacritty then "alacritty" else "xterm-256color";
   };
+  ranger = pkgs.ranger.wrap {
+    withoutDragon = true;
+  };
 
   nerd_font_string = "FiraMono";
   font_string = "${nerd_font_string} Nerd Font";
@@ -16,15 +19,10 @@ in {
     # "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     # ./minimal-graphical-base.nix
     shell.${login_shell}
-    ranger
   ] ++ (lib.optional (login_shell != "bash") system-modules.shell.bash);
 
   birdeeMods = {
     ${login_shell}.enable = true;
-    ranger = {
-      enable = true;
-      withoutDragon = true;
-    };
   } // (lib.optionalAttrs (login_shell != "bash") {
     bash.enable = true;
   });
@@ -44,6 +42,7 @@ in {
     git
     findutils
     coreutils
+    ranger
     xclip
   ] ++ (if is_minimal then [
     pkgs.neovim

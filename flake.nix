@@ -66,11 +66,13 @@
     wezterm_bundle.url = "github:BirdeeHub/wezterm_bundle";
     # wezterm_bundle.url = "git+file:/home/birdee/Projects/wezterm_bundle";
     wezterm_bundle.inputs.nixpkgs.follows = "nixpkgsNV";
+    wezterm_bundle.inputs.wrappers.follows = "wrappers";
 
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
+    birdeevim.inputs.wrappers.follows = "wrappers";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
   };
   outputs = inputs: import ./. inputs;

@@ -16,11 +16,9 @@ in {
   LD = import (systemOnly ./LD) args;
   firefox = import (homeOnly ./firefox) args;
   thunar = import (homeOnly ./thunar) args;
-  ranger = import ./ranger args;
   i3 = import ./i3 args;
   i3MonMemory = import ./i3MonMemory args;
   lightdm = import (systemOnly ./lightdm) args;
-  tmux = import ./tmux args;
   shell = import ./shell args;
   aliasNetwork = import (systemOnly ./aliasNetwork) args;
   old_modules_compat = import ./old_modules_compat args;
