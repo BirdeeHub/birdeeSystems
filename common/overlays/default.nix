@@ -31,6 +31,7 @@ overlay
 
     # wrapper modules
     alakitty = import ./alakitty;
+    starship = import ./starship;
     ranger = import ./ranger;
     luakitkat = import ./luakit birdeeutils;
     opencode = import ./opencode;

@@ -6,10 +6,6 @@ in {
   options = {
     ${moduleNamespace}.fish = {
       enable = lib.mkEnableOption "birdeeFish";
-      themer = lib.mkOption {
-        default = "stars";
-        type = lib.types.enum [ "stars" "OMP" ];
-      };
     };
   };
   config = lib.mkIf cfg.enable (let
@@ -20,12 +16,7 @@ in {
         ${pkgs.fzf}/bin/fzf --fish > $out
       '';
     };
-    themestr = if cfg.themer == "stars" then ''
-        export STARSHIP_CONFIG='${./starship.toml}'
-        ${pkgs.starship}/bin/starship init fish | source
-    '' else ''
-        ${pkgs.oh-my-posh}/bin/oh-my-posh init fish --config ${./atomic-emodipt.omp.json} | source
-    '';
+    themestr = ''${pkgs.starship}/bin/starship init fish | source'';
   in if homeManager then {
     home.packages = [ pkgs.carapace ];
     programs.fish = {

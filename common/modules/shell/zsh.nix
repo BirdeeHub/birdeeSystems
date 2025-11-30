@@ -6,20 +6,11 @@ in {
   options = {
     ${moduleNamespace}.zsh = {
       enable = lib.mkEnableOption "birdeeZsh";
-      themer = lib.mkOption {
-        default = "stars";
-        type = lib.types.enum [ "stars" "OMP" ];
-      };
     };
   };
   config = lib.mkIf cfg.enable (let
     fzfinit = pkgs.runCommand "fzfinit" {} "${pkgs.fzf}/bin/fzf --zsh > $out";
-    themestr = if cfg.themer == "stars" then ''
-        export STARSHIP_CONFIG='${./starship.toml}'
-        eval "$(${pkgs.starship}/bin/starship init zsh)"
-    '' else ''
-        eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./atomic-emodipt.omp.json})"
-    '';
+    themestr = ''eval "$(${pkgs.starship}/bin/starship init zsh)"'';
   in if homeManager then {
     home.packages = [ pkgs.carapace ];
     programs.zsh = {
