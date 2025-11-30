@@ -14,7 +14,7 @@ let
   common = import ./common { inherit inputs; };
   inherit (common) birdeeutils;
   my_common_hub = common.hub {};
-  inherit (my_common_hub) system-modules home-modules overlaySet flakeModules diskoCFG templates userdata;
+  inherit (my_common_hub) system-modules home-modules overlaySet flakeModules diskoCFG templates userdata wrappers;
   packages_func = my_common_hub.packages;
   overlayList = builtins.attrValues overlaySet;
   # factor out declaring home manager as a module for configs that do that
@@ -79,6 +79,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.homeModule;
     };
     inherit flakeModules templates birdeeutils;
+    inherit (wrappers) modules wrapperModules;
   };
   perSystem = {
     config,
@@ -101,7 +102,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
     packages = (packages_func system) // {
-      inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakitkat opencode git_with_config ranger alakitty;
+      inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakit opencode git_with_config ranger alacritty starship;
     } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
     app-images = let

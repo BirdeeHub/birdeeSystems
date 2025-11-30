@@ -30,12 +30,14 @@ overlay
     antifennel = import ./antifennel;
 
     # wrapper modules
-    alakitty = import ./alakitty;
-    starship = import ./starship;
-    ranger = import ./ranger;
-    luakitkat = import ./luakit birdeeutils;
-    opencode = import ./opencode;
-    git_with_config = import ./git;
+    git_with_config = import ./git.nix;
+    ranger = import ./ranger.nix;
+    luakit = import ./luakit.nix;
+    opencode = import ./opencode.nix;
+    alacritty = import ./alacritty.nix;
+    starship = import ./starship.nix;
+    tmux = import ./tmux.nix;
+    wezterm = import ./wezterm.nix;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
@@ -43,14 +45,5 @@ overlay
     nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
     shelua = inputs.shelua.overlays.default;
-    wezterm = final: prev: {
-      wezterm = inputs.wezterm_bundle.packages.${final.system}.wezterm.wrap ({lib, ...}: {
-        withLauncher = lib.mkDefault false;
-        wrapZSH = lib.mkDefault false;
-      });
-    };
-    tmux = final: prev: {
-      tmux = inputs.wezterm_bundle.packages.${final.system}.tmux;
-    };
   };
 in overlaySet

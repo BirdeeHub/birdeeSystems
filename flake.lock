@@ -1708,7 +1708,7 @@
         "ollama": "ollama",
         "shelua": "shelua",
         "templ": "templ_2",
-        "wezterm_bundle": "wezterm_bundle",
+        "tmux-navigate-src": "tmux-navigate-src",
         "wrappers": "wrappers"
       }
     },
@@ -2024,30 +2024,6 @@
         "owner": "a-h",
         "ref": "0.0.10",
         "repo": "version",
-        "type": "github"
-      }
-    },
-    "wezterm_bundle": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgsNV"
-        ],
-        "tmux-navigate-src": "tmux-navigate-src",
-        "wrappers": [
-          "wrappers"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764477325,
-        "narHash": "sha256-gIpratykTs8zKs1rXEGfI22mYtroiJCLZ1+BjXYwJiU=",
-        "owner": "BirdeeHub",
-        "repo": "wezterm_bundle",
-        "rev": "09ddddacfa7586c55b75d558233649c4c2cbc67b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "wezterm_bundle",
         "type": "github"
       }
     },

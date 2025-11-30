@@ -1,5 +1,7 @@
 { inputs, birdeeutils, ... }:
 { config, pkgs, lib, wlib, ... }: {
+  _file = ./default.nix;
+  key = ./default.nix;
   imports = [ wlib.modules.default ];
   options.lua = lib.mkOption {
     type = lib.types.package;

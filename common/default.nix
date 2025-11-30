@@ -10,6 +10,7 @@ in {
   , flakeMods ? true
   , templates ? true
   , userdata ? true
+  , wrappers ? true
   , ...
   }: let
     inherit (inputs.nixpkgs) lib;
@@ -19,6 +20,7 @@ in {
     mypkgs = system: (import ./pkgs { inherit inputs system birdeeutils; });
     usrdta = pkgs: import ./userdata { inherit inputs birdeeutils; } pkgs;
     FM = import ./flakeModules { inherit inputs birdeeutils; };
+    wrapperModules = import ./wrappers { inherit inputs birdeeutils; };
   in {
     home-modules = lib.optionalAttrs HM homeMods;
     system-modules = lib.optionalAttrs nixos nixosMods;
@@ -28,5 +30,6 @@ in {
     flakeModules = lib.optionalAttrs flakeMods FM;
     templates = lib.optionalAttrs templates (import ./templates inputs);
     userdata = if userdata then usrdta else (_:{});
+    wrappers = if wrappers then wrapperModules else {};
   };
 }

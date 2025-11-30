@@ -123,16 +123,20 @@ in {
   services.displayManager.defaultSession = if use_alacritty then "alacritty" else "xterm-installer";
   services.xserver.desktopManager.session = let
     alacritty_dm = (let
-      alakitty = pkgs.callPackage ./alatoml.nix {
-        maximizer = "${inputs.maximizer.packages.${pkgs.system}.default}/bin/maximize_program";
-        inherit font_string;
-        tx = final_tmux;
-        shellStr = "${pkgs.${login_shell}}/bin/${login_shell}";
+      alakitty = pkgs.alacritty.wrap {
+        fontString = font_string;
+        tmuxPackage = final_tmux.wrap {
+          runShell = [ "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program Alacritty > /dev/null 2>&1 &" ];
+        };
+        settings.terminal.shell = {
+          program = "${pkgs.${login_shell}}/bin/${login_shell}";
+        };
+        settings.window.startup_mode = "Fullscreen";
       };
     in [
       { name = "alacritty";
         start = /*bash*/ ''
-          ${pkgs.alacritty}/bin/alacritty --config-file ${alakitty} &
+          ${alakitty}/bin/alacritty &
           waitPID=$!
         '';
       }

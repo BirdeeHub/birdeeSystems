@@ -194,7 +194,7 @@ in {
     tmux
     #
 
-    luakitkat
+    luakit
     ffuf
     kdePackages.kdenlive
     blender
