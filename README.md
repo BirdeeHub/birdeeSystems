@@ -2,6 +2,8 @@ I configure everything I have gotten around to converting so far via:
 
 [nix-wrapper-modules](https://github.com/BirdeeHub/nix-wrapper-modules)
 
+[website introduction and documentation](https://birdeehub.github.io/nix-wrapper-modules/)
+
 Currently Im doing that in this directory although that may change and I might forget to update this.
 
 [./common/wrappers](./common/wrappers)
