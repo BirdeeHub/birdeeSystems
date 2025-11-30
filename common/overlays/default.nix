@@ -13,6 +13,13 @@ in
 overlay
 */
 { inputs, birdeeutils, ... }: let 
+  wrapmod = importName: inputs: final: prev: {
+    ${importName} = inputs.self.wrapperModules.${importName}.wrap {
+        pkgs = final // {
+          ${importName} = prev.${importName};
+        };
+    };
+  };
   overlaySetPre = {
 
     # this is how you would add another overlay file
@@ -31,13 +38,13 @@ overlay
 
     # wrapper modules
     git_with_config = import ./git.nix;
-    ranger = import ./ranger.nix;
-    luakit = import ./luakit.nix;
-    opencode = import ./opencode.nix;
-    alacritty = import ./alacritty.nix;
-    starship = import ./starship.nix;
-    tmux = import ./tmux.nix;
-    wezterm = import ./wezterm.nix;
+    ranger = wrapmod;
+    luakit = wrapmod;
+    opencode = wrapmod;
+    alacritty = wrapmod;
+    starship = wrapmod;
+    tmux = wrapmod;
+    wezterm = wrapmod;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;

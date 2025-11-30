@@ -103,6 +103,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
 
     packages = (packages_func system) // {
       inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakit opencode git_with_config ranger alacritty starship;
+      wezshterm = pkgs.wezterm.wrap {
+        withLauncher = lib.mkDefault true;
+        wrapZSH = lib.mkDefault true;
+      };
     } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
 
     app-images = let

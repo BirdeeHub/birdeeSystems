@@ -7,9 +7,10 @@ inputs:
   ...
 }:
 let
-  tmuxf = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux.wrap {
+  tmux = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux.wrap {
     updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
   };
+  starship = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.starship.wrap;
 in
 {
   _file = ./default.nix;
@@ -60,7 +61,7 @@ in
   };
   options.ZDOTDIR = lib.mkOption {
     type = lib.types.nullOr wlib.types.stringable;
-    default = pkgs.callPackage ../zdot { };
+    default = pkgs.callPackage ./zdot { inherit starship; };
   };
   config."wezterm.lua".content = /* lua */ ''
     local cfgdir = require('nix-info').config_dir
@@ -83,10 +84,10 @@ in
       lib.optional (config.shellString != null) config.shellString
       ++ lib.optionals (config.shellString != null && config.withLauncher) [
         "-c"
-        "exec ${if config.launcher == null then "${tmuxf}/bin/tx" else config.launcher}"
+        "exec ${if config.launcher == null then "${tmux}/bin/tx" else config.launcher}"
       ];
   };
-  config.extraPackages = [ tmuxf ];
+  config.extraPackages = [ tmux ];
   config.runShell = [
     "declare -f __bp_install_after_session_init && source '${placeholder "out"}/etc/profile.d/wezterm.sh'"
   ];
