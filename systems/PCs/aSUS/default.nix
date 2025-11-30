@@ -71,7 +71,8 @@ in {
   virtualisation.vmware.host.enable = true;
   virtualisation.vmware.host.package = pkgs.vmware-workstation.override (prev: let
     new_pkgs = import inputs.nixpkgsLocked {
-      inherit (pkgs) system overlays config;
+      inherit (pkgs) overlays config;
+      inherit (pkgs.stdenv.hostPlatform) system;
     };
   in { gdbm = new_pkgs.gdbm; });
   # virtualisation.vmware.host.extraConfig = ''

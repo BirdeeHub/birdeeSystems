@@ -11,8 +11,8 @@
     default.path = pkgs.writeText "nixRangerRC.conf" config.configFile.content;
   };
   config.configFile.content = (if config.withoutDragon then "" else ''
-    map <C-Y> shell ${pkgs.xdragon} -a -x %p
-    map y<C-Y> shell ${pkgs.xdragon} --all-compact -x %p
+    map <C-Y> shell ${pkgs.dragon-drop} -a -x %p
+    map y<C-Y> shell ${pkgs.dragon-drop} --all-compact -x %p
   '') + ''
     set mouse_enabled!
     map ps shell echo "$(${pkgs.xclip}/bin/xclip -o) ." | ${pkgs.findutils}/bin/xargs cp -r

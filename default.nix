@@ -29,7 +29,7 @@ let
       home-manager.backupFileExtension = "hm-bkp";
       home-manager.verbose = true;
       home-manager.extraSpecialArgs = {
-        my_pkgs = packages_func pkgs.system;
+        my_pkgs = packages_func pkgs.stdenv.hostPlatform.system;
         inherit
           stateVersion
           self

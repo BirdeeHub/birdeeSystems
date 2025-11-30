@@ -1,7 +1,7 @@
 importName: inputs: let
   overlay = self: super: (let
     pkgs = import inputs.nixpkgsLocked {
-      inherit (self) system;
+      inherit (self.stdenv.hostPlatform) system;
       config.allowUnfree = true;
     };
   in {

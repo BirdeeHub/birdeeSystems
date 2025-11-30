@@ -13,7 +13,7 @@
 , inputs ? {}
 , APPNAME
 }: let
-  templ = inputs.templ.packages.${pkgs.system}.templ;
+  templ = inputs.templ.packages.${pkgs.stdenv.hostPlatform.system}.templ;
 in
 buildGoApplication {
   pname = "${APPNAME}";

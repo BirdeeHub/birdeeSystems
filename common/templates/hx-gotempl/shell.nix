@@ -16,7 +16,7 @@
 }:
 
 let
-  templ = inputs.templ.packages.${pkgs.system}.templ;
+  templ = inputs.templ.packages.${pkgs.stdenv.hostPlatform.system}.templ;
   air = pkgs.writeShellScriptBin "air" ''
     export PATH=${pkgs.lib.makeBinPath [ templ gomod2nix goEnv pkgs.tailwindcss ]}:$PATH
     exec ${pkgs.air}/bin/air -c ${pkgs.writeText "air-toml" (builtins.readFile ./.air.toml)}

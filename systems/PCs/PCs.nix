@@ -160,7 +160,7 @@ in {
   fonts.packages = with pkgs; [
     fira-code
     openmoji-color
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.fira-mono
     nerd-fonts.go-mono
   ];

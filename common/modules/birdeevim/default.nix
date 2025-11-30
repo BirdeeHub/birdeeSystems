@@ -28,7 +28,7 @@ in {
         categories = lib.mkIf (n == "birdeevim") {
           kotlin = true;
         };
-      }) inputs.birdeevim.packages.${pkgs.system}.default.packageDefinitions;
+      }) inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default.packageDefinitions;
     in {
       inherit (cfg) enable packageNames;
       packageDefinitions.replace = replacements;

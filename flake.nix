@@ -56,11 +56,11 @@
       url = "sourcehut:~technomancy/antifennel";
       flake = false;
     };
-    nixpkgs-ollama.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    ollama = {
-      url = "github:ollama/ollama";
-      flake = false;
-    };
+    # nixpkgs-ollama.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # ollama = {
+    #   url = "github:ollama/ollama";
+    #   flake = false;
+    # };
 
     tmux-navigate-src = {
       url = "github:sunaku/tmux-navigate";

@@ -37,7 +37,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    inputs.disko.packages.${system}.default
+    inputs.disko.packages.${stdenv.hostPlatform.system}.default
     final_tmux
     git
     findutils
@@ -48,7 +48,7 @@ in {
     pkgs.neovim
   ] else with pkgs; [
     # todo make a version that counts as minimal to include above
-    system-modules.birdeevim.packages.${system}.noAInvim
+    system-modules.birdeevim.packages.${stdenv.hostPlatform.system}.noAInvim
   ]);
 
   isoImage.isoBaseName = "birdeeOS_installer";
@@ -142,7 +142,7 @@ in {
       }
     ]);
     xterm_dm = (let
-      maximizer = "${inputs.maximizer.packages.${pkgs.system}.default}/bin/maximize_program";
+      maximizer = "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program";
       launchScript = pkgs.writeShellScript "mysh" /*bash*/ ''
         ${maximizer} xterm > /dev/null 2>&1 &
         exec ${final_tmux}/bin/tx

@@ -215,7 +215,7 @@ in {
 
     fira-code
     openmoji-color
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.go-mono
 
     # dislocker
@@ -235,7 +235,7 @@ in {
     nix-output-monitor
     nh
     manix
-    inputs.nsearch.packages.${system}.default
+    inputs.nsearch.packages.${stdenv.hostPlatform.system}.default
     nix-info
     direnv
     steam-run
