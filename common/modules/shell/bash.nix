@@ -9,34 +9,23 @@ in {
     };
   };
   config = lib.mkIf cfg.enable (let
-    fzfinit = pkgs.stdenv.mkDerivation {
-      name = "fzfinit";
-      builder = pkgs.writeText "builder.sh" /* bash */ ''
-        source $stdenv/setup
-        ${pkgs.fzf}/bin/fzf --bash > $out
-      '';
-    };
-    themestr = ''eval "$(${pkgs.starship}/bin/starship init bash)"'';
+    fzfinit = pkgs.runCommand "fzfinit" {} "${pkgs.fzf}/bin/fzf --bash > $out";
+    init = ''
+      eval "$(${pkgs.starship}/bin/starship init bash)"
+      export CARAPACE_BRIDGES='bash,inshellisense' # optional
+      source <(${pkgs.carapace}/bin/carapace _carapace bash)
+      source ${fzfinit}
+    '';
   in if homeManager then {
     home.packages = [ pkgs.carapace ];
     programs.bash = {
       enableVteIntegration = true;
-      initExtra = ''
-        ${themestr}
-        export CARAPACE_BRIDGES='bash,inshellisense' # optional
-        source <(${pkgs.carapace}/bin/carapace _carapace bash)
-        source ${fzfinit}
-      '';
+      initExtra = init;
     };
   } else {
     environment.systemPackages = [ pkgs.carapace ];
     programs.bash = {
-      promptInit = ''
-        ${themestr}
-        export CARAPACE_BRIDGES='bash,inshellisense' # optional
-        source <(${pkgs.carapace}/bin/carapace _carapace bash)
-        source ${fzfinit}
-      '';
+      promptInit = init;
     };
   });
 }

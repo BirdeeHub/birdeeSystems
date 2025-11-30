@@ -9,43 +9,33 @@ in {
     };
   };
   config = lib.mkIf cfg.enable (let
-    fzfinit = pkgs.stdenv.mkDerivation {
-      name = "fzfinit";
-      builder = pkgs.writeText "builder.sh" /* bash */ ''
-        source $stdenv/setup
-        ${pkgs.fzf}/bin/fzf --fish > $out
-      '';
-    };
-    themestr = ''${pkgs.starship}/bin/starship init fish | source'';
+    fzfinit = pkgs.runCommand "fzfinit" {} "${pkgs.fzf}/bin/fzf --fish > $out";
+    init = ''
+      fish_vi_key_bindings
+    '';
+    prompt = ''
+      ${pkgs.starship}/bin/starship init fish | source
+      export CARAPACE_BRIDGES='fish,inshellisense' # optional
+      mkdir -p ~/.config/fish/completions
+      ${pkgs.carapace}/bin/carapace --list | awk '{print $1}' | xargs -I{} touch ~/.config/fish/completions/{}.fish # disable auto-loaded completions (#185)
+      ${pkgs.carapace}/bin/carapace _carapace fish | source
+      source ${fzfinit}
+    '';
   in if homeManager then {
     home.packages = [ pkgs.carapace ];
     programs.fish = {
       enable = true;
       interactiveShellInit = ''
-        fish_vi_key_bindings
-        ${themestr}
-        export CARAPACE_BRIDGES='fish,inshellisense' # optional
-        mkdir -p ~/.config/fish/completions
-        ${pkgs.carapace}/bin/carapace --list | awk '{print $1}' | xargs -I{} touch ~/.config/fish/completions/{}.fish # disable auto-loaded completions (#185)
-        ${pkgs.carapace}/bin/carapace _carapace fish | source
-        source ${fzfinit}
+        ${init}
+        ${prompt}
       '';
     };
   } else {
     environment.systemPackages = [ pkgs.carapace ];
     programs.fish = {
       enable = true;
-      interactiveShellInit = ''
-        fish_vi_key_bindings
-      '';
-      promptInit = ''
-        ${themestr}
-        export CARAPACE_BRIDGES='fish,inshellisense' # optional
-        mkdir -p ~/.config/fish/completions
-        ${pkgs.carapace}/bin/carapace --list | awk '{print $1}' | xargs -I{} touch ~/.config/fish/completions/{}.fish # disable auto-loaded completions (#185)
-        ${pkgs.carapace}/bin/carapace _carapace fish | source
-        source ${fzfinit}
-      '';
+      interactiveShellInit = init;
+      promptInit = prompt;
     };
   });
 }
