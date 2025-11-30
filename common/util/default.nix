@@ -130,8 +130,6 @@ inputs: with builtins; rec {
   mkHMdir = pkgs: username: let
     homeDirPrefix = if pkgs.stdenv.hostPlatform.isDarwin then "Users" else "home";
     homeDirectory = "/${homeDirPrefix}/${username}";
-  in {
-    inherit username homeDirectory;
-  };
+  in homeDirectory;
 
 }

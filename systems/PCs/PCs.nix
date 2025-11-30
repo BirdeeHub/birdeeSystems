@@ -42,7 +42,7 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  users.users = users.users;
+  users.users = users;
   birdeeMods = {
     birdeevim = {
       enable = true;

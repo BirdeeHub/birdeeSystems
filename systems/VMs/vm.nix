@@ -17,7 +17,7 @@ in {
   ];
 
 
-  users.users = users.users;
+  users.users = users;
   birdeeMods = {
     birdeevim = {
       enable = true;
