@@ -17,8 +17,6 @@ in {
   ];
 
 
-  programs.git = (users.git false).${username};
-
   users.users = users.users;
   birdeeMods = {
     birdeevim = {

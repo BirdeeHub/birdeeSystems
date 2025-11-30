@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, my_pkgs, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
     tmux
@@ -16,7 +16,6 @@ in {
   # manage.
   home.username = username;
   home.homeDirectory = lib.mkDefault users.homeManager.${username}.homeDirectory;
-  programs.git = (users.git true).${username};
 
   birdeeMods = {
     birdeevim = {
@@ -56,7 +55,7 @@ in {
       prompt=''${2:-$prompt}
       ollama run "$model" "$prompt"
       echo "(auto-msg $model)"
-      ${pkgs.git}/bin/git status
+      ${my_pkgs.git}/bin/git status
     '';
   in {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
@@ -305,7 +304,6 @@ in {
     zip
     dig
     unzip
-    git
     pciutils
     xclip
     xcp
@@ -328,7 +326,9 @@ in {
     # jetbrains.idea-community
     android-studio
     visualvm
-  ];
+  ] ++ (with my_pkgs; [
+    git
+  ]);
   fonts.fontconfig.enable = true;
   qt.platformTheme.name = "gtk3";
   qt.enable = true;

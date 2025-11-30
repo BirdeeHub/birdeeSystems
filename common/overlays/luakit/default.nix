@@ -1,4 +1,4 @@
 birdeeutils: importName: inputs:
 final: prev: {
-  ${importName} = prev.callPackage ./package.nix { inherit birdeeutils inputs; };
+  ${importName} = (inputs.wrappers.lib.evalModule (final.lib.modules.importApply ./module.nix { inherit birdeeutils inputs; })).config.wrap { pkgs = final; };
 }

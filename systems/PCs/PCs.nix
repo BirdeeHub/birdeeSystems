@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, lib, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ modulesPath, config, lib, pkgs, self, my_pkgs, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
     i3
@@ -220,12 +220,13 @@ in {
     unzip
     xclip
     xsel
-    git
     ntfs3g
     # dislocker
     man-pages
     man-pages-posix
-  ]);
+  ] ++ (with my_pkgs; [
+    git
+  ]));
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
