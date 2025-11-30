@@ -34,6 +34,7 @@ overlay
     ranger = import ./ranger;
     luakitkat = import ./luakit birdeeutils;
     opencode = import ./opencode;
+    git_with_config = import ./git;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;

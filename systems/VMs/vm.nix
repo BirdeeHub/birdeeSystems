@@ -212,7 +212,7 @@ in {
     unzip
     xclip
     xsel
-    git
+    git_with_config
     ntfs3g
   ]);
 

@@ -49,7 +49,7 @@ in {
       prompt=''${2:-$prompt}
       ollama run "$model" "$prompt"
       echo "(auto-msg $model)"
-      ${my_pkgs.git}/bin/git status
+      ${pkgs.git_with_config}/bin/git status
     '';
   in {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
@@ -322,9 +322,8 @@ in {
     # jetbrains.idea-community
     android-studio
     visualvm
-  ] ++ (with my_pkgs; [
-    git
-  ]);
+    git_with_config
+  ];
   fonts.fontconfig.enable = true;
   qt.platformTheme.name = "gtk3";
   qt.enable = true;

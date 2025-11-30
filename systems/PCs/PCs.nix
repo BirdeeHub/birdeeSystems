@@ -187,6 +187,7 @@ in {
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wezterm
+    git_with_config
     hplip
     qemu
     tmux
@@ -227,9 +228,7 @@ in {
     # dislocker
     man-pages
     man-pages-posix
-  ] ++ (with my_pkgs; [
-    git
-  ]));
+  ]);
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

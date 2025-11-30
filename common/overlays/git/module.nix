@@ -1,4 +1,3 @@
-inputs:
 {config, pkgs, wlib, lib, ... }: {
   imports = [ wlib.wrapperModules.git ];
   settings = {
