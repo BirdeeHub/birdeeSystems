@@ -1,17 +1,12 @@
-Just me learning how to use nix
+I configure everything I have gotten around to converting so far via:
 
-I wouldn't suggest installing any of the final configurations on your own machine but most stuff is importable separately
+[nix-wrapper-modules](https://github.com/BirdeeHub/nix-wrapper-modules)
 
----
+Currently Im doing that in this directory although that may change and I might forget to update this.
 
-If you check out nothing else from this repo, this link is the thing to click.
+[./common/wrappers](./common/wrappers)
 
-It is a comprehensive format for importing your regular nvim configuration directly into nix.
-
-While still allowing you do have as many configs in 1 file, flake, or module as you want for all the cool direnv stuff.
-
-- editor: [birdeevim](https://github.com/BirdeeHub/birdeevim)
-- uses: [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
+All packages wrapped in this manner may be reconfigured via calling `.wrap` on them, which takes a module as an argument. `.override` and `.overrideAttrs` will pass through to the actual package.
 
 ---
 
@@ -27,16 +22,6 @@ monitor management:
   It is necessary for the user service to work.
 
   Home module specifies service using inotify to trigger when that temp file is written to and then run your xrandr scripts, and handle putting your i3 workspaces back from whence they came when you plug the monitor back in.
-
-  If you had this repo as a flake input, you could access those via importing
-
-    inputs.birdeeSystems.homeModules.i3MonMemory
-    inputs.birdeeSystems.nixosModules.i3MonMemory
-
-  In fact, all items [specified in this file](./common/modules/default.nix) can be imported in this way in other flakes.
-
-  There are others too!
-  Use `nix repl` followed by `:lf .` then type `outputs.` and hit `<tab>` to explore all the possible outputs.
 
 ---
 
@@ -55,10 +40,10 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
   - completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`
   - Also, I can't claim every language setup works perfectly or anything. This is not a distribution its mine.
 - [browser:](./common/modules/firefox) firefox
-- [file manager:](./common/modules/ranger/default.nix) ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
-- [terminal:](https://github.com/BirdeeHub/wezterm_bundle) wezterm
+- [file manager:](./common/wrappers/ranger/default.nix) ranger, but thunar when launched from firefox because im already using the mouse when it pops up from firefox
+- [terminal:](./common/wrappers/wezterm/default.nix) wezterm
 - [shell:](./common/modules/shell/home/zsh.nix) zsh with vi mode plugin, themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
-- [tmux:](./common/overlays/tmux) with some keybinds and onedark theme
+- [tmux:](./common/wrappers/tmux/default.nix) with some keybinds and onedark theme
 
 ---
 
