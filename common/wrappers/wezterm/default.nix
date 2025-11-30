@@ -6,20 +6,20 @@ inputs:
   pkgs,
   ...
 }:
-let
-  # we need to grab the final pacakge,
-  # because pkgs now has the updated tmux in it, so theres no unupdated tmux to use
-  # because we are importing these wrapper modules in overlays
-  # (it could still be grabbed from pkgs.tmux.configuration.package)
-  tmux = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux.wrap {
-    updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
-  };
-  starship = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.starship.wrap;
-in
 {
   _file = ./default.nix;
   key = ./default.nix;
   imports = [ wlib.wrapperModules.wezterm ];
+  # we need to grab the final pacakge,
+  # because pkgs now has the updated tmux in it, so theres no unupdated tmux to use
+  # because we are importing these wrapper modules in overlays
+  # (it could still be grabbed from pkgs.tmux.configuration.package, but that was more annoying)
+  options.tmux = lib.mkOption {
+    type = lib.types.package;
+    default = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux.wrap {
+      updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
+    };
+  };
   options.shellString = lib.mkOption {
     type = wlib.types.stringable;
     default = "${pkgs.zsh}/bin/zsh";
@@ -65,7 +65,7 @@ in
   };
   options.ZDOTDIR = lib.mkOption {
     type = lib.types.nullOr wlib.types.stringable;
-    default = pkgs.callPackage ./zdot { inherit starship; };
+    default = pkgs.callPackage ./zdot { inherit (inputs.self.packages.${pkgs.stdenv.hostPlatform.system}) starship; };
   };
   config."wezterm.lua".content = /* lua */ ''
     local cfgdir = require('nix-info').config_dir
@@ -88,10 +88,10 @@ in
       lib.optional (config.shellString != null) config.shellString
       ++ lib.optionals (config.shellString != null && config.withLauncher) [
         "-c"
-        "exec ${if config.launcher == null then "${tmux}/bin/tx" else config.launcher}"
+        "exec ${if config.launcher == null then "${config.tmux}/bin/tx" else config.launcher}"
       ];
   };
-  config.extraPackages = [ tmux ];
+  config.extraPackages = [ config.tmux ];
   config.runShell = [
     "declare -f __bp_install_after_session_init && source '${placeholder "out"}/etc/profile.d/wezterm.sh'"
   ];
