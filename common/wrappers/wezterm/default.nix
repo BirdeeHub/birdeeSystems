@@ -7,6 +7,10 @@ inputs:
   ...
 }:
 let
+  # we need to grab the final pacakge,
+  # because pkgs now has the updated tmux in it, so theres no unupdated tmux to use
+  # because we are importing these wrapper modules in overlays
+  # (it could still be grabbed from pkgs.tmux.configuration.package)
   tmux = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux.wrap {
     updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
   };
