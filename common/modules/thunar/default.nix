@@ -28,22 +28,25 @@ in {
   in {
     home.packages = [ package ];
     home.file = {
-      ".config/Thunar/uca.xml".text = lib.mkIf cfg.enableCustomActions /*xml*/''
-        <?xml version="1.0" encoding="UTF-8"?>
-        <actions>
-        <action>
-            <icon>utilities-terminal</icon>
-            <name>Open Terminal Here</name>
-            <submenu></submenu>
-            <command>${cfg.terminal} --working-directory %f</command>
-            <description></description>
-            <range></range>
-            <patterns>*</patterns>
-            <startup-notify/>
-            <directories/>
-        </action>
-        </actions>
-      '';
+      ".config/Thunar/uca.xml" = lib.mkIf cfg.enableCustomActions {
+        force = true;
+        text = /*xml*/ ''
+          <?xml version="1.0" encoding="UTF-8"?>
+          <actions>
+          <action>
+              <icon>utilities-terminal</icon>
+              <name>Open Terminal Here</name>
+              <submenu></submenu>
+              <command>${cfg.terminal} --working-directory %f</command>
+              <description></description>
+              <range></range>
+              <patterns>*</patterns>
+              <startup-notify/>
+              <directories/>
+          </action>
+          </actions>
+        '';
+      };
     };
   });
 }
