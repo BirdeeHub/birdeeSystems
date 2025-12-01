@@ -6,10 +6,33 @@ inputs:
   pkgs,
   ...
 }:
+let
+  mkColor =
+    default:
+    lib.mkOption {
+      type = lib.types.str;
+      inherit default;
+    };
+in
 {
   _file = ./default.nix;
   key = ./default.nix;
   imports = [ wlib.wrapperModules.tmux ];
+  options.colors = lib.mkOption {
+    type = lib.types.submodule {
+      options = {
+        black = mkColor "#282c34";
+        blue = mkColor "#61afef";
+        yellow = mkColor "#e5c07b";
+        red = mkColor "#e06c75";
+        white = mkColor "#aab2bf";
+        green = mkColor "#98c379";
+        visual_grey = mkColor "#3e4452";
+        comment_grey = mkColor "#5c6370";
+      };
+    };
+  };
+  config.colors.green = "#80a0ff";
   config.prefix = "C-Space";
   config.terminal = "xterm-256color";
   config.terminalOverrides = ",${config.terminal}:RGB";
@@ -18,7 +41,7 @@ inputs:
   config.modeKeys = "vi";
   config.vimVisualKeys = true;
   config.disableConfirmationPrompt = true;
-  config.configBefore = /*tmux*/ ''
+  config.configBefore = /* tmux */ ''
     bind-key -N "Select the previously current window" C-p last-window
     bind-key -N "Switch to the last client" P switch-client -l
 
@@ -38,7 +61,18 @@ inputs:
     bind -r -N "Move the visible part of the window right" M-l refresh-client -R 10
   '';
   config.plugins = [
-    pkgs.tmuxPlugins.onedark-theme
+    # pkgs.tmuxPlugins.onedark-theme
+    (let
+      pname = "tmux-onedark-custom";
+      plugin = pkgs.runCommand pname {
+        src = pkgs.replaceVars ./tmux-onedark-theme.tmux (builtins.mapAttrs (_: wlib.escapeShellArgWithEnv) config.colors // { inherit (pkgs) bash; });
+      } "mkdir -p $out; cp $src $out/${pname}.tmux; chmod +x $out/${pname}.tmux";
+    in pkgs.tmuxPlugins.mkTmuxPlugin {
+      pluginName = pname;
+      version = "master";
+      src = plugin;
+      rtpFilePath = "${pname}.tmux";
+    })
     {
       plugin = (
         pkgs.tmuxPlugins.mkTmuxPlugin {
@@ -58,7 +92,7 @@ inputs:
     }
   ];
   config.drv.postBuild = let
-    tx = /*bash*/''
+    tx = /* bash */ ''
       #!${pkgs.bash}/bin/bash
       if [[ $(${placeholder "out"}/bin/tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
         selected_session=$(${placeholder "out"}/bin/tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
@@ -79,7 +113,7 @@ inputs:
   options.nixosModule = lib.mkOption {
     readOnly = true;
     type = lib.types.raw;
-    default = {pkgs,...}: {
+    default = { pkgs, ... }: {
       config.security.wrappers = {
         utempter = {
           source = "${pkgs.libutempter}/lib/utempter/utempter";
