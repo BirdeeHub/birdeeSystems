@@ -6,7 +6,7 @@
   ...
 }:
 # Produces a SOURCEABLE script which exports STARSHIP_CONFIG and then evals the prompt command
-# This is because STARSHIP_CONFIG needs to be set in the SHELL, not just starship
+# This is because remembering which way to source it for which shell is obnoxious
 
 # If shell is null, the default, it wont be a sourceable script
 # It will be like the normal starship command, which returns a string to source yourself.
