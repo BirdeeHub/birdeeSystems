@@ -7,6 +7,9 @@
 }:
 # Produces a SOURCEABLE script which exports STARSHIP_CONFIG and then evals the prompt command
 # This is because STARSHIP_CONFIG needs to be set in the SHELL, not just starship
+
+# If shell is null, the default, it wont be a sourceable script
+# It will be like the normal starship command, which returns a string to source yourself.
 let
   tomlFmt = pkgs.formats.toml { };
 in
@@ -29,6 +32,12 @@ in
       };
     };
 
+    shell = lib.mkOption {
+      type = lib.types.nullOr (lib.types.enum [ "bash" "zsh" "fish" ]);
+      default = null;
+      description = "Target shell this will be sourced in";
+    };
+
     configFile = lib.mkOption {
       type = wlib.types.file pkgs;
       default.path = tomlFmt.generate "starship.toml" config.settings;
@@ -37,7 +46,13 @@ in
   };
 
   config = {
-    argv0type = lib.mkDefault (s: ''eval "$(${s})"'');
+    addFlag = lib.mkIf (config.shell != null) [ [ "init" config.shell ] ];
+    argv0type = lib.mkIf (config.shell != null) (
+      if config.shell == "fish" then
+        s: s + " | source"
+      else
+        s: ''eval "$(${s})"''
+    );
     package = lib.mkDefault pkgs.starship;
     env.STARSHIP_CONFIG = config.configFile.path;
     meta.platforms = lib.platforms.all;

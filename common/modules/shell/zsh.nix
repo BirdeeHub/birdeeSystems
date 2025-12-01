@@ -25,7 +25,7 @@ in {
       source ${fzfinit}
     '';
     prompt = /* bash */ ''
-      . ${pkgs.starship.wrap { addFlag = [ "init" "zsh" ]; }}/bin/starship
+      . ${pkgs.starship.wrap { shell = "zsh"; }}/bin/starship
     '';
   in if homeManager then {
     home.packages = [ pkgs.carapace ];
