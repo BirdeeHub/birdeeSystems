@@ -10,7 +10,7 @@
 let
   # NOTE: setup
   flake-path = "/home/birdee/birdeeSystems";
-  stateVersion = "23.05";
+  stateVersion = "25.11";
   common = import ./common { inherit inputs; };
   inherit (common) birdeeutils;
   my_common_hub = common.hub {};
