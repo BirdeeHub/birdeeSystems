@@ -67,7 +67,8 @@
       flake = false;
     };
 
-    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules/sourceables";
+    # wrappers.url = "git+file:/home/birdee/Projects/nix-wrapper-modules";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";

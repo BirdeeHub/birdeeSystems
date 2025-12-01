@@ -25,8 +25,7 @@ in {
       source ${fzfinit}
     '';
     prompt = /* bash */ ''
-      . ${pkgs.starship}/bin/sourceme
-      eval "$(${pkgs.starship}/bin/starship init zsh)"
+      . ${pkgs.starship.wrap { addFlag = [ "init" "zsh" ]; }}/bin/starship
     '';
   in if homeManager then {
     home.packages = [ pkgs.carapace ];

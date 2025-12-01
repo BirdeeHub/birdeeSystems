@@ -43,8 +43,7 @@ let
       source ${zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
       source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
       source ${runCommand "fzfinit" {} "${fzf}/bin/fzf --zsh > $out"}
-      . ${starship}/bin/sourceme
-      eval "$(${starship}/bin/starship init zsh)"
+      . ${starship.wrap { addFlag = [ "init" "zsh" ]; }}/bin/starship
     '';
   newzshenv = ''[[ -f ~/.zshenv ]] && source "$HOME/.zshenv"'';
   newzprofile = ''[[ -f ~/.zprofile ]] && source "$HOME/.zprofile"'';

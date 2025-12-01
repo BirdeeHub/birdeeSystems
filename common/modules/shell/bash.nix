@@ -11,8 +11,7 @@ in {
   config = lib.mkIf cfg.enable (let
     fzfinit = pkgs.runCommand "fzfinit" {} "${pkgs.fzf}/bin/fzf --bash > $out";
     init = ''
-      . ${pkgs.starship}/bin/sourceme
-      eval "$(${pkgs.starship}/bin/starship init bash)"
+      . ${pkgs.starship.wrap { addFlag = [ "init" "bash" ]; }}/bin/starship
       export CARAPACE_BRIDGES='bash,inshellisense' # optional
       source <(${pkgs.carapace}/bin/carapace _carapace bash)
       source ${fzfinit}
