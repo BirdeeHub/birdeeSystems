@@ -191,6 +191,12 @@ in
   };
 
   config = {
+    drv.starshipPrompt = ''
+      export STARSHIP_CONFIG=${config.configFile.path}
+    '';
+    drv.postBuild = ''
+      echo "$starshipPrompt" > ${placeholder "out"}/bin/sourceme
+    '';
     package = lib.mkDefault pkgs.starship;
     env.STARSHIP_CONFIG = config.configFile.path;
     meta.platforms = lib.platforms.all;

@@ -14,7 +14,7 @@ in {
       fish_vi_key_bindings
     '';
     prompt = ''
-      export STARSHIP_CONFIG=${lib.escapeShellArg pkgs.starship.configuration.env.STARSHIP_CONFIG.data}
+      source ${pkgs.starship}/bin/sourceme
       ${pkgs.starship}/bin/starship init fish | source
       export CARAPACE_BRIDGES='fish,inshellisense' # optional
       mkdir -p ~/.config/fish/completions

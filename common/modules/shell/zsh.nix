@@ -25,7 +25,7 @@ in {
       source ${fzfinit}
     '';
     prompt = /* bash */ ''
-      export STARSHIP_CONFIG=${lib.escapeShellArg pkgs.starship.configuration.env.STARSHIP_CONFIG.data}
+      . ${pkgs.starship}/bin/sourceme
       eval "$(${pkgs.starship}/bin/starship init zsh)"
     '';
   in if homeManager then {
