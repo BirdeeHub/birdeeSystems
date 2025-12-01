@@ -1999,16 +1999,15 @@
         "nixpkgs": "nixpkgs_18"
       },
       "locked": {
-        "lastModified": 1764577626,
-        "narHash": "sha256-ZkHIoyiH6uHlrvnETfq8KHN1PcdYlmwx5yIOlZhOiuQ=",
+        "lastModified": 1764581374,
+        "narHash": "sha256-eKpYShb0WvFgjyAq1bh3tuQgHxMbroQ6eZiXj7LDd/g=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "6f96ac1d15cbe3c7c103d54939bbc998fcd02a46",
+        "rev": "dea5133ba5e4f3957e4a76776ab1e333b7f0e20a",
         "type": "github"
       },
       "original": {
         "owner": "BirdeeHub",
-        "ref": "sourceables",
         "repo": "nix-wrapper-modules",
         "type": "github"
       }
