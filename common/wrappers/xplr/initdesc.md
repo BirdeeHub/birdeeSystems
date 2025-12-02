@@ -1,0 +1,38 @@
+`luaInit` is a flexible configuration option for providing Lua code that will be executed when the Lua environment for `xplr` is initialized.
+
+It can be either a simple string of Lua code or a structured DAG (directed acyclic graph) of Lua code snippets with dependencies between them.
+
+The dag type has an extra `opts` field that can be used to pass in options to the lua code.
+
+It is like the `config.luaInfo` option, but per entry.
+
+You can then recieve it in `.data` with `local opts, name = ...`
+
+`{ data, after ? [], before ? [], opts ? {} }`
+
+**Example usage:**
+
+```nix
+luaEnv = lp: [ lp.inspect ];
+luaInit.WillRunEventually = "print('you can also just put a string if you dont want opts or need to run it before or after another')";
+luaInit.TESTFILE_1 = {
+  opts = { testval = 1; };
+  data = ''
+    local opts, name = ...
+    print(name, require("inspect")(opts))
+    return opts.hooks -- xplr configurations can return hooks
+  '';
+luaInit.TESTFILE_2 = {
+  opts = { testval = 2; };
+  after = [ "TESTFILE_1" ];
+  data = ''
+    local opts, name = ...
+    print(name, require("inspect")(opts))
+    return opts.hooks -- xplr configurations can return hooks
+  '';
+};
+```
+
+Here, `TESTFILE_1` runs before `TESTFILE_2`, with their respective options passed in.
+
+`WillRunEventually` will run at some point, but when is not specified. It could even run between `TESTFILE_1` and `TESTFILE_2`
