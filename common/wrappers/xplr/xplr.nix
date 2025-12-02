@@ -62,7 +62,6 @@ in
       else builtins.concatStringsSep ",\n" (
         wlib.dag.sortAndUnwrap {
           inherit dag;
-          # the `local hooks` protects the overall hooks collection
           mapIfOk = v: "(function(...)\n${v.data}\nend)(${lib.generators.toLua { } v.opts})";
         }
       );
