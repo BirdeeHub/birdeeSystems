@@ -78,6 +78,8 @@ in
         local acc = res[k]
         if type(acc) ~= "table" then
           res[k] = vlist
+        elseif type(vlist) ~= "table" then
+          error("expected a list of hooks at ".. tostring(k) ..", but got a " .. type(vlist))
         else
           local n = #acc
           for i = 1, #vlist do
