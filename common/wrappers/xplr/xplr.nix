@@ -59,10 +59,10 @@ in
   config.drv.nixLuaInit = let
     generateConfig = dag:
       if builtins.isString dag then dag
-      else builtins.concatStringsSep ",\n" (
+      else builtins.concatStringsSep ",\n  " (
         wlib.dag.sortAndUnwrap {
           inherit dag;
-          mapIfOk = v: "(function(...)\n${v.data}\nend)(${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
+          mapIfOk = v: "(function(...)\n${v.data}\n  end)(\n  ${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
         }
       );
   in
