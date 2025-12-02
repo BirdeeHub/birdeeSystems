@@ -62,7 +62,13 @@ in
       else builtins.concatStringsSep "\n" (
         wlib.dag.sortAndUnwrap {
           inherit dag;
-          mapIfOk = v: "hooks[#hooks+1] = (function(...)\nlocal hooks\n${v.data}\nend)(${lib.generators.toLua { } v.opts})";
+          # the `local hooks` protects the overall hooks collection
+          mapIfOk = v: ''
+            hooks[#hooks+1] = (function(...)
+              local hooks
+              ${v.data}
+            end)(${lib.generators.toLua { } v.opts})
+          '';
         }
       );
     withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
@@ -77,7 +83,9 @@ in
       package.path = package.path .. ";" .. ${builtins.toJSON (genLuaPathAbsStr luaEnv)}
       package.cpath = package.cpath .. ";" .. ${builtins.toJSON (genLuaCPathAbsStr luaEnv)}
     ''}
-    package.preload["nix-info"] = function(...) return ${lib.generators.toLua { } config.luaInfo} end
+    package.preload["nix-info"] = function(...)
+      return ${lib.generators.toLua { } config.luaInfo}
+    end
     local hooks = {}
     ${generateConfig config.luaInit}
     local function add_hooks(res, b)
