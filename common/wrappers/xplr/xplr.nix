@@ -110,8 +110,8 @@ in
       config.lua.pkgs.luaLib.genLuaPathAbsStr or pkgs.luajit.pkgs.luaLib.genLuaPathAbsStr;
     luaEnv = withPackages config.luaEnv;
   in lib.mkIf ((config.luaEnv config.lua.pkgs) != [ ]) [
-    "LUA_PATH" ";" (genLuaPathAbsStr luaEnv)
-    "LUA_CPATH" ";" (genLuaCPathAbsStr luaEnv)
+    [ "LUA_PATH" ";" (genLuaPathAbsStr luaEnv) ]
+    [ "LUA_CPATH" ";" (genLuaCPathAbsStr luaEnv) ]
   ];
   config.addFlag = [ {
     # use addFlag because it allows multiple -c args
