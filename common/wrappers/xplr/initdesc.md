@@ -36,3 +36,7 @@ luaInit.TESTFILE_2 = {
 Here, `TESTFILE_1` runs before `TESTFILE_2`, with their respective options passed in.
 
 `WillRunEventually` will run at some point, but when is not specified. It could even run between `TESTFILE_1` and `TESTFILE_2`
+
+The resulting generated file given the name `GENERATED_WRAPPER_LUA` and it is added using `-c` flag.
+
+`xplr` accepts an arbitrary number of config files passed via the `-c` flag, so you may pass extra yourself if you wish.
