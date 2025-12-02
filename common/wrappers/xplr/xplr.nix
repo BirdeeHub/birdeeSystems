@@ -109,7 +109,8 @@ in
   '';
   config.addFlag = [ {
     # use addFlag because it allows multiple -c args
-    # and while flags values can be a list for that, the esc-fn option would be for all of them.
+    # and while config.flags values can be a list for that purpose,
+    # the esc-fn option would be for all of them.
     name = "GENERATED_WRAPPER_LUA";
     data = [ "-c" "${placeholder "out"}/${config.binName}-rc.lua" ];
     esc-fn = lib.escapeShellArg;
