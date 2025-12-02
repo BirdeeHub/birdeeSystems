@@ -4,6 +4,7 @@
     tmux = import mods.tmux inputs;
     wezterm = import mods.wezterm inputs;
     luakit = import mods.luakit { inherit birdeeutils inputs; };
+    xplr = import mods.xplr { inherit birdeeutils inputs; };
   };
 in {
   modules = modules;

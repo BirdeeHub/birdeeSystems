@@ -102,7 +102,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
     packages = (packages_func system) // {
-      inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakit opencode git_with_config ranger alacritty starship;
+      inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakit opencode git_with_config ranger alacritty starship xplr;
       wezshterm = pkgs.wezterm.wrap {
         withLauncher = lib.mkDefault true;
         wrapZSH = lib.mkDefault true;

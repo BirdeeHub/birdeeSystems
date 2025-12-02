@@ -6,7 +6,6 @@ in {
     shell.fish
     firefox
     birdeevim
-    thunar
     i3
     i3MonMemory
   ];
@@ -24,7 +23,6 @@ in {
     bash.enable = true;
     fish.enable = true;
     firefox.enable = true;
-    thunar.enable = true;
     i3.enable = true;
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
@@ -198,6 +196,7 @@ in {
     ffuf
     kdePackages.kdenlive
     blender
+    kdePackages.dolphin
     nmap
     sqlmap
     burpsuite
@@ -214,6 +213,9 @@ in {
     jimtcl
 
     fira-code
+    nerd-fonts.fira-mono
+    open-fonts
+    xkcd-font
     openmoji-color
     noto-fonts-color-emoji
     nerd-fonts.go-mono
@@ -325,20 +327,25 @@ in {
     git_with_config
   ];
   fonts.fontconfig.enable = true;
-  qt.platformTheme.name = "gtk3";
-  qt.enable = true;
-  qt.style.package = pkgs.adwaita-qt;
-  qt.style.name = "adwaita-dark";
-  gtk.enable = true;
-
-  gtk.cursorTheme.package = pkgs.phinger-cursors;
-  gtk.cursorTheme.name = "phinger-cursors";
 
   home.pointerCursor.package = pkgs.phinger-cursors;
   home.pointerCursor.name = "phinger-cursors";
+  home.pointerCursor.enable = true;
+  home.pointerCursor.gtk.enable = true;
+  home.pointerCursor.x11.enable = true;
+  home.pointerCursor.x11.defaultCursor = "phinger-cursors";
+  home.pointerCursor.dotIcons.enable = true;
 
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3-dark";
+  gtk.font.name = "Sans";
+  gtk.font.size = 11;
+  gtk.enable = true;
+
+  qt.enable = true;
+  qt.platformTheme.name = "gtk3";
+  qt.style.package = pkgs.adwaita-qt;
+  qt.style.name = "adwaita-qt";
 
   # gtk.gtk3.extraCss = '''';
   # gtk.gtk3.extraConfig = {};

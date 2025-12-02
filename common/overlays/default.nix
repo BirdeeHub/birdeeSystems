@@ -48,6 +48,7 @@ overlay
     alacritty = wrapmod;
     starship = wrapmod;
     tmux = wrapmod;
+    xplr = wrapmod;
     wezterm = wrapmod;
 
   };
