@@ -71,32 +71,33 @@ in
     package.preload["nix-info"] = function(...)
       return ${lib.generators.toLua { } config.luaInfo}
     end
-    local hooks = {
-      ${generateConfig config.luaInit}
-    }
-    local function add_hooks(res, b)
-      for k, vlist in pairs(b) do
-        local acc = res[k]
-        if type(acc) ~= "table" then
-          res[k] = vlist
-        elseif type(vlist) ~= "table" then
-          error("expected a list of hooks at ".. tostring(k) ..", but got a " .. type(vlist))
-        else
-          local n = #acc
-          for i = 1, #vlist do
-            acc[n + i] = vlist[i]
+    return (function(hooks)
+      local function add_hooks(res, b)
+        for k, vlist in pairs(b) do
+          local acc = res[k]
+          if type(acc) ~= "table" then
+            res[k] = vlist
+          elseif type(vlist) ~= "table" then
+            error("expected a list of hooks at ".. tostring(k) ..", but got a " .. type(vlist))
+          else
+            local n = #acc
+            for i = 1, #vlist do
+              acc[n + i] = vlist[i]
+            end
           end
         end
+        return res
       end
-      return res
-    end
-    local result = {}
-    for _, h in ipairs(hooks) do
-      if type(h) == "table" then
-        result = add_hooks(result, h)
+      local result = {}
+      for _, h in ipairs(hooks) do
+        if type(h) == "table" then
+          result = add_hooks(result, h)
+        end
       end
-    end
-    return result
+      return result
+    end)({
+      ${generateConfig config.luaInit}
+    })
   '';
   config.drv.buildPhase = ''
     runHook preBuild
