@@ -8,7 +8,7 @@
   #   after = [ "TESTFILE_1" ];
   #   type = "fnl";
   #   data = ''
-  #     (print ((require "inspect") [...]))
+  #     (print "${placeholder "out"}" ((require "inspect") [...]))
   #   '';
   # };
   # luaInit.TESTFILE_1 = {
