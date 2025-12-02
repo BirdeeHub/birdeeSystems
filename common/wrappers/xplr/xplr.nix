@@ -62,7 +62,7 @@ in
       else builtins.concatStringsSep ",\n" (
         wlib.dag.sortAndUnwrap {
           inherit dag;
-          mapIfOk = v: "(function(...)\n${v.data}\nend)(${lib.generators.toLua { } v.opts})";
+          mapIfOk = v: "(function(...)\n${v.data}\nend)(${lib.generators.toLua { } v.opts}, ${v.name})";
         }
       );
   in
