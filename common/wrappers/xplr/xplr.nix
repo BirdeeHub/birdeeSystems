@@ -111,8 +111,18 @@ in
   in
   /* lua */ ''
     version = ${builtins.toJSON config.package.version}
-    package.preload["nix-info"] = function(...)
-      return ${lib.generators.toLua { } config.luaInfo}
+    package.preload["nix-info"] = function()
+      return setmetatable(${lib.generators.toLua { } config.luaInfo}, {
+        __call = function(self, default, ...)
+          if select('#', ...) == 0 then return default end
+          local tbl = self;
+          for _, key in ipairs({...}) do
+            if type(tbl) ~= "table" then return default end
+            tbl = tbl[key]
+          end
+          return tbl
+        end
+      })
     end
     return (function(hooks)
       local function add_hooks(res, b)
