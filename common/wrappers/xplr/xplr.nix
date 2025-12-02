@@ -71,12 +71,6 @@ in
           '';
         }
       );
-    withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
-    genLuaCPathAbsStr =
-      config.lua.pkgs.luaLib.genLuaCPathAbsStr or pkgs.luajit.pkgs.luaLib.genLuaCPathAbsStr;
-    genLuaPathAbsStr =
-      config.lua.pkgs.luaLib.genLuaPathAbsStr or pkgs.luajit.pkgs.luaLib.genLuaPathAbsStr;
-    luaEnv = withPackages config.luaEnv;
   in
   /* lua */ ''
     ${lib.optionalString ((config.luaEnv config.lua.pkgs) != [ ]) /* lua */ ''
@@ -115,6 +109,17 @@ in
     { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; } > ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
     runHook postBuild
   '';
+  suffixVar = let
+    withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
+    genLuaCPathAbsStr =
+      config.lua.pkgs.luaLib.genLuaCPathAbsStr or pkgs.luajit.pkgs.luaLib.genLuaCPathAbsStr;
+    genLuaPathAbsStr =
+      config.lua.pkgs.luaLib.genLuaPathAbsStr or pkgs.luajit.pkgs.luaLib.genLuaPathAbsStr;
+    luaEnv = withPackages config.luaEnv;
+  in lib.mkIf ((config.luaEnv config.lua.pkgs) != [ ]) [
+    "LUA_PATH" ";" (genLuaPathAbsStr luaEnv)
+    "LUA_CPATH" ";" (genLuaCPathAbsStr luaEnv)
+  ];
   config.addFlag = [ {
     # use addFlag because it allows multiple -c args
     # and while config.flags values can be a list for that purpose,
