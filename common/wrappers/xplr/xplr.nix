@@ -101,16 +101,7 @@ in
   };
   config.package = lib.mkDefault pkgs.xplr;
   config.drv.passAsFile = [ "nixLuaInit" ];
-  config.drv.nixLuaInit = if builtins.isString config.luaInit then config.luaInit else let
-    generateConfig = dag: builtins.concatStringsSep ",\n  " (
-      wlib.dag.sortAndUnwrap {
-        inherit dag;
-        mapIfOk = v: "(function(...)\n${v.data}\n  end)(${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
-      }
-    );
-  in
-  /* lua */ ''
-    version = ${builtins.toJSON config.package.version}
+  config.drv.nixLuaInfo = /* lua */ ''
     package.preload["nix-info"] = function()
       return setmetatable(${lib.generators.toLua { } config.luaInfo}, {
         __call = function(self, default, ...)
@@ -124,6 +115,15 @@ in
         end
       })
     end
+  '';
+  config.drv.nixLuaInit = let
+    generateConfig = dag: builtins.concatStringsSep ",\n  " (
+      wlib.dag.sortAndUnwrap {
+        inherit dag;
+        mapIfOk = v: "(function(...)\n${v.data}\n  end)(${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
+      }
+    );
+  in (if builtins.isString config.luaInit then config.luaInit else /*lua*/''
     return (function(hooks)
       local function add_hooks(res, b)
         for k, vlist in pairs(b) do
@@ -151,8 +151,30 @@ in
     end)({
       ${generateConfig config.luaInit}
     })
-  '';
-  config.drv.buildPhase = ''
+  '');
+  /**
+    (tset _G :version ${builtins.toJSON config.package.version})
+    ((fn [hooks]
+       (fn add-hooks [res b]
+         (each [k vlist (pairs b)]
+           (local acc (. res k))
+           (if (not= (type acc) :table) (tset res k vlist)
+               (not= (type vlist) :table)
+               (error (.. "expected a list of hooks at " (tostring k)
+                          ", but got a " (type vlist)))
+               (let [n (length acc)]
+                 (for [i 1 (length vlist)] (tset acc (+ n i) (. vlist i))))))
+         res)
+
+       (var result {})
+       (each [_ h (ipairs hooks)]
+         (when (= (type h) :table) (set result (add-hooks result h))))
+       result) {
+        ${generateConfig config.luaInit}
+       })
+  */
+  config.drv.buildPhase = let
+  in /*bash*/''
     runHook preBuild
     { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; } > ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
     runHook postBuild
