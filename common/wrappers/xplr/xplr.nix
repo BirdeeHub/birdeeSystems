@@ -105,7 +105,7 @@ in
   config.drv.buildPhase = ''
     runHook preBuild
     { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; } > ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
-    runHook preBuild
+    runHook postBuild
   '';
   config.addFlag = [ {
     # use addFlag because it allows multiple -c args
