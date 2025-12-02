@@ -59,16 +59,11 @@ in
   config.drv.nixLuaInit = let
     generateConfig = dag:
       if builtins.isString dag then dag
-      else builtins.concatStringsSep "\n" (
+      else builtins.concatStringsSep ",\n" (
         wlib.dag.sortAndUnwrap {
           inherit dag;
           # the `local hooks` protects the overall hooks collection
-          mapIfOk = v: ''
-            hooks[#hooks+1] = (function(...)
-              local hooks
-              ${v.data}
-            end)(${lib.generators.toLua { } v.opts})
-          '';
+          mapIfOk = v: "(function(...)\n${v.data}\nend)(${lib.generators.toLua { } v.opts})";
         }
       );
   in
@@ -76,8 +71,9 @@ in
     package.preload["nix-info"] = function(...)
       return ${lib.generators.toLua { } config.luaInfo}
     end
-    local hooks = {}
-    ${generateConfig config.luaInit}
+    local hooks = {
+      ${generateConfig config.luaInit}
+    }
     local function add_hooks(res, b)
       for k, vlist in pairs(b) do
         local acc = res[k]
@@ -105,7 +101,7 @@ in
     { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; } > ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
     runHook postBuild
   '';
-  suffixVar = let
+  config.suffixVar = let
     withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
     genLuaCPathAbsStr =
       config.lua.pkgs.luaLib.genLuaCPathAbsStr or pkgs.luajit.pkgs.luaLib.genLuaCPathAbsStr;
