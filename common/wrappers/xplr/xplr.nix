@@ -21,7 +21,7 @@ let
       type = luaType;
       default = {};
       description = ''
-        Can be received in `.data` with `local opts = ...`
+        Can be received in `.data` with `local opts, name = ...`
       '';
     };
   };
