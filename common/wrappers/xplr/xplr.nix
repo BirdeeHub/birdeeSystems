@@ -40,6 +40,7 @@ let
           "lua"
         ];
         default = config.defaultConfigLang;
+        description = "The language to be used within this config segment";
       };
     };
   };
@@ -59,6 +60,7 @@ in
       "lua"
     ];
     default = "lua";
+    description = "The default config language to use for generated config segments";
   };
   options.luaEnv = lib.mkOption {
     type = withPackagesType;
