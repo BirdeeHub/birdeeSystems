@@ -91,6 +91,11 @@ in
   config.drv.passAsFile = [ "nixLuaInit" ];
   config.drv.nixLuaInit =
     let
+      versionstr =
+        if hasFnl then
+          "(tset _G :version ${builtins.toJSON config.package.version})"
+        else
+          "version = ${builtins.toJSON config.package.version}";
       nixLuaInfo =
         let
           infoscript = /* lua */ ''
@@ -109,11 +114,6 @@ in
             end'';
         in
         if hasFnl then "(lua ${builtins.toJSON infoscript})" else infoscript;
-      versionstr =
-        if hasFnl then
-          "(tset _G :version ${builtins.toJSON config.package.version})"
-        else
-          "version = ${builtins.toJSON config.package.version}";
       generatedConfig = lib.pipe initDal [
         (map (
           v:
