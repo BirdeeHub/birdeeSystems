@@ -62,7 +62,7 @@ in
       else builtins.concatStringsSep "\n" (
         wlib.dag.sortAndUnwrap {
           inherit dag;
-          mapIfOk = v: "hooks[#hooks+1] = (function(...)\n${v.data}\nend)(${lib.generators.toLua { } v.opts})";
+          mapIfOk = v: "hooks[#hooks+1] = (function(...)\nlocal hooks\n${v.data}\nend)(${lib.generators.toLua { } v.opts})";
         }
       );
     withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
