@@ -73,10 +73,6 @@ in
       );
   in
   /* lua */ ''
-    ${lib.optionalString ((config.luaEnv config.lua.pkgs) != [ ]) /* lua */ ''
-      package.path = package.path .. ";" .. ${builtins.toJSON (genLuaPathAbsStr luaEnv)}
-      package.cpath = package.cpath .. ";" .. ${builtins.toJSON (genLuaCPathAbsStr luaEnv)}
-    ''}
     package.preload["nix-info"] = function(...)
       return ${lib.generators.toLua { } config.luaInfo}
     end
