@@ -49,10 +49,55 @@ in
   options.luaInit = lib.mkOption {
     type = lib.types.either lib.types.str (configDag lib.types.lines);
     default = { };
+    description = ''
+      `luaInit` is a flexible configuration option for providing Lua code that will be executed when the Lua environment for `xplr` is initialized.
+
+      It can be either a simple string of Lua code or a structured DAG (directed acyclic graph) of Lua code snippets with dependencies between them.
+
+      The dag type has an extra `opts` field that can be used to pass in options to the lua code.
+
+      It is like the `config.luaInfo` option, but per entry.
+
+      You can then recieve it in `.data` with `local opts, name = ...`
+
+      `{ data, after ? [], before ? [], opts ? {} }`
+
+      **Example usage:**
+
+      ```nix
+      luaEnv = lp: [ lp.inspect ];
+      luaInit.WillRunEventually = "print('you can also just put a string if you dont want opts or need to run it before or after another')";
+      luaInit.TESTFILE_1 = {
+        opts = { testval = 1; };
+        data = ${"''\n    "+''
+          local opts, name = ...
+              print(name, require("inspect")(opts))
+        ''+"  '';"}
+      };
+      luaInit.TESTFILE_2 = {
+        opts = { testval = 2; };
+        after = [ "TESTFILE_1" ];
+        data = ${"''\n    "+''
+          local opts, name = ...
+              print(name, require("inspect")(opts))
+              return opts.hooks -- xplr configurations can return hooks
+        ''+"  '';"}
+      };
+      ```
+
+      Here, `TESTFILE_1` runs before `TESTFILE_2`, with their respective options passed in.
+
+      `WillRunEventually` will run at some point, but when is not specified. It could even run between `TESTFILE_1` and `TESTFILE_2`
+    '';
   };
   options.luaInfo = lib.mkOption {
     type = luaType;
     default = { };
+    description = ''
+      `luaInfo` is a Lua table that can hold arbitrary data you want to expose to your Lua environment.
+
+      This table is automatically converted to Lua code and made available under `require "nix-info"`.
+    '';
   };
   config.package = lib.mkDefault pkgs.xplr;
   config.drv.passAsFile = [ "nixLuaInit" ];
