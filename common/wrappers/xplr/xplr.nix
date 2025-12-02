@@ -56,15 +56,13 @@ in
   };
   config.package = lib.mkDefault pkgs.xplr;
   config.drv.passAsFile = [ "nixLuaInit" ];
-  config.drv.nixLuaInit = let
-    generateConfig = dag:
-      if builtins.isString dag then dag
-      else builtins.concatStringsSep ",\n  " (
-        wlib.dag.sortAndUnwrap {
-          inherit dag;
-          mapIfOk = v: "(function(...)\n${v.data}\n  end)(${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
-        }
-      );
+  config.drv.nixLuaInit = if builtins.isString config.luaInit then config.luaInit else let
+    generateConfig = dag: builtins.concatStringsSep ",\n  " (
+      wlib.dag.sortAndUnwrap {
+        inherit dag;
+        mapIfOk = v: "(function(...)\n${v.data}\n  end)(${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
+      }
+    );
   in
   /* lua */ ''
     version = ${builtins.toJSON config.package.version}
