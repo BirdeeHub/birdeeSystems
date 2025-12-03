@@ -92,6 +92,11 @@ in
     default = { };
     description = builtins.readFile ./initdesc.md;
   };
+  options.infopath = lib.mkOption {
+    type = lib.types.str;
+    default = "nix-info";
+    description = "The default require path for the result of the luaInfo option";
+  };
   options.luaInfo = lib.mkOption {
     type = luaType;
     default = { };
@@ -195,7 +200,11 @@ in
     '';
   config.drv.buildPhase =
     let
-      errORname = name: if name == "nix-info" then "plugin name 'nix-info' already taken by the generated config" else if name == null then "name must be provided for a plugin!" else name;
+      errORname = name: if name == config.infopath
+          then "plugin name '${config.infopath}' already taken by luaInfo result. Change the name, or value of `config.infopath`"
+        else if name == null
+          then "name must be provided for a plugin!"
+        else name;
       mkLinkCommand =
         name: plugin:
         "ln -s ${lib.escapeShellArg plugin} ${lib.escapeShellArg "${basePluginDir}/${errORname name}"}";
@@ -207,7 +216,7 @@ in
       { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; }${
         if hasFnl then " | ${pkgs.luajitPackages.fennel}/bin/fennel --compile - " else " "
       }> ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
-      { [ -e "$nixLuaInfoPath" ] && cat "$nixLuaInfoPath" || echo "$nixLuaInfo"; } > ${lib.escapeShellArg "${basePluginDir}/nix-info.lua"}
+      { [ -e "$nixLuaInfoPath" ] && cat "$nixLuaInfoPath" || echo "$nixLuaInfo"; } > ${lib.escapeShellArg "${basePluginDir}/${config.infopath}.lua"}
       ${builtins.concatStringsSep "\n" linkCommands}
       runHook postBuild
     '';
@@ -229,7 +238,7 @@ in
       [
         "LUA_CPATH"
         ";"
-        ("${basePluginDir}/?.so;" + genLuaPathAbsStr luaEnv)
+        ("${basePluginDir}/?.so;" + genLuaCPathAbsStr luaEnv)
       ]
     ];
   config.addFlag = [
