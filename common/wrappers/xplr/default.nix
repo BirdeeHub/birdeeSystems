@@ -4,8 +4,9 @@
   imports = [ ./xplr.nix ];
   luaInfo = { };
   defaultConfigLang = "fnl";
-  # LOL impure plugins
-  plugins = {};
+  plugins = {
+    # plugin_name = plugin_path;
+  };
   luaEnv = lp: [ lp.inspect ];
   luaInit.MAIN_INIT = {
     opts = {};
