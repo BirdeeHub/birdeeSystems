@@ -7,18 +7,18 @@
   };
 in {
   imports = [ wlib.wrapperModules.xplr ];
-  luaInfo = { };
   defaultConfigLang = "fnl";
   plugins = {
     command-mode = inputs.command-mode-xplr;
     fzf = inputs.fzf-xplr;
-    # require_name = plugin_path;
   };
   luaEnv = lp: [ lp.inspect ];
   # <c-k>*l = λ
-  luaInit.debug_print = {
-    before = [ "MAIN_INIT" ];
+  luaInfo = { };
+  luaInit.MAIN_INIT = {
+    opts = {};
     data = /* fennel */ ''
+      (local (opts name) ...)
       (set _G.nix-info (require "nix-info"))
       (set _G.nix-info.debug_print (fn [...] (let [ args [...] ]
         (for [i 1 (select "#" ...)]
@@ -28,13 +28,6 @@ in {
       (set _G.nix-info.call_setup (λ [mod opts]
         ((. (require mod) :setup) opts)
       ))
-      nil
-    '';
-  };
-  luaInit.MAIN_INIT = {
-    opts = {};
-    data = /* fennel */ ''
-      (local (opts name) ...)
       ;; (_G.nix-info.debug_print name opts (require :nix-info))
       nil
     '';
