@@ -112,7 +112,10 @@ in
     '';
   };
   config.package = lib.mkDefault pkgs.xplr;
-  config.drv.passAsFile = [ "nixLuaInit" "nixLuaInfo" ];
+  config.drv.passAsFile = [
+    "nixLuaInit"
+    "nixLuaInfo"
+  ];
   config.drv.nixLuaInfo = /* lua */ ''
     return setmetatable(${lib.generators.toLua { } config.luaInfo}, {
       __call = function(self, default, ...)
@@ -137,7 +140,9 @@ in
         (map (
           v:
           let
-            lua = "(function(...) ${v.data} end)(${lib.generators.toLua { } v.opts}, ${builtins.toJSON v.name})";
+            lua = "(function(...) ${v.data} end)(${
+              lib.generators.toLua { } v.opts
+            }, ${builtins.toJSON v.name})";
             fnl = ''((fn [...] ${v.data}) (lua "" ${builtins.toJSON "${lib.generators.toLua { } v.opts}"}) ${builtins.toJSON v.name})'';
           in
           if hasFnl then if v.type == "fnl" then fnl else ''(lua "" ${builtins.toJSON lua})'' else lua
@@ -205,15 +210,21 @@ in
     '';
   config.drv.buildPhase =
     let
-      errORname = name: if name == config.infopath
-          then "plugin name '${config.infopath}' already taken by luaInfo result. Change the name, or value of `config.infopath`"
-        else if name == null
-          then "name must be provided for a plugin!"
-        else name;
+      errORname =
+        name:
+        if name == config.infopath then
+          "plugin name '${config.infopath}' already taken by luaInfo result. Change the name, or value of `config.infopath`"
+        else if name == null then
+          "name must be provided for a plugin!"
+        else
+          name;
       mkLinkCommand =
         name: plugin:
         "ln -s ${lib.escapeShellArg plugin} ${lib.escapeShellArg "${basePluginDir}/${errORname name}"}";
-      linkCommands = wlib.dag.sortAndUnwrap { dag = config.plugins; mapIfOk = v: mkLinkCommand v.name v.data; };
+      linkCommands = wlib.dag.sortAndUnwrap {
+        dag = config.plugins;
+        mapIfOk = v: mkLinkCommand v.name v.data;
+      };
     in
     /* bash */ ''
       runHook preBuild
@@ -235,16 +246,22 @@ in
       luaEnv = withPackages config.luaEnv;
     in
     lib.mkIf ((config.luaEnv config.lua.pkgs) != [ ]) [
-      [
-        "LUA_PATH"
-        ";"
-        ("${basePluginDir}/?.lua;${basePluginDir}/?/init.lua;" + genLuaPathAbsStr luaEnv)
-      ]
-      [
-        "LUA_CPATH"
-        ";"
-        ("${basePluginDir}/?.so;" + genLuaCPathAbsStr luaEnv)
-      ]
+      {
+        name = "GENERATED_LUA_PATH";
+        data = [
+          "LUA_PATH"
+          ";"
+          ("${basePluginDir}/?.lua;${basePluginDir}/?/init.lua;" + genLuaPathAbsStr luaEnv)
+        ];
+      }
+      {
+        name = "GENERATED_LUA_CPATH";
+        data = [
+          "LUA_CPATH"
+          ";"
+          ("${basePluginDir}/?.so;" + genLuaCPathAbsStr luaEnv)
+        ];
+      }
     ];
   config.addFlag = [
     {
@@ -259,4 +276,5 @@ in
       esc-fn = lib.escapeShellArg;
     }
   ];
+  config.meta.maintainers = [ wlib.maintainers.birdee ];
 }
