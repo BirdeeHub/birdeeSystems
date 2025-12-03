@@ -7,14 +7,11 @@
   };
 in {
   imports = [ wlib.wrapperModules.xplr ];
-  defaultConfigLang = "fnl";
-  plugins = {
-    command-mode = inputs.command-mode-xplr;
-    fzf = inputs.fzf-xplr;
-  };
-  luaEnv = lp: [ lp.inspect ];
   # <c-k>*l = λ
-  luaInfo = { };
+  defaultConfigLang = "fnl";
+  luaEnv = lp: [ lp.inspect ];
+  luaInfo = {
+  };
   luaInit.MAIN_INIT = {
     opts = {};
     data = /* fennel */ ''
@@ -32,20 +29,6 @@ in {
       nil
     '';
   };
-  luaInit.fzf = mkPluginCfg {
-    opts = {};
-    data = /* fennel */ ''
-      (_G.nix-info.call-setup :fzf opts)
-      nil
-    '';
-  };
-  luaInit.command-mode = mkPluginCfg {
-    opts = {};
-    data = /* fennel */ ''
-      (_G.nix-info.call-setup :command-mode opts)
-      nil
-    '';
-  };
   luaInit.AFTER_PLUGINS = {
     after = [ "MAIN_INIT" ];
     opts = {};
@@ -54,4 +37,60 @@ in {
       nil
     '';
   };
+  plugins = {
+    # command-mode = inputs.command-mode-xplr;
+    # term = inputs.term-xplr;
+    fzf = inputs.fzf-xplr;
+    tree-view = inputs.tree-view-xplr;
+    dragon = inputs.dragon-xplr;
+  };
+  luaInit.fzf = mkPluginCfg {
+    opts = {
+      mode = "default";
+      key = "ctrl-f";
+      bin = "${pkgs.fzf}/bin/fzf";
+      args = "--preview '${pkgs.pistol}/bin/pistol {}'";
+      recursive = false;  # If true, search all files under $PWD
+      enter_dir = false;  # Enter if the result is directory
+    };
+    data = /* fennel */ ''
+      (_G.nix-info.call-setup :fzf opts)
+      nil
+    '';
+  };
+  luaInit.tree-view = mkPluginCfg {
+    opts = {};
+    data = /* fennel */ ''
+      (_G.nix-info.call-setup :tree-view opts)
+      nil
+    '';
+  };
+  luaInit.dragon = mkPluginCfg {
+    opts = {
+      mode = "selection_ops";
+      key = "D";
+      drag_args = "";
+      drop_args = "";
+      keep_selection = false;
+      bin = "${pkgs.dragon-drop}/bin/dragon";
+    };
+    data = /* fennel */ ''
+      (_G.nix-info.call-setup :dragon opts)
+      nil
+    '';
+  };
+  # luaInit.command-mode = mkPluginCfg {
+  #   opts = {};
+  #   data = /* fennel */ ''
+  #     (_G.nix-info.call-setup :command-mode opts)
+  #     nil
+  #   '';
+  # };
+  # luaInit.term = mkPluginCfg {
+  #   opts = {};
+  #   data = /* fennel */ ''
+  #     (_G.nix-info.call-setup :term opts)
+  #     nil
+  #   '';
+  # };
 }

@@ -76,8 +76,20 @@
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
 
     # xplr
-    command-mode-xplr = {
-      url = "github:sayanarijit/command-mode.xplr";
+    # command-mode-xplr = {
+    #   url = "github:sayanarijit/command-mode.xplr";
+    #   flake = false;
+    # };
+    # term-xplr = {
+    #   url = "github:dtomvan/term.xplr";
+    #   flake = false;
+    # };
+    tree-view-xplr = {
+      url = "github:sayanarijit/tree-view.xplr";
+      flake = false;
+    };
+    dragon-xplr = {
+      url = "github:sayanarijit/dragon.xplr";
       flake = false;
     };
     fzf-xplr = {

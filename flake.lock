@@ -92,22 +92,6 @@
         "type": "github"
       }
     },
-    "command-mode-xplr": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1755668163,
-        "narHash": "sha256-Yt2x2ebSsvFVt05kTD7cWQiRy/ab/O3h+klhCeVXLHQ=",
-        "owner": "sayanarijit",
-        "repo": "command-mode.xplr",
-        "rev": "fcb5176241b8de20ecd553a0f49644a1b4ce0139",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sayanarijit",
-        "repo": "command-mode.xplr",
-        "type": "github"
-      }
-    },
     "devenv": {
       "inputs": {
         "cachix": "cachix",
@@ -148,6 +132,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "disko",
+        "type": "github"
+      }
+    },
+    "dragon-xplr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673425908,
+        "narHash": "sha256-FJbyu5kK78XiTJl0NNXcI0KPOdXOPwpbBCWPUEpu5zA=",
+        "owner": "sayanarijit",
+        "repo": "dragon.xplr",
+        "rev": "5fbddcb33f7d75a5abd12d27223ac55589863335",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sayanarijit",
+        "repo": "dragon.xplr",
         "type": "github"
       }
     },
@@ -1688,9 +1688,9 @@
       "inputs": {
         "antifennel": "antifennel",
         "birdeevim": "birdeevim",
-        "command-mode-xplr": "command-mode-xplr",
         "devenv": "devenv",
         "disko": "disko",
+        "dragon-xplr": "dragon-xplr",
         "flake-parts": "flake-parts_3",
         "flake-utils": "flake-utils_8",
         "fzf-xplr": "fzf-xplr",
@@ -1710,6 +1710,7 @@
         "shelua": "shelua",
         "templ": "templ_2",
         "tmux-navigate-src": "tmux-navigate-src",
+        "tree-view-xplr": "tree-view-xplr",
         "wrappers": "wrappers"
       }
     },
@@ -1980,6 +1981,22 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "tomlua",
+        "type": "github"
+      }
+    },
+    "tree-view-xplr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1704284021,
+        "narHash": "sha256-v9KDupi5l3F+Oa5X6pc/Qz9EhaFIrnQK5sckjne/kIU=",
+        "owner": "sayanarijit",
+        "repo": "tree-view.xplr",
+        "rev": "eeba82a862ca296db253d7319caf730ce1f034c2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sayanarijit",
+        "repo": "tree-view.xplr",
         "type": "github"
       }
     },
