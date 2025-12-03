@@ -6,7 +6,7 @@ The dag type has an extra `opts` field that can be used to pass in options to th
 
 It is like the `config.luaInfo` option, but per entry.
 
-You can then recieve it in `.data` with `local opts, name = ...`
+You can then receive it in `.data` with `local opts, name = ...`
 
 `{ data, after ? [], before ? [], opts ? {} }`
 
