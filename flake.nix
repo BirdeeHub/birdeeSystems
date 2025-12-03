@@ -74,6 +74,17 @@
     birdeevim.url = "github:BirdeeHub/birdeevim";
     birdeevim.inputs.wrappers.follows = "wrappers";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
+
+    # xplr
+    command-mode-xplr = {
+      url = "github:sayanarijit/command-mode.xplr";
+      flake = false;
+    };
+    fzf-xplr = {
+      url = "github:sayanarijit/fzf.xplr";
+      flake = false;
+    };
+    
   };
   outputs = inputs: import ./. inputs;
 }
