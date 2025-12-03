@@ -28,7 +28,7 @@ in {
       (set _G.nix-info.call-setup (λ [mod opts]
         ((. (require mod) :setup) opts)
       ))
-      ;; (_G.nix-info.debug_print name opts (require :nix-info))
+      ;; (_G.nix-info.debug-print name opts (require :nix-info))
       nil
     '';
   };
