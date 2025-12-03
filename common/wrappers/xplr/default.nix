@@ -13,7 +13,7 @@
     opts = {};
     data = /* fennel */ ''
       (local (opts name) ...)
-      (λ debugger [...] (each [k v (ipairs [...])]
+      (fn debugger [...] (each [k v (ipairs [...])]
         (print (.. k ":\n" ((require :inspect) v)))
       ))
       ;; (debugger name opts (require :nix-info))
