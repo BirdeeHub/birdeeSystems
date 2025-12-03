@@ -190,6 +190,7 @@ in {
     wezterm
     opencode
     tmux
+    xplr
     #
 
     luakit
