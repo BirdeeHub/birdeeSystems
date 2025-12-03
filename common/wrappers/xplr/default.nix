@@ -5,7 +5,7 @@
   luaInfo = { };
   defaultConfigLang = "fnl";
   plugins = {
-    # plugin_name = plugin_path;
+    # require_name = plugin_path;
   };
   luaEnv = lp: [ lp.inspect ];
   luaInit.MAIN_INIT = {
