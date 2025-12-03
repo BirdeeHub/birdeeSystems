@@ -12,14 +12,14 @@
   luaInit.MAIN_INIT = {
     opts = {};
     data = /* fennel */ ''
-      (let [ (opts name) ... ]
+      (local (opts name) ...)
       (fn debugger [...] (let [ args [...] ]
         (for [i 1 (select "#" ...)]
           (print (.. i ":\n" ((require :inspect) (. args i))))
         )
       ))
       ;; (debugger name opts (require :nix-info))
-      nil)
+      nil
     '';
   };
 }
