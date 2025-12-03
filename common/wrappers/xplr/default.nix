@@ -20,12 +20,12 @@ in {
     data = /* fennel */ ''
       (local (opts name) ...)
       (set _G.nix-info (require "nix-info"))
-      (set _G.nix-info.debug_print (fn [...] (let [ args [...] ]
+      (set _G.nix-info.debug-print (fn [...] (let [ args [...] ]
         (for [i 1 (select "#" ...)]
           (print (.. i ":\n" ((require :inspect) (. args i))))
         )
       )))
-      (set _G.nix-info.call_setup (λ [mod opts]
+      (set _G.nix-info.call-setup (λ [mod opts]
         ((. (require mod) :setup) opts)
       ))
       ;; (_G.nix-info.debug_print name opts (require :nix-info))
@@ -35,14 +35,14 @@ in {
   luaInit.fzf = mkPluginCfg {
     opts = {};
     data = /* fennel */ ''
-      (_G.nix-info.call_setup :fzf opts)
+      (_G.nix-info.call-setup :fzf opts)
       nil
     '';
   };
   luaInit.command-mode = mkPluginCfg {
     opts = {};
     data = /* fennel */ ''
-      (_G.nix-info.call_setup :command-mode opts)
+      (_G.nix-info.call-setup :command-mode opts)
       nil
     '';
   };
