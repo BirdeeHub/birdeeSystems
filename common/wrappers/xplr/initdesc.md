@@ -17,18 +17,20 @@ luaEnv = lp: [ lp.inspect ];
 luaInit.WillRunEventually = "print('you can also just put a string if you dont want opts or need to run it before or after another')";
 luaInit.TESTFILE_1 = {
   opts = { testval = 1; };
-  data = ''
+  data = /* lua */''
     local opts, name = ...
-    print(name, require("inspect")(opts))
+    print(name, require("inspect")(opts), "${placeholder "out"}")
     return opts.hooks -- xplr configurations can return hooks
   '';
+};
 luaInit.TESTFILE_2 = {
   opts = { testval = 2; };
   after = [ "TESTFILE_1" ];
-  data = ''
-    local opts, name = ...
-    print(name, require("inspect")(opts))
-    return opts.hooks -- xplr configurations can return hooks
+  type = "fnl";
+  data = /* fennel */ ''
+    (local (opts name) ...)
+    (print name ((require "inspect") opts) "${placeholder "out"}")
+    (. opts hooks) ;; xplr configurations can return hooks
   '';
 };
 ```
