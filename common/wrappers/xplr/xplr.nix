@@ -46,6 +46,7 @@ let
   };
   initDal = wlib.dag.sortAndUnwrap { dag = config.luaInit; };
   hasFnl = builtins.any (v: v.type == "fnl") initDal;
+  basePluginDir = "${placeholder "out"}/${config.binName}-plugins";
 in
 {
   imports = [ wlib.modules.default ];
@@ -60,7 +61,7 @@ in
       "lua"
     ];
     default = "lua";
-    description = "The default config language to use for generated config segments";
+    description = "The default config language to use for generated config segments. Does not affect the `luaInfo` option.";
   };
   options.luaEnv = lib.mkOption {
     type = withPackagesType;
@@ -73,6 +74,17 @@ in
       `config.lua.withPackages config.luaEnv`
 
       The result will be added to package.path and package.cpath
+    '';
+  };
+  options.plugins = lib.mkOption {
+    type = wlib.types.dagOf wlib.types.stringable;
+    default = { };
+    description = ''
+      Will be symlinked into a directory added to the `LUA_PATH` and `LUA_CPATH`
+
+      The name of the plugin via `require` will be the dag name for the value.
+
+      The name nix-info is not allowed.
     '';
   };
   options.luaInit = lib.mkOption {
@@ -90,7 +102,20 @@ in
     '';
   };
   config.package = lib.mkDefault pkgs.xplr;
-  config.drv.passAsFile = [ "nixLuaInit" ];
+  config.drv.passAsFile = [ "nixLuaInit" "nixLuaInfo" ];
+  config.drv.nixLuaInfo = /* lua */ ''
+    return setmetatable(${lib.generators.toLua { } config.luaInfo}, {
+      __call = function(self, default, ...)
+        if select('#', ...) == 0 then return default end
+        local tbl = self;
+        for _, key in ipairs({...}) do
+          if type(tbl) ~= "table" then return default end
+          tbl = tbl[key]
+        end
+        return tbl
+      end
+    })
+  '';
   config.drv.nixLuaInit =
     let
       versionstr =
@@ -98,24 +123,6 @@ in
           "(tset _G :version ${builtins.toJSON config.package.version})"
         else
           "version = ${builtins.toJSON config.package.version}";
-      nixLuaInfo =
-        let
-          infoscript = /* lua */ ''
-            package.preload["nix-info"] = function()
-              return setmetatable(${lib.generators.toLua { } config.luaInfo}, {
-                __call = function(self, default, ...)
-                  if select('#', ...) == 0 then return default end
-                  local tbl = self;
-                  for _, key in ipairs({...}) do
-                    if type(tbl) ~= "table" then return default end
-                    tbl = tbl[key]
-                  end
-                  return tbl
-                end
-              })
-            end'';
-        in
-        if hasFnl then "(lua ${builtins.toJSON infoscript})" else infoscript;
       generatedConfig = lib.pipe initDal [
         (map (
           v:
@@ -184,16 +191,26 @@ in
     in
     ''
       ${versionstr}
-      ${nixLuaInfo}
       ${nixInit}
     '';
-  config.drv.buildPhase = ''
-    runHook preBuild
-    { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; }${
-      if hasFnl then " | ${pkgs.luajitPackages.fennel}/bin/fennel --compile - " else " "
-    }> ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
-    runHook postBuild
-  '';
+  config.drv.buildPhase =
+    let
+      errORname = name: if name == "nix-info" then "plugin name 'nix-info' already taken by the generated config" else if name == null then "name must be provided for a plugin!" else name;
+      mkLinkCommand =
+        name: plugin:
+        "ln -s ${lib.escapeShellArg plugin} ${lib.escapeShellArg "${basePluginDir}/${errORname name}"}";
+      linkCommands = wlib.dag.sortAndUnwrap { dag = config.plugins; mapIfOk = v: mkLinkCommand v.name v.data; };
+    in
+    /* bash */ ''
+      runHook preBuild
+      mkdir -p ${lib.escapeShellArg "${basePluginDir}"}
+      { [ -e "$nixLuaInitPath" ] && cat "$nixLuaInitPath" || echo "$nixLuaInit"; }${
+        if hasFnl then " | ${pkgs.luajitPackages.fennel}/bin/fennel --compile - " else " "
+      }> ${lib.escapeShellArg "${placeholder "out"}/${config.binName}-rc.lua"}
+      { [ -e "$nixLuaInfoPath" ] && cat "$nixLuaInfoPath" || echo "$nixLuaInfo"; } > ${lib.escapeShellArg "${basePluginDir}/nix-info.lua"}
+      ${builtins.concatStringsSep "\n" linkCommands}
+      runHook postBuild
+    '';
   config.suffixVar =
     let
       withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
@@ -207,12 +224,12 @@ in
       [
         "LUA_PATH"
         ";"
-        (genLuaPathAbsStr luaEnv)
+        (genLuaPathAbsStr luaEnv + ";${basePluginDir}/?.lua;${basePluginDir}/?/init.lua")
       ]
       [
         "LUA_CPATH"
         ";"
-        (genLuaCPathAbsStr luaEnv)
+        (genLuaCPathAbsStr luaEnv + ";${basePluginDir}/?.so")
       ]
     ];
   config.addFlag = [

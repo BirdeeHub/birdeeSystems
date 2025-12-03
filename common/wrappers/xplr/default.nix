@@ -2,6 +2,11 @@
 { config, pkgs, lib, wlib, ... }:
 {
   imports = [ ./xplr.nix ];
+  # luaInfo = {
+  #   testval = "blu";
+  # };
+  # # LOL impure plugins
+  # plugins.TESTPLUGIN = "/home/birdee/Projects/shelua/lua";
   # luaEnv = lp: [ lp.inspect ];
   # luaInit.TESTFILE_2 = {
   #   opts = { haha = 2; };
@@ -15,7 +20,10 @@
   #   opts = { haha = 1; };
   #   data = ''
   #     local opts, name = ...
-  #     print(name, require("inspect")(opts))
+  #     local inspect = require "inspect"
+  #     local sh = require "TESTPLUGIN.sh"
+  #     print(sh.cat "/home/birdee/birdeeSystems/flake.nix")
+  #     print(name, inspect(opts), inspect(require "nix-info"))
   #   '';
   # };
 }
