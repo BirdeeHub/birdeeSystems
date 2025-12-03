@@ -90,7 +90,7 @@ in
   options.luaInit = lib.mkOption {
     type = lib.types.either lib.types.str (configDag lib.types.lines);
     default = { };
-    description = builtins.readFile ./initdesc.md;
+    description = builtins.readFile ./luaInit-desc.md;
   };
   options.infopath = lib.mkOption {
     type = lib.types.str;
