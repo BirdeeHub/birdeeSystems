@@ -1709,6 +1709,7 @@
         "nur": "nur",
         "shelua": "shelua",
         "templ": "templ_2",
+        "term-xplr": "term-xplr",
         "tmux-navigate-src": "tmux-navigate-src",
         "tree-view-xplr": "tree-view-xplr",
         "wrappers": "wrappers"
@@ -1944,6 +1945,22 @@
       "original": {
         "owner": "a-h",
         "repo": "templ",
+        "type": "github"
+      }
+    },
+    "term-xplr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1671274740,
+        "narHash": "sha256-bnSyHqIbit4ttMNERTnR/gZneRdPr6DJbS2ET39Umb8=",
+        "owner": "dtomvan",
+        "repo": "term.xplr",
+        "rev": "870736bb2ca4635de06b8986e761baaf705eb2a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dtomvan",
+        "repo": "term.xplr",
         "type": "github"
       }
     },

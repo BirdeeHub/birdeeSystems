@@ -39,7 +39,7 @@ in {
   };
   plugins = {
     # command-mode = inputs.command-mode-xplr;
-    # term = inputs.term-xplr;
+    term = inputs.term-xplr;
     fzf = inputs.fzf-xplr;
     tree-view = inputs.tree-view-xplr;
     dragon = inputs.dragon-xplr;
@@ -86,11 +86,12 @@ in {
   #     nil
   #   '';
   # };
-  # luaInit.term = mkPluginCfg {
-  #   opts = {};
-  #   data = /* fennel */ ''
-  #     (_G.nix-info.call-setup :term opts)
-  #     nil
-  #   '';
-  # };
+  luaInit.term = mkPluginCfg {
+    opts = {};
+    data = /* fennel */ ''
+      (local term (require :term))
+      (term.setup [ (term.profile_tmux_vsplit) (term.profile_tmux_hsplit) ])
+      nil
+    '';
+  };
 }

@@ -80,10 +80,10 @@
     #   url = "github:sayanarijit/command-mode.xplr";
     #   flake = false;
     # };
-    # term-xplr = {
-    #   url = "github:dtomvan/term.xplr";
-    #   flake = false;
-    # };
+    term-xplr = {
+      url = "github:dtomvan/term.xplr";
+      flake = false;
+    };
     tree-view-xplr = {
       url = "github:sayanarijit/tree-view.xplr";
       flake = false;
