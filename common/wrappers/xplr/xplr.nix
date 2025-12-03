@@ -71,7 +71,7 @@ in
 
       value is to be a function from `config.lua.pkgs` to list
 
-      `config.lua.withPackages config.luaEnv`
+      `config.luaEnv = lp: [ lp.inspect ];`
 
       The result will be added to package.path and package.cpath
     '';
@@ -84,7 +84,7 @@ in
 
       The name of the plugin via `require` will be the dag name for the value.
 
-      The name nix-info is not allowed.
+      The name in `config.infopath` is not allowed (default `nix-info`)
     '';
   };
   options.luaInit = lib.mkOption {
@@ -95,7 +95,10 @@ in
   options.infopath = lib.mkOption {
     type = lib.types.str;
     default = "nix-info";
-    description = "The default require path for the result of the luaInfo option";
+    description = ''
+      The default require path for the result of the luaInfo option.
+      Don't change this unless you have a really good reason to.
+    '';
   };
   options.luaInfo = lib.mkOption {
     type = luaType;
@@ -103,7 +106,9 @@ in
     description = ''
       `luaInfo` is a Lua table that can hold arbitrary data you want to expose to your Lua environment.
 
-      This table is automatically converted to Lua code and made available under `require "nix-info"`.
+      This table is automatically converted to Lua code and made available under `require "''${config.infopath}"`.
+
+      `config.defaultConfigLang` does NOT affect this value.
     '';
   };
   config.package = lib.mkDefault pkgs.xplr;
