@@ -211,7 +211,7 @@ in
       ${builtins.concatStringsSep "\n" linkCommands}
       runHook postBuild
     '';
-  config.suffixVar =
+  config.prefixVar =
     let
       withPackages = config.lua.withPackages or pkgs.luajit.withPackages;
       genLuaCPathAbsStr =
@@ -224,12 +224,12 @@ in
       [
         "LUA_PATH"
         ";"
-        (genLuaPathAbsStr luaEnv + ";${basePluginDir}/?.lua;${basePluginDir}/?/init.lua")
+        ("${basePluginDir}/?.lua;${basePluginDir}/?/init.lua;" + genLuaPathAbsStr luaEnv)
       ]
       [
         "LUA_CPATH"
         ";"
-        (genLuaCPathAbsStr luaEnv + ";${basePluginDir}/?.so")
+        ("${basePluginDir}/?.so;" + genLuaPathAbsStr luaEnv)
       ]
     ];
   config.addFlag = [
