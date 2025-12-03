@@ -8,6 +8,7 @@
     # require_name = plugin_path;
   };
   luaEnv = lp: [ lp.inspect ];
+  # <c-k>*l = λ
   luaInit.MAIN_INIT = {
     opts = {};
     data = /* fennel */ ''
