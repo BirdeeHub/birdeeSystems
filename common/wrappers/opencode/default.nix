@@ -26,7 +26,7 @@
     };
   };
   imports = [ wlib.modules.default ];
-  config.package = pkgs.opencode;
+  config.package = lib.mkDefault pkgs.opencode;
   config.envDefault = {
     OPENCODE_CONFIG = pkgs.writeText "OPENCODE_CONFIG.json" (builtins.toJSON config.settings);
   };
