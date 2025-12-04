@@ -12,10 +12,9 @@ in {
   luaEnv = lp: [ lp.inspect ];
   luaInfo = {
   };
-  luaInit.MAIN_INIT = {
-    opts = {};
+  luaInit.helpers = {
+    before = [ "MAIN_INIT" ];
     data = /* fennel */ ''
-      (local (opts name) ...)
       (set _G.nix-info (require "nix-info"))
       (set _G.nix-info.debug-print (fn [...] (let [ args [...] ]
         (for [i 1 (select "#" ...)]
@@ -25,6 +24,74 @@ in {
       (set _G.nix-info.call-setup (λ [mod opts]
         ((. (require mod) :setup) opts)
       ))
+    '';
+  };
+  luaInit.luaHacks = {
+    before = [ "MAIN_INIT" ];
+    after = [ "helpers" ];
+    opts = {};
+    type = "lua";
+    data = /* lua */ ''
+    '';
+  };
+  luaInit.MAIN_INIT = {
+    opts = {};
+    data = /* fennel */ ''
+      (local (opts name) ...)
+      (set xplr.config.modes.builtin.default.key_bindings.on_key.S {
+        :help "serve $PWD"
+        :messages [
+          {
+            :BashExec0 ${builtins.toJSON ''
+              ${pkgs.python3}/bin/python3 -m http.server 1337
+            ''}
+          }
+        ]
+      })
+      (set xplr.config.modes.builtin.go_to.key_bindings.on_key.h {
+        :help "history"
+        :messages [
+          "PopMode"
+          {
+            :BashExec0 ${builtins.toJSON ''
+              PTH=$(cat "''${XPLR_PIPE_HISTORY_OUT:?}" | sort -z -u | ${pkgs.fzf}/bin/fzf --read0)
+              if [ "$PTH" ]; then
+                "$XPLR" -m 'ChangeDirectory: %q' "$PTH"
+              fi
+            ''}
+          }
+        ]
+      })
+      (set xplr.config.modes.builtin.default.key_bindings.on_key.m {
+        :help "bookmark"
+        :messages [
+          {
+            :BashExecSilently0 ${builtins.toJSON ''
+              PTH="''${XPLR_FOCUS_PATH:?}"
+              PTH_ESC=$(printf %q "$PTH")
+              if echo "''${PTH:?}" >> "''${XPLR_SESSION_PATH:?}/bookmarks"; then
+                "$XPLR" -m 'LogSuccess: %q' "$PTH_ESC added to bookmarks"
+              else
+                "$XPLR" -m 'LogError: %q' "Failed to bookmark $PTH_ESC"
+              fi
+            ''}
+          }
+        ]
+      })
+      (tset xplr.config.modes.builtin.default.key_bindings.on_key "`" {
+        :help "go to bookmark"
+        :messages [
+          {
+            :BashExec0 ${builtins.toJSON ''
+              PTH=$(cat "''${XPLR_SESSION_PATH:?}/bookmarks" | ${pkgs.fzf}/bin/fzf --no-sort)
+              PTH_ESC=$(printf %q "$PTH")
+              if [ "$PTH" ]; then
+                "$XPLR" -m 'FocusPath: %q' "$PTH"
+              fi
+            ''}
+          }
+        ]
+      })
       ;; (_G.nix-info.debug-print name opts (require :nix-info))
       nil
     '';
