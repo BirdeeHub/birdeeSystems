@@ -92,7 +92,7 @@ in
         else if config.shell == "nu" then
           /* bash */ ''
             echo 'mkdir ($nu.data-dir | path join "vendor/autoload")' > "$out/bin/${config.binName}"
-            echo "$out/bin/.OG-${config.binName} | save -f ($nu.data-dir | path join \"vendor/autoload/starship.nu\")" >> "$out/bin/${config.binName}"
+            echo "$out/bin/.OG-${config.binName} | save -f (\$nu.data-dir | path join \"vendor/autoload/starship.nu\")" >> "$out/bin/${config.binName}"
           ''
         else
           throw "language unsupported by this module"
