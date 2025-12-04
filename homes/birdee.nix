@@ -191,9 +191,10 @@ in {
     tmux
     xplr
     git_with_config
+    nushell
+    luakit
     #
 
-    luakit
     ffuf
     kdePackages.kdenlive
     blender
