@@ -53,7 +53,7 @@ in
 
         bash && zsh: `. ''${this}/bin/''${this.meta.mainProgram}`
         fish: `source ''${this}/bin/''${this.meta.mainProgram}`
-        nu: `include ''${this}/bin/''${this.meta.mainProgram}`
+        nu: `source ''${this}/bin/''${this.meta.mainProgram}`
       '';
     };
 
