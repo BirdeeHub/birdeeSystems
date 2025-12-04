@@ -37,14 +37,8 @@ in {
       nil
     '';
   };
-  plugins = {
-    # command-mode = inputs.command-mode-xplr;
-    term = inputs.term-xplr;
-    fzf = inputs.fzf-xplr;
-    tree-view = inputs.tree-view-xplr;
-    dragon = inputs.dragon-xplr;
-  };
   luaInit.fzf = mkPluginCfg {
+    plugin = inputs.fzf-xplr;
     opts = {
       mode = "default";
       key = "ctrl-f";
@@ -59,6 +53,7 @@ in {
     '';
   };
   luaInit.tree-view = mkPluginCfg {
+    plugin = inputs.tree-view-xplr;
     opts = {};
     data = /* fennel */ ''
       (_G.nix-info.call-setup :tree-view opts)
@@ -66,6 +61,7 @@ in {
     '';
   };
   luaInit.dragon = mkPluginCfg {
+    plugin = inputs.dragon-xplr;
     opts = {
       mode = "selection_ops";
       key = "D";
@@ -79,14 +75,17 @@ in {
       nil
     '';
   };
-  # luaInit.command-mode = mkPluginCfg {
-  #   opts = {};
-  #   data = /* fennel */ ''
-  #     (_G.nix-info.call-setup :command-mode opts)
-  #     nil
-  #   '';
-  # };
+  luaInit.command-mode = mkPluginCfg {
+    disabled = true;
+    plugin = inputs.command-mode-xplr;
+    opts = {};
+    data = /* fennel */ ''
+      (_G.nix-info.call-setup :command-mode opts)
+      nil
+    '';
+  };
   luaInit.term = mkPluginCfg {
+    plugin = inputs.term-xplr;
     opts = {};
     data = /* fennel */ ''
       (local term (require :term))

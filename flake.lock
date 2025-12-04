@@ -92,6 +92,22 @@
         "type": "github"
       }
     },
+    "command-mode-xplr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755668163,
+        "narHash": "sha256-Yt2x2ebSsvFVt05kTD7cWQiRy/ab/O3h+klhCeVXLHQ=",
+        "owner": "sayanarijit",
+        "repo": "command-mode.xplr",
+        "rev": "fcb5176241b8de20ecd553a0f49644a1b4ce0139",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sayanarijit",
+        "repo": "command-mode.xplr",
+        "type": "github"
+      }
+    },
     "devenv": {
       "inputs": {
         "cachix": "cachix",
@@ -1688,6 +1704,7 @@
       "inputs": {
         "antifennel": "antifennel",
         "birdeevim": "birdeevim",
+        "command-mode-xplr": "command-mode-xplr",
         "devenv": "devenv",
         "disko": "disko",
         "dragon-xplr": "dragon-xplr",
@@ -2067,11 +2084,11 @@
         "nixpkgs": "nixpkgs_18"
       },
       "locked": {
-        "lastModified": 1764754827,
-        "narHash": "sha256-hCZr4KcLtzXG6aNXJ5aKr33JsgkRZEqtqYoRiQ161Lw=",
+        "lastModified": 1764814217,
+        "narHash": "sha256-dBTpkss7EGOy9nuM/VAJ9prZiJNFilykpBfRhH+Wo2I=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "9870a066f711d2b6ada5de6af6b10a331bf6f83e",
+        "rev": "72fb64f706b863d96c0b9c6870654953dc936465",
         "type": "github"
       },
       "original": {

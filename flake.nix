@@ -76,10 +76,10 @@
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
 
     # xplr
-    # command-mode-xplr = {
-    #   url = "github:sayanarijit/command-mode.xplr";
-    #   flake = false;
-    # };
+    command-mode-xplr = {
+      url = "github:sayanarijit/command-mode.xplr";
+      flake = false;
+    };
     term-xplr = {
       url = "github:dtomvan/term.xplr";
       flake = false;
