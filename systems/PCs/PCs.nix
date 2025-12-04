@@ -14,7 +14,6 @@ in {
     lightdm
     i3MonMemory
     LD
-    aliasNetwork
   ];
 
   nix.settings = {
@@ -48,7 +47,6 @@ in {
       enable = true;
       packageNames = [ "noAInvim" ];
     };
-    aliasNetwork.enable = false;
     i3.enable = true;
     zsh.enable = true;
     bash.enable = true;
