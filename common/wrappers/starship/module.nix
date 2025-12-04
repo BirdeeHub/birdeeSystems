@@ -33,27 +33,45 @@ in
     };
 
     shell = lib.mkOption {
-      type = lib.types.nullOr (lib.types.enum [ "bash" "zsh" "fish" ]);
+      type = lib.types.nullOr (lib.types.enum [ "bash" "zsh" "fish" "nu" ]);
       default = null;
-      description = "Target shell this will be sourced in";
+      description = ''
+        If null, this module just wraps starship with config,
+        user must source the output of the command in their shell.
+
+        However, for some languages this wrapper is capable of outputting a sourceable script.
+
+        If you set this option, you can then source $out/bin/starship directly.
+      '';
     };
 
     configFile = lib.mkOption {
       type = wlib.types.file pkgs;
       default.path = tomlFmt.generate "starship.toml" config.settings;
-      description = "The starship configuration file.";
+      description = "The starship configuration file. By default, this is generated from `config.settings`";
     };
   };
 
   config = {
-    addFlag = lib.mkIf (config.shell != null) [ [ "init" config.shell ] ];
-    argv0type = lib.mkIf (config.shell != null) (
-      if config.shell == "fish" then
-        s: s + " | source"
-      else
-        s: ''eval "$(${s})"''
-    );
+    addFlag = lib.mkIf (config.shell != null) [
+      {
+        name = "GENERATED_INIT_FLAG";
+        data = [ "init" config.shell "--print-full-init" ];
+      }
+    ];
+    argv0type = lib.mkIf (config.shell == "bash") (s: ''eval "$(${s})"'');
+    drv.buildPhase = lib.mkIf (config.shell != null && config.shell != "bash") (/* bash */ ''
+      mv $out/bin/${config.binName} $out/bin/OG-starship
+    '' + (if config.shell == "fish" then /* bash */ ''
+      echo "$out/bin/OG-starship | source" > "$out/bin/${config.binName}"
+    '' else if config.shell == "zsh" then /* bash */ ''
+      echo "eval \"\$($out/bin/OG-starship)\"" > "$out/bin/${config.binName}"
+    '' else if config.shell == "nu" then /* bash */ ''
+      echo 'mkdir ($nu.data-dir | path join "vendor/autoload")' > "$out/bin/${config.binName}"
+      echo "$out/bin/OG-starship | save -f ($nu.data-dir | path join \"vendor/autoload/starship.nu\")" >> "$out/bin/${config.binName}"
+    '' else throw "language unsupported by this module"));
     package = lib.mkDefault pkgs.starship;
+    runShell = lib.mkIf (config.shell != null && config.shell != "bash") [ (if config.shell == "nu" then "echo ${lib.escapeShellArg ''$env.STARSHIP_CONFIG = "${config.configFile.path}"''}" else if config.shell == "fish" then "echo ${lib.escapeShellArg ''set -x STARSHIP_CONFIG "${config.configFile.path}"''}" else "echo ${lib.escapeShellArg ''export "STARSHIP_CONFIG=${config.configFile.path}"''}") ];
     env.STARSHIP_CONFIG = config.configFile.path;
     meta.platforms = lib.platforms.all;
   };
