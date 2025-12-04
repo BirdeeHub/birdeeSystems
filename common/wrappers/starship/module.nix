@@ -71,8 +71,11 @@ in
       echo "$out/bin/OG-starship | save -f ($nu.data-dir | path join \"vendor/autoload/starship.nu\")" >> "$out/bin/${config.binName}"
     '' else throw "language unsupported by this module"));
     package = lib.mkDefault pkgs.starship;
-    runShell = lib.mkIf (config.shell != null && config.shell != "bash") [ (if config.shell == "nu" then "echo ${lib.escapeShellArg ''$env.STARSHIP_CONFIG = "${config.configFile.path}"''}" else if config.shell == "fish" then "echo ${lib.escapeShellArg ''set -x STARSHIP_CONFIG "${config.configFile.path}"''}" else "echo ${lib.escapeShellArg ''export "STARSHIP_CONFIG=${config.configFile.path}"''}") ];
-    env.STARSHIP_CONFIG = config.configFile.path;
+    runShell = lib.mkIf (config.shell != null && config.shell != "bash") [ (if config.shell == "nu" then "echo ${lib.escapeShellArg ''$env.STARSHIP_CONFIG = ${wlib.escapeShellArgWithEnv config.configFile.path}''}" else if config.shell == "fish" then "echo ${lib.escapeShellArg ''set -x STARSHIP_CONFIG ${wlib.escapeShellArgWithEnv config.configFile.path}''}" else "echo ${lib.escapeShellArg "export ${wlib.escapeShellArgWithEnv "STARSHIP_CONFIG=${config.configFile.path}"}"}") ];
+    env.STARSHIP_CONFIG = {
+      data = config.configFile.path;
+      esc-fn = wlib.escapeShellArgWithEnv;
+    };
     meta.platforms = lib.platforms.all;
   };
 }
