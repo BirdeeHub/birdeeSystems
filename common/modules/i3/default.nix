@@ -90,11 +90,11 @@ in {
         }
         TERMINAL=${cfg.dmenu.terminalStr}
       '' + (builtins.readFile ./dmenu_recency.sh));
-      dmenuclr_recent = ''${pkgs.writeShellScriptBin "dmenuclr_recent" (/*bash*/''
+      dmenuclr_recent = ''${pkgs.writeShellScriptBin "dmenuclr_recent" ''
         cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
         cache="$cachedir/dmenu_recent"
         rm $cache
-      '')}'';
+      ''}'';
       i3status = (pkgs.writeShellScriptBin "i3status" ''
         exec ${pkgs.i3status}/bin/i3status --config ${pkgs.writeText "i3bar" (pkgs.callPackage ./i3bar.nix {inherit (cfg) cputemppath;})} "$@"
       '');
