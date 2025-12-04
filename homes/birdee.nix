@@ -190,6 +190,7 @@ in {
     opencode
     tmux
     xplr
+    git_with_config
     #
 
     luakit
@@ -324,7 +325,6 @@ in {
     # jetbrains.idea-community
     android-studio
     visualvm
-    git_with_config
   ];
   fonts.fontconfig.enable = true;
 
