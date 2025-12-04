@@ -33,6 +33,7 @@ in
       };
     };
 
+    # TODO: make nushell work
     shell = lib.mkOption {
       type = lib.types.nullOr (
         lib.types.enum [

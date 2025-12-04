@@ -44,6 +44,7 @@ overlay
     };
     ranger = wrapmod;
     luakit = wrapmod;
+    nushell = wrapmod;
     opencode = wrapmod;
     alacritty = wrapmod;
     starship = wrapmod;
