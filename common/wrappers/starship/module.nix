@@ -113,6 +113,6 @@ in
       data = config.configFile.path;
       esc-fn = wlib.escapeShellArgWithEnv;
     };
-    meta.platforms = lib.platforms.all;
+    meta.maintainers = [ wlib.maintainers.birdee ];
   };
 }
