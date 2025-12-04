@@ -66,8 +66,8 @@ in {
     autorepl = ''${pkgs.writeShellScript "autorepl" ''
       exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgsNV.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
     ''}'';
-    yolo = ''git add . && git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(git status)" && git push'';
-    yoloAI = ''git add . && git commit -m "$(${prompt})" && git push'';
+    yolo = ''${pkgs.git_with_config}/bin/git add . && ${pkgs.git_with_config}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${pkgs.git_with_config}/bin/git status)" && ${pkgs.git_with_config}/bin/git push'';
+    yoloAI = ''${pkgs.git_with_config}/bin/git add . && ${pkgs.git_with_config}/bin/git commit -m "$(${prompt})" && ${pkgs.git_with_config}/bin/git push'';
     ai-msg = ''${prompt}'';
     scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
     exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
@@ -156,7 +156,7 @@ in {
     };
   };
   xdg.mimeApps.defaultApplications = {
-    "inode/directory" = [ "ranger.desktop" ];
+    "inode/directory" = [ "xplr.desktop" ];
     "application/pdf" = [ "firefox.desktop" "draw.desktop" "gimp.desktop" ];
   };
   # This value determines the Home Manager release that your configuration is
