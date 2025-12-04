@@ -5,9 +5,6 @@
   final_tmux = pkgs.tmux.wrap {
     terminal = if use_alacritty then "alacritty" else "xterm-256color";
   };
-  ranger = pkgs.ranger.wrap {
-    withoutDragon = true;
-  };
 
   nerd_font_string = "FiraMono";
   font_string = "${nerd_font_string} Nerd Font";
@@ -42,7 +39,7 @@ in {
     git
     findutils
     coreutils
-    ranger
+    xplr
     xclip
   ] ++ (if is_minimal then [
     pkgs.neovim

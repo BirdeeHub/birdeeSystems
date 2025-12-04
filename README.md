@@ -42,7 +42,7 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
   - completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`
   - Also, I can't claim every language setup works perfectly or anything. This is not a distribution its mine.
 - [browser:](./common/modules/firefox) firefox
-- [file manager:](./common/wrappers/ranger/default.nix) ranger, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
+- [file manager:](./common/wrappers/xplr/default.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
 - [terminal:](./common/wrappers/wezterm/default.nix) wezterm
 - [shell:](./common/modules/shell/home/zsh.nix) zsh with vi mode plugin, themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
 - [tmux:](./common/wrappers/tmux/default.nix) with some keybinds and onedark theme

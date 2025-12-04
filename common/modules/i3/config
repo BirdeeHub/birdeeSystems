@@ -84,7 +84,7 @@ bindsym $mod+Shift+m exec blueman-manager
 bindsym $mod+m exec pavucontrol
 bindsym $mod+F1 exec bitwarden
 bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec $termSTR -e ranger
+bindsym $mod+F3 exec $termSTR -e xplr
 bindsym $mod+F4 exec signal-desktop
 bindsym $mod+F5 exec spotify
 bindsym $mod+F6 exec discord

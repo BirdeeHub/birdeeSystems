@@ -84,7 +84,7 @@
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
   environment.systemPackages = with pkgs; [
-    ranger
+    xplr
     git
     xsel
     ntfs3g

@@ -48,7 +48,14 @@ overlay
     alacritty = wrapmod;
     starship = wrapmod;
     tmux = wrapmod;
-    xplr = wrapmod;
+    xplr = importName: inputs: final: prev: {
+      ${importName} = inputs.self.wrapperModules.${importName}.wrap {
+          pkgs = final // {
+            ${importName} = prev.${importName};
+          };
+          termCmd = "${final.wezterm}/bin/wezterm";
+      };
+    };
     wezterm = wrapmod;
 
   };

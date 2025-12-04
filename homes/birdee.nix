@@ -186,7 +186,6 @@ in {
     dep-tree
     minesweeper
     antifennel
-    ranger
     wezterm
     opencode
     tmux

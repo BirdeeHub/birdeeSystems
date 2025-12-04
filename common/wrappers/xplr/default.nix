@@ -6,7 +6,7 @@
     before = [ "AFTER_PLUGINS" ] ++ cfg.before or [];
   };
 in {
-  imports = [ wlib.wrapperModules.xplr ];
+  imports = [ wlib.wrapperModules.xplr ./desktop.nix ];
   # <c-k>*l = λ
   defaultConfigLang = "fnl";
   luaEnv = lp: [ lp.inspect ];
