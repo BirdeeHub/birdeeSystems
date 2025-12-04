@@ -44,7 +44,7 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 - [browser:](./common/modules/firefox) firefox
 - [file manager:](./common/wrappers/xplr/default.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
 - [terminal:](./common/wrappers/wezterm/default.nix) wezterm
-- [shell:](./common/modules/shell/home/zsh.nix) zsh with vi mode plugin, themer is oh-my-posh, the theme is a mashup of emodipt-extend and atomic
+- [shell:](./common/modules/shell/home/zsh.nix) zsh with vi mode plugin, themer is [starship](./common/wrappers/starship/default.nix)
 - [tmux:](./common/wrappers/tmux/default.nix) with some keybinds and onedark theme
 
 ---
