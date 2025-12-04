@@ -1,5 +1,5 @@
 { pkgs, lib, wlib, config, ... }: {
-  config.filesToPatch = lib.mkForce [];
+  config.filesToPatch = lib.mkDefault [];
   config.drv.desktop_with_term = lib.mkIf (config.termCmd != null) /* desktop */ ''
     [Desktop Entry]
     Type=Application
