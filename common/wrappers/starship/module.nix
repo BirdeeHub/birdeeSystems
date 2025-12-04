@@ -79,6 +79,7 @@ in
     argv0type = lib.mkIf (config.shell == "bash") (s: ''eval "$(${s})"'');
     drv.buildPhase = lib.mkIf (config.shell != null && config.shell != "bash") (
       /* bash */ ''
+        runHook preBuild
         mv $out/bin/${config.binName} $out/bin/.OG-${config.binName}
       ''
       + (
@@ -99,8 +100,9 @@ in
           ''
         else
           throw "language unsupported by this module"
-      )
-    );
+      ) + ''
+      runHook postBuild
+    '');
     package = lib.mkDefault pkgs.starship;
     runShell = lib.mkIf (config.shell != null && config.shell != "bash" && config.shell != "nu") [
       (
