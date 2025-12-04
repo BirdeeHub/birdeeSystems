@@ -15,7 +15,6 @@ in {
   birdeevim = import ./birdeevim args;
   LD = import (systemOnly ./LD) args;
   firefox = import (homeOnly ./firefox) args;
-  thunar = import (homeOnly ./thunar) args;
   i3 = import ./i3 args;
   i3MonMemory = import ./i3MonMemory args;
   lightdm = import (systemOnly ./lightdm) args;
