@@ -95,12 +95,18 @@ in {
         cache="$cachedir/dmenu_recent"
         rm $cache
       ''}'';
-      i3status = (pkgs.writeShellScriptBin "i3status" ''
-        exec ${pkgs.i3status}/bin/i3status --config ${pkgs.writeText "i3bar" (pkgs.callPackage ./i3bar.nix {inherit (cfg) cputemppath;})} "$@"
-      '');
-      i3lock = (pkgs.writeShellScriptBin "i3lock" ''
-        exec ${pkgs.i3lock}/bin/i3lock -t -i ${cfg.lockerBackground} "$@"
-      '');
+      i3status = (inputs.wrappers.lib.evalModule {
+        imports = [ ./i3bar.nix ];
+        inherit pkgs;
+        inherit (cfg) cputemppath;
+      }).config.wrapper;
+      i3lock = inputs.wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.i3lock;
+        addFlag = [
+          [ "-t" "-i" cfg.lockerBackground ]
+        ];
+      };
     in
     with pkgs; with pkgs.xfce; (if cfg.defaultLockerEnabled then [
       xss-lock
