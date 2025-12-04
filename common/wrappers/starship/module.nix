@@ -93,6 +93,8 @@ in
         else if config.shell == "nu" then
           /* bash */ ''
             echo 'mkdir ($nu.data-dir | path join "vendor/autoload")' > "$out/bin/${config.binName}"
+            echo '$env.STARSHIP_CONFIG = ${wlib.escapeShellArgWithEnv config.configFile.path}' >> "$out/bin/${config.binName}"
+            echo '$env.STARSHIP_SHELL = "nu"' >> "$out/bin/${config.binName}"
             echo "$out/bin/.OG-${config.binName} | save -f (\$nu.data-dir | path join \"vendor/autoload/starship.nu\")" >> "$out/bin/${config.binName}"
           ''
         else
@@ -100,16 +102,18 @@ in
       )
     );
     package = lib.mkDefault pkgs.starship;
-    runShell = lib.mkIf (config.shell != null && config.shell != "bash") [
+    runShell = lib.mkIf (config.shell != null && config.shell != "bash" && config.shell != "nu") [
       (
-        if config.shell == "nu" then
-          "echo ${lib.escapeShellArg ''$env.STARSHIP_CONFIG = ${wlib.escapeShellArgWithEnv config.configFile.path}''}"
-        else if config.shell == "fish" then
+        if config.shell == "fish" then
           "echo ${lib.escapeShellArg ''set -x STARSHIP_CONFIG ${wlib.escapeShellArgWithEnv config.configFile.path}''}"
         else
           "echo ${lib.escapeShellArg "export ${wlib.escapeShellArgWithEnv "STARSHIP_CONFIG=${config.configFile.path}"}"}"
       )
     ];
+    env.STARSHIP_SHELL = lib.mkIf (config.shell != null) {
+      data = config.shell;
+      esc-fn = wlib.escapeShellArgWithEnv;
+    };
     env.STARSHIP_CONFIG = {
       data = config.configFile.path;
       esc-fn = wlib.escapeShellArgWithEnv;
