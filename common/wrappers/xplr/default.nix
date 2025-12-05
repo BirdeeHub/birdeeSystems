@@ -43,7 +43,9 @@ in {
         :messages [
           {
             :BashExec0 ${builtins.toJSON ''
-              ${pkgs.python3}/bin/python3 -m http.server 1337
+              ${pkgs.python3}/bin/python3 -m http.server 1337 &
+              sleep 1 && read -p '[press enter to exit]'
+              kill -9 %1
             ''}
           }
         ]
