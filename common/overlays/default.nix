@@ -36,9 +36,7 @@ overlay
 
     # wrapper modules
     git_with_config = importName: inputs: final: prev: {
-      ${importName} = inputs.self.wrapperModules.git.wrap {
-        pkgs = final // { ${importName} = prev.${importName}; };
-      };
+      ${importName} = inputs.self.wrapperModules.git.wrap { pkgs = final; };
     };
     ranger = wrapmod;
     luakit = wrapmod;
