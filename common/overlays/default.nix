@@ -18,7 +18,7 @@ overlay
         pkgs = final // { ${importName} = prev.${importName}; };
     };
   };
-  overlaySetPre = {
+  overlaySet = {
 
     # this is how you would add another overlay file
     # for if your customBuildsOverlay gets too long
@@ -54,10 +54,9 @@ overlay
     };
 
   };
-  overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
-  overlaySet = overlaySetMapped // {
+  importedOverlays = {
     nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
     shelua = inputs.shelua.overlays.default;
   };
-in overlaySet
+in builtins.mapAttrs (name: value: (value name inputs)) overlaySet // importedOverlays
