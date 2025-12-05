@@ -45,13 +45,13 @@ overlay
     alacritty = wrapmod;
     starship = wrapmod;
     tmux = wrapmod;
+    wezterm = wrapmod;
     xplr = importName: inputs: final: prev: {
       ${importName} = inputs.self.wrapperModules.${importName}.wrap {
         pkgs = final // { ${importName} = prev.${importName}; };
         termCmd = "${final.wezterm}/bin/wezterm";
       };
     };
-    wezterm = wrapmod;
 
   };
   overlaySetMapped = builtins.mapAttrs (name: value: (value name inputs)) overlaySetPre;
