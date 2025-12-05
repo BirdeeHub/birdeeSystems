@@ -76,6 +76,7 @@ in {
     ll = "lsd -lh";
     l  = "lsd -alh";
     yeet = "rm -rf";
+    ccd = ''cd "$(${pkgs.xplr}/bin/xplr --print-pwd-as-result)"'';
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
     find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
