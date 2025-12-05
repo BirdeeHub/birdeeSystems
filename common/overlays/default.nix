@@ -46,6 +46,7 @@ overlay
     starship = wrapmod;
     tmux = wrapmod;
     wezterm = wrapmod;
+    bemenu = wrapmod;
     xplr = importName: inputs: final: prev: {
       ${importName} = inputs.self.wrapperModules.${importName}.wrap {
         pkgs = final // { ${importName} = prev.${importName}; };
