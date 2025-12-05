@@ -15,9 +15,7 @@ overlay
 { inputs, birdeeutils, ... }: let 
   wrapmod = importName: inputs: final: prev: {
     ${importName} = inputs.self.wrapperModules.${importName}.wrap {
-        pkgs = final // {
-          ${importName} = prev.${importName};
-        };
+        pkgs = final // { ${importName} = prev.${importName}; };
     };
   };
   overlaySetPre = {
@@ -37,10 +35,10 @@ overlay
     antifennel = import ./antifennel;
 
     # wrapper modules
-    git_with_config = importName: inputs: final: prev: let
-      pkgs = import inputs.wrappers.inputs.nixpkgs { inherit (prev.stdenv.hostPlatform) system; };
-    in {
-      ${importName} = inputs.self.wrapperModules.git.wrap { inherit pkgs; };
+    git_with_config = importName: inputs: final: prev: {
+      ${importName} = inputs.self.wrapperModules.git.wrap {
+        pkgs = final // { ${importName} = prev.${importName}; };
+      };
     };
     ranger = wrapmod;
     luakit = wrapmod;
