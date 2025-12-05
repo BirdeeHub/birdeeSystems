@@ -1,8 +1,6 @@
 { config, pkgs, wlib, lib, ... }: {
-  options.settings = lib.mkOption {
-    type = (pkgs.formats.json {}).type;
-  };
-  config.settings = {
+  imports = [ wlib.wrapperModules.opencode ];
+  settings = {
     "$schema" = "https://opencode.ai/config.json";
     provider = {
       ollama = {
@@ -24,10 +22,5 @@
         };
       };
     };
-  };
-  imports = [ wlib.modules.default ];
-  config.package = lib.mkDefault pkgs.opencode;
-  config.envDefault = {
-    OPENCODE_CONFIG = pkgs.writeText "OPENCODE_CONFIG.json" (builtins.toJSON config.settings);
   };
 }
