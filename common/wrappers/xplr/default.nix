@@ -105,6 +105,19 @@ in {
           }
         ]
       })
+      (set xplr.config.modes.builtin.default.key_bindings.on_key.e {
+        :help "edit"
+        :messages [
+          {
+            :BashExec ${builtins.toJSON ''
+              PTH="''${XPLR_FOCUS_PATH:?}"
+              "''${EDITOR:-nvim}" "$PTH"
+              # Reload metadata after editor exit
+              "$XPLR" -m 'ExplorePwd'
+            ''}
+          }
+        ]
+      })
       ;; (_G.nix-info.debug-print name opts (require :nix-info))
       nil
     '';
