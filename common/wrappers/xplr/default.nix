@@ -92,6 +92,19 @@ in {
           }
         ]
       })
+      (tset xplr.config.modes.builtin.default.key_bindings.on_key "*" {
+        :help "toggle exe"
+        :messages [
+          {
+            :BashExecSilently0 ${builtins.toJSON ''
+              f="$XPLR_FOCUS_PATH"
+              if [ -x "$f" ]; then chmod -x "$f"; else chmod +x "$f"; fi
+              "$XPLR" -m 'ExplorePwd'
+              "$XPLR" -m 'FocusPath: %q' "$f"
+            ''}
+          }
+        ]
+      })
       ;; (_G.nix-info.debug-print name opts (require :nix-info))
       nil
     '';
