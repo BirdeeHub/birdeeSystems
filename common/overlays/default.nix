@@ -47,9 +47,7 @@ overlay
     tmux = wrapmod;
     xplr = importName: inputs: final: prev: {
       ${importName} = inputs.self.wrapperModules.${importName}.wrap {
-        pkgs = final // {
-          ${importName} = prev.${importName};
-        };
+        pkgs = final // { ${importName} = prev.${importName}; };
         termCmd = "${final.wezterm}/bin/wezterm";
       };
     };
