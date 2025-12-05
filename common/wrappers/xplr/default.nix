@@ -111,7 +111,10 @@ in {
           {
             :BashExec ${builtins.toJSON ''
               PTH="''${XPLR_FOCUS_PATH:?}"
+              savedpwd="$PWD"
+              cd "$PTH"
               "''${EDITOR:-nvim}" "$PTH"
+              cd "$PWD"
               # Reload metadata after editor exit
               "$XPLR" -m 'ExplorePwd'
             ''}
