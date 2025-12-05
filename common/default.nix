@@ -13,7 +13,7 @@ in {
   , wrappers ? true
   , ...
   }: let
-    inherit (inputs.nixpkgs) lib;
+    inherit (inputs.nixpkgsNV) lib;
     nixosMods = (import ./modules { inherit inputs birdeeutils; homeManager = false; });
     homeMods = (import ./modules { inherit inputs birdeeutils; homeManager = true; });
     overs = (import ./overlays { inherit inputs birdeeutils; });

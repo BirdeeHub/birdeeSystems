@@ -15,7 +15,7 @@ in {
 
   services.ollama = {
     enable = true;
-    acceleration = "rocm";
+    # acceleration = "rocm";
     rocmOverrideGfx = "11.0.2";
     package = pkgs.ollama;
     # package = (import inputs.nixpkgs-ollama { inherit (pkgs) overlays; inherit (pkgs.stdenv.hostPlatform) system; }).ollama.overrideAttrs {

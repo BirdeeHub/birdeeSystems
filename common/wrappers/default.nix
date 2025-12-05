@@ -1,5 +1,5 @@
 { inputs, birdeeutils, ... }@args: let
-  mods = builtins.listToAttrs (map (n: { name = n; value = ./${n}; }) (builtins.attrNames (inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir ./.))));
+  mods = builtins.listToAttrs (map (n: { name = n; value = ./${n}; }) (builtins.attrNames (inputs.nixpkgsNV.lib.filterAttrs (n: v: v == "directory") (builtins.readDir ./.))));
   applyfirst = {
     tmux = true;
     wezterm = true;
