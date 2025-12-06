@@ -33,6 +33,7 @@ overlay
     dep-tree = import ./dep-tree;
     nops = import ./nops;
     antifennel = import ./antifennel;
+    gac = import ./gac;
 
     # wrapper modules
     git_with_config = importName: inputs: final: prev: {
