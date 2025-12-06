@@ -7,7 +7,7 @@ importName: inputs:
       sourcePreference = "wheel";
       dependencies = workspace.deps.all;
     };
-    pythonSets =
+    pythonSet =
       (self.callPackage inputs.pyproject-nix.build.packages {
         python = self.python3;
       }).overrideScope
@@ -26,6 +26,11 @@ importName: inputs:
         );
   in
   {
-    gac = pythonSets.mkVirtualEnv "gac-env" workspace.deps.default;
+    # gotta get gac from the venv
+    # but not python3 and other stuff that causes path collision.
+    gac = (self.callPackages inputs.pyproject-nix.build.util { }).mkApplication {
+      venv = pythonSet.mkVirtualEnv "gac-env" workspace.deps.default;
+      package = pythonSet.gac;
+    };
   }
 )

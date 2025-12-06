@@ -194,6 +194,7 @@ in {
     git_with_config
     nushell
     luakit
+    gac
     #
 
     ffuf
