@@ -65,4 +65,9 @@ inputs: {
                   I have not tried it yet.
                   no idea if it works.'';
   };
+  gac = {
+    # TODO: put it in an overlay and take it out of the flake
+    path = ./gac;
+    description = "temporary save of gac packaging";
+  };
 }
