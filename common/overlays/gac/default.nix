@@ -1,19 +1,19 @@
-importName: inputs:
+importName: { uv2nix, pyproject-nix, pyproject-build-systems, gac-src, ... }:
 (
   self: super:
   let
-    workspace = inputs.uv2nix.lib.workspace.loadWorkspace { workspaceRoot = inputs.gac-src; };
+    workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = gac-src; };
     overlay = workspace.mkPyprojectOverlay {
       sourcePreference = "wheel";
       dependencies = workspace.deps.all;
     };
     pythonSet =
-      (self.callPackage inputs.pyproject-nix.build.packages {
+      (self.callPackage pyproject-nix.build.packages {
         python = self.python3;
       }).overrideScope
         (
           self.lib.composeManyExtensions [
-            inputs.pyproject-build-systems.overlays.wheel
+            pyproject-build-systems.overlays.wheel
             overlay
             (final: prev: {
               halo = prev.halo.overrideAttrs (old: {
@@ -28,7 +28,7 @@ importName: inputs:
   {
     # gotta get gac from the venv
     # but not python3 and other stuff that causes path collision.
-    gac = (self.callPackages inputs.pyproject-nix.build.util { }).mkApplication {
+    gac = (self.callPackages pyproject-nix.build.util { }).mkApplication {
       venv = pythonSet.mkVirtualEnv "gac-env" workspace.deps.default;
       package = pythonSet.gac;
     };
