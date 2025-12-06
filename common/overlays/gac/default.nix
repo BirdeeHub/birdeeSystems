@@ -1,6 +1,6 @@
 importName: { uv2nix, pyproject-nix, pyproject-build-systems, gac-src, ... }:
 (
-  self: super:
+  self: _super:
   let
     workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = gac-src; };
     overlay = workspace.mkPyprojectOverlay {
