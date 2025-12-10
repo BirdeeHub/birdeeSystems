@@ -69,6 +69,7 @@
 
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     # wrappers.url = "git+file:/home/birdee/Projects/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgsNV";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
