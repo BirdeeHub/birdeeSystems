@@ -78,7 +78,7 @@ in {
     yeet = "rm -rf";
     ccd = ''cd "$(${pkgs.xplr}/bin/xplr --print-pwd-as-result)"'';
     # Ok, so, this is not an alias, but I find it fun and I wanted to save it so its just a comment
-    # bat(){ local f; for f in "${@-/dev/stdin}"; do echo "$(<"$f")"; done }
+    # bat(){ if [[ ! -t 0 || $# != 0 ]]; then local f; for f in "${@-/dev/stdin}"; do echo "$(<"$f")"; done; fi }
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
     find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
