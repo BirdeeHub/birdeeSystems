@@ -174,7 +174,7 @@ in {
     '';
   };
   luaInit.command-mode = mkPluginCfg {
-    disabled = true;
+    enable = false;
     plugin = inputs.command-mode-xplr;
     opts = {};
     data = /* fennel */ ''
