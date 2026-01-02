@@ -197,6 +197,7 @@ in {
     nushell
     luakit
     gac
+    nix-inspect
     #
 
     ffuf
