@@ -41,6 +41,7 @@ in
   config.modeKeys = "vi";
   config.vimVisualKeys = true;
   config.disableConfirmationPrompt = true;
+  config.escapeTime = 10;
   config.configBefore = /* tmux */ ''
     bind-key -N "Select the previously current window" C-p last-window
     bind-key -N "Switch to the last client" P switch-client -l
