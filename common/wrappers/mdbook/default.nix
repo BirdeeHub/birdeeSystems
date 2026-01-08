@@ -9,9 +9,11 @@ let
 in
 {
   imports = [ ./module.nix ];
-  options.outpath = lib.mkOption {
-    type = lib.types.nonEmptyStr;
-    default = "./_site";
+  config.flags = {
+    "-d" = {
+      after = [ "BUILD_ARG" ];
+      data = lib.mkOptionDefault "./_site";
+    };
   };
   options.baked-in-build = lib.mkOption {
     type = lib.types.bool;
@@ -23,13 +25,6 @@ in
       data = [
         "build"
         "${placeholder "out"}/${config.generated-book-subdir}"
-      ];
-    }
-    {
-      after = [ "BUILD_ARG" ];
-      data = [
-        "-d"
-        "${config.outpath}"
       ];
     }
   ];
