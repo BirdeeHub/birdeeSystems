@@ -60,8 +60,8 @@ let
           ''
         else if node.data == "prefix" || node.data == "suffix" then
           assert
-            (node.name != null && node.path != null && node.src != null)
-            || throw "Type error: prefix/suffix node must have name, src, and path";
+            (node.name != null && node.path != null)
+            || throw "Type error: prefix/suffix node must have name, and path";
           ''
             [${toString node.name}](${toString node.path})
           ''
@@ -72,8 +72,8 @@ let
           ''
         else if node.data == "numbered" then
           assert
-            (node.name != null && node.path != null && node.src != null)
-            || throw "Type error: numbered node must have name, src, and path";
+            (node.name != null && node.path != null)
+            || throw "Type error: numbered node must have name, and path";
           ''
             ${i}- [${toString node.name}](${toString node.path})
           ''
