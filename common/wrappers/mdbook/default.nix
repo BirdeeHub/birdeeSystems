@@ -9,11 +9,9 @@ let
 in
 {
   imports = [ ./module.nix ];
-  config.flags = {
-    "-d" = {
-      after = [ "BUILD_ARG" ];
-      data = lib.mkOptionDefault "./_site";
-    };
+  config.flags."-d" = {
+    after = [ "BUILD_ARG" ];
+    data = lib.mkOptionDefault "./_site";
   };
   options.baked-in-build = lib.mkOption {
     type = lib.types.bool;
