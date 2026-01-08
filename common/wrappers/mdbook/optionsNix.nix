@@ -1,4 +1,8 @@
-lib: transformOptions:
+lib:
+{
+  options ? { },
+  transformOptions ? x: [ x ],
+}:
 let
   # Generate DocBook documentation for a list of packages. This is
   # what `relatedPackages` option of `mkOption` from
@@ -39,9 +43,9 @@ let
     in
     lib.concatMapStrings (p: describe (unpack p)) packages;
 in
-lib.flip lib.pipe [
+lib.pipe options [
   lib.optionAttrSetToDocList
-  (map transformOptions)
+  (builtins.concatMap transformOptions)
   (map (
     opt:
     opt
