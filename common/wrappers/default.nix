@@ -6,8 +6,13 @@
     xplr = true;
     nushell = true;
   };
-  mods = builtins.listToAttrs (map (n: { name = n; value = ./${n}; }) (builtins.attrNames (inputs.nixpkgsNV.lib.filterAttrs (n: v: v == "directory") (builtins.readDir ./.))));
-  modules = builtins.mapAttrs (n: v: if applyfirst.${n} or null != null then import v args else v) mods;
+  modules = birdeeutils.pipe (builtins.readDir ./.) [
+    (birdeeutils.filterAttrs (n: v: v == "directory"))
+    builtins.attrNames
+    (map (n: { name = n; value = ./${n}; }))
+    builtins.listToAttrs
+    (builtins.mapAttrs (n: v: if applyfirst.${n} or null != null then import v args else v))
+  ];
 in {
   modules = modules;
   wrapperModules = builtins.mapAttrs (n: v: (inputs.wrappers.lib.evalModule v).config) modules;

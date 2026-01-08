@@ -19,6 +19,8 @@ inputs: with builtins; rec {
 
   birdIsAttrs = v: isAttrs v.value && ! isDerivation v.value && ! isFunctor v.value && ! hasOutPath v.value;
 
+  filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+
   recAttrsToList = here: flip pipe [
     (mapAttrsToList (n: value: {
       path = here ++ [n];
