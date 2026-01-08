@@ -9,7 +9,7 @@ let
 in
 {
   imports = [ ./module.nix ];
-  config.flags."-d" = {
+  config.flags."-d" = lib.mkIf config.baked-in-build {
     after = [ "BUILD_ARG" ];
     data = lib.mkOptionDefault "./_site";
   };
