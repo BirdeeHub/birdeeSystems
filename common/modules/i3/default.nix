@@ -108,7 +108,7 @@ in {
         ];
       };
     in
-    with pkgs; with pkgs.xfce; (if cfg.defaultLockerEnabled then [
+    with pkgs; (if cfg.defaultLockerEnabled then [
       xss-lock
       i3lock #default i3 screen locker
     ] else []) ++ [

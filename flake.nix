@@ -19,31 +19,31 @@
 
   inputs = {
     # system
-    nixpkgs.url = "github:nixos/nixpkgs/ae815cee91b417be55d43781eb4b73ae1ecc396c";
-    # nixpkgsNV.url = "git+file:/home/birdee/temp/testgrammars/nixpkgs?branch=end-nvim-treesitter-queries-saga";
-    # nixpkgsNV.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
-    nixpkgsNV.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixpkgsNV.url = "github:PerchunPak/nixpkgs/end-nvim-treesitter-queries-saga";
+    nixpkgsOLD.url = "github:nixos/nixpkgs/ae815cee91b417be55d43781eb4b73ae1ecc396c";
+    # nixpkgs.url = "git+file:/home/birdee/temp/testgrammars/nixpkgs?branch=end-nvim-treesitter-queries-saga";
+    # nixpkgs.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:PerchunPak/nixpkgs/end-nvim-treesitter-queries-saga";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgsNV";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
     manix.url = "github:nix-community/manix";
-    manix.inputs.nixpkgs.follows = "nixpkgsNV";
+    manix.inputs.nixpkgs.follows = "nixpkgs";
     manix.inputs.flake-utils.follows = "flake-utils";
     flake-parts.url = "github:hercules-ci/flake-parts";
     devenv.url = "github:cachix/devenv";
     nur.url = "github:nix-community/nur";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/9fc19be21f0807d6be092d70bf0b1de0c00ac895";
-    nixos-hardware-new.url = "github:NixOS/nixos-hardware";
+    nixos-hardware-old.url = "github:NixOS/nixos-hardware/9fc19be21f0807d6be092d70bf0b1de0c00ac895";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nsearch.url = "github:niksingh710/nsearch";
     nsearch.inputs.nixpkgs.follows = "nixpkgs";
     minesweeper.url = "github:BirdeeHub/minesweeper";
-    minesweeper.inputs.nixpkgs.follows = "nixpkgsNV";
+    minesweeper.inputs.nixpkgs.follows = "nixpkgs";
     maximizer.url = "github:BirdeeHub/maximizer";
     maximizer.inputs.nixpkgs.follows = "nixpkgs";
     nixToLua.url = "github:BirdeeHub/nixtoLua";
@@ -69,7 +69,7 @@
 
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     # wrappers.url = "git+file:/home/birdee/Projects/nix-wrapper-modules";
-    wrappers.inputs.nixpkgs.follows = "nixpkgsNV";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
@@ -104,18 +104,18 @@
     };
     pyproject-nix = {
       url = "github:pyproject-nix/pyproject.nix";
-      inputs.nixpkgs.follows = "nixpkgsNV";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     uv2nix = {
       url = "github:pyproject-nix/uv2nix";
       inputs.pyproject-nix.follows = "pyproject-nix";
-      inputs.nixpkgs.follows = "nixpkgsNV";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     pyproject-build-systems = {
       url = "github:pyproject-nix/build-system-pkgs";
       inputs.pyproject-nix.follows = "pyproject-nix";
       inputs.uv2nix.follows = "uv2nix";
-      inputs.nixpkgs.follows = "nixpkgsNV";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # dsa

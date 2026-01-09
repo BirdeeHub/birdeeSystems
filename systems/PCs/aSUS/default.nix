@@ -5,9 +5,9 @@
 { config, pkgs, flake-path, lib, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
-    inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
-    inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
+    inputs.nixos-hardware-old.outputs.nixosModules.common-pc-laptop
+    inputs.nixos-hardware-old.outputs.nixosModules.common-cpu-intel
+    inputs.nixos-hardware-old.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
     ../PCs.nix
   ];

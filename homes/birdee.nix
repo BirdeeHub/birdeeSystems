@@ -60,7 +60,7 @@ in {
       ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
     ''}'';
     autorepl = ''${pkgs.writeShellScript "autorepl" ''
-      exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgsNV.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
+      exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgs.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
     ''}'';
     yolo = ''${pkgs.git_with_config}/bin/git add . && ${pkgs.git_with_config}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${pkgs.git_with_config}/bin/git status)" && ${pkgs.git_with_config}/bin/git push'';
     yoloAI = ''${pkgs.git_with_config}/bin/git add . && ${pkgs.git_with_config}/bin/git commit -m "$(${prompt})" && ${pkgs.git_with_config}/bin/git push'';
@@ -119,7 +119,7 @@ in {
     !include /home/birdee/.secrets/gitoke
   '';
   nix.nixPath = [
-    "nixpkgs=${builtins.path { path = inputs.nixpkgsNV; }}"
+    "nixpkgs=${builtins.path { path = inputs.nixpkgs; }}"
   ];
   nix.gc = {
     automatic = true;
@@ -127,7 +127,7 @@ in {
     options = "-d";
   };
   nix.registry = {
-    nixpkgs.flake = inputs.nixpkgsNV;
+    nixpkgs.flake = inputs.nixpkgs;
     nixCats.flake = inputs.birdeevim.inputs.nixCats;
     wrappers.flake = inputs.wrappers;
     home-manager.flake = inputs.home-manager;
@@ -227,10 +227,10 @@ in {
     ueberzugpp
     vlc
     nix-tree
-    xfce.ristretto
+    ristretto
     grex
     qbittorrent
-    galculator
+    # galculator
     gparted
     exfatprogs
     ntfs3g

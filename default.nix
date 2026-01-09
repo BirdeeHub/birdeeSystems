@@ -73,7 +73,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # final, # Only with easyOverlay imported
     ...
   }: {
-    _module.args.pkgs = import inputs.nixpkgsNV {
+    _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = overlayList;
       config = {
@@ -152,7 +152,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
     nixosConfigurations = let users = userdata pkgs; in {
       "birdee@nestOS" = {
-        nixpkgs = inputs.nixpkgsNV;
+        nixpkgs = inputs.nixpkgs;
         inherit home-manager;
         specialArgs = {
           inherit
@@ -176,7 +176,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       "birdee@aSUS" = {
-        nixpkgs = inputs.nixpkgs;
+        nixpkgs = inputs.nixpkgsOLD;
         inherit home-manager;
         specialArgs = {
           inherit
@@ -200,7 +200,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       "birdee@dustbook" = {
-        nixpkgs = inputs.nixpkgs;
+        nixpkgs = inputs.nixpkgsOLD;
         inherit home-manager;
         specialArgs = {
           inherit
@@ -224,7 +224,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       "aSUS" = {
-        nixpkgs = inputs.nixpkgs;
+        nixpkgs = inputs.nixpkgsOLD;
         specialArgs = {
           inherit
             stateVersion
@@ -244,7 +244,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       "dustbook" = {
-        nixpkgs = inputs.nixpkgs;
+        nixpkgs = inputs.nixpkgsOLD;
         specialArgs = {
           inherit
             stateVersion
@@ -307,7 +307,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       "installer_mine" = {
-        nixpkgs = inputs.nixpkgsNV;
+        nixpkgs = inputs.nixpkgs;
         specialArgs = {
           is_minimal = true;
           use_alacritty = false;
@@ -327,7 +327,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         ];
       };
       "installer" = {
-        nixpkgs = inputs.nixpkgsNV;
+        nixpkgs = inputs.nixpkgs;
         specialArgs = {
           inherit self inputs system-modules;
         };

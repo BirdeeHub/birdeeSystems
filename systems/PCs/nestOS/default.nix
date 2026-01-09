@@ -7,10 +7,10 @@ in {
   imports = with system-modules; [
     ./hardware-configuration.nix
     ../PCs.nix
-    inputs.nixos-hardware-new.nixosModules.common-cpu-amd
-    inputs.nixos-hardware-new.nixosModules.common-gpu-amd
-    inputs.nixos-hardware-new.nixosModules.common-pc-laptop
-    inputs.nixos-hardware-new.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
   services.ollama = {

@@ -12,7 +12,7 @@ in {
   , wrappers ? true
   , ...
   }: let
-    inherit (inputs.nixpkgsNV) lib;
+    inherit (inputs.nixpkgs) lib;
     nixosMods = (import ./modules { inherit inputs util; homeManager = false; });
     homeMods = (import ./modules { inherit inputs util; homeManager = true; });
     overs = (import ./overlays { inherit inputs util; });

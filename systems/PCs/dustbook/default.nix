@@ -7,9 +7,9 @@ in {
   imports = with system-modules; [
     old_modules_compat
     ../PCs.nix
-    inputs.nixos-hardware.outputs.nixosModules.common-pc-laptop
-    inputs.nixos-hardware.outputs.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware-old.outputs.nixosModules.common-pc-laptop
+    inputs.nixos-hardware-old.outputs.nixosModules.common-cpu-intel
+    inputs.nixos-hardware-old.nixosModules.common-pc-laptop-ssd
     ./hardware-configuration.nix
   ];
 
