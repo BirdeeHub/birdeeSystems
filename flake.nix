@@ -117,6 +117,13 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgsNV";
     };
+
+    # dsa
+    libvma-src = {
+      url = "github:Mellanox/libvma";
+      flake = false;
+    };
+
   };
   outputs = inputs: import ./. inputs;
 }

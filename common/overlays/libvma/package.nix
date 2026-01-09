@@ -1,5 +1,7 @@
 # call with pkgs.callPackage
-{
+let
+  pname = "libvma";
+in {
   lib,
   pkg-config,
   autoreconfHook,
@@ -19,13 +21,13 @@
 }:
 stdenv.mkDerivation {
   version = libvma-src.rev;
-  pname = libvma-src.repo;
+  inherit pname;
   src = libvma-src;
   nativeBuildInputs = [ pkg-config autoreconfHook rdma-core libnl libcap ];
   meta = {
-    mainProgram = libvma-src.repo;
+    mainProgram = pname;
     description = "Linux user space library for network socket acceleration based on RDMA compatible network adaptors";
-    homepage = "https://github.com/${libvma-src.owner}/${libvma-src.repo}/tree/${libvma-src.rev}";
+    homepage = "https://github.com/Mellanox/${pname}/tree/${libvma-src.rev}";
     maintainers = [ lib.maintainers.birdee ];
   };
 }

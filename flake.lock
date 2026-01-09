@@ -674,6 +674,22 @@
         "type": "github"
       }
     },
+    "libvma-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767883105,
+        "narHash": "sha256-vm9yeoW65HdkzGhoV9cdNf7sEIgloxFNXM/Bqfp7als=",
+        "owner": "Mellanox",
+        "repo": "libvma",
+        "rev": "4555b4bcef0158139eb78004f31fe7a7f7b21ea7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mellanox",
+        "repo": "libvma",
+        "type": "github"
+      }
+    },
     "manix": {
       "inputs": {
         "flake-utils": [
@@ -1689,6 +1705,7 @@
         "fzf-xplr": "fzf-xplr",
         "gac-src": "gac-src",
         "home-manager": "home-manager",
+        "libvma-src": "libvma-src",
         "manix": "manix",
         "maximizer": "maximizer",
         "minesweeper": "minesweeper",
