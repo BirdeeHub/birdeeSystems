@@ -27,7 +27,7 @@ let
       home-manager.extraSpecialArgs = { inherit home-modules ; };
       services.displayManager.defaultSession = lib.mkDefault "none+fake";
     };
-  HMmain = module: { username ? "birdee", ... }: { home-manager.users.${username} = module; };
+  HMmain = module: { username, ... }: { home-manager.users.${username} = module; };
 in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
