@@ -8,7 +8,7 @@
 let
   inherit (lib) types mkOption genAttrs;
   file = ./hub.nix;
-  hubutils = config.flake.hubutils;
+  hubutils = config.flake.util;
   mkHMdir =
     pkgs: username:
     let
@@ -41,7 +41,7 @@ in
           {
             _file = file;
             key = file;
-            options.hubutils = mkOption {
+            options.util = mkOption {
               type = types.attrsOf types.raw;
               default = { };
               description = ''
@@ -86,7 +86,7 @@ in
                       x:
                       x
                       // {
-                        hubutils = hubutils;
+                        util = hubutils;
                         inherit (config) hostname username;
                         inherit inputs;
                       };
@@ -183,7 +183,7 @@ in
                       x:
                       x
                       // {
-                        hubutils = hubutils;
+                        util = hubutils;
                         inherit (config) username;
                         inherit inputs;
                       };
