@@ -39,6 +39,7 @@ let
     dep-tree = import ./dep-tree;
     nops = import ./nops;
     antifennel = import ./antifennel;
+    libvma = import ./libvma;
     gac = import ./gac;
 
     # wrapper modules
