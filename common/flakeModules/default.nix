@@ -1,4 +1,4 @@
-{ ... }: {
-  hub = ./hub.nix;
-  configsPerSystem = ./configsPerSystem.nix;
+{ inputs, ... }: {
+  hub = import ./hub.nix inputs;
+  configsPerSystem = import ./configsPerSystem.nix inputs;
 }

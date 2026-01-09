@@ -2,7 +2,6 @@
   self,
   nixpkgs,
   home-manager,
-  disko,
   nix-appimage,
   flake-parts,
   ...
@@ -47,12 +46,8 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     diskoConfigurations = {
       sda_swap = diskoCFG.PCs.sda_swap;
       sdb_swap = diskoCFG.PCs.sdb_swap;
-      dustbook = diskoCFG.PCs.sda_swap;
-      aSUS = diskoCFG.PCs.sda_swap;
-      "virtbird" = diskoCFG.VMs.noswap_bios;
-      "birdee@aSUS" = diskoCFG.PCs.sda_swap;
-      "birdee@dustbook" = diskoCFG.PCs.sda_swap;
-      "birdee@nestOS" = diskoCFG.PCs.nvme0n1_swap;
+      nvme0n1_swap = diskoCFG.PCs.nvme0n1_swap;
+      noswap_bios = diskoCFG.VMs.noswap_bios;
     };
     overlays = overlaySet // { };
     nixosModules = system-modules // {
@@ -155,6 +150,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "birdee@nestOS" = {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
+        disko.diskoModule = diskoCFG.PCs.nvme0n1_swap;
         specialArgs = {
           inherit
             stateVersion
@@ -169,8 +165,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           monitorCFG = ./homes/monitors_by_hostname/nestOS;
         };
         modules = [
-          disko.nixosModules.disko
-          diskoCFG.PCs.nvme0n1_swap
           ./systems/PCs/nestOS
           (HMmain (import ./homes/main))
           HMasModule
@@ -179,6 +173,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "birdee@aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
         inherit home-manager;
+        disko.diskoModule = diskoCFG.PCs.sda_swap;
         specialArgs = {
           inherit
             stateVersion
@@ -193,8 +188,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
         };
         modules = [
-          disko.nixosModules.disko
-          diskoCFG.PCs.sda_swap
           ./systems/PCs/aSUS
           (HMmain (import ./homes/birdee.nix))
           HMasModule
@@ -202,6 +195,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       };
       "birdee@dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
+        disko.diskoModule = diskoCFG.PCs.sda_swap;
         inherit home-manager;
         specialArgs = {
           inherit
@@ -217,8 +211,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
         };
         modules = [
-          disko.nixosModules.disko
-          diskoCFG.PCs.sda_swap
           ./systems/PCs/dustbook
           (HMmain (import ./homes/birdee.nix))
           HMasModule
@@ -226,6 +218,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       };
       "aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
+        disko.diskoModule = diskoCFG.PCs.sda_swap;
         specialArgs = {
           inherit
             stateVersion
@@ -239,13 +232,12 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         inherit system;
         modules = [
           { nixpkgs.overlays = overlayList; }
-          disko.nixosModules.disko
-          diskoCFG.PCs.sda_swap
           ./systems/PCs/aSUS
         ];
       };
       "dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
+        disko.diskoModule = diskoCFG.PCs.sda_swap;
         specialArgs = {
           inherit
             stateVersion
@@ -258,8 +250,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         };
         modules = [
           { nixpkgs.overlays = overlayList; }
-          disko.nixosModules.disko
-          diskoCFG.PCs.sda_swap
           ./systems/PCs/dustbook
         ];
       };
@@ -267,6 +257,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       in {name, ... }: {
         nixpkgs = inputs.nixpkgs;
         username = "birdee";
+        disko.diskoModule = diskoCFG.VMs.noswap_bios;
         specialArgs = {
           inherit
             stateVersion
@@ -280,8 +271,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         inherit system;
         modules = [
           { nixpkgs.overlays = overlayList; }
-          disko.nixosModules.disko
-          self.diskoConfigurations.${name}
           ./systems/VMs/${name}
         ];
       });
@@ -289,6 +278,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
         hostname = "virtbird";
+        disko.diskoModule = diskoCFG.VMs.noswap_bios;
         username = "birdee";
         specialArgs = {
           inherit

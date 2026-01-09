@@ -1,3 +1,6 @@
+inputs: let
+  wlib = inputs.wrappers.lib;
+in
 {
   lib,
   flake-parts-lib,
@@ -6,7 +9,7 @@
   ...
 }:
 let
-  inherit (lib) types mkOption genAttrs;
+  inherit (lib) types mkOption;
   file = ./hub.nix;
   hubutils = config.flake.util;
 in
@@ -40,7 +43,7 @@ in
               description = ''
                 contains various personal utilities which are not system dependent
               '';
-              apply = x: x // { wlib = inputs.wrappers.lib; };
+              apply = x: { inherit wlib; } // x;
             };
           }
         ];

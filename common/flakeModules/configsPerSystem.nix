@@ -1,3 +1,8 @@
+inputs:
+let
+  wlib = inputs.wrappers.lib;
+  diskoflake = inputs.disko;
+in
 {
   lib,
   flake-parts-lib,
@@ -9,6 +14,7 @@ let
   inherit (lib) types mkOption genAttrs;
   file = ./configsPerSystem.nix;
   hubutils = config.flake.util;
+  diskos = config.flake.diskoConfigurations or { };
   mkHMdir =
     pkgs: username:
     let
@@ -33,7 +39,7 @@ in
               {
                 _file = file;
                 key = file;
-                freeformType = inputs.wrappers.lib.types.attrsRecursive;
+                freeformType = wlib.types.attrsRecursive;
                 options = {
                   home-manager = mkOption {
                     type = types.raw;
@@ -42,6 +48,11 @@ in
                   nixpkgs = mkOption {
                     type = types.raw;
                     default = inputs.nixpkgs or null;
+                  };
+                  system = mkOption {
+                    type = types.str;
+                    readOnly = true;
+                    default = system;
                   };
                   extraSpecialArgs = mkOption {
                     type = types.attrsOf types.raw;
@@ -59,9 +70,42 @@ in
                         inherit inputs;
                       };
                   };
-                  system = mkOption {
-                    type = types.str;
-                    default = system;
+                  disko = mkOption {
+                    type = wlib.types.subWrapperModuleWith {
+                      modules =
+                        let
+                          inherit (config) nixpkgs;
+                        in
+                        [
+                          (
+                            { config, wlib, ... }:
+                            {
+                              imports = [ wlib.modules.default ];
+                              config.pkgs = nixpkgs.legacyPackages.${system} or (import nixpkgs { inherit system; });
+                              options.diskoModule = mkOption {
+                                # TODO: handle set form modules rather than just path.
+                                # do this by builtins.toJSON, then generate a flake in the wrapper.
+                                # That flake can then read the json into a nix structure.
+                                # when using a flake, disko can then use that.
+                                type = types.nullOr wlib.types.stringable;
+                                default = null;
+                                apply = x: if x == null then diskos.${name} or null else x;
+                              };
+                              config.flags."--no-deps" = lib.mkDefault true;
+                              config.addFlag = [
+                                {
+                                  name = "CallMod";
+                                  data = config.diskoModule;
+                                }
+                              ];
+                              config.package = lib.mkDefault (
+                                inputs.disko.packages.${system}.disko or diskoflake.packages.${system}.disko or null
+                              );
+                            }
+                          )
+                        ];
+                    };
+                    default = { };
                   };
                   hostname = mkOption {
                     type = types.str;
@@ -108,6 +152,10 @@ in
                             home.homeDirectory = lib.mkDefault (mkHMdir pkgs config.username);
                           };
                       }
+                      ++ lib.optionals (config.disko.diskoModule != null) [
+                        (inputs.disko.nixosModules.disko or diskoflake.nixosModules.disko or { })
+                        config.disko.diskoModule
+                      ]
                       ++ [ config.config ]
                       ++ x;
                   };
@@ -126,7 +174,7 @@ in
             types.submodule (
               { config, name, ... }:
               {
-                freeformType = inputs.wrappers.lib.types.attrsRecursive;
+                freeformType = wlib.types.attrsRecursive;
                 options = {
                   home-manager = mkOption {
                     type = types.raw;
@@ -209,6 +257,7 @@ in
           builtins.removeAttrs v [
             "nixpkgs"
             "config"
+            "disko"
             "extraSpecialArgs"
             "hostname"
             "username"
@@ -216,6 +265,11 @@ in
           ]
         )
       ) (config.perSystem system).nixosConfigurations;
+      diskoConfigurations = lib.filterAttrs (n: v: v != null) (
+        builtins.mapAttrs (
+          n: v: if v.disko.diskoModule == null then null else v.disko.wrapper
+        ) (config.perSystem system).nixosConfigurations
+      );
     });
   };
 }
