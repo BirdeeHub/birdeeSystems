@@ -129,7 +129,7 @@ in
                       else
                         null;
                   };
-                  config = mkOption {
+                  module = mkOption {
                     type = types.deferredModule;
                     default = { };
                   };
@@ -156,7 +156,7 @@ in
                         (inputs.disko.nixosModules.disko or diskoflake.nixosModules.disko or { })
                         config.disko.diskoModule
                       ]
-                      ++ [ config.config ]
+                      ++ [ config.module ]
                       ++ x;
                   };
                 };
@@ -204,7 +204,7 @@ in
                         inherit inputs;
                       };
                   };
-                  config = mkOption {
+                  module = mkOption {
                     type = types.deferredModule;
                     default = { };
                   };
@@ -221,7 +221,7 @@ in
                             home.homeDirectory = lib.mkDefault (mkHMdir pkgs config.username);
                           }
                         )
-                        config.config
+                        config.module
                       ]
                       ++ x;
                   };
@@ -247,7 +247,7 @@ in
           builtins.removeAttrs v [
             "home-manager"
             "username"
-            "config"
+            "module"
           ]
         )
       ) (config.perSystem system).homeConfigurations;
@@ -256,7 +256,7 @@ in
         v.nixpkgs.lib.nixosSystem (
           builtins.removeAttrs v [
             "nixpkgs"
-            "config"
+            "module"
             "disko"
             "extraSpecialArgs"
             "hostname"

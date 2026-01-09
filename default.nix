@@ -223,9 +223,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             flake-path
             ;
         };
-        inherit system;
+        module.nixpkgs.overlays = overlayList;
         modules = [
-          { nixpkgs.overlays = overlayList; }
           ./systems/PCs/aSUS
         ];
       };
@@ -241,8 +240,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             flake-path
             ;
         };
+        module.nixpkgs.overlays = overlayList;
         modules = [
-          { nixpkgs.overlays = overlayList; }
           ./systems/PCs/dustbook
         ];
       };
@@ -260,9 +259,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             flake-path
             ;
         };
-        inherit system;
+        module.nixpkgs.overlays = overlayList;
         modules = [
-          { nixpkgs.overlays = overlayList; }
           ./systems/VMs/${name}
         ];
       });
@@ -281,7 +279,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             flake-path
             ;
         };
-        inherit system;
+        module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/VMs/qemu
           (HMmain (import ./homes/birdee.nix))
@@ -301,9 +299,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             flake-path
             ;
         };
-        inherit system;
+        module.nixpkgs.overlays = overlayList;
         modules = [
-          { nixpkgs.overlays = overlayList; }
           ./systems/installers/installer_mine
         ];
       };
@@ -312,9 +309,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         specialArgs = {
           inherit inputs system-modules;
         };
-        inherit system;
+        module.nixpkgs.overlays = overlayList;
         modules = [
-          { nixpkgs.overlays = overlayList; }
           ./systems/installers/installer
         ];
       };
