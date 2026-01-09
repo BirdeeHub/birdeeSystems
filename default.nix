@@ -15,35 +15,19 @@ let
   inherit (common) birdeeutils;
   my_common_hub = common.hub {};
   inherit (my_common_hub) system-modules home-modules overlaySet overlayList flakeModules diskoCFG templates userdata wrappers;
-  packages_func = my_common_hub.packages;
   # factor out declaring home manager as a module for configs that do that
   HMasModule =
-    { users, monitorCFG ? null, username, hmCFGmodMAIN, }:
-    { pkgs, lib, ... }:
+    { lib, ... }:
     {
       nixpkgs.overlays = overlayList;
+      home-manager.backupFileExtension = "hm-bkp";
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.birdee = hmCFGmodMAIN; # import ./homes/birdee.nix;
-      home-manager.backupFileExtension = "hm-bkp";
       home-manager.verbose = true;
-      home-manager.extraSpecialArgs = {
-        my_pkgs = packages_func pkgs.stdenv.hostPlatform.system;
-        inherit
-          stateVersion
-          self
-          inputs
-          home-modules
-          flake-path
-          username # username = "birdee";
-          users
-          monitorCFG
-          birdeeutils
-          ;
-      }; # monitorCFG = ./homes/monitors_by_hostname/<hostname>;
+      home-manager.extraSpecialArgs = { inherit home-modules ; };
       services.displayManager.defaultSession = lib.mkDefault "none+fake";
     };
-
+  HMmain = module: { username ? "birdee", ... }: { home-manager.users.${username} = module; };
 in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
@@ -52,10 +36,9 @@ flake-parts.lib.mkFlake { inherit inputs; } {
   systems = nixpkgs.lib.platforms.all;
   imports = [
     # inputs.flake-parts.flakeModules.easyOverlay
-    inputs.devenv.flakeModule
-    flakeModules.nixosCFGperSystem
-    flakeModules.homeCFGperSystem
-    flakeModules.appImagePerSystem
+    # inputs.devenv.flakeModule
+    inputs.flake-parts.flakeModules.flakeModules
+    flakeModules.hub
 
     # e.g. treefmt-nix.flakeModule
   ];
@@ -77,7 +60,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     homeModules = home-modules // {
       birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.homeModule;
     };
-    inherit flakeModules templates birdeeutils;
+    inherit templates birdeeutils flakeModules;
     inherit (wrappers) modules wrapperModules;
   };
   perSystem = {
@@ -100,7 +83,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
 
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
-    packages = (packages_func system) // {
+    packages = {
       inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakit opencode git_with_config ranger alacritty starship xplr nushell bemenu gac;
       wezshterm = pkgs.wezterm.wrap {
         withLauncher = lib.mkDefault true;
@@ -116,11 +99,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
 
     # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
     homeConfigurations = let users = userdata pkgs; in {
-      "birdee@dustbook" = home-manager.lib.homeManagerConfiguration {
+      "birdee@dustbook" = {
+        inherit home-manager;
         extraSpecialArgs = {
-          username = "birdee";
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -132,7 +114,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             birdeeutils
             ;
         };
-        inherit pkgs;
         modules = [
           ./homes/birdee.nix
           (
@@ -143,11 +124,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           )
         ];
       };
-      "birdee@aSUS" = home-manager.lib.homeManagerConfiguration {
+      "birdee@aSUS" = {
+        inherit home-manager;
         extraSpecialArgs = {
-          username = "birdee";
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -159,7 +139,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             birdeeutils
             ;
         };
-        inherit pkgs;
         modules = [
           ./homes/birdee.nix
           (
@@ -174,10 +153,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
 
     # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
     nixosConfigurations = let users = userdata pkgs; in {
-      "birdee@nestOS" = inputs.nixpkgsNV.lib.nixosSystem {
+      "birdee@nestOS" = {
+        nixpkgs = inputs.nixpkgsNV;
+        inherit home-manager;
         specialArgs = {
-          hostname = "nestOS";
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -188,24 +167,21 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             birdeeutils
             ;
         };
-        inherit system;
+        extraSpecialArgs = {
+          monitorCFG = ./homes/monitors_by_hostname/nestOS;
+        };
         modules = [
-          home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           diskoCFG.PCs.nvme0n1_swap
           ./systems/PCs/nestOS
-          (HMasModule {
-            monitorCFG = ./homes/monitors_by_hostname/nestOS;
-            username = "birdee";
-            inherit users;
-            hmCFGmodMAIN = import ./homes/main;
-          })
+          (HMmain (import ./homes/main))
+          HMasModule
         ];
       };
-      "birdee@aSUS" = nixpkgs.lib.nixosSystem {
+      "birdee@aSUS" = {
+        nixpkgs = inputs.nixpkgs;
+        inherit home-manager;
         specialArgs = {
-          hostname = "aSUS";
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -216,24 +192,21 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             birdeeutils
             ;
         };
-        inherit system;
+        extraSpecialArgs = {
+          monitorCFG = ./homes/monitors_by_hostname/aSUS;
+        };
         modules = [
-          home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           diskoCFG.PCs.sda_swap
           ./systems/PCs/aSUS
-          (HMasModule {
-            monitorCFG = ./homes/monitors_by_hostname/aSUS;
-            username = "birdee";
-            inherit users;
-            hmCFGmodMAIN = import ./homes/birdee.nix;
-          })
+          (HMmain (import ./homes/birdee.nix))
+          HMasModule
         ];
       };
-      "birdee@dustbook" = nixpkgs.lib.nixosSystem {
+      "birdee@dustbook" = {
+        nixpkgs = inputs.nixpkgs;
+        inherit home-manager;
         specialArgs = {
-          hostname = "dustbook";
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             users
@@ -244,24 +217,20 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             birdeeutils
             ;
         };
-        inherit system;
+        extraSpecialArgs = {
+          monitorCFG = ./homes/monitors_by_hostname/dustbook;
+        };
         modules = [
-          home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           diskoCFG.PCs.sda_swap
           ./systems/PCs/dustbook
-          (HMasModule {
-            monitorCFG = ./homes/monitors_by_hostname/dustbook;
-            username = "birdee";
-            inherit users;
-            hmCFGmodMAIN = import ./homes/birdee.nix;
-          })
+          (HMmain (import ./homes/birdee.nix))
+          HMasModule
         ];
       };
-      "aSUS" = nixpkgs.lib.nixosSystem {
+      "aSUS" = {
+        nixpkgs = inputs.nixpkgs;
         specialArgs = {
-          hostname = "aSUS";
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -280,10 +249,9 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           ./systems/PCs/aSUS
         ];
       };
-      "dustbook" = nixpkgs.lib.nixosSystem {
+      "dustbook" = {
+        nixpkgs = inputs.nixpkgs;
         specialArgs = {
-          hostname = "dustbook";
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -294,7 +262,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             birdeeutils
             ;
         };
-        inherit system;
         modules = [
           { nixpkgs.overlays = overlayList; }
           disko.nixosModules.disko
@@ -302,12 +269,11 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           ./systems/PCs/dustbook
         ];
       };
-      "virtbird" = nixpkgs.lib.nixosSystem (let
-        hostname = "virtbird";
+      "virtbird" = (let
+      in {name, ... }: {
+        nixpkgs = inputs.nixpkgs;
         username = "birdee";
-      in {
         specialArgs = {
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -316,29 +282,22 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             system-modules
             flake-path
             birdeeutils
-            hostname
-            username
             ;
         };
         inherit system;
         modules = [
-          # home-manager.nixosModules.home-manager
           { nixpkgs.overlays = overlayList; }
           disko.nixosModules.disko
-          self.diskoConfigurations.${hostname}
-          ./systems/VMs/${hostname}
-          # (HMasModule {
-          #   username = "birdee";
-          #   inherit users;
-          #   hmCFGmodMAIN = import ./homes/birdee.nix;
-          # })
+          self.diskoConfigurations.${name}
+          ./systems/VMs/${name}
         ];
       });
-      "my-qemu-vm" = nixpkgs.lib.nixosSystem {
+      "my-qemu-vm" = {
+        nixpkgs = inputs.nixpkgs;
+        inherit home-manager;
+        hostname = "virtbird";
+        username = "birdee";
         specialArgs = {
-          hostname = "virtbird";
-          username = "birdee";
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -351,21 +310,16 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         };
         inherit system;
         modules = [
-          home-manager.nixosModules.home-manager
           ./systems/VMs/qemu
-          (HMasModule {
-            username = "birdee";
-            inherit users;
-            hmCFGmodMAIN = import ./homes/birdee.nix;
-          })
+          (HMmain (import ./homes/birdee.nix))
+          HMasModule
         ];
       };
-      "installer_mine" = inputs.nixpkgsNV.lib.nixosSystem {
+      "installer_mine" = {
+        nixpkgs = inputs.nixpkgsNV;
         specialArgs = {
-          hostname = "installer_mine";
           is_minimal = true;
           use_alacritty = false;
-          my_pkgs = packages_func system;
           inherit
             stateVersion
             self
@@ -380,17 +334,11 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         modules = [
           { nixpkgs.overlays = overlayList; }
           ./systems/installers/installer_mine
-          # home-manager.nixosModules.home-manager
-          # (HMasModule {
-          #   username = "birdee";
-          #   inherit users;
-          #   hmCFGmodMAIN = import ./homes/birdee.nix;
-          # })
         ];
       };
-      "installer" = inputs.nixpkgsNV.lib.nixosSystem {
+      "installer" = {
+        nixpkgs = inputs.nixpkgsNV;
         specialArgs = {
-          my_pkgs = packages_func system;
           inherit self inputs system-modules birdeeutils;
         };
         inherit system;

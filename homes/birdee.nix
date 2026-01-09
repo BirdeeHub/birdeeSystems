@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, my_pkgs, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
     shell.bash
@@ -9,10 +9,6 @@ in {
     i3
     i3MonMemory
   ];
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = username;
-  home.homeDirectory = lib.mkDefault (self.birdeeutils.mkHMdir pkgs username);
 
   birdeeMods = {
     birdeevim = {
