@@ -1,4 +1,4 @@
-{ inputs, birdeeutils, ... }:
+{ inputs, util, ... }:
 {config, pkgs, wlib, lib, ... }: {
   imports = [ wlib.wrapperModules.nushell ];
   # # TODO: why this no work

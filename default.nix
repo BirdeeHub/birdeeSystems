@@ -12,7 +12,7 @@ let
   flake-path = "/home/birdee/birdeeSystems";
   stateVersion = "25.11";
   common = import ./common { inherit inputs; };
-  inherit (common) birdeeutils;
+  inherit (common) util;
   my_common_hub = common.hub {};
   inherit (my_common_hub) system-modules home-modules overlaySet overlayList flakeModules diskoCFG templates userdata wrappers;
   # factor out declaring home manager as a module for configs that do that
@@ -60,7 +60,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     homeModules = home-modules // {
       birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.homeModule;
     };
-    inherit templates birdeeutils flakeModules;
+    inherit templates util flakeModules;
     inherit (wrappers) modules wrapperModules;
   };
   perSystem = {
@@ -111,7 +111,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             home-modules
             flake-path
-            birdeeutils
             ;
         };
         modules = [
@@ -136,7 +135,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             home-modules
             flake-path
-            birdeeutils
             ;
         };
         modules = [
@@ -164,7 +162,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         extraSpecialArgs = {
@@ -189,7 +186,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         extraSpecialArgs = {
@@ -214,7 +210,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             inputs
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         extraSpecialArgs = {
@@ -238,7 +233,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         inherit system;
@@ -259,7 +253,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         modules = [
@@ -281,7 +274,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         inherit system;
@@ -305,7 +297,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         inherit system;
@@ -327,7 +318,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
             users
             system-modules
             flake-path
-            birdeeutils
             ;
         };
         inherit system;
@@ -339,7 +329,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "installer" = {
         nixpkgs = inputs.nixpkgsNV;
         specialArgs = {
-          inherit self inputs system-modules birdeeutils;
+          inherit self inputs system-modules;
         };
         inherit system;
         modules = [

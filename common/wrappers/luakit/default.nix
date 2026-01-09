@@ -1,4 +1,4 @@
-{ inputs, birdeeutils, ... }:
+{ inputs, util, ... }:
 { config, pkgs, lib, wlib, ... }: {
   _file = ./default.nix;
   key = ./default.nix;
@@ -41,7 +41,7 @@
     ln -s "${config.theme}" "${placeholder "out"}/theme.lua"
     ln -s "${config.init}" "${placeholder "out"}/init.lua"
     { [ -e "$nixInfoPath" ] && cat "$nixInfoPath" || echo "$nixInfo"; } > ${lib.escapeShellArg "${placeholder "out"}/rc.lua"}
-    ${birdeeutils.mkRecBuilder {
+    ${util.mkRecBuilder {
       src = "$src";
       out = "$out/cfg";
       action = /*bash*/''

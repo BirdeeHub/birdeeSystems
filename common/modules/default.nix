@@ -1,4 +1,4 @@
-{ inputs, homeManager ? false, birdeeutils, ... }: let
+{ inputs, homeManager ? false, util, ... }: let
   homeOnly = path:
     (if homeManager
       then path
@@ -10,7 +10,7 @@
       else path
     );
   moduleNamespace = "birdeeMods";
-  args = { inherit inputs moduleNamespace homeManager birdeeutils; };
+  args = { inherit inputs moduleNamespace homeManager util; };
 in {
   birdeevim = import ./birdeevim args;
   LD = import (systemOnly ./LD) args;

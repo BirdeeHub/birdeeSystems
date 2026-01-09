@@ -4,7 +4,7 @@
     birdeeSystems.url = "github:BirdeeHub/birdeeSystems";
   };
   outputs = { self, nixpkgs, ... }@inputs: let
-    inherit (inputs.birdeeSystems.birdeeutils) mkLuaApp eachSystem;
+    inherit (inputs.birdeeSystems.util) mkLuaApp eachSystem;
     forEachSystem = eachSystem nixpkgs.lib.platforms.all;
     APPNAME = "REPLACE_ME";
     appOverlay = final: prev: {

@@ -1,4 +1,4 @@
-{ inputs, birdeeutils, ... }: pkgs:
+{ inputs, util, ... }: pkgs:
 {
   birdee = {
     name = "birdee";

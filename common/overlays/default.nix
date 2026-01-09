@@ -10,7 +10,7 @@
   in
   overlay
 */
-{ inputs, birdeeutils, ... }:
+{ inputs, util, ... }:
 let
   wrapmod = extraFromPrev: importName: inputs: final: prev: {
     ${importName} = inputs.self.wrapperModules.${importName}.wrap {
@@ -74,7 +74,7 @@ let
   oversAfter = [ "tmux" ];
 in
 rec {
-  overlaySet = birdeeutils.pipe overlays [
+  overlaySet = util.pipe overlays [
     (builtins.mapAttrs (name: f: (f name inputs)))
     (v: v // importedOverlays)
   ];

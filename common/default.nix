@@ -1,7 +1,7 @@
 { inputs, ... }: let
-  birdeeutils = import ./util inputs;
+  util = import ./util inputs;
 in {
-  inherit birdeeutils;
+  inherit util;
   hub = { HM ? true
   , nixos ? true
   , overlays ? true
@@ -13,12 +13,12 @@ in {
   , ...
   }: let
     inherit (inputs.nixpkgsNV) lib;
-    nixosMods = (import ./modules { inherit inputs birdeeutils; homeManager = false; });
-    homeMods = (import ./modules { inherit inputs birdeeutils; homeManager = true; });
-    overs = (import ./overlays { inherit inputs birdeeutils; });
-    usrdta = pkgs: import ./userdata { inherit inputs birdeeutils; } pkgs;
-    wrapperModules = import ./wrappers { inherit inputs birdeeutils; };
-    flakeMods = import ./flakeModules { inherit inputs birdeeutils; };
+    nixosMods = (import ./modules { inherit inputs util; homeManager = false; });
+    homeMods = (import ./modules { inherit inputs util; homeManager = true; });
+    overs = (import ./overlays { inherit inputs util; });
+    usrdta = pkgs: import ./userdata { inherit inputs util; } pkgs;
+    wrapperModules = import ./wrappers { inherit inputs util; };
+    flakeMods = import ./flakeModules { inherit inputs util; };
   in {
     home-modules = lib.optionalAttrs HM homeMods;
     system-modules = lib.optionalAttrs nixos nixosMods;

@@ -1,4 +1,4 @@
-{ inputs, birdeeutils, ... }:
+{ inputs, util, ... }:
 { config, pkgs, lib, wlib, ... }: let
   mkPluginCfg = cfg: cfg // {
     after = [ "MAIN_INIT" ] ++ cfg.after or [];

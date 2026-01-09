@@ -1,4 +1,4 @@
-{ moduleNamespace, inputs, homeManager, birdeeutils, ... }:
+{ moduleNamespace, inputs, homeManager, util, ... }:
 { config, pkgs, lib, ... }: let
   cfg = config.${moduleNamespace}.birdeevim;
   inherit (config.birdeevim) utils;

@@ -1,4 +1,4 @@
-{ inputs, birdeeutils, ... }@args: let
+{ inputs, util, ... }@args: let
   applyfirst = {
     tmux = true;
     wezterm = true;
@@ -6,8 +6,8 @@
     xplr = true;
     nushell = true;
   };
-  modules = birdeeutils.pipe (builtins.readDir ./.) [
-    (birdeeutils.filterAttrs (n: v: v == "directory"))
+  modules = util.pipe (builtins.readDir ./.) [
+    (util.filterAttrs (n: v: v == "directory"))
     builtins.attrNames
     (map (n: { name = n; value = ./${n}; }))
     builtins.listToAttrs
