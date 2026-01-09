@@ -1,24 +1,30 @@
-/*
-This file imports overlays defined in the following format.
-*/
+# This file imports overlays defined in the following format.
 # Example overlay:
 /*
-importName: inputs: let
-  overlay = self: super: { 
-    ${importName} = {
-      # define your overlay derivations here
+  importName: inputs: let
+    overlay = self: super: {
+      ${importName} = {
+        # define your overlay derivations here
+      };
     };
-  };
-in
-overlay
+  in
+  overlay
 */
-{ inputs, birdeeutils, ... }: let 
-  wrapmod = importName: inputs: final: prev: {
+{ inputs, birdeeutils, ... }:
+let
+  wrapmod = extraFromPrev: importName: inputs: final: prev: {
     ${importName} = inputs.self.wrapperModules.${importName}.wrap {
-        pkgs = final // { ${importName} = prev.${importName}; };
+      pkgs =
+        final
+        // (builtins.listToAttrs (
+          map (name: {
+            inherit name;
+            value = prev.${name};
+          }) ([ importName ] ++ extraFromPrev)
+        ));
     };
   };
-  overlaySet = {
+  overlays = {
 
     # this is how you would add another overlay file
     # for if your customBuildsOverlay gets too long
@@ -39,18 +45,21 @@ overlay
     git_with_config = importName: inputs: final: prev: {
       ${importName} = inputs.self.wrapperModules.git.wrap { pkgs = final; };
     };
-    ranger = wrapmod;
-    luakit = wrapmod;
-    nushell = wrapmod;
-    opencode = wrapmod;
-    alacritty = wrapmod;
-    starship = wrapmod;
-    tmux = wrapmod;
-    wezterm = wrapmod;
-    bemenu = wrapmod;
+    ranger = wrapmod [ ];
+    luakit = wrapmod [ ];
+    nushell = wrapmod [ ];
+    opencode = wrapmod [ ];
+    alacritty = wrapmod [ ];
+    starship = wrapmod [ ];
+    tmux = wrapmod [ ];
+    wezterm = wrapmod [ "tmux" ];
+    bemenu = wrapmod [ ];
     xplr = importName: inputs: final: prev: {
       ${importName} = inputs.self.wrapperModules.${importName}.wrap {
-        pkgs = final // { ${importName} = prev.${importName}; };
+        pkgs = final // {
+          ${importName} = prev.${importName};
+          tmux = prev.tmux;
+        };
         termCmd = "${final.wezterm}/bin/wezterm";
       };
     };
@@ -61,4 +70,15 @@ overlay
     minesweeper = inputs.minesweeper.overlays.default;
     shelua = inputs.shelua.overlays.default;
   };
-in builtins.mapAttrs (name: value: (value name inputs)) overlaySet // importedOverlays
+  oversBefore = [];
+  oversAfter = [ "tmux" ];
+in
+rec {
+  overlaySet = birdeeutils.pipe overlays [
+    (builtins.mapAttrs (name: f: (f name inputs)))
+    (v: v // importedOverlays)
+  ];
+  overlayList = map (n: overlaySet.${n}) oversBefore
+    ++ builtins.attrValues (builtins.removeAttrs overlaySet (oversBefore ++ oversAfter))
+    ++ map (n: overlaySet.${n}) oversAfter;
+}

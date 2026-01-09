@@ -24,8 +24,9 @@ in {
   in {
     home-modules = lib.optionalAttrs HM homeMods;
     system-modules = lib.optionalAttrs nixos nixosMods;
-    overlaySet = lib.optionalAttrs overlays overs;
     packages = if packages then mypkgs else (_:{});
+    overlaySet = lib.optionalAttrs overlays overs.overlaySet;
+    overlayList = lib.optionals overlays overs.overlayList;
     diskoCFG = lib.optionalAttrs disko (import ./disko);
     flakeModules = lib.optionalAttrs flakeMods FM;
     templates = lib.optionalAttrs templates (import ./templates inputs);

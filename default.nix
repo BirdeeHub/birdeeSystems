@@ -14,9 +14,8 @@ let
   common = import ./common { inherit inputs; };
   inherit (common) birdeeutils;
   my_common_hub = common.hub {};
-  inherit (my_common_hub) system-modules home-modules overlaySet flakeModules diskoCFG templates userdata wrappers;
+  inherit (my_common_hub) system-modules home-modules overlaySet overlayList flakeModules diskoCFG templates userdata wrappers;
   packages_func = my_common_hub.packages;
-  overlayList = builtins.attrValues overlaySet;
   # factor out declaring home manager as a module for configs that do that
   HMasModule =
     { users, monitorCFG ? null, username, hmCFGmodMAIN, }:

@@ -15,10 +15,16 @@
   # because we are importing these wrapper modules in overlays
   # (it could still be grabbed from pkgs.tmux.configuration.package, but that was more annoying)
   options.tmux = lib.mkOption {
-    type = lib.types.package;
-    default = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux.wrap {
-      updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
+    type = wlib.types.subWrapperModuleWith {
+      modules = [
+        inputs.self.modules.tmux
+        {
+          config.pkgs = pkgs;
+          config.updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
+        }
+      ];
     };
+    default = { };
   };
   options.shellString = lib.mkOption {
     type = wlib.types.stringable;
@@ -88,10 +94,10 @@
       lib.optional (config.shellString != null) config.shellString
       ++ lib.optionals (config.shellString != null && config.withLauncher) [
         "-c"
-        "exec ${if config.launcher == null then "${config.tmux}/bin/tx" else config.launcher}"
+        "exec ${if config.launcher == null then "${config.tmux.wrapper}/bin/tx" else config.launcher}"
       ];
   };
-  config.extraPackages = [ config.tmux ];
+  config.extraPackages = [ config.tmux.wrapper ];
   config.runShell = [
     "declare -f __bp_install_after_session_init && source '${placeholder "out"}/etc/profile.d/wezterm.sh'"
   ];
