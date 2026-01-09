@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, modulesPath, system-modules, inputs, ... }: {
+{ config, lib, pkgs, modulesPath, system-modules, inputs, ... }: {
   imports = with system-modules; [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     birdeevim
@@ -45,8 +45,8 @@
     l  = "ls -alh";
   };
 
-  isoImage.contents = lib.mkIf (builtins.isPath "${self}/secrets") [
-    { source = "${self}/secrets"; target = "/secrets";}
+  isoImage.contents = lib.mkIf (builtins.isPath "${inputs.self}/secrets") [
+    { source = "${inputs.self}/secrets"; target = "/secrets";}
   ];
 
   isoImage.isoBaseName = "birdeeSystems_installer";

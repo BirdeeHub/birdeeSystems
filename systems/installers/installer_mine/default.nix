@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, modulesPath, system-modules, inputs, is_minimal ? true, use_alacritty ? false, ... }: let
+{ config, lib, pkgs, modulesPath, system-modules, inputs, is_minimal ? true, use_alacritty ? false, ... }: let
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 
@@ -49,8 +49,8 @@ in {
   ]);
 
   isoImage.isoBaseName = "birdeeOS_installer";
-  isoImage.contents = lib.mkIf (builtins.isPath "${self}/secrets") [
-    { source = "${self}/secrets"; target = "/secrets";}
+  isoImage.contents = lib.mkIf (builtins.isPath "${inputs.self}/secrets") [
+    { source = "${inputs.self}/secrets"; target = "/secrets";}
   ];
 
   environment.shellAliases = {

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, pkgs, lib, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with home-modules; [
     shell.bash
@@ -81,15 +81,15 @@ in {
 
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
       export NH_FLAKE="${flake-path}";
-      exec ${self}/scripts/system "$@"
+      exec ${inputs.self}/scripts/system "$@"
     ''}'';
     me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
       export NH_FLAKE="${flake-path}";
-      exec ${self}/scripts/home "$@"
+      exec ${inputs.self}/scripts/home "$@"
     ''}'';
     me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
       export NH_FLAKE="${flake-path}";
-      exec ${self}/scripts/both "$@"
+      exec ${inputs.self}/scripts/both "$@"
     ''}'';
   };
   home.sessionVariables = let
@@ -131,7 +131,7 @@ in {
     nixCats.flake = inputs.birdeevim.inputs.nixCats;
     wrappers.flake = inputs.wrappers;
     home-manager.flake = inputs.home-manager;
-    birdeeSystems.flake = self;
+    birdeeSystems.flake = inputs.self;
     gomod2nix.to = {
       type = "github";
       owner = "nix-community";

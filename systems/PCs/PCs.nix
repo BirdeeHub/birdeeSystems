@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, lib, pkgs, self, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ modulesPath, config, lib, pkgs, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
     i3

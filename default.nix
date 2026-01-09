@@ -31,7 +31,7 @@ in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
-flake-parts.lib.mkFlake { inherit inputs; } {
+flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
   systems = nixpkgs.lib.platforms.all;
   imports = [
     # inputs.flake-parts.flakeModules.easyOverlay
@@ -59,7 +59,9 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     inherit templates util flakeModules;
     inherit (wrappers) modules wrapperModules;
   };
-  perSystem = {
+  perSystem = let
+    flakeCfg = config.flake;
+  in {
     config,
     self',
     inputs',
@@ -101,8 +103,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
           inherit
             stateVersion
-            self
-            system
             inputs
             users
             home-modules
@@ -125,8 +125,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
           inherit
             stateVersion
-            self
-            system
             inputs
             users
             home-modules
@@ -150,11 +148,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "birdee@nestOS" = {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
-        disko.diskoModule = diskoCFG.PCs.nvme0n1_swap;
+        disko.diskoModule = flakeCfg.diskoConfigurations.nvme0n1_swap;
         specialArgs = {
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -173,11 +170,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "birdee@aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
         inherit home-manager;
-        disko.diskoModule = diskoCFG.PCs.sda_swap;
+        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = {
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -195,13 +191,12 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       };
       "birdee@dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = diskoCFG.PCs.sda_swap;
+        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         inherit home-manager;
         specialArgs = {
           inherit
             stateVersion
             users
-            self
             inputs
             system-modules
             flake-path
@@ -218,11 +213,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       };
       "aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = diskoCFG.PCs.sda_swap;
+        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = {
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -237,11 +231,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       };
       "dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = diskoCFG.PCs.sda_swap;
+        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = {
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -257,11 +250,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       in {name, ... }: {
         nixpkgs = inputs.nixpkgs;
         username = "birdee";
-        disko.diskoModule = diskoCFG.VMs.noswap_bios;
+        disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
         specialArgs = {
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -278,12 +270,11 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
         hostname = "virtbird";
-        disko.diskoModule = diskoCFG.VMs.noswap_bios;
+        disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
         username = "birdee";
         specialArgs = {
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -304,7 +295,6 @@ flake-parts.lib.mkFlake { inherit inputs; } {
           use_alacritty = false;
           inherit
             stateVersion
-            self
             inputs
             users
             system-modules
@@ -320,7 +310,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       "installer" = {
         nixpkgs = inputs.nixpkgs;
         specialArgs = {
-          inherit self inputs system-modules;
+          inherit inputs system-modules;
         };
         inherit system;
         modules = [
@@ -330,4 +320,4 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       };
     };
   };
-}
+})

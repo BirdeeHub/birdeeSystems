@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, self, flake-path, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ config, pkgs, lib, flake-path, inputs, stateVersion, users, hostname, system-modules, ... }: let
 in {
   imports = with system-modules; [
     old_modules_compat
@@ -41,15 +41,15 @@ in {
   environment.shellAliases = {
     me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
       export NH_FLAKE="${flake-path}";
-      exec ${self}/scripts/system "$@"
+      exec ${inputs.self}/scripts/system "$@"
     ''}'';
     me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
       export NH_FLAKE="${flake-path}";
-      exec ${self}/scripts/home "$@"
+      exec ${inputs.self}/scripts/home "$@"
     ''}'';
     me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
       export NH_FLAKE="${flake-path}";
-      exec ${self}/scripts/both "$@"
+      exec ${inputs.self}/scripts/both "$@"
     ''}'';
   };
 
