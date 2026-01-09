@@ -13,7 +13,7 @@ in {
     lightdm
     i3MonMemory
     LD
-    inputs.self.wrapperModules.tmux.nixosModule
+    inputs.self.wrappedModules.tmux.nixosModule
   ];
 
 

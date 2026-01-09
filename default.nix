@@ -13,7 +13,7 @@ let
   common = import ./common { inherit inputs; };
   inherit (common) util;
   my_common_hub = common.hub {};
-  inherit (my_common_hub) system-modules home-modules overlaySet overlayList flakeModules diskoCFG templates userdata wrappers;
+  inherit (my_common_hub) system-modules home-modules overlaySet overlayList wrapperModules flakeModules diskoCFG templates userdata wrappers;
   # factor out declaring home manager as a module for configs that do that
   HMasModule =
     { lib, ... }:
@@ -38,6 +38,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     # inputs.devenv.flakeModule
     inputs.flake-parts.flakeModules.flakeModules
     flakeModules.hub
+    flakeModules.wrapper
     flakeModules.configsPerSystem
 
     # e.g. treefmt-nix.flakeModule
@@ -57,7 +58,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.homeModule;
     };
     inherit templates util flakeModules;
-    inherit (wrappers) modules wrapperModules;
+    inherit wrapperModules;
   };
   perSystem = let
     flakeCfg = config.flake;
@@ -82,8 +83,9 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
     packages = {
-      inherit (pkgs) dep-tree minesweeper nops manix tmux wezterm antifennel luakit opencode git_with_config ranger alacritty starship xplr nushell bemenu gac libvma;
-      wezshterm = pkgs.wezterm.wrap {
+      inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma;
+      wezshterm = flakeCfg.wrappedModules.wezterm.wrap {
+        inherit pkgs;
         withLauncher = lib.mkDefault true;
         wrapZSH = lib.mkDefault true;
       };

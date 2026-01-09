@@ -28,6 +28,6 @@ in {
     flakeModules = lib.optionalAttrs flakeModules flakeMods;
     templates = lib.optionalAttrs templates (import ./templates inputs);
     userdata = if userdata then usrdta else (_:{});
-    wrappers = if wrappers then wrapperModules else {};
+    wrapperModules = if wrappers then wrapperModules else {};
   };
 }

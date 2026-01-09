@@ -13,7 +13,7 @@
 { inputs, util, ... }:
 let
   wrapmod = extraFromPrev: importName: inputs: final: prev: {
-    ${importName} = inputs.self.wrapperModules.${importName}.wrap {
+    ${importName} = inputs.self.wrappedModules.${importName}.wrap {
       pkgs =
         final
         // (builtins.listToAttrs (
@@ -44,7 +44,7 @@ let
 
     # wrapper modules
     git_with_config = importName: inputs: final: prev: {
-      ${importName} = inputs.self.wrapperModules.git.wrap { pkgs = final; };
+      ${importName} = inputs.self.wrappedModules.git.wrap { pkgs = final; };
     };
     ranger = wrapmod [ ];
     luakit = wrapmod [ ];
@@ -56,7 +56,7 @@ let
     wezterm = wrapmod [ "tmux" ];
     bemenu = wrapmod [ ];
     xplr = importName: inputs: final: prev: {
-      ${importName} = inputs.self.wrapperModules.${importName}.wrap {
+      ${importName} = inputs.self.wrappedModules.${importName}.wrap {
         pkgs = final // {
           ${importName} = prev.${importName};
           tmux = prev.tmux;

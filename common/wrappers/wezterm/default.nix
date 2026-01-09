@@ -17,7 +17,7 @@
   options.tmux = lib.mkOption {
     type = wlib.types.subWrapperModuleWith {
       modules = [
-        inputs.self.modules.tmux
+        inputs.self.wrapperModules.tmux
         {
           config.pkgs = pkgs;
           config.updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;

@@ -9,7 +9,7 @@ in {
     birdeevim
     shell.bash
     shell.zsh
-    inputs.self.wrapperModules.tmux.nixosModule
+    inputs.self.wrappedModules.tmux.nixosModule
     shell.fish
     lightdm
     i3MonMemory
