@@ -39,6 +39,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # inputs.devenv.flakeModule
     inputs.flake-parts.flakeModules.flakeModules
     flakeModules.hub
+    flakeModules.configsPerSystem
 
     # e.g. treefmt-nix.flakeModule
   ];
