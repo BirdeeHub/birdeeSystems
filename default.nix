@@ -94,17 +94,20 @@ in {
     };
 
     # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
-    homeConfigurations = let users = userdata pkgs; in {
+    homeConfigurations = let
+      defaultSpecialArgs = {
+        users = userdata pkgs;
+        inherit
+          stateVersion
+          inputs
+          flake-path
+          ;
+      };
+    in {
       "birdee@dustbook" = {
         inherit home-manager;
-        extraSpecialArgs = {
+        extraSpecialArgs = defaultSpecialArgs // {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
         };
         modules = [
           ./homes/birdee.nix
@@ -118,14 +121,8 @@ in {
       };
       "birdee@aSUS" = {
         inherit home-manager;
-        extraSpecialArgs = {
+        extraSpecialArgs = defaultSpecialArgs // {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
         };
         modules = [
           ./homes/birdee.nix
@@ -140,19 +137,21 @@ in {
     };
 
     # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
-    nixosConfigurations = let users = userdata pkgs; in {
+    nixosConfigurations = let
+      defaultSpecialArgs = {
+        users = userdata pkgs;
+        inherit
+          stateVersion
+          inputs
+          flake-path
+          ;
+      };
+    in {
       "birdee@nestOS" = {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
         disko.diskoModule = flakeCfg.diskoConfigurations.nvme0n1_swap;
-        specialArgs = {
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/nestOS;
         };
@@ -167,14 +166,7 @@ in {
         nixpkgs = inputs.nixpkgsOLD;
         inherit home-manager;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
-        specialArgs = {
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
         };
@@ -189,14 +181,7 @@ in {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         inherit home-manager;
-        specialArgs = {
-          inherit
-            stateVersion
-            users
-            inputs
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
         };
@@ -210,14 +195,7 @@ in {
       "aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
-        specialArgs = {
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/PCs/aSUS
@@ -226,14 +204,7 @@ in {
       "dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
-        specialArgs = {
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/PCs/dustbook
@@ -244,14 +215,7 @@ in {
         nixpkgs = inputs.nixpkgs;
         username = "birdee";
         disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
-        specialArgs = {
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/VMs/${name}
@@ -263,14 +227,7 @@ in {
         hostname = "virtbird";
         disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
         username = "birdee";
-        specialArgs = {
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
-        };
+        specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/VMs/qemu
@@ -280,15 +237,9 @@ in {
       };
       "installer_mine" = {
         nixpkgs = inputs.nixpkgs;
-        specialArgs = {
+        specialArgs = defaultSpecialArgs // {
           is_minimal = true;
           use_alacritty = false;
-          inherit
-            stateVersion
-            inputs
-            users
-            flake-path
-            ;
         };
         extraSpecialArgs = {
         };
@@ -299,9 +250,7 @@ in {
       };
       "installer" = {
         nixpkgs = inputs.nixpkgs;
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/installers/installer
