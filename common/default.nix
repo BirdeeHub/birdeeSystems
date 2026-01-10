@@ -4,6 +4,7 @@ inputs: let
   inherit (inputs.nixpkgs.lib.modules) importApply;
 in {
   imports = [
+    inputs.flake-parts.flakeModules.flakeModules
     flakeModules.wrapper
     flakeModules.hub
     flakeModules.configsPerSystem

@@ -44,7 +44,6 @@ in {
     # inputs.flake-parts.flakeModules.easyOverlay
     # inputs.devenv.flakeModule
     # e.g. treefmt-nix.flakeModule
-    inputs.flake-parts.flakeModules.flakeModules
     (nixpkgs.lib.modules.importApply ./common inputs)
   ];
   perSystem = let
