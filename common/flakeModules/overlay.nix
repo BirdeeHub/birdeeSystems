@@ -11,25 +11,11 @@ in
 }:
 let
   inherit (lib) types mkOption;
-  file = ./hub.nix;
+  file = ./overlay.nix;
 in
 {
   _file = file;
   key = file;
-  imports = [
-    (flake-parts-lib.mkTransposedPerSystemModule {
-      name = "app-images";
-      file = file;
-      option = mkOption {
-        type = types.lazyAttrsOf types.package;
-        default = { };
-        description = ''
-          perSystem.app-images.<name> = app-images.$${system}.<name>
-        '';
-      };
-    })
-  ];
-
   options = {
     flake = mkOption {
       type = types.submoduleWith {
@@ -37,14 +23,6 @@ in
           {
             _file = file;
             key = file;
-            options.util = mkOption {
-              type = types.lazyAttrsOf types.raw;
-              default = { };
-              description = ''
-                contains various personal utilities which are not system dependent
-              '';
-              apply = x: { inherit wlib; } // x;
-            };
             options.overlist = mkOption {
               type = lib.types.listOf types.raw;
               readOnly = true;
@@ -88,5 +66,4 @@ in
       default = { };
     };
   };
-
 }

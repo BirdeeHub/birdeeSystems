@@ -1,7 +1,8 @@
 inputs: let
   inherit (inputs.nixpkgs.lib.modules) importApply;
 in {
-  hub = importApply ./hub.nix inputs;
+  misc = importApply ./misc.nix inputs;
+  overlay = importApply ./overlay.nix inputs;
   configsPerSystem = importApply ./configsPerSystem.nix inputs;
   wrapper = importApply ./wrapper.nix inputs;
 }

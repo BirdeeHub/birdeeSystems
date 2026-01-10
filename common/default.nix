@@ -6,7 +6,8 @@ in {
   imports = [
     inputs.flake-parts.flakeModules.flakeModules
     flakeModules.wrapper
-    flakeModules.hub
+    flakeModules.overlay
+    flakeModules.misc
     flakeModules.configsPerSystem
     ./disko
     (importApply ./overlays { inherit inputs util; })
