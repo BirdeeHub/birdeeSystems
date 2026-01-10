@@ -1,4 +1,4 @@
-importName: { uv2nix, pyproject-nix, pyproject-build-systems, gac-src, ... }:
+{ uv2nix, pyproject-nix, pyproject-build-systems, gac-src, ... }:
 (
   self: _super:
   let

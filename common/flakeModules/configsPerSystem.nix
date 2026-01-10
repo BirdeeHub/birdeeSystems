@@ -33,7 +33,7 @@ in
         _file = file;
         key = file;
         options.nixosConfigurations = mkOption {
-          type = types.attrsOf (
+          type = types.lazyAttrsOf (
             types.submodule (
               { config, name, ... }:
               {
@@ -55,11 +55,11 @@ in
                     default = system;
                   };
                   extraSpecialArgs = mkOption {
-                    type = types.attrsOf types.raw;
+                    type = types.lazyAttrsOf types.raw;
                     default = { };
                   };
                   specialArgs = mkOption {
-                    type = types.attrsOf types.raw;
+                    type = types.lazyAttrsOf types.raw;
                     default = { };
                     apply =
                       x:
@@ -170,7 +170,7 @@ in
           '';
         };
         options.homeConfigurations = mkOption {
-          type = types.attrsOf (
+          type = types.lazyAttrsOf (
             types.submodule (
               { config, name, ... }:
               {
@@ -189,11 +189,11 @@ in
                       if matchres != null && builtins.length matchres > 0 then builtins.head matchres else name;
                   };
                   pkgs = mkOption {
-                    type = types.raw;
+                    type = types.pkgs;
                     default = pkgs;
                   };
                   extraSpecialArgs = mkOption {
-                    type = types.attrsOf types.raw;
+                    type = types.lazyAttrsOf types.raw;
                     default = { };
                     apply =
                       x:

@@ -1,4 +1,4 @@
-importName: inputs:
+inputs: importName:
 (
   final: prev: let
     manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs {

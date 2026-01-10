@@ -1,9 +1,9 @@
-{ config, pkgs, lib, inputs, flake-path, users, username, stateVersion, home-modules, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, pkgs, lib, inputs, flake-path, users, username, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
 in {
-  imports = with home-modules; [
-    shell.bash
-    shell.zsh
-    shell.fish
+  imports = with inputs.self.homeModules; [
+    bash
+    zsh
+    fish
     firefox
     birdeevim
     i3

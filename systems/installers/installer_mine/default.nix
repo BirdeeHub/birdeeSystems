@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, system-modules, inputs, is_minimal ? true, use_alacritty ? false, ... }: let
+{ config, lib, pkgs, modulesPath, inputs, is_minimal ? true, use_alacritty ? false, ... }: let
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
 
@@ -11,12 +11,12 @@
   login_shell = "zsh";
 
 in {
-  imports = with system-modules; [
+  imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-base.nix"
     # "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     # ./minimal-graphical-base.nix
-    shell.${login_shell}
-  ] ++ (lib.optional (login_shell != "bash") system-modules.shell.bash);
+    (inputs.self.nixosModules.${login_shell} or throw "no such shell config")
+  ] ++ (lib.optional (login_shell != "bash") inputs.self.nixosModules.shell.bash);
 
   birdeeMods = {
     ${login_shell}.enable = true;
@@ -45,7 +45,7 @@ in {
     pkgs.neovim
   ] else with pkgs; [
     # todo make a version that counts as minimal to include above
-    system-modules.birdeevim.packages.${stdenv.hostPlatform.system}.noAInvim
+    inputs.self.nixosModules.birdeevim.packages.${stdenv.hostPlatform.system}.noAInvim
   ]);
 
   isoImage.isoBaseName = "birdeeOS_installer";

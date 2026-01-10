@@ -26,7 +26,7 @@ in
               _file = file;
               key = file;
               options.wrapperModules = mkOption {
-                type = types.attrsOf types.raw;
+                type = types.lazyAttrsOf types.deferredModule;
                 default = { };
                 description = ''
                   contains unevaluated wrapper modules like from this library
@@ -35,24 +35,29 @@ in
                 '';
               };
               options.wrappedModules = mkOption {
-                type = types.attrsOf types.raw;
-                default = { };
+                type = types.lazyAttrsOf (wlib.types.subWrapperModuleWith { });
                 description = ''
                   contains partially evaluated wrapperModules
                 '';
-                apply = x: builtins.mapAttrs (_: v: (wlib.evalModule v).config) config.wrapperModules // x;
               };
+              config.wrappedModules = config.wrapperModules;
             }
           )
         ];
       };
     };
-    perSystem = flake-parts-lib.mkPerSystemOption (
-      { system, pkgs, ... }:
+    perSystem = let
+      wrapped = config.flake.wrappedModules;
+    in flake-parts-lib.mkPerSystemOption (
+      { system, pkgs, config, ... }:
       {
         _file = file;
         key = file;
-        config.packages = builtins.mapAttrs (_: v: v.wrap { inherit pkgs; }) config.flake.wrappedModules;
+        options.wrapperPkgs = mkOption {
+          type = types.pkgs;
+          default = pkgs;
+        };
+        config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
       }
     );
   };

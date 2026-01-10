@@ -10,20 +10,14 @@ let
   # NOTE: setup
   flake-path = "/home/birdee/birdeeSystems";
   stateVersion = "25.11";
-  common = import ./common { inherit inputs; };
-  inherit (common) util;
-  my_common_hub = common.hub {};
-  inherit (my_common_hub) system-modules home-modules overlaySet overlayList wrapperModules flakeModules diskoCFG templates userdata wrappers;
   # factor out declaring home manager as a module for configs that do that
   HMasModule =
     { lib, ... }:
     {
-      nixpkgs.overlays = overlayList;
       home-manager.backupFileExtension = "hm-bkp";
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;
-      home-manager.extraSpecialArgs = { inherit home-modules ; };
       services.displayManager.defaultSession = lib.mkDefault "none+fake";
     };
   HMmain = module: { username, ... }: { home-manager.users.${username} = module; };
@@ -31,35 +25,28 @@ in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
-flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
+flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: let
+  overlayList = config.flake.overlist;
+  userdata = pkgs: {
+    birdee = {
+      name = "birdee";
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      description = "";
+      extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+      # this is packages for nixOS user config.
+      # packages = []; # empty because that is managed by home-manager
+    };
+  };
+in {
   systems = nixpkgs.lib.platforms.all;
   imports = [
     # inputs.flake-parts.flakeModules.easyOverlay
     # inputs.devenv.flakeModule
-    inputs.flake-parts.flakeModules.flakeModules
-    flakeModules.hub
-    flakeModules.wrapper
-    flakeModules.configsPerSystem
-
     # e.g. treefmt-nix.flakeModule
+    inputs.flake-parts.flakeModules.flakeModules
+    (nixpkgs.lib.modules.importApply ./common inputs)
   ];
-  flake = {
-    diskoConfigurations = {
-      sda_swap = diskoCFG.PCs.sda_swap;
-      sdb_swap = diskoCFG.PCs.sdb_swap;
-      nvme0n1_swap = diskoCFG.PCs.nvme0n1_swap;
-      noswap_bios = diskoCFG.VMs.noswap_bios;
-    };
-    overlays = overlaySet // { };
-    nixosModules = system-modules // {
-      birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.nixosModule;
-    };
-    homeModules = home-modules // {
-      birdeevim = self.legacyPackages.x86_64-linux.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages.birdeevim.homeModule;
-    };
-    inherit templates util flakeModules;
-    inherit wrapperModules;
-  };
   perSystem = let
     flakeCfg = config.flake;
   in {
@@ -82,10 +69,19 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
 
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
+    # Make sure the exported wrapper module packages
+    # don't get a pkgs with the items already imported
+    # This is because we also added our wrapper modules
+    # into our overlayList
+    wrapperPkgs = import inputs.nixpkgs {
+      inherit system;
+      config = {
+        allowUnfree = true;
+      };
+    };
     packages = {
       inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma;
-      wezshterm = flakeCfg.wrappedModules.wezterm.wrap {
-        inherit pkgs;
+      wezshterm = config.packages.wezterm.wrap {
         withLauncher = lib.mkDefault true;
         wrapZSH = lib.mkDefault true;
       };
@@ -107,7 +103,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            home-modules
             flake-path
             ;
         };
@@ -129,7 +124,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            home-modules
             flake-path
             ;
         };
@@ -156,13 +150,13 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
         };
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/nestOS;
         };
+        module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/PCs/nestOS
           (HMmain (import ./homes/main))
@@ -178,13 +172,13 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
         };
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
         };
+        module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/PCs/aSUS
           (HMmain (import ./homes/birdee.nix))
@@ -200,13 +194,13 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             users
             inputs
-            system-modules
             flake-path
             ;
         };
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
         };
+        module.nixpkgs.overlays = overlayList;
         modules = [
           ./systems/PCs/dustbook
           (HMmain (import ./homes/birdee.nix))
@@ -221,7 +215,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
         };
@@ -238,7 +231,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
         };
@@ -257,7 +249,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
         };
@@ -277,7 +268,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
         };
@@ -297,9 +287,10 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
             stateVersion
             inputs
             users
-            system-modules
             flake-path
             ;
+        };
+        extraSpecialArgs = {
         };
         module.nixpkgs.overlays = overlayList;
         modules = [
@@ -309,7 +300,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       "installer" = {
         nixpkgs = inputs.nixpkgs;
         specialArgs = {
-          inherit inputs system-modules;
+          inherit inputs;
         };
         module.nixpkgs.overlays = overlayList;
         modules = [

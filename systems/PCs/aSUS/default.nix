@@ -2,9 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, flake-path, lib, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ config, pkgs, flake-path, lib, inputs, stateVersion, users, hostname, ... }: let
 in {
-  imports = with system-modules; [
+  imports = with inputs.self.nixosModules; [
     inputs.nixos-hardware-old.outputs.nixosModules.common-pc-laptop
     inputs.nixos-hardware-old.outputs.nixosModules.common-cpu-intel
     inputs.nixos-hardware-old.nixosModules.common-pc-ssd

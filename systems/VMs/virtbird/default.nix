@@ -1,6 +1,6 @@
-{ config, pkgs, lib, modulesPath, flake-path, inputs, stateVersion, users, hostname, system-modules, nixpkgs, ... }: let
+{ config, pkgs, lib, modulesPath, flake-path, inputs, stateVersion, users, hostname, nixpkgs, ... }: let
 in {
-  imports = with system-modules; [
+  imports = with inputs.self.nixosModules; [
     "${modulesPath}/virtualisation/vmware-guest.nix"
     ../vm.nix
     ./hardware-configuration.nix

@@ -1,85 +1,67 @@
-# This file imports overlays defined in the following format.
-# Example overlay:
-/*
-  importName: inputs: let
-    overlay = self: super: {
-      ${importName} = {
-        # define your overlay derivations here
-      };
-    };
-  in
-  overlay
-*/
 { inputs, util, ... }:
 let
-  wrapmod = extraFromPrev: importName: inputs: final: prev: {
-    ${importName} = inputs.self.wrappedModules.${importName}.wrap {
-      pkgs =
-        final
-        // (builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = prev.${name};
-          }) ([ importName ] ++ extraFromPrev)
-        ));
+  combinepkgs =
+    fromPrev: final: prev:
+    final
+    // (builtins.listToAttrs (
+      map (name: {
+        inherit name;
+        value = prev.${name};
+      }) fromPrev
+    ));
+  wrapmod = extrasFromPrev: {
+    data = name: final: prev: {
+      ${name} = inputs.self.wrappedModules.${name}.wrap {
+        pkgs = combinepkgs ([ name ] ++ extrasFromPrev) final prev;
+      };
     };
+    call-data-with-name = true;
   };
+in
+{
   overlays = {
-
-    # this is how you would add another overlay file
-    # for if your customBuildsOverlay gets too long
-    # the name here will be the name used when importing items from it in your flake.
-    # i.e. these items will be accessed as pkgs.nixCatsBuilds.thenameofthepackage
-
-    # except this one which outputs wherever it needs to.
-    pinnedVersions = import ./pinnedVersions.nix;
-
+    dep-tree = final: prev: {
+      dep-tree = prev.callPackage ./dep-tree.nix { };
+    };
+    antifennel = final: prev: { antifennel = prev.callPackage ./antifennel.nix { inherit inputs; }; };
+    libvma = final: prev: { libvma = prev.callPackage ./libvma.nix { inherit (inputs) libvma-src; }; };
+    gac = import ./gac.nix inputs;
+    pinnedVersions = import ./pinnedVersions.nix inputs;
+    nops = {
+      call-data-with-name = true;
+      data = import ./nops inputs;
+    };
     nerd-fonts-compat = import ./nerd-fonts-compat.nix;
-
-    dep-tree = import ./dep-tree;
-    nops = import ./nops;
-    antifennel = import ./antifennel;
-    libvma = import ./libvma;
-    gac = import ./gac;
+    nur = inputs.nur.overlays.default or inputs.nur.overlay;
+    minesweeper = inputs.minesweeper.overlays.default;
+    shelua = inputs.shelua.overlays.default;
 
     # wrapper modules
-    git_with_config = importName: inputs: final: prev: {
-      ${importName} = inputs.self.wrappedModules.git.wrap { pkgs = final; };
+    git_with_config = final: prev: {
+      git_with_config = inputs.self.wrappedModules.git.wrap { pkgs = final; };
     };
     ranger = wrapmod [ ];
     luakit = wrapmod [ ];
     nushell = wrapmod [ ];
+    bemenu = wrapmod [ ];
     opencode = wrapmod [ ];
     alacritty = wrapmod [ ];
     starship = wrapmod [ ];
     tmux = wrapmod [ ];
-    wezterm = wrapmod [ "tmux" ];
-    bemenu = wrapmod [ ];
-    xplr = importName: inputs: final: prev: {
-      ${importName} = inputs.self.wrappedModules.${importName}.wrap {
-        pkgs = final // {
-          ${importName} = prev.${importName};
-          tmux = prev.tmux;
+    wezterm = wrapmod [ "tmux" ] // {
+      before = [ "tmux" ];
+    };
+    xplr = {
+      before = [ "tmux" ];
+      data = final: prev: {
+        xplr = inputs.self.wrappedModules.xplr.wrap {
+          pkgs = final // {
+            xplr = prev.xplr;
+            tmux = prev.tmux;
+          };
+          termCmd = "${final.wezterm}/bin/wezterm";
         };
-        termCmd = "${final.wezterm}/bin/wezterm";
       };
     };
-
   };
-  importedOverlays = {
-    nur = inputs.nur.overlays.default or inputs.nur.overlay;
-    minesweeper = inputs.minesweeper.overlays.default;
-    shelua = inputs.shelua.overlays.default;
-  };
-  oversBefore = [];
-  oversAfter = [ "tmux" ];
-in
-rec {
-  overlaySet = util.pipe overlays [
-    (builtins.mapAttrs (name: f: (f name inputs)))
-    (v: v // importedOverlays)
-  ];
-  overlayList = map (n: overlaySet.${n}) oversBefore
-    ++ builtins.attrValues (builtins.removeAttrs overlaySet (oversBefore ++ oversAfter))
-    ++ map (n: overlaySet.${n}) oversAfter;
 }

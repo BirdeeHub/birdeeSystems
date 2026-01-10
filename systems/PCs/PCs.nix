@@ -2,15 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, lib, pkgs, inputs, stateVersion, users, hostname, system-modules, ... }: let
+{ modulesPath, config, lib, pkgs, inputs, stateVersion, users, hostname, ... }: let
 in {
-  imports = with system-modules; [
+  imports = with inputs.self.nixosModules; [
     i3
     birdeevim
-    shell.bash
-    shell.zsh
+    bash
+    zsh
     inputs.self.wrappedModules.tmux.nixosModule
-    shell.fish
+    fish
     lightdm
     i3MonMemory
     LD

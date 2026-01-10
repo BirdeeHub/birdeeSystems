@@ -1,4 +1,5 @@
-inputs: let
+inputs:
+let
   wlib = inputs.wrappers.lib;
 in
 {
@@ -11,7 +12,6 @@ in
 let
   inherit (lib) types mkOption;
   file = ./hub.nix;
-  hubutils = config.flake.util;
 in
 {
   _file = file;
@@ -38,24 +38,55 @@ in
             _file = file;
             key = file;
             options.util = mkOption {
-              type = types.attrsOf types.raw;
+              type = types.lazyAttrsOf types.raw;
               default = { };
               description = ''
                 contains various personal utilities which are not system dependent
               '';
               apply = x: { inherit wlib; } // x;
             };
+            options.overlist = mkOption {
+              type = lib.types.listOf types.raw;
+              readOnly = true;
+              default = wlib.dag.sortAndUnwrap { dag = config.overlays; name = "overlays"; mapIfOk = v: v.data; };
+            };
+            config.overlays = lib.filterAttrs (_: v: v != null) (builtins.mapAttrs (n: v: if v.enable then v.data else null) config.overlays);
           }
         ];
       };
     };
-    perSystem = flake-parts-lib.mkPerSystemOption (
-      { system, pkgs, ... }:
-      {
-        _file = file;
-        key = file;
-      }
-    );
+    overlays = mkOption {
+      type = types.lazyAttrsOf (wlib.types.spec ({name, config, ...}: {
+        options = {
+          data = mkOption {
+            type = types.raw;
+            apply = x: if config.call-data-with-name then x name else x;
+          };
+          name = mkOption {
+            type = types.str;
+            default = name;
+            readOnly = true;
+          };
+          before = mkOption {
+            type = types.listOf types.str;
+            default = [ ];
+          };
+          after = mkOption {
+            type = types.listOf types.str;
+            default = [ ];
+          };
+          enable = mkOption {
+            default = true;
+            type = types.bool;
+          };
+          call-data-with-name = mkOption {
+            default = false;
+            type = types.bool;
+          };
+        };
+      }));
+      default = { };
+    };
   };
 
 }

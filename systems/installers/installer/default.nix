@@ -1,10 +1,10 @@
-{ config, lib, pkgs, modulesPath, system-modules, inputs, ... }: {
-  imports = with system-modules; [
+{ config, lib, pkgs, modulesPath, inputs, ... }: {
+  imports = with inputs.self.nixosModules; [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     birdeevim
-    shell.bash
-    shell.zsh
-    shell.fish
+    bash
+    zsh
+    fish
   ];
 
   boot.kernelModules = [ "kvm-intel" "wl" ];

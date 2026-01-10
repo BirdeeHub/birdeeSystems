@@ -11,6 +11,7 @@
     );
   moduleNamespace = "birdeeMods";
   args = { inherit inputs moduleNamespace homeManager util; };
+  shell = import ./shell args;
 in {
   birdeevim = import ./birdeevim args;
   LD = import (systemOnly ./LD) args;
@@ -18,7 +19,7 @@ in {
   i3 = import ./i3 args;
   i3MonMemory = import ./i3MonMemory args;
   lightdm = import (systemOnly ./lightdm) args;
-  shell = import ./shell args;
+  inherit (shell) zsh bash fish nushell;
   aliasNetwork = import (systemOnly ./aliasNetwork) args;
   old_modules_compat = import ./old_modules_compat args;
 }
