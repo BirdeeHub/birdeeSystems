@@ -39,6 +39,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         inputs
         flake-path
         ;
+      inherit (flakeCfg) util;
       users = {
         birdee = {
           name = "birdee";

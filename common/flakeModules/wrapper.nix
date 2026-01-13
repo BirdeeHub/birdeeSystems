@@ -1,4 +1,4 @@
-inputs:
+{ inputs, util }:
 let
   wlib = inputs.wrappers.lib;
 in

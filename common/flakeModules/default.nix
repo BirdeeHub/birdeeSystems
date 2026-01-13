@@ -1,8 +1,14 @@
-{ inputs, util }: let
+{ inputs, util }@args: let
   inherit (inputs.nixpkgs.lib.modules) importApply;
-in {
-  misc = importApply ./misc.nix inputs;
-  overlay = importApply ./overlay.nix inputs;
-  configsPerSystem = importApply ./configsPerSystem.nix inputs;
-  wrapper = importApply ./wrapper.nix inputs;
+  flakeModules = {
+    app-images = importApply ./app-images.nix args;
+    overlay = importApply ./overlay.nix args;
+    configsPerSystem = importApply ./configsPerSystem.nix args;
+    wrapper = importApply ./wrapper.nix args;
+    util = importApply ./util.nix args;
+  };
+in flakeModules // {
+  default = {
+    imports = builtins.attrValues flakeModules;
+  };
 }

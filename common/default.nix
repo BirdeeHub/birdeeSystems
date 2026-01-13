@@ -1,25 +1,13 @@
 inputs:
 let
   util = import ./util inputs;
-  flakeModules =
-    let
-      initial = import ./flakeModules { inherit inputs util; };
-    in
-    initial
-    // {
-      default = {
-        imports = builtins.attrValues initial;
-      };
-    };
+  flakeModules = import ./flakeModules { inherit inputs util; };
 in
 { lib, ... }:
 {
   imports = [
     inputs.flake-parts.flakeModules.flakeModules
-    flakeModules.wrapper
-    flakeModules.overlay
-    flakeModules.misc
-    flakeModules.configsPerSystem
+    flakeModules.default
     ./disko
     (lib.modules.importApply ./overlays { inherit inputs util; })
     (lib.modules.importApply ./modules { inherit inputs util; })

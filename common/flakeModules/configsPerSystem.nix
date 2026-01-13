@@ -1,4 +1,4 @@
-inputs:
+{ inputs, util }:
 let
   wlib = inputs.wrappers.lib;
   diskoflake = inputs.disko;
@@ -13,15 +13,7 @@ in
 let
   inherit (lib) types mkOption genAttrs;
   file = ./configsPerSystem.nix;
-  hubutils = config.flake.util;
   diskos = config.flake.diskoConfigurations or { };
-  mkHMdir =
-    pkgs: username:
-    let
-      homeDirPrefix = if pkgs.stdenv.hostPlatform.isDarwin then "Users" else "home";
-      homeDirectory = "/${homeDirPrefix}/${username}";
-    in
-    homeDirectory;
 in
 {
   _file = file;
@@ -65,7 +57,6 @@ in
                       x:
                       x
                       // {
-                        util = hubutils;
                         inherit (config) hostname username;
                         inherit inputs;
                       };
@@ -160,7 +151,7 @@ in
                           { pkgs, ... }:
                           {
                             home.username = config.username;
-                            home.homeDirectory = lib.mkDefault (mkHMdir pkgs config.username);
+                            home.homeDirectory = lib.mkDefault (util.mkHMdir pkgs config.username);
                           };
                       }
                       ++ lib.optionals (config.disko.diskoModule != null) [
@@ -210,7 +201,6 @@ in
                       x:
                       x
                       // {
-                        util = hubutils;
                         inherit (config) username;
                         inherit inputs;
                       };
@@ -229,7 +219,7 @@ in
                           { pkgs, ... }:
                           {
                             home.username = config.username;
-                            home.homeDirectory = lib.mkDefault (mkHMdir pkgs config.username);
+                            home.homeDirectory = lib.mkDefault (util.mkHMdir pkgs config.username);
                           }
                         )
                         config.module

@@ -1,4 +1,4 @@
-inputs:
+{ inputs, util }:
 let
   wlib = inputs.wrappers.lib;
 in
@@ -11,24 +11,11 @@ in
 }:
 let
   inherit (lib) types mkOption;
-  file = ./misc.nix;
+  file = ./util.nix;
 in
 {
   _file = file;
   key = file;
-  imports = [
-    (flake-parts-lib.mkTransposedPerSystemModule {
-      name = "app-images";
-      file = file;
-      option = mkOption {
-        type = types.lazyAttrsOf types.package;
-        default = { };
-        description = ''
-          perSystem.app-images.<name> = app-images.$${system}.<name>
-        '';
-      };
-    })
-  ];
   options = {
     flake = mkOption {
       type = types.submoduleWith {
