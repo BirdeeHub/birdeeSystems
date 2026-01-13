@@ -55,9 +55,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = flakeCfg.overlist;
-      config = {
-        allowUnfree = true;
-      };
+      config.allowUnfree = true;
     };
 
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
@@ -68,9 +66,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     # into our overlays list
     wrapperPkgs = import inputs.nixpkgs {
       inherit system;
-      config = {
-        allowUnfree = true;
-      };
+      config.allowUnfree = true;
     };
     packages = {
       inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma;
