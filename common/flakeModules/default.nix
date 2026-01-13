@@ -1,4 +1,4 @@
-inputs: let
+{ inputs, util }: let
   inherit (inputs.nixpkgs.lib.modules) importApply;
 in {
   misc = importApply ./misc.nix inputs;

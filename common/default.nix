@@ -1,7 +1,19 @@
-inputs: let
-  flakeModules = import ./flakeModules inputs;
+inputs:
+let
   util = import ./util inputs;
-in { lib, ... }: {
+  flakeModules =
+    let
+      initial = import ./flakeModules { inherit inputs util; };
+    in
+    initial
+    // {
+      default = {
+        imports = builtins.attrValues initial;
+      };
+    };
+in
+{ lib, ... }:
+{
   imports = [
     inputs.flake-parts.flakeModules.flakeModules
     flakeModules.wrapper
@@ -13,11 +25,7 @@ in { lib, ... }: {
     (lib.modules.importApply ./modules { inherit inputs util; })
   ];
   flake.wrapperModules = import ./wrappers { inherit inputs util; };
-  flake.flakeModules = {
-    default = {
-      imports = [ flakeModules.hub flakeModules.configsPerSystem flakeModules.wrapper ];
-    };
-  } // flakeModules;
+  flake.flakeModules = flakeModules;
   flake.templates = import ./templates inputs;
   flake.util = util;
 }
