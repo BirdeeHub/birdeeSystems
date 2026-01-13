@@ -78,24 +78,35 @@ in
                         in
                         [
                           (
-                            { config, wlib, ... }:
+                            { config, wlib, ... }: let
+                              diskoflakedir = "${placeholder "out"}/${config.binName}-${name}";
+                            in
                             {
                               imports = [ wlib.modules.default ];
                               config.pkgs = nixpkgs.legacyPackages.${system} or (import nixpkgs { inherit system; });
                               options.diskoModule = mkOption {
-                                # TODO: handle set form modules rather than just path.
-                                # do this by builtins.toJSON, then generate a flake in the wrapper.
-                                # That flake can then read the json into a nix structure.
-                                # when using a flake, disko can then use that.
-                                type = types.nullOr wlib.types.stringable;
+                                type = types.nullOr (lib.types.either wlib.types.stringable (pkgs.formats.json {}).type);
                                 default = null;
-                                apply = x: if x == null then diskos.${name} or null else x;
+                                apply = x: if x == null then diskos.${name} or null else x; 
                               };
                               config.flags."--no-deps" = lib.mkDefault true;
-                              config.addFlag = [
+                              config.drv.preBuild = lib.mkIf (!wlib.types.stringable.check config.diskoModule) ''
+                                mkdir -p ${lib.escapeShellArg diskoflakedir}
+                                echo ${lib.escapeShellArg (builtins.toJSON config.diskoModule)} > ${lib.escapeShellArg "${diskoflakedir}/disko.json"}
+                                echo ${lib.escapeShellArg ''
+                                  {
+                                    outputs = _: {
+                                      diskoConfigurations = {
+                                        ${wlib.escapeShellArgWithEnv name} = builtins.fromJSON (builtins.readFile "''${./.}/disko.json");
+                                      };
+                                    };
+                                  }
+                                ''} > ${lib.escapeShellArg "${diskoflakedir}/flake.nix"}
+                              '';
+                              config.appendFlag = [
                                 {
                                   name = "CallMod";
-                                  data = config.diskoModule;
+                                  data = if wlib.types.stringable.check config.diskoModule then config.diskoModule else [ "--flake" "${diskoflakedir}#${name}" ];
                                 }
                               ];
                               config.package = lib.mkDefault (
