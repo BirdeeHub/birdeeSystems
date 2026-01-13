@@ -13,19 +13,7 @@ in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
-flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: let
-  userdata = pkgs: {
-    birdee = {
-      name = "birdee";
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      description = "";
-      extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
-      # this is packages for nixOS user config.
-      # packages = []; # empty because that is managed by home-manager
-    };
-  };
-in {
+flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
   systems = nixpkgs.lib.platforms.all;
   imports = [
     # inputs.flake-parts.flakeModules.easyOverlay
@@ -44,7 +32,26 @@ in {
     system,
     # final, # Only with easyOverlay imported
     ...
-  }: {
+  }: let
+    defaultSpecialArgs = {
+      inherit
+        stateVersion
+        inputs
+        flake-path
+        ;
+      users = {
+        birdee = {
+          name = "birdee";
+          shell = pkgs.zsh;
+          isNormalUser = true;
+          description = "";
+          extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+          # this is packages for nixOS user config.
+          # packages = []; # empty because that is managed by home-manager
+        };
+      };
+    };
+  in {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = flakeCfg.overlist;
@@ -80,16 +87,7 @@ in {
     };
 
     # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
-    homeConfigurations = let
-      defaultSpecialArgs = {
-        users = userdata pkgs;
-        inherit
-          stateVersion
-          inputs
-          flake-path
-          ;
-      };
-    in {
+    homeConfigurations = {
       "birdee@dustbook" = {
         inherit home-manager;
         extraSpecialArgs = defaultSpecialArgs // {
@@ -124,14 +122,6 @@ in {
 
     # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
     nixosConfigurations = let
-      defaultSpecialArgs = {
-        users = userdata pkgs;
-        inherit
-          stateVersion
-          inputs
-          flake-path
-          ;
-      };
       # factor out declaring home manager as a module for configs that do that
       HMmain = module: { username, ... }: { home-manager.users.${username} = module; };
       HMasModule =
