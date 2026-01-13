@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, lib, pkgs, inputs, stateVersion, users, hostname, ... }: let
+{ modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, ... }: let
 in {
   imports = with inputs.self.nixosModules; [
     i3
@@ -41,7 +41,6 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  users.users = users;
   birdeeMods = {
     birdeevim = {
       enable = true;

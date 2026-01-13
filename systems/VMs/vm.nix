@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, stateVersion, users, hostname, username, ... }: let
+{ config, pkgs, inputs, stateVersion, hostname, username, ... }: let
 in {
   imports = with inputs.self.nixosModules; [
     i3
@@ -16,8 +16,6 @@ in {
     inputs.self.wrappedModules.tmux.nixosModule
   ];
 
-
-  users.users = users;
   birdeeMods = {
     birdeevim = {
       enable = true;

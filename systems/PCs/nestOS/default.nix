@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, flake-path, lib, inputs, stateVersion, users, hostname, ... }: let
+{ config, pkgs, flake-path, lib, inputs, stateVersion, hostname, ... }: let
 in {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix

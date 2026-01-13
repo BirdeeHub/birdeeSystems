@@ -40,17 +40,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         flake-path
         ;
       inherit (flakeCfg) util;
-      users = {
-        birdee = {
-          name = "birdee";
-          shell = pkgs.zsh;
-          isNormalUser = true;
-          description = "";
-          extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
-          # this is packages for nixOS user config.
-          # packages = []; # empty because that is managed by home-manager
-        };
-      };
     };
   in {
     _module.args.pkgs = import inputs.nixpkgs {
@@ -130,6 +119,19 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
           home-manager.verbose = true;
           services.displayManager.defaultSession = lib.mkDefault "none+fake";
         };
+      usermod = { pkgs, username ? null, ... }: {
+        config.users.users = lib.mkIf (username != null) {
+          ${username} = {
+            name = username;
+            shell = pkgs.zsh;
+            isNormalUser = true;
+            description = "";
+            extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+            # this is packages for nixOS user config.
+            # packages = []; # empty because that is managed by home-manager
+          };
+        };
+      };
     in {
       "birdee@nestOS" = {
         nixpkgs = inputs.nixpkgs;
@@ -142,6 +144,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/nestOS
+          usermod
           (HMmain (import ./homes/main))
           HMasModule
         ];
@@ -157,6 +160,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/aSUS
+          usermod
           (HMmain (import ./homes/birdee.nix))
           HMasModule
         ];
@@ -172,6 +176,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/dustbook
+          usermod
           (HMmain (import ./homes/birdee.nix))
           HMasModule
         ];
@@ -180,8 +185,10 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
+        username = "birdee";
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
+          usermod
           ./systems/PCs/aSUS
         ];
       };
@@ -189,8 +196,10 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
+        username = "birdee";
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
+          usermod
           ./systems/PCs/dustbook
         ];
       };
@@ -202,6 +211,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
+          usermod
           ./systems/VMs/${name}
         ];
       });
@@ -214,6 +224,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         specialArgs = defaultSpecialArgs;
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
+          usermod
           ./systems/VMs/qemu
           (HMmain (import ./homes/birdee.nix))
           HMasModule

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, flake-path, inputs, stateVersion, users, hostname, nixpkgs, ... }: let
+{ config, pkgs, lib, modulesPath, flake-path, inputs, stateVersion, hostname, nixpkgs, ... }: let
 in {
   imports = with inputs.self.nixosModules; [
     "${modulesPath}/virtualisation/qemu-vm.nix"
