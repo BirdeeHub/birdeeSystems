@@ -26,7 +26,6 @@ in
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
 flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: let
-  overlayList = config.flake.overlist;
   userdata = pkgs: {
     birdee = {
       name = "birdee";
@@ -60,7 +59,7 @@ in {
   }: {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
-      overlays = overlayList;
+      overlays = flakeCfg.overlist;
       config = {
         allowUnfree = true;
       };
@@ -71,7 +70,7 @@ in {
     # Make sure the exported wrapper module packages
     # don't get a pkgs with the items already imported
     # This is because we also added our wrapper modules
-    # into our overlayList
+    # into our overlays list
     wrapperPkgs = import inputs.nixpkgs {
       inherit system;
       config = {
@@ -154,7 +153,7 @@ in {
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/nestOS;
         };
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/nestOS
           (HMmain (import ./homes/main))
@@ -169,7 +168,7 @@ in {
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
         };
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/aSUS
           (HMmain (import ./homes/birdee.nix))
@@ -184,7 +183,7 @@ in {
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
         };
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/dustbook
           (HMmain (import ./homes/birdee.nix))
@@ -195,7 +194,7 @@ in {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/aSUS
         ];
@@ -204,7 +203,7 @@ in {
         nixpkgs = inputs.nixpkgsOLD;
         disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/PCs/dustbook
         ];
@@ -215,7 +214,7 @@ in {
         username = "birdee";
         disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/VMs/${name}
         ];
@@ -227,7 +226,7 @@ in {
         disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
         username = "birdee";
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/VMs/qemu
           (HMmain (import ./homes/birdee.nix))
@@ -242,7 +241,7 @@ in {
         };
         extraSpecialArgs = {
         };
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/installers/installer_mine
         ];
@@ -250,7 +249,7 @@ in {
       "installer" = {
         nixpkgs = inputs.nixpkgs;
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = overlayList;
+        module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/installers/installer
         ];
