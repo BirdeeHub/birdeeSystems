@@ -27,9 +27,11 @@ monitor management:
 
 ---
 
-common items are imported via [./common/default.nix](./common/default.nix) into the main [flake.nix](./flake.nix)
+common items are exported via [./common/default.nix](./common/default.nix)
 
-They are then sent to the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
+They are then grabbed from `inputs.self` by the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
+
+Im using flake-parts to do this mapping, and my configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
 
 ---
 
@@ -49,12 +51,12 @@ They are then sent to the [home-manager config](./homes/birdee.nix) and the chos
 
 ---
 
-only x86_64-linux
-
 Just cherry pick stuff or import modules if you want to copy something. Its my computer get your own XD
 
 Dont install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
 with home-manager to install a home-manager config without booting, you wont have a user environment to boot into.
+
+If you use disko to reformat your drives and lose all your data, I am not responsible.
 
 [Build Scripts](./scripts)
 
