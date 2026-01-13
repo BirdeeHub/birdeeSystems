@@ -7,20 +7,8 @@
   ...
 }@inputs:
 let
-  # NOTE: setup
   flake-path = "/home/birdee/birdeeSystems";
   stateVersion = "25.11";
-  # factor out declaring home manager as a module for configs that do that
-  HMasModule =
-    { lib, ... }:
-    {
-      home-manager.backupFileExtension = "hm-bkp";
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.verbose = true;
-      services.displayManager.defaultSession = lib.mkDefault "none+fake";
-    };
-  HMmain = module: { username, ... }: { home-manager.users.${username} = module; };
 in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
@@ -144,6 +132,17 @@ in {
           flake-path
           ;
       };
+      # factor out declaring home manager as a module for configs that do that
+      HMmain = module: { username, ... }: { home-manager.users.${username} = module; };
+      HMasModule =
+        { lib, ... }:
+        {
+          home-manager.backupFileExtension = "hm-bkp";
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.verbose = true;
+          services.displayManager.defaultSession = lib.mkDefault "none+fake";
+        };
     in {
       "birdee@nestOS" = {
         nixpkgs = inputs.nixpkgs;
