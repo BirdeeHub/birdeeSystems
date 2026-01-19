@@ -48,6 +48,7 @@ in
     alacritty = wrapmod [ ];
     starship = wrapmod [ ];
     tmux = wrapmod [ ];
+    neovim = wrapmod [ ];
     wezterm = wrapmod [ "tmux" ] // {
       before = [ "tmux" ];
     };

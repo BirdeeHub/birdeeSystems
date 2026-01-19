@@ -78,7 +78,7 @@
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
   environment.systemPackages = with pkgs; [
-    inputs.birdeevim.packages.${stdenv.hostPlatform.system}.default
+    neovim
     xplr
     git
     xsel

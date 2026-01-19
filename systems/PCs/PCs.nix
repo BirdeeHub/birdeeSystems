@@ -177,7 +177,7 @@ in {
   environment.systemPackages = (let
   in
   with pkgs; [
-    inputs.birdeevim.packages.${stdenv.hostPlatform.system}.default
+    neovim
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wezterm
     git_with_config

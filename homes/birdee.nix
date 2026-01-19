@@ -88,7 +88,7 @@ in {
     ''}'';
   };
   home.sessionVariables = let
-    nvimpkg = inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    nvimpkg = pkgs.neovim;
     nvimpath = lib.getExe nvimpkg;
   in {
     EDITOR = nvimpath;
@@ -175,8 +175,8 @@ in {
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # 
-    inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default
-    (inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default.wrap { settings.wrapRc = false; })
+    neovim
+    (neovim.wrap { settings.wrapRc = false; })
     nops # manix fzf alias
     dep-tree
     minesweeper
