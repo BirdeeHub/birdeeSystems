@@ -74,6 +74,7 @@
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
     birdeevim.inputs.wrappers.follows = "wrappers";
+    birdeevim.inputs.nixpkgs.follows = "nixpkgs";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
 
     # xplr
