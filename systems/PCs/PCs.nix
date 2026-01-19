@@ -6,7 +6,6 @@
 in {
   imports = with inputs.self.nixosModules; [
     i3
-    birdeevim
     bash
     zsh
     inputs.self.wrappedModules.tmux.nixosModule
@@ -42,10 +41,6 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   birdeeMods = {
-    birdeevim = {
-      enable = true;
-      packageNames = [ "noAInvim" ];
-    };
     i3.enable = true;
     zsh.enable = true;
     bash.enable = true;
@@ -182,6 +177,7 @@ in {
   environment.systemPackages = (let
   in
   with pkgs; [
+    inputs.birdeevim.packages.${stdenv.hostPlatform.system}.default
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wezterm
     git_with_config

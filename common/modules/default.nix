@@ -18,7 +18,6 @@ let
       shell = import ./shell args;
     in
     {
-      birdeevim = import ./birdeevim args;
       LD = import (systemOnly ./LD) args;
       firefox = import (homeOnly ./firefox) args;
       i3 = import ./i3 args;

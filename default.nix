@@ -64,7 +64,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         withLauncher = lib.mkDefault true;
         wrapZSH = lib.mkDefault true;
       };
-    } // self.legacyPackages.${system}.homeConfigurations."birdee@dustbook".config.birdeevim.out.packages;
+      birdeevim = inputs.birdeevim.packages.${system}.default;
+    };
 
     app-images = let
       bundle = nix-appimage.bundlers.${system}.default;

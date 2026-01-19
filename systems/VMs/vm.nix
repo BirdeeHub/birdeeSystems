@@ -6,7 +6,6 @@
 in {
   imports = with inputs.self.nixosModules; [
     i3
-    birdeevim
     bash
     zsh
     fish
@@ -17,10 +16,6 @@ in {
   ];
 
   birdeeMods = {
-    birdeevim = {
-      enable = true;
-      packageNames = [ "noAInvim" ];
-    };
     i3.enable = true;
     zsh.enable = true;
     bash.enable = true;
@@ -176,6 +171,7 @@ in {
   in
   with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    inputs.birdeevim.packages.${stdenv.hostPlatform.system}.default
     wezterm
     tmux
     fuse

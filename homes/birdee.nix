@@ -5,16 +5,11 @@ in {
     zsh
     fish
     firefox
-    birdeevim
     i3
     i3MonMemory
   ];
 
   birdeeMods = {
-    birdeevim = {
-      enable = true;
-      packageNames = [ "birdeevim" "testvim" ];
-    };
     zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
@@ -93,8 +88,8 @@ in {
     ''}'';
   };
   home.sessionVariables = let
-    nvimpkg = config.birdeevim.out.packages.birdeevim;
-    nvimpath = "${nvimpkg}/bin/${nvimpkg.nixCats_packageName}";
+    nvimpkg = inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    nvimpath = lib.getExe nvimpkg;
   in {
     EDITOR = nvimpath;
     MANPAGER = "${nvimpath} +Man!";
@@ -128,7 +123,6 @@ in {
   };
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
-    nixCats.flake = inputs.birdeevim.inputs.nixCats;
     wrappers.flake = inputs.wrappers;
     home-manager.flake = inputs.home-manager;
     birdeeSystems.flake = inputs.self;

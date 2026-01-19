@@ -1,7 +1,6 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
   imports = with inputs.self.nixosModules; [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
-    birdeevim
     bash
     zsh
     fish
@@ -76,14 +75,10 @@
   };
   fonts.fontDir.enable = true;
 
-  birdeevim = {
-    enable = true;
-    packageNames = [ "noAInvim" ];
-  };
-
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
   environment.systemPackages = with pkgs; [
+    inputs.birdeevim.packages.${stdenv.hostPlatform.system}.default
     xplr
     git
     xsel
