@@ -38,11 +38,7 @@ Im using flake-parts to do this mapping, and my configs are output under `legacy
 - [display manager:](./common/modules/lightdm/default.nix) lightdm which loads ~/.xsession
 - [window manager:](./common/modules/i3/default.nix) i3 loaded via home manager from .xsession
 - desktop manager: none but I have like half of xfce including the power manager
-- [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nixCats-nvim.
-  - You can run it with `nix shell github:BirdeeHub/birdeeSystems#noAInvim` and then typing `vi`, `vim`, or `noAInvim`, keep in mind its going to download a lot of lsps and plugins.
-  - You should use the noAI one because you dont have my key and also it wont download bitwarden cli + ai plugins for you.
-  - completion keys are `<M-h>` = `<esc>` `<M-j>` = `next` `<M-k>` = `previous` `<M-l>` = `accept`
-  - Also, I can't claim every language setup works perfectly or anything. This is not a distribution its mine.
+- [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nix-wrapper-modules.
 - [browser:](./common/modules/firefox) firefox
 - [file manager:](./common/wrappers/xplr/default.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
 - [terminal:](./common/wrappers/wezterm/default.nix) wezterm

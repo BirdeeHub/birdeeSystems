@@ -175,6 +175,8 @@ in {
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # 
+    inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default
+    (inputs.birdeevim.packages.${pkgs.stdenv.hostPlatform.system}.default.wrap { settings.wrapRc = false; })
     nops # manix fzf alias
     dep-tree
     minesweeper
