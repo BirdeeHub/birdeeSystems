@@ -79,6 +79,10 @@ in {
       ];
     });
   in {
+    rebuild-system = lib.getExe nh;
+    rebuild-home = lib.getExe (nh.wrap {
+      eval-type = "home";
+    });
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
       git add . && nix flake update && nom build --show-trace $target && git add .; $@
@@ -111,10 +115,6 @@ in {
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
     find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
-    rebuild-system = lib.getExe nh;
-    rebuild-home = lib.getExe (nh.wrap {
-      eval-type = "home";
-    });
   };
   home.sessionVariables = let
     nvimpath = lib.getExe pkgs.neovim;
