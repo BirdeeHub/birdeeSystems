@@ -117,8 +117,7 @@ in {
     });
   };
   home.sessionVariables = let
-    nvimpkg = pkgs.neovim;
-    nvimpath = lib.getExe nvimpkg;
+    nvimpath = lib.getExe pkgs.neovim;
   in {
     EDITOR = nvimpath;
     MANPAGER = "${nvimpath} +Man!";
