@@ -40,8 +40,7 @@ in {
       echo "(auto-msg $model)"
       ${pkgs.git_with_config}/bin/git status
     '';
-    nh = inputs.wrappers.lib.evalPackage ({config,wlib,...}:{
-      imports = [ wlib.modules.default ];
+    nh = inputs.wrappers.lib.wrapPackage ({config, wlib, ...}: {
       config.pkgs = pkgs;
       config.package = pkgs.nh;
       config.env.NH_FLAKE = flake-path;
