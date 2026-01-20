@@ -248,7 +248,7 @@ in
       homeConfigurations = builtins.mapAttrs (
         n: v:
         v.home-manager.lib.homeManagerConfiguration (
-          builtins.removeAttrs v [
+          removeAttrs v [
             "home-manager"
             "username"
             "module"
@@ -258,7 +258,7 @@ in
       nixosConfigurations = builtins.mapAttrs (
         n: v:
         v.nixpkgs.lib.nixosSystem (
-          builtins.removeAttrs v [
+          removeAttrs v [
             "nixpkgs"
             "module"
             "disko"
