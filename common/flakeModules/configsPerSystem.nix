@@ -49,6 +49,7 @@ in
                   extraSpecialArgs = mkOption {
                     type = types.lazyAttrsOf types.raw;
                     default = { };
+                    apply = x: config.specialArgs // x;
                   };
                   specialArgs = mkOption {
                     type = types.lazyAttrsOf types.raw;
@@ -58,6 +59,7 @@ in
                       x
                       // {
                         inherit (config) hostname username;
+                        output-name = name;
                         inherit inputs;
                       };
                   };
@@ -143,7 +145,7 @@ in
                       lib.optionals (config.home-manager != null) [
                         (config.home-manager.nixosModules.home-manager or { })
                         {
-                          config.home-manager.extraSpecialArgs = config.specialArgs // config.extraSpecialArgs;
+                          config.home-manager.extraSpecialArgs = config.extraSpecialArgs;
                         }
                       ]
                       ++ lib.optional (config.home-manager != null && config.username != null) {
@@ -202,6 +204,7 @@ in
                       x
                       // {
                         inherit (config) username;
+                        output-name = name;
                         inherit inputs;
                       };
                   };

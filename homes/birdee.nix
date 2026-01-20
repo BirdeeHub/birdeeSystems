@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, flake-path, users, username, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, pkgs, lib, inputs, flake-path, users, username, output-name, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   imports = with inputs.self.homeModules; [
     bash
@@ -40,6 +40,44 @@ in {
       echo "(auto-msg $model)"
       ${pkgs.git_with_config}/bin/git status
     '';
+    nh = inputs.wrappers.lib.evalPackage ({config,wlib,...}:{
+      imports = [ wlib.modules.default ];
+      config.pkgs = pkgs;
+      config.package = pkgs.nh;
+      config.env.NH_FLAKE = flake-path;
+      config.argv0type = v: "sudo -v && exec -a \"$0\" ${v}";
+      options.eval-type = lib.mkOption {
+        type = lib.types.str;
+        default = "os";
+      };
+      options.eval-action = lib.mkOption {
+        type = lib.types.str;
+        default = "switch";
+      };
+      options.eval-target = lib.mkOption {
+        type = lib.types.str;
+        default = output-name;
+      };
+      options.flags = lib.mkOption {
+        type = lib.types.attrsOf (wlib.types.spec {
+          before = [ "NIX_RUN_MAIN_PACKAGE" ];
+          after = [ "STARTARG" ];
+        });
+      };
+      options.addFlag = lib.mkOption {
+        type = lib.types.listOf (wlib.types.spec {
+          before = [ "NIX_RUN_MAIN_PACKAGE" ];
+          after = [ "STARTARG" ];
+        });
+      };
+      config.flags."-v" = true;
+      config.flags."-t" = true;
+      config.flags."-H" = lib.mkIf (config.eval-type == "os") config.eval-target;
+      config.flags."-c" = lib.mkIf (config.eval-type == "home") config.eval-target;
+      config.addFlag = [
+        { name = "STARTARG"; data = [ config.eval-type config.eval-action ]; after = lib.mkForce []; }
+      ];
+    });
   in {
     flakeUpAndAddem = ''${pkgs.writeShellScript "flakeUpAndAddem.sh" /*bash*/''
       target=""; [[ $# > 0 ]] && target=".#$1" && shift 1;
@@ -73,19 +111,10 @@ in {
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
     run = "nohup xdg-open";
     find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
-
-    me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/system "$@"
-    ''}'';
-    me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/home "$@"
-    ''}'';
-    me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/both "$@"
-    ''}'';
+    rebuild-system = lib.getExe nh;
+    rebuild-home = lib.getExe (nh.wrap {
+      eval-type = "home";
+    });
   };
   home.sessionVariables = let
     nvimpkg = pkgs.neovim;
