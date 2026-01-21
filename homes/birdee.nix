@@ -203,7 +203,7 @@ in {
 
     # 
     neovim
-    (neovim.wrap { settings.wrapRc = false; })
+    (neovim.wrap { settings.test_mode = true; })
     nops # manix fzf alias
     dep-tree
     minesweeper
