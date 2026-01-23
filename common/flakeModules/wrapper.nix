@@ -13,7 +13,7 @@ let
   inherit (lib) types mkOption;
   file = ./wrapper.nix;
   mkInstallModule =
-    optloc: loc: n: v:
+    loc: outloc: n: v:
     {
       pkgs,
       lib,
@@ -21,7 +21,7 @@ let
       ...
     }:
     {
-      options = lib.setAttrByPath (optloc ++ [ n ]) (lib.mkOption {
+      options = lib.setAttrByPath (loc ++ [ n ]) (lib.mkOption {
         default = { };
         type = wlib.types.subWrapperModule [
           v
@@ -31,9 +31,9 @@ let
           }
         ];
       });
-      config = lib.setAttrByPath loc (
-        lib.mkIf (lib.getAttrFromPath (optloc ++ [ n "enable" ]) config) [
-          (lib.getAttrFromPath (optloc ++ [ n "wrapper" ]) config)
+      config = lib.setAttrByPath outloc (
+        lib.mkIf (lib.getAttrFromPath (loc ++ [ n "enable" ]) config) [
+          (lib.getAttrFromPath (loc ++ [ n "wrapper" ]) config)
         ]
       );
     };
