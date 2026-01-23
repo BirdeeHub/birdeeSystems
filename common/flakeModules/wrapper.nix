@@ -10,57 +10,69 @@ in
   ...
 }:
 let
-  inherit (lib) types mkOption;
+  inherit (lib) types mkOption toList;
   file = ./wrapper.nix;
-  mkInstallModule = location: n: v: {
-    outloc = location;
-    loc = [ "wrapperModules" ];
-    __functor =
-      {
-        loc ? [ "wrapperModules" ],
-        outloc ? location,
-        ...
-      }:
-      {
-        pkgs,
-        lib,
-        config,
-        ...
-      }:
-      {
-        options = lib.setAttrByPath (loc ++ [ n ]) (
-          lib.mkOption {
-            default = { };
-            type = wlib.types.subWrapperModule [
-              v
-              {
-                config.pkgs = pkgs;
-                options.enable = lib.mkEnableOption n;
-              }
-            ];
-          }
-        );
-        config = lib.setAttrByPath outloc (
-          lib.mkIf
-            (lib.getAttrFromPath (
-              loc
-              ++ [
-                n
-                "enable"
-              ]
-            ) config)
-            [
-              (lib.getAttrFromPath (
-                loc
+  mkInstallModule =
+    name: module:
+    let
+      default-optloc = [ "wrapperModules" ];
+      default-loc = [
+        "environment"
+        "systemPackages"
+      ];
+    in
+    {
+      optloc = default-optloc;
+      loc = default-loc;
+      __functor =
+        {
+          optloc ? default-optloc,
+          loc ? default-loc,
+          ...
+        }:
+        {
+          pkgs,
+          lib,
+          config,
+          ...
+        }:
+        {
+          options = lib.setAttrByPath (optloc ++ [ name ]) (
+            lib.mkOption {
+              default = { };
+              type = wlib.types.subWrapperModule (
+                (toList module)
                 ++ [
-                  n
-                  "wrapper"
+                  {
+                    config.pkgs = pkgs;
+                    options.enable = lib.mkEnableOption name;
+                  }
+                ]
+              );
+            }
+          );
+          config = lib.setAttrByPath loc (
+            lib.mkIf
+              (lib.getAttrFromPath (
+                optloc
+                ++ [
+                  name
+                  "enable"
                 ]
               ) config)
-            ]
-        );
-      };
-  };
+              [
+                (lib.getAttrFromPath (
+                  optloc
+                  ++ [
+                    name
+                    "wrapper"
+                  ]
+                ) config)
+              ]
+          );
+        };
+    };
+  installMods = builtins.mapAttrs mkInstallModule config.flake.wrapperModules;
 in
 {
   _file = file;
@@ -116,24 +128,21 @@ in
         config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
       }
     );
-  config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule [
-    "home"
-    "packages"
-  ]) config.flake.wrapperModules;
-  config.flake.modules.nixos = builtins.mapAttrs (mkInstallModule [
-    "environment"
-    "systemPackages"
-  ]) config.flake.wrapperModules;
-  config.flake.modules.darwin = builtins.mapAttrs (mkInstallModule [
-    "environment"
-    "systemPackages"
-  ]) config.flake.wrapperModules;
+  config.flake.modules.homeManager = builtins.mapAttrs (
+    _: v:
+    v
+    // {
+      loc = [
+        "home"
+        "packages"
+      ];
+    }
+  ) installMods;
+  config.flake.modules.nixos = installMods;
+  config.flake.modules.darwin = installMods;
   config.flake.modules.generic = config.flake.wrapperModules // {
     default = {
-      imports = lib.mapAttrsToList (mkInstallModule [
-        "environment"
-        "systemPackages"
-      ]) config.flake.wrapperModules;
+      imports = builtins.attrValues installMods;
     };
   };
 }
