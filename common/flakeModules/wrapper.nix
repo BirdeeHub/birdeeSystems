@@ -13,70 +13,58 @@ let
   inherit (lib) types mkOption toList;
   file = ./wrapper.nix;
   mkInstallModule =
-    optionName: module:
-    let
-      default-optloc = [ "wrapperModules" ];
-      default-loc = [
+    {
+      optloc ? [ "wrapperModules" ],
+      loc ? [
         "environment"
         "systemPackages"
-      ];
-    in
+      ],
+      name,
+      value,
+      ...
+    }:
     {
-      optloc = default-optloc;
-      loc = default-loc;
-      name = optionName;
-      value = module;
-      __functor =
-        {
-          optloc ? default-optloc,
-          loc ? default-loc,
-          name ? optionName,
-          value ? module,
-          ...
-        }:
-        {
-          pkgs,
-          lib,
-          config,
-          ...
-        }:
-        {
-          options = lib.setAttrByPath (optloc ++ [ name ]) (
-            lib.mkOption {
-              default = { };
-              type = wlib.types.subWrapperModule (
-                (toList value)
-                ++ [
-                  {
-                    config.pkgs = pkgs;
-                    options.enable = lib.mkEnableOption name;
-                  }
-                ]
-              );
-            }
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      options = lib.setAttrByPath (optloc ++ [ name ]) (
+        lib.mkOption {
+          default = { };
+          type = wlib.types.subWrapperModule (
+            (toList value)
+            ++ [
+              {
+                config.pkgs = pkgs;
+                options.enable = lib.mkEnableOption name;
+              }
+            ]
           );
-          config = lib.setAttrByPath loc (
-            lib.mkIf
-              (lib.getAttrFromPath (
-                optloc
-                ++ [
-                  name
-                  "enable"
-                ]
-              ) config)
-              [
-                (lib.getAttrFromPath (
-                  optloc
-                  ++ [
-                    name
-                    "wrapper"
-                  ]
-                ) config)
+        }
+      );
+      config = lib.setAttrByPath loc (
+        lib.mkIf
+          (lib.getAttrFromPath (
+            optloc
+            ++ [
+              name
+              "enable"
+            ]
+          ) config)
+          [
+            (lib.getAttrFromPath (
+              optloc
+              ++ [
+                name
+                "wrapper"
               ]
-          );
-        };
+            ) config)
+          ]
+      );
     };
-  installMods = builtins.mapAttrs mkInstallModule config.flake.wrapperModules;
+  installMods = builtins.mapAttrs (name: value: { __functor = mkInstallModule; inherit name value; }) config.flake.wrapperModules;
 in
 {
   _file = file;
