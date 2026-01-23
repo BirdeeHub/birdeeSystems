@@ -9,7 +9,7 @@ let
   };
 in
 {
-  flake.wrapperModules = util.pipe (builtins.readDir ./.) [
+  flake.wrappers = util.pipe (builtins.readDir ./.) [
     (util.filterAttrs (n: v: v == "directory"))
     builtins.attrNames
     (map (n: {

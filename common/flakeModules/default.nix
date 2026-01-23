@@ -4,7 +4,8 @@
     app-images = importApply ./app-images.nix args;
     overlay = importApply ./overlay.nix args;
     configsPerSystem = importApply ./configsPerSystem.nix args;
-    wrapper = importApply ./wrapper.nix args;
+    wrappers = importApply ./wrappers.nix args;
+    wrapperMods = importApply ./wrapperMods.nix args;
     util = importApply ./util.nix args;
   };
 in flakeModules // {

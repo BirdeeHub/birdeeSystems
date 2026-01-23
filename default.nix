@@ -20,7 +20,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     # e.g. treefmt-nix.flakeModule
     (nixpkgs.lib.modules.importApply ./common inputs)
   ];
-  flake.wrapperModules.neovim = inputs.birdeevim.wrapperModules.neovim;
+  flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
   perSystem = let
     flakeCfg = config.flake;
   in {
