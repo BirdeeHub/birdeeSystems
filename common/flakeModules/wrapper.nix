@@ -68,7 +68,6 @@ in
         }
       );
   };
-  config.flake.modules.wrapper = config.flake.wrapperModules;
   config.flake.modules.generic = config.flake.wrapperModules;
   config.flake.modules.homeManager = builtins.mapAttrs (
     n: v:
