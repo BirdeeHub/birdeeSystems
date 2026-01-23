@@ -102,4 +102,8 @@ in
     "environment"
     "systemPackages"
   ]) config.flake.wrapperModules;
+  config.flake.modules.generic = builtins.mapAttrs (mkInstallModule [
+    "environment"
+    "systemPackages"
+  ]) config.flake.wrapperModules;
 }
