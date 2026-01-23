@@ -85,6 +85,7 @@ wlib: {
       config,
       ...
     }:
+    # https://github.com/NixOS/nixpkgs/blob/c171bfa97744c696818ca23d1d0fc186689e45c7/lib/modules.nix#L615C1-L623C25
     builtins.intersectAttrs {
       _class = null;
       _file = null;
