@@ -9,6 +9,8 @@ in
     inputs.flake-parts.flakeModules.flakeModules
     inputs.flake-parts.flakeModules.modules
     inputs.flake-parts.flakeModules.bundlers
+    # inputs.flake-parts.flakeModules.easyOverlay
+    # inputs.flake-parts.flakeModules.partitions
     flakeModules.default
     ./disko
     (lib.modules.importApply ./overlays { inherit inputs util; })

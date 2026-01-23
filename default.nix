@@ -16,7 +16,6 @@ in
 flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
   systems = nixpkgs.lib.platforms.all;
   imports = [
-    # inputs.flake-parts.flakeModules.easyOverlay
     # inputs.devenv.flakeModule
     # e.g. treefmt-nix.flakeModule
     (nixpkgs.lib.modules.importApply ./common inputs)
