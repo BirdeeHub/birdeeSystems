@@ -13,7 +13,7 @@ let
   inherit (lib) types mkOption toList;
   file = ./wrapper.nix;
   mkInstallModule =
-    name: module:
+    optionName: module:
     let
       default-optloc = [ "wrapperModules" ];
       default-loc = [
@@ -24,10 +24,12 @@ let
     {
       optloc = default-optloc;
       loc = default-loc;
+      name = optionName;
       __functor =
         {
           optloc ? default-optloc,
           loc ? default-loc,
+          name ? optionName,
           ...
         }:
         {
