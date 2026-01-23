@@ -56,7 +56,6 @@ in
     in
     flake-parts-lib.mkPerSystemOption (
       {
-        system,
         pkgs,
         config,
         ...
