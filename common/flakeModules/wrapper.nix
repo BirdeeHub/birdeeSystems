@@ -71,53 +71,55 @@ in
         }
       );
   };
-  config.flake.modules.generic = config.flake.wrapperModules;
-  config.flake.modules.homeManager = builtins.mapAttrs (
-    n: v:
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      options.wrapperModules.${n} = lib.mkOption {
-        default = { };
-        type = wlib.types.subWrapperModule [
-          v
-          {
-            config.pkgs = pkgs;
-            options.enable = lib.mkEnableOption n;
-          }
+  config.flake.modules = {
+    generic = config.flake.wrapperModules;
+    homeManager = builtins.mapAttrs (
+      n: v:
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      {
+        options.wrapperModules.${n} = lib.mkOption {
+          default = { };
+          type = wlib.types.subWrapperModule [
+            v
+            {
+              config.pkgs = pkgs;
+              options.enable = lib.mkEnableOption n;
+            }
+          ];
+        };
+        config.home.packages = lib.mkIf config.wrapperModules.${n}.enable [
+          config.wrapperModules.${n}.wrapper
         ];
-      };
-      config.home.packages = lib.mkIf config.wrapperModules.${n}.enable [
-        config.wrapperModules.${n}.wrapper
-      ];
-    }
-  ) config.flake.wrapperModules;
-  config.flake.modules.nixos = builtins.mapAttrs (
-    n: v:
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      options.wrapperModules.${n} = lib.mkOption {
-        default = { };
-        type = wlib.types.subWrapperModule [
-          v
-          {
-            config.pkgs = pkgs;
-            options.enable = lib.mkEnableOption n;
-          }
+      }
+    ) config.flake.wrapperModules;
+    nixos = builtins.mapAttrs (
+      n: v:
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      {
+        options.wrapperModules.${n} = lib.mkOption {
+          default = { };
+          type = wlib.types.subWrapperModule [
+            v
+            {
+              config.pkgs = pkgs;
+              options.enable = lib.mkEnableOption n;
+            }
+          ];
+        };
+        config.environment.systemPackages = lib.mkIf config.wrapperModules.${n}.enable [
+          config.wrapperModules.${n}.wrapper
         ];
-      };
-      config.environment.systemPackages = lib.mkIf config.wrapperModules.${n}.enable [
-        config.wrapperModules.${n}.wrapper
-      ];
-    }
-  ) config.flake.wrapperModules;
+      }
+    ) config.flake.wrapperModules;
+  };
 }
