@@ -57,6 +57,13 @@ wlib: {
     ```
 
     If needed, you can also grab the package directly with `config.wrapperModules."?".wrapper`
+
+    Note: This function requires the other module system to provide a `pkgs` via its module arguments to use.
+
+    If this is not possible, you can still make an option like this!
+
+    You can construct the option yourself with `wlib.types.subWrapperModule`,
+    and install the resulting config value to the location specified by that system.
   */
   mkInstallModule =
     {
