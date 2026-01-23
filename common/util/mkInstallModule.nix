@@ -61,7 +61,7 @@ wlib: {
     If needed, you can also grab the package directly with `config.wrappers."?".wrapper`
 
     NOTE: This function will only provide a `pkgs` to the `subWrapperModule` automatically,
-    if the importing module evaluation provides a `pkgs` via its module arguments to use!
+    if the target module evaluation provides a `pkgs` via its module arguments to use!
     Otherwise, you will need to supply it to the submodule yourself later.
   */
   mkInstallModule =
