@@ -12,6 +12,31 @@ in
 let
   inherit (lib) types mkOption;
   file = ./wrapper.nix;
+  mkInstallModule =
+    loc: n: v:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      options.wrapperModules.${n} = lib.mkOption {
+        default = { };
+        type = wlib.types.subWrapperModule [
+          v
+          {
+            config.pkgs = pkgs;
+            options.enable = lib.mkEnableOption n;
+          }
+        ];
+      };
+      config = lib.setAttrByPath loc (
+        lib.mkIf config.wrapperModules.${n}.enable [
+          config.wrapperModules.${n}.wrapper
+        ]
+      );
+    };
 in
 {
   _file = file;
@@ -70,52 +95,12 @@ in
       }
     );
   config.flake.modules.generic = config.flake.wrapperModules;
-  config.flake.modules.homeManager = builtins.mapAttrs (
-    n: v:
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      options.wrapperModules.${n} = lib.mkOption {
-        default = { };
-        type = wlib.types.subWrapperModule [
-          v
-          {
-            config.pkgs = pkgs;
-            options.enable = lib.mkEnableOption n;
-          }
-        ];
-      };
-      config.home.packages = lib.mkIf config.wrapperModules.${n}.enable [
-        config.wrapperModules.${n}.wrapper
-      ];
-    }
-  ) config.flake.wrapperModules;
-  config.flake.modules.nixos = builtins.mapAttrs (
-    n: v:
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      options.wrapperModules.${n} = lib.mkOption {
-        default = { };
-        type = wlib.types.subWrapperModule [
-          v
-          {
-            config.pkgs = pkgs;
-            options.enable = lib.mkEnableOption n;
-          }
-        ];
-      };
-      config.environment.systemPackages = lib.mkIf config.wrapperModules.${n}.enable [
-        config.wrapperModules.${n}.wrapper
-      ];
-    }
-  ) config.flake.wrapperModules;
+  config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule [
+    "home"
+    "packages"
+  ]) config.flake.wrapperModules;
+  config.flake.modules.nixos = builtins.mapAttrs (mkInstallModule [
+    "environment"
+    "systemPackages"
+  ]) config.flake.wrapperModules;
 }
