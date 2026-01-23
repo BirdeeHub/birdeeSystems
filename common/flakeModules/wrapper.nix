@@ -80,7 +80,7 @@ in
     {
       options.wrapperModules.${n} = lib.mkOption {
         default = { };
-        types = wlib.types.subWrapperModule [
+        type = wlib.types.subWrapperModule [
           v
           {
             config.pkgs = pkgs;
@@ -104,7 +104,7 @@ in
     {
       options.wrapperModules.${n} = lib.mkOption {
         default = { };
-        types = wlib.types.subWrapperModule [
+        type = wlib.types.subWrapperModule [
           v
           {
             config.pkgs = pkgs;
@@ -117,5 +117,4 @@ in
       ];
     }
   ) config.flake.wrapperModules;
-
 }

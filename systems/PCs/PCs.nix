@@ -4,16 +4,29 @@
 
 { modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, ... }: let
 in {
-  imports = with inputs.self.modules.nixos; [
-    i3
-    bash
-    zsh
+  imports = [
     inputs.self.wrappedModules.tmux.nixosModule
-    fish
-    lightdm
-    i3MonMemory
-    LD
   ];
+  birdeeMods = {
+    i3.enable = true;
+    zsh.enable = true;
+    bash.enable = true;
+    fish.enable = true;
+    i3MonMemory.enable = true;
+    lightdm.enable = true;
+    LD.enable = true;
+  };
+  wrapperModules = {
+    neovim.enable = true;
+    wezterm.enable = true;
+    tmux.enable = true;
+    xplr.enable = true;
+    git.enable = true;
+    opencode.enable = false;
+    nushell.enable = false;
+    luakit.enable = false;
+    ranger.enable = false;
+  };
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
@@ -39,16 +52,6 @@ in {
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  birdeeMods = {
-    i3.enable = true;
-    zsh.enable = true;
-    bash.enable = true;
-    fish.enable = true;
-    i3MonMemory.enable = true;
-    lightdm.enable = true;
-    LD.enable = true;
-  };
 
   services.flatpak.enable = true;
 
@@ -177,13 +180,8 @@ in {
   environment.systemPackages = (let
   in
   with pkgs; [
-    neovim
-    # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wezterm
-    git_with_config
     hplip
     qemu
-    tmux
     fuse
     fuse3
     parted
@@ -199,7 +197,6 @@ in {
     nix-info
     pciutils
     lm_sensors
-    xplr
     usbutils
     nvme-cli
     unzip

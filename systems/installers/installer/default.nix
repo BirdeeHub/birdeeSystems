@@ -1,9 +1,6 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
-  imports = with inputs.self.modules.nixos; [
+  imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
-    bash
-    zsh
-    fish
   ];
 
   boot.kernelModules = [ "kvm-intel" "wl" ];
@@ -50,6 +47,12 @@
 
   isoImage.isoBaseName = "birdeeSystems_installer";
 
+  wrapperModules = {
+    # TODO: add a `minimal` option for your neovim module to use here
+    neovim.enable = true;
+    git.enable = true;
+    xplr.enable = true;
+  };
   birdeeMods = {
     zsh.enable = true;
     bash.enable = true;
@@ -78,9 +81,6 @@
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
   environment.systemPackages = with pkgs; [
-    neovim
-    xplr
-    git
     xsel
     ntfs3g
     findutils

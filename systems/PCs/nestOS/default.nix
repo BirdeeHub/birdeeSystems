@@ -4,7 +4,7 @@
 
 { config, pkgs, flake-path, lib, inputs, stateVersion, hostname, ... }: let
 in {
-  imports = with inputs.self.modules.nixos; [
+  imports = [
     ./hardware-configuration.nix
     ../PCs.nix
     inputs.nixos-hardware.nixosModules.common-cpu-amd

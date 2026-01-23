@@ -1,11 +1,6 @@
 { config, lib, pkgs, modulesPath, inputs, is_minimal ? true, use_alacritty ? false, ... }: let
   # TODO: non_minimal should also include calamares installer, i3, firefox,
   # and also disk utilities so that you dont have to nix shell them all
-
-  final_tmux = pkgs.tmux.wrap {
-    terminal = if use_alacritty then "alacritty" else "xterm-256color";
-  };
-
   nerd_font_string = "FiraMono";
   font_string = "${nerd_font_string} Nerd Font";
   login_shell = "zsh";
@@ -15,8 +10,15 @@ in {
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-base.nix"
     # "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     # ./minimal-graphical-base.nix
-    (inputs.self.modules.nixos.${login_shell} or (throw "no such shell config"))
-  ] ++ (lib.optional (login_shell != "bash") inputs.self.modules.nixos.shell.bash);
+  ];
+  wrapperModules = {
+    # TODO: add a `minimal` option for your neovim module to use here
+    neovim.enable = true;
+    tmux.enable = true;
+    tmux.terminal = if use_alacritty then "alacritty" else "xterm-256color";
+    git.enable = true;
+    xplr.enable = true;
+  };
 
   birdeeMods = {
     ${login_shell}.enable = true;
@@ -35,18 +37,10 @@ in {
 
   environment.systemPackages = with pkgs; [
     inputs.disko.packages.${stdenv.hostPlatform.system}.default
-    final_tmux
-    git
     findutils
     coreutils
-    xplr
     xclip
-  ] ++ (if is_minimal then [
-    pkgs.neovim
-  ] else with pkgs; [
-    # TODO: make a version that counts as minimal to include above
-    neovim
-  ]);
+  ];
 
   isoImage.isoBaseName = "birdeeOS_installer";
   isoImage.contents = lib.mkIf (builtins.isPath "${inputs.self}/secrets") [
@@ -120,9 +114,9 @@ in {
   services.displayManager.defaultSession = if use_alacritty then "alacritty" else "xterm-installer";
   services.xserver.desktopManager.session = let
     alacritty_dm = (let
-      alakitty = pkgs.alacritty.wrap {
+      alakitty = config.wrapperModules.alacritty.wrap {
         fontString = font_string;
-        tmuxPackage = final_tmux.wrap {
+        tmuxPackage = config.wrapperModules.tmux.wrap {
           runShell = [ "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program Alacritty > /dev/null 2>&1 &" ];
         };
         settings.terminal.shell = {
@@ -142,7 +136,7 @@ in {
       maximizer = "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program";
       launchScript = pkgs.writeShellScript "mysh" /*bash*/ ''
         ${maximizer} xterm > /dev/null 2>&1 &
-        exec ${final_tmux}/bin/tx
+        exec ${config.wrapperModules.tmux.wrapper}/bin/tx
       '';
     in [
       { name = "xterm-installer";

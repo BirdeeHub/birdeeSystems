@@ -1,23 +1,23 @@
 { inputs, util, ... }:
-let
-  combinepkgs =
-    fromPrev: final: prev:
-    final
-    // (builtins.listToAttrs (
-      map (name: {
-        inherit name;
-        value = prev.${name};
-      }) fromPrev
-    ));
-  wrapmod = extrasFromPrev: {
-    data = name: final: prev: {
-      ${name} = inputs.self.wrappedModules.${name}.wrap {
-        pkgs = combinepkgs ([ name ] ++ extrasFromPrev) final prev;
-      };
-    };
-    call-data-with-name = true;
-  };
-in
+# let
+#   combinepkgs =
+#     fromPrev: final: prev:
+#     final
+#     // (builtins.listToAttrs (
+#       map (name: {
+#         inherit name;
+#         value = prev.${name};
+#       }) fromPrev
+#     ));
+#   wrapmod = extrasFromPrev: {
+#     data = name: final: prev: {
+#       ${name} = inputs.self.wrappedModules.${name}.wrap {
+#         pkgs = combinepkgs ([ name ] ++ extrasFromPrev) final prev;
+#       };
+#     };
+#     call-data-with-name = true;
+#   };
+# in
 {
   overlays = {
     dep-tree = final: prev: {
@@ -37,32 +37,32 @@ in
     shelua = inputs.shelua.overlays.default;
 
     # wrapper modules
-    git_with_config = final: prev: {
-      git_with_config = inputs.self.wrappedModules.git.wrap { pkgs = final; };
-    };
-    ranger = wrapmod [ ];
-    luakit = wrapmod [ ];
-    nushell = wrapmod [ ];
-    bemenu = wrapmod [ ];
-    opencode = wrapmod [ ];
-    alacritty = wrapmod [ ];
-    starship = wrapmod [ ];
-    tmux = wrapmod [ ];
-    neovim = wrapmod [ ];
-    wezterm = wrapmod [ "tmux" ] // {
-      before = [ "tmux" ];
-    };
-    xplr = {
-      before = [ "tmux" ];
-      data = final: prev: {
-        xplr = inputs.self.wrappedModules.xplr.wrap {
-          pkgs = final // {
-            xplr = prev.xplr;
-            tmux = prev.tmux;
-          };
-          termCmd = "${final.wezterm}/bin/wezterm";
-        };
-      };
-    };
+    # git_with_config = final: prev: {
+    #   git_with_config = inputs.self.wrappedModules.git.wrap { pkgs = final; };
+    # };
+    # ranger = wrapmod [ ];
+    # luakit = wrapmod [ ];
+    # nushell = wrapmod [ ];
+    # bemenu = wrapmod [ ];
+    # opencode = wrapmod [ ];
+    # alacritty = wrapmod [ ];
+    # starship = wrapmod [ ];
+    # tmux = wrapmod [ ];
+    # neovim = wrapmod [ ];
+    # wezterm = wrapmod [ "tmux" ] // {
+    #   before = [ "tmux" ];
+    # };
+    # xplr = {
+    #   before = [ "tmux" ];
+    #   data = final: prev: {
+    #     xplr = inputs.self.wrappedModules.xplr.wrap {
+    #       pkgs = final // {
+    #         xplr = prev.xplr;
+    #         tmux = prev.tmux;
+    #       };
+    #       termCmd = "${final.wezterm}/bin/wezterm";
+    #     };
+    #   };
+    # };
   };
 }

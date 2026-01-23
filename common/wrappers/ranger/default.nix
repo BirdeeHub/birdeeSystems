@@ -3,7 +3,7 @@
   config.package = pkgs.ranger;
   options.withoutDragon = lib.mkEnableOption "smaller ranger without x-dragon";
   options.terminal = lib.mkOption {
-    default = "${pkgs.wezterm}/bin/wezterm";
+    default = "${config.wrapperModules.wezterm.wrapper}/bin/wezterm";
     type = wlib.types.stringable;
   };
   options.configFile = lib.mkOption {

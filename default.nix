@@ -84,7 +84,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
               nix.package = pkgs.nix;
             }
           )
-        ];
+        ] ++ builtins.attrValues self.modules.homeManager;
       };
       "birdee@aSUS" = {
         inherit home-manager;
@@ -99,14 +99,18 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
               nix.package = pkgs.nix;
             }
           )
-        ];
+        ] ++ builtins.attrValues self.modules.homeManager;
       };
     };
 
     # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
     nixosConfigurations = let
       # factor out declaring home manager as a module for configs that do that
-      HMmain = module: { username, ... }: { home-manager.users.${username} = module; };
+      HMmain = module: { username, ... }: {
+        home-manager.users.${username} = {
+          imports = builtins.attrValues self.modules.homeManager ++ [ module ];
+        };
+      };
       HMasModule =
         { lib, ... }:
         {
@@ -144,7 +148,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
           usermod
           (HMmain (import ./homes/main))
           HMasModule
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "birdee@aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
@@ -160,7 +164,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
           usermod
           (HMmain (import ./homes/birdee.nix))
           HMasModule
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "birdee@dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
@@ -176,7 +180,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
           usermod
           (HMmain (import ./homes/birdee.nix))
           HMasModule
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
@@ -187,7 +191,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           usermod
           ./systems/PCs/aSUS
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
@@ -198,7 +202,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           usermod
           ./systems/PCs/dustbook
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "virtbird" = (let
       in {name, ... }: {
@@ -210,7 +214,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           usermod
           ./systems/VMs/${name}
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       });
       "my-qemu-vm" = {
         nixpkgs = inputs.nixpkgs;
@@ -225,7 +229,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
           ./systems/VMs/qemu
           (HMmain (import ./homes/birdee.nix))
           HMasModule
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "installer_mine" = {
         nixpkgs = inputs.nixpkgs;
@@ -238,7 +242,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/installers/installer_mine
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
       "installer" = {
         nixpkgs = inputs.nixpkgs;
@@ -246,7 +250,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         module.nixpkgs.overlays = flakeCfg.overlist;
         modules = [
           ./systems/installers/installer
-        ];
+        ] ++ builtins.attrValues self.modules.nixos;
       };
     };
   };

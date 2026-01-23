@@ -1,14 +1,5 @@
 { config, pkgs, lib, inputs, flake-path, users, username, output-name, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
 in {
-  imports = with inputs.self.modules.homeManager; [
-    bash
-    zsh
-    fish
-    firefox
-    i3
-    i3MonMemory
-  ];
-
   birdeeMods = {
     zsh.enable = true;
     bash.enable = true;
@@ -18,6 +9,16 @@ in {
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = monitorCFG;
+  };
+  wrapperModules = {
+    neovim.enable = true;
+    wezterm.enable = true;
+    opencode.enable = true;
+    tmux.enable = true;
+    xplr.enable = true;
+    git.enable = true;
+    nushell.enable = true;
+    luakit.enable = true;
   };
 
   home.shellAliases = let
@@ -38,7 +39,7 @@ in {
       prompt=''${2:-$prompt}
       ollama run "$model" "$prompt"
       echo "(auto-msg $model)"
-      ${pkgs.git_with_config}/bin/git status
+      ${config.wrapperModules.git.wrapper}/bin/git status
     '';
     nh = inputs.wrappers.lib.wrapPackage ({config, wlib, ...}: {
       config.pkgs = pkgs;
@@ -98,8 +99,8 @@ in {
     autorepl = ''${pkgs.writeShellScript "autorepl" ''
       exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgs.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
     ''}'';
-    yolo = ''${pkgs.git_with_config}/bin/git add . && ${pkgs.git_with_config}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${pkgs.git_with_config}/bin/git status)" && ${pkgs.git_with_config}/bin/git push'';
-    yoloAI = ''${pkgs.git_with_config}/bin/git add . && ${pkgs.git_with_config}/bin/git commit -m "$(${prompt})" && ${pkgs.git_with_config}/bin/git push'';
+    yolo = ''${config.wrapperModules.git.wrapper}/bin/git add . && ${config.wrapperModules.git.wrapper}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${config.wrapperModules.git.wrapper}/bin/git status)" && ${config.wrapperModules.git.wrapper}/bin/git push'';
+    yoloAI = ''${config.wrapperModules.git.wrapper}/bin/git add . && ${config.wrapperModules.git.wrapper}/bin/git commit -m "$(${prompt})" && ${config.wrapperModules.git.wrapper}/bin/git push'';
     ai-msg = ''${prompt}'';
     scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
     exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
@@ -108,7 +109,7 @@ in {
     ll = "lsd -lh";
     l  = "lsd -alh";
     yeet = "rm -rf";
-    ccd = ''cd "$(${pkgs.xplr}/bin/xplr --print-pwd-as-result)"'';
+    ccd = ''cd "$(${config.wrapperModules.xplr.wrapper}/bin/xplr --print-pwd-as-result)"'';
     # Ok, so, this is not an alias, but I find it fun and I wanted to save it so its just a comment
     # bat(){ if [[ ! -t 0 || $# != 0 ]]; then local f; for f in "${@-/dev/stdin}"; do echo "$(<"$f")"; done; fi }
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
@@ -116,7 +117,7 @@ in {
     find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
   };
   home.sessionVariables = let
-    nvimpath = lib.getExe pkgs.neovim;
+    nvimpath = lib.getExe config.wrapperModules.neovim.wrapper;
   in {
     EDITOR = nvimpath;
     MANPAGER = "${nvimpath} +Man!";
@@ -202,19 +203,11 @@ in {
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # 
-    neovim
-    (neovim.wrap { settings.test_mode = true; })
+    (config.wrapperModules.neovim.wrap { settings.test_mode = true; })
     nops # manix fzf alias
     dep-tree
     minesweeper
     antifennel
-    wezterm
-    opencode
-    tmux
-    xplr
-    git_with_config
-    nushell
-    luakit
     gac
     nix-inspect
     #

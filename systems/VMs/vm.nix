@@ -4,14 +4,7 @@
 
 { config, pkgs, inputs, stateVersion, hostname, username, ... }: let
 in {
-  imports = with inputs.self.modules.nixos; [
-    i3
-    bash
-    zsh
-    fish
-    lightdm
-    i3MonMemory
-    LD
+  imports = [
     inputs.self.wrappedModules.tmux.nixosModule
   ];
 
@@ -24,6 +17,18 @@ in {
     i3MonMemory.enable = true;
     LD.enable = true;
   };
+  wrapperModules = {
+    neovim.enable = true;
+    wezterm.enable = true;
+    tmux.enable = true;
+    xplr.enable = true;
+    git.enable = true;
+    opencode.enable = false;
+    nushell.enable = false;
+    luakit.enable = false;
+    ranger.enable = false;
+  };
+
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
@@ -170,9 +175,6 @@ in {
   environment.systemPackages = (let
   in
   with pkgs; [
-    neovim
-    wezterm
-    tmux
     fuse
     fuse3
     parted
@@ -205,7 +207,6 @@ in {
     unzip
     xclip
     xsel
-    git_with_config
     ntfs3g
   ]);
 
