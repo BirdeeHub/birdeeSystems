@@ -8,7 +8,7 @@ wlib: {
     Defines a list value at the path indicated by `loc` containing the `.wrapper` value of the submodule,
     with the default `loc` being `[ "environment" "systemPackages" ]`
 
-    By default, this means it will create a module that can be used like so:
+    This means it will create a module that can be used like so:
 
     ```nix
     # in a nixos module
