@@ -94,7 +94,6 @@ in
         config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
       }
     );
-  config.flake.modules.generic = config.flake.wrapperModules;
   config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule [
     "home"
     "packages"
