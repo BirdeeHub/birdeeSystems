@@ -1,6 +1,22 @@
 wlib: {
   /**
-    Produces a module that can be imported to configure and/or install a wrapper module.
+    Produces a module for another module system,
+    that can be imported to configure and/or install a wrapper module.
+
+    *Arguments:*
+
+    ```nix
+    {
+      optloc ? [ "wrapperModules" ],
+      loc ? [
+        "environment"
+        "systemPackages"
+      ],
+      name, # string
+      value, # module or list of modules
+      ...
+    }:
+    ```
 
     Creates a `wlib.types.subWrapperModule` option with an extra `enable` option at
     the path indicated by `optloc ++ [ name ]`, with the default `optloc` being `[ "wrapperModules" ]`
@@ -31,21 +47,6 @@ wlib: {
         env.EXTRAVAR = "TEST VALUE";
       };
     };
-    ```
-
-    *Arguments:*
-
-    ```nix
-    {
-      optloc ? [ "wrapperModules" ],
-      loc ? [
-        "environment"
-        "systemPackages"
-      ],
-      name, # string
-      value, # module or list of modules
-      ...
-    }:
     ```
   */
   mkInstallModule =
