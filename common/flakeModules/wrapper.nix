@@ -12,10 +12,15 @@ in
 let
   inherit (lib) types mkOption;
   file = ./wrapper.nix;
-  mkInstallModule = loc: outloc: n: v: {
-    inherit loc outloc;
+  mkInstallModule = location: n: v: {
+    outloc = location;
+    loc = [ "wrapperModules" ];
     __functor =
-      self:
+      {
+        loc ? [ "wrapperModules" ],
+        outloc ? location,
+        ...
+      }:
       {
         pkgs,
         lib,
@@ -23,7 +28,7 @@ let
         ...
       }:
       {
-        options = lib.setAttrByPath (self.loc or loc ++ [ n ]) (
+        options = lib.setAttrByPath (loc ++ [ n ]) (
           lib.mkOption {
             default = { };
             type = wlib.types.subWrapperModule [
@@ -35,10 +40,10 @@ let
             ];
           }
         );
-        config = lib.setAttrByPath (self.outloc or outloc) (
+        config = lib.setAttrByPath outloc (
           lib.mkIf
             (lib.getAttrFromPath (
-              self.loc or loc
+              loc
               ++ [
                 n
                 "enable"
@@ -46,7 +51,7 @@ let
             ) config)
             [
               (lib.getAttrFromPath (
-                self.loc or loc
+                loc
                 ++ [
                   n
                   "wrapper"
@@ -111,36 +116,24 @@ in
         config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
       }
     );
-  config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule
-    [ "wrapperModules" ]
-    [
-      "home"
-      "packages"
-    ]
-  ) config.flake.wrapperModules;
-  config.flake.modules.nixos = builtins.mapAttrs (mkInstallModule
-    [ "wrapperModules" ]
-    [
-      "environment"
-      "systemPackages"
-    ]
-  ) config.flake.wrapperModules;
-  config.flake.modules.darwin = builtins.mapAttrs (mkInstallModule
-    [ "wrapperModules" ]
-    [
-      "environment"
-      "systemPackages"
-    ]
-  ) config.flake.wrapperModules;
+  config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule [
+    "home"
+    "packages"
+  ]) config.flake.wrapperModules;
+  config.flake.modules.nixos = builtins.mapAttrs (mkInstallModule [
+    "environment"
+    "systemPackages"
+  ]) config.flake.wrapperModules;
+  config.flake.modules.darwin = builtins.mapAttrs (mkInstallModule [
+    "environment"
+    "systemPackages"
+  ]) config.flake.wrapperModules;
   config.flake.modules.generic = config.flake.wrapperModules // {
     default = {
-      imports = lib.mapAttrsToList (mkInstallModule
-        [ "wrapperModules" ]
-        [
-          "environment"
-          "systemPackages"
-        ]
-      ) config.flake.wrapperModules;
+      imports = lib.mapAttrsToList (mkInstallModule [
+        "environment"
+        "systemPackages"
+      ]) config.flake.wrapperModules;
     };
   };
 }
