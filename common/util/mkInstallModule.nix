@@ -12,6 +12,7 @@ wlib: {
         "environment"
         "systemPackages"
       ],
+      as_list ? true,
       name, # string
       value, # module or list of modules
       ...
@@ -23,6 +24,9 @@ wlib: {
 
     Defines a list value at the path indicated by `loc` containing the `.wrapper` value of the submodule,
     with the default `loc` being `[ "environment" "systemPackages" ]`
+
+    If `as_list` is false, it will set the value at the path indicated by `loc` as it is,
+    without putting it into a list.
 
     This means it will create a module that can be used like so:
 
@@ -51,6 +55,8 @@ wlib: {
       };
     }
     ```
+
+    If needed, you can also grab the package directly with `config.wrapperModules."?".wrapper`
   */
   mkInstallModule =
     {
@@ -59,6 +65,7 @@ wlib: {
         "environment"
         "systemPackages"
       ],
+      as_list ? true,
       name,
       value,
       ...
@@ -93,15 +100,18 @@ wlib: {
               "enable"
             ]
           ) config)
-          [
-            (lib.getAttrFromPath (
-              optloc
-              ++ [
-                name
-                "wrapper"
-              ]
-            ) config)
-          ]
+          (
+            let
+              res = lib.getAttrFromPath (
+                optloc
+                ++ [
+                  name
+                  "wrapper"
+                ]
+              ) config;
+            in
+            if as_list then [ res ] else res
+          )
       );
     };
 }
