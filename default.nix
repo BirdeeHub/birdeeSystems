@@ -50,14 +50,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
 
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
-    # Make sure the exported wrapper module packages
-    # don't get a pkgs with the items already imported
-    # This is because we also added our wrapper modules
-    # into our overlays list
-    wrapperPkgs = import inputs.nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
     packages = {
       inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma;
       wezshterm = config.packages.wezterm.wrap {
