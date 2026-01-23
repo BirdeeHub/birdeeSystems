@@ -12,47 +12,50 @@ in
 let
   inherit (lib) types mkOption;
   file = ./wrapper.nix;
-  mkInstallModule =
-    loc: outloc: n: v:
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      options = lib.setAttrByPath (loc ++ [ n ]) (
-        lib.mkOption {
-          default = { };
-          type = wlib.types.subWrapperModule [
-            v
-            {
-              config.pkgs = pkgs;
-              options.enable = lib.mkEnableOption n;
-            }
-          ];
-        }
-      );
-      config = lib.setAttrByPath outloc (
-        lib.mkIf
-          (lib.getAttrFromPath (
-            loc
-            ++ [
-              n
-              "enable"
-            ]
-          ) config)
-          [
+  mkInstallModule = loc: outloc: n: v: {
+    inherit loc outloc;
+    __functor =
+      self:
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      {
+        options = lib.setAttrByPath (self.loc or loc ++ [ n ]) (
+          lib.mkOption {
+            default = { };
+            type = wlib.types.subWrapperModule [
+              v
+              {
+                config.pkgs = pkgs;
+                options.enable = lib.mkEnableOption n;
+              }
+            ];
+          }
+        );
+        config = lib.setAttrByPath (self.outloc or outloc) (
+          lib.mkIf
             (lib.getAttrFromPath (
-              loc
+              self.loc or loc
               ++ [
                 n
-                "wrapper"
+                "enable"
               ]
             ) config)
-          ]
-      );
-    };
+            [
+              (lib.getAttrFromPath (
+                self.loc or loc
+                ++ [
+                  n
+                  "wrapper"
+                ]
+              ) config)
+            ]
+        );
+      };
+  };
 in
 {
   _file = file;
