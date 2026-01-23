@@ -22,12 +22,9 @@ let
       i3 = import ./i3 args;
       i3MonMemory = import ./i3MonMemory args;
       lightdm = import (systemOnly ./lightdm) args;
-      inherit (import ./shell args)
-        zsh
-        bash
-        fish
-        nushell
-        ;
+      zsh = import ./zsh args;
+      bash = import ./bash.nix args;
+      fish = import ./fish.nix args;
       aliasNetwork = import (systemOnly ./aliasNetwork) args;
       old_modules_compat = import ./old_modules_compat args;
     };
