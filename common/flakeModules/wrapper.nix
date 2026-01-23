@@ -25,11 +25,13 @@ let
       optloc = default-optloc;
       loc = default-loc;
       name = optionName;
+      value = module;
       __functor =
         {
           optloc ? default-optloc,
           loc ? default-loc,
           name ? optionName,
+          value ? module,
           ...
         }:
         {
@@ -43,7 +45,7 @@ let
             lib.mkOption {
               default = { };
               type = wlib.types.subWrapperModule (
-                (toList module)
+                (toList value)
                 ++ [
                   {
                     config.pkgs = pkgs;
