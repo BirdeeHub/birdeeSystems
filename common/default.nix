@@ -17,7 +17,6 @@ in
     (lib.modules.importApply ./modules { inherit inputs util; })
     (lib.modules.importApply ./wrappers { inherit inputs util; })
   ];
-  flake.nixosModules = config.flake.modules.nixos;
   flake.flakeModules = flakeModules;
   flake.templates = import ./templates inputs;
   flake.util = util;
