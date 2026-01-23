@@ -28,7 +28,7 @@ in
               readOnly = true;
               default = (types.lazyAttrsOf types.deferredModule).merge options.wrappers.loc options.wrappers.definitionsWithLocations;
               description = ''
-                contains unevaluated wrapper modules like from this library
+                contains importable module forms of your `wrappers` output
 
                 https://github.com/BirdeeHub/nix-wrapper-modules
               '';
@@ -37,7 +37,9 @@ in
               type = types.lazyAttrsOf (wlib.types.subWrapperModuleWith { });
               default = { };
               description = ''
-                contains partially evaluated wrapperModules
+                Submodule option for configuring and exporting wrapper modules!
+
+                https://github.com/BirdeeHub/nix-wrapper-modules
               '';
             };
           }
@@ -59,10 +61,12 @@ in
         _file = file;
         key = file;
         options.wrapperPkgs = mkOption {
-          type = types.pkgs;
+          type = lib.types.nullOr types.pkgs;
           default = pkgs;
         };
-        config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
+        config.packages = lib.optionalAttrs (config.wrapperPkgs != null) builtins.mapAttrs (
+          _: v: v.wrap { pkgs = config.wrapperPkgs; }
+        ) wrapped;
       }
     );
 }
