@@ -5,6 +5,9 @@ let
 in
 { lib, config, ... }:
 {
+  flake.modules.flake = flakeModules;
+  flake.templates = import ./templates inputs;
+  flake.util = util;
   imports = [
     inputs.flake-parts.flakeModules.flakeModules
     inputs.flake-parts.flakeModules.modules
@@ -17,7 +20,6 @@ in
     (lib.modules.importApply ./modules { inherit inputs util; })
     (lib.modules.importApply ./wrappers { inherit inputs util; })
   ];
-  flake.flakeModules = flakeModules;
-  flake.templates = import ./templates inputs;
-  flake.util = util;
+  flake.nixosModules = config.flake.modules.nixos;
+  flake.flakeModules = config.flake.modules.flake;
 }

@@ -122,11 +122,22 @@ in
       "systemPackages"
     ]
   ) config.flake.wrapperModules;
-  config.flake.modules.generic = builtins.mapAttrs (mkInstallModule
+  config.flake.modules.darwin = builtins.mapAttrs (mkInstallModule
     [ "wrapperModules" ]
     [
       "environment"
       "systemPackages"
     ]
   ) config.flake.wrapperModules;
+  config.flake.modules.generic = config.flake.wrapperModules // {
+    default = {
+      imports = lib.mapAttrsToList (mkInstallModule
+        [ "wrapperModules" ]
+        [
+          "environment"
+          "systemPackages"
+        ]
+      ) config.flake.wrapperModules;
+    };
+  };
 }
