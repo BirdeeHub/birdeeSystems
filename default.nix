@@ -67,11 +67,8 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       };
     };
 
-    app-images = let
-      bundle = nix-appimage.bundlers.${system}.default;
-    in {
-      minesweeper = bundle pkgs.minesweeper;
-    };
+    bundlers.default = nix-appimage.bundlers.${system}.default;
+    bundlers.app-image = nix-appimage.bundlers.${system}.default;
 
     # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
     homeConfigurations = {

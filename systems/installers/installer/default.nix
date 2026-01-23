@@ -1,5 +1,5 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
-  imports = with inputs.self.nixosModules; [
+  imports = with inputs.self.modules.nixos; [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     bash
     zsh

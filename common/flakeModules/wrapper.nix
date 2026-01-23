@@ -46,20 +46,77 @@ in
         ];
       };
     };
-    perSystem = let
-      wrapped = config.flake.wrappedModules;
-    in flake-parts-lib.mkPerSystemOption (
-      { system, pkgs, config, ... }:
-      {
-        _file = file;
-        key = file;
-        options.wrapperPkgs = mkOption {
-          type = types.pkgs;
-          default = pkgs;
-        };
-        config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
-      }
-    );
+    perSystem =
+      let
+        wrapped = config.flake.wrappedModules;
+      in
+      flake-parts-lib.mkPerSystemOption (
+        {
+          system,
+          pkgs,
+          config,
+          ...
+        }:
+        {
+          _file = file;
+          key = file;
+          options.wrapperPkgs = mkOption {
+            type = types.pkgs;
+            default = pkgs;
+          };
+          config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
+        }
+      );
   };
+  config.flake.modules.wrapper = config.flake.wrapperModules;
+  config.flake.modules.generic = config.flake.wrapperModules;
+  config.flake.modules.homeManager = builtins.mapAttrs (
+    n: v:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      options.wrapperModules.${n} = lib.mkOption {
+        default = { };
+        types = wlib.types.subWrapperModule [
+          v
+          {
+            config.pkgs = pkgs;
+            options.enable = lib.mkEnableOption n;
+          }
+        ];
+      };
+      config.home.packages = lib.mkIf config.wrapperModules.${n}.enable [
+        config.wrapperModules.${n}.wrapper
+      ];
+    }
+  ) config.flake.wrapperModules;
+  config.flake.modules.nixos = builtins.mapAttrs (
+    n: v:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      options.wrapperModules.${n} = lib.mkOption {
+        default = { };
+        types = wlib.types.subWrapperModule [
+          v
+          {
+            config.pkgs = pkgs;
+            options.enable = lib.mkEnableOption n;
+          }
+        ];
+      };
+      config.environment.systemPackages = lib.mkIf config.wrapperModules.${n}.enable [
+        config.wrapperModules.${n}.wrapper
+      ];
+    }
+  ) config.flake.wrapperModules;
 
 }

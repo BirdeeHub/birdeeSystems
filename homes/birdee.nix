@@ -1,6 +1,6 @@
 { config, pkgs, lib, inputs, flake-path, users, username, output-name, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
 in {
-  imports = with inputs.self.homeModules; [
+  imports = with inputs.self.modules.homeManager; [
     bash
     zsh
     fish

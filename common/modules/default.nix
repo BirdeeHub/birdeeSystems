@@ -3,9 +3,9 @@ let
   mkMods =
     homeManager:
     let
-      homeOnly = path: (if homeManager then path else builtins.throw "no system module with that name");
+      homeOnly = path: (if homeManager then path else throw "no system module with that name");
       systemOnly =
-        path: (if homeManager then builtins.throw "no home-manager module with that name" else path);
+        path: (if homeManager then throw "no home-manager module with that name" else path);
       moduleNamespace = "birdeeMods";
       args = {
         inherit
@@ -15,7 +15,6 @@ let
           util
           ;
       };
-      shell = import ./shell args;
     in
     {
       LD = import (systemOnly ./LD) args;
@@ -23,7 +22,7 @@ let
       i3 = import ./i3 args;
       i3MonMemory = import ./i3MonMemory args;
       lightdm = import (systemOnly ./lightdm) args;
-      inherit (shell)
+      inherit (import ./shell args)
         zsh
         bash
         fish
@@ -34,6 +33,6 @@ let
     };
 in
 {
-  flake.nixosModules = mkMods false;
-  flake.homeModules = mkMods true;
+  flake.modules.nixos = mkMods false;
+  flake.modules.homeManager = mkMods true;
 }

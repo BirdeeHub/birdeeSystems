@@ -15,8 +15,8 @@ in {
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-base.nix"
     # "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     # ./minimal-graphical-base.nix
-    (inputs.self.nixosModules.${login_shell} or (throw "no such shell config"))
-  ] ++ (lib.optional (login_shell != "bash") inputs.self.nixosModules.shell.bash);
+    (inputs.self.modules.nixos.${login_shell} or (throw "no such shell config"))
+  ] ++ (lib.optional (login_shell != "bash") inputs.self.modules.nixos.shell.bash);
 
   birdeeMods = {
     ${login_shell}.enable = true;

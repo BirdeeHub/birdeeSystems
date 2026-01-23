@@ -4,11 +4,11 @@
 
 { config, pkgs, lib, flake-path, inputs, stateVersion, hostname, ... }: let
 in {
-  imports = with inputs.self.nixosModules; [
+  imports = with inputs.self.modules.nixos; [
     old_modules_compat
     ../PCs.nix
-    inputs.nixos-hardware-old.outputs.nixosModules.common-pc-laptop
-    inputs.nixos-hardware-old.outputs.nixosModules.common-cpu-intel
+    inputs.nixos-hardware-old.nixosModules.common-pc-laptop
+    inputs.nixos-hardware-old.nixosModules.common-cpu-intel
     inputs.nixos-hardware-old.nixosModules.common-pc-laptop-ssd
     ./hardware-configuration.nix
   ];

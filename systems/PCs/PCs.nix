@@ -4,7 +4,7 @@
 
 { modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, ... }: let
 in {
-  imports = with inputs.self.nixosModules; [
+  imports = with inputs.self.modules.nixos; [
     i3
     bash
     zsh
