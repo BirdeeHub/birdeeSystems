@@ -38,6 +38,7 @@ wlib: {
       };
     }
     ```
+
     ```nix
     # in a home-manager module
     { ... }: {
