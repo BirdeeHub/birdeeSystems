@@ -13,7 +13,7 @@ let
   inherit (lib) types mkOption;
   file = ./wrapper.nix;
   mkInstallModule =
-    loc: n: v:
+    optloc: loc: n: v:
     {
       pkgs,
       lib,
@@ -21,7 +21,7 @@ let
       ...
     }:
     {
-      options.wrapperModules.${n} = lib.mkOption {
+      options = lib.setAttrByPath (optloc ++ [ n ]) (lib.mkOption {
         default = { };
         type = wlib.types.subWrapperModule [
           v
@@ -30,10 +30,10 @@ let
             options.enable = lib.mkEnableOption n;
           }
         ];
-      };
+      });
       config = lib.setAttrByPath loc (
-        lib.mkIf config.wrapperModules.${n}.enable [
-          config.wrapperModules.${n}.wrapper
+        lib.mkIf (lib.getAttrFromPath (optloc ++ [ n "enable" ]) config) [
+          (lib.getAttrFromPath (optloc ++ [ n "wrapper" ]) config)
         ]
       );
     };
@@ -94,15 +94,15 @@ in
         config.packages = builtins.mapAttrs (_: v: v.wrap { pkgs = config.wrapperPkgs; }) wrapped;
       }
     );
-  config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule [
+  config.flake.modules.homeManager = builtins.mapAttrs (mkInstallModule [ "wrapperModules" ] [
     "home"
     "packages"
   ]) config.flake.wrapperModules;
-  config.flake.modules.nixos = builtins.mapAttrs (mkInstallModule [
+  config.flake.modules.nixos = builtins.mapAttrs (mkInstallModule [ "wrapperModules" ] [
     "environment"
     "systemPackages"
   ]) config.flake.wrapperModules;
-  config.flake.modules.generic = builtins.mapAttrs (mkInstallModule [
+  config.flake.modules.generic = builtins.mapAttrs (mkInstallModule [ "wrapperModules" ] [
     "environment"
     "systemPackages"
   ]) config.flake.wrapperModules;
