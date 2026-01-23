@@ -10,17 +10,17 @@ in {
       enable = lib.mkEnableOption "birdee's i3 configuration";
       dmenu = {
         terminalStr = lib.mkOption {
-          default = ''${config.wrapperModules.wezterm.wrapper}/bin/wezterm'';
+          default = ''${config.wrappers.wezterm.wrapper}/bin/wezterm'';
           type = str;
         };
       };
       tmuxTerminalStr = lib.mkOption {
-        default = ''${config.wrapperModules.wezterm.wrap { withLauncher = true; }}/bin/wezterm'';
+        default = ''${config.wrappers.wezterm.wrap { withLauncher = true; }}/bin/wezterm'';
         type = str;
         description = "mod + enter";
       };
       tmuxlessTerm = lib.mkOption {
-        default = ''${config.wrapperModules.wezterm.wrapper}/bin/wezterm'';
+        default = ''${config.wrappers.wezterm.wrapper}/bin/wezterm'';
         type = str;
         description = "mod + shift + enter";
       };

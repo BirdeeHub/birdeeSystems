@@ -14,7 +14,7 @@ in {
       fish_vi_key_bindings
     '';
     prompt = ''
-      source ${config.wrapperModules.starship.wrap { shell = "fish"; }}/bin/starship
+      source ${config.wrappers.starship.wrap { shell = "fish"; }}/bin/starship
       export CARAPACE_BRIDGES='fish,inshellisense' # optional
       mkdir -p ~/.config/fish/completions
       ${pkgs.carapace}/bin/carapace --list | awk '{print $1}' | xargs -I{} touch ~/.config/fish/completions/{}.fish # disable auto-loaded completions (#185)

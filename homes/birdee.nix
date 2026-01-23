@@ -10,7 +10,7 @@ in {
     i3MonMemory.enable = true;
     i3MonMemory.monitorScriptDir = monitorCFG;
   };
-  wrapperModules = {
+  wrappers = {
     neovim.enable = true;
     wezterm.enable = true;
     opencode.enable = true;
@@ -39,7 +39,7 @@ in {
       prompt=''${2:-$prompt}
       ollama run "$model" "$prompt"
       echo "(auto-msg $model)"
-      ${config.wrapperModules.git.wrapper}/bin/git status
+      ${config.wrappers.git.wrapper}/bin/git status
     '';
     nh = inputs.wrappers.lib.wrapPackage ({config, wlib, ...}: {
       config.pkgs = pkgs;
@@ -99,8 +99,8 @@ in {
     autorepl = ''${pkgs.writeShellScript "autorepl" ''
       exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgs.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
     ''}'';
-    yolo = ''${config.wrapperModules.git.wrapper}/bin/git add . && ${config.wrapperModules.git.wrapper}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${config.wrapperModules.git.wrapper}/bin/git status)" && ${config.wrapperModules.git.wrapper}/bin/git push'';
-    yoloAI = ''${config.wrapperModules.git.wrapper}/bin/git add . && ${config.wrapperModules.git.wrapper}/bin/git commit -m "$(${prompt})" && ${config.wrapperModules.git.wrapper}/bin/git push'';
+    yolo = ''${config.wrappers.git.wrapper}/bin/git add . && ${config.wrappers.git.wrapper}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${config.wrappers.git.wrapper}/bin/git status)" && ${config.wrappers.git.wrapper}/bin/git push'';
+    yoloAI = ''${config.wrappers.git.wrapper}/bin/git add . && ${config.wrappers.git.wrapper}/bin/git commit -m "$(${prompt})" && ${config.wrappers.git.wrapper}/bin/git push'';
     ai-msg = ''${prompt}'';
     scratch = ''export OGDIR="$(realpath .)" && export SCRATCHDIR="$(mktemp -d)" && cd "$SCRATCHDIR"'';
     exitscratch = ''cd "$OGDIR" && rm -rf "$SCRATCHDIR"'';
@@ -109,7 +109,7 @@ in {
     ll = "lsd -lh";
     l  = "lsd -alh";
     yeet = "rm -rf";
-    ccd = ''cd "$(${config.wrapperModules.xplr.wrapper}/bin/xplr --print-pwd-as-result)"'';
+    ccd = ''cd "$(${config.wrappers.xplr.wrapper}/bin/xplr --print-pwd-as-result)"'';
     # Ok, so, this is not an alias, but I find it fun and I wanted to save it so its just a comment
     # bat(){ if [[ ! -t 0 || $# != 0 ]]; then local f; for f in "${@-/dev/stdin}"; do echo "$(<"$f")"; done; fi }
     dugood = ''${pkgs.writeShellScript "dugood" ''du -hxd1 $@ | sort -hr''}'';
@@ -117,7 +117,7 @@ in {
     find-nix-roots = "${pkgs.writeShellScript "find-nix-roots" "find \"\${1:-.}\" -type l -lname '/nix/store/*'"}";
   };
   home.sessionVariables = let
-    nvimpath = lib.getExe config.wrapperModules.neovim.wrapper;
+    nvimpath = lib.getExe config.wrappers.neovim.wrapper;
   in {
     EDITOR = nvimpath;
     MANPAGER = "${nvimpath} +Man!";
@@ -203,7 +203,7 @@ in {
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # 
-    (config.wrapperModules.neovim.wrap { settings.test_mode = true; })
+    (config.wrappers.neovim.wrap { settings.test_mode = true; })
     nops # manix fzf alias
     dep-tree
     minesweeper

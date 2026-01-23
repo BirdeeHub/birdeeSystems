@@ -11,7 +11,7 @@ in {
     # "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     # ./minimal-graphical-base.nix
   ];
-  wrapperModules = {
+  wrappers = {
     # TODO: add a `minimal` option for your neovim module to use here
     neovim.enable = true;
     tmux.enable = true;
@@ -114,9 +114,9 @@ in {
   services.displayManager.defaultSession = if use_alacritty then "alacritty" else "xterm-installer";
   services.xserver.desktopManager.session = let
     alacritty_dm = (let
-      alakitty = config.wrapperModules.alacritty.wrap {
+      alakitty = config.wrappers.alacritty.wrap {
         fontString = font_string;
-        tmuxPackage = config.wrapperModules.tmux.wrap {
+        tmuxPackage = config.wrappers.tmux.wrap {
           runShell = [ "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program Alacritty > /dev/null 2>&1 &" ];
         };
         settings.terminal.shell = {
@@ -136,7 +136,7 @@ in {
       maximizer = "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program";
       launchScript = pkgs.writeShellScript "mysh" /*bash*/ ''
         ${maximizer} xterm > /dev/null 2>&1 &
-        exec ${config.wrapperModules.tmux.wrapper}/bin/tx
+        exec ${config.wrappers.tmux.wrapper}/bin/tx
       '';
     in [
       { name = "xterm-installer";

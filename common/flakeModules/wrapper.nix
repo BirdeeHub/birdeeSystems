@@ -38,13 +38,13 @@ in
                 https://github.com/BirdeeHub/nix-wrapper-modules
               '';
             };
-            options.wrappedModules = mkOption {
+            options.wrappers = mkOption {
               type = types.lazyAttrsOf (wlib.types.subWrapperModuleWith { });
               description = ''
                 contains partially evaluated wrapperModules
               '';
             };
-            config.wrappedModules = config.wrapperModules;
+            config.wrappers = config.wrapperModules;
           }
         )
       ];
@@ -52,7 +52,7 @@ in
   };
   options.perSystem =
     let
-      wrapped = config.flake.wrappedModules;
+      wrapped = config.flake.wrappers;
     in
     flake-parts-lib.mkPerSystemOption (
       {

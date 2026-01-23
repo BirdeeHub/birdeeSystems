@@ -5,7 +5,7 @@
 { config, pkgs, inputs, stateVersion, hostname, username, ... }: let
 in {
   imports = [
-    inputs.self.wrappedModules.tmux.nixosModule
+    inputs.self.wrappers.tmux.nixosModule
   ];
 
   birdeeMods = {
@@ -17,7 +17,7 @@ in {
     i3MonMemory.enable = true;
     LD.enable = true;
   };
-  wrapperModules = {
+  wrappers = {
     neovim.enable = true;
     wezterm.enable = true;
     tmux.enable = true;

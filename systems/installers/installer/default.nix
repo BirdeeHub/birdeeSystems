@@ -47,7 +47,7 @@
 
   isoImage.isoBaseName = "birdeeSystems_installer";
 
-  wrapperModules = {
+  wrappers = {
     # TODO: add a `minimal` option for your neovim module to use here
     neovim.enable = true;
     git.enable = true;

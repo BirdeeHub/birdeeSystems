@@ -11,7 +11,7 @@
 #     ));
 #   wrapmod = extrasFromPrev: {
 #     data = name: final: prev: {
-#       ${name} = inputs.self.wrappedModules.${name}.wrap {
+#       ${name} = inputs.self.wrappers.${name}.wrap {
 #         pkgs = combinepkgs ([ name ] ++ extrasFromPrev) final prev;
 #       };
 #     };
@@ -38,7 +38,7 @@
 
     # wrapper modules
     # git_with_config = final: prev: {
-    #   git_with_config = inputs.self.wrappedModules.git.wrap { pkgs = final; };
+    #   git_with_config = inputs.self.wrappers.git.wrap { pkgs = final; };
     # };
     # ranger = wrapmod [ ];
     # luakit = wrapmod [ ];
@@ -55,7 +55,7 @@
     # xplr = {
     #   before = [ "tmux" ];
     #   data = final: prev: {
-    #     xplr = inputs.self.wrappedModules.xplr.wrap {
+    #     xplr = inputs.self.wrappers.xplr.wrap {
     #       pkgs = final // {
     #         xplr = prev.xplr;
     #         tmux = prev.tmux;

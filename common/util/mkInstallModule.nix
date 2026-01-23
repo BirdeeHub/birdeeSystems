@@ -9,20 +9,20 @@ wlib: {
     {
       name, # string
       value, # module or list of modules
-      optloc ? [ "wrapperModules" ],
+      optloc ? [ "wrappers" ],
       loc ? [
         "environment"
         "systemPackages"
       ],
       as_list ? true,
-      # plus any valid top-level module attribute
+      # Also accepts any valid top-level module attribute
       # other than `config` or `options`
       ...
     }: 
     ```
 
     Creates a `wlib.types.subWrapperModule` option with an extra `enable` option at
-    the path indicated by `optloc ++ [ name ]`, with the default `optloc` being `[ "wrapperModules" ]`
+    the path indicated by `optloc ++ [ name ]`, with the default `optloc` being `[ "wrappers" ]`
 
     Defines a list value at the path indicated by `loc` containing the `.wrapper` value of the submodule,
     with the default `loc` being `[ "environment" "systemPackages" ]`
@@ -38,7 +38,7 @@ wlib: {
       imports = [
         (mkInstallModule { name = "?"; value = someWrapperModule; })
       ];
-      config.wrapperModules."?" = {
+      config.wrappers."?" = {
         enable = true;
         env.EXTRAVAR = "TEST VALUE";
       };
@@ -51,25 +51,22 @@ wlib: {
       imports = [
         (mkInstallModule { name = "?"; loc = [ "home" "packages" ]; value = someWrapperModule; })
       ];
-      config.wrapperModules."?" = {
+      config.wrappers."?" = {
         enable = true;
         env.EXTRAVAR = "TEST VALUE";
       };
     }
     ```
 
-    If needed, you can also grab the package directly with `config.wrapperModules."?".wrapper`
+    If needed, you can also grab the package directly with `config.wrappers."?".wrapper`
 
-    Note: This function requires the other module system to provide a `pkgs` via its module arguments to use.
-
-    If this is not possible, you can still make an option like this, just not with this function!
-
-    You can construct the option yourself with `wlib.types.subWrapperModule`,
-    and install the resulting config value to the location specified by that system.
+    NOTE: This function will only provide a `pkgs` to the `subWrapperModule` automatically,
+    if the importing module evaluation provides a `pkgs` via its module arguments to use!
+    Otherwise, you will need to supply it to the submodule yourself later.
   */
   mkInstallModule =
     {
-      optloc ? [ "wrapperModules" ],
+      optloc ? [ "wrappers" ],
       loc ? [
         "environment"
         "systemPackages"
@@ -80,7 +77,7 @@ wlib: {
       ...
     }@args:
     {
-      pkgs,
+      pkgs ? null,
       lib,
       config,
       ...
@@ -103,7 +100,7 @@ wlib: {
             (lib.toList value)
             ++ [
               {
-                config.pkgs = pkgs;
+                config.pkgs = lib.mkIf (pkgs != null) pkgs;
                 options.enable = lib.mkEnableOption name;
               }
             ]
