@@ -64,7 +64,10 @@ let
           ]
       );
     };
-  installMods = builtins.mapAttrs (name: value: { __functor = mkInstallModule; inherit name value; }) config.flake.wrapperModules;
+  installMods = builtins.mapAttrs (name: value: {
+    inherit name value;
+    __functor = mkInstallModule;
+  }) config.flake.wrapperModules;
 in
 {
   _file = file;
