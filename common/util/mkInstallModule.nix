@@ -5,7 +5,7 @@ wlib: {
     Creates a `wlib.types.subWrapperModule` option with an extra `enable` option at
     the path indicated by `optloc ++ [ name ]`, with the default `optloc` being `[ "wrapperModules" ]`
 
-    Defines a list value at the path indicated by `loc` containing the wrapper output,
+    Defines a list value at the path indicated by `loc` containing the `.wrapper` value of the submodule,
     with the default `loc` being `[ "environment" "systemPackages" ]`
 
     By default, this means it will create a module that can be used like so:
@@ -13,7 +13,9 @@ wlib: {
     ```nix
     # in a nixos module
     { ... }: {
-      imports = [ (mkInstallModule { name = "?"; value = someWrapperModule; }) ];
+      imports = [
+        (mkInstallModule { name = "?"; value = someWrapperModule; })
+      ];
       config.wrapperModules."?" = {
         enable = true;
         env.EXTRAVAR = "TEST VALUE";
@@ -21,7 +23,9 @@ wlib: {
     };
     # in a home-manager module
     { ... }: {
-      imports = [ (mkInstallModule { name = "?"; loc = [ "home" "packages" ]; value = someWrapperModule; }) ];
+      imports = [
+        (mkInstallModule { name = "?"; loc = [ "home" "packages" ]; value = someWrapperModule; })
+      ];
       config.wrapperModules."?" = {
         enable = true;
         env.EXTRAVAR = "TEST VALUE";
