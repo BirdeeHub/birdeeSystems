@@ -16,6 +16,9 @@ in
 {
   _file = file;
   key = file;
+  imports = [
+    inputs.flake-parts.flakeModules.modules
+  ];
   options = {
     flake = mkOption {
       type = types.submoduleWith {
