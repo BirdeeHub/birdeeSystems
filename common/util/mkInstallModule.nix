@@ -7,16 +7,18 @@ wlib: {
 
     ```nix
     {
+      name, # string
+      value, # module or list of modules
       optloc ? [ "wrapperModules" ],
       loc ? [
         "environment"
         "systemPackages"
       ],
       as_list ? true,
-      name, # string
-      value, # module or list of modules
+      # plus any valid top-level module attribute
+      # other than `config` or `options`
       ...
-    }:
+    }: 
     ```
 
     Creates a `wlib.types.subWrapperModule` option with an extra `enable` option at
@@ -76,14 +78,23 @@ wlib: {
       name,
       value,
       ...
-    }:
+    }@args:
     {
       pkgs,
       lib,
       config,
       ...
     }:
-    {
+    builtins.intersectAttrs {
+      _class = null;
+      _file = null;
+      key = null;
+      disabledModules = null;
+      imports = null;
+      meta = null;
+      freeformType = null;
+    } args
+    // {
       options = lib.setAttrByPath (optloc ++ [ name ]) (
         lib.mkOption {
           default = { };
