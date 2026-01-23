@@ -36,7 +36,9 @@ wlib: {
         enable = true;
         env.EXTRAVAR = "TEST VALUE";
       };
-    };
+    }
+    ```
+    ```nix
     # in a home-manager module
     { ... }: {
       imports = [
@@ -46,7 +48,7 @@ wlib: {
         enable = true;
         env.EXTRAVAR = "TEST VALUE";
       };
-    };
+    }
     ```
   */
   mkInstallModule =
