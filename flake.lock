@@ -19,6 +19,7 @@
     "birdeevim": {
       "inputs": {
         "fenix": "fenix",
+        "flake-parts": "flake-parts",
         "neorg-overlay": "neorg-overlay",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": "nix-appimage",
@@ -46,11 +47,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769218499,
-        "narHash": "sha256-0N/U7J+dikRYMZaLAB8GaxZ7ephuBE3EsaQ6Ng8vgys=",
+        "lastModified": 1769220219,
+        "narHash": "sha256-A5QMe1HUcmUALBxVa219Ri+2HbW2msKZmXgG141ak0Q=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "cf664400f452d997b559e68ece065d7d1bfd20d2",
+        "rev": "c74aa7001ab623a79c8f1dc2961887ad5df6ea7f",
         "type": "github"
       },
       "original": {
@@ -287,7 +288,6 @@
       "inputs": {
         "nixpkgs-lib": [
           "birdeevim",
-          "neovim-nightly-overlay",
           "nixpkgs"
         ]
       },
@@ -816,7 +816,10 @@
     },
     "neovim-nightly-overlay": {
       "inputs": {
-        "flake-parts": "flake-parts",
+        "flake-parts": [
+          "birdeevim",
+          "flake-parts"
+        ],
         "neovim-src": "neovim-src",
         "nixpkgs": "nixpkgs_5"
       },
