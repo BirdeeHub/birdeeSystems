@@ -34,8 +34,11 @@
     manix.inputs.nixpkgs.follows = "nixpkgs";
     manix.inputs.flake-utils.follows = "flake-utils";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     devenv.url = "github:cachix/devenv";
     nur.url = "github:nix-community/nur";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+    nur.inputs.flake-parts.follows = "flake-parts";
     nixos-hardware-old.url = "github:NixOS/nixos-hardware/9fc19be21f0807d6be092d70bf0b1de0c00ac895";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     disko.url = "github:nix-community/disko";

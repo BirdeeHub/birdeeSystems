@@ -30,6 +30,7 @@ in {
   in if homeManager then {
     home.packages = [ pkgs.carapace ];
     programs.zsh = {
+      dotDir = "${config.xdg.configHome}/zsh";
       shellAliases = {};
       enable = true;
       enableVteIntegration = true;
