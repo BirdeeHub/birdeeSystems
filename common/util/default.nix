@@ -133,6 +133,4 @@ inputs: with builtins; rec {
     homeDirPrefix = if pkgs.stdenv.hostPlatform.isDarwin then "Users" else "home";
     homeDirectory = "/${homeDirPrefix}/${username}";
   in homeDirectory;
-
-  inherit (import ./mkInstallModule.nix inputs.wrappers.lib) mkInstallModule;
 }

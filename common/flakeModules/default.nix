@@ -5,7 +5,6 @@
     overlay = importApply ./overlay.nix args;
     configsPerSystem = importApply ./configsPerSystem.nix args;
     wrappers = importApply ./wrappers.nix args;
-    wrapperMods = importApply ./wrapperMods.nix args;
     util = importApply ./util.nix args;
   };
 in flakeModules // {
