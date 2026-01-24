@@ -1,14 +1,4 @@
-{ inputs, util }:
-let
-  wlib = inputs.wrappers.lib;
-in
-{
-  lib,
-  flake-parts-lib,
-  config,
-  inputs,
-  ...
-}:
+{ lib, flake-parts-lib, ... }:
 let
   inherit (lib) types mkOption;
   file = ./app-images.nix;

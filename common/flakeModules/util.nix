@@ -1,14 +1,5 @@
 { inputs, util }:
-let
-  wlib = inputs.wrappers.lib;
-in
-{
-  lib,
-  flake-parts-lib,
-  config,
-  inputs,
-  ...
-}:
+{ lib, ... }:
 let
   inherit (lib) types mkOption;
   file = ./util.nix;
@@ -29,7 +20,7 @@ in
               description = ''
                 contains various personal utilities which are not system dependent
               '';
-              apply = x: { inherit wlib; } // x;
+              apply = x: { wlib = inputs.wrappers.lib; } // x;
             };
           }
         ];
