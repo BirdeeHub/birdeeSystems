@@ -98,19 +98,18 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
     nixosConfigurations = let
       # factor out declaring home manager as a module for configs that do that
-      HMmain = module: { username, ... }: {
-        home-manager.users.${username} = {
-          imports = builtins.attrValues self.modules.homeManager ++ [ module ];
-        };
-      };
       HMasModule =
-        { lib, ... }:
+        module:
+        { username, lib, ... }:
         {
           home-manager.backupFileExtension = "hm-bkp";
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.verbose = true;
           services.displayManager.defaultSession = lib.mkDefault "none+fake";
+          home-manager.users.${username} = {
+            imports = builtins.attrValues self.modules.homeManager ++ [ module ];
+          };
         };
       usermod = { pkgs, username ? null, ... }: {
         config.users.users = lib.mkIf (username != null) {
@@ -138,8 +137,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           ./systems/PCs/nestOS
           usermod
-          (HMmain (import ./homes/main))
-          HMasModule
+          (HMasModule ./homes/main)
         ] ++ builtins.attrValues self.modules.nixos;
       };
       "birdee@aSUS" = {
@@ -154,8 +152,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           ./systems/PCs/aSUS
           usermod
-          (HMmain (import ./homes/birdee.nix))
-          HMasModule
+          (HMasModule ./homes/birdee.nix)
         ] ++ builtins.attrValues self.modules.nixos;
       };
       "birdee@dustbook" = {
@@ -170,8 +167,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           ./systems/PCs/dustbook
           usermod
-          (HMmain (import ./homes/birdee.nix))
-          HMasModule
+          (HMasModule ./homes/birdee.nix)
         ] ++ builtins.attrValues self.modules.nixos;
       };
       "aSUS" = {
@@ -219,8 +215,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         modules = [
           usermod
           ./systems/VMs/qemu
-          (HMmain (import ./homes/birdee.nix))
-          HMasModule
+          (HMasModule ./homes/birdee.nix)
         ] ++ builtins.attrValues self.modules.nixos;
       };
       "installer_mine" = {
