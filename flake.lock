@@ -561,6 +561,22 @@
         "type": "github"
       }
     },
+    "hpg-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764952405,
+        "narHash": "sha256-tJl/eufKv1z0Hig+zvdi+xykjuPSCCW1SgzsibthcwY=",
+        "ref": "refs/heads/main",
+        "rev": "b149abb95f01d40877667c0e86220f4accf9bc7f",
+        "revCount": 668,
+        "type": "git",
+        "url": "https://gitlab.com/dsa-2000/rcp/hpg.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.com/dsa-2000/rcp/hpg.git"
+      }
+    },
     "libvma-src": {
       "flake": false,
       "locked": {
@@ -1420,6 +1436,7 @@
         "fzf-xplr": "fzf-xplr",
         "gac-src": "gac-src",
         "home-manager": "home-manager",
+        "hpg-src": "hpg-src",
         "libvma-src": "libvma-src",
         "manix": "manix",
         "maximizer": "maximizer",

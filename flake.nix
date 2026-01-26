@@ -127,6 +127,10 @@
       url = "github:Mellanox/libvma";
       flake = false;
     };
+    hpg-src = {
+      url = "git+https://gitlab.com/dsa-2000/rcp/hpg.git";
+      flake = false;
+    };
 
   };
   outputs = inputs: import ./. inputs;
