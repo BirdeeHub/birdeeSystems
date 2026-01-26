@@ -28,7 +28,7 @@ stdenv.mkDerivation {
   version = "main";
   inherit pname;
   src = hpg-src;
-  nativeBuildInputs = [ cudaPackages.libcufft pkg-config cmake hdf5.bin hdf5.dev kokkos fftw cudatoolkit ];
+  nativeBuildInputs = [ cudaPackages.libcufft cmake hdf5.bin hdf5.dev kokkos fftw cudatoolkit ];
   cmakeFlags = [
     "-DHDF5_DIR=${hdf5.dev}/lib/cmake"
     "-DHDF5_TOOLS_DIR=${hdf5.bin}/bin"
