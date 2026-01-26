@@ -29,7 +29,6 @@
         "plugins-fn_finder": "plugins-fn_finder",
         "plugins-lze": "plugins-lze",
         "plugins-lzextras": "plugins-lzextras",
-        "plugins-nvim-aider": "plugins-nvim-aider",
         "plugins-nvim-lspconfig": "plugins-nvim-lspconfig",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-opencode-nvim": "plugins-opencode-nvim",
@@ -46,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769299518,
-        "narHash": "sha256-bHd3Rr1MkP/PX8agwlE3PLs+5l4vkvJ3NdWfDqpi4Jg=",
+        "lastModified": 1769414833,
+        "narHash": "sha256-NU9MbGOkim7hFfG1nfEOpJXP73m8TIR4s/iaqQ7IJDk=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "a3f15bff1da5a6cea5ab2cde24ddd4f8f6f14927",
+        "rev": "28e16a1f63840ff195e1cfeb6ee49955dcd0d169",
         "type": "github"
       },
       "original": {
@@ -1212,22 +1211,6 @@
         "type": "github"
       }
     },
-    "plugins-nvim-aider": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1761640116,
-        "narHash": "sha256-LHSDfn9I+Ff83u8DZlom7fgZNwqSZ1h72y6NJq0eKTw=",
-        "owner": "GeorgesAlkhouri",
-        "repo": "nvim-aider",
-        "rev": "c8a4f952937d54f17dc23bd378e9e3b373f502b2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "GeorgesAlkhouri",
-        "repo": "nvim-aider",
-        "type": "github"
-      }
-    },
     "plugins-nvim-lspconfig": {
       "flake": false,
       "locked": {
@@ -1791,11 +1774,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769298825,
-        "narHash": "sha256-rXVu3eRjiZQWDph+Bn8GspDbGEmVQgdegJ5wo9v60ko=",
+        "lastModified": 1769410124,
+        "narHash": "sha256-RXp/2MpdcY790A8cqLhDtRwGXcDVNCUoYv80xTNjbYw=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "f7c2014f52d20d584b6ab99837ac85ff6eb49ead",
+        "rev": "89680a388490eb20c2a87431197b544355ad9337",
         "type": "github"
       },
       "original": {
