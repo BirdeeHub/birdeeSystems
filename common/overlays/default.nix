@@ -25,6 +25,7 @@
     };
     antifennel = final: prev: { antifennel = prev.callPackage ./antifennel.nix { inherit inputs; }; };
     libvma = final: prev: { libvma = prev.callPackage ./libvma.nix { inherit (inputs) libvma-src; }; };
+    hpg = final: prev: { hpg = prev.callPackage ./hpg.nix { ${if inputs ? hpg-src then "hpg-src" else null} = inputs.hpg-src; }; };
     gac = import ./gac.nix inputs;
     pinnedVersions = import ./pinnedVersions.nix inputs;
     nops = {

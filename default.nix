@@ -51,7 +51,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
     packages = {
-      inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma;
+      inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma hpg;
       wezshterm = config.packages.wezterm.wrap {
         withLauncher = lib.mkDefault true;
         wrapZSH = lib.mkDefault true;
