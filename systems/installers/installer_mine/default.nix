@@ -12,8 +12,8 @@ in {
     # ./minimal-graphical-base.nix
   ];
   wrappers = {
-    # TODO: add a `minimal` option for your neovim module to use here
     neovim.enable = true;
+    neovim.settings.minimal = true;
     tmux.enable = true;
     tmux.terminal = if use_alacritty then "alacritty" else "xterm-256color";
     git.enable = true;
