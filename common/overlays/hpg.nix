@@ -9,6 +9,7 @@ in {
   kokkos,
   fftw,
   cudatoolkit,
+  cudaPackages,
   fetchFromGitLab,
   stdenv,
   # can also come from flake input
@@ -27,7 +28,7 @@ stdenv.mkDerivation {
   version = "main";
   inherit pname;
   src = hpg-src;
-  nativeBuildInputs = [ pkg-config cmake hdf5.bin hdf5.dev kokkos fftw cudatoolkit ];
+  nativeBuildInputs = [ cudaPackages.libcufft pkg-config cmake hdf5.bin hdf5.dev kokkos fftw cudatoolkit ];
   cmakeFlags = [
     "-DHDF5_DIR=${hdf5.dev}/lib/cmake"
     "-DHDF5_TOOLS_DIR=${hdf5.bin}/bin"
