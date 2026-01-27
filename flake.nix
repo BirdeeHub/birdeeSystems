@@ -131,6 +131,7 @@
       url = "git+https://gitlab.com/dsa-2000/rcp/hpg.git";
       flake = false;
     };
+    nixpkgsKokkos4.url = "github:nixos/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261";
 
   };
   outputs = inputs: import ./. inputs;
