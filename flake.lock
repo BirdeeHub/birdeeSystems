@@ -560,38 +560,6 @@
         "type": "github"
       }
     },
-    "hpg-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1764952405,
-        "narHash": "sha256-tJl/eufKv1z0Hig+zvdi+xykjuPSCCW1SgzsibthcwY=",
-        "ref": "refs/heads/main",
-        "rev": "b149abb95f01d40877667c0e86220f4accf9bc7f",
-        "revCount": 668,
-        "type": "git",
-        "url": "https://gitlab.com/dsa-2000/rcp/hpg.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://gitlab.com/dsa-2000/rcp/hpg.git"
-      }
-    },
-    "libvma-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767883105,
-        "narHash": "sha256-vm9yeoW65HdkzGhoV9cdNf7sEIgloxFNXM/Bqfp7als=",
-        "owner": "Mellanox",
-        "repo": "libvma",
-        "rev": "4555b4bcef0158139eb78004f31fe7a7f7b21ea7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mellanox",
-        "repo": "libvma",
-        "type": "github"
-      }
-    },
     "manix": {
       "inputs": {
         "flake-utils": [
@@ -926,22 +894,6 @@
         "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgsKokkos4": {
-      "locked": {
-        "lastModified": 1763934636,
-        "narHash": "sha256-9glbI7f1uU+yzQCq5LwLgdZqx6svOhZWkd4JRY265fc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ee09932cedcef15aaf476f9343d1dea2cb77e261",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ee09932cedcef15aaf476f9343d1dea2cb77e261",
         "type": "github"
       }
     },
@@ -1435,8 +1387,6 @@
         "fzf-xplr": "fzf-xplr",
         "gac-src": "gac-src",
         "home-manager": "home-manager",
-        "hpg-src": "hpg-src",
-        "libvma-src": "libvma-src",
         "manix": "manix",
         "maximizer": "maximizer",
         "minesweeper": "minesweeper",
@@ -1445,7 +1395,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-hardware-old": "nixos-hardware-old",
         "nixpkgs": "nixpkgs_9",
-        "nixpkgsKokkos4": "nixpkgsKokkos4",
         "nixpkgsLocked": "nixpkgsLocked",
         "nixpkgsOLD": "nixpkgsOLD",
         "nsearch": "nsearch",

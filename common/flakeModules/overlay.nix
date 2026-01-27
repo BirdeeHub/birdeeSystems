@@ -26,11 +26,10 @@ in
             options.overlist = mkOption {
               type = lib.types.listOf types.raw;
               readOnly = true;
-              default = wlib.dag.sortAndUnwrap {
-                dag = config.overlays;
-                name = "overlays";
-                mapIfOk = v: v.data;
-              };
+              default = lib.pipe config.overlays [
+                (wlib.dag.unwrapSort "overlays")
+                (builtins.concatMap (v: if v.enable then [ v.data ] else [ ]))
+              ];
             };
             config.overlays = lib.filterAttrs (_: v: v != null) (
               builtins.mapAttrs (n: v: if v.enable then v.data else null) config.overlays

@@ -123,15 +123,15 @@
     };
 
     # dsa
-    libvma-src = {
-      url = "github:Mellanox/libvma";
-      flake = false;
-    };
-    hpg-src = {
-      url = "git+https://gitlab.com/dsa-2000/rcp/hpg.git";
-      flake = false;
-    };
-    nixpkgsKokkos4.url = "github:nixos/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261";
+    # libvma-src = {
+    #   url = "github:Mellanox/libvma";
+    #   flake = false;
+    # };
+    # hpg-src = {
+    #   url = "git+https://gitlab.com/dsa-2000/rcp/hpg.git";
+    #   flake = false;
+    # };
+    # nixpkgsKokkos4.url = "github:nixos/nixpkgs/bce5fe2bb998488d8e7e7856315f90496723793c";
 
   };
   outputs = inputs: import ./. inputs;

@@ -24,11 +24,19 @@
       dep-tree = prev.callPackage ./dep-tree.nix { };
     };
     antifennel = final: prev: { antifennel = prev.callPackage ./antifennel.nix { inherit inputs; }; };
-    libvma = final: prev: { libvma = prev.callPackage ./libvma.nix { inherit (inputs) libvma-src; }; };
-    hpg = final: prev: {
-      hpg = prev.callPackage ./hpg.nix {
-        ${if inputs ? hpg-src then "hpg-src" else null} = inputs.hpg-src;
-        kokkos4 = inputs.nixpkgsKokkos4.legacyPackages.${final.stdenv.hostPlatform.system}.kokkos;
+    libvma = {
+      enable = false;
+      data = final: prev: {
+        libvma = prev.callPackage ./libvma.nix { libvma-src = inputs.libvma-src or null; };
+      };
+    };
+    hpg = {
+      enable = false;
+      data = final: prev: {
+        hpg = prev.callPackage ./hpg.nix {
+          hpg-src = inputs.hpg-src;
+          kokkos4 = inputs.nixpkgsKokkos4.legacyPackages.${final.stdenv.hostPlatform.system}.kokkos;
+        };
       };
     };
     gac = import ./gac.nix inputs;
