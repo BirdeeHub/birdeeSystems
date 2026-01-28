@@ -1,7 +1,7 @@
 lib:
 {
   options ? { },
-  transformOptions ? x: [ x ],
+  transform ? x: [ x ],
 }:
 let
   # Generate DocBook documentation for a list of packages. This is
@@ -45,7 +45,7 @@ let
 in
 lib.pipe options [
   lib.optionAttrSetToDocList
-  (builtins.concatMap transformOptions)
+  (builtins.concatMap transform)
   (map (
     opt:
     opt

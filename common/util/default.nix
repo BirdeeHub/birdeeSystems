@@ -136,4 +136,6 @@ inputs: with builtins; rec {
 
   collectOptions = import ./collectOptions.nix inputs.nixpkgs.lib;
 
+  normOpts = import ./normopts.nix { lib = inputs.nixpkgs.lib; wlib = inputs.wrappers.lib; collectOptions = collectOptions; };
+
 }
