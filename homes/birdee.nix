@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, flake-path, users, username, output-name, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, util, pkgs, lib, inputs, flake-path, users, username, output-name, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
 in {
   birdeeMods = {
     zsh.enable = true;
@@ -41,7 +41,7 @@ in {
       echo "(auto-msg $model)"
       ${config.wrappers.git.wrapper}/bin/git status
     '';
-    nh = inputs.wrappers.lib.wrapPackage ({config, wlib, ...}: {
+    nh = util.wlib.wrapPackage ({config, wlib, ...}: {
       config.pkgs = pkgs;
       config.package = pkgs.nh;
       config.env.NH_FLAKE = flake-path;

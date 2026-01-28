@@ -1,19 +1,14 @@
-{ inputs, util }:
-let
-  wlib = inputs.wrappers.lib;
-  diskoflake = inputs.disko;
-in
+{ inputs, util }@args:
 {
   lib,
   flake-parts-lib,
   config,
   inputs,
   ...
-}:
+}@top:
 let
   inherit (lib) types mkOption genAttrs;
   file = ./configsPerSystem.nix;
-  diskos = config.flake.diskoConfigurations or { };
 in
 {
   _file = file;
@@ -31,7 +26,7 @@ in
               {
                 _file = file;
                 key = file;
-                freeformType = wlib.types.attrsRecursive;
+                freeformType = util.wlib.types.attrsRecursive;
                 options = {
                   home-manager = mkOption {
                     type = types.raw;
@@ -64,7 +59,7 @@ in
                       };
                   };
                   disko = mkOption {
-                    type = wlib.types.subWrapperModuleWith {
+                    type = util.wlib.types.subWrapperModuleWith {
                       modules =
                         let
                           inherit (config) nixpkgs;
@@ -80,7 +75,7 @@ in
                               options.diskoModule = mkOption {
                                 type = types.nullOr (lib.types.either wlib.types.stringable (pkgs.formats.json {}).type);
                                 default = null;
-                                apply = x: if x == null then diskos.${name} or null else x; 
+                                apply = x: if x == null then (top.config.flake.diskoConfigurations or { }).${name} or null else x; 
                               };
                               config.flags."--no-deps" = lib.mkDefault true;
                               config.drv.preBuild = lib.mkIf (!wlib.types.stringable.check config.diskoModule) ''
@@ -103,7 +98,7 @@ in
                                 }
                               ];
                               config.package = lib.mkDefault (
-                                inputs.disko.packages.${system}.disko or diskoflake.packages.${system}.disko or null
+                                inputs.disko.packages.${system}.disko or args.inputs.disko.packages.${system}.disko or null
                               );
                             }
                           )
@@ -157,7 +152,7 @@ in
                           };
                       }
                       ++ lib.optionals (config.disko.diskoModule != null) [
-                        (inputs.disko.nixosModules.disko or diskoflake.nixosModules.disko or { })
+                        (inputs.disko.nixosModules.disko or args.inputs.disko.nixosModules.disko or { })
                         config.disko.diskoModule
                       ]
                       ++ [ config.module ]
@@ -178,7 +173,7 @@ in
             types.submodule (
               { config, name, ... }:
               {
-                freeformType = wlib.types.attrsRecursive;
+                freeformType = util.wlib.types.attrsRecursive;
                 options = {
                   home-manager = mkOption {
                     type = types.raw;

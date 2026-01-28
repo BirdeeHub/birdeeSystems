@@ -3,7 +3,7 @@
 let
   installMods = builtins.mapAttrs (name: value: {
     inherit name value;
-    __functor = inputs.wrappers.lib.mkInstallModule;
+    __functor = util.wlib.mkInstallModule;
   }) config.flake.wrapperModules;
   file = ./wrappers.nix;
 in

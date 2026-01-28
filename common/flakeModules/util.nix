@@ -20,7 +20,6 @@ in
               description = ''
                 contains various personal utilities which are not system dependent
               '';
-              apply = x: { wlib = inputs.wrappers.lib; } // x;
             };
           }
         ];

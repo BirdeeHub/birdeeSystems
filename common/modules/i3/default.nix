@@ -1,4 +1,4 @@
-{ moduleNamespace, homeManager, inputs, ... }:
+{ moduleNamespace, homeManager, inputs, util, ... }:
 { config, pkgs, lib, ... }: let
   cfg = config.${moduleNamespace}.i3;
 in {
@@ -95,12 +95,12 @@ in {
         cache="$cachedir/dmenu_recent"
         rm $cache
       ''}'';
-      i3status = (inputs.wrappers.lib.evalModule {
+      i3status = util.wlib.evalPackage {
         imports = [ ./i3bar.nix ];
         inherit pkgs;
         inherit (cfg) cputemppath;
-      }).config.wrapper;
-      i3lock = inputs.wrappers.lib.wrapPackage {
+      };
+      i3lock = util.wlib.wrapPackage {
         inherit pkgs;
         package = pkgs.i3lock;
         addFlag = [

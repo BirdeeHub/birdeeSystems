@@ -1,6 +1,6 @@
 inputs:
 let
-  util = import ./util inputs;
+  util = import ./util inputs // { wlib = inputs.wrappers.lib; };
   flakeModules = import ./flakeModules { inherit inputs util; };
 in
 { lib, config, ... }:

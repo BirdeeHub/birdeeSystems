@@ -13,7 +13,7 @@ in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
-flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
+flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }@top: {
   systems = nixpkgs.lib.platforms.all;
   imports = [
     # inputs.devenv.flakeModule
@@ -21,9 +21,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
     (nixpkgs.lib.modules.importApply ./common inputs)
   ];
   flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
-  perSystem = let
-    flakeCfg = config.flake;
-  in {
+  perSystem = {
     config,
     self',
     inputs',
@@ -39,12 +37,12 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         inputs
         flake-path
         ;
-      inherit (flakeCfg) util;
+      inherit (top.config.flake) util;
     };
   in {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
-      overlays = flakeCfg.overlist;
+      overlays = top.config.flake.overlist;
       config.allowUnfree = true;
     };
 
@@ -128,12 +126,12 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       "birdee@nestOS" = {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
-        disko.diskoModule = flakeCfg.diskoConfigurations.nvme0n1_swap;
+        disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
         specialArgs = defaultSpecialArgs;
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/nestOS;
         };
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           ./systems/PCs/nestOS
           usermod
@@ -143,12 +141,12 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       "birdee@aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
         inherit home-manager;
-        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
+        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/aSUS;
         };
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           ./systems/PCs/aSUS
           usermod
@@ -157,13 +155,13 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       };
       "birdee@dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
+        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
         inherit home-manager;
         specialArgs = defaultSpecialArgs;
         extraSpecialArgs = {
           monitorCFG = ./homes/monitors_by_hostname/dustbook;
         };
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           ./systems/PCs/dustbook
           usermod
@@ -172,10 +170,10 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       };
       "aSUS" = {
         nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
+        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
         username = "birdee";
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           usermod
           ./systems/PCs/aSUS
@@ -183,10 +181,10 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       };
       "dustbook" = {
         nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
+        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
         specialArgs = defaultSpecialArgs;
         username = "birdee";
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           usermod
           ./systems/PCs/dustbook
@@ -196,9 +194,9 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       in {name, ... }: {
         nixpkgs = inputs.nixpkgs;
         username = "birdee";
-        disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
+        disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           usermod
           ./systems/VMs/${name}
@@ -208,10 +206,10 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         nixpkgs = inputs.nixpkgs;
         inherit home-manager;
         hostname = "virtbird";
-        disko.diskoModule = flakeCfg.diskoConfigurations.noswap_bios;
+        disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
         username = "birdee";
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           usermod
           ./systems/VMs/qemu
@@ -226,7 +224,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
         };
         extraSpecialArgs = {
         };
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           ./systems/installers/installer_mine
         ] ++ builtins.attrValues self.modules.nixos;
@@ -234,7 +232,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       "installer" = {
         nixpkgs = inputs.nixpkgs;
         specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = flakeCfg.overlist;
+        module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
           ./systems/installers/installer
         ] ++ builtins.attrValues self.modules.nixos;

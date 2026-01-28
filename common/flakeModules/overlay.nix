@@ -1,7 +1,4 @@
-{ inputs, util }:
-let
-  wlib = inputs.wrappers.lib;
-in
+{ inputs, util }@args:
 {
   lib,
   flake-parts-lib,
@@ -27,7 +24,7 @@ in
               type = lib.types.listOf types.raw;
               readOnly = true;
               default = lib.pipe config.overlays [
-                (wlib.dag.unwrapSort "overlays")
+                (util.wlib.dag.unwrapSort "overlays")
                 (builtins.concatMap (v: if v.enable then [ v.data ] else [ ]))
               ];
             };
@@ -40,8 +37,8 @@ in
     };
     overlays = mkOption {
       type = types.lazyAttrsOf (
-        wlib.types.spec [
-          (wlib.dag.mkDagEntry {
+        util.wlib.types.spec [
+          (util.wlib.dag.mkDagEntry {
             dataOptFn =
               { name, config, ... }:
               {
