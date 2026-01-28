@@ -133,4 +133,7 @@ inputs: with builtins; rec {
     homeDirPrefix = if pkgs.stdenv.hostPlatform.isDarwin then "Users" else "home";
     homeDirectory = "/${homeDirPrefix}/${username}";
   in homeDirectory;
+
+  collectOptions = import ./collectOptions.nix inputs.nixpkgs.lib;
+
 }
