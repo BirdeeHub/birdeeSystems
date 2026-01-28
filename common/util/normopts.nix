@@ -7,5 +7,5 @@ pkgs:
 options:
 collectOptions {
   inherit options;
-  transform = x: if !builtins.elem "_module" x.loc then [ x ] else [ ];
+  transform = x: if builtins.elem "_module" x.loc then [ ] else [ x ];
 }
