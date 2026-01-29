@@ -40,11 +40,29 @@ let
     in
     zipper (descriptions ++ maintainers);
 
+  mergemeta = meta: file: new: meta // {
+    ${file} = meta.${file} or { } // {
+      associated = meta.${file}.associated or [ ] ++ [ new ];
+    };
+  };
+
   # associate module files from graph with items in meta-info
   # all imports get grouped until the next one with an item in meta-info is found
-  # afterwards, merge the associated file paths into your meta-info for each item
+  # merge the associated file paths into your meta-info for each item
+  associate =
+    current:
+    builtins.foldl' (
+      acc: v:
+      if acc.${v.file} or null != null then
+        associate v.file (mergemeta acc v.file { inherit (v) file key; }) v.imports
+      else if current == null then
+        associate current (mergemeta acc v.file { inherit (v) file key; }) v.imports
+      else
+        associate current (mergemeta acc current { inherit (v) file key; }) v.imports
+    );
+
   # This will be used to sort the options from collectOptions
-  modules-by-meta = {};
+  modules-by-meta = builtins.attrValues (associate null meta-info graph);
 
   # og_options = collectOptions {
   #   inherit options;
@@ -62,7 +80,4 @@ let
   # visible = lib.pipe illiterate [
   # ];
 in
-{
-  graph = graph;
-  meta = meta-info;
-}
+modules-by-meta
