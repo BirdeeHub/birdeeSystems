@@ -66,20 +66,20 @@ let
   # This will be used to sort the options from collectOptions
   modules-by-meta = builtins.attrValues (associate null meta-info graph);
 
-  # og_options = collectOptions {
-  #   inherit options;
-  #   transform = x: if builtins.elem "_module" x.loc then [ ] else [ x ];
-  # };
-  # renderVal =
-  #   v:
-  #   if v ? _type && v ? text then
-  #     if v._type == "literalExpression" then "`${toString v.text}`" else toString v.text
-  #   else if lib.isStringLike v then
-  #     "${toString v}"
-  #   else
-  #     v;
-  # illiterate = map (v: builtins.mapAttrs (n: renderVal) v) og_options;
-  # visible = lib.pipe illiterate [
-  # ];
+  og_options = collectOptions {
+    inherit options;
+    transform = x: if builtins.elem "_module" x.loc then [ ] else [ x ];
+  };
+  renderVal =
+    v:
+    if v ? _type && v ? text then
+      if v._type == "literalExpression" then "`${toString v.text}`" else toString v.text
+    else if lib.isStringLike v then
+      "${toString v}"
+    else
+      v;
+  illiterate = map (v: builtins.mapAttrs (n: renderVal) v) og_options;
+  visible = lib.pipe illiterate [
+  ];
 in
-modules-by-meta
+{ meta = modules-by-meta; entries = visible; }

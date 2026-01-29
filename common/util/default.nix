@@ -134,8 +134,6 @@ inputs: with builtins; rec {
     homeDirectory = "/${homeDirPrefix}/${username}";
   in homeDirectory;
 
-  collectOptions = import ./collectOptions.nix inputs.nixpkgs.lib;
-
-  normOpts = import ./normopts.nix { lib = inputs.nixpkgs.lib; wlib = inputs.wrappers.lib; collectOptions = collectOptions; };
+  inherit (import ./docs { lib = inputs.nixpkgs.lib; wlib = inputs.wrappers.lib; }) normDocs;
 
 }
