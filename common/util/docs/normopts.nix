@@ -83,6 +83,7 @@ let
   internal = invisible.right;
   hidden = invisible.wrong;
   visible = partitioned.wrong;
+  # TODO: put them with their associated meta info
 in
 {
   inherit modules-by-meta;
