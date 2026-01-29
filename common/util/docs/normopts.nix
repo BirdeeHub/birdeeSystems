@@ -68,7 +68,7 @@ let
     associate' null;
 
   # This will be used to sort the options from collectOptions
-  modules-by-meta = builtins.attrValues (associate (get-meta config.meta.description config.meta.maintainers) graph);
+  modules-by-meta = lib.mapAttrsToList (file: v: if v ? file then v else v // { inherit file; }) (associate (get-meta config.meta.description config.meta.maintainers) graph);
 
   og_options = collectOptions {
     inherit options;
