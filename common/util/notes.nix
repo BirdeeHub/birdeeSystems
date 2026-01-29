@@ -2,81 +2,48 @@
   graph = [
     {
       disabled = false;
-      file = "<unknown-file>";
+      file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/lib/core.nix";
       imports = [ ];
-      key = ":anon-1";
+      key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/lib/core.nix";
     }
     {
       disabled = false;
-      file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/parts.nix";
+      file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/wrapperModules/g/git/module.nix";
       imports = [
         {
           disabled = false;
-          file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/lib/core.nix";
-          imports = [ ];
-          key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/lib/core.nix";
-        }
-      ];
-      key = ":anon-2";
-    }
-    {
-      disabled = false;
-      file = "<unknown-file>";
-      imports = [ ];
-      key = ":anon-3";
-    }
-    {
-      disabled = false;
-      file = "/nix/store/grpw7h19fprplgy33kmrs56i9x8db86m-source/common/wrappers";
-      imports = [
-        {
-          disabled = false;
-          file = "/nix/store/grpw7h19fprplgy33kmrs56i9x8db86m-source/common/wrappers/git";
+          file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/default/module.nix";
           imports = [
             {
               disabled = false;
-              file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/wrapperModules/g/git/module.nix";
+              file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/symlinkScript/module.nix";
+              imports = [ ];
+              key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/symlinkScript/module.nix";
+            }
+            {
+              disabled = false;
+              file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix";
               imports = [
                 {
                   disabled = false;
-                  file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/default/module.nix";
-                  imports = [
-                    {
-                      disabled = false;
-                      file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/symlinkScript/module.nix";
-                      imports = [ ];
-                      key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/symlinkScript/module.nix";
-                    }
-                    {
-                      disabled = false;
-                      file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix";
-                      imports = [
-                        {
-                          disabled = false;
-                          file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix";
-                          imports = [ ];
-                          key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix:anon-1";
-                        }
-                      ];
-                      key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix";
-                    }
-                  ];
-                  key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/default/module.nix";
+                  file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix";
+                  imports = [ ];
+                  key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix:anon-1";
                 }
               ];
-              key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/wrapperModules/g/git/module.nix";
+              key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/makeWrapper/module.nix";
             }
           ];
-          key = "/nix/store/grpw7h19fprplgy33kmrs56i9x8db86m-source/common/wrappers/git";
+          key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/default/module.nix";
         }
       ];
-      key = ":anon-4";
+      key = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/wrapperModules/g/git/module.nix";
     }
     {
       disabled = false;
       file = "REPLFILE";
       imports = [ ];
-      key = ":anon-5";
+      key = ":anon-3";
     }
   ];
   meta = {
