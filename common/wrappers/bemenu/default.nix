@@ -29,5 +29,6 @@
   };
   imports = [ wlib.modules.default ];
   config.package = lib.mkDefault pkgs.bemenu;
-  config.env.BEMENU_OPTS = lib.cli.toGNUCommandLineShell { } config.settings;
+  config.wrapperVariants.bemenu-run = { };
+  config.env.BEMENU_OPTS = lib.cli.toCommandLineShell { } config.settings;
 }
