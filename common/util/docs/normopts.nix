@@ -1,6 +1,7 @@
 {
   lib,
   collectOptions,
+  ...
 }:
 {
   graph,
@@ -75,18 +76,9 @@ let
     inherit options;
     transform = x: if builtins.elem "_module" x.loc then [ ] else [ x ];
   };
-  renderVal =
-    v:
-    if v ? _type && v ? text then
-      if v._type == "literalExpression" then "`${toString v.text}`" else toString v.text
-    else if lib.isStringLike v && !builtins.isString v then
-      v.name or builtins.unsafeDiscardStringContext "${v}"
-    else
-      v;
-  illiterate = map (v: builtins.mapAttrs (n: renderVal) v) og_options;
   partitioned = lib.partition (
     v: v.internal or false == true || v.visible or true == false
-  ) illiterate;
+  ) og_options;
   invisible = lib.partition (v: v.internal or false == true) partitioned.right;
   internal = invisible.right;
   hidden = invisible.wrong;
