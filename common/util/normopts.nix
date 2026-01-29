@@ -40,15 +40,14 @@ let
     in
     zipper (descriptions ++ maintainers);
 
+  # associate module files from graph with items in meta-info
+  # all imports get grouped until the next one with an item in meta-info is found
+  # merge the associated file paths into your meta-info for each item
   mergemeta = meta: file: new: meta // {
     ${file} = meta.${file} or { } // {
       associated = meta.${file}.associated or [ ] ++ [ new ];
     };
   };
-
-  # associate module files from graph with items in meta-info
-  # all imports get grouped until the next one with an item in meta-info is found
-  # merge the associated file paths into your meta-info for each item
   associate =
     current:
     builtins.foldl' (
