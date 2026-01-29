@@ -74,12 +74,15 @@ let
     v:
     if v ? _type && v ? text then
       if v._type == "literalExpression" then "`${toString v.text}`" else toString v.text
-    else if lib.isStringLike v then
-      "${toString v}"
+    else if lib.isStringLike v && !builtins.isString v then
+      v.name or builtins.unsafeDiscardStringContext "${v}"
     else
       v;
   illiterate = map (v: builtins.mapAttrs (n: renderVal) v) og_options;
-  visible = lib.pipe illiterate [
-  ];
+  partitioned = lib.partition (
+    v: v.internal or false == true || v.visible or true == false
+  ) illiterate;
+  invisible = partitioned.right;
+  visible = partitioned.wrong;
 in
-{ meta = modules-by-meta; entries = visible; }
+{ inherit visible invisible; }

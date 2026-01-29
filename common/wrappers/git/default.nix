@@ -1,6 +1,6 @@
 {config, pkgs, wlib, lib, ... }: {
   imports = [ wlib.wrapperModules.git ];
-  settings = {
+  config.settings = {
     init.defaultBranch = "master";
     core = {
       autoSetupRemote = true;
@@ -9,5 +9,20 @@
     };
     user.name = "Birdee";
     user.email = "<85372418+BirdeeHub@users.noreply.github.com>";
+  };
+  options.testopt = lib.mkOption {
+    type = lib.types.attrsOf (lib.types.submodule {
+      options.internaltest = lib.mkOption {
+        type = lib.types.raw;
+        default = "TESTVAL";
+        description = ''
+          INNER
+        '';
+      };
+    });
+    visible = "transparent";
+    description = ''
+      OUTER
+    '';
   };
 }
