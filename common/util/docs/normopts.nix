@@ -1,16 +1,13 @@
 {
   lib,
-  wlib,
   collectOptions,
 }:
 {
   graph,
   options,
-  config,
   ...
 }:
 let
-  inherit (config) pkgs;
   get-meta =
     descs: authors:
     let
@@ -69,7 +66,7 @@ let
     associate' null;
 
   # This will be used to sort the options from collectOptions
-  modules-by-meta = lib.pipe (get-meta config.meta.description config.meta.maintainers) [
+  modules-by-meta = lib.pipe (get-meta options.meta.description.value options.meta.maintainers.value) [
     (v: associate v graph)
     (lib.mapAttrsToList (file: v: if v ? file then v else v // { inherit file; }))
   ];
