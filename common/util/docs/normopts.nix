@@ -43,28 +43,32 @@ let
   # associate module files from graph with items in meta-info
   # all imports get grouped until the next one with an item in meta-info is found
   # merge the associated file paths into your meta-info for each item
-  mergemeta =
-    meta: file: new:
-    meta
-    // {
-      ${file} = meta.${file} or { } // {
-        associated = meta.${file}.associated or [ ] ++ [ new ];
-      };
-    };
   associate =
-    current:
-    builtins.foldl' (
-      acc: v:
-      if acc.${v.file} or null != null then
-        associate v.file (mergemeta acc v.file v.file) v.imports
-      else if current == null then
-        associate current (mergemeta acc v.file v.file) v.imports
-      else
-        associate current (mergemeta acc current v.file) v.imports
-    );
+    let
+      mergemeta =
+        meta: file: new:
+        meta
+        // {
+          ${file} = meta.${file} or { } // {
+            associated = meta.${file}.associated or [ ] ++ [ new ];
+          };
+        };
+      associate' =
+        current:
+        builtins.foldl' (
+          acc: v:
+          if acc.${v.file} or null != null then
+            associate' v.file (mergemeta acc v.file v.file) v.imports
+          else if current == null then
+            associate' current (mergemeta acc v.file v.file) v.imports
+          else
+            associate' current (mergemeta acc current v.file) v.imports
+        );
+    in
+    associate' null;
 
   # This will be used to sort the options from collectOptions
-  modules-by-meta = builtins.attrValues (associate null meta-info graph);
+  modules-by-meta = builtins.attrValues (associate meta-info graph);
 
   og_options = collectOptions {
     inherit options;
@@ -85,4 +89,6 @@ let
   invisible = partitioned.right;
   visible = partitioned.wrong;
 in
-{ inherit visible invisible; }
+{
+  inherit visible invisible;
+}
