@@ -21,8 +21,8 @@ let
             acc: v:
             acc
             // {
-              ${if v.desc.pre or "" != "" then "pre" else null} = v.desc.pre;
-              ${if v.desc.post or "" != "" then "post" else null} = v.desc.post;
+              ${if v.desc.pre or "" != "" then "pre" else null} = (if acc.desc.pre or "" != "" then acc.desc.pre + "\n\n" else "") + v.desc.pre;
+              ${if v.desc.post or "" != "" then "post" else null} = (if acc.desc.post or "" != "" then acc.desc.post + "\n\n" else "") + v.desc.post;
             }
           ) { } xs;
           maintainers = builtins.filter (v: v != null) (map (v: v.ppl or null) xs);
@@ -90,7 +90,9 @@ let
   partitioned = lib.partition (
     v: v.internal or false == true || v.visible or true == false
   ) illiterate;
-  invisible = partitioned.right;
+  invisible = lib.partition (v: v.internal or false == true) partitioned.right;
+  internal = invisible.right;
+  hidden = invisible.wrong;
   visible = partitioned.wrong;
 in
 {
