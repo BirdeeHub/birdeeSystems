@@ -11,25 +11,34 @@
 }:
 let
   inherit (config) pkgs;
-  zipper = builtins.zipAttrsWith (file: xs: {
-    inherit file;
-    description = builtins.foldl' (acc: v: acc // {
-      ${if v.desc.pre or "" != "" then "pre" else null} = v.desc.pre;
-      ${if v.desc.post or "" != "" then "post" else null} = v.desc.post;
-    }) {} xs;
-    maintainers = builtins.filter (v: v != null) (map (v: v.ppl or null) xs);
-  });
-  descriptions = map (v: {
-    ${v.file} = {
-      desc = v;
-    };
-  }) config.meta.description;
-  maintainers = map (v: {
-    ${v.file} = {
-      ppl = v;
-    };
-  }) config.meta.maintainers;
-  zipped = zipper (descriptions ++ maintainers);
+  zipped =
+    let
+      zipper = builtins.zipAttrsWith (
+        file: xs: {
+          inherit file;
+          description = builtins.foldl' (
+            acc: v:
+            acc
+            // {
+              ${if v.desc.pre or "" != "" then "pre" else null} = v.desc.pre;
+              ${if v.desc.post or "" != "" then "post" else null} = v.desc.post;
+            }
+          ) { } xs;
+          maintainers = builtins.filter (v: v != null) (map (v: v.ppl or null) xs);
+        }
+      );
+      descriptions = map (v: {
+        ${v.file} = {
+          desc = v;
+        };
+      }) config.meta.description;
+      maintainers = map (v: {
+        ${v.file} = {
+          ppl = v;
+        };
+      }) config.meta.maintainers;
+    in
+    zipper (descriptions ++ maintainers);
 
   # og_options = collectOptions {
   #   inherit options;
@@ -47,4 +56,7 @@ let
   # visible = lib.pipe illiterate [
   # ];
 in
-{ graph = graph; meta = zipped; }
+{
+  graph = graph;
+  meta = zipped;
+}
