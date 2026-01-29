@@ -42,7 +42,7 @@ let
 
   # associate module files from graph with items in meta-info
   # all imports get grouped until the next one with an item in meta-info is found
-  # afterwards, merge the associated modules into your meta-info
+  # afterwards, merge the associated files into your meta-info
   # This will be used to sort the options from collectOptions
   modules-by-meta = {};
 
