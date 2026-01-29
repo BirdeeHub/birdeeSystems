@@ -56,11 +56,11 @@ let
     builtins.foldl' (
       acc: v:
       if acc.${v.file} or null != null then
-        associate v.file (mergemeta acc v.file { inherit (v) file key; }) v.imports
+        associate v.file (mergemeta acc v.file v.file) v.imports
       else if current == null then
-        associate current (mergemeta acc v.file { inherit (v) file key; }) v.imports
+        associate current (mergemeta acc v.file v.file) v.imports
       else
-        associate current (mergemeta acc current { inherit (v) file key; }) v.imports
+        associate current (mergemeta acc current v.file) v.imports
     );
 
   # This will be used to sort the options from collectOptions
