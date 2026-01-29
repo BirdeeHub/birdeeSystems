@@ -19,8 +19,10 @@ let
             acc: v:
             acc
             // {
-              ${if v.desc.pre or "" != "" then "pre" else null} = (if acc.desc.pre or "" != "" then acc.desc.pre + "\n\n" else "") + v.desc.pre;
-              ${if v.desc.post or "" != "" then "post" else null} = (if acc.desc.post or "" != "" then acc.desc.post + "\n\n" else "") + v.desc.post;
+              ${if v.desc.pre or "" != "" then "pre" else null} =
+                (if acc.desc.pre or "" != "" then acc.desc.pre + "\n\n" else "") + v.desc.pre;
+              ${if v.desc.post or "" != "" then "post" else null} =
+                (if acc.desc.post or "" != "" then acc.desc.post + "\n\n" else "") + v.desc.post;
             }
           ) { } xs;
           maintainers = builtins.filter (v: v != null) (map (v: v.ppl or null) xs);
@@ -67,10 +69,12 @@ let
     associate' null;
 
   # This will be used to sort the options from collectOptions
-  modules-by-meta = lib.pipe (get-meta options.meta.description.value options.meta.maintainers.value) [
-    (v: associate v graph)
-    (lib.mapAttrsToList (file: v: if v ? file then v else v // { inherit file; }))
-  ];
+  modules-by-meta =
+    lib.pipe (get-meta options.meta.description.value options.meta.maintainers.value)
+      [
+        (v: associate v graph)
+        (lib.mapAttrsToList (file: v: if v ? file then v else v // { inherit file; }))
+      ];
 
   og_options = collectOptions {
     inherit options;
@@ -84,7 +88,7 @@ let
   hidden = invisible.wrong;
   visible = partitioned.wrong;
   # TODO: put them with their associated meta info
+  normalizedOpts = modules-by-meta;
 in
-{
-  inherit modules-by-meta;
-}
+# TODO: return the whole modules-by-meta with their now attached options
+normalizedOpts
