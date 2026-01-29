@@ -11,7 +11,7 @@
 }:
 let
   inherit (config) pkgs;
-  meta-info =
+  get-meta = descs: authors:
     let
       zipper = builtins.zipAttrsWith (
         file: xs: {
@@ -31,12 +31,12 @@ let
         ${v.file} = {
           desc = v;
         };
-      }) config.meta.description;
+      }) descs;
       maintainers = map (v: {
         ${v.file} = {
           ppl = v;
         };
-      }) config.meta.maintainers;
+      }) authors;
     in
     zipper (descriptions ++ maintainers);
 
@@ -68,7 +68,7 @@ let
     associate' null;
 
   # This will be used to sort the options from collectOptions
-  modules-by-meta = builtins.attrValues (associate meta-info graph);
+  modules-by-meta = builtins.attrValues (associate (get-meta config.meta.description config.meta.maintainers) graph);
 
   og_options = collectOptions {
     inherit options;
@@ -90,5 +90,5 @@ let
   visible = partitioned.wrong;
 in
 {
-  inherit visible invisible;
+  inherit modules-by-meta;
 }
