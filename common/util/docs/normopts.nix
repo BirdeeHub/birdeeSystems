@@ -87,7 +87,7 @@ let
   internal = invisible.right;
   hidden = invisible.wrong;
   visible = partitioned.wrong;
-  # TODO: put them with their associated meta info
+  # TODO: put them with their associated meta info by checking the declarations field against the associated field
   normalizedOpts = modules-by-meta;
 in
 # TODO: return the whole modules-by-meta with their now attached options
