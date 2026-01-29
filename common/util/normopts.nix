@@ -11,7 +11,7 @@
 }:
 let
   inherit (config) pkgs;
-  zipped =
+  meta-info =
     let
       zipper = builtins.zipAttrsWith (
         file: xs: {
@@ -58,5 +58,5 @@ let
 in
 {
   graph = graph;
-  meta = zipped;
+  meta = meta-info;
 }
