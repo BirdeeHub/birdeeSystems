@@ -10,6 +10,7 @@
     user.name = "Birdee";
     user.email = "<85372418+BirdeeHub@users.noreply.github.com>";
   };
+  # TODO: DELETE ME LATER
   options.testopt = lib.mkOption {
     type = lib.types.attrsOf (lib.types.submodule {
       options.internaltest = lib.mkOption {
