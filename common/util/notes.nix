@@ -48,7 +48,9 @@
   ];
   meta = {
     "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/lib/core.nix" = {
-      description = { pre = "# Core (builtin) Options set\n\nThese are the core options that make everything else possible.\n\nThey include the `.extendModules`, `.apply`, `.eval`, and `.wrap` functions, and the `.wrapper` itself\n\nThey are always imported with every module evaluation.\n\nThey are somewhat minimal by design. They pertain to building the derivation, not the wrapper script.\n\nThe default `builderFunction` value provides no options.\n\nThe default `wrapperFunction` is null.\n\n`wlib.modules.default` provides great values for these options, and creates many more for you to use.\n\nBut you may want to wrap your package via different means, provide different options, or provide modules for others to use to help do those things!\n\nDoing it this way allows wrapper modules to do anything you might wish involving wrapping some source/package in a derivation.\n\nExcited to see what ways to use these options everyone comes up with! Docker helpers? BubbleWrap? If it's a derivation, it should be possible!\n\n---\n"; };
+      description = {
+        pre = "# Core (builtin) Options set\n\nThese are the core options that make everything else possible.\n\nThey include the `.extendModules`, `.apply`, `.eval`, and `.wrap` functions, and the `.wrapper` itself\n\nThey are always imported with every module evaluation.\n\nThey are somewhat minimal by design. They pertain to building the derivation, not the wrapper script.\n\nThe default `builderFunction` value provides no options.\n\nThe default `wrapperFunction` is null.\n\n`wlib.modules.default` provides great values for these options, and creates many more for you to use.\n\nBut you may want to wrap your package via different means, provide different options, or provide modules for others to use to help do those things!\n\nDoing it this way allows wrapper modules to do anything you might wish involving wrapping some source/package in a derivation.\n\nExcited to see what ways to use these options everyone comes up with! Docker helpers? BubbleWrap? If it's a derivation, it should be possible!\n\n---\n";
+      };
       file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/lib/core.nix";
       maintainers = [
         {
@@ -62,7 +64,9 @@
       ];
     };
     "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/default/module.nix" = {
-      description = { pre = "This module imports both `wlib.modules.makeWrapper` and `wlib.modules.symlinkScript` for convenience\n\n## `wlib.modules.makeWrapper`\n\nAn implementation of the `makeWrapper` interface via type safe module options.\n\nAllows you to choose one of several underlying implementations of the `makeWrapper` interface.\n\nWherever the type includes `DAG` you can mentally substitute this with `attrsOf`\n\nWherever the type includes `DAL` or `DAG list` you can mentally substitute this with `listOf`\n\nHowever they also take items of the form `{ data, name ? null, before ? [], after ? [] }`\n\nThis allows you to specify that values are added to the wrapper before or after another value.\n\nThe sorting occurs across ALL the options, thus you can target items in any `DAG` or `DAL` within this module from any other `DAG` or `DAL` option within this module.\n\nThe `DAG`/`DAL` entries in this module also accept an extra field, `esc-fn ? null`\n\nIf defined, it will be used instead of the value of `options.escapingFunction` to escape that value.\n\n## `wlib.modules.symlinkScript`\n\nAdds extra options compared to the default `builderFunction` option value.\n\n---\n"; };
+      description = {
+        pre = "This module imports both `wlib.modules.makeWrapper` and `wlib.modules.symlinkScript` for convenience\n\n## `wlib.modules.makeWrapper`\n\nAn implementation of the `makeWrapper` interface via type safe module options.\n\nAllows you to choose one of several underlying implementations of the `makeWrapper` interface.\n\nWherever the type includes `DAG` you can mentally substitute this with `attrsOf`\n\nWherever the type includes `DAL` or `DAG list` you can mentally substitute this with `listOf`\n\nHowever they also take items of the form `{ data, name ? null, before ? [], after ? [] }`\n\nThis allows you to specify that values are added to the wrapper before or after another value.\n\nThe sorting occurs across ALL the options, thus you can target items in any `DAG` or `DAL` within this module from any other `DAG` or `DAL` option within this module.\n\nThe `DAG`/`DAL` entries in this module also accept an extra field, `esc-fn ? null`\n\nIf defined, it will be used instead of the value of `options.escapingFunction` to escape that value.\n\n## `wlib.modules.symlinkScript`\n\nAdds extra options compared to the default `builderFunction` option value.\n\n---\n";
+      };
       file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/default/module.nix";
       maintainers = [
         {
@@ -93,7 +97,9 @@
       ];
     };
     "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/symlinkScript/module.nix" = {
-      description = { pre = "Adds extra options compared to the default `builderFunction` option value.\n\nImported by `wlib.modules.default`\n\n---\n"; };
+      description = {
+        pre = "Adds extra options compared to the default `builderFunction` option value.\n\nImported by `wlib.modules.default`\n\n---\n";
+      };
       file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/modules/symlinkScript/module.nix";
       maintainers = [
         {
@@ -107,7 +113,9 @@
       ];
     };
     "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/wrapperModules/g/git/module.nix" = {
-      description = { pre = "Nix uses git for all sorts of things. Including fetching flakes!\n\nSo if you put this one in an overlay, name it something other than `pkgs.git`!\n\nOtherwise you will probably get infinite recursion.\n\nThe vast majority of other packages do not have this issue. And,\ndue to the passthrough of `.override` and `.overrideAttrs`,\nmost other packages are safe to replace with their wrapped counterpart in overlays directly.\n"; };
+      description = {
+        pre = "Nix uses git for all sorts of things. Including fetching flakes!\n\nSo if you put this one in an overlay, name it something other than `pkgs.git`!\n\nOtherwise you will probably get infinite recursion.\n\nThe vast majority of other packages do not have this issue. And,\ndue to the passthrough of `.override` and `.overrideAttrs`,\nmost other packages are safe to replace with their wrapped counterpart in overlays directly.\n";
+      };
       file = "/nix/store/5wrajzbddlpixvjf3zshrxwd1b1fh5pq-source/wrapperModules/g/git/module.nix";
       maintainers = [
         {
