@@ -40,6 +40,11 @@ let
     in
     zipper (descriptions ++ maintainers);
 
+  # associate module files from graph with items in meta-info
+  # all imports get grouped until the next one with an item in meta-info is found
+  # afterwards, merge the associated modules into your meta-info
+  modules-by-meta = {};
+
   # og_options = collectOptions {
   #   inherit options;
   #   transform = x: if builtins.elem "_module" x.loc then [ ] else [ x ];
