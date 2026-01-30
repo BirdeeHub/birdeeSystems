@@ -11,6 +11,22 @@
   ...
 }:
 let
+/*
+  Backslash (\)
+  Backtick (`)
+  Asterisk (*)
+  Underscore (_)
+  Curly braces ({})
+  Square brackets ([])
+  Angle brackets (<>)
+  Parentheses (())
+  Pound sign/Hash mark (#)
+  Plus sign (+)
+  Minus sign/Hyphen (-)
+  Dot (.)
+  Exclamation mark (!)
+  Pipe (|) (used in tables in some Markdown flavors) 
+*/
   sanitize =
     v:
     if v ? _type && v ? text then
@@ -36,7 +52,7 @@ let
   normed = normWrapperDocs { inherit options graph; };
   cleaned = lib.reverseList (sanitize normed);
   renderOption = opt: ''
-    ## ${opt.name or ""}
+    ## `${opt.name or ""}`
 
     ${opt.description or ""}
 
