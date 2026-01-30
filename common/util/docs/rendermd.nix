@@ -62,40 +62,19 @@ let
     else
       v;
   normed = normWrapperDocs { inherit options graph transform; };
-  maybecore = if includeCore == true then normed else builtins.filter (v: v.file != wlib.core) normed;
-  cleaned = lib.reverseList (sanitize maybecore);
+  cleaned = sanitize (
+    if includeCore == true then normed else builtins.filter (v: v.file != wlib.core) normed
+  );
+  mkOptField =
+    opt: n: desc:
+    lib.optionalString (opt ? "${n}") (lib.optionalString (desc != "") "${desc}\n" + "${opt.${n}}\n\n");
   renderOption = opt: ''
     ## `${lib.options.showOption (opt.loc or [ ])}`
 
-    ${
-      lib.optionalString (opt.description or "" != "") ''
-        ${opt.description}
-
-      ''
-    }${
-      lib.optionalString (opt ? relatedPackages) ''
-        Related packages:
-        ${opt.relatedPackages}
-
-      ''
-    }${
-      lib.optionalString (opt ? type) ''
-        Type:
-        ${opt.type}
-
-      ''
-    }${
-      lib.optionalString (opt ? default) ''
-        Default:
-        ${opt.default}
-
-      ''
-    }${
-      lib.optionalString (opt.example or "" != "") ''
-        Example:
-        ${opt.example}
-
-      ''
+    ${mkOptField opt "description" ""}${
+      mkOptField opt "relatedPackages" "Related packages:\n"
+    }${mkOptField opt "type" "Type:"}${mkOptField opt "default" "Default:"}${
+      mkOptField opt "example" "Example:"
     }${
       lib.optionalString (opt.declarations or [ ] != [ ]) ''
         Declared by:

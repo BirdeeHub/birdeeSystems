@@ -119,7 +119,7 @@ lib.pipe modules-by-meta [
   ))
   (
     v:
-    v
+    lib.reverseList v
     ++
       lib.optional
         (
