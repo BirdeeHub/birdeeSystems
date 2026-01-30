@@ -85,7 +85,7 @@ let
   ) og_options;
   invisible = lib.partition (v: v.internal or false == true) partitioned.right;
 
-  anon_name = "anonymous_file";
+  anon_name = "<anonymous_file>";
   groupByDecl =
     opts:
     builtins.zipAttrsWith (n: xs: xs) (
@@ -109,24 +109,23 @@ lib.pipe modules-by-meta [
     lib.optional (internal ? "${v.file}" || hidden ? "${v.file}" || visible ? "${v.file}") (
       v
       // {
-        ${if internal ? "${v.file}" then "internal" else null} = internal.${v.file};
-        ${if hidden ? "${v.file}" then "hidden" else null} = hidden.${v.file};
-        ${if visible ? "${v.file}" then "visible" else null} = visible.${v.file};
+        ${if internal ? "${v.file}" then "internal" else null} =
+          internal.${v.file} ++ lib.optional (v.file == anon_name) internal.${anon_name} or [ ];
+        ${if hidden ? "${v.file}" then "hidden" else null} =
+          hidden.${v.file} ++ lib.optional (v.file == anon_name) hidden.${anon_name} or [ ];
+        ${if visible ? "${v.file}" then "visible" else null} =
+          visible.${v.file} ++ lib.optional (v.file == anon_name) visible.${anon_name} or [ ];
       }
     )
   ))
-  (v: if internal ? "${anon_name}" || hidden ? "${anon_name}" || visible ? "${anon_name}" then {
-    ${anon_name} =
-      v.${anon_name} or {
-        file = anon_name;
-      }
-      // {
-        ${if internal ? "${anon_name}" then "internal" else null} =
-          v.${anon_name}.internal or [ ] ++ internal.${anon_name};
-        ${if hidden ? "${anon_name}" then "hidden" else null} =
-          v.${anon_name}.hidden or [ ] ++ hidden.${anon_name};
-        ${if visible ? "${anon_name}" then "visible" else null} =
-          v.${anon_name}.visible or [ ] ++ visible.${anon_name};
-      };
-  } else v)
+  (
+    v:
+    v
+    ++ lib.optional (builtins.all (v: v.file != anon_name) v && internal ? "${anon_name}" || hidden ? "${anon_name}" || visible ? "${anon_name}") {
+      file = anon_name;
+      ${if internal ? "${anon_name}" then "internal" else null} = internal.${anon_name};
+      ${if hidden ? "${anon_name}" then "hidden" else null} = hidden.${anon_name};
+      ${if visible ? "${anon_name}" then "visible" else null} = visible.${anon_name};
+    }
+  )
 ]
