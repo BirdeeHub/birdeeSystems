@@ -12,9 +12,9 @@
   moduleStartsOpen ? i: mod: i == 1,
   descriptionStartsOpen ? type: i: mod: i == 1,
   extraModuleNotes ?
-    { maintainers, ... }:
-    lib.optionalString (maintainers != [ ]) "This module is made possible by: "
-    + builtins.concatStringsSep ", " (map (v: v.name) maintainers),
+    i: { maintainers, ... }:
+    lib.optionalString (maintainers != [ ] && i == 1) ("This module is made possible by: "
+    + builtins.concatStringsSep ", " (map (v: v.name) maintainers)),
   ...
 }:
 let
@@ -95,7 +95,7 @@ let
   renderModule =
     i: mod:
     let
-      moduleNotes = extraModuleNotes mod;
+      moduleNotes = extraModuleNotes i mod;
     in
     lib.optionalString (mod.visible or [ ] != [ ]) ''
       # ${nameFromModule mod}
@@ -103,7 +103,9 @@ let
       ${lib.optionalString (mod.description.pre or "" != "") ''
         <details${if descriptionStartsOpen "pre" i mod then " open" else ""}>
           <summary></summary>
-            ${mod.description.pre}
+
+        ${mod.description.pre}
+
         </details>
 
       ''}
@@ -120,7 +122,9 @@ let
 
         <details${if descriptionStartsOpen "post" i mod then " open" else ""}>
           <summary></summary>
-            ${mod.description.post}
+
+        ${mod.description.post}
+
         </details>
       ''}
     '';
