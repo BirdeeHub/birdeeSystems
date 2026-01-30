@@ -6,47 +6,45 @@
   ...
 }@top:
 let
-  summaryType = lib.types.listOf (
-    wlib.types.spec {
-      options.data = lib.mkOption {
-        type = lib.types.enum [
-          "prefix"
-          "suffix"
-          "title"
-          "numbered"
-          "draft"
-          "separator"
-        ];
-      };
-      options.name = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-      };
-      options.before = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-      };
-      options.after = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-      };
-      options.subchapters = lib.mkOption {
-        type = summaryType;
-        default = [ ];
-      };
-      options.path = lib.mkOption {
-        type = lib.types.nullOr wlib.types.nonEmptyLine;
-        default = null;
-      };
-      options.src = lib.mkOption {
-        type = lib.types.nullOr wlib.types.stringable;
-        default = null;
-      };
-    }
-  );
+  summaryType = lib.types.listOf (wlib.types.spec {
+    options.data = lib.mkOption {
+      type = lib.types.enum [
+        "prefix"
+        "suffix"
+        "title"
+        "numbered"
+        "draft"
+        "separator"
+      ];
+    };
+    options.name = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+    };
+    options.before = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
+    options.after = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
+    options.subchapters = lib.mkOption {
+      type = summaryType;
+      default = [ ];
+    };
+    options.path = lib.mkOption {
+      type = lib.types.nullOr wlib.types.nonEmptyLine;
+      default = null;
+    };
+    options.src = lib.mkOption {
+      type = lib.types.nullOr wlib.types.stringable;
+      default = null;
+    };
+  });
 
   renderBook =
-    subdir: book_src: summary: summaryVarname:
+    subdir: book_src: summary: summaryVarname: bookVarname:
     let
       renderItemSummary =
         node:
@@ -143,6 +141,7 @@ let
               + ''${summaryVarname}Path" || echo "$''
               + ''${summaryVarname}"; } > ${lib.escapeShellArg "${bookSrc}/SUMMARY.md"}''
             )
+            (''json2toml "$'' + ''${bookVarname}Path" ${lib.escapeShellArg "${placeholder "out"}/${subdir}/book.toml"}'')
           ]
           ++ v
         )
@@ -154,7 +153,7 @@ let
       linkCmds = linkCmds;
     };
 
-  jsontype = (pkgs.formats.json { }).type;
+  tomltype = (pkgs.formats.toml { }).type;
 
   sanitizeShellVar =
     s:
@@ -189,23 +188,31 @@ in
           { name, config, ... }:
           let
             pages =
-              renderBook config.generated-book-subdir config.book.src config.summary
-                config.generated-summary-varname;
+              renderBook config.generated-book-subdir config.book.book.src config.summary
+                config.generated-summary-varname config.generated-book-json-varname;
           in
           {
             options = {
               book = lib.mkOption {
                 type = lib.types.submodule {
-                  freeformType = jsontype;
-                  options.src = lib.mkOption {
-                    type = wlib.types.nonEmptyLine;
-                    default = "src";
+                  freeformType = tomltype;
+                  options.book = lib.mkOption {
+                    type = lib.types.submodule {
+                      freeformType = tomltype;
+                      options.src = lib.mkOption {
+                        type = wlib.types.nonEmptyLine;
+                        default = "src";
+                      };
+                    };
                   };
                 };
-                default = { };
               };
               enable = lib.mkEnableOption "the book `${name}`" // {
                 default = true;
+              };
+              summary = lib.mkOption {
+                type = summaryType;
+                default = [ ];
               };
               generatedSummary = lib.mkOption {
                 type = lib.types.str;
@@ -224,15 +231,17 @@ in
                 readOnly = true;
                 default = "${top.config.binName}-book-dir/${name}";
               };
+              generated-book-json-varname = lib.mkOption {
+                type = lib.types.str;
+                readOnly = true;
+                internal = true;
+                default = "generated_book_json_${sanitizeShellVar name}";
+              };
               generated-summary-varname = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
                 internal = true;
                 default = "generated_summary_${sanitizeShellVar name}";
-              };
-              summary = lib.mkOption {
-                type = summaryType;
-                default = [ ];
               };
             };
           }
@@ -243,7 +252,6 @@ in
 
   config = {
     wrapperVariants = builtins.mapAttrs (_: v: {
-      config.env.MDBOOK_BOOK = builtins.toJSON v.book;
       config.appendFlag = [ "${placeholder "out"}/${v.generated-book-subdir}" ];
       options.addFlag = lib.mkOption {
         type = lib.types.listOf (
@@ -261,14 +269,18 @@ in
       };
       config.enable = v.enable;
       config.flags.build = true;
+      config.flags."-d" = {
+        data = "\"$uservar\"";
+        esc-fn = v: v;
+      };
+      config.runShell = [ "uservar=\${1:-_site}; shift 1" ];
       config.exePath = config.exePath;
     }) config.books;
     drv =
-      builtins.foldl' (acc: v: acc // v) { } (
-        lib.mapAttrsToList (_: v: { ${v.generated-summary-varname} = v.generatedSummary; }) config.books
-      )
+      builtins.foldl' (acc: v: acc // v) {} (lib.mapAttrsToList (_: v: { ${v.generated-summary-varname} = v.generatedSummary; ${v.generated-book-json-varname} = builtins.toJSON v.book; }) config.books)
       // {
-        passAsFile = lib.mapAttrsToList (_: v: v.generated-summary-varname) config.books;
+        passAsFile = builtins.concatLists (lib.mapAttrsToList (_: v: [ v.generated-summary-varname v.generated-book-json-varname ]) config.books);
+        nativeBuildInputs = [ pkgs.remarshal ];
         buildPhase =
           "runHook preBuild\n"
           + builtins.concatStringsSep "\n" (lib.mapAttrsToList (_: v: v.buildCommands) config.books)

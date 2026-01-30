@@ -82,7 +82,7 @@ in
 {
   imports = [ ./module.nix ];
   books.nix-wrapper-modules = {
-    book.src = "src";
+    book.book.src = "src";
     # "prefix"
     # "suffix"
     # "title"
