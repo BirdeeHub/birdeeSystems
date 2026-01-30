@@ -26,7 +26,7 @@ let
     else
       v;
   normed = normWrapperDocs { inherit options graph; };
-  cleaned = sanitize normed;
+  cleaned = lib.reverseList (sanitize normed);
   # TODO: make this into some markdown
 in
 cleaned
