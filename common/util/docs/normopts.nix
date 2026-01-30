@@ -85,6 +85,7 @@ let
   ) og_options;
   invisible = lib.partition (v: v.internal or false == true) partitioned.right;
 
+  anon_name = "anonymous_file";
   groupByDecl =
     opts:
     builtins.zipAttrsWith (n: xs: xs) (
@@ -93,7 +94,7 @@ let
         map (n: {
           ${n} = v;
           # NOTE: what to do with items without anything in declarations? That can happen if the type definition is messed up.
-        }) (if v.declarations or [ ] == [ ] then [ "<anonymous_file>" ] else v.declarations)
+        }) (if v.declarations or [ ] == [ ] then [ anon_name ] else v.declarations)
       ) opts
     );
 
@@ -101,8 +102,31 @@ let
   hidden = groupByDecl invisible.wrong;
   visible = groupByDecl partitioned.wrong;
 
-  # TODO: put them with their associated meta info
-  normalizedOpts = modules-by-meta;
 in
-# TODO: return the whole modules-by-meta with their now attached options
-visible
+lib.pipe modules-by-meta [
+  (builtins.concatMap (
+    v:
+    lib.optional (internal ? "${v.file}" || hidden ? "${v.file}" || visible ? "${v.file}") (
+      v
+      // {
+        ${if internal ? "${v.file}" then "internal" else null} = internal.${v.file};
+        ${if hidden ? "${v.file}" then "hidden" else null} = hidden.${v.file};
+        ${if visible ? "${v.file}" then "visible" else null} = visible.${v.file};
+      }
+    )
+  ))
+  (v: if internal ? "${anon_name}" || hidden ? "${anon_name}" || visible ? "${anon_name}" then {
+    ${anon_name} =
+      v.${anon_name} or {
+        file = anon_name;
+      }
+      // {
+        ${if internal ? "${anon_name}" then "internal" else null} =
+          v.${anon_name}.internal or [ ] ++ internal.${anon_name};
+        ${if hidden ? "${anon_name}" then "hidden" else null} =
+          v.${anon_name}.hidden or [ ] ++ hidden.${anon_name};
+        ${if visible ? "${anon_name}" then "visible" else null} =
+          v.${anon_name}.visible or [ ] ++ visible.${anon_name};
+      };
+  } else v)
+]
