@@ -85,7 +85,6 @@ let
   ) og_options;
   invisible = lib.partition (v: v.internal or false == true) partitioned.right;
 
-  # NOTE: what to do with items without anything in declarations? That can happen if the type definition is messed up.
   groupByDecl =
     opts:
     builtins.zipAttrsWith (n: xs: xs) (
@@ -93,6 +92,7 @@ let
         v:
         map (n: {
           ${n} = v;
+          # NOTE: what to do with items without anything in declarations? That can happen if the type definition is messed up.
         }) (if v.declarations or [ ] == [ ] then [ "<anonymous_file>" ] else v.declarations)
       ) opts
     );
