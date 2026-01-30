@@ -110,11 +110,11 @@ lib.pipe modules-by-meta [
       v
       // {
         ${if internal ? "${v.file}" then "internal" else null} =
-          internal.${v.file} ++ lib.optional (v.file == anon_name) internal.${anon_name} or [ ];
+          internal.${v.file} ++ lib.optional (v.file == anon_name) (internal.${anon_name} or [ ]);
         ${if hidden ? "${v.file}" then "hidden" else null} =
-          hidden.${v.file} ++ lib.optional (v.file == anon_name) hidden.${anon_name} or [ ];
+          hidden.${v.file} ++ lib.optional (v.file == anon_name) (hidden.${anon_name} or [ ]);
         ${if visible ? "${v.file}" then "visible" else null} =
-          visible.${v.file} ++ lib.optional (v.file == anon_name) visible.${anon_name} or [ ];
+          visible.${v.file} ++ lib.optional (v.file == anon_name) (visible.${anon_name} or [ ]);
       }
     )
   ))
