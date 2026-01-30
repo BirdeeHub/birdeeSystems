@@ -92,4 +92,4 @@ let
   normalizedOpts = modules-by-meta;
 in
 # TODO: return the whole modules-by-meta with their now attached options
-visible
+normalizedOpts
