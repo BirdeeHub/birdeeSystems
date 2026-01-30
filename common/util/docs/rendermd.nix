@@ -1,7 +1,7 @@
 {
   wlib,
   lib,
-  normDocs,
+  normWrapperDocs,
 }:
 { options, graph, ... }:
 let
@@ -13,6 +13,6 @@ let
       v.name or builtins.unsafeDiscardStringContext "${v}"
     else
       v;
-  normed = normDocs { inherit options graph; };
+  normed = normWrapperDocs { inherit options graph; };
 in
 normed
