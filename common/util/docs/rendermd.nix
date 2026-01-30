@@ -22,8 +22,15 @@
       "This module is made possible by: " + builtins.concatStringsSep ", " (map (v: v.name) maintainers)
     ),
   declaredBy ?
-    { declarations, ... }: let
-      linkDest = v: if lib.hasPrefix wlib.modulesPath v then "https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/" + lib.removePrefix "${wlib.modulesPath}/" (toString v) else toString v;
+    { declarations, ... }:
+    let
+      linkDest =
+        v:
+        if lib.hasPrefix wlib.modulesPath v then
+          "https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/"
+          + lib.removePrefix "${wlib.modulesPath}/" (toString v)
+        else
+          toString v;
       linkName = v: lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString v));
     in
     builtins.concatStringsSep "\n" (map (v: "- [${linkName v}](${linkDest v})") declarations),
@@ -49,7 +56,9 @@ let
   sanitize =
     v:
     if v ? _type && v ? text then
-      builtins.unsafeDiscardStringContext (if v._type == "literalExpression" then "```nix\n${toString v.text}\n```" else toString v.text)
+      builtins.unsafeDiscardStringContext (
+        if v._type == "literalExpression" then "```nix\n${toString v.text}\n```" else toString v.text
+      )
     else if lib.isStringLike v && !builtins.isString v then
       builtins.unsafeDiscardStringContext "`<${if v ? name then "derivation ${v.name}" else v}>`"
     else if builtins.isString v then
@@ -129,15 +138,17 @@ let
         </details>
 
       ''}
-      <details${if moduleStartsOpen i mod then " open" else ""}>
-        <summary></summary>
+      ${lib.optionalString (mod.visible or [ ] != [ ]) ''
+        <details${if moduleStartsOpen i mod then " open" else ""}>
+          <summary></summary>
 
-      ${lib.pipe (mod.visible or [ ]) [
-        (map renderOption)
-        (builtins.concatStringsSep "\n\n")
-      ]}
+        ${lib.pipe mod.visible [
+          (map renderOption)
+          (builtins.concatStringsSep "\n\n")
+        ]}
 
-      </details>
+        </details>
+      ''}
       ${lib.optionalString (mod.description.post or "" != "") ''
 
         <details${if descriptionStartsOpen "post" i mod then " open" else ""}>
@@ -149,4 +160,6 @@ let
       ''}
     '';
 in
-builtins.unsafeDiscardStringContext (builtins.concatStringsSep "\n\n" (lib.imap1 renderModule cleaned))
+builtins.unsafeDiscardStringContext (
+  builtins.concatStringsSep "\n\n" (lib.imap1 renderModule cleaned)
+)
