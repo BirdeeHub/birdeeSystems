@@ -134,6 +134,6 @@ inputs: with builtins; rec {
     homeDirectory = "/${homeDirPrefix}/${username}";
   in homeDirectory;
 
-  inherit (import ./docs { lib = inputs.nixpkgs.lib; wlib = inputs.wrappers.lib; }) normDocs;
+  inherit (import ./docs { lib = inputs.nixpkgs.lib; wlib = inputs.wrappers.lib; }) wrapperModuleMD normWrapperDocs;
 
 }
