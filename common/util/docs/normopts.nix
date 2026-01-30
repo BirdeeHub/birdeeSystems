@@ -5,6 +5,7 @@
 {
   graph,
   options,
+  transform ? x: if builtins.elem "_module" x.loc then [ ] else [ x ],
   ...
 }:
 let
@@ -75,13 +76,11 @@ let
         (lib.mapAttrsToList (file: v: if v ? file then v else v // { inherit file; }))
       ];
 
-  og_options = collectOptions {
-    inherit options;
-    transform = x: if builtins.elem "_module" x.loc then [ ] else [ x ];
-  };
-  partitioned = lib.partition (
-    v: v.internal or false == true || v.visible or true == false
-  ) og_options;
+  partitioned =
+    lib.partition (v: v.internal or false == true || v.visible or true == false)
+      (collectOptions {
+        inherit options transform;
+      });
   invisible = lib.partition (v: v.internal or false == true) partitioned.right;
 
   anon_name = "<anonymous_file>";
@@ -121,11 +120,18 @@ lib.pipe modules-by-meta [
   (
     v:
     v
-    ++ lib.optional (builtins.all (v: v.file != anon_name) v && internal ? "${anon_name}" || hidden ? "${anon_name}" || visible ? "${anon_name}") {
-      file = anon_name;
-      ${if internal ? "${anon_name}" then "internal" else null} = internal.${anon_name};
-      ${if hidden ? "${anon_name}" then "hidden" else null} = hidden.${anon_name};
-      ${if visible ? "${anon_name}" then "visible" else null} = visible.${anon_name};
-    }
+    ++
+      lib.optional
+        (
+          builtins.all (v: v.file != anon_name) v && internal ? "${anon_name}"
+          || hidden ? "${anon_name}"
+          || visible ? "${anon_name}"
+        )
+        {
+          file = anon_name;
+          ${if internal ? "${anon_name}" then "internal" else null} = internal.${anon_name};
+          ${if hidden ? "${anon_name}" then "hidden" else null} = hidden.${anon_name};
+          ${if visible ? "${anon_name}" then "visible" else null} = visible.${anon_name};
+        }
   )
 ]

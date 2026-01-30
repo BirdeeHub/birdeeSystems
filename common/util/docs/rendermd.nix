@@ -6,6 +6,8 @@
 {
   options,
   graph,
+  includeCore ? true,
+  transform ? x: if builtins.elem "_module" x.loc then [ ] else [ x ],
   nameFromModule ?
     { file, ... }:
     lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString file)),
@@ -47,7 +49,7 @@ let
   sanitize =
     v:
     if v ? _type && v ? text then
-      builtins.unsafeDiscardStringContext (if v._type == "literalExpression" then "```\n${toString v.text}\n```" else toString v.text)
+      builtins.unsafeDiscardStringContext (if v._type == "literalExpression" then "```nix\n${toString v.text}\n```" else toString v.text)
     else if lib.isStringLike v && !builtins.isString v then
       builtins.unsafeDiscardStringContext "`<${if v ? name then "derivation ${v.name}" else v}>`"
     else if builtins.isString v then
@@ -66,8 +68,9 @@ let
       builtins.mapAttrs (n: sanitize) v
     else
       v;
-  normed = normWrapperDocs { inherit options graph; };
-  cleaned = lib.reverseList (sanitize normed);
+  normed = normWrapperDocs { inherit options graph transform; };
+  maybecore = if includeCore == true then normed else builtins.filter (v: v.file != wlib.core) normed;
+  cleaned = lib.reverseList (sanitize maybecore);
   renderOption = opt: ''
     ## `${lib.options.showOption (opt.loc or [ ])}`
 
@@ -115,7 +118,7 @@ let
       moduleNotes = extraModuleNotes i mod;
     in
     lib.optionalString (mod.visible or [ ] != [ ]) ''
-      # ${nameFromModule mod}
+      ## ${nameFromModule mod}
       ${lib.optionalString (builtins.isString moduleNotes && moduleNotes != "") "\n${moduleNotes}\n"}
       ${lib.optionalString (mod.description.pre or "" != "") ''
         <details${if descriptionStartsOpen "pre" i mod then " open" else ""}>
