@@ -15,13 +15,13 @@ let
       builtins.unsafeDiscardStringContext v
     else if builtins.isList v then
       map sanitize v
-    else if builtins.isAttrs v then
-      builtins.mapAttrs (n: sanitize) v
-    else if builtins.isFunction v then
+    else if lib.isFunction v then
       "<function with arguments ${lib.pipe v [
         lib.functionArgs
         (lib.mapAttrsToList (n: v: "${n}${lib.optionalString v "?"}"))
       ]}>"
+    else if builtins.isAttrs v then
+      builtins.mapAttrs (n: sanitize) v
     else
       v;
   normed = normWrapperDocs { inherit options graph; };
