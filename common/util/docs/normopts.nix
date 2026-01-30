@@ -1,7 +1,6 @@
 {
   lib,
   collectOptions,
-  ...
 }:
 {
   graph,
