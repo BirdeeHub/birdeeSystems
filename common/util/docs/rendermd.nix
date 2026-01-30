@@ -49,18 +49,20 @@ let
       ${opt.example}
     ''}
   '';
-  renderModule = mod: ''
-    # ${nameFromModule mod}
+  renderModule =
+    mod:
+    lib.optionalString (mod.visible or [ ] != [ ]) ''
+      # ${nameFromModule mod}
 
-    <details open>
-      <summary></summary>
+      <details open>
+        <summary></summary>
 
-    ${lib.pipe (mod.visible or []) [
-      (map renderOption)
-      (builtins.concatStringsSep "\n\n")
-    ]}
+      ${lib.pipe (mod.visible or [ ]) [
+        (map renderOption)
+        (builtins.concatStringsSep "\n\n")
+      ]}
 
-    </details>
-  '';
+      </details>
+    '';
 in
 builtins.concatStringsSep "\n\n" (map renderModule cleaned)
