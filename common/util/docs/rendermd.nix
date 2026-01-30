@@ -10,11 +10,21 @@
     { file, ... }:
     lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString file)),
   moduleStartsOpen ? i: mod: i == 1,
-  descriptionStartsOpen ? type: i: mod: i == 1,
+  descriptionStartsOpen ?
+    type: i: mod:
+    i == 1,
   extraModuleNotes ?
-    i: { maintainers, ... }:
-    lib.optionalString (maintainers != [ ] && i == 1) ("This module is made possible by: "
-    + builtins.concatStringsSep ", " (map (v: v.name) maintainers)),
+    i:
+    { maintainers, ... }:
+    lib.optionalString (maintainers != [ ] && i == 1) (
+      "This module is made possible by: " + builtins.concatStringsSep ", " (map (v: v.name) maintainers)
+    ),
+  declaredBy ?
+    { declarations, ... }: let
+      linkDest = v: if lib.hasPrefix wlib.modulesPath v then "https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/" + lib.removePrefix "${wlib.modulesPath}/" (toString v) else toString v;
+      linkName = v: lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString v));
+    in
+    builtins.concatStringsSep "\n" (map (v: "- [${linkName v}](${linkDest v})") declarations),
   ...
 }:
 let
@@ -62,7 +72,7 @@ let
     ## `${lib.options.showOption (opt.loc or [ ])}`
 
     ${
-      lib.optionalString (opt ? description) ''
+      lib.optionalString (opt.description or "" != "") ''
         ${opt.description}
 
       ''
@@ -85,9 +95,16 @@ let
 
       ''
     }${
-      lib.optionalString (opt ? example) ''
+      lib.optionalString (opt.example or "" != "") ''
         Example:
         ${opt.example}
+
+      ''
+    }${
+      lib.optionalString (opt.declarations or [ ] != [ ]) ''
+        Declared by:
+
+        ${declaredBy opt}
 
       ''
     }
