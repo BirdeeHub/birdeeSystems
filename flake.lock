@@ -1742,15 +1742,15 @@
       "locked": {
         "lastModified": 1769731670,
         "narHash": "sha256-iHq0bwOsDI5IkJuxVsljdztZdVKIBb8yO0RBRMrco68=",
-        "ref": "refs/heads/main",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
         "rev": "4622dd5ef8e152475fce48307d3bc77211249c6a",
-        "revCount": 554,
-        "type": "git",
-        "url": "file:/home/birdee/Projects/nix-wrapper-modules"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:/home/birdee/Projects/nix-wrapper-modules"
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "type": "github"
       }
     }
   },
