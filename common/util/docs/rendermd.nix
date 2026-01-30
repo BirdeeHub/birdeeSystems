@@ -19,7 +19,10 @@
     i:
     { maintainers, ... }:
     lib.optionalString (maintainers != [ ] && i == 1) (
-      "This module is made possible by: " + builtins.concatStringsSep ", " (map (v: v.name) maintainers)
+      "This module is made possible by: "
+      + builtins.concatStringsSep ", " (
+        map (v: "[${v.name}](https://github.com/${v.github})") maintainers
+      )
     ),
   declaredBy ?
     { declarations, ... }:
