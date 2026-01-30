@@ -56,6 +56,11 @@ let
 
     ${opt.description or ""}
 
+    ${lib.optionalString (opt ? type) ''
+      type:
+      ${opt.type}
+    ''}
+
     ${lib.optionalString (opt ? default) ''
       default:
       ${opt.default}
