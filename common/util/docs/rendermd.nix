@@ -19,7 +19,7 @@ let
       builtins.mapAttrs (n: sanitize) v
     else if builtins.isFunction v then
       "<function with arguments ${lib.pipe v [
-        builtins.functionArgs
+        lib.functionArgs
         (lib.mapAttrsToList (n: v: "${n}${lib.optionalString v "?"}"))
       ]}>"
     else
