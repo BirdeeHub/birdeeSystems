@@ -27,5 +27,6 @@ let
       v;
   normed = normWrapperDocs { inherit options graph; };
   cleaned = sanitize normed;
+  # TODO: make this into some markdown and maybe also json
 in
 cleaned
