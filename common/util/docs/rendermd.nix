@@ -52,7 +52,7 @@ let
   normed = normWrapperDocs { inherit options graph; };
   cleaned = lib.reverseList (sanitize normed);
   renderOption = opt: ''
-    ## `${opt.name or ""}`
+    ## `${lib.options.showOption (opt.loc or [])}`
 
     ${lib.optionalString (opt ? description) ''
       ${opt.description}
