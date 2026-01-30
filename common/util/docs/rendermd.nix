@@ -27,8 +27,8 @@
       linkDest =
         v:
         if lib.hasPrefix wlib.modulesPath v then
-          "https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/"
-          + lib.removePrefix "${wlib.modulesPath}/" (toString v)
+          "https://github.com/BirdeeHub/nix-wrapper-modules/blob/main"
+          + lib.removePrefix wlib.modulesPath (toString v)
         else
           toString v;
       linkName = v: lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString v));
