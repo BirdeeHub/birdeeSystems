@@ -93,6 +93,7 @@ let
         map (n: {
           ${n} = v;
           # NOTE: what to do with items without anything in declarations? That can happen if the type definition is messed up.
+          # Right now we group them all under "<anonymous_file>"
         }) (if v.declarations or [ ] == [ ] then [ anon_name ] else v.declarations)
       ) opts
     );
