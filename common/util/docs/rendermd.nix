@@ -57,24 +57,20 @@ let
     ${lib.optionalString (opt ? description) ''
       ${opt.description}
 
-    ''}
-    ${lib.optionalString (opt ? relatedPackages) ''
-      related packages:
+    ''}${lib.optionalString (opt ? relatedPackages) ''
+      Related packages:
       ${opt.relatedPackages}
 
-    ''}
-    ${lib.optionalString (opt ? type) ''
-      type:
+    ''}${lib.optionalString (opt ? type) ''
+      Type:
       ${opt.type}
 
-    ''}
-    ${lib.optionalString (opt ? default) ''
-      default:
+    ''}${lib.optionalString (opt ? default) ''
+      Default:
       ${opt.default}
 
-    ''}
-    ${lib.optionalString (opt ? example) ''
-      example:
+    ''}${lib.optionalString (opt ? example) ''
+      Example:
       ${opt.example}
 
     ''}
