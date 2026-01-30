@@ -6,6 +6,7 @@ let
     luakit = true;
     xplr = true;
     nushell = true;
+    mdbook = true;
   };
 in
 {
@@ -17,6 +18,6 @@ in
       value = ./${n};
     }))
     builtins.listToAttrs
-    (builtins.mapAttrs (n: v: if applyfirst.${n} or null != null then import v args else v))
+    (builtins.mapAttrs (n: v: if applyfirst.${n} or null != null then inputs.nixpkgs.lib.modules.importApply v args else v))
   ];
 }

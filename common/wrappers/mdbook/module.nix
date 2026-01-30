@@ -6,42 +6,38 @@
   ...
 }@top:
 let
-  summaryType = lib.types.listOf (wlib.types.spec {
-    options.data = lib.mkOption {
-      type = lib.types.enum [
-        "prefix"
-        "suffix"
-        "title"
-        "numbered"
-        "draft"
-        "separator"
-      ];
-    };
-    options.name = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-    };
-    options.before = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-    };
-    options.after = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-    };
-    options.subchapters = lib.mkOption {
-      type = summaryType;
-      default = [ ];
-    };
-    options.path = lib.mkOption {
-      type = lib.types.nullOr wlib.types.nonEmptyLine;
-      default = null;
-    };
-    options.src = lib.mkOption {
-      type = lib.types.nullOr wlib.types.stringable;
-      default = null;
-    };
-  });
+  summaryType =
+    (
+      wlib.types.dalOf
+      // {
+        modules = [
+          {
+            options.subchapters = lib.mkOption {
+              type = summaryType;
+              default = [ ];
+            };
+            options.path = lib.mkOption {
+              type = lib.types.nullOr wlib.types.nonEmptyLine;
+              default = null;
+            };
+            options.src = lib.mkOption {
+              type = lib.types.nullOr wlib.types.stringable;
+              default = null;
+            };
+          }
+        ];
+      }
+    )
+      (
+        lib.types.enum [
+          "prefix"
+          "suffix"
+          "title"
+          "numbered"
+          "draft"
+          "separator"
+        ]
+      );
 
   renderBook =
     subdir: book_src: summary: summaryVarname: bookVarname:
@@ -141,7 +137,10 @@ let
               + ''${summaryVarname}Path" || echo "$''
               + ''${summaryVarname}"; } > ${lib.escapeShellArg "${bookSrc}/SUMMARY.md"}''
             )
-            (''json2toml "$'' + ''${bookVarname}Path" ${lib.escapeShellArg "${placeholder "out"}/${subdir}/book.toml"}'')
+            (
+              ''json2toml "$''
+              + ''${bookVarname}Path" ${lib.escapeShellArg "${placeholder "out"}/${subdir}/book.toml"}''
+            )
           ]
           ++ v
         )
@@ -189,7 +188,8 @@ in
           let
             pages =
               renderBook config.generated-book-subdir config.book.book.src config.summary
-                config.generated-summary-varname config.generated-book-json-varname;
+                config.generated-summary-varname
+                config.generated-book-json-varname;
           in
           {
             options = {
@@ -269,17 +269,32 @@ in
       };
       config.enable = v.enable;
       config.flags.build = true;
+      config.runShell = [
+        {
+          name = "PROCESS_ARG_1";
+          data = "doc_out=\${1:-_site}; shift 1";
+        }
+      ];
       config.flags."-d" = {
-        data = "\"$uservar\"";
+        data = "\"$doc_out\"";
         esc-fn = v: v;
       };
-      config.runShell = [ "uservar=\${1:-_site}; shift 1" ];
       config.exePath = config.exePath;
     }) config.books;
     drv =
-      builtins.foldl' (acc: v: acc // v) {} (lib.mapAttrsToList (_: v: { ${v.generated-summary-varname} = v.generatedSummary; ${v.generated-book-json-varname} = builtins.toJSON v.book; }) config.books)
+      builtins.foldl' (acc: v: acc // v) { } (
+        lib.mapAttrsToList (_: v: {
+          ${v.generated-summary-varname} = v.generatedSummary;
+          ${v.generated-book-json-varname} = builtins.toJSON v.book;
+        }) config.books
+      )
       // {
-        passAsFile = builtins.concatLists (lib.mapAttrsToList (_: v: [ v.generated-summary-varname v.generated-book-json-varname ]) config.books);
+        passAsFile = builtins.concatLists (
+          lib.mapAttrsToList (_: v: [
+            v.generated-summary-varname
+            v.generated-book-json-varname
+          ]) config.books
+        );
         nativeBuildInputs = [ pkgs.remarshal ];
         buildPhase =
           "runHook preBuild\n"

@@ -2,5 +2,6 @@
 **/result-*
 **/repl-result-*
 **/.luarc.json
+_site
 /secrets
 **/*.qcow2
