@@ -9,8 +9,8 @@
   nameFromModule ?
     { file, ... }:
     lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString file)),
-  moduleStartsOpen ? i: { file, ... }: file != wlib.core,
-  descriptionStartsOpen ? type: i: _: i == 1,
+  moduleStartsOpen ? i: mod: i == 1,
+  descriptionStartsOpen ? type: i: mod: i == 1,
   extraModuleNotes ?
     { maintainers, ... }:
     lib.optionalString (maintainers != [ ]) "This module is made possible by: "
