@@ -6,7 +6,8 @@
 {
   options,
   graph,
-  nameFromModule ? { file, ... }: toString file,
+  nameFromModule ? { file, ... }: lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString file)),
+  moduleStartsOpen ? { file, ... }: file != wlib.core,
   ...
 }:
 let
@@ -54,7 +55,7 @@ let
     lib.optionalString (mod.visible or [ ] != [ ]) ''
       # ${nameFromModule mod}
 
-      <details open>
+      <details${if moduleStartsOpen mod then " open" else ""}>
         <summary></summary>
 
       ${lib.pipe (mod.visible or [ ]) [
