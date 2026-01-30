@@ -47,7 +47,7 @@ let
   sanitize =
     v:
     if v ? _type && v ? text then
-      if v._type == "literalExpression" then "```\n${toString v.text}\n```" else toString v.text
+      builtins.unsafeDiscardStringContext (if v._type == "literalExpression" then "```\n${toString v.text}\n```" else toString v.text)
     else if lib.isStringLike v && !builtins.isString v then
       builtins.unsafeDiscardStringContext "`<${if v ? name then "derivation ${v.name}" else v}>`"
     else if builtins.isString v then
@@ -55,7 +55,7 @@ let
     else if builtins.isList v then
       map sanitize v
     else if lib.isFunction v then
-      "`<function with arguments ${
+      builtins.unsafeDiscardStringContext "`<function with arguments ${
         lib.pipe v [
           lib.functionArgs
           (lib.mapAttrsToList (n: v: "${n}${lib.optionalString v "?"}"))
@@ -146,4 +146,4 @@ let
       ''}
     '';
 in
-builtins.concatStringsSep "\n\n" (lib.imap1 renderModule cleaned)
+builtins.unsafeDiscardStringContext (builtins.concatStringsSep "\n\n" (lib.imap1 renderModule cleaned))
