@@ -6,27 +6,34 @@
 {
   options,
   graph,
-  nameFromModule ? { file, ... }: lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString file)),
-  moduleStartsOpen ? { file, ... }: file != wlib.core,
+  nameFromModule ?
+    { file, ... }:
+    lib.removeSuffix "/module.nix" (lib.removePrefix "${wlib.modulesPath}/" (toString file)),
+  moduleStartsOpen ? i: { file, ... }: file != wlib.core,
+  descriptionStartsOpen ? type: i: _: i == 1,
+  extraModuleNotes ?
+    { maintainers, ... }:
+    lib.optionalString (maintainers != [ ]) "This module is made possible by: "
+    + builtins.concatStringsSep ", " (map (v: v.name) maintainers),
   ...
 }:
 let
-/*
-  Backslash (\)
-  Backtick (`)
-  Asterisk (*)
-  Underscore (_)
-  Curly braces ({})
-  Square brackets ([])
-  Angle brackets (<>)
-  Parentheses (())
-  Pound sign/Hash mark (#)
-  Plus sign (+)
-  Minus sign/Hyphen (-)
-  Dot (.)
-  Exclamation mark (!)
-  Pipe (|) (used in tables in some Markdown flavors) 
-*/
+  /*
+    Backslash (\)
+    Backtick (`)
+    Asterisk (*)
+    Underscore (_)
+    Curly braces ({})
+    Square brackets ([])
+    Angle brackets (<>)
+    Parentheses (())
+    Pound sign/Hash mark (#)
+    Plus sign (+)
+    Minus sign/Hyphen (-)
+    Dot (.)
+    Exclamation mark (!)
+    Pipe (|) (used in tables in some Markdown flavors)
+  */
   sanitize =
     v:
     if v ? _type && v ? text then
@@ -52,35 +59,55 @@ let
   normed = normWrapperDocs { inherit options graph; };
   cleaned = lib.reverseList (sanitize normed);
   renderOption = opt: ''
-    ## `${lib.options.showOption (opt.loc or [])}`
+    ## `${lib.options.showOption (opt.loc or [ ])}`
 
-    ${lib.optionalString (opt ? description) ''
-      ${opt.description}
+    ${
+      lib.optionalString (opt ? description) ''
+        ${opt.description}
 
-    ''}${lib.optionalString (opt ? relatedPackages) ''
-      Related packages:
-      ${opt.relatedPackages}
+      ''
+    }${
+      lib.optionalString (opt ? relatedPackages) ''
+        Related packages:
+        ${opt.relatedPackages}
 
-    ''}${lib.optionalString (opt ? type) ''
-      Type:
-      ${opt.type}
+      ''
+    }${
+      lib.optionalString (opt ? type) ''
+        Type:
+        ${opt.type}
 
-    ''}${lib.optionalString (opt ? default) ''
-      Default:
-      ${opt.default}
+      ''
+    }${
+      lib.optionalString (opt ? default) ''
+        Default:
+        ${opt.default}
 
-    ''}${lib.optionalString (opt ? example) ''
-      Example:
-      ${opt.example}
+      ''
+    }${
+      lib.optionalString (opt ? example) ''
+        Example:
+        ${opt.example}
 
-    ''}
+      ''
+    }
   '';
   renderModule =
-    mod:
+    i: mod:
+    let
+      moduleNotes = extraModuleNotes mod;
+    in
     lib.optionalString (mod.visible or [ ] != [ ]) ''
       # ${nameFromModule mod}
+      ${lib.optionalString (builtins.isString moduleNotes && moduleNotes != "") "\n${moduleNotes}\n"}
+      ${lib.optionalString (mod.description.pre or "" != "") ''
+        <details${if descriptionStartsOpen "pre" i mod then " open" else ""}>
+          <summary></summary>
+            ${mod.description.pre}
+        </details>
 
-      <details${if moduleStartsOpen mod then " open" else ""}>
+      ''}
+      <details${if moduleStartsOpen i mod then " open" else ""}>
         <summary></summary>
 
       ${lib.pipe (mod.visible or [ ]) [
@@ -89,6 +116,13 @@ let
       ]}
 
       </details>
+      ${lib.optionalString (mod.description.post or "" != "") ''
+
+        <details${if descriptionStartsOpen "post" i mod then " open" else ""}>
+          <summary></summary>
+            ${mod.description.post}
+        </details>
+      ''}
     '';
 in
-builtins.concatStringsSep "\n\n" (map renderModule cleaned)
+builtins.concatStringsSep "\n\n" (lib.imap1 renderModule cleaned)
