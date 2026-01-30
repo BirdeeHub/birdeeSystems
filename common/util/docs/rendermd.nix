@@ -25,5 +25,6 @@ let
     else
       v;
   normed = normWrapperDocs { inherit options graph; };
+  cleaned = sanitize normed;
 in
-normed
+cleaned
