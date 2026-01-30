@@ -84,12 +84,25 @@ let
     v: v.internal or false == true || v.visible or true == false
   ) og_options;
   invisible = lib.partition (v: v.internal or false == true) partitioned.right;
-  internal = invisible.right;
-  hidden = invisible.wrong;
-  visible = partitioned.wrong;
-  # TODO: put them with their associated meta info by checking the declarations field against the associated field
+
   # NOTE: what to do with items without anything in declarations? That can happen if the type definition is messed up.
+  groupByDecl =
+    opts:
+    builtins.zipAttrsWith (n: xs: xs) (
+      builtins.concatMap (
+        v:
+        map (n: {
+          ${n} = v;
+        }) (if v.declarations or [ ] == [ ] then [ "<anonymous_file>" ] else v.declarations)
+      ) opts
+    );
+
+  internal = groupByDecl invisible.right;
+  hidden = groupByDecl invisible.wrong;
+  visible = groupByDecl partitioned.wrong;
+
+  # TODO: put them with their associated meta info
   normalizedOpts = modules-by-meta;
 in
 # TODO: return the whole modules-by-meta with their now attached options
-normalizedOpts
+groupByDecl visible
