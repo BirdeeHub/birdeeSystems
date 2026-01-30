@@ -16,11 +16,11 @@ let
     else if builtins.isList v then
       map sanitize v
     else if lib.isFunction v then
-      "<function with arguments ${lib.pipe v [
+      "`<function with arguments ${lib.pipe v [
         lib.functionArgs
         (lib.mapAttrsToList (n: v: "${n}${lib.optionalString v "?"}"))
         (builtins.concatStringsSep ", ")
-      ]}>"
+      ]}>`"
     else if builtins.isAttrs v then
       builtins.mapAttrs (n: sanitize) v
     else
