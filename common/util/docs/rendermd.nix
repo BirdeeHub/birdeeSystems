@@ -54,21 +54,29 @@ let
   renderOption = opt: ''
     ## `${opt.name or ""}`
 
-    ${opt.description or ""}
+    ${lib.optionalString (opt ? description) ''
+      ${opt.description}
 
+    ''}
+    ${lib.optionalString (opt ? relatedPackages) ''
+      related packages:
+      ${opt.relatedPackages}
+
+    ''}
     ${lib.optionalString (opt ? type) ''
       type:
       ${opt.type}
-    ''}
 
+    ''}
     ${lib.optionalString (opt ? default) ''
       default:
       ${opt.default}
-    ''}
 
+    ''}
     ${lib.optionalString (opt ? example) ''
       example:
       ${opt.example}
+
     ''}
   '';
   renderModule =
