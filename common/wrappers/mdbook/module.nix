@@ -214,6 +214,10 @@ in
                 type = summaryType;
                 default = [ ];
               };
+              defaultOutLocation = lib.mkOption {
+                type = lib.types.str;
+                default = "_site";
+              };
               generatedSummary = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
@@ -272,7 +276,7 @@ in
       config.runShell = [
         {
           name = "PROCESS_ARG_1";
-          data = "doc_out=\${1:-_site}; shift 1";
+          data = "doc_out=\${1:-${v.defaultOutLocation}}; shift 1";
         }
       ];
       config.flags."-d" = {
