@@ -6,96 +6,87 @@
   ...
 }@top:
 let
-  summaryType =
-    (
-      wlib.types.dalOf
-      // {
-        modules = [
-          {
-            options.data = lib.mkOption {
-              type = lib.types.enum [ "prefix" "suffix" "title" "numbered" "draft" "separator" ];
-              description = ''
-                Identifies the kind of summary item.
-
-                This determines how the item is rendered in SUMMARY.md and which additional fields are required or meaningful.
-
-                Valid values are:
-
-                title — A section heading in the summary.
-
-                separator — A horizontal rule (---) separating sections. (can be defined simply as the string "separator" in the list unless you want to sort on them)
-
-                prefix — A link rendered before the main numbered chapters.
-
-                suffix — A link rendered after the main numbered chapters.
-
-                numbered — A standard numbered chapter entry.
-
-                draft — A chapter entry without a target path.
-
-                Rendering behavior and required fields depend on this value.
-              '';
-            };
-            options.before = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = ''
-                Ensure this item appears before the named entries in this list
-              '';
-            };
-            options.after = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = ''
-                Ensure this item appears after the named entries in this list
-              '';
-            };
-            options.name = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default = null;
-              description = ''
-                The name of the summary item. Usually rendered as the text of the item.
-
-                Can also be used as a sorting target by `before` and `after` fields of other items.
-              '';
-            };
-            options.subchapters = lib.mkOption {
-              type = summaryType;
-              default = [ ];
-              description = ''
-                The same options as this level of the summary,
-                however the items within will be indented 1 level further.
-              '';
-            };
-            options.path = lib.mkOption {
-              type = lib.types.nullOr wlib.types.nonEmptyLine;
-              default = null;
-              description = ''
-                The relative output path of the item within the book directory.
-              '';
-            };
-            options.src = lib.mkOption {
-              type = lib.types.nullOr wlib.types.stringable;
-              default = null;
-              description = ''
-                If this item is of a type which accepts a source file,
-                this file will be linked to the location indicated by the `path` option.
-              '';
-            };
-          }
-        ];
-      }
-    )
-      (
-        lib.types.enum [
+  summaryType = lib.types.listOf (
+    wlib.types.spec {
+      options.data = lib.mkOption {
+        type = lib.types.enum [
           "prefix"
           "suffix"
           "title"
           "numbered"
           "draft"
           "separator"
-        ]
-      );
+        ];
+        description = ''
+          Identifies the kind of summary item.
+
+          This determines how the item is rendered in SUMMARY.md and which additional fields are required or meaningful.
+
+          Valid values are:
+
+          title — A section heading in the summary.
+
+          separator — A horizontal rule (---) separating sections. (can be defined simply as the string "separator" in the list unless you want to sort on them)
+
+          prefix — A link rendered before the main numbered chapters.
+
+          suffix — A link rendered after the main numbered chapters.
+
+          numbered — A standard numbered chapter entry.
+
+          draft — A chapter entry without a target path.
+
+          Rendering behavior and required fields depend on this value.
+        '';
+      };
+      options.before = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = ''
+          Ensure this item appears before the named entries in this list
+        '';
+      };
+      options.after = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = ''
+          Ensure this item appears after the named entries in this list
+        '';
+      };
+      options.name = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = ''
+          The name of the summary item. Usually rendered as the text of the item.
+
+          Can also be used as a sorting target by `before` and `after` fields of other items.
+        '';
+      };
+      options.subchapters = lib.mkOption {
+        type = summaryType;
+        default = [ ];
+        description = ''
+          The same options as this level of the summary,
+          however the items within will be indented 1 level further.
+        '';
+      };
+      options.path = lib.mkOption {
+        type = lib.types.nullOr wlib.types.nonEmptyLine;
+        default = null;
+        description = ''
+          The relative output path of the item within the book directory.
+        '';
+      };
+      options.src = lib.mkOption {
+        type = lib.types.nullOr wlib.types.stringable;
+        default = null;
+        description = ''
+          If this item is of a type which accepts a source file,
+          this file will be linked to the location indicated by the `path` option.
+        '';
+      };
+    }
+  );
 
   renderBook =
     subdir: book_src: summary: summaryVarname: bookVarname:
@@ -421,11 +412,30 @@ in
         )
       );
     };
+    mainBook = lib.mkOption {
+      type = lib.types.nullOr wlib.types.nonEmptyLine;
+      default = null;
+      description = ''
+        If not null, replace the main package with the generated script for that book
+      '';
+    };
   };
 
   config = {
     wrapperVariants = builtins.mapAttrs (_: v: {
-      config.appendFlag = [ "${placeholder "out"}/${v.generated-book-subdir}" ];
+      config.appendFlag = [
+        {
+          data = "${placeholder "out"}/${v.generated-book-subdir}";
+          name = "GENERATED_MD_BOOK";
+        }
+      ];
+      options.appendFlag = lib.mkOption {
+        type = lib.types.listOf (
+          wlib.types.spec {
+            before = lib.mkDefault [ "GENERATED_MD_BOOK" ];
+          }
+        );
+      };
       options.addFlag = lib.mkOption {
         type = lib.types.listOf (
           wlib.types.spec {
@@ -479,15 +489,23 @@ in
         buildPhase =
           "runHook preBuild\n"
           + builtins.concatStringsSep "\n" (lib.mapAttrsToList (_: v: v.buildCommands) config.books)
+          + "\n"
+          + (
+            if config.mainBook == null || !config.books ? "${config.mainBook}" then
+              ""
+            else
+              ''
+                rm -f $out/bin/${config.binName}
+                ln -s ${config.mainBook} $out/bin/${config.binName}
+              ''
+          )
           + "\nrunHook postBuild";
       };
     passthru.book-out-dir = book-out-dir;
     package = lib.mkDefault pkgs.mdbook;
     meta.maintainers = [ wlib.maintainers.birdee ];
     meta.description = ''
-      This module is interesting in that it does not wrap the default mdbook derivation.
-
-      Instead, it makes use of `wrapperVariants` to make a script for each of the books you define.
+      This module makes use of `wrapperVariants` to make a script for each of the books you define.
 
       If you make an entry in the `books` attribute set, you will get a binary of that name,
       which as its first argument takes the output directory to generate to (or a default if not provided).
@@ -497,6 +515,8 @@ in
 
       To achieve greater runtime control, run the main executable with one of the generated books within the derivation
       as input yourself, either at runtime, or within the module via `''${passthru "out"}/''${config.book-out-dir}/''${name}`
+
+      Within the module, however, that is not necessary. Simply set `mainBook = "<name>";`, or `null` to leave it unwrapped (the default)
     '';
   };
 }

@@ -63,6 +63,7 @@ let
 in
 {
   imports = [ ./module.nix ];
+  mainBook = "nix-wrapper-modules";
   books.nix-wrapper-modules = {
     book.book = {
       src = "src";
