@@ -416,7 +416,7 @@ in
       type = lib.types.nullOr wlib.types.nonEmptyLine;
       default = null;
       description = ''
-        If not null, replace the main package with the generated script for that book
+        If not null, replace the main package with a link to the generator script for that book
       '';
     };
   };
@@ -516,7 +516,9 @@ in
       To achieve greater runtime control, run the main executable with one of the generated books within the derivation
       as input yourself, either at runtime, or within the module via `''${passthru "out"}/''${config.book-out-dir}/''${name}`
 
-      Within the module, however, that is not necessary. Simply set `mainBook = "<name>";`, or `null` to leave it unwrapped (the default)
+      Within the module, there is an option to REPLACE the main executable with a symlink to the desired book generation script.
+
+      For more fine-tuned control, you should instead give it the path to the book yourself as demonstrated above.
     '';
   };
 }
