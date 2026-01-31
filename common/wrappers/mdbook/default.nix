@@ -1,13 +1,12 @@
 { inputs, ... }:
 {
-  config,
   lib,
   wlib,
   pkgs,
   ...
 }:
 let
-  inherit (pkgs.callPackage "${wlib.modulesPath}/docs/per-mod" { inherit lib wlib; }) wrapperModuleMD;
+  inherit (import "${wlib.modulesPath}/docs/per-mod" { inherit lib wlib; }) wrapperModuleMD;
   buildModuleDocs =
     {
       prefix ? "",
