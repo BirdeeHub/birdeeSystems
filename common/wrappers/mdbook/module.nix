@@ -384,6 +384,8 @@ in
                 default = "${book-out-dir}/${name}";
                 description = ''
                   The directory within the wrapped derivation that contains the generated markdown for the book.
+
+                  `''${passthru "out"}/''${config.books.<name>.generated-book-subdir}` is the root of this book.
                 '';
               };
               generatedSummary = lib.mkOption {
