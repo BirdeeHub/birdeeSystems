@@ -346,6 +346,13 @@ in
           }
         );
       };
+      options.runShell = lib.mkOption {
+        type = lib.types.listOf (
+          wlib.types.spec {
+            after = lib.mkDefault [ "PROCESS_ARG_1" ];
+          }
+        );
+      };
       config.enable = v.enable;
       config.flags.build = true;
       config.runShell = [
