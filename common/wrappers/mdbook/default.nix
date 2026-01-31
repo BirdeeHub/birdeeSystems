@@ -87,7 +87,7 @@ in
         data = "numbered";
         path = "md/intro.md";
         src = pkgs.runCommand "intro.md" { README = "${inputs.wrappers}/README.md"; } ''
-          cat "$README" | sed 's|# \[nix-wrapper-modules\](https://birdeehub.github.io/nix-wrapper-modules/)|# [nix-wrapper-modules](https://github.com/BirdeeHub/nix-wrapper-modules)|' > $out
+          sed 's|# \[nix-wrapper-modules\](https://birdeehub.github.io/nix-wrapper-modules/)|# [nix-wrapper-modules](https://github.com/BirdeeHub/nix-wrapper-modules)|' < "$README" > "$out"
         '';
       }
       {
