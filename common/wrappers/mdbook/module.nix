@@ -55,6 +55,8 @@ let
               default = null;
               description = ''
                 The name of the summary item. Usually rendered as the text of the item.
+
+                Can also be used as a sorting target by `before` and `after` fields of other items.
               '';
             };
             options.subchapters = lib.mkOption {
@@ -238,6 +240,15 @@ in
 {
   imports = [ wlib.modules.default ];
   options = {
+    book-out-dir = lib.mkOption {
+      readOnly = true;
+      default = book-out-dir;
+      description = ''
+        The books are generated to:
+
+        `''${passthru "out"}/''${config.book-out-dir}/''${name}`
+      '';
+    };
     books = lib.mkOption {
       default = { };
       type = lib.types.attrsOf (
@@ -483,7 +494,7 @@ in
       you only have access to the other flags on these items at runtime.
 
       To achieve greater runtime control, run the main executable with one of the generated books within the derivation
-      as input yourself, either at runtime, or within the module via `''${passthru "out"}`
+      as input yourself, either at runtime, or within the module via `''${passthru "out"}/''${config.book-out-dir}/''${name}`
     '';
   };
 }
