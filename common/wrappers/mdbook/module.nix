@@ -12,17 +12,73 @@ let
       // {
         modules = [
           {
+            options.data = lib.mkOption {
+              type = lib.types.enum [ "prefix" "suffix" "title" "numbered" "draft" "separator" ];
+              description = ''
+                Identifies the kind of summary item.
+
+                This determines how the item is rendered in SUMMARY.md and which additional fields are required or meaningful.
+
+                Valid values are:
+
+                title — A section heading in the summary.
+
+                separator — A horizontal rule (---) separating sections. (can be defined simply as the string "separator" in the list unless you want to sort on them)
+
+                prefix — A link rendered before the main numbered chapters.
+
+                suffix — A link rendered after the main numbered chapters.
+
+                numbered — A standard numbered chapter entry.
+
+                draft — A chapter entry without a target path.
+
+                Rendering behavior and required fields depend on this value.
+              '';
+            };
+            options.before = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ ];
+              description = ''
+                Ensure this item appears before the named entries in this list
+              '';
+            };
+            options.after = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ ];
+              description = ''
+                Ensure this item appears after the named entries in this list
+              '';
+            };
+            options.name = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = ''
+                The name of the summary item. Usually rendered as the text of the item.
+              '';
+            };
             options.subchapters = lib.mkOption {
               type = summaryType;
               default = [ ];
+              description = ''
+                The same options as this level of the summary,
+                however the items within will be indented 1 level further.
+              '';
             };
             options.path = lib.mkOption {
               type = lib.types.nullOr wlib.types.nonEmptyLine;
               default = null;
+              description = ''
+                The relative output path of the item within the book directory.
+              '';
             };
             options.src = lib.mkOption {
               type = lib.types.nullOr wlib.types.stringable;
               default = null;
+              description = ''
+                If this item is of a type which accepts a source file,
+                this file will be linked to the location indicated by the `path` option.
+              '';
             };
           }
         ];
@@ -274,7 +330,30 @@ in
                 description = ''
                   Builds your summary, and your book!
 
-                  TODO: explain
+                  A list of specs, with the main field, `data`,
+                  representing the type of the item.
+
+                  Accepts `prefix`, `suffix`, `title`, `numbered`, `draft`, `separator`
+
+                  For info on what those are:
+
+                  https://rust-lang.github.io/mdBook/format/summary.html
+
+                  In addition, it accepts `name`, `subchapters`, `src`, and `path`.
+
+                  These values are processed differently depending on the type of item.
+
+                  `path` refers to the output path `src` will be linked to.
+
+                  It is relative to the book root dir.
+
+                  `name` is the visible part of the summary item, if it displays text.
+
+                  You can also sort based on `name`, `before`, and `after` like the other DAL options.
+
+                  It will sort within each chapter list if any orderings were specified.
+
+                  `subchapters` are processed recursively, and the depth represents the indentation of the summary item.
                 '';
               };
               defaultOutLocation = lib.mkOption {
@@ -389,5 +468,19 @@ in
       };
     package = pkgs.mdbook;
     meta.maintainers = [ wlib.maintainers.birdee ];
+    meta.description = ''
+      This module is interesting in that it does not wrap the default mdbook derivation.
+
+      Instead, it makes use of `wrapperVariants` to make a script for each of the books you define.
+
+      If you make an entry in the `books` attribute set, you will get a binary of that name,
+      which as its first argument takes the output directory to generate to.
+
+      As each one already has its book directory specified and `-d` option set to the first argument or a default,
+      you only have access to the other flags on these items at runtime.
+
+      To achieve greater runtime control, run the main executable with one of the generated books within the derivation
+      as input yourself, either at runtime, or within the module via `''${passthru "out"}`
+    '';
   };
 }
