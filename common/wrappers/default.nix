@@ -6,7 +6,6 @@ let
     luakit = true;
     xplr = true;
     nushell = true;
-    mdbook = true;
   };
 in
 {
