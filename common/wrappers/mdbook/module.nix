@@ -490,7 +490,7 @@ in
       Instead, it makes use of `wrapperVariants` to make a script for each of the books you define.
 
       If you make an entry in the `books` attribute set, you will get a binary of that name,
-      which as its first argument takes the output directory to generate to.
+      which as its first argument takes the output directory to generate to (or a default if not provided).
 
       As each one already has its book directory specified and `-d` option set to the first argument or a default,
       you only have access to the other flags on these items at runtime.
