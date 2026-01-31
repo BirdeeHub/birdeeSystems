@@ -232,6 +232,8 @@ let
     in
     # ensure valid first character
     if builtins.match "[A-Za-z_].*" body != null then body else "_" + body;
+
+  book-out-dir = "${top.config.binName}-book-dir";
 in
 {
   imports = [ wlib.modules.default ];
@@ -368,7 +370,7 @@ in
               generated-book-subdir = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
-                default = "${top.config.binName}-book-dir/${name}";
+                default = "${book-out-dir}/${name}";
                 description = ''
                   The directory within the wrapped derivation that contains the generated markdown for the book.
                 '';
@@ -466,7 +468,8 @@ in
           + builtins.concatStringsSep "\n" (lib.mapAttrsToList (_: v: v.buildCommands) config.books)
           + "\nrunHook postBuild";
       };
-    package = pkgs.mdbook;
+    passthru.book-out-dir = book-out-dir;
+    package = lib.mkDefault pkgs.mdbook;
     meta.maintainers = [ wlib.maintainers.birdee ];
     meta.description = ''
       This module is interesting in that it does not wrap the default mdbook derivation.
