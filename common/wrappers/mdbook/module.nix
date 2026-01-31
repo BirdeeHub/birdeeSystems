@@ -65,6 +65,7 @@ let
       options.subchapters = lib.mkOption {
         type = summaryType;
         default = [ ];
+        visible = "shallow";
         description = ''
           The same options as this level of the summary,
           however the items within will be indented 1 level further.
@@ -233,6 +234,7 @@ in
   options = {
     book-out-dir = lib.mkOption {
       readOnly = true;
+      type = lib.types.str;
       default = book-out-dir;
       description = ''
         The books are generated to:
@@ -491,13 +493,13 @@ in
           + builtins.concatStringsSep "\n" (lib.mapAttrsToList (_: v: v.buildCommands) config.books)
           + "\n"
           + (
-            if config.mainBook == null || !config.books ? "${config.mainBook}" then
-              ""
-            else
+            if config.mainBook != null && config.wrapperVariants."${config.mainBook}".enable or false == true then
               ''
                 rm -f $out/bin/${config.binName}
                 ln -s ${config.mainBook} $out/bin/${config.binName}
               ''
+            else
+              ""
           )
           + "\nrunHook postBuild";
       };
@@ -516,7 +518,7 @@ in
       To achieve greater runtime control, run the main executable with one of the generated books within the derivation
       as input yourself, either at runtime, or within the module via `''${passthru "out"}/''${config.book-out-dir}/''${name}`
 
-      Within the module, there is an option to REPLACE the main executable with a symlink to the desired book generation script.
+      Within the module, there is an option called `mainBook` to REPLACE the main executable with a symlink to the desired book generation script.
 
       For more fine-tuned control, you should instead give it the path to the book yourself as demonstrated above.
     '';
