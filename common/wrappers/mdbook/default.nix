@@ -69,6 +69,7 @@ in
       authors = [ "BirdeeHub" ];
       language = "en";
       title = "nix-wrapper-modules";
+      description = "Make wrapper derivations with the module system! Use the existing modules, or write your own!";
     };
     book.output.html.git-repository-url = "https://github.com/BirdeeHub/nix-wrapper-modules";
     book.output.html.redirect =

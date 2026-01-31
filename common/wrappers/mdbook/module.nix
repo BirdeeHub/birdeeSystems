@@ -152,7 +152,7 @@ let
       linkCmds = linkCmds;
     };
 
-  tomltype = (pkgs.formats.toml { }).type;
+  tomltype = (pkgs.formats.json { }).type;
 
   sanitizeShellVar =
     s:
@@ -194,14 +194,72 @@ in
           {
             options = {
               book = lib.mkOption {
+                default = { };
+                apply = x: lib.filterAttrsRecursive (_: v: !builtins.isFunction v && v != null) x;
+                description = ''
+                  Values for the `book.toml` file for this book.
+
+                  Reference: https://rust-lang.github.io/mdBook/format/configuration/general.html
+
+                  Any `null` values will be as if not declared.
+                '';
                 type = lib.types.submodule {
                   freeformType = tomltype;
                   options.book = lib.mkOption {
+                    description = ''
+                      The `book` table of the `book.toml` file.
+
+                      Reference: https://rust-lang.github.io/mdBook/format/configuration/general.html#general-metadata
+                    '';
                     type = lib.types.submodule {
                       freeformType = tomltype;
                       options.src = lib.mkOption {
-                        type = wlib.types.nonEmptyLine;
+                        type = lib.types.nonEmptyStr;
                         default = "src";
+                        description = ''
+                          By default, the source directory is found in the directory named src directly under the root folder.
+                        '';
+                      };
+                      options.title = lib.mkOption {
+                        type = lib.types.nullOr lib.types.str;
+                        default = null;
+                        description = ''
+                          The title of the book
+                        '';
+                      };
+                      options.authors = lib.mkOption {
+                        type = lib.types.nullOr (lib.types.listOf lib.types.str);
+                        default = null;
+                        description = ''
+                          The author(s) of the book
+                        '';
+                      };
+                      options.description = lib.mkOption {
+                        type = lib.types.nullOr lib.types.str;
+                        default = null;
+                        description = ''
+                          A description for the book, which is added as meta information in the html `<head>` of each page
+                        '';
+                      };
+                      options.language = lib.mkOption {
+                        type = lib.types.nullOr lib.types.nonEmptyStr;
+                        default = null;
+                        description = ''
+                          The main language of the book, which is used as a
+                          language attribute `<html lang="en">` for example.
+                          This is also used to derive the direction of text (RTL, LTR) within the book.
+                        '';
+                      };
+                      options.text-direction = lib.mkOption {
+                        type = lib.types.nullOr lib.types.nonEmptyStr;
+                        default = null;
+                        description = ''
+                          The direction of text in the book: Left-to-right (LTR) or Right-to-left (RTL).
+
+                          Possible values: `ltr`, `rtl`.
+
+                          When not specified, the text direction is derived from the book’s language attribute.
+                        '';
                       };
                     };
                   };
@@ -213,38 +271,55 @@ in
               summary = lib.mkOption {
                 type = summaryType;
                 default = [ ];
+                description = ''
+                  Builds your summary, and your book!
+
+                  TODO: explain
+                '';
               };
               defaultOutLocation = lib.mkOption {
                 type = lib.types.str;
                 default = "_site";
+                description = ''
+                  The book outputs take the target directory to generate to as their first argument.
+
+                  This sets the default output directory for this book if the first argument is not supplied.
+                '';
+              };
+              generated-book-subdir = lib.mkOption {
+                type = lib.types.str;
+                readOnly = true;
+                default = "${top.config.binName}-book-dir/${name}";
+                description = ''
+                  The directory within the wrapped derivation that contains the generated markdown for the book.
+                '';
               };
               generatedSummary = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
                 internal = true;
+                visible = false;
                 default = pages.summaryMD;
               };
               buildCommands = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
                 internal = true;
+                visible = false;
                 default = pages.linkCmds;
-              };
-              generated-book-subdir = lib.mkOption {
-                type = lib.types.str;
-                readOnly = true;
-                default = "${top.config.binName}-book-dir/${name}";
               };
               generated-book-json-varname = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
                 internal = true;
+                visible = false;
                 default = "generated_book_json_${sanitizeShellVar name}";
               };
               generated-summary-varname = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
                 internal = true;
+                visible = false;
                 default = "generated_summary_${sanitizeShellVar name}";
               };
             };
