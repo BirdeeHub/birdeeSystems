@@ -313,14 +313,14 @@ in
                 readOnly = true;
                 internal = true;
                 visible = false;
-                default = "generated_book_json_${sanitizeShellVar name}";
+                default = "nix_generated_book_json_${sanitizeShellVar name}";
               };
               generated-summary-varname = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
                 internal = true;
                 visible = false;
-                default = "generated_summary_${sanitizeShellVar name}";
+                default = "nix_generated_summary_${sanitizeShellVar name}";
               };
             };
           }
