@@ -11,9 +11,11 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
+      "https://install.determinate.systems"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
     ];
   };
 
@@ -23,6 +25,7 @@
     # nixpkgs.url = "git+file:/home/birdee/temp/testgrammars/nixpkgs?branch=end-nvim-treesitter-queries-saga";
     # nixpkgs.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     # nixpkgs.url = "github:PerchunPak/nixpkgs/end-nvim-treesitter-queries-saga";
     nixpkgsLocked.url = "github:nixos/nixpkgs/e913ae340076bbb73d9f4d3d065c2bca7caafb16";
     home-manager = {
@@ -132,7 +135,6 @@
     #   flake = false;
     # };
     # nixpkgsKokkos4.url = "github:nixos/nixpkgs/bce5fe2bb998488d8e7e7856315f90496723793c";
-
   };
   outputs = inputs: import ./. inputs;
 }

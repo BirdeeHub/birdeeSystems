@@ -133,6 +133,7 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }@top: {
         };
         module.nixpkgs.overlays = top.config.flake.overlist;
         modules = [
+          inputs.determinate.nixosModules.default
           ./systems/PCs/nestOS
           usermod
           (HMasModule ./homes/main)
