@@ -3,6 +3,7 @@ let
   applyfirst = {
     tmux = true;
     wezterm = true;
+    ranger = true;
     luakit = true;
     xplr = true;
     nushell = true;

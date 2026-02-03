@@ -68,10 +68,10 @@ in {
       };
     } else {
       # the trigger mechanism requires root set up a udev rule.
-      enable = lib.mkEnableOption (lib.literalExpression ''
+      enable = lib.mkEnableOption ''
         echoes "$RANDOM" to /tmp/i3monsMemory/i3xrandrTriggerFile on udev rule trigger.
         This serves as the trigger mechanism for the user level services.
-      '');
+      '';
       trigger = lib.mkOption {
         default = "udev";
         type = lib.types.enum [ "udev" "Xlog" ];
