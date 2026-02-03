@@ -4,7 +4,7 @@
   config.package = pkgs.ranger;
   options.withoutDragon = lib.mkEnableOption "smaller ranger without x-dragon";
   options.terminal = lib.mkOption {
-    default = "${inputs.self.wrappers.wezterm.wrapper.wrap { inherit pkgs; }}/bin/wezterm";
+    default = "${inputs.self.wrappers.wezterm.wrap { inherit pkgs; }}/bin/wezterm";
     type = wlib.types.stringable;
   };
   options.configFile = lib.mkOption {

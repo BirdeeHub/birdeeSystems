@@ -213,7 +213,7 @@ in {
     #
 
     ffuf
-    kdePackages.kdenlive
+    # kdePackages.kdenlive
     blender
     kdePackages.dolphin
     nmap
