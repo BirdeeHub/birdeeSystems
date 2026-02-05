@@ -17,7 +17,7 @@
   in
   runLuaCommand.runLuaCommand name luaEnv.interpreter ({
       passthru = (args.passthru or {}) // (if lib.isFunction nix_info then nix_info n2l else nix_info);
-    } // (builtins.removeAttrs args [ "nix_info" "name" "passthru" "luaEnv" ])
+    } // (removeAttrs args [ "nix_info" "name" "passthru" "luaEnv" ])
   ) /*lua*/ ''
     _G.src = os.env.src
     local lutil = dofile('${./lutil.lua}')
