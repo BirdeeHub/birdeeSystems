@@ -38,7 +38,7 @@
         "plugins-opencode-nvim": "plugins-opencode-nvim",
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-shelua": "plugins-shelua",
-        "plugins-snacks.nvim": "plugins-snacks.nvim",
+        "plugins-snacks-nvim": "plugins-snacks-nvim",
         "plugins-tmux-navigate": "plugins-tmux-navigate",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "roc": "roc",
@@ -51,11 +51,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770378984,
-        "narHash": "sha256-k6wXSoShofgPZ9hthQx4eqYD+pDby4/hYwkO4wni6XI=",
+        "lastModified": 1770379250,
+        "narHash": "sha256-fziayOnqYX4dquZPCaw8HmrxXll2gW33IJRzeS01CKY=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "d2c1188506996ad7ceb1e137c85f5871a513b9d6",
+        "rev": "6624d0f1d66bc4d114da504319f29582d9c2515f",
         "type": "github"
       },
       "original": {
@@ -1233,7 +1233,7 @@
         "type": "github"
       }
     },
-    "plugins-snacks.nvim": {
+    "plugins-snacks-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1763464072,
