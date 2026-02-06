@@ -6,8 +6,8 @@ inputs: let
     };
   in {
     # virtualbox = pkgs.virtualbox;
-    qalculate-qt = pkgs.qalculate-qt;
-    vagrant = pkgs.vagrant;
+    # qalculate-qt = pkgs.qalculate-qt;
+    # vagrant = pkgs.vagrant;
   });
 in
 overlay

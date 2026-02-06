@@ -40,7 +40,10 @@
       };
     };
     gac = import ./gac.nix inputs;
-    pinnedVersions = import ./pinnedVersions.nix inputs;
+    pinnedVersions = {
+      data = import ./pinnedVersions.nix inputs;
+      enable = false;
+    };
     nops = {
       call-data-with-name = true;
       data = import ./nops inputs;

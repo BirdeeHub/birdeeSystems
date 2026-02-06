@@ -173,7 +173,7 @@ in {
     templates = "${config.home.homeDirectory}/Templates";
     videos = "${config.home.homeDirectory}/Videos";
     extraConfig = {
-      XDG_MISC_DIR = "${config.home.homeDirectory}/Misc";
+      MISC = "${config.home.homeDirectory}/Misc";
     };
   };
   xdg.mimeApps.defaultApplications = {
@@ -213,7 +213,7 @@ in {
     #
 
     ffuf
-    # kdePackages.kdenlive
+    kdePackages.kdenlive
     blender
     kdePackages.dolphin
     nmap

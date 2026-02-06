@@ -58,6 +58,7 @@
     shelua.inputs.n2l.follows = "nixToLua";
     nix-appimage.url = "github:ralismark/nix-appimage";
     nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
+    nix-appimage.inputs.flake-utils.follows = "flake-utils";
     templ.url = "github:a-h/templ";
     templ.inputs.nixpkgs.follows = "nixpkgs";
     templ.inputs.nixpkgs-unstable.follows = "nixpkgs";
