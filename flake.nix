@@ -38,7 +38,7 @@
     manix.inputs.flake-utils.follows = "flake-utils";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    devenv.url = "github:cachix/devenv";
+    # devenv.url = "github:cachix/devenv";
     nur.url = "github:nix-community/nur";
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.inputs.flake-parts.follows = "flake-parts";
