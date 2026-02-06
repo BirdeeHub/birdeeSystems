@@ -5,3 +5,4 @@
 _site
 /secrets
 **/*.qcow2
+*.AppImage
