@@ -57,7 +57,10 @@
     shelua.inputs.nixpkgs.follows = "nixpkgs";
     shelua.inputs.n2l.follows = "nixToLua";
     nix-appimage.url = "github:ralismark/nix-appimage";
+    nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
     templ.url = "github:a-h/templ";
+    templ.inputs.nixpkgs.follows = "nixpkgs";
+    templ.inputs.nixpkgs-unstable.follows = "nixpkgs";
     antifennel = {
       url = "sourcehut:~technomancy/antifennel";
       flake = false;
@@ -81,6 +84,9 @@
     birdeevim.url = "github:BirdeeHub/birdeevim";
     birdeevim.inputs.wrappers.follows = "wrappers";
     birdeevim.inputs.nixpkgs.follows = "nixpkgs";
+    birdeevim.inputs.flake-parts.follows = "flake-parts";
+    birdeevim.inputs.templ.follows = "templ";
+    birdeevim.inputs.nix-appimage.follows = "nix-appimage";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
 
     # xplr
