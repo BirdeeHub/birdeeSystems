@@ -86,6 +86,7 @@
     birdeevim.inputs.wrappers.follows = "wrappers";
     birdeevim.inputs.nixpkgs.follows = "nixpkgs";
     birdeevim.inputs.flake-parts.follows = "flake-parts";
+    birdeevim.inputs.flake-utils.follows = "flake-utils";
     birdeevim.inputs.templ.follows = "templ";
     birdeevim.inputs.nix-appimage.follows = "nix-appimage";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
