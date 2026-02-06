@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770373395,
-        "narHash": "sha256-5bYrgA2WjTyvg/ULyUcOztqwyNC7pwvdt1XgcfuLnYo=",
+        "lastModified": 1770373626,
+        "narHash": "sha256-QAMk2ID2SAsfpjB96yLXm20gFU7mQ0051LgjX6e5LJA=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "74b5c8d3135695d7d807b64b792c76d477359313",
+        "rev": "27a43e4167a2abc71a224b60d07aefa8f4976110",
         "type": "github"
       },
       "original": {
@@ -1063,22 +1063,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-unstable_2": {
-      "locked": {
-        "lastModified": 1766902085,
-        "narHash": "sha256-coBu0ONtFzlwwVBzmjacUQwj3G+lybcZ1oeNSQkgC0M=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c0b0e0fddf73fd517c3471e546c0df87a42d53f4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgsLocked": {
       "locked": {
         "lastModified": 1718149104,
@@ -1686,7 +1670,10 @@
           "birdeevim",
           "nixpkgs"
         ],
-        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-unstable": [
+          "birdeevim",
+          "nixpkgs"
+        ],
         "version": "version"
       },
       "locked": {
@@ -1707,7 +1694,7 @@
       "inputs": {
         "gitignore": "gitignore_3",
         "nixpkgs": "nixpkgs_8",
-        "nixpkgs-unstable": "nixpkgs-unstable_2",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "version": "version_2"
       },
       "locked": {
