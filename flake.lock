@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770373206,
-        "narHash": "sha256-l4B5f0Mw1hJe89z1m4hfY3UYrgd3v5GRsOHe9L3zAyk=",
+        "lastModified": 1770373395,
+        "narHash": "sha256-5bYrgA2WjTyvg/ULyUcOztqwyNC7pwvdt1XgcfuLnYo=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "da414702547997b0a50333532016796f079156fe",
+        "rev": "74b5c8d3135695d7d807b64b792c76d477359313",
         "type": "github"
       },
       "original": {
