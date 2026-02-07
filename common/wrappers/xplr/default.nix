@@ -12,7 +12,7 @@ let
     cfg
     // {
       after = [ "MAIN_INIT" ] ++ cfg.after or [ ];
-      data = "(local (opts name) ...)\n" + cfg.data or "";
+      data = (if cfg.type or config.defaultConfigLang == "fnl" then "(local (opts name) ...)\n" else "local opts, name = ...\n") + cfg.data or "";
       before = [ "AFTER_PLUGINS" ] ++ cfg.before or [ ];
     };
 in
