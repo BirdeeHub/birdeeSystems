@@ -45,60 +45,64 @@ in
     after = [ "helpers" ];
     opts = { };
     type = "lua";
-    data = /* lua */ ''
-      xplr.config.modes.builtin.default.key_bindings.on_key.P = {
-        help = "preview",
-        messages = {
-          {
-            BashExecSilently0 = [===[
-              FIFO_PATH="/tmp/xplr.fifo"
+    data =
+      let
+        imv-open = pkgs.writeShellScript "imv-open.sh" ''
+          #!${pkgs.bash}/bin/bash
+          PATH="${
+            lib.makeBinPath (
+              with pkgs;
+              [
+                xdotool
+                imv
+              ]
+            )
+          }:$PATH"
 
-              if [ -e "$FIFO_PATH" ]; then
-                "$XPLR" -m StopFifo
-                rm -f -- "$FIFO_PATH"
-              else
-                mkfifo "$FIFO_PATH"
-                "${pkgs.writeShellScript "imv-open.sh" ''
-                  #!${pkgs.bash}/bin/bash
-                  PATH="${
-                    lib.makeBinPath (
-                      with pkgs;
-                      [
-                        xdotool
-                        imv
-                      ]
-                    )
-                  }:$PATH"
+          FIFO_PATH="$1"
+          IMAGE="$2"
+          MAINWINDOW="$(xdotool getactivewindow)"
+          IMV_PID="$(pgrep imv)"
 
-                  FIFO_PATH="$1"
-                  IMAGE="$2"
-                  MAINWINDOW="$(xdotool getactivewindow)"
-                  IMV_PID="$(pgrep imv)"
+          if [ ! "$IMV_PID" ]; then
+            imv "$IMAGE" &
+            IMV_PID=$!
+          fi
 
-                  if [ ! "$IMV_PID" ]; then
-                    imv "$IMAGE" &
-                    IMV_PID=$!
-                  fi
+          sleep 0.5
 
-                  sleep 0.5
+          xdotool windowactivate "$MAINWINDOW"
 
-                  xdotool windowactivate "$MAINWINDOW"
+          while read -r path; do
+            imv-msg "$IMV_PID" close all
+            imv-msg "$IMV_PID" open "$path"
+          done < "$FIFO_PATH"
 
-                  while read -r path; do
-                    imv-msg "$IMV_PID" close all
-                    imv-msg "$IMV_PID" open "$path"
-                  done < "$FIFO_PATH"
+          imv-msg "$IMV_PID" quit
+          [ -e "$FIFO_PATH" ] && rm -f -- "$FIFO_PATH"
+        '';
+      in
+      /* lua */ ''
+        xplr.config.modes.builtin.default.key_bindings.on_key.P = {
+          help = "preview",
+          messages = {
+            {
+              BashExecSilently0 = [===[
+                FIFO_PATH="/tmp/xplr.fifo"
 
-                  imv-msg "$IMV_PID" quit
-                  [ -e "$FIFO_PATH" ] && rm -f -- "$FIFO_PATH"
-                ''}" "$FIFO_PATH" "$XPLR_FOCUS_PATH" &
-                "$XPLR" -m 'StartFifo: %q' "$FIFO_PATH"
-              fi
-            ]===],
+                if [ -e "$FIFO_PATH" ]; then
+                  "$XPLR" -m StopFifo
+                  rm -f -- "$FIFO_PATH"
+                else
+                  mkfifo "$FIFO_PATH"
+                  "${imv-open}" "$FIFO_PATH" "$XPLR_FOCUS_PATH" &
+                  "$XPLR" -m 'StartFifo: "%q"' "$FIFO_PATH"
+                fi
+              ]===],
+            },
           },
-        },
-      }
-    '';
+        }
+      '';
   };
   luaInit.MAIN_INIT = {
     opts = { };
