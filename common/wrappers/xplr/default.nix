@@ -1,12 +1,26 @@
 { inputs, util, ... }:
-{ config, pkgs, lib, wlib, ... }: let
-  mkPluginCfg = cfg: cfg // {
-    after = [ "MAIN_INIT" ] ++ cfg.after or [];
-    data = "(local (opts name) ...)\n" + cfg.data or "";
-    before = [ "AFTER_PLUGINS" ] ++ cfg.before or [];
-  };
-in {
-  imports = [ wlib.wrapperModules.xplr ./desktop.nix ];
+{
+  config,
+  pkgs,
+  lib,
+  wlib,
+  ...
+}:
+let
+  mkPluginCfg =
+    cfg:
+    cfg
+    // {
+      after = [ "MAIN_INIT" ] ++ cfg.after or [ ];
+      data = "(local (opts name) ...)\n" + cfg.data or "";
+      before = [ "AFTER_PLUGINS" ] ++ cfg.before or [ ];
+    };
+in
+{
+  imports = [
+    wlib.wrapperModules.xplr
+    ./desktop.nix
+  ];
   # <c-k>*l = λ
   defaultConfigLang = "fnl";
   luaEnv = lp: [ lp.inspect ];
@@ -29,7 +43,7 @@ in {
   luaInit.luaHacks = {
     before = [ "MAIN_INIT" ];
     after = [ "helpers" ];
-    opts = {};
+    opts = { };
     type = "lua";
     data = /* lua */ ''
       xplr.config.modes.builtin.default.key_bindings.on_key.P = {
@@ -46,7 +60,15 @@ in {
                 mkfifo "$FIFO_PATH"
                 "${pkgs.writeShellScript "imv-open.sh" ''
                   #!${pkgs.bash}/bin/bash
-                  PATH="${lib.makeBinPath (with pkgs; [ xdotool imv ])}:$PATH"
+                  PATH="${
+                    lib.makeBinPath (
+                      with pkgs;
+                      [
+                        xdotool
+                        imv
+                      ]
+                    )
+                  }:$PATH"
 
                   FIFO_PATH="$1"
                   IMAGE="$2"
@@ -79,7 +101,7 @@ in {
     '';
   };
   luaInit.MAIN_INIT = {
-    opts = {};
+    opts = { };
     data = /* fennel */ ''
       (local (opts name) ...)
       (set xplr.config.modes.builtin.default.key_bindings.on_key.S {
@@ -173,7 +195,7 @@ in {
   };
   luaInit.AFTER_PLUGINS = {
     after = [ "MAIN_INIT" ];
-    opts = {};
+    opts = { };
     data = /* fennel */ ''
       (local (opts name) ...)
       nil
@@ -186,8 +208,8 @@ in {
       key = "ctrl-f";
       bin = "${pkgs.fzf}/bin/fzf";
       args = "--preview '${pkgs.pistol}/bin/pistol {}'";
-      recursive = false;  # If true, search all files under $PWD
-      enter_dir = false;  # Enter if the result is directory
+      recursive = false; # If true, search all files under $PWD
+      enter_dir = false; # Enter if the result is directory
     };
     data = /* fennel */ ''
       (_G.nix-info.call-setup :fzf opts)
@@ -196,7 +218,7 @@ in {
   };
   luaInit.tree-view = mkPluginCfg {
     plugin = inputs.tree-view-xplr;
-    opts = {};
+    opts = { };
     data = /* fennel */ ''
       (_G.nix-info.call-setup :tree-view opts)
       nil
@@ -220,7 +242,7 @@ in {
   luaInit.command-mode = mkPluginCfg {
     enable = false;
     plugin = inputs.command-mode-xplr;
-    opts = {};
+    opts = { };
     data = /* fennel */ ''
       (_G.nix-info.call-setup :command-mode opts)
       nil
@@ -228,7 +250,7 @@ in {
   };
   luaInit.term = mkPluginCfg {
     plugin = inputs.term-xplr;
-    opts = {};
+    opts = { };
     data = /* fennel */ ''
       (local term (require :term))
       (term.setup [ (term.profile_tmux_vsplit) (term.profile_tmux_hsplit) ])
