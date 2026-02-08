@@ -4,7 +4,7 @@
     version = "1.0.1-1";
     knownRockspec = "${inputs.lua-fenster}/fenster-dev-1.rockspec";
     src = inputs.lua-fenster;
-    propagatedBuildInputs = [ pkgs.xorg.libX11 ];
+    propagatedBuildInputs = [ pkgs.libX11 ];
     disabled = lp.luaOlder "5.1";
     meta = {
       homepage = "https://github.com/jonasgeiler/lua-fenster";

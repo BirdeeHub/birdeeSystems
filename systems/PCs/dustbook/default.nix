@@ -20,7 +20,7 @@ in {
 
   birdeeMods = {
     lightdm.sessionCommands = ''
-      ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
+      ${pkgs.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
         Xft.dpi: 80
       ''}
     '';

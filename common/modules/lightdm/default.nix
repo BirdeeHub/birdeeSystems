@@ -10,7 +10,7 @@ in {
       enable = lib.mkEnableOption "birdee's lightdm module";
       sessionCommands = lib.mkOption {
         default = ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
+          ${pkgs.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
             Xft.dpi: 100
           ''}
         '';

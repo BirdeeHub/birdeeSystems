@@ -63,7 +63,7 @@ in {
             ${pkgs.jq}/bin/jq "$@"
           }
           xrandr() {
-            ${pkgs.xorg.xrandr}/bin/xrandr "$@"
+            ${pkgs.xrandr}/bin/xrandr "$@"
           }
           ${builtins.readFile ./monWkspcCycle.sh}
         '');
@@ -136,7 +136,7 @@ in {
       xfce4-taskmanager
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
-      # xorg.libXinerama
+      # libXinerama
       # dex
       # hicolor-icon-theme
       # tango-icon-theme
@@ -156,7 +156,7 @@ in {
     '';
 
     xtraSesCMDs = ''
-      ${pkgs.xorg.xrdb}/bin/xrdb -merge ${xresources}
+      ${pkgs.xrdb}/bin/xrdb -merge ${xresources}
 
       ${if cfg.extraSessionCommands == null then "" else cfg.extraSessionCommands}
     '';

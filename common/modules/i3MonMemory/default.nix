@@ -48,7 +48,7 @@ in {
       denyXDGoverride = lib.mkEnableOption "dont override with scripts from $XDG_CONFIG_HOME";
       internalDependencies = lib.mkOption {
         default = with pkgs; [
-          xorg.xrandr
+          xrandr
           gawk
           coreutils-full
         ];
@@ -60,7 +60,7 @@ in {
         example = lib.literalExpression ''
           cfg.internalDependencies = with pkgs; [
             coreutils-full
-            xorg.xrandr
+            xrandr
             gawk
             "${jq}"
           ];

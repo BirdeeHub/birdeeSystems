@@ -325,8 +325,8 @@ in {
     xclip
     xcp
     xsel
-    xorg.xev
-    xorg.xmodmap
+    xev
+    xmodmap
     libreoffice
     wireshark
     chromium

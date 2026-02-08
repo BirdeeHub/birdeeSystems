@@ -11,7 +11,7 @@
     , xrandrPrimarySH
     , triggerFile
     , lua ? pkgs.lua5_2
-    , luaProgPath ? (with pkgs; [ i3 xorg.xrandr gawk ])
+    , luaProgPath ? (with pkgs; [ i3 xrandr gawk ])
     , extraLuaPackages ? (lpkgs: with lpkgs; [ luafilesystem cjson ])
     , toPass ? {
       json_cache = userJsonCache;

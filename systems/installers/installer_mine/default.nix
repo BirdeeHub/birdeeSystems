@@ -141,7 +141,7 @@ in {
     in [
       { name = "xterm-installer";
         start = /*bash*/ ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge ${pkgs.writeText "Xresources" ''
+          ${pkgs.xrdb}/bin/xrdb -merge ${pkgs.writeText "Xresources" ''
             xterm*termName: xterm-256color
             xterm*faceName: ${font_string}
             xterm*faceSize: 12
