@@ -292,7 +292,7 @@ in {
     steam
     heroic
     lutris
-    wineWowPackages.stable
+    wineWow64Packages.stable
     winetricks
     python3
     distrobox
