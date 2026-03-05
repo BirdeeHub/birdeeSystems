@@ -25,6 +25,7 @@
         "flake-utils": [
           "flake-utils"
         ],
+        "juan-logs-src": "juan-logs-src",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": [
           "nix-appimage"
@@ -54,11 +55,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772329394,
-        "narHash": "sha256-bFd+fvkl/bGgWIn0HJUeOOB5MBH+ay5lAayg05CgYD4=",
+        "lastModified": 1772700530,
+        "narHash": "sha256-0jo/sgY5WbwCOy+NAGb4X3u2CzHWgW+48mBsGjciryY=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "1e90b433936cd0a9d3fc3015126efed8201dc48a",
+        "rev": "b6ce2b07cb9e3ba579b60c337dbcccfe15181d5f",
         "type": "github"
       },
       "original": {
@@ -419,6 +420,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "juan-logs-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772683929,
+        "narHash": "sha256-YWXKrr+0xFdSBrOaxyFJDqRFmGe25lU9w4Fyk6nlf+k=",
+        "owner": "minigian",
+        "repo": "juan-logs.nvim",
+        "rev": "dfbcbd237c78d8a3f060fa654df4c0496e667090",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minigian",
+        "repo": "juan-logs.nvim",
         "type": "github"
       }
     },
@@ -1355,11 +1372,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772329359,
-        "narHash": "sha256-0zwyzQ6TV1HZDs182O9ahtFLlUBm/TkOBSewG9EmP74=",
+        "lastModified": 1772662098,
+        "narHash": "sha256-BKxBM4RNWP+5q0ZQ6v3JlJ0e6fFj/YoYNZ7/OpgabdU=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "cf2acacbbb4dc86211be108524891e316bc3e4f4",
+        "rev": "2c0a3b795766b25d15ad1ec9eef3a06160154c9a",
         "type": "github"
       },
       "original": {
