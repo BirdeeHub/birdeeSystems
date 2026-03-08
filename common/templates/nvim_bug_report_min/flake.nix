@@ -18,13 +18,21 @@
     extraOverlays = [];
     overlayMyNeovim = nvim: prev: final: {
       myNeovim = let
-        luaRC = final.writeText "init.lua" ''
-          require("nvim-treesitter.configs").setup({
-            auto_install = false,
-            highlight = {
-              enable = true
-            },
-          })
+        forluavals = {
+          configdir = ./.;
+          test = "value";
+        };
+        luaRC = final.writeText "init.lua" /*lua*/''
+          local configdir = vim.fn.stdpath('config')
+          vim.opt.packpath:remove(configdir)
+          vim.opt.runtimepath:remove(configdir)
+          vim.opt.runtimepath:remove(configdir)
+          vim.g.nix_values = ${final.lib.generators.toLua { } forluavals}
+          configdir = vim.g.nix_values.configdir
+          vim.opt.packpath:prepend(configdir)
+          vim.opt.runtimepath:prepend(configdir)
+          vim.opt.runtimepath:append(configdir)
+          dofile(configdir .. "/init.lua")
         '';
       in
       final.wrapNeovim (if nvim != null then nvim else final.neovim-unwrapped) {
