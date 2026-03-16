@@ -52,14 +52,16 @@
     neovim.settings.minimal = true;
     git.enable = true;
     xplr.enable = true;
+    zsh.enable = true;
   };
   birdeeMods = {
-    zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
   };
 
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = config.wrappers.zsh.wrapper;
+  environment.pathsToLink = [ "/share/zsh" ];
+  programs.zsh.enable = true;
 
   fonts.packages = with pkgs; [
     openmoji-color

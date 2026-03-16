@@ -3,7 +3,6 @@
   # and also disk utilities so that you dont have to nix shell them all
   nerd_font_string = "FiraMono";
   font_string = "${nerd_font_string} Nerd Font";
-  login_shell = "zsh";
 
 in {
   imports = [
@@ -14,6 +13,7 @@ in {
   wrappers = {
     neovim.enable = true;
     neovim.settings.minimal = true;
+    zsh.enable = true;
     tmux.enable = true;
     tmux.terminal = if use_alacritty then "alacritty" else "xterm-256color";
     git.enable = true;
@@ -21,10 +21,8 @@ in {
   };
 
   birdeeMods = {
-    ${login_shell}.enable = true;
-  } // (lib.optionalAttrs (login_shell != "bash") {
     bash.enable = true;
-  });
+  };
 
   nix.settings = {
     extra-trusted-substituters = [
@@ -92,10 +90,12 @@ in {
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
 
-  users.defaultUserShell = pkgs.${login_shell};
-  system.activationScripts.silencezsh.text = ''
-    [ ! -e "/home/nixos/.zshrc" ] && echo "# dummy file" > /home/nixos/.zshrc
-  '';
+  users.defaultUserShell = config.wrappers.zsh.wrapper;
+  environment.pathsToLink = [ "/share/zsh" ];
+  programs.zsh.enable = true;
+  # system.activationScripts.silencezsh.text = ''
+  #   [ ! -e "/home/nixos/.zshrc" ] && echo "# dummy file" > /home/nixos/.zshrc
+  # '';
 
   fonts.packages = with pkgs; [
     nerd-fonts.fira-mono
@@ -119,9 +119,7 @@ in {
         tmuxPackage = config.wrappers.tmux.wrap {
           runShell = [ "${inputs.maximizer.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/maximize_program Alacritty > /dev/null 2>&1 &" ];
         };
-        settings.terminal.shell = {
-          program = "${pkgs.${login_shell}}/bin/${login_shell}";
-        };
+        wrapZSH = true;
         settings.window.startup_mode = "Fullscreen";
       };
     in [

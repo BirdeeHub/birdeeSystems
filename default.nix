@@ -5,10 +5,13 @@
   nix-appimage,
   flake-parts,
   ...
-}@inputs:
+}@inargs:
 let
   flake-path = "/home/birdee/birdeeSystems";
   stateVersion = "25.11";
+  inputs = inargs // {
+    inherit flake-path stateVersion;
+  };
 in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
@@ -35,7 +38,6 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }@top: {
       inherit
         stateVersion
         inputs
-        flake-path
         ;
       inherit (top.config.flake) util;
     };
@@ -109,11 +111,11 @@ flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }@top: {
             imports = builtins.attrValues self.modules.homeManager ++ [ module ];
           };
         };
-      usermod = { pkgs, username ? null, ... }: {
+      usermod = { config, username ? null, ... }: {
         config.users.users = lib.mkIf (username != null) {
           ${username} = {
             name = username;
-            shell = pkgs.zsh;
+            shell = config.wrappers.zsh.wrapper;
             isNormalUser = true;
             description = "";
             extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];

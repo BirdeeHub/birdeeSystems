@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, stateVersion, hostname, username, ... }: let
+{ config, pkgs, inputs, stateVersion, hostname, output-name, username, ... }: let
 in {
   imports = [
     inputs.self.wrappers.tmux.nixosModule
@@ -10,7 +10,6 @@ in {
 
   birdeeMods = {
     i3.enable = true;
-    zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
     lightdm.enable = true;
@@ -19,6 +18,8 @@ in {
   };
   wrappers = {
     neovim.enable = true;
+    zsh.enable = true;
+    zsh.output-name = output-name;
     wezterm.enable = true;
     tmux.enable = true;
     xplr.enable = true;
@@ -28,6 +29,9 @@ in {
     luakit.enable = false;
     ranger.enable = false;
   };
+  environment.pathsToLink = [ "/share/zsh" ];
+  users.defaultUserShell = config.wrappers.zsh.wrapper;
+  programs.zsh.enable = true;
 
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
@@ -46,12 +50,6 @@ in {
   };
   environment.interactiveShellInit = ''
   '';
-  environment.shellAliases = {
-    lsnc = "lsd --color=never";
-    la = "lsd -a";
-    ll = "lsd -lh";
-    l  = "lsd -alh";
-  };
 
   swapDevices = let
     GB = v: v*1024;
@@ -167,8 +165,6 @@ in {
   fonts.fontDir.enable = true;
 
   virtualisation.docker.enable = true;
-
-  users.defaultUserShell = pkgs.zsh;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

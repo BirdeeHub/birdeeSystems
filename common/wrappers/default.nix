@@ -2,6 +2,8 @@
 let
   applyfirst = {
     tmux = true;
+    alacritty = true;
+    zsh = true;
     wezterm = true;
     ranger = true;
     luakit = true;

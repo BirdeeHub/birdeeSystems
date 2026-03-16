@@ -2,14 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, ... }: let
+{ modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, output-name, ... }: let
 in {
   imports = [
     inputs.self.wrappers.tmux.nixosModule
   ];
   birdeeMods = {
     i3.enable = true;
-    zsh.enable = true;
     bash.enable = true;
     fish.enable = true;
     i3MonMemory.enable = true;
@@ -18,6 +17,8 @@ in {
   };
   wrappers = {
     neovim.enable = true;
+    zsh.enable = true;
+    zsh.output-name = output-name;
     wezterm.enable = true;
     tmux.enable = true;
     xplr.enable = true;
@@ -27,6 +28,10 @@ in {
     luakit.enable = false;
     ranger.enable = false;
   };
+
+  environment.pathsToLink = [ "/share/zsh" ];
+  users.defaultUserShell = config.wrappers.zsh.wrapper;
+  programs.zsh.enable = true;
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
@@ -65,12 +70,6 @@ in {
   };
   environment.interactiveShellInit = ''
   '';
-  environment.shellAliases = {
-    lsnc = "lsd --color=never";
-    la = "lsd -a";
-    ll = "lsd -lh";
-    l  = "lsd -alh";
-  };
 
   # Bootloader.
   boot.loader.timeout = 3;
@@ -172,8 +171,6 @@ in {
   documentation.dev.enable = true;
 
   virtualisation.docker.enable = true;
-
-  users.defaultUserShell = pkgs.zsh;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

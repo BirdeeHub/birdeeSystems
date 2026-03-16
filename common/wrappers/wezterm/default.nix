@@ -15,20 +15,26 @@
   # because we are importing these wrapper modules in overlays
   # (it could still be grabbed from pkgs.tmux.configuration.package, but that was more annoying)
   options.tmux = lib.mkOption {
-    type = wlib.types.subWrapperModuleWith {
-      modules = [
-        inputs.self.wrapperModules.tmux
-        {
-          config.pkgs = pkgs;
-          config.updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
-        }
-      ];
-    };
+    type = wlib.types.subWrapperModule [
+      inputs.self.wrapperModules.tmux
+      {
+        config.pkgs = pkgs;
+        config.updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
+      }
+    ];
     default = { };
   };
+  options.zsh = lib.mkOption {
+    type = wlib.types.subWrapperModule [
+      inputs.self.wrapperModules.zsh
+      { inherit pkgs; }
+    ];
+    default = { };
+  };
+  options.wrapZSH = lib.mkEnableOption "wrapped zsh";
   options.shellString = lib.mkOption {
     type = wlib.types.stringable;
-    default = "${pkgs.zsh}/bin/zsh";
+    default = if config.wrapZSH then "${config.zsh.wrapper}${config.zsh.wrapper.shellPath}" else "zsh";
   };
   options.launcher = lib.mkOption {
     type = lib.types.nullOr wlib.types.stringable;
@@ -65,14 +71,6 @@
     type = lib.types.package;
     default = pkgs.nerd-fonts.fira-mono;
   };
-  options.wrapZSH = lib.mkOption {
-    type = lib.types.bool;
-    default = false;
-  };
-  options.ZDOTDIR = lib.mkOption {
-    type = lib.types.nullOr wlib.types.stringable;
-    default = pkgs.callPackage ./zdot { inherit (inputs.self.packages.${pkgs.stdenv.hostPlatform.system}) starship; };
-  };
   config."wezterm.lua".content = /* lua */ ''
     local cfgdir = require('nix-info').config_dir
     require('nix-info').config_dir = nil
@@ -84,7 +82,7 @@
   '';
   config.luaInfo = {
     config_dir = ./.;
-    set_environment_variables = lib.optionalAttrs config.wrapZSH { inherit (config) ZDOTDIR; };
+    set_environment_variables = { };
     inherit (config) webgpu_power_preference webgpu_force_fallback_adapter;
     front_end = config.gpuFrontEnd;
     font_dirs = [ "${config.fontPackage}/share/fonts" ];

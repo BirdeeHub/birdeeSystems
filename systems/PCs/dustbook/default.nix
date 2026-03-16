@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, flake-path, inputs, stateVersion, hostname, ... }: let
+{ config, pkgs, lib, inputs, stateVersion, hostname, ... }: let
 in {
   imports = [
     ../PCs.nix
@@ -35,21 +35,6 @@ in {
     pciutils
     mesa
   ];
-
-  environment.shellAliases = {
-    me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/system "$@"
-    ''}'';
-    me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/home "$@"
-    ''}'';
-    me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/both "$@"
-    ''}'';
-  };
 
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;

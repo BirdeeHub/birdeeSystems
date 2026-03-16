@@ -47,20 +47,4 @@ in {
   services.auto-cpufreq.enable = true;
 
   # virtualisation.vmware.host.enable = true;
-
-  environment.shellAliases = {
-    me-build-system = ''${pkgs.writeShellScript "me-build-system" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/system "$@"
-    ''}'';
-    me-build-home = ''${pkgs.writeShellScript "me-build-home" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/home "$@"
-    ''}'';
-    me-build-both = ''${pkgs.writeShellScript "me-build-both" ''
-      export NH_FLAKE="${flake-path}";
-      exec ${inputs.self}/scripts/both "$@"
-    ''}'';
-  };
-
 }
