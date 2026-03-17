@@ -42,7 +42,7 @@ Im using flake-parts to do this mapping, and my configs are output under `legacy
 - [browser:](./common/modules/firefox) firefox
 - [file manager:](./common/wrappers/xplr/default.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
 - [terminal:](./common/wrappers/wezterm/default.nix) wezterm
-- [shell:](./common/modules/shell/home/zsh.nix) zsh with vi mode plugin, themer is [starship](./common/wrappers/starship/default.nix)
+- [shell:](./common/wrappers/zsh) zsh with vi mode plugin, themer is [starship](./common/wrappers/starship/default.nix)
 - [tmux:](./common/wrappers/tmux/default.nix) with some keybinds and onedark theme
 
 ---
