@@ -14,10 +14,7 @@ in {
     wezterm.enable = true;
     zsh.enable = true;
     zsh.output-name = output-name;
-    zsh.hmSessionVariables = {
-      enable = osConfig == null;
-      scriptLocation = "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh";
-    };
+    zsh.hmSessionVariables = if osConfig == null then "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh" else null;
     opencode.enable = true;
     tmux.enable = true;
     xplr.enable = true;
