@@ -4,10 +4,6 @@ let
     _file = p;
   };
   optionals = c: v: if c then v else [ ];
-  pipe = builtins.foldl' (x: f: f x);
-  filterAttrs =
-    pred: set:
-    removeAttrs set (builtins.filter (name: !pred name set.${name}) (builtins.attrNames set));
   basefunc =
     {
       deep ? false,
@@ -34,23 +30,8 @@ in
 {
   inherit
     importApply
-    filterAttrs
-    pipe
     optionals
     ;
-
-  mapModDirs =
-    staticArgs: applyfirst: dir:
-    pipe (builtins.readDir dir) [
-      (filterAttrs (n: v: v == "directory"))
-      builtins.attrNames
-      (map (n: {
-        name = n;
-        value = "${dir}/${n}";
-      }))
-      builtins.listToAttrs
-      (builtins.mapAttrs (n: v: if applyfirst.${n} or null != null then importApply v staticArgs else v))
-    ];
 
   findModulesWith = basefunc { };
 

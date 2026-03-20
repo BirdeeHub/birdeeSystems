@@ -12,6 +12,12 @@ import ./import.nix
 
   linkFarmPair = name: path: { inherit name path; };
 
+  pipe = builtins.foldl' (x: f: f x);
+
+  filterAttrs =
+    pred: set:
+    removeAttrs set (builtins.filter (name: !pred name set.${name}) (builtins.attrNames set));
+
   flip =
     f: a: b:
     f b a;
