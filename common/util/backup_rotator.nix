@@ -1,4 +1,4 @@
-with builtins; {
+{
   writeShellScript
   , coreutils
   , SCRIPTNAME ? "backup_rotator"
