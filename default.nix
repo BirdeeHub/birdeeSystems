@@ -24,7 +24,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
   { config, ... }@top:
   {
     systems = nixpkgs.lib.platforms.all;
-    imports = util.findModulesWith "flake-parts.nix" {
+    imports = util.findModulesWith "module.nix" {
       inherit inputs util;
       inherit (util) moduleNamespace;
     } ./common;
