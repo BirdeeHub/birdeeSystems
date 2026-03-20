@@ -1213,13 +1213,17 @@
       }
     },
     "somewm": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1773900214,
-        "narHash": "sha256-xw2X1ltZDoomtO4OBvCPIpKE+OOTpGxv0HHdMSQVXoI=",
+        "lastModified": 1773980356,
+        "narHash": "sha256-iTCjIzbNC8mF4k4vDJyxMx8Oox1neqNohY23OIhQWeo=",
         "owner": "trip-zip",
         "repo": "somewm",
-        "rev": "a7ecae7aa4918c7d0bf28e62dffe71a0ddb157b8",
+        "rev": "460b42cd3fd15d68794922935c52b74cbd36703f",
         "type": "github"
       },
       "original": {

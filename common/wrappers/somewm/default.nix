@@ -1,7 +1,8 @@
 { inputs, ... }:
 { config, pkgs, lib, wlib, ... }: {
-  imports = [ ./module.nix ];
+  imports = [ inputs.self.wrapperModules.awesomeWM ];
   config.package = inputs.somewm.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  config.init = ''
-  '';
+  # config.init = ''
+  # '';
+  # config.extraLuaPaths = [ ./lua ];
 }
