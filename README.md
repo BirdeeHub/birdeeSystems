@@ -27,23 +27,33 @@ monitor management:
 
 ---
 
-common items are exported via [./common/default.nix](./common/default.nix)
+Dendritic common directory heavily utilizing flake parts.
 
-They are then grabbed from `inputs.self` by the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
+The things it creates are used by the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
 
-Im using flake-parts to do this mapping, and my configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
+My configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
+
+The mapping of that too is also done via flake-parts
+
+The modules that do the mappings are here:
+
+[./common/flakeModules](./common/flakeModules/)
+
+And the recursive import function is here
+
+[./util/import.nix](./util/import.nix)
 
 ---
 
-- [display manager:](./common/modules/lightdm/default.nix) lightdm which loads ~/.xsession
-- [window manager:](./common/modules/i3/default.nix) i3 loaded via home manager from .xsession
+- [display manager:](./common/modules/lightdm/module.nix) lightdm which loads ~/.xsession
+- [window manager:](./common/modules/i3/module.nix) i3 loaded via home manager from .xsession
 - desktop manager: none but I have like half of xfce including the power manager
 - [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nix-wrapper-modules.
 - [browser:](./common/modules/firefox) firefox
-- [file manager:](./common/wrappers/xplr/default.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
-- [terminal:](./common/wrappers/wezterm/default.nix) wezterm
-- [shell:](./common/wrappers/zsh) zsh with vi mode plugin, themer is [starship](./common/wrappers/starship/default.nix)
-- [tmux:](./common/wrappers/tmux/default.nix) with some keybinds and onedark theme
+- [file manager:](./common/wrappers/xplr/module.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
+- [terminal:](./common/wrappers/wezterm/module.nix) wezterm
+- [shell:](./common/wrappers/zsh) zsh with vi mode plugin, themer is [starship](./common/wrappers/starship/module.nix)
+- [tmux:](./common/wrappers/tmux/module.nix) with some keybinds and onedark theme
 
 ---
 
