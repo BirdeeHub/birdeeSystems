@@ -170,7 +170,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inputs.determinate.nixosModules.default
                 ./systems/PCs/nestOS
                 usermod
-                (HMasModule ./homes/main)
+                (HMasModule ./homes/main.nix)
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
