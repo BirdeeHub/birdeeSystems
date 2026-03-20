@@ -1,6 +1,8 @@
 inputs:
 let
-  util = import ./util inputs // { wlib = inputs.wrappers.lib; };
+  util = import ./util inputs // {
+    wlib = inputs.wrappers.lib;
+  };
   flakeModules = import ./flakeModules { inherit inputs util; };
 in
 { lib, config, ... }:
@@ -16,10 +18,8 @@ in
     # inputs.flake-parts.flakeModules.partitions
     flakeModules.default
     ./disko
-    (lib.modules.importApply ./overlays { inherit inputs util; })
-    (lib.modules.importApply ./modules { inherit inputs util; })
-    (lib.modules.importApply ./wrappers { inherit inputs util; })
-  ];
+  ]
+  ++ util.recursiveImportModuleWith "flake-parts.nix" { inherit inputs util; } ./.;
   flake.nixosModules = config.flake.modules.nixos;
   flake.flakeModules = config.flake.modules.flake;
 }

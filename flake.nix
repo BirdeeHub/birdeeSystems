@@ -92,6 +92,9 @@
     birdeevim.inputs.nix-appimage.follows = "nix-appimage";
     # birdeevim.url = "git+file:/home/birdee/.birdeevim";
 
+    somewm.url = "github:trip-zip/somewm";
+    somewm.inputs.nixpkgs.follows = "nixpkgs";
+
     # xplr
     command-mode-xplr = {
       url = "github:sayanarijit/command-mode.xplr";

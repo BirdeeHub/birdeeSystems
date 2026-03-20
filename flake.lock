@@ -1141,6 +1141,7 @@
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",
         "shelua": "shelua",
+        "somewm": "somewm",
         "templ": "templ",
         "term-xplr": "term-xplr",
         "tmux-navigate-src": "tmux-navigate-src",
@@ -1208,6 +1209,22 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "shelua",
+        "type": "github"
+      }
+    },
+    "somewm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773900214,
+        "narHash": "sha256-xw2X1ltZDoomtO4OBvCPIpKE+OOTpGxv0HHdMSQVXoI=",
+        "owner": "trip-zip",
+        "repo": "somewm",
+        "rev": "a7ecae7aa4918c7d0bf28e62dffe71a0ddb157b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "trip-zip",
+        "repo": "somewm",
         "type": "github"
       }
     },

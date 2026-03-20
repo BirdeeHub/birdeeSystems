@@ -2,6 +2,7 @@
 let
   applyfirst = {
     tmux = true;
+    somewm = true;
     alacritty = true;
     zsh = true;
     wezterm = true;
