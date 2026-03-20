@@ -1,3 +1,7 @@
+This directory mostly is just to contain the [./import.nix](./import.nix) file
+
+Those functions are used for recursively finding and importing modules, and calling them like `importApply` when doing so.
+
 I am not particularly convinced most of these lua builder things are any good.
 
 The embed thing is kinda interesting?

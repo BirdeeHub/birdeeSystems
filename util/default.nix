@@ -1,4 +1,7 @@
-inputs: with builtins; rec {
+inputs:
+with builtins;
+import ./import.nix
+// rec {
 
   # use callPackage
   backup_rotator = ./backup_rotator.nix;
@@ -6,8 +9,6 @@ inputs: with builtins; rec {
   inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs pipe; }) compile_lua_dir mkLuaApp;
 
   inherit (inputs.nixToLua) mkEnum;
-
-  inherit (import ./import.nix) findModulesWith recursiveImportModuleWith findModulesIn;
 
   linkFarmPair = name: path: { inherit name path; };
 

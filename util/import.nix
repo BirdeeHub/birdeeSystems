@@ -36,7 +36,7 @@ in
 {
   findModulesWith = basefunc { };
 
-  recursiveImportModuleWith = basefunc { deep = true; };
+  recImportApplyNamed = basefunc { deep = true; };
 
   findModulesIn = basefunc { skip = true; };
 }
