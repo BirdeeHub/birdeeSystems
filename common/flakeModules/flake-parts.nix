@@ -9,6 +9,7 @@ let
         configsPerSystem = importApply ./configsPerSystem.nix args;
         wrappers = importApply ./wrappers.nix args;
         util = importApply ./util.nix args;
+        inherit (inputs.flake-parts.flakeModules) bundlers modules flakeModules;
       };
     in
     initial
@@ -18,7 +19,11 @@ let
       };
     };
 in
+{ config, ... }:
 {
   imports = [ flakeModules.default ];
   flake.modules.flake = flakeModules;
+  flake.util = util;
+  flake.nixosModules = config.flake.modules.nixos;
+  flake.flakeModules = config.flake.modules.flake;
 }

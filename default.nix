@@ -23,16 +23,8 @@ flake-parts.lib.mkFlake { inherit inputs; } (
   { config, ... }@top:
   {
     systems = nixpkgs.lib.platforms.all;
-    imports = [
-      inputs.flake-parts.flakeModules.flakeModules
-      inputs.flake-parts.flakeModules.modules
-      inputs.flake-parts.flakeModules.bundlers
-    ]
-    ++ util.findModulesWith "flake-parts.nix" { inherit inputs util; } ./common;
+    imports = util.findModulesWith "flake-parts.nix" { inherit inputs util; } ./common;
     flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
-    flake.util = util;
-    flake.nixosModules = config.flake.modules.nixos;
-    flake.flakeModules = config.flake.modules.flake;
     perSystem =
       {
         config,
