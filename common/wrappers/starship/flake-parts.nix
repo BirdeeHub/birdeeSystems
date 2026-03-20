@@ -9,7 +9,7 @@
       ...
     }:
     {
-      imports = [ ./module.nix ];
+      imports = [ ./. ];
       config.settings = {
         format =
           "$shell$sudo$vcsh$fossil_branch$fossil_metrics$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$pijul_channel$docker_context$package$line_break"
