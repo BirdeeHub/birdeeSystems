@@ -1,0 +1,105 @@
+{ inputs, ... }:
+{
+  flake.wrappers.wezterm =
+    {
+      config,
+      lib,
+      wlib,
+      pkgs,
+      ...
+    }:
+    {
+      _file = ./default.nix;
+      key = ./default.nix;
+      imports = [ wlib.wrapperModules.wezterm ];
+      # we need to grab the final pacakge,
+      # because pkgs now has the updated tmux in it, so theres no unupdated tmux to use
+      # because we are importing these wrapper modules in overlays
+      # (it could still be grabbed from pkgs.tmux.configuration.package, but that was more annoying)
+      options.tmux = lib.mkOption {
+        type = wlib.types.subWrapperModule [
+          inputs.self.wrapperModules.tmux
+          {
+            config.pkgs = pkgs;
+            config.updateEnvironment = builtins.attrNames config.luaInfo.set_environment_variables;
+          }
+        ];
+        default = { };
+      };
+      options.zsh = lib.mkOption {
+        type = wlib.types.subWrapperModule [
+          inputs.self.wrapperModules.zsh
+          { inherit pkgs; }
+        ];
+        default = { };
+      };
+      options.wrapZSH = lib.mkEnableOption "wrapped zsh";
+      options.shellString = lib.mkOption {
+        type = wlib.types.stringable;
+        default = if config.wrapZSH then "${config.zsh.wrapper}${config.zsh.wrapper.shellPath}" else "zsh";
+      };
+      options.launcher = lib.mkOption {
+        type = lib.types.nullOr wlib.types.stringable;
+        default = null;
+      };
+      options.withLauncher = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
+      options.gpuFrontEnd = lib.mkOption {
+        type = lib.types.enum [
+          "OpenGL"
+          "Software"
+          "WebGpu"
+        ];
+        default = "OpenGL";
+      };
+      options.webgpu_power_preference = lib.mkOption {
+        type = lib.types.enum [
+          "HighPerformance"
+          "LowPower"
+        ];
+        default = "LowPower";
+      };
+      options.webgpu_force_fallback_adapter = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
+      options.fontString = lib.mkOption {
+        type = lib.types.str;
+        default = "FiraMono Nerd Font";
+      };
+      options.fontPackage = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.nerd-fonts.fira-mono;
+      };
+      config."wezterm.lua".content = /* lua */ ''
+        local cfgdir = require('nix-info').config_dir
+        require('nix-info').config_dir = nil
+        package.path = package.path .. ';' .. cfgdir .. '/?.lua;' .. cfgdir .. '/?/init.lua'
+        package.cpath = package.cpath .. ';' .. cfgdir .. '/?.so'
+        local wezterm = require 'wezterm'
+        wezterm.config_dir = cfgdir
+        return require 'init'
+      '';
+      config.luaInfo = {
+        config_dir = ./.;
+        set_environment_variables = { };
+        inherit (config) webgpu_power_preference webgpu_force_fallback_adapter;
+        front_end = config.gpuFrontEnd;
+        font_dirs = [ "${config.fontPackage}/share/fonts" ];
+        font = lib.generators.mkLuaInline "wezterm.font(${builtins.toJSON config.fontString})";
+        color_scheme_dirs = [ "${config.luaInfo.config_dir}/colors" ];
+        default_prog =
+          lib.optional (config.shellString != null) config.shellString
+          ++ lib.optionals (config.shellString != null && config.withLauncher) [
+            "-c"
+            "exec ${if config.launcher == null then "${config.tmux.wrapper}/bin/tx" else config.launcher}"
+          ];
+      };
+      config.extraPackages = [ config.tmux.wrapper ];
+      config.runShell = [
+        "declare -f __bp_install_after_session_init && source '${placeholder "out"}/etc/profile.d/wezterm.sh'"
+      ];
+    };
+}
