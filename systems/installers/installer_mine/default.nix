@@ -14,6 +14,7 @@ in {
     neovim.enable = true;
     neovim.settings.minimal = true;
     zsh.enable = true;
+    zsh.asSystemDefault = true;
     tmux.enable = true;
     tmux.terminal = if use_alacritty then "alacritty" else "xterm-256color";
     git.enable = true;
@@ -90,9 +91,6 @@ in {
   services.libinput.enable = true;
   services.libinput.touchpad.disableWhileTyping = true;
 
-  users.defaultUserShell = config.wrappers.zsh.wrapper;
-  environment.pathsToLink = [ "/share/zsh" ];
-  programs.zsh.enable = true;
   # system.activationScripts.silencezsh.text = ''
   #   [ ! -e "/home/nixos/.zshrc" ] && echo "# dummy file" > /home/nixos/.zshrc
   # '';

@@ -11,6 +11,7 @@ in {
     i3.enable = true;
     bash.enable = true;
     fish.enable = true;
+    flatpak.enable = true;
     i3MonMemory.enable = true;
     lightdm.enable = true;
     LD.enable = true;
@@ -18,6 +19,7 @@ in {
   wrappers = {
     neovim.enable = true;
     zsh.enable = true;
+    zsh.asSystemDefault = true;
     zsh.output-name = output-name;
     wezterm.enable = true;
     tmux.enable = true;
@@ -28,10 +30,6 @@ in {
     luakit.enable = false;
     ranger.enable = false;
   };
-
-  environment.pathsToLink = [ "/share/zsh" ];
-  users.defaultUserShell = config.wrappers.zsh.wrapper;
-  programs.zsh.enable = true;
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
@@ -53,12 +51,9 @@ in {
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
-  security.pam.services.i3lock.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  services.flatpak.enable = true;
 
   virtualisation.libvirtd.enable = true;
 

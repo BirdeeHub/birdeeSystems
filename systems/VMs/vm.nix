@@ -19,6 +19,7 @@ in {
   wrappers = {
     neovim.enable = true;
     zsh.enable = true;
+    zsh.asSystemDefault = true;
     zsh.output-name = output-name;
     wezterm.enable = true;
     tmux.enable = true;
@@ -29,15 +30,10 @@ in {
     luakit.enable = false;
     ranger.enable = false;
   };
-  environment.pathsToLink = [ "/share/zsh" ];
-  users.defaultUserShell = config.wrappers.zsh.wrapper;
-  programs.zsh.enable = true;
 
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
-
-  # services.flatpak.enable = true;
 
   boot.kernelModules = [ "kvm" ];
   # virtualisation.libvirtd.enable = true;

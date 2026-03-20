@@ -193,6 +193,7 @@ let
       # system.activationScripts.something.text = ''
       # '';
 
+      security.pam.services.i3lock.enable = true;
       services.displayManager.defaultSession = lib.mkOverride 1001 "none+i3";
       services.xserver.windowManager.i3 = {
         enable = true;

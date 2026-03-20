@@ -3,6 +3,7 @@ in {
   birdeeMods = {
     bash.enable = true;
     fish.enable = true;
+    flatpak.enable = true;
     firefox.enable = true;
     i3.enable = true;
     i3.updateDbusEnvironment = true;
@@ -22,14 +23,7 @@ in {
     luakit.enable = true;
   };
 
-  home.sessionVariables = let
-    nvimpath = lib.getExe config.wrappers.neovim.wrapper;
-  in {
-    EDITOR = nvimpath;
-    MANPAGER = "${nvimpath} +Man!";
-    XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
-    JAVA_HOME = "${pkgs.jdk}";
-  };
+  home.sessionVariables.JAVA_HOME = "${pkgs.jdk}";
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
@@ -193,7 +187,6 @@ in {
     man-pages
     man-pages-posix
     _7zz
-    # flatpak
     # gnome.gnome-software
     steam
     heroic
