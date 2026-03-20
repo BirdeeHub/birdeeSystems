@@ -10,6 +10,7 @@ let
   util = import ./util inargs // {
     wlib = inargs.wrappers.lib;
     flake-path = "/home/birdee/birdeeSystems";
+    moduleNamespace = "birdeeMods";
     stateVersion = "25.11";
   };
   inputs = inargs // {
@@ -23,7 +24,10 @@ flake-parts.lib.mkFlake { inherit inputs; } (
   { config, ... }@top:
   {
     systems = nixpkgs.lib.platforms.all;
-    imports = util.findModulesWith "flake-parts.nix" { inherit inputs util; } ./common;
+    imports = util.findModulesWith "flake-parts.nix" {
+      inherit inputs util;
+      inherit (util) moduleNamespace;
+    } ./common;
     flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
     perSystem =
       {
