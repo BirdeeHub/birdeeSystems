@@ -1,4 +1,4 @@
-{ inputs, util }@args:
+{ inputs, util, ... }@args:
 let
   flakeModules =
     let

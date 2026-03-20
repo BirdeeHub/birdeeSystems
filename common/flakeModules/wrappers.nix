@@ -1,4 +1,4 @@
-{ inputs, util }:
+{ inputs, util, ... }:
 { config, ... }:
 let
   installMods = builtins.mapAttrs (name: value: {

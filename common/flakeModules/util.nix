@@ -1,4 +1,4 @@
-{ inputs, util }:
+{ inputs, util, ... }:
 { lib, ... }:
 let
   inherit (lib) types mkOption;

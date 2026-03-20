@@ -1,4 +1,4 @@
-{ inputs, util }@args:
+{ inputs, util, ... }@args:
 {
   lib,
   flake-parts-lib,
