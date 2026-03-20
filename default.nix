@@ -82,15 +82,14 @@ flake-parts.lib.mkFlake { inherit inputs; } (
         homeConfigurations = {
           "birdee@dustbook" = {
             inherit home-manager;
-            extraSpecialArgs = defaultSpecialArgs // {
-              monitorCFG = ./homes/monitors_by_hostname/dustbook;
-            };
+            extraSpecialArgs = defaultSpecialArgs;
             modules = [
               ./homes/birdee.nix
               (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
+                  birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
                 }
               )
             ]
@@ -98,15 +97,15 @@ flake-parts.lib.mkFlake { inherit inputs; } (
           };
           "birdee@aSUS" = {
             inherit home-manager;
-            extraSpecialArgs = defaultSpecialArgs // {
-              monitorCFG = ./homes/monitors_by_hostname/aSUS;
-            };
+            extraSpecialArgs = defaultSpecialArgs;
+              
             modules = [
               ./homes/birdee.nix
               (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
+                  birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
                 }
               )
             ]
@@ -162,9 +161,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               inherit home-manager;
               disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
               specialArgs = defaultSpecialArgs;
-              extraSpecialArgs = {
-                monitorCFG = ./homes/monitors_by_hostname/nestOS;
-              };
+              homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 inputs.determinate.nixosModules.default
@@ -179,9 +176,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               inherit home-manager;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
-              extraSpecialArgs = {
-                monitorCFG = ./homes/monitors_by_hostname/aSUS;
-              };
+              homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 ./systems/PCs/aSUS
@@ -195,9 +190,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               inherit home-manager;
               specialArgs = defaultSpecialArgs;
-              extraSpecialArgs = {
-                monitorCFG = ./homes/monitors_by_hostname/dustbook;
-              };
+              homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 ./systems/PCs/dustbook

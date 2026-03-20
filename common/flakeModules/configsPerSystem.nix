@@ -132,6 +132,10 @@ in
                     type = types.deferredModule;
                     default = { };
                   };
+                  homeModule = mkOption {
+                    type = types.deferredModule;
+                    default = { };
+                  };
                   modules = mkOption {
                     type = types.listOf types.raw;
                     default = [ ];
@@ -147,6 +151,7 @@ in
                         config.home-manager.users.${config.username} =
                           { pkgs, ... }:
                           {
+                            imports = [ config.homeModule ];
                             home.username = config.username;
                             home.homeDirectory = lib.mkDefault (util.mkHMdir pkgs config.username);
                           };
@@ -247,6 +252,7 @@ in
             "home-manager"
             "username"
             "module"
+            "homeModule"
           ]
         )
       ) (config.perSystem system).homeConfigurations;
@@ -256,6 +262,7 @@ in
           removeAttrs v [
             "nixpkgs"
             "module"
+            "homeModule"
             "disko"
             "extraSpecialArgs"
             "hostname"

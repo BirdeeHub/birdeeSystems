@@ -1,4 +1,4 @@
-{ config, util, pkgs, lib, inputs, users, username, output-name, stateVersion, monitorCFG, osConfig ? null, ...  }@args: let
+{ config, util, pkgs, lib, inputs, users, username, output-name, stateVersion, osConfig ? null, ...  }@args: let
 in {
   birdeeMods = {
     bash.enable = true;
@@ -7,7 +7,6 @@ in {
     i3.enable = true;
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
-    i3MonMemory.monitorScriptDir = monitorCFG;
   };
   wrappers = {
     neovim.enable = true;
