@@ -38,5 +38,7 @@ in
 
   recImportApplyNamed = basefunc { deep = true; };
 
+  recImportApplyNamedIn = basefunc { deep = true; skip = true; };
+
   findModulesIn = basefunc { skip = true; };
 }
