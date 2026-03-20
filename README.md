@@ -66,8 +66,6 @@ with home-manager to install a home-manager config without booting, you wont hav
 
 If you use disko to reformat your drives and lose all your data, I am not responsible.
 
-[Build Scripts](./scripts)
-
 ---
 
 to do: change firefox config to use autoconf instead of copying prefs.js raw so that I dont have to reaccept terms and conditions every time I provision firefox from scratch.
