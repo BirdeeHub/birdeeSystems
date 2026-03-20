@@ -1,5 +1,10 @@
 { inputs, ... }:
 {
+  flake.modules.nixos.tmux = {
+    imports = [
+      inputs.self.wrappers.tmux.nixosModule
+    ];
+  };
   flake.wrappers.tmux =
     {
       config,
@@ -115,18 +120,23 @@
           echo ${lib.escapeShellArg tx} > $out/bin/tx
           chmod +x $out/bin/tx
         '';
-      # module code to include with root installs
-      # This is required so that tmux can write to /var/run/utmp
-      # (which can be queried with who to display currently connected user sessions).
-      # Note, this will add a guid wrapper for the group utmp!
-      # see programs.tmux.withUtempter
       options.nixosModule = lib.mkOption {
         readOnly = true;
         type = lib.types.raw;
         default =
-          { pkgs, ... }:
+          { pkgs, config, ... }:
           {
-            config.security.wrappers = {
+            options.wrappers.tmux.utempter = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = ''
+                security wrapper for utempter so it can write to /var/run/utmp
+                (which can be queried with who to display currently connected user sessions).
+                Note, this will add a guid wrapper for the group utmp!
+                see programs.tmux.withUtempter
+              '';
+            };
+            config.security.wrappers = lib.mkIf config.wrappers.tmux.utempter {
               utempter = {
                 source = "${pkgs.libutempter}/lib/utempter/utempter";
                 owner = "root";

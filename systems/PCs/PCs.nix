@@ -4,9 +4,6 @@
 
 { modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, output-name, ... }: let
 in {
-  imports = [
-    inputs.self.wrappers.tmux.nixosModule
-  ];
   birdeeMods = {
     i3.enable = true;
     bash.enable = true;
@@ -23,6 +20,7 @@ in {
     zsh.output-name = output-name;
     wezterm.enable = true;
     tmux.enable = true;
+    tmux.utempter = true;
     xplr.enable = true;
     git.enable = true;
     opencode.enable = false;
