@@ -8,7 +8,7 @@ let
         overlay = importApply ./overlay.nix args;
         configsPerSystem = importApply ./configsPerSystem.nix args;
         wrappers = importApply ./wrappers.nix args;
-        util = importApply ./util.nix args;
+        util = ./util.nix;
         inherit (inputs.flake-parts.flakeModules) bundlers modules flakeModules;
       };
     in
