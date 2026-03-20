@@ -7,239 +7,289 @@
   ...
 }@inargs:
 let
-  flake-path = "/home/birdee/birdeeSystems";
-  stateVersion = "25.11";
+  util = import ./util inargs // {
+    wlib = inargs.wrappers.lib;
+    flake-path = "/home/birdee/birdeeSystems";
+    stateVersion = "25.11";
+  };
   inputs = inargs // {
-    inherit flake-path stateVersion;
+    inherit util;
   };
 in
 # NOTE: flake parts definitions
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
-flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }@top: {
-  systems = nixpkgs.lib.platforms.all;
-  imports = [
-    # inputs.devenv.flakeModule
-    # e.g. treefmt-nix.flakeModule
-    (nixpkgs.lib.modules.importApply ./common inputs)
-  ];
-  flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
-  perSystem = {
-    config,
-    self',
-    inputs',
-    lib,
-    pkgs,
-    system,
-    # final, # Only with easyOverlay imported
-    ...
-  }: let
-    defaultSpecialArgs = {
-      inherit
-        stateVersion
-        inputs
-        ;
-      inherit (top.config.flake) util;
-    };
-  in {
-    _module.args.pkgs = import inputs.nixpkgs {
-      inherit system;
-      overlays = top.config.flake.overlist;
-      config.allowUnfree = true;
-    };
-
-    # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
-
-    packages = {
-      inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma hpg;
-      wezshterm = config.packages.wezterm.wrap {
-        withLauncher = lib.mkDefault true;
-        wrapZSH = lib.mkDefault true;
-      };
-    };
-
-    bundlers.default = nix-appimage.bundlers.${system}.default;
-    bundlers.app-image = nix-appimage.bundlers.${system}.default;
-
-    # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
-    homeConfigurations = {
-      "birdee@dustbook" = {
-        inherit home-manager;
-        extraSpecialArgs = defaultSpecialArgs // {
-          monitorCFG = ./homes/monitors_by_hostname/dustbook;
+flake-parts.lib.mkFlake { inherit inputs; } (
+  { config, ... }@top:
+  {
+    systems = nixpkgs.lib.platforms.all;
+    imports = [
+      inputs.flake-parts.flakeModules.flakeModules
+      inputs.flake-parts.flakeModules.modules
+      inputs.flake-parts.flakeModules.bundlers
+    ]
+    ++ util.findModulesWith "flake-parts.nix" { inherit inputs util; } ./common;
+    flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
+    flake.util = util;
+    flake.nixosModules = config.flake.modules.nixos;
+    flake.flakeModules = config.flake.modules.flake;
+    perSystem =
+      {
+        config,
+        self',
+        inputs',
+        lib,
+        pkgs,
+        system,
+        # final, # Only with easyOverlay imported
+        ...
+      }:
+      let
+        defaultSpecialArgs = {
+          inherit
+            inputs
+            ;
+          inherit (util) stateVersion;
+          inherit (top.config.flake) util;
         };
-        modules = [
-          ./homes/birdee.nix
-          (
-            { pkgs, ... }:
-            {
-              nix.package = pkgs.nix;
-            }
-          )
-        ] ++ builtins.attrValues self.modules.homeManager;
-      };
-      "birdee@aSUS" = {
-        inherit home-manager;
-        extraSpecialArgs = defaultSpecialArgs // {
-          monitorCFG = ./homes/monitors_by_hostname/aSUS;
+      in
+      {
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = top.config.flake.overlist;
+          config.allowUnfree = true;
         };
-        modules = [
-          ./homes/birdee.nix
-          (
-            { pkgs, ... }:
-            {
-              nix.package = pkgs.nix;
-            }
-          )
-        ] ++ builtins.attrValues self.modules.homeManager;
-      };
-    };
 
-    # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
-    nixosConfigurations = let
-      # factor out declaring home manager as a module for configs that do that
-      HMasModule =
-        module:
-        { username, lib, ... }:
-        {
-          home-manager.backupFileExtension = "hm-bkp";
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.verbose = true;
-          services.displayManager.defaultSession = lib.mkDefault "none+fake";
-          home-manager.users.${username} = {
-            imports = builtins.attrValues self.modules.homeManager ++ [ module ];
+        # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
+
+        packages = {
+          inherit (pkgs)
+            dep-tree
+            minesweeper
+            nops
+            manix
+            antifennel
+            gac
+            libvma
+            hpg
+            ;
+          wezshterm = config.packages.wezterm.wrap {
+            withLauncher = lib.mkDefault true;
+            wrapZSH = lib.mkDefault true;
           };
         };
-      usermod = { config, username ? null, ... }: {
-        config.users.users = lib.mkIf (username != null) {
-          ${username} = {
-            name = username;
-            shell = config.wrappers.zsh.wrapper;
-            isNormalUser = true;
-            description = "";
-            extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
-            # this is packages for nixOS user config.
-            # packages = []; # empty because that is managed by home-manager
+
+        bundlers.default = nix-appimage.bundlers.${system}.default;
+        bundlers.app-image = nix-appimage.bundlers.${system}.default;
+
+        # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
+        homeConfigurations = {
+          "birdee@dustbook" = {
+            inherit home-manager;
+            extraSpecialArgs = defaultSpecialArgs // {
+              monitorCFG = ./homes/monitors_by_hostname/dustbook;
+            };
+            modules = [
+              ./homes/birdee.nix
+              (
+                { pkgs, ... }:
+                {
+                  nix.package = pkgs.nix;
+                }
+              )
+            ]
+            ++ builtins.attrValues self.modules.homeManager;
+          };
+          "birdee@aSUS" = {
+            inherit home-manager;
+            extraSpecialArgs = defaultSpecialArgs // {
+              monitorCFG = ./homes/monitors_by_hostname/aSUS;
+            };
+            modules = [
+              ./homes/birdee.nix
+              (
+                { pkgs, ... }:
+                {
+                  nix.package = pkgs.nix;
+                }
+              )
+            ]
+            ++ builtins.attrValues self.modules.homeManager;
           };
         };
+
+        # NOTE: outputs to legacyPackages.${system}.nixosConfigurations.<name>
+        nixosConfigurations =
+          let
+            # factor out declaring home manager as a module for configs that do that
+            HMasModule =
+              module:
+              { username, lib, ... }:
+              {
+                home-manager.backupFileExtension = "hm-bkp";
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.verbose = true;
+                services.displayManager.defaultSession = lib.mkDefault "none+fake";
+                home-manager.users.${username} = {
+                  imports = builtins.attrValues self.modules.homeManager ++ [ module ];
+                };
+              };
+            usermod =
+              {
+                config,
+                username ? null,
+                ...
+              }:
+              {
+                config.users.users = lib.mkIf (username != null) {
+                  ${username} = {
+                    name = username;
+                    shell = config.wrappers.zsh.wrapper;
+                    isNormalUser = true;
+                    description = "";
+                    extraGroups = [
+                      "networkmanager"
+                      "wheel"
+                      "docker"
+                      "vboxusers"
+                    ];
+                    # this is packages for nixOS user config.
+                    # packages = []; # empty because that is managed by home-manager
+                  };
+                };
+              };
+          in
+          {
+            "birdee@nestOS" = {
+              nixpkgs = inputs.nixpkgs;
+              inherit home-manager;
+              disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
+              specialArgs = defaultSpecialArgs;
+              extraSpecialArgs = {
+                monitorCFG = ./homes/monitors_by_hostname/nestOS;
+              };
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                inputs.determinate.nixosModules.default
+                ./systems/PCs/nestOS
+                usermod
+                (HMasModule ./homes/main)
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "birdee@aSUS" = {
+              nixpkgs = inputs.nixpkgsOLD;
+              inherit home-manager;
+              disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
+              specialArgs = defaultSpecialArgs;
+              extraSpecialArgs = {
+                monitorCFG = ./homes/monitors_by_hostname/aSUS;
+              };
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                ./systems/PCs/aSUS
+                usermod
+                (HMasModule ./homes/birdee.nix)
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "birdee@dustbook" = {
+              nixpkgs = inputs.nixpkgsOLD;
+              disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
+              inherit home-manager;
+              specialArgs = defaultSpecialArgs;
+              extraSpecialArgs = {
+                monitorCFG = ./homes/monitors_by_hostname/dustbook;
+              };
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                ./systems/PCs/dustbook
+                usermod
+                (HMasModule ./homes/birdee.nix)
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "aSUS" = {
+              nixpkgs = inputs.nixpkgsOLD;
+              disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
+              specialArgs = defaultSpecialArgs;
+              username = "birdee";
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                usermod
+                ./systems/PCs/aSUS
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "dustbook" = {
+              nixpkgs = inputs.nixpkgsOLD;
+              disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
+              specialArgs = defaultSpecialArgs;
+              username = "birdee";
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                usermod
+                ./systems/PCs/dustbook
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "virtbird" = (
+              let
+              in
+              { name, ... }:
+              {
+                nixpkgs = inputs.nixpkgs;
+                username = "birdee";
+                disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
+                specialArgs = defaultSpecialArgs;
+                module.nixpkgs.overlays = top.config.flake.overlist;
+                modules = [
+                  usermod
+                  ./systems/VMs/${name}
+                ]
+                ++ builtins.attrValues self.modules.nixos;
+              }
+            );
+            "my-qemu-vm" = {
+              nixpkgs = inputs.nixpkgs;
+              inherit home-manager;
+              hostname = "virtbird";
+              disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
+              username = "birdee";
+              specialArgs = defaultSpecialArgs;
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                usermod
+                ./systems/VMs/qemu
+                (HMasModule ./homes/birdee.nix)
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "installer_mine" = {
+              nixpkgs = inputs.nixpkgs;
+              specialArgs = defaultSpecialArgs // {
+                is_minimal = true;
+                use_alacritty = false;
+              };
+              extraSpecialArgs = {
+              };
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                ./systems/installers/installer_mine
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "installer" = {
+              nixpkgs = inputs.nixpkgs;
+              specialArgs = defaultSpecialArgs;
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                ./systems/installers/installer
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+          };
       };
-    in {
-      "birdee@nestOS" = {
-        nixpkgs = inputs.nixpkgs;
-        inherit home-manager;
-        disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
-        specialArgs = defaultSpecialArgs;
-        extraSpecialArgs = {
-          monitorCFG = ./homes/monitors_by_hostname/nestOS;
-        };
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          inputs.determinate.nixosModules.default
-          ./systems/PCs/nestOS
-          usermod
-          (HMasModule ./homes/main)
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "birdee@aSUS" = {
-        nixpkgs = inputs.nixpkgsOLD;
-        inherit home-manager;
-        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
-        specialArgs = defaultSpecialArgs;
-        extraSpecialArgs = {
-          monitorCFG = ./homes/monitors_by_hostname/aSUS;
-        };
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          ./systems/PCs/aSUS
-          usermod
-          (HMasModule ./homes/birdee.nix)
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "birdee@dustbook" = {
-        nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
-        inherit home-manager;
-        specialArgs = defaultSpecialArgs;
-        extraSpecialArgs = {
-          monitorCFG = ./homes/monitors_by_hostname/dustbook;
-        };
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          ./systems/PCs/dustbook
-          usermod
-          (HMasModule ./homes/birdee.nix)
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "aSUS" = {
-        nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
-        specialArgs = defaultSpecialArgs;
-        username = "birdee";
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          usermod
-          ./systems/PCs/aSUS
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "dustbook" = {
-        nixpkgs = inputs.nixpkgsOLD;
-        disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
-        specialArgs = defaultSpecialArgs;
-        username = "birdee";
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          usermod
-          ./systems/PCs/dustbook
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "virtbird" = (let
-      in {name, ... }: {
-        nixpkgs = inputs.nixpkgs;
-        username = "birdee";
-        disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
-        specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          usermod
-          ./systems/VMs/${name}
-        ] ++ builtins.attrValues self.modules.nixos;
-      });
-      "my-qemu-vm" = {
-        nixpkgs = inputs.nixpkgs;
-        inherit home-manager;
-        hostname = "virtbird";
-        disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
-        username = "birdee";
-        specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          usermod
-          ./systems/VMs/qemu
-          (HMasModule ./homes/birdee.nix)
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "installer_mine" = {
-        nixpkgs = inputs.nixpkgs;
-        specialArgs = defaultSpecialArgs // {
-          is_minimal = true;
-          use_alacritty = false;
-        };
-        extraSpecialArgs = {
-        };
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          ./systems/installers/installer_mine
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-      "installer" = {
-        nixpkgs = inputs.nixpkgs;
-        specialArgs = defaultSpecialArgs;
-        module.nixpkgs.overlays = top.config.flake.overlist;
-        modules = [
-          ./systems/installers/installer
-        ] ++ builtins.attrValues self.modules.nixos;
-      };
-    };
-  };
-})
+  }
+)

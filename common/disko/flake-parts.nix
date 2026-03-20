@@ -1,4 +1,4 @@
-{
+{ inputs, util, ... }: {
   flake = {
     diskoConfigurations = {
       sda_swap = import ./sda_swap.nix;

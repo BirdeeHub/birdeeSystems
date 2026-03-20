@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, util, ... }:
 {
   pkgs,
   wlib,
@@ -10,7 +10,7 @@
   imports = [ wlib.wrapperModules.zsh ];
   options.flake-path = lib.mkOption {
     type = lib.types.nullOr lib.types.str;
-    default = inputs.flake-path;
+    default = util.flake-path;
   };
   options.output-name = lib.mkOption {
     type = lib.types.nullOr lib.types.str;

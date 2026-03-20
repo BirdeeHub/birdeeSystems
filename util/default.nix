@@ -1,5 +1,14 @@
 inputs: with builtins; rec {
 
+  # use callPackage
+  backup_rotator = ./backup_rotator.nix;
+
+  inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs pipe; }) compile_lua_dir mkLuaApp;
+
+  inherit (inputs.nixToLua) mkEnum;
+
+  inherit (import ./import.nix) findModulesWith recursiveImportModuleWith findModulesIn;
+
   linkFarmPair = name: path: { inherit name path; };
 
   pipe = foldl' (x: f: f x);
@@ -128,13 +137,6 @@ inputs: with builtins; rec {
       dirloop ${src} ${outdir} builder_file_action
     '';
 
-  # use callPackage
-  backup_rotator = ./backup_rotator.nix;
-
-  inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs pipe; }) compile_lua_dir mkLuaApp;
-
-  inherit (inputs.nixToLua) mkEnum;
-
   addLuarocksTree = /* bash */ ''
     # addPathForLuarocksTree luarocks LUA_PATH "$LUAROCKS_TREE_PATH"
     # addPathForLuarocksTree luarocks LUA_CPATH "$LUAROCKS_TREE_PATH"
@@ -177,29 +179,5 @@ inputs: with builtins; rec {
       homeDirectory = "/${homeDirPrefix}/${username}";
     in
     homeDirectory;
-
-  recursiveImportModuleWith =
-    target-name: staticArgs: dir:
-    let
-      entries = builtins.readDir dir;
-    in
-    (
-      if entries ? "${target-name}" then
-        [
-          {
-            imports = [ (import (dir + "/${target-name}") staticArgs) ];
-            _file = dir + "/${target-name}";
-          }
-        ]
-      else
-        [ ]
-    )
-    ++ builtins.concatMap (
-      name:
-      if entries.${name} == "directory" then
-        recursiveImportModuleWith target-name staticArgs (dir + "/${name}")
-      else
-        [ ]
-    ) (builtins.attrNames entries);
 
 }
