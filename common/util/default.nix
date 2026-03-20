@@ -182,7 +182,6 @@ inputs: with builtins; rec {
     target-name: staticArgs: dir:
     let
       entries = builtins.readDir dir;
-      names = builtins.attrNames entries;
     in
     (
       if entries ? "${target-name}" then
@@ -196,7 +195,11 @@ inputs: with builtins; rec {
         [ ]
     )
     ++ builtins.concatMap (
-      name: if entries.${name} == "directory" then recursiveImportModuleWith target-name staticArgs (dir + "/${name}") else [ ]
-    ) names;
+      name:
+      if entries.${name} == "directory" then
+        recursiveImportModuleWith target-name staticArgs (dir + "/${name}")
+      else
+        [ ]
+    ) (builtins.attrNames entries);
 
 }
