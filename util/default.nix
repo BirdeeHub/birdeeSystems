@@ -12,8 +12,6 @@ import ./import.nix
 
   linkFarmPair = name: path: { inherit name path; };
 
-  pipe = foldl' (x: f: f x);
-
   flip =
     f: a: b:
     f b a;
@@ -28,8 +26,6 @@ import ./import.nix
 
   birdIsAttrs =
     v: isAttrs v.value && !isDerivation v.value && !isFunctor v.value && !hasOutPath v.value;
-
-  filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
 
   recAttrsToList =
     here:
