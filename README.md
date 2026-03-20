@@ -29,7 +29,9 @@ monitor management:
 
 Dendritic common directory heavily utilizing flake parts.
 
-The things it creates are used by the [home-manager config](./homes/birdee.nix) and the chosen [system](./systems/PCs/aSUS/default.nix) [config](./systems/PCs/dustbook/default.nix) which both import the common system module [./systems/PCs/PCs.nix](./systems/PCs/PCs.nix)
+The common directory creates the stuff, and the configs consume it.
+
+The configs are in [./homes](./systems) and [./systems](./systems) and they are organized by base config, with several entry points which import it to be imported from [./default.nix](./default.nix)
 
 My configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
 
