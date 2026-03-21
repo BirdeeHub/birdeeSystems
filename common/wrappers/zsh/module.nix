@@ -1,13 +1,20 @@
-{ inputs, util, moduleNamespace, ... }:
 {
-  flake.modules.nixos.zsh = { config, lib, ... }: {
-    options.wrappers.zsh.asSystemDefault = lib.mkEnableOption "zsh as defaultUserShell";
-    config = lib.mkIf config.wrappers.zsh.enable {
-      environment.pathsToLink = [ "/share/zsh" ];
-      users.defaultUserShell = lib.mkIf config.wrappers.zsh.asSystemDefault config.wrappers.zsh.wrapper;
-      programs.zsh.enable = true;
+  inputs,
+  util,
+  moduleNamespace,
+  ...
+}:
+{
+  flake.modules.nixos.zsh =
+    { config, lib, ... }:
+    {
+      options.wrappers.zsh.asSystemDefault = lib.mkEnableOption "zsh as defaultUserShell";
+      config = lib.mkIf config.wrappers.zsh.enable {
+        environment.pathsToLink = [ "/share/zsh" ];
+        users.defaultUserShell = lib.mkIf config.wrappers.zsh.asSystemDefault config.wrappers.zsh.wrapper;
+        programs.zsh.enable = true;
+      };
     };
-  };
   flake.wrappers.zsh =
     {
       pkgs,
