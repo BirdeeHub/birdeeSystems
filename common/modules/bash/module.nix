@@ -1,52 +1,53 @@
 { moduleNamespace, inputs, ... }:
 let
-  mkMod =
-    homeManager:
+  module =
     {
       config,
       pkgs,
       lib,
+      _class,
       ...
     }:
     let
       cfg = config.${moduleNamespace}.bash;
-    in
-    {
       _file = ./bash.nix;
       options = {
         ${moduleNamespace}.bash = {
           enable = lib.mkEnableOption "birdeeBash";
         };
       };
-      config = lib.mkIf cfg.enable (
-        let
-          fzfinit = pkgs.runCommand "fzfinit" { } "${pkgs.fzf}/bin/fzf --bash > $out";
-          init = ''
-            . ${config.wrappers.starship.wrap { shell = "bash"; }}/bin/starship
-            export CARAPACE_BRIDGES='bash,inshellisense' # optional
-            source <(${pkgs.carapace}/bin/carapace _carapace bash)
-            source ${fzfinit}
-          '';
-        in
-        if homeManager then
-          {
-            home.packages = [ pkgs.carapace ];
-            programs.bash = {
-              enableVteIntegration = true;
-              initExtra = init;
-            };
-          }
-        else
-          {
-            environment.systemPackages = [ pkgs.carapace ];
-            programs.bash = {
-              promptInit = init;
-            };
-          }
-      );
-    };
+      fzfinit = pkgs.runCommand "fzfinit" { } "${pkgs.fzf}/bin/fzf --bash > $out";
+      init = ''
+        . ${config.wrappers.starship.wrap { shell = "bash"; }}/bin/starship
+        export CARAPACE_BRIDGES='bash,inshellisense' # optional
+        source <(${pkgs.carapace}/bin/carapace _carapace bash)
+        source ${fzfinit}
+      '';
+    in
+    {
+      homeManager = {
+        inherit _file options;
+        config = lib.mkIf cfg.enable {
+          home.packages = [ pkgs.carapace ];
+          programs.bash = {
+            enableVteIntegration = true;
+            initExtra = init;
+          };
+        };
+      };
+      nixos = {
+        inherit _file options;
+        config = lib.mkIf cfg.enable {
+          environment.systemPackages = [ pkgs.carapace ];
+          programs.bash = {
+            promptInit = init;
+          };
+        };
+      };
+    }
+    .${_class};
 in
 {
-  flake.modules.nixos.bash = mkMod false;
-  flake.modules.homeManager.bash = mkMod true;
+  flake.modules.nixos.bash = module;
+  flake.modules.homeManager.bash = module;
 }
