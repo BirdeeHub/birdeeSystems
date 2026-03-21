@@ -55,7 +55,7 @@ in {
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
-      vaapiVdpau libva
+      libva-vdpau-driver libva
     ];
   };
 

@@ -80,7 +80,7 @@ in {
     enable32Bit = true;
     # setLdLibraryPath = true;
     extraPackages = with pkgs; [
-      vaapiVdpau
+      libva-vdpau-driver
     ];
   };
 
