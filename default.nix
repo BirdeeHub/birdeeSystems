@@ -171,7 +171,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               ++ builtins.attrValues self.modules.nixos;
             };
             "birdee@aSUS" = {
-              nixpkgs = inputs.nixpkgsOLD;
+              nixpkgs = inputs.nixpkgs;
               inherit home-manager;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
@@ -185,7 +185,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               ++ builtins.attrValues self.modules.nixos;
             };
             "birdee@dustbook" = {
-              nixpkgs = inputs.nixpkgsOLD;
+              nixpkgs = inputs.nixpkgs;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               inherit home-manager;
               specialArgs = defaultSpecialArgs;
@@ -199,7 +199,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               ++ builtins.attrValues self.modules.nixos;
             };
             "aSUS" = {
-              nixpkgs = inputs.nixpkgsOLD;
+              nixpkgs = inputs.nixpkgs;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
               username = "birdee";
@@ -211,7 +211,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               ++ builtins.attrValues self.modules.nixos;
             };
             "dustbook" = {
-              nixpkgs = inputs.nixpkgsOLD;
+              nixpkgs = inputs.nixpkgs;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
               username = "birdee";
