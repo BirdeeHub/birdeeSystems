@@ -39,7 +39,7 @@ in {
   services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_5_15;
+  boot.kernelPackages = pkgs.linuxPackages_5_10;
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.nvidia.modesetting.enable = true;
   services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];

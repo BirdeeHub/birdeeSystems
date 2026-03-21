@@ -14,6 +14,7 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   nixpkgs.config.permittedInsecurePackages = [
     "broadcom-sta-6.30.223.271-59-5.15.200"
+    "broadcom-sta-6.30.223.271-59-5.10.250"
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
