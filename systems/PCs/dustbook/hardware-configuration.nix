@@ -12,6 +12,9 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-59-6.18.10"
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
