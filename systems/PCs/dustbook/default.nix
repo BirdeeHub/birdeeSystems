@@ -6,9 +6,9 @@
 in {
   imports = [
     ../PCs.nix
-    inputs.nixos-hardware-old.nixosModules.common-pc-laptop
-    inputs.nixos-hardware-old.nixosModules.common-cpu-intel
-    inputs.nixos-hardware-old.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     ./hardware-configuration.nix
   ];
 

@@ -638,22 +638,6 @@
         "type": "github"
       }
     },
-    "nixos-hardware-old": {
-      "locked": {
-        "lastModified": 1724575805,
-        "narHash": "sha256-OB/kEL3GAhUZmUfkbPfsPhKs0pRqJKs0EEBiLfyKZw8=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "9fc19be21f0807d6be092d70bf0b1de0c00ac895",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "9fc19be21f0807d6be092d70bf0b1de0c00ac895",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1722403750,
@@ -730,22 +714,6 @@
         "owner": "nixos",
         "repo": "nixpkgs",
         "rev": "e913ae340076bbb73d9f4d3d065c2bca7caafb16",
-        "type": "github"
-      }
-    },
-    "nixpkgsOLD": {
-      "locked": {
-        "lastModified": 1724395761,
-        "narHash": "sha256-zRkDV/nbrnp3Y8oCADf5ETl1sDrdmAW6/bBVJ8EbIdQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ae815cee91b417be55d43781eb4b73ae1ecc396c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ae815cee91b417be55d43781eb4b73ae1ecc396c",
         "type": "github"
       }
     },
@@ -1132,10 +1100,8 @@
         "nix-appimage": "nix-appimage",
         "nixToLua": "nixToLua",
         "nixos-hardware": "nixos-hardware",
-        "nixos-hardware-old": "nixos-hardware-old",
         "nixpkgs": "nixpkgs_5",
         "nixpkgsLocked": "nixpkgsLocked",
-        "nixpkgsOLD": "nixpkgsOLD",
         "nsearch": "nsearch",
         "nur": "nur",
         "pyproject-build-systems": "pyproject-build-systems",
