@@ -147,7 +147,7 @@
             ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
           ''}";
           autorepl = "${pkgs.writeShellScript "autorepl" ''
-            exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgs.outPath} { system = "${pkgs.system}"; config.allowUnfree = true; }; }' "$@"
+            exec nix repl --show-trace --expr '{ pkgs = import ${inputs.nixpkgs.outPath} { system = "${pkgs.stdenv.hostPlatform.system}"; config.allowUnfree = true; }; }' "$@"
           ''}";
           yolo = ''${git}/bin/git add . && ${git}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${git}/bin/git status)" && ${git}/bin/git push'';
           yoloAI = ''${git}/bin/git add . && ${git}/bin/git commit -m "$(${prompt})" && ${git}/bin/git push'';
