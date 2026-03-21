@@ -1,7 +1,7 @@
 inputs: importName:
 (
   final: prev: let
-    manix = inputs.manix.packages.${prev.system}.manix.overrideAttrs {
+    manix = inputs.manix.packages.${prev.stdenv.hostPlatform.system}.manix.overrideAttrs {
       patches = [
         (prev.replaceVars ./patchManix4Flake.diff {
           homeManager = "${inputs.home-manager}";
