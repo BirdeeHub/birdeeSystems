@@ -20,10 +20,9 @@ let
     ++ optionals (!entries ? "${target-name}" || deep) (
       builtins.concatMap (
         name:
-        if entries.${name} == "directory" then
+        optionals (entries.${name} == "directory") (
           basefunc (args // { skip = false; }) target-name staticArgs (dir + "/${name}")
-        else
-          [ ]
+        )
       ) (builtins.attrNames entries)
     );
 in
