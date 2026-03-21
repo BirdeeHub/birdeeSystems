@@ -23,7 +23,7 @@ in {
   in
   with pkgs; [
     ntfs3g
-    glxinfo
+    mesa-demos
     pciutils
     mesa
   ];

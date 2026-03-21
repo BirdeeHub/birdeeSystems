@@ -31,7 +31,7 @@ in {
   environment.systemPackages = let
   in
   with pkgs; [
-    glxinfo
+    mesa-demos
     pciutils
     mesa
   ];
