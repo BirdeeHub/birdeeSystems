@@ -13,7 +13,8 @@ in {
     neovim.enable = true;
     wezterm.enable = true;
     zsh.enable = true;
-    zsh.output-name = output-name;
+    zsh.output-name = lib.mkIf (osConfig != null) output-name;
+    zsh.home-output = lib.mkIf (osConfig == null) output-name;
     zsh.hmSessionVariables = if osConfig == null then "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh" else null;
     opencode.enable = true;
     tmux.enable = true;

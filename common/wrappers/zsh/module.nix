@@ -33,6 +33,10 @@
         type = lib.types.nullOr lib.types.str;
         default = null;
       };
+      options.home-output = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+      };
       config.zshrc.content = /* zsh */ ''
         . ${./compinstallOut}
 
