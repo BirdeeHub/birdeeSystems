@@ -38,7 +38,7 @@
     };
   };
 
-  launchers = [
+  launcher = [
     {
       icon = "/usr/share/weston/icon_flower.png";
       path = "/usr/bin/weston-flower";
