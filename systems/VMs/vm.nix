@@ -11,6 +11,7 @@ in {
     lightdm.enable = true;
     i3MonMemory.enable = true;
     LD.enable = true;
+    nix.enable = true;
   };
   wrappers = {
     neovim.enable = true;
@@ -27,10 +28,6 @@ in {
     luakit.enable = false;
     ranger.enable = false;
   };
-
-  # nix.extraOptions = ''
-  #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
-  # '';
 
   boot.kernelModules = [ "kvm" ];
   # virtualisation.libvirtd.enable = true;
@@ -87,20 +84,6 @@ in {
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  # Allow flakes and new command
-  nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
-  nix.settings.show-trace = true;
-  nix.settings.auto-optimise-store = true;
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "-d";
-    persistent = true;
   };
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth

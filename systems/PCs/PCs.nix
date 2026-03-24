@@ -12,6 +12,7 @@ in {
     i3MonMemory.enable = true;
     lightdm.enable = true;
     LD.enable = true;
+    nix.enable = true;
   };
   wrappers = {
     neovim.enable = true;
@@ -28,30 +29,6 @@ in {
     luakit.enable = false;
     ranger.enable = false;
   };
-
-  nix.settings = {
-    # bash-prompt-prefix = "✓";
-    extra-trusted-substituters = [
-      "https://nix-community.cachix.org"
-    ];
-    experimental-features = [ "nix-command" "flakes" ];
-    show-trace = true;
-    auto-optimise-store = true;
-    flake-registry = "";
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-    trusted-users = [ "@wheel" ];
-  };
-  nix.extraOptions = ''
-    !include /home/birdee/.secrets/gitoke
-  '';
-  # nix.extraOptions = ''
-  #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
-  # '';
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   virtualisation.libvirtd.enable = true;
 

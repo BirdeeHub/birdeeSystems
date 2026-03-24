@@ -8,6 +8,7 @@ in {
     i3.enable = true;
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
+    nix.enable = true;
   };
   wrappers = {
     neovim.enable = true;
@@ -25,42 +26,6 @@ in {
   };
 
   home.sessionVariables.JAVA_HOME = "${pkgs.jdk}";
-
-  nix.settings = {
-    # bash-prompt-prefix = "✓";
-    experimental-features = [ "nix-command" "flakes" ];
-    auto-optimise-store = true;
-    flake-registry = "";
-    show-trace = true;
-    extra-trusted-substituters = [
-      "https://nix-community.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
-  nix.extraOptions = ''
-    !include /home/birdee/.secrets/gitoke
-  '';
-  nix.nixPath = [
-    "nixpkgs=${builtins.path { path = inputs.nixpkgs; }}"
-  ];
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "-d";
-  };
-  nix.registry = {
-    nixpkgs.flake = inputs.nixpkgs;
-    wrappers.flake = inputs.wrappers;
-    home-manager.flake = inputs.home-manager;
-    birdeeSystems.flake = inputs.self;
-    gomod2nix.to = {
-      type = "github";
-      owner = "nix-community";
-      repo = "gomod2nix";
-    };
-  };
 
   xdg.enable = true;
   xdg.userDirs = {
