@@ -25,11 +25,35 @@ let
         )
       ) (builtins.attrNames entries)
     );
+  import-tree =
+    dir:
+    builtins.concatLists (
+      builtins.attrValues (
+        builtins.mapAttrs (
+          n: v:
+          let
+            len = builtins.stringLength n;
+          in
+          if v == "directory" then
+            import-tree (dir + "/" + n)
+          else if
+            v == "regular"
+            && len > 3
+            && builtins.substring 0 1 n != "_"
+            && builtins.substring (len - 4) 4 n == ".nix"
+          then
+            [ (dir + "/" + n) ]
+          else
+            [ ]
+        ) (builtins.readDir dir)
+      )
+    );
 in
 {
   inherit
     importApply
     optionals
+    import-tree
     ;
 
   findModulesWith = basefunc { };
