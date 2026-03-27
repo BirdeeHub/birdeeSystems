@@ -24,10 +24,14 @@ flake-parts.lib.mkFlake { inherit inputs; } (
   { config, ... }@top:
   {
     systems = nixpkgs.lib.platforms.all;
-    imports = util.findModulesWith "module.nix" {
-      inherit inputs util;
-      inherit (util) moduleNamespace;
-    } ./common;
+    imports = util.recImport {
+      name = "module.nix";
+      dir = ./common;
+      args = {
+        inherit inputs util;
+        inherit (util) moduleNamespace;
+      };
+    };
     perSystem =
       {
         config,
@@ -97,7 +101,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
           "birdee@aSUS" = {
             inherit home-manager;
             extraSpecialArgs = defaultSpecialArgs;
-              
+
             modules = [
               ./homes/birdee.nix
               (

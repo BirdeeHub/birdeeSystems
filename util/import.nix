@@ -4,45 +4,54 @@ let
     _file = p;
   };
   optionals = c: v: if c then v else [ ];
-  basefunc =
+  recImport =
     {
       deep ? false,
       skip ? false,
+      name,
+      dir,
       ...
-    }@args:
-    target-name: staticArgs: dir:
+    }@opts:
     let
       entries = builtins.readDir dir;
     in
-    optionals (entries ? "${target-name}" && !skip) [
-      (importApply (dir + "/${target-name}") staticArgs)
+    optionals (entries ? "${name}" && !skip) [
+      (if opts ? args then (importApply (dir + "/${name}") opts.args) else (dir + "/${name}"))
     ]
-    ++ optionals (!entries ? "${target-name}" || deep) (
+    ++ optionals (!entries ? "${name}" || deep) (
       builtins.concatMap (
         name:
         optionals (entries.${name} == "directory") (
-          basefunc (args // { skip = false; }) target-name staticArgs (dir + "/${name}")
+          recImport (
+            opts
+            // {
+              skip = false;
+              dir = (dir + "/${name}");
+            }
+          )
         )
       ) (builtins.attrNames entries)
     );
-  import-tree =
-    dir:
+  importTree =
+    { dir, ... }@opts:
     builtins.concatLists (
       builtins.attrValues (
         builtins.mapAttrs (
           n: v:
-          let
-            len = builtins.stringLength n;
-          in
           if v == "directory" then
-            import-tree (dir + "/" + n)
+            importTree (opts // { dir = (dir + "/${n}"); })
           else if
+            let
+              len = builtins.stringLength n;
+            in
             v == "regular"
             && len > 3
             && builtins.substring 0 1 n != "_"
             && builtins.substring (len - 4) 4 n == ".nix"
           then
-            [ (dir + "/" + n) ]
+            [
+              (if opts ? args then (importApply (dir + "/${n}") opts.args) else (dir + "/${n}"))
+            ]
           else
             [ ]
         ) (builtins.readDir dir)
@@ -53,17 +62,7 @@ in
   inherit
     importApply
     optionals
-    import-tree
+    importTree
+    recImport
     ;
-
-  findModulesWith = basefunc { };
-
-  recImportApplyNamed = basefunc { deep = true; };
-
-  recImportApplyNamedIn = basefunc {
-    deep = true;
-    skip = true;
-  };
-
-  findModulesIn = basefunc { skip = true; };
 }
