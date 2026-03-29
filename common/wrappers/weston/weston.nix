@@ -11,7 +11,7 @@
     type = wlib.types.attrsRecursive;
     default = { };
     description = ''
-      content of the weston INI config file
+      Content of the weston INI config file
 
       To repeat a heading, provide a list of values for that heading.
     '';
