@@ -1,41 +1,39 @@
 {
-  settings = {
-    core = {
-      xwayland = true;
-    };
+  core = {
+    xwayland = true;
+  };
 
-    libinput = {
-      enable-tap = true;
-    };
+  libinput = {
+    enable-tap = true;
+  };
 
-    shell = {
-      background-type = "scale-crop";
-      background-color = "0xff000000";
-      panel-color = "0x00ffffff";
-      panel-position = "bottom";
-      close-animation = "none";
-      focus-animation = "dim-layer";
-      num-workspaces = 6;
-      locking = false;
-      cursor-theme = "Adwaita";
-      cursor-size = 24;
-    };
+  shell = {
+    background-type = "scale-crop";
+    background-color = "0xff000000";
+    panel-color = "0x00ffffff";
+    panel-position = "bottom";
+    close-animation = "none";
+    focus-animation = "dim-layer";
+    num-workspaces = 6;
+    locking = false;
+    cursor-theme = "Adwaita";
+    cursor-size = 24;
+  };
 
-    output = {
-      name = "LVDS1";
-      mode = "preferred";
-    };
+  output = {
+    name = "LVDS1";
+    mode = "preferred";
+  };
 
-    keyboard = {
-      keymap_rules = "evdev";
-      repeat-rate = 30;
-      repeat-delay = 300;
-    };
+  keyboard = {
+    keymap_rules = "evdev";
+    repeat-rate = 30;
+    repeat-delay = 300;
+  };
 
-    terminal = {
-      font = "monospace";
-      font-size = 18;
-    };
+  terminal = {
+    font = "monospace";
+    font-size = 18;
   };
 
   launcher = [
