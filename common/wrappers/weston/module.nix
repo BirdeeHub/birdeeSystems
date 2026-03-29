@@ -27,7 +27,7 @@
           panel-position = "bottom";
           close-animation = "none";
           focus-animation = "dim-layer";
-          num-workspaces = 6;
+          num-workspaces = 10;
           locking = false;
           cursor-theme = "Adwaita";
           cursor-size = 24;
@@ -51,16 +51,7 @@
 
         launcher = [
           {
-            icon = "/usr/share/weston/icon_flower.png";
-            path = "/usr/bin/weston-flower";
-          }
-          {
-            icon = "/usr/share/icons/gnome/32x32/apps/utilities-terminal.png";
-            path = "/usr/bin/weston-terminal --shell=/usr/bin/bash";
-          }
-          {
-            icon = "/usr/share/icons/hicolor/32x32/apps/firefox.png";
-            path = "MOZ_ENABLE_WAYLAND=1 /usr/bin/firefox";
+            path = "${inputs.self.wrappers.wezterm.wrap { inherit pkgs; withLauncher = true; }}";
           }
         ];
       };
