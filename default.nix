@@ -159,7 +159,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               };
           in
           {
-            "birdee@nestOS" = {
+            "birdee@nestOS" = { config, ... }: {
               nixpkgs = inputs.nixpkgs;
               inherit home-manager;
               disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
@@ -168,13 +168,13 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 inputs.determinate.nixosModules.default
-                ./systems/PCs/nestOS
+                ./systems/PCs/${config.hostname}
                 usermod
                 (HMasModule ./homes/main.nix)
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "birdee@aSUS" = {
+            "birdee@aSUS" = { config, ... }: {
               nixpkgs = inputs.nixpkgs;
               inherit home-manager;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
@@ -182,13 +182,13 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
-                ./systems/PCs/aSUS
+                ./systems/PCs/${config.hostname}
                 usermod
                 (HMasModule ./homes/birdee.nix)
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "birdee@dustbook" = {
+            "birdee@dustbook" = { config, ... }: {
               nixpkgs = inputs.nixpkgs;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               inherit home-manager;
@@ -196,13 +196,13 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
-                ./systems/PCs/dustbook
+                ./systems/PCs/${config.hostname}
                 usermod
                 (HMasModule ./homes/birdee.nix)
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "aSUS" = {
+            "aSUS" = { name, ... }: {
               nixpkgs = inputs.nixpkgs;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
@@ -210,11 +210,11 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 usermod
-                ./systems/PCs/aSUS
+                ./systems/PCs/${name}
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "dustbook" = {
+            "dustbook" = { name, ... }: {
               nixpkgs = inputs.nixpkgs;
               disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
@@ -222,28 +222,23 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 usermod
-                ./systems/PCs/dustbook
+                ./systems/PCs/${name}
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "virtbird" = (
-              let
-              in
-              { name, ... }:
-              {
-                nixpkgs = inputs.nixpkgs;
-                username = "birdee";
-                disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
-                specialArgs = defaultSpecialArgs;
-                module.nixpkgs.overlays = top.config.flake.overlist;
-                modules = [
-                  usermod
-                  ./systems/VMs/${name}
-                ]
-                ++ builtins.attrValues self.modules.nixos;
-              }
-            );
-            "my-qemu-vm" = {
+            "virtbird" = { name, ... }: {
+              nixpkgs = inputs.nixpkgs;
+              username = "birdee";
+              disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
+              specialArgs = defaultSpecialArgs;
+              module.nixpkgs.overlays = top.config.flake.overlist;
+              modules = [
+                usermod
+                ./systems/VMs/${name}
+              ]
+              ++ builtins.attrValues self.modules.nixos;
+            };
+            "qemu" = { name, ... }: {
               nixpkgs = inputs.nixpkgs;
               inherit home-manager;
               hostname = "virtbird";
@@ -253,12 +248,12 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
                 usermod
-                ./systems/VMs/qemu
+                ./systems/VMs/${name}
                 (HMasModule ./homes/birdee.nix)
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "installer_mine" = {
+            "installer_mine" = { name, ... }: {
               nixpkgs = inputs.nixpkgs;
               specialArgs = defaultSpecialArgs // {
                 is_minimal = true;
@@ -268,16 +263,16 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               };
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
-                ./systems/installers/installer_mine
+                ./systems/installers/${name}
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
-            "installer" = {
+            "installer" = { name, ... }: {
               nixpkgs = inputs.nixpkgs;
               specialArgs = defaultSpecialArgs;
               module.nixpkgs.overlays = top.config.flake.overlist;
               modules = [
-                ./systems/installers/installer
+                ./systems/installers/${name}
               ]
               ++ builtins.attrValues self.modules.nixos;
             };
