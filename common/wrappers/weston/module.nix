@@ -51,7 +51,7 @@
 
         launcher = [
           {
-            path = "${inputs.self.wrappers.wezterm.wrap { inherit pkgs; withLauncher = true; }}";
+            path = "${lib.getExe (inputs.self.wrappers.wezterm.wrap { inherit pkgs; withLauncher = true; })}";
           }
         ];
       };
