@@ -1,16 +1,19 @@
 { inputs, moduleNamespace, ... }:
+let
+  name = "nix";
+in
 {
-  flake.modules.nixos.nix =
+  flake.modules.nixos.${name} =
     {
       config,
       lib,
       ...
     }:
     let
-      cfg = config.${moduleNamespace}.nix;
+      cfg = config.${moduleNamespace}.${name};
     in
     {
-      options.${moduleNamespace}.nix.enable = lib.mkEnableOption "birdee's nix.conf";
+      options.${moduleNamespace}.${name}.enable = lib.mkEnableOption "birdee's nix.conf";
       config = lib.mkIf cfg.enable {
         nix.settings = {
           # bash-prompt-prefix = "✓";
@@ -48,17 +51,17 @@
         };
       };
     };
-  flake.modules.homeManager.nix =
+  flake.modules.homeManager.${name} =
     {
       config,
       lib,
       ...
     }:
     let
-      cfg = config.${moduleNamespace}.nix;
+      cfg = config.${moduleNamespace}.${name};
     in
     {
-      options.${moduleNamespace}.nix.enable = lib.mkEnableOption "birdee's nix.conf";
+      options.${moduleNamespace}.${name}.enable = lib.mkEnableOption "birdee's nix.conf";
       config = lib.mkIf cfg.enable {
         nix.settings = {
           # bash-prompt-prefix = "✓";
