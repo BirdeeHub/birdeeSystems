@@ -1,6 +1,6 @@
 { inputs, moduleNamespace, ... }:
 let
-  name = "nix";
+  name = "nixconfig";
 in
 {
   flake.modules.nixos.${name} =

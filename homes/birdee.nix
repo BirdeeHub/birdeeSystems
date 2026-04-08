@@ -8,7 +8,7 @@ in {
     i3.enable = true;
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
-    nix.enable = true;
+    nixconfig.enable = true;
   };
   wrappers = {
     neovim.enable = true;
@@ -30,6 +30,7 @@ in {
   xdg.enable = true;
   xdg.userDirs = {
     enable = true;
+    setSessionVariables = true;
     desktop = "${config.home.homeDirectory}/Desktop";
     documents = "${config.home.homeDirectory}/Documents";
     download = "${config.home.homeDirectory}/Downloads";
@@ -142,7 +143,7 @@ in {
     gnumake
     cmake
     # gccgo just have a dev shell for c....
-    gccgo
+    # gccgo
     gotools
     go-tools
     sqlite-interactive
@@ -219,6 +220,7 @@ in {
   home.pointerCursor.dotIcons.enable = true;
 
   gtk.theme.package = pkgs.adw-gtk3;
+  gtk.gtk4.theme = config.gtk.theme;
   gtk.theme.name = "adw-gtk3-dark";
   gtk.font.name = "Sans";
   gtk.font.size = 11;

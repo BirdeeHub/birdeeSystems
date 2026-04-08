@@ -12,7 +12,7 @@ in {
     i3MonMemory.enable = true;
     lightdm.enable = true;
     LD.enable = true;
-    nix.enable = true;
+    nixconfig.enable = true;
   };
   wrappers = {
     neovim.enable = true;

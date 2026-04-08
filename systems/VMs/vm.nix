@@ -11,7 +11,7 @@ in {
     lightdm.enable = true;
     i3MonMemory.enable = true;
     LD.enable = true;
-    nix.enable = true;
+    nixconfig.enable = true;
   };
   wrappers = {
     neovim.enable = true;
