@@ -1,10 +1,5 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.tmux = {
-    imports = [
-      inputs.self.wrappers.tmux.nixosModule
-    ];
-  };
   flake.wrappers.tmux =
     {
       config,
@@ -12,7 +7,7 @@
       lib,
       pkgs,
       ...
-    }:
+    }@top:
     let
       mkColor =
         default:
@@ -120,32 +115,36 @@
           echo ${lib.escapeShellArg tx} > $out/bin/tx
           chmod +x $out/bin/tx
         '';
-      options.nixosModule = lib.mkOption {
-        readOnly = true;
-        type = lib.types.raw;
-        default =
-          { pkgs, config, ... }:
-          {
-            options.wrappers.tmux.utempter = lib.mkOption {
-              type = lib.types.bool;
-              default = false;
-              description = ''
-                security wrapper for utempter so it can write to /var/run/utmp
-                (which can be queried with who to display currently connected user sessions).
-                Note, this will add a guid wrapper for the group utmp!
-                see programs.tmux.withUtempter
-              '';
-            };
-            config.security.wrappers = lib.mkIf config.wrappers.tmux.utempter {
-              utempter = {
-                source = "${pkgs.libutempter}/lib/utempter/utempter";
-                owner = "root";
-                group = "utmp";
-                setuid = false;
-                setgid = true;
+      config.install.modules.nixos =
+        { pkgs, config, ... }: let
+          cfg = top.config.install.getWrapperConfig config;
+        in
+        {
+          config = lib.mkMerge [
+            (top.config.install.mkWrapperExtension "tmux utempter" {
+              options.utempter = lib.mkOption {
+                type = lib.types.bool;
+                default = false;
+                description = ''
+                  security wrapper for utempter so it can write to /var/run/utmp
+                  (which can be queried with who to display currently connected user sessions).
+                  Note, this will add a guid wrapper for the group utmp!
+                  see programs.tmux.withUtempter
+                '';
               };
-            };
-          };
-      };
+            })
+            {
+              security.wrappers = lib.mkIf cfg.utempter {
+                utempter = {
+                  source = "${pkgs.libutempter}/lib/utempter/utempter";
+                  owner = "root";
+                  group = "utmp";
+                  setuid = false;
+                  setgid = true;
+                };
+              };
+            }
+          ];
+        };
     };
 }

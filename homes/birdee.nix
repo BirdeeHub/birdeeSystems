@@ -2,7 +2,7 @@
 in {
   birdeeMods = {
     bash.enable = true;
-    fish.enable = true;
+    fish.enable = false;
     flatpak.enable = true;
     firefox.enable = true;
     i3.enable = true;

@@ -1,14 +1,21 @@
 { inputs, ... }:
 {
-  flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
-  flake.modules.homeManager.neovim = {config, lib, ...}: {
-    config = lib.mkIf config.wrappers.neovim.enable {
-      home.sessionVariables = let
-        nvimpath = lib.getExe config.wrappers.neovim.wrapper;
-      in {
-        EDITOR = nvimpath;
-        MANPAGER = "${nvimpath} +Man!";
+  flake.wrappers.neovim = top: {
+    imports = [ inputs.birdeevim.wrapperModules.neovim ];
+    install.modules.homeManager =
+      { config, lib, ... }:
+      let
+        cfg = top.config.install.getWrapperConfig config;
+      in
+      {
+        home.sessionVariables =
+          let
+            nvimpath = lib.getExe cfg.wrapper;
+          in
+          {
+            EDITOR = nvimpath;
+            MANPAGER = "${nvimpath} +Man!";
+          };
       };
-    };
   };
 }
