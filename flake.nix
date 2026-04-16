@@ -72,6 +72,15 @@
     #   flake = false;
     # };
 
+    awesome-git = {
+      url = "github:awesomeWM/awesome";
+      flake = false;
+    };
+    layout-machi = {
+      url = "github:xinhaoyuan/layout-machi";
+      flake = false;
+    };
+
     tmux-navigate-src = {
       url = "github:sunaku/tmux-navigate";
       flake = false;

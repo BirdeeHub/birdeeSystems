@@ -193,6 +193,40 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 # }
                 # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };
+            "birdee@testOS" =
+              { config, ... }:
+              {
+                nixpkgs = inputs.nixpkgs;
+                inherit home-manager;
+                disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
+                specialArgs = defaultSpecialArgs;
+                homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
+                module.nixpkgs.overlays = top.config.flake.overlist;
+                # module.nix.package = pkgs.lixPackageSets.stable.lix;
+                # module.nixpkgs.overlays = top.config.flake.overlist ++ [
+                #   (final: prev: {
+                #     inherit (prev.lixPackageSets.stable)
+                #       nixpkgs-review
+                #       nix-eval-jobs
+                #       nix-fast-build
+                #       colmena
+                #       ;
+                #   })
+                # ];
+                # module.birdeeMods.manuals.disable = true;
+                # homeModule.birdeeMods.manuals.disable = true;
+                modules = [
+                  inputs.determinate.nixosModules.default
+                  ./systems/PCs/${config.hostname}
+                  usermod
+                  (HMasModule ./homes/test.nix)
+                ]
+                ++ builtins.attrValues self.modules.nixos;
+                # ++ builtins.attrValues {
+                #   inherit (self.modules.nixos) LD aliasNetwork bash fish flatpak i3 i3MonMemory lightdm nixconfig;
+                # }
+                # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
+              };
             "birdee@aSUS" =
               { config, ... }:
               {
