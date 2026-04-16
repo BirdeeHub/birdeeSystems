@@ -53,6 +53,7 @@
         );
         terminalSTR = lib.getExe (inputs.self.wrappers.wezterm.wrap { inherit pkgs; });
         flake_svg = ./nix-flake.svg;
+        editor = inputs.self.wrappers.neovim.wrap { inherit pkgs; };
         wallpaper = ../../modules/i3/misc/rooftophang.png;
       };
       config.extraPackages =

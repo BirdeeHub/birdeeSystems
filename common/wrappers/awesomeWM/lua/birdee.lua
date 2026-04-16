@@ -39,7 +39,7 @@ local nix = require("nix-info")
 
 -- This is used later as the default terminal and editor to run.
 local terminal = nix.terminal
-local editor = os.getenv("EDITOR") or "nano"
+local editor = nix.editor or os.getenv("EDITOR") or "nvim"
 local editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
