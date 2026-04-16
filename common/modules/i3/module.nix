@@ -18,12 +18,6 @@ let
       options = {
         ${moduleNamespace}.i3 = with lib.types; {
           enable = lib.mkEnableOption "birdee's i3 configuration";
-          dmenu = {
-            terminalStr = lib.mkOption {
-              default = "${config.wrappers.wezterm.wrapper}/bin/wezterm";
-              type = str;
-            };
-          };
           tmuxTerminalStr = lib.mkOption {
             default = "${config.wrappers.wezterm.wrap { withLauncher = true; }}/bin/wezterm";
             type = str;
@@ -111,23 +105,6 @@ let
 
       i3packagesList = (
         let
-          dmenu = pkgs.writeShellScriptBin "dmenu_run" (
-            /* bash */ ''
-              dmenu() {
-                ${pkgs.dmenu}/bin/dmenu "$@"
-              }
-              dmenu_path() {
-                ${pkgs.dmenu}/bin/dmenu_path "$@"
-              }
-              TERMINAL=${cfg.dmenu.terminalStr}
-            ''
-            + (builtins.readFile ./dmenu_recency.sh)
-          );
-          dmenuclr_recent = "${pkgs.writeShellScriptBin "dmenuclr_recent" ''
-            cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
-            cache="$cachedir/dmenu_recent"
-            rm $cache
-          ''}";
           i3status = util.wlib.evalPackage {
             imports = [ ./i3bar.nix ];
             inherit pkgs;
@@ -158,8 +135,7 @@ let
         ++ [
           i3status # default i3 status bar
           libnotify
-          dmenu # application launcher most people use
-          dmenuclr_recent
+          (inputs.self.wrappers.bemenu.wrap { inherit pkgs; })
           pa_applet
           pavucontrol
           networkmanagerapplet

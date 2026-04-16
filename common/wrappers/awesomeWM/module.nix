@@ -12,6 +12,7 @@
       imports = [ inputs.self.wrapperModules.awesomeWM ];
       config.package = lib.mkForce inputs.somewm.packages.${pkgs.stdenv.hostPlatform.system}.default;
       config.info.modkey = lib.mkForce "Mod1";
+      config.info.isX11 = lib.mkForce false;
     };
   flake.wrappers.awesomeWM =
     {
@@ -44,6 +45,8 @@
       config.env.XCURSOR_THEME = "Adwaita";
       config.env.XCURSOR_SIZE = toString 24;
       config.info = {
+        isX11 = true;
+        bemenu = (inputs.self.wrappers.bemenu.apply { inherit pkgs; }).constructFiles.bemenu-recency.outPath;
         modkey = "Mod4";
         terminal = lib.getExe (
           inputs.self.wrappers.wezterm.wrap {
@@ -55,26 +58,19 @@
         flake_svg = ./nix-flake.svg;
         editor = inputs.self.wrappers.neovim.wrap { inherit pkgs; };
         wallpaper = ../../modules/i3/misc/rooftophang.png;
+        left = "h";
+        down = "j";
+        up = "k";
+        right = "l";
+        gaps_inner = 5;
+        gaps_outer = 1;
+        smart_gaps = true;
+        smart_borders = "no_gaps";
+        default_border_width = 3;
+        default_floating_border_width = 1;
       };
       config.extraPackages =
         let
-          dmenu = pkgs.writeShellScriptBin "dmenu_run" (
-            /* bash */ ''
-              dmenu() {
-                ${pkgs.dmenu}/bin/dmenu "$@"
-              }
-              dmenu_path() {
-                ${pkgs.dmenu}/bin/dmenu_path "$@"
-              }
-              TERMINAL=${config.info.terminalSTR}
-            ''
-            + (builtins.readFile ../../modules/i3/dmenu_recency.sh)
-          );
-          dmenuclr_recent = "${pkgs.writeShellScriptBin "dmenuclr_recent" ''
-            cachedir=''${XDG_CACHE_HOME:-"$HOME/.cache"}
-            cache="$cachedir/dmenu_recent"
-            rm $cache
-          ''}";
           i3lock = util.wlib.wrapPackage {
             inherit pkgs;
             package = pkgs.i3lock;
@@ -93,8 +89,6 @@
           i3lock # default i3 screen locker
           i3status # default i3 status bar
           libnotify
-          dmenu # application launcher most people use
-          dmenuclr_recent
           pa_applet
           pavucontrol
           networkmanagerapplet
