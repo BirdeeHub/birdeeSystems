@@ -63,12 +63,13 @@ local myawesomemenu = {
 local mymainmenu = awful.menu({
     items = {
         { "awesome", myawesomemenu, beautiful.awesome_icon },
-        { "open terminal", terminal }
+        { "open terminal", terminal },
+        { "open terminal no tmux", nix.terminalSTR }
     }
 })
 
 local mylauncher = awful.widget.launcher({
-    -- image = "@NIX_FLAKE_SVG@",
+    image = nix.flake_svg,
     menu = mymainmenu
 })
 
@@ -286,6 +287,8 @@ awful.keyboard.append_global_keybindings({
         { description = "lua execute prompt", group = "awesome" }),
     awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "launcher" }),
+    awful.key({ modkey, "Shift" }, "Return", function() awful.spawn(nix.terminalSTR) end,
+        { description = "open a terminal without tmux", group = "launcher" }),
     awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
         { description = "run prompt", group = "launcher" }),
     awful.key({ modkey }, "p", function() menubar.show() end,

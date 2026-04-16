@@ -52,6 +52,7 @@
           }
         );
         terminalSTR = lib.getExe (inputs.self.wrappers.wezterm.wrap { inherit pkgs; });
+        flake_svg = ./nix-flake.svg;
         wallpaper = ../../modules/i3/misc/rooftophang.png;
       };
       config.extraPackages =
