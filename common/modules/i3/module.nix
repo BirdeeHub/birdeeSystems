@@ -135,7 +135,7 @@ let
         ++ [
           i3status # default i3 status bar
           libnotify
-          (inputs.self.wrappers.bemenu.wrap { inherit pkgs; })
+          config.wrappers.bemenu.wrapper
           pa_applet
           pavucontrol
           networkmanagerapplet
