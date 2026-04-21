@@ -9,6 +9,10 @@
       path = ./flakeParts;
       description = "an empty flake with flake parts";
     };
+    json = {
+      path = ./json;
+      description = "json drv";
+    };
     emptyFlake = {
       path = ./emptyFlake;
       description = "an empty flake";

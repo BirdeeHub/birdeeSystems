@@ -1,0 +1,22 @@
+{
+  "name": "simple",
+  "system": "x86_64-linux",
+  "version": 4,
+  "builder": "/bin/sh",
+  "outputs": {
+    "out": {
+      "path": "5bkcqwq3qb6dxshcj44hr1jrf8k7qhxb-simple"
+    }
+  },
+  "inputs": {
+    "srcs": [],
+    "drvs": {}
+  },
+  "env": {
+    "out": "/nix/store/5bkcqwq3qb6dxshcj44hr1jrf8k7qhxb-simple"
+  },
+  "args": [
+    "-c",
+    "echo 'hello world' > $out"
+  ]
+}
