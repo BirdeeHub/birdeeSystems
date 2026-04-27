@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "advisory-db": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769407479,
+        "narHash": "sha256-ByIwFH/JsWtIpANhSjoQmx3JnPLUQL+wDZYMb6+GxhE=",
+        "owner": "rustsec",
+        "repo": "advisory-db",
+        "rev": "6e8c8d3103a0c56f1581409ebcaba1bc9f2fc799",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rustsec",
+        "repo": "advisory-db",
+        "type": "github"
+      }
+    },
     "antifennel": {
       "flake": false,
       "locked": {
@@ -66,16 +82,17 @@
           "templ"
         ],
         "tomlua": "tomlua",
+        "topiary": "topiary",
         "wrappers": [
           "wrappers"
         ]
       },
       "locked": {
-        "lastModified": 1776964782,
-        "narHash": "sha256-5lI/+lHg6r6YX5r1l+uTmGH4hHhOBTAunhj9UAAlZfQ=",
+        "lastModified": 1777110407,
+        "narHash": "sha256-MD+9oMI6I8AWjOyclgxo+aTarZ0DMoo3hUkmJpK9iTw=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "8e46922af9bc6d78b9f766692c8d5f86ed57f13c",
+        "rev": "6f92c60103975040bd7f7af8a97ce3513b683a7a",
         "type": "github"
       },
       "original": {
@@ -100,13 +117,28 @@
         "type": "github"
       }
     },
+    "crane": {
+      "locked": {
+        "lastModified": 1769287525,
+        "narHash": "sha256-gABuYA6BzoRMLuPaeO5p7SLrpd4qExgkwEmYaYQY4bM=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "0314e365877a85c9e5758f9ea77a9972afbb4c21",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "determinate": {
       "inputs": {
         "determinate-nixd-aarch64-darwin": "determinate-nixd-aarch64-darwin",
         "determinate-nixd-aarch64-linux": "determinate-nixd-aarch64-linux",
         "determinate-nixd-x86_64-linux": "determinate-nixd-x86_64-linux",
         "nix": "nix",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1775584659,
@@ -537,7 +569,7 @@
     },
     "naersk": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1698420672,
@@ -599,7 +631,7 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "git-hooks-nix": "git-hooks-nix",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_4",
         "nixpkgs-23-11": "nixpkgs-23-11",
         "nixpkgs-regression": "nixpkgs-regression"
       },
@@ -751,6 +783,38 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1769330179,
+        "narHash": "sha256-yxgb4AmkVHY5OOBrC79Vv6EVd4QZEotqv+6jcvA212M=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "48698d12cc10555a4f3e3222d9c669b884a49dfe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1744536153,
+        "narHash": "sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg/N38=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "18dd725c29603f582cf1900e0d25f9f1063dbf11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1761597516,
         "narHash": "sha256-wxX7u6D2rpkJLWkZ2E932SIvDJW8+ON/0Yy8+a5vsDU=",
         "rev": "daf6dc47aa4b44791372d6139ab7b25269184d55",
@@ -763,7 +827,7 @@
         "url": "https://flakehub.com/f/NixOS/nixpkgs/0.2505"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1775464765,
         "narHash": "sha256-nex6TL2x1/sVHCyDWcvl1t/dbTedb9bAGC4DLf/pmYk=",
@@ -777,7 +841,7 @@
         "url": "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1706173671,
         "narHash": "sha256-lciR7kQUK2FCAYuszyd7zyRRmTaXVeoZsCyK6QFpGdk=",
@@ -791,7 +855,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1776255774,
         "narHash": "sha256-psVTpH6PK3q1htMJpmdz1hLF5pQgEshu7gQWgKO6t6Y=",
@@ -1134,7 +1198,7 @@
         "nix-appimage": "nix-appimage",
         "nixToLua": "nixToLua",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_5",
+        "nixpkgs": "nixpkgs_7",
         "nixpkgsLocked": "nixpkgsLocked",
         "nsearch": "nsearch",
         "nur": "nur",
@@ -1181,6 +1245,24 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "a0b81d4fa349d9af1765b0f0b4a899c13776f706",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1769396217,
+        "narHash": "sha256-YNzh46h8fby49yOIB40lNoQ9ucVoXe1bHVwkZ4AwGe0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "e9bcd12156a577ac4e47d131c14dc0293cc9c8c2",
         "type": "github"
       },
       "original": {
@@ -1325,6 +1407,27 @@
         "type": "github"
       }
     },
+    "topiary": {
+      "inputs": {
+        "advisory-db": "advisory-db",
+        "crane": "crane",
+        "nixpkgs": "nixpkgs_2",
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "lastModified": 1776874439,
+        "narHash": "sha256-3FnE21CagsRAcn0xGWE/gwfEQDBTmzSp+/j9pa4vyWI=",
+        "ref": "refs/heads/main",
+        "rev": "196ab4788c555ee0bf2304d7dcb601ee131fcdf8",
+        "revCount": 1319,
+        "type": "git",
+        "url": "file:/home/birdee/Projects/topiary"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:/home/birdee/Projects/topiary"
+      }
+    },
     "tree-view-xplr": {
       "flake": false,
       "locked": {
@@ -1393,11 +1496,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776777523,
-        "narHash": "sha256-HELR3At0lk9WkhcWLX7QbSm4O/U+ZkWZDHh8P2rmv/A=",
+        "lastModified": 1777187736,
+        "narHash": "sha256-rBkv2u4QliZAY/YUUZg7FXoEDIeO4t7tNyy2ASlbOuY=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "01c5771cbac01c182374bca5f7f22e7a3ff72a21",
+        "rev": "4771895666f194142ba3248d9775b3b0fb011219",
         "type": "github"
       },
       "original": {
