@@ -88,11 +88,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777382937,
-        "narHash": "sha256-y+Kdf5qlAH+8w1Ts727wMCDhlIWM3aHOG5TODrqWH4E=",
+        "lastModified": 1777396078,
+        "narHash": "sha256-Gh9XjkFPW2tNhJQzCxnQApEnLErfEGn1eK/1UoM+O6Y=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "115a3c534fb224df24d5aace85da614e64f9efdc",
+        "rev": "6aa1a564c45be5c31b0dbdb3b84fe30f78c52353",
         "type": "github"
       },
       "original": {
@@ -1415,16 +1415,15 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1777379536,
-        "narHash": "sha256-sgJuDiTAUyIdSQhMTjzJLI6wH66Yn40YWqCPWJ8NTv0=",
-        "owner": "BirdeeHub",
+        "lastModified": 1777395988,
+        "narHash": "sha256-kSjLynTqInGsKnvjEnlKEzMgmKOUOKLZXfA4/I1DKzU=",
+        "owner": "topiary",
         "repo": "topiary",
-        "rev": "4e9e05d07a01daf973bd635ac7bdf2051aa82195",
+        "rev": "f4e357fce8dbee696581e43e8b79c1e63083b317",
         "type": "github"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "ref": "append_empty_input_softline",
+        "owner": "topiary",
         "repo": "topiary",
         "type": "github"
       }
@@ -1497,11 +1496,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777377596,
-        "narHash": "sha256-jN8P2PFHu25zoIVmXRwavQwG+k6Z3m8CROM+QWsbs3g=",
+        "lastModified": 1777384001,
+        "narHash": "sha256-ei7mFq+hUb6ErReIkzrziNBl1sCtCLeZM51tRd/d56k=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "83770267d23290dbf920c6a743fa185d5ae1caf0",
+        "rev": "cf0cb0512baa0682e2d94c334e2685e5af43d542",
         "type": "github"
       },
       "original": {
