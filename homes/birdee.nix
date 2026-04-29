@@ -2,7 +2,6 @@
 in {
   birdeeMods = {
     bash.enable = true;
-    fish.enable = false;
     flatpak.enable = true;
     firefox.enable = true;
     i3.enable = true;
@@ -13,6 +12,7 @@ in {
   wrappers = {
     neovim.enable = true;
     wezterm.enable = true;
+    fish.enable = true;
     zsh.enable = true;
     zsh.output-name = lib.mkIf (osConfig != null) output-name;
     zsh.home-output = if osConfig == null then output-name else username;

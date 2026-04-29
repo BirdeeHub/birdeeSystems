@@ -191,7 +191,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 ]
                 ++ builtins.attrValues self.modules.nixos;
                 # ++ builtins.attrValues {
-                #   inherit (self.modules.nixos) LD aliasNetwork bash fish flatpak i3 i3MonMemory lightdm nixconfig;
+                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3MonMemory lightdm nixconfig;
                 # }
                 # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };
@@ -225,7 +225,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 ]
                 ++ builtins.attrValues self.modules.nixos;
                 # ++ builtins.attrValues {
-                #   inherit (self.modules.nixos) LD aliasNetwork bash fish flatpak i3 i3MonMemory lightdm nixconfig;
+                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3MonMemory lightdm nixconfig;
                 # }
                 # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };

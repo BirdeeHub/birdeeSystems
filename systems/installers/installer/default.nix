@@ -57,7 +57,6 @@
   };
   birdeeMods = {
     bash.enable = true;
-    fish.enable = true;
   };
 
   fonts.packages = with pkgs; [
