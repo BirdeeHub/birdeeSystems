@@ -7,7 +7,7 @@ in {
   birdeeMods = {
     i3.enable = true;
     bash.enable = true;
-    fish.enable = true;
+    fish.enable = false;
     flatpak.enable = true;
     i3MonMemory.enable = true;
     lightdm.enable = true;

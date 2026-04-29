@@ -116,11 +116,14 @@ local function inc_gaps_outer(delta)
     gaps_outer = math.max(0, gaps_outer + delta)
     update_gaps()
 end
-
+local machi = require("layout-machi")
 -- {{{ Tag layout
 -- Table of layouts to cover with awful.layout.inc, order matters.
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
+        machi.default_layout,
+        machi.default_editor,
+        awful.layout.suit.tile.right,
         awful.layout.suit.tile,
         awful.layout.suit.tile.left,
         awful.layout.suit.tile.bottom,

@@ -24,6 +24,7 @@
     # nixpkgsOLD.url = "github:nixos/nixpkgs/ae815cee91b417be55d43781eb4b73ae1ecc396c";
     # nixpkgs.url = "git+file:/home/birdee/temp/testgrammars/nixpkgs?branch=end-nvim-treesitter-queries-saga";
     # nixpkgs.url = "git+file:/home/birdee/temp/nixpkgs?branch=fix-treesitter-duplicate-grammar";
+    # nixpkgs.url = "git+file:/home/birdee/Projects/nixpkgs";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     # nixpkgs.url = "github:PerchunPak/nixpkgs/end-nvim-treesitter-queries-saga";
@@ -87,19 +88,19 @@
     };
 
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
-    # wrappers.url = "github:BirdeeHub/nix-wrapper-modules/zsh";
+    # wrappers.url = "github:BirdeeHub/nix-wrapper-modules/install";
     # wrappers.url = "git+file:/home/birdee/Projects/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
 
     # neovim
     birdeevim.url = "github:BirdeeHub/birdeevim";
+    # birdeevim.url = "git+file:/home/birdee/.birdeevim";
     birdeevim.inputs.wrappers.follows = "wrappers";
     birdeevim.inputs.nixpkgs.follows = "nixpkgs";
     birdeevim.inputs.flake-parts.follows = "flake-parts";
     birdeevim.inputs.flake-utils.follows = "flake-utils";
     birdeevim.inputs.templ.follows = "templ";
     birdeevim.inputs.nix-appimage.follows = "nix-appimage";
-    # birdeevim.url = "git+file:/home/birdee/.birdeevim";
 
     somewm.url = "github:trip-zip/somewm";
     somewm.inputs.nixpkgs.follows = "nixpkgs";
