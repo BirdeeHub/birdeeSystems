@@ -1,11 +1,8 @@
-{ inputs, util, ... }:
+{ inputs, ... }:
 { config, ... }:
-let
-  file = ./wrappers.nix;
-in
 {
-  _file = file;
-  key = file;
+  _file = ./wrappers.nix;
+  key = ./wrappers.nix;
   imports = [
     inputs.flake-parts.flakeModules.modules
     inputs.wrappers.flakeModules.wrappers
