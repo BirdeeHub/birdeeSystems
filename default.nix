@@ -33,6 +33,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
       };
     };
     flake.formatter = nixpkgs.lib.genAttrs config.systems (system: inputs.birdeevim.formatter.${system});
+    flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
     perSystem =
       {
         config,
