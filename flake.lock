@@ -88,11 +88,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777489625,
-        "narHash": "sha256-pYSKDMtqhd0fvZTe8cip4G2B1FRfjGQ6x2Gp0nfxFUU=",
+        "lastModified": 1777746985,
+        "narHash": "sha256-g8E8YCrAIZ0dsKrUTGQf7MBcxGWsxq5IZKOjojBidrE=",
         "owner": "BirdeeHub",
         "repo": "birdeevim",
-        "rev": "e6b315d58b8d43b8c73ba40d72ffc2b8f8da7e6c",
+        "rev": "339a91aa6940075f5d05351f8fcfad2fb7817117",
         "type": "github"
       },
       "original": {
@@ -1415,15 +1415,16 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1777428359,
-        "narHash": "sha256-+vg4ySTCwFygU3beDWxv2Yx2ivhDbY+iF1iQmrA6Olc=",
+        "lastModified": 1777515037,
+        "narHash": "sha256-fKlKX8bBkvoDn1ysvRsOZcmBt3WbABrnsrSi0SPz1oc=",
         "owner": "topiary",
         "repo": "topiary",
-        "rev": "e08817ed1cc90653a8a18e20bfcb842c4e23ba22",
+        "rev": "b8e3b85f82607606402fcf77eeca24d9cd024197",
         "type": "github"
       },
       "original": {
         "owner": "topiary",
+        "ref": "philipp/fix_multi_line_indent_all",
         "repo": "topiary",
         "type": "github"
       }
@@ -1496,11 +1497,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777489553,
-        "narHash": "sha256-zR4vCp+LXrfTOCrjEHrxhD8FAs8KdWqOUomJgF+ds08=",
+        "lastModified": 1777716383,
+        "narHash": "sha256-DM1fnj0Pqy/JyALhBWVbo3DOkh/afgnKPu6GxlNZ2zo=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "d3e027abcbf37f6185b1e131836490ef8764ec68",
+        "rev": "32022b4c09599b8b421dfce7df030c1efa976fe2",
         "type": "github"
       },
       "original": {

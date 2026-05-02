@@ -99,22 +99,19 @@
           '';
         }
       ];
-      config.drv.postBuild =
-        let
-          tx = /* bash */ ''
-            #!${pkgs.bash}/bin/bash
-            if [[ $(${placeholder "out"}/bin/tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
-              selected_session=$(${placeholder "out"}/bin/tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
-              exec ${placeholder "out"}/bin/tmux new-session -At $selected_session
-            else
-              exec ${placeholder "out"}/bin/tmux new-session
-            fi
-          '';
-        in
-        ''
-          echo ${lib.escapeShellArg tx} > $out/bin/tx
-          chmod +x $out/bin/tx
+      config.constructFiles.tx = {
+        content = /* bash */ ''
+          #!${pkgs.bash}/bin/bash
+          if [[ $(${placeholder "out"}/bin/tmux list-sessions -F '#{?session_attached,1,0}' | grep -c '0') -ne 0 ]]; then
+            selected_session=$(${placeholder "out"}/bin/tmux list-sessions -F '#{?session_attached,,#{session_name}}' | tr '\n' ' ' | awk '{print $1}')
+            exec ${placeholder "out"}/bin/tmux new-session -At $selected_session
+          else
+            exec ${placeholder "out"}/bin/tmux new-session
+          fi
         '';
+        relPath = "bin/tx";
+        builder = ''mkdir -p "$(dirname "$2")" && cp "$1" "$2" && chmod +x "$2"'';
+      };
       config.install.modules.nixos =
         { pkgs, config, ... }: let
           cfg = top.config.install.getWrapperConfig config;
