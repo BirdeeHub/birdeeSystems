@@ -1,48 +1,15 @@
-{
-  config,
-  lib,
-  wlib,
-  pkgs,
-  ...
-}:
+{ config, lib, wlib, pkgs, ... }:
 # If shell is null, the default, it wont be a sourceable script
 # It will be like the normal starship command, which returns a string to source yourself.
-
 # If shell is not null, produces a SOURCEABLE file
 # which exports STARSHIP_CONFIG and then evals the prompt command
 # This is because remembering which way to source it for which shell is obnoxious
-let
-  tomlFmt = pkgs.formats.toml { };
-in
 {
-  imports = [ wlib.modules.default ];
+  imports = [ wlib.wrapperModules.starship ];
   options = {
-    settings = lib.mkOption {
-      type = tomlFmt.type;
-      default = { };
-      description = "Starship configuration as a Nix attribute set. See https://starship.rs/config/";
-      example = {
-        add_newline = false;
-        character = {
-          success_symbol = "[>](bold green)";
-          error_symbol = "[x](bold red)";
-        };
-        directory = {
-          truncation_length = 3;
-        };
-      };
-    };
-
     # TODO: make nushell work
     shell = lib.mkOption {
-      type = lib.types.nullOr (
-        lib.types.enum [
-          "bash"
-          "zsh"
-          "fish"
-          "nu"
-        ]
-      );
+      type = lib.types.nullOr (lib.types.enum [ "bash" "zsh" "fish" "nu" ]);
       default = null;
       description = ''
         If null, this module just wraps starship with config,
@@ -56,12 +23,6 @@ in
         fish: `source ''${this}/bin/''${this.meta.mainProgram}`
         nu: `source ''${this}/bin/''${this.meta.mainProgram}`
       '';
-    };
-
-    configFile = lib.mkOption {
-      type = wlib.types.file pkgs;
-      default.path = tomlFmt.generate "starship.toml" config.settings;
-      description = "The starship configuration file. By default, this is generated from `config.settings`";
     };
   };
 
@@ -94,7 +55,7 @@ in
         else if config.shell == "nu" then
           /* bash */ ''
             echo 'mkdir ($nu.data-dir | path join "vendor/autoload")' > "$out/bin/${config.binName}"
-            echo '$env.STARSHIP_CONFIG = ${wlib.escapeShellArgWithEnv config.configFile.path}' >> "$out/bin/${config.binName}"
+            echo '$env.STARSHIP_CONFIG = ${wlib.escapeShellArgWithEnv config.constructFiles."starship.toml".path}' >> "$out/bin/${config.binName}"
             echo '$env.STARSHIP_SHELL = "nu"' >> "$out/bin/${config.binName}"
             echo "$out/bin/.OG-${config.binName} | save -f (\$nu.data-dir | path join \"vendor/autoload/starship.nu\")" >> "$out/bin/${config.binName}"
           ''
@@ -103,23 +64,13 @@ in
       ) + ''
       runHook postBuild
     '');
-    package = lib.mkDefault pkgs.starship;
     runShell = lib.mkIf (config.shell != null && config.shell != "bash" && config.shell != "nu") [
       (
         if config.shell == "fish" then
-          "echo ${lib.escapeShellArg ''set -x STARSHIP_CONFIG ${wlib.escapeShellArgWithEnv config.configFile.path}''}"
+          "echo ${lib.escapeShellArg ''set -x STARSHIP_CONFIG ${wlib.escapeShellArgWithEnv config.constructFiles."starship.toml".path}''}"
         else
-          "echo ${lib.escapeShellArg "export ${wlib.escapeShellArgWithEnv "STARSHIP_CONFIG=${config.configFile.path}"}"}"
+          "echo ${lib.escapeShellArg "export ${wlib.escapeShellArgWithEnv "STARSHIP_CONFIG=${config.constructFiles."starship.toml".path}"}"}"
       )
     ];
-    env.STARSHIP_SHELL = lib.mkIf (config.shell != null) {
-      data = config.shell;
-      esc-fn = wlib.escapeShellArgWithEnv;
-    };
-    env.STARSHIP_CONFIG = {
-      data = config.configFile.path;
-      esc-fn = wlib.escapeShellArgWithEnv;
-    };
-    meta.maintainers = [ wlib.maintainers.birdee ];
   };
 }
