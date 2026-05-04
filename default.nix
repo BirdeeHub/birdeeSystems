@@ -32,7 +32,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
         inherit (util) moduleNamespace;
       };
     };
-    flake.formatter = nixpkgs.lib.genAttrs config.systems (system: inputs.birdeevim.formatter.${system});
     flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
     perSystem =
       {
@@ -60,9 +59,10 @@ flake-parts.lib.mkFlake { inherit inputs; } (
           overlays = top.config.flake.overlist;
           config.allowUnfree = true;
         };
-
+        formatter = inputs.birdeevim.formatter.${system};
+        bundlers.default = nix-appimage.bundlers.${system}.default;
+        bundlers.app-image = nix-appimage.bundlers.${system}.default;
         # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
-
         packages = {
           inherit (pkgs)
             dep-tree
@@ -79,9 +79,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
             wrapZSH = lib.mkDefault true;
           };
         };
-
-        bundlers.default = nix-appimage.bundlers.${system}.default;
-        bundlers.app-image = nix-appimage.bundlers.${system}.default;
 
         # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
         homeConfigurations = {
