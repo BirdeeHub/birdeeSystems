@@ -56,7 +56,6 @@
     nixToLua.url = "github:BirdeeHub/nixtoLua";
     shelua.url = "github:BirdeeHub/shelua";
     shelua.inputs.nixpkgs.follows = "nixpkgs";
-    shelua.inputs.n2l.follows = "nixToLua";
     nix-appimage.url = "github:ralismark/nix-appimage";
     nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.inputs.flake-utils.follows = "flake-utils";
