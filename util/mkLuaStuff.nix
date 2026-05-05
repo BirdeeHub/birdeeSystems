@@ -1,4 +1,20 @@
 { mkRecBuilder, inputs, pipe, ... }: with builtins; rec {
+  mkLuaEmbed = callPackage: arguments: let
+    mkLuaEmbedWcallPackage = {
+      runCommandCC,
+      luajit,
+      LUA ? luajit,
+      ...
+    }: let
+    in runCommandCC "lua_embed" {
+      inherit LUA;
+      src = ./lua_embed.c;
+    } ''
+      mkdir -p $out
+      $CC -x c -fPIC -shared -I"$LUA/include" -o $out/embed.so $src
+    '';
+  in callPackage mkLuaEmbedWcallPackage arguments;
+
   compile_lua_dir = {
     name ? "REPLACE_ME",
     LUA_SRC,

@@ -1273,19 +1273,16 @@
     },
     "shelua": {
       "inputs": {
-        "n2l": [
-          "nixToLua"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1776133122,
-        "narHash": "sha256-urGLEtqmkoDmFAjYSZmS/VUjmOtHZLUNURfomwk8318=",
+        "lastModified": 1778014533,
+        "narHash": "sha256-GyIkaF5CmYcXuyqIp0i9t1U5owAHM5Y8G+8vVY1FfQU=",
         "owner": "BirdeeHub",
         "repo": "shelua",
-        "rev": "3b6df6953963022ffe6c89876593a8122eec965e",
+        "rev": "f13dcf33eef5f0ec00d7c01fb3a5916a6ac41562",
         "type": "github"
       },
       "original": {

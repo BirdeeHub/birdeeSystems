@@ -6,7 +6,7 @@ import ./import.nix
   # use callPackage
   backup_rotator = ./backup_rotator.nix;
 
-  inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs pipe; }) compile_lua_dir mkLuaApp;
+  inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs pipe; }) compile_lua_dir mkLuaApp mkLuaEmbed;
 
   inherit (inputs.nixToLua) mkEnum;
 
