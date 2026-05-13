@@ -157,7 +157,7 @@ in {
     # gnome.gnome-software
     steam
     heroic
-    lutris
+    # lutris
     wineWow64Packages.stable
     winetricks
     python3

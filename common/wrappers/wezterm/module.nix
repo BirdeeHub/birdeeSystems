@@ -97,6 +97,14 @@
             "exec ${if config.launcher == null then "${config.tmux.wrapper}/bin/tx" else config.launcher}"
           ];
       };
+      config.luaEnv = (lp: with lp; let
+        overridename = input: name: (inputs.${input}.packages.x86_64-linux.${name}.override { inherit (lp) buildLuarocksPackage; });
+      in [
+        inspect
+        (overridename "tomlua" "luajit-tomlua")
+        (overridename "osenv" "luajit-osenv")
+        (overridename "shelua" "sheluajit")
+      ]);
       config.extraPackages = [ config.tmux.wrapper ];
       config.runShell = [
         "declare -f __bp_install_after_session_init && source '${placeholder "out"}/etc/profile.d/wezterm.sh'"

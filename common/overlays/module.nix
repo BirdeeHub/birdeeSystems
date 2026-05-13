@@ -52,7 +52,8 @@
     nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
     shelua = inputs.shelua.overlays.default;
-    tomlua = inputs.birdeevim.inputs.tomlua.overlays.default;
+    tomlua = inputs.tomlua.overlays.default;
+    lua-osenv = inputs.osenv.overlays.default;
 
     # wrapper modules
     # git_with_config = final: prev: {

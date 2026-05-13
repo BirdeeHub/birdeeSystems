@@ -54,8 +54,15 @@
     maximizer.url = "github:BirdeeHub/maximizer";
     maximizer.inputs.nixpkgs.follows = "nixpkgs";
     nixToLua.url = "github:BirdeeHub/nixtoLua";
+    # shelua.url = "git+file:/home/birdee/Projects/shelua";
     shelua.url = "github:BirdeeHub/shelua";
     shelua.inputs.nixpkgs.follows = "nixpkgs";
+    # osenv.url = "git+file:/home/birdee/Projects/lua-osenv";
+    osenv.url = "github:BirdeeHub/lua-osenv";
+    osenv.inputs.nixpkgs.follows = "nixpkgs";
+    # tomlua.url = "git+file:/home/birdee/Projects/tomlua";
+    tomlua.url = "github:BirdeeHub/tomlua";
+    tomlua.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.url = "github:ralismark/nix-appimage";
     nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.inputs.flake-utils.follows = "flake-utils";

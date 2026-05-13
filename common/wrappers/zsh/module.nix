@@ -124,7 +124,17 @@
         ${pkgs.nix-search-cli}/bin/nix-search -q  "package_description:("$@")"
       ''}";
       autorepl = "${pkgs.writeShellScript "autorepl" ''
-        exec nix repl --show-trace --expr 'rec { wlib = (import ${inputs.wrappers.outPath} { inherit pkgs; }).lib; pkgs = import ${inputs.nixpkgs.outPath} { system = "${pkgs.stdenv.hostPlatform.system}"; config.allowUnfree = true; }; lib = pkgs.lib; }' "$@"
+        exec nix repl --show-trace --file ${pkgs.writeText "expr.nix" /* nix */ ''
+          let system_flake = builtins.getFlake ${inputs.self.outPath}; in rec {
+            lib = pkgs.lib;
+            wlib = (import ${inputs.wrappers.outPath} { inherit pkgs; }).lib;
+            pkgs = import ${inputs.nixpkgs.outPath} {
+              system = "${pkgs.stdenv.hostPlatform.system}";
+              config.allowUnfree = true;
+              overlays = system_flake.overlist;
+            };
+          }
+        ''} "$@"
       ''}";
       yolo = ''${git}/bin/git add . && ${git}/bin/git commit -m "$(curl -fsSL https://whatthecommit.com/index.txt)" -m '(auto-msg whatthecommit.com)' -m "$(${git}/bin/git status)" && ${git}/bin/git push'';
       yoloAI = ''${git}/bin/git add . && ${git}/bin/git commit -m "$(${prompt})" && ${git}/bin/git push'';
