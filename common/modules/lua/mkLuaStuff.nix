@@ -25,8 +25,8 @@
         cp -f "$file" "$outdir"
       fi
     '';
-    env_path = pipe lua_interpreter.LuaPathSearchPaths [ head (split "[\/][?]") head ];
-    env_cpath = pipe lua_interpreter.LuaCPathSearchPaths [ head (split "[\/][?]") head ];
+    env_path = pipe lua_interpreter.LuaPathSearchPaths [ head (split "[?]") head dirOf ];
+    env_cpath = pipe lua_interpreter.LuaCPathSearchPaths [ head (split "[?]") head dirOf ];
     mknixluavals = ''echo 'return ${lib.generators.toLua { } miscNixVals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
     app = mkDerivation (finalAttrs: {
       inherit name;
@@ -45,54 +45,5 @@
       '';
     });
   in lua_interpreter.pkgs.luaLib.toLuaModule app;
-
-  mkLuaApp = callPackage: arguments: let
-    mkLuaAppWcallPackage = {
-      lib
-      , stdenv
-      , makeWrapper
-      , lua5_2
-      # args below:
-      , LUA_SRC
-      , CPATH_DIR ? null
-      , lua_interpreter ? lua5_2
-      , lua_packages ? (_:[])
-      , extraLuaPackages ? (_:[])
-      , APPNAME ? "REPLACE_ME"
-      , wrapperArgs ? []
-      , miscNixVals ? {}
-      , ...
-    }: let
-      compiled = lib.makeOverridable compile_lua_dir {
-        name = APPNAME;
-        inherit (stdenv) mkDerivation;
-        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals;
-      };
-      app_final = stdenv.mkDerivation (let
-        luaEnv = compiled.luaModule.withPackages (_: [ compiled ]);
-      in {
-        name = APPNAME;
-        src = compiled;
-        nativeBuildInputs = [ makeWrapper ];
-        propagatedBuildInputs = [ compiled ];
-        passthru = {
-          inherit luaEnv;
-          unwrapped = compiled;
-        };
-        buildPhase = /*bash*/''
-          runHook preBuild
-          mkdir -p $out/bin
-          echo '#!${luaEnv.interpreter}' > $out/bin/${APPNAME}
-          echo ${lib.escapeShellArg "require(${lib.generators.toLua {} APPNAME})"} >> $out/bin/${APPNAME}
-          chmod +x $out/bin/${APPNAME}
-          runHook postBuild
-        '';
-        postFixup = /*bash*/''
-          wrapProgram $out/bin/${APPNAME} ${concatStringsSep " " wrapperArgs}
-        '';
-      });
-    in
-    lua_interpreter.pkgs.luaLib.toLuaModule app_final;
-  in callPackage mkLuaAppWcallPackage arguments;
 
 }
