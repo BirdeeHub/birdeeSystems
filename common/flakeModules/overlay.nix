@@ -53,7 +53,7 @@ in {
                 ))
                 (builtins.zipAttrsWith (_: vs: vs))
                 (builtins.mapAttrs (
-                  n: list: (lib.attrByPath [ n "override" ] null prev.luaInterpreters) (old: {
+                  n: list: prev.luaInterpreters.${n}.override (old: {
                     packageOverrides = lib.composeManyExtensions ((lib.optional (old ? packageOverrides) old.packageOverrides) ++ list);
                   })
                 ))

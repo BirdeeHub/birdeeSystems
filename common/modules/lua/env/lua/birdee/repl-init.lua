@@ -2,18 +2,20 @@ local colors = require 'term.colors'
 local char   = require "sirocco.char"
 local default = require 'croissant.conf'
 
-local function colorToEscapeCode(color)
+local M = {}
+
+function M.colorToEscapeCode(color)
     if type(color) == "string" then
-        return colors[c]
+        return colors[color]
     end
-    local color = ""
-    for _, c in ipairs(v) do
-        color = color .. colors[c]
+    local res = ""
+    for _, c in ipairs(color) do
+        res = res .. (colors[c] or "")
     end
-    return color
+    return res
 end
 
-local function renderReplKeybinds(keybinds)
+function M.renderReplKeybinds(keybinds)
     local res = {}
     for command, bindings in pairs(keybinds) do
         local bds = {}
@@ -32,3 +34,10 @@ local function renderReplKeybinds(keybinds)
     end
     return res
 end
+
+function M.initRepl()
+    default.syntaxColors.identifier = M.colorToEscapeCode 'cyan'
+    require('croissant.repl')()
+end
+
+return M
