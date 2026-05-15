@@ -32,13 +32,14 @@ in {
     lua-embed = {
       data = null;
       lua = lself: lprev: {
-        embed = lself.callPackage ./embed { };
+        embed = lself.callPackage ./embed { inherit util; };
       };
     };
     croissant = {
       data = null;
       lua = lself: lprev: {
         croissant = lself.callPackage generated.croissant { };
+        repl-init = lself.callPackage ./repl-init { inherit util; };
         sirocco = (lself.callPackage generated.sirocco { }).overrideAttrs (oa: {
           # fetchFromGitHub absolutely refuses to fetch submodules
           src = (lself.callPackage ({ fetchgit }: fetchgit) {}) {
@@ -72,6 +73,7 @@ in {
         luasocket
         fennel
         fn_finder
+        repl-init
         embed
         croissant
       ]

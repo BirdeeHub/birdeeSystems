@@ -9,6 +9,8 @@ import ./import.nix
 
   pipe = builtins.foldl' (x: f: f x);
 
+  getLuaLoc = luaSearchList: pipe luaSearchList [ head (split "[?]") head dirOf ];
+
   filterAttrs =
     pred: set:
     removeAttrs set (builtins.filter (name: !pred name set.${name}) (builtins.attrNames set));
