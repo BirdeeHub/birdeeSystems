@@ -1,14 +1,9 @@
-inputs:
 with builtins;
 import ./import.nix
 // rec {
 
   # use callPackage
   backup_rotator = ./backup_rotator.nix;
-
-  inherit (import ./mkLuaStuff.nix { inherit mkRecBuilder inputs pipe; }) compile_lua_dir mkLuaApp mkLuaEmbed;
-
-  inherit (inputs.nixToLua) mkEnum;
 
   linkFarmPair = name: path: { inherit name path; };
 

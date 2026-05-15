@@ -1,4 +1,5 @@
 { moduleNamespace, util, inputs, ... }: { lib, ... }: let
+  mkLuaStuff = import ./mkLuaStuff.nix util;
   generated = let
     files = lib.pipe ./luarocks [
       lib.filesystem.listFilesRecursive
@@ -28,6 +29,12 @@ in {
     tomlua = inputs.tomlua.overlays.default;
     lua-osenv = inputs.osenv.overlays.default;
     fn_finder = inputs.fn_finder.overlays.default;
+    lua-embed = {
+      data = null;
+      lua = lself: lprev: {
+        embed = lself.callPackage ./embed { };
+      };
+    };
     croissant = {
       data = null;
       lua = lself: lprev: {
@@ -65,6 +72,7 @@ in {
         luasocket
         fennel
         fn_finder
+        embed
         croissant
       ]
     );

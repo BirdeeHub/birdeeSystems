@@ -1,20 +1,4 @@
-{ mkRecBuilder, inputs, pipe, ... }: with builtins; rec {
-  mkLuaEmbed = callPackage: arguments: let
-    mkLuaEmbedWcallPackage = {
-      runCommandCC,
-      luajit,
-      LUA ? luajit,
-      ...
-    }: let
-    in runCommandCC "lua_embed" {
-      inherit LUA;
-      src = ./lua_embed.c;
-    } ''
-      mkdir -p $out
-      $CC -x c -fPIC -shared -I"$LUA/include" -o $out/embed.so $src
-    '';
-  in callPackage mkLuaEmbedWcallPackage arguments;
-
+{ mkRecBuilder, pipe, ... }: with builtins; rec {
   compile_lua_dir = {
     name ? "REPLACE_ME",
     LUA_SRC,
@@ -26,7 +10,6 @@
     mkDerivation,
     ...
     }: let
-    inherit (inputs.nixToLua) toLua;
     luaFileAction = /*bash*/''
       local file=$1
       local outdir=$2
@@ -44,8 +27,7 @@
     '';
     env_path = pipe lua_interpreter.LuaPathSearchPaths [ head (split "[\/][?]") head ];
     env_cpath = pipe lua_interpreter.LuaCPathSearchPaths [ head (split "[\/][?]") head ];
-    nixluavals = if isFunction toLua then toLua miscNixVals else "";
-    mknixluavals = ''echo 'return ${nixluavals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
+    mknixluavals = ''echo 'return ${lib.generators.toLua { } miscNixVals}' > $out/${env_path}/NIX_${name}_VALUES.lua'';
     app = mkDerivation (finalAttrs: {
       inherit name;
       src = LUA_SRC;
@@ -54,7 +36,7 @@
       buildPhase = ''
         runHook preBuild
         ${mkRecBuilder { action = luaFileAction; src = "$src"; outdir = "$out/${env_path}"; }}
-        ${if isFunction toLua then mknixluavals else ""}
+        ${mknixluavals}
         ${if CPATH_DIR == null then "" else ''
           mkdir -p $out/${env_cpath}
           cp -r ${CPATH_DIR}/* $out/${env_cpath}
@@ -81,11 +63,10 @@
       , miscNixVals ? {}
       , ...
     }: let
-      inherit (inputs.nixToLua) toLua;
       compiled = lib.makeOverridable compile_lua_dir {
         name = APPNAME;
         inherit (stdenv) mkDerivation;
-        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals toLua;
+        inherit lua_interpreter lua_packages extraLuaPackages LUA_SRC CPATH_DIR miscNixVals;
       };
       app_final = stdenv.mkDerivation (let
         luaEnv = compiled.luaModule.withPackages (_: [ compiled ]);
@@ -102,7 +83,7 @@
           runHook preBuild
           mkdir -p $out/bin
           echo '#!${luaEnv.interpreter}' > $out/bin/${APPNAME}
-          echo ${lib.escapeShellArg "require(${toLua APPNAME})"} >> $out/bin/${APPNAME}
+          echo ${lib.escapeShellArg "require(${lib.generators.toLua {} APPNAME})"} >> $out/bin/${APPNAME}
           chmod +x $out/bin/${APPNAME}
           runHook postBuild
         '';

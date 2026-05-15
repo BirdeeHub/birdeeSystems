@@ -7,7 +7,7 @@
   ...
 }@inargs:
 let
-  util = import ./util inargs // {
+  util = import ./util // {
     wlib = inargs.wrappers.lib;
     flake-path = "/home/birdee/birdeeSystems";
     moduleNamespace = "birdeeMods";
