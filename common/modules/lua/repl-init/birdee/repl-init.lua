@@ -39,6 +39,7 @@ function M.initRepl()
     default.syntaxColors.identifier = M.colorToEscapeCode 'cyan'
     os.sh = require('sh')
     os.env = require('osenv')
+    _G.uv = require('luv')
     require('croissant.repl')()
 end
 
