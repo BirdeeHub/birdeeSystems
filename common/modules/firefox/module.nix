@@ -21,6 +21,7 @@
           in
           {
             enable = true;
+            configPath = "${config.xdg.configHome}/mozilla/firefox";
             profiles.birdee = {
               isDefault = true;
               name = "birdee";

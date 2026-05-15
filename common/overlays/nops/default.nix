@@ -1,6 +1,5 @@
-inputs: importName:
-(
-  final: prev: let
+inputs: {
+  overlays.nops = final: prev: let
     manix = inputs.manix.packages.${prev.stdenv.hostPlatform.system}.manix.overrideAttrs {
       patches = [
         (prev.replaceVars ./patchManix4Flake.diff {
@@ -9,12 +8,12 @@ inputs: importName:
       ];
     };
     manixFZF = { lib, writeShellScriptBin, manix, gnused, gnugrep, fzf, findutils }:
-      writeShellScriptBin importName ''
+      writeShellScriptBin "nops" ''
         export PATH="${lib.makeBinPath [ manix gnused gnugrep fzf findutils ]}:$PATH"
         manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
       '';
   in {
-    ${importName} = final.callPackage manixFZF { };
+    nops = final.callPackage manixFZF { };
     inherit manix;
-  }
-)
+  };
+}

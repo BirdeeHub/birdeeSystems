@@ -1,29 +1,10 @@
 { inputs, util, ... }:
-# let
-#   combinepkgs =
-#     fromPrev: final: prev:
-#     final
-#     // (builtins.listToAttrs (
-#       map (name: {
-#         inherit name;
-#         value = prev.${name};
-#       }) fromPrev
-#     ));
-#   wrapmod = extrasFromPrev: {
-#     data = name: final: prev: {
-#       ${name} = inputs.self.wrappers.${name}.wrap {
-#         pkgs = combinepkgs ([ name ] ++ extrasFromPrev) final prev;
-#       };
-#     };
-#     call-data-with-name = true;
-#   };
-# in
 {
+  imports = [ (util.importApply ./nops inputs) ];
   overlays = {
     dep-tree = final: prev: {
       dep-tree = prev.callPackage ./dep-tree.nix { };
     };
-    antifennel = final: prev: { antifennel = prev.callPackage ./antifennel.nix { inherit inputs; }; };
     libvma = {
       enable = false;
       data = final: prev: {
@@ -44,44 +25,8 @@
       data = import ./pinnedVersions.nix inputs;
       enable = false;
     };
-    nops = {
-      call-data-with-name = true;
-      data = import ./nops inputs;
-    };
     nerd-fonts-compat = import ./nerd-fonts-compat.nix;
     nur = inputs.nur.overlays.default or inputs.nur.overlay;
     minesweeper = inputs.minesweeper.overlays.default;
-    shelua = inputs.shelua.overlays.default;
-    tomlua = inputs.tomlua.overlays.default;
-    lua-osenv = inputs.osenv.overlays.default;
-
-    # wrapper modules
-    # git_with_config = final: prev: {
-    #   git_with_config = inputs.self.wrappers.git.wrap { pkgs = final; };
-    # };
-    # ranger = wrapmod [ ];
-    # luakit = wrapmod [ ];
-    # nushell = wrapmod [ ];
-    # bemenu = wrapmod [ ];
-    # opencode = wrapmod [ ];
-    # alacritty = wrapmod [ ];
-    # starship = wrapmod [ ];
-    # tmux = wrapmod [ ];
-    # neovim = wrapmod [ ];
-    # wezterm = wrapmod [ "tmux" ] // {
-    #   before = [ "tmux" ];
-    # };
-    # xplr = {
-    #   before = [ "tmux" ];
-    #   data = final: prev: {
-    #     xplr = inputs.self.wrappers.xplr.wrap {
-    #       pkgs = final // {
-    #         xplr = prev.xplr;
-    #         tmux = prev.tmux;
-    #       };
-    #       termCmd = "${final.wezterm}/bin/wezterm";
-    #     };
-    #   };
-    # };
   };
 }

@@ -1,0 +1,76 @@
+{ moduleNamespace, util, inputs, ... }: { lib, ... }: let
+  generated = let
+    files = lib.pipe ./luarocks [
+      lib.filesystem.listFilesRecursive
+      (builtins.filter (lib.hasSuffix ".nix"))
+      (map (v: { name = lib.removeSuffix ".nix" (baseNameOf v); value = v; }))
+      builtins.listToAttrs
+    ];
+  in files;
+  module = { config, pkgs, lib, _class, ... }: let
+    packages = with pkgs; [
+      inputs.self.packages.${system}.birdeeLua
+      gcc
+      antifennel
+    ];
+    cfg = config.${moduleNamespace}.birdeeLua;
+  in {
+    options.${moduleNamespace}.birdeeLua.enable = lib.mkEnableOption "birdee lua env";
+    config = lib.mkIf cfg.enable {
+      homeManager.home.packages = packages;
+      nixos.environment.systemPackages = packages;
+    }.${_class};
+  };
+in {
+  overlays = {
+    antifennel = final: prev: { antifennel = final.callPackage ./antifennel.nix { inherit inputs; }; };
+    shelua = inputs.shelua.overlays.default;
+    tomlua = inputs.tomlua.overlays.default;
+    lua-osenv = inputs.osenv.overlays.default;
+    fn_finder = inputs.fn_finder.overlays.default;
+    croissant = {
+      data = null;
+      lua = lself: lprev: {
+        croissant = lself.callPackage generated.croissant { };
+        sirocco = (lself.callPackage generated.sirocco { }).overrideAttrs (oa: {
+          # fetchFromGitHub absolutely refuses to fetch submodules
+          src = (lself.callPackage ({ fetchgit }: fetchgit) {}) {
+            url = "https://github.com/giann/sirocco";
+            rev = "b2af2d336e808e763b424d2ea42e6a2c2b4aa24d";
+            hash = "sha256-LcdHV+STHNZzRaw/aoIWi71Gx1t4+7uHVoP9w6Rrc9Y=";
+            fetchSubmodules = true;
+          };
+        });
+        hump = lself.callPackage generated.hump { };
+        wcwidth = lself.callPackage generated.wcwidth { };
+      };
+    };
+  };
+  perSystem = { pkgs, ... }: let
+    luaEnv = pkgs.luajit.withPackages (
+      lp: with lp; [
+        luv
+        shelua
+        tomlua
+        osenv
+        cjson
+        inspect
+        lyaml
+        luarocks-nix
+        lpeg
+        luaossl
+        luazip
+        lua-zlib
+        luafilesystem
+        luasocket
+        fennel
+        fn_finder
+        croissant
+      ]
+    );
+  in {
+    packages.birdeeLua = luaEnv;
+  };
+  flake.modules.homeManager.birdeeLua = module;
+  flake.modules.nixos.birdeeLua = module;
+}

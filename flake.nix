@@ -63,6 +63,9 @@
     # tomlua.url = "git+file:/home/birdee/Projects/tomlua";
     tomlua.url = "github:BirdeeHub/tomlua";
     tomlua.inputs.nixpkgs.follows = "nixpkgs";
+    # fn_finder.url = "git+file:/home/birdee/Projects/fn_finder";
+    fn_finder.url = "github:BirdeeHub/fn_finder";
+    fn_finder.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.url = "github:ralismark/nix-appimage";
     nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.inputs.flake-utils.follows = "flake-utils";

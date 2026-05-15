@@ -8,6 +8,7 @@ in {
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
     nixconfig.enable = true;
+    birdeeLua.enable = true;
   };
   wrappers = {
     neovim.enable = true;
