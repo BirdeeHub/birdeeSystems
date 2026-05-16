@@ -1634,11 +1634,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778900128,
-        "narHash": "sha256-qVZ6gIwX6qi6CWrED2WduTIg+LVBICK/oZ5F7YjokMs=",
+        "lastModified": 1778900241,
+        "narHash": "sha256-WVP9sxYU8oOjIx7AgAcirGH2arY2XXqyIuMSH+w0Qmo=",
         "owner": "BirdeeHub",
         "repo": "shelua",
-        "rev": "e825a55619dc2cd8eb5bbb6a6d8dffcd95bc697c",
+        "rev": "77d96832e30813c2e5d5a49507ad662bc52b03a0",
         "type": "github"
       },
       "original": {
