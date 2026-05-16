@@ -34,6 +34,7 @@
           };
         };
       };
+      config.sourceSensible = true;
       config.colors.green = "#80a0ff";
       config.prefix = "C-Space";
       config.terminal = "xterm-256color";
