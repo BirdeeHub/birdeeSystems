@@ -1,6 +1,6 @@
 local colors = require 'term.colors'
 local char   = require "sirocco.char"
-local default = require 'croissant.conf'
+local conf = require 'croissant.conf'
 
 local M = {}
 
@@ -36,8 +36,8 @@ function M.renderReplKeybinds(keybinds)
 end
 
 function M.initRepl()
-    default.syntaxColors.identifier = M.colorToEscapeCode 'cyan'
-    os.sh = require('sh')({ proper_pipes = true })
+    conf.syntaxColors.identifier = M.colorToEscapeCode 'cyan'
+    _G.sh = require('sh') { proper_pipes = true }
     os.env = require('osenv')
     _G.uv = require('luv')
     require('croissant.repl')()
