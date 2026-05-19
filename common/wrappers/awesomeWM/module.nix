@@ -69,7 +69,7 @@
         default_border_width = 3;
         default_floating_border_width = 1;
       };
-      config.extraPackages =
+      config.runtimePkgs =
         let
           i3lock = util.wlib.wrapPackage {
             inherit pkgs;

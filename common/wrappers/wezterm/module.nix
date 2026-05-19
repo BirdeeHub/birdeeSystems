@@ -105,7 +105,7 @@
         (overridename "osenv" "luajit-osenv")
         (overridename "shelua" "sheluajit")
       ]);
-      config.extraPackages = [ config.tmux.wrapper ];
+      config.runtimePkgs = [ config.tmux.wrapper ];
       config.runShell = [
         "declare -f __bp_install_after_session_init && source '${placeholder "out"}/etc/profile.d/wezterm.sh'"
       ];

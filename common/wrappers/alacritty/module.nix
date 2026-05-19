@@ -19,7 +19,7 @@
         type = lib.types.nullOr lib.types.package;
         default = null;
       };
-      config.extraPackages = lib.mkIf (config.tmuxPackage != null) [ config.tmuxPackage ];
+      config.runtimePkgs = lib.mkIf (config.tmuxPackage != null) [ config.tmuxPackage ];
       options.zsh = lib.mkOption {
         type = wlib.types.subWrapperModule [
           inputs.self.wrapperModules.zsh
