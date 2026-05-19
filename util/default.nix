@@ -5,6 +5,8 @@ import ./import.nix
   # use callPackage
   backup_rotator = ./backup_rotator.nix;
 
+  mkLuaOverlay = import ./mkLuaOverlay.nix;
+
   linkFarmPair = name: path: { inherit name path; };
 
   pipe = builtins.foldl' (x: f: f x);
