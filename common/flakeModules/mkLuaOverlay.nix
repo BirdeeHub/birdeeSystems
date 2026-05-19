@@ -29,34 +29,4 @@ in {
       })
     ))
   ];
-  inherit (final.luaInterpreters)
-  lua5_1
-  lua5_2
-  lua5_2_compat
-  lua5_3
-  lua5_3_compat
-  lua5_4
-  lua5_4_compat
-  lua5_5
-  lua5_5_compat
-  luajit_2_1
-  luajit_2_0
-  luajit_openresty;
-
-  lua5 = final.lua5_2_compat;
-  lua = final.lua5;
-  lua51Packages = prev.lib.recurseIntoAttrs final.lua5_1.pkgs;
-  lua52Packages = prev.lib.recurseIntoAttrs final.lua5_2.pkgs;
-  lua53Packages = prev.lib.recurseIntoAttrs final.lua5_3.pkgs;
-  lua54Packages = prev.lib.recurseIntoAttrs final.lua5_4.pkgs;
-  lua55Packages = prev.lib.recurseIntoAttrs final.lua5_5.pkgs;
-  luajitPackages = prev.lib.recurseIntoAttrs final.luajit.pkgs;
-  luaPackages = final.lua52Packages;
-  luajit = final.luajit_2_1;
-  emiluaPlugins = prev.lib.recurseIntoAttrs (final.callPackage ./emilua-plugins.nix {} (final.callPackage ../development/interpreters/emilua {}));
-  inherit (final.emiluaPlugins) emilua;
-  luarocks = final.luaPackages.luarocks;
-  luarocks-nix = final.luaPackages.luarocks-nix;
-  toluapp = final.callPackage ../development/tools/toluapp { lua = final.lua5_1; };
-  ${if prev.lib.isFunction vimPlugins then "vimPlugins" else null} = prev.vimPlugins // vimPlugins final prev;
 }
