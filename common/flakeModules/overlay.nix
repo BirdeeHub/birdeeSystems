@@ -29,7 +29,7 @@ in {
         modules = [
           (let
             mappedSpecs = lib.pipe config.overlays [
-              (lib.filterAttrs (_: v: v.enable || (v.data != null && v.lua != null)))
+              (lib.filterAttrs (_: v: v.enable && (v.data != null || v.lua != null)))
               (builtins.mapAttrs (_: v: v // {
                 lua = if v.lua == null then [] else [ (util.mkLuaOverlay v.lua) ];
                 data = if v.data == null then [] else [ v.data ];
