@@ -11,7 +11,6 @@
   assert builtins.isList versions || throw "lua versions must be a list of strings containing `lua.luaAttr` names corresponding to `pkgs.luaInterpreters`!";
   assert controlType == "build" || controlType == "exclude" || throw ''controlType must be "build" or "exclude"'';
 final: prev: {
-  # https://github.com/NixOS/nixpkgs/blob/dd950ec2fda73b76273d3812a1a5cf35c77b4b69/pkgs/top-level/all-packages.nix#L4866-L4907
   luaInterpreters = prev.luaInterpreters // prev.lib.pipe (
     if controlType == "build" then
       prev.lib.intersectLists versions (builtins.attrNames prev.luaInterpreters)
