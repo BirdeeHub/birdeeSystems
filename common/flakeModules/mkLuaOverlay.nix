@@ -29,4 +29,5 @@ in {
       })
     ))
   ];
+  ${if prev.lib.isFunction vimPlugins then "vimPlugins" else null} = prev.vimPlugins // vimPlugins final prev;
 }
