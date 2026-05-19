@@ -31,14 +31,12 @@ in {
     fn_finder = inputs.fn_finder.overlays.default;
     lua-embed = {
       data = null;
-      before = [ "shelua" "tomlua" "lua-osenv" "fn_finder" ];
       lua = lself: lprev: {
         embed = lself.callPackage ./embed { inherit util; };
       };
     };
     croissant = {
       data = null;
-      before = [ "shelua" "tomlua" "lua-osenv" "fn_finder" ];
       lua = lself: lprev: {
         croissant = lself.callPackage generated.croissant { };
         repl-init = lself.callPackage ./repl-init { inherit util; };
