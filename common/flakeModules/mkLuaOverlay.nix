@@ -1,7 +1,7 @@
 {
-  # takes a lua packageOverrides overlay or a list of them
+  # takes a lua packageOverrides overlay
   packageOverrides,
-  # takes the same types, but it is a top level overlay, and null to disable
+  # takes an overlay but which the returned values are placed into vimPlugins instead
   vimPlugins ? null,
   # lua versions control
   versions ? [],
