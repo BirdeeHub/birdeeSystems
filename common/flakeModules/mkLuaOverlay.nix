@@ -19,14 +19,19 @@ let
         builtins.attrNames
         (builtins.filter (x: !builtins.elem x versions))
       ];
+    final-overrides = prev.lib.pipe packageOverrides [
+      (if packageOverrides == null then [] else packageOverrides)
+      prev.lib.toList
+      prev.lib.flatten
+    ];
   in {
     # https://github.com/NixOS/nixpkgs/blob/dd950ec2fda73b76273d3812a1a5cf35c77b4b69/pkgs/top-level/all-packages.nix#L4866-L4907
     luaInterpreters = prev.luaInterpreters // prev.lib.pipe final-versions [
-      (map (v: prev.lib.nameValuePair v (prev.lib.flatten (prev.lib.toList packageOverrides))))
+      (map (v: prev.lib.nameValuePair v final-overrides))
       builtins.listToAttrs
       (builtins.mapAttrs (
         n: list: prev.luaInterpreters.${n}.override (old: {
-          packageOverrides = prev.lib.composeManyExtensions (old.packageOverrides or [] ++ list);
+          packageOverrides = prev.lib.composeManyExtensions ((prev.lib.toList (old.packageOverrides or [])) ++ list);
         })
       ))
     ];
