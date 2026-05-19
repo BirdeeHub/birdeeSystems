@@ -16,10 +16,7 @@ final: prev: {
     if controlType == "build" then
       prev.lib.intersectLists versions (builtins.attrNames prev.luaInterpreters)
     else
-      prev.lib.pipe prev.luaInterpreters [
-        builtins.attrNames
-        (builtins.filter (x: !builtins.elem x versions))
-      ]
+      builtins.filter (x: !builtins.elem x versions) (builtins.attrNames prev.luaInterpreters)
   ) [
     (map (v: prev.lib.nameValuePair v packageOverrides))
     builtins.listToAttrs
