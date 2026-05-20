@@ -54,58 +54,52 @@ in {
       };
     };
   };
-  perSystem = { pkgs, ... }: let
-    luaEnv = util.wlib.wrapPackage [
-      { inherit pkgs; }
-      ({ pkgs, config, wlib, lib, ... }: {
-        options.withPackages = lib.mkOption {
-          type = wlib.types.withPackagesType;
-          default = lp: [];
-        };
-        config.package = pkgs.luajit;
-        options.overrides = lib.mkOption {
-          type = wlib.types.seriesOf (wlib.types.spec {
-            after = lib.mkDefault [ "SetupWithPackages" ];
-          });
-        };
-        config.wrapperVariants.lua-repl = {
-          exePath = config.exePath;
-          flags."-e" = ''require("birdee.repl-init").initRepl()'';
-        };
-        config.overrides = [
-          {
-            name = "SetupWithPackages";
-            type = null;
-            data = package:
-              (util.wlib.makeCustomizable "withPackages" { mergeArgs = og: new: lp: og lp ++ new lp; } package.withPackages (
-                lp: with lp; [
-                  luv
-                  shelua
-                  tomlua
-                  osenv
-                  cjson
-                  inspect
-                  lyaml
-                  luarocks-nix
-                  lpeg
-                  luaossl
-                  luazip
-                  lua-zlib
-                  luafilesystem
-                  luasocket
-                  fennel
-                  fn_finder
-                  repl-init
-                  embed
-                  croissant
-                ]
-              )).withPackages config.withPackages;
-          }
-        ];
-      })
+  flake.wrappers.birdeeLua = { pkgs, config, wlib, lib, ... }: {
+    imports = [ wlib.modules.default ];
+    options.withPackages = lib.mkOption {
+      type = wlib.types.withPackagesType;
+      default = lp: [];
+    };
+    config.package = pkgs.luajit;
+    options.overrides = lib.mkOption {
+      type = wlib.types.seriesOf (wlib.types.spec {
+        after = lib.mkDefault [ "SetupWithPackages" ];
+      });
+    };
+    config.wrapperVariants.lua-repl = {
+      exePath = config.exePath;
+      flags."-e" = ''require("birdee.repl-init").initRepl()'';
+    };
+    config.overrides = [
+      {
+        name = "SetupWithPackages";
+        type = null;
+        data = package:
+          (util.wlib.makeCustomizable "withPackages" { mergeArgs = og: new: lp: og lp ++ new lp; } package.withPackages (
+            lp: with lp; [
+              luv
+              shelua
+              tomlua
+              osenv
+              cjson
+              inspect
+              lyaml
+              luarocks-nix
+              lpeg
+              luaossl
+              luazip
+              lua-zlib
+              luafilesystem
+              luasocket
+              fennel
+              fn_finder
+              repl-init
+              embed
+              croissant
+            ]
+          )).withPackages config.withPackages;
+      }
     ];
-  in {
-    packages.birdeeLua = luaEnv;
   };
   flake.modules.homeManager.birdeeLua = module;
   flake.modules.nixos.birdeeLua = module;
