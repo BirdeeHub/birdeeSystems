@@ -11,7 +11,7 @@ in {
     mkdir -p $out/$LUA_PATH_DIR
     mkdir -p $out/fnl
     cp -r $src/fnl/birdee $out/fnl
-    cp -r $src/birdee $out/$LUA_PATH_DIR/
+    cp -r $src/lua/birdee $out/$LUA_PATH_DIR/
     runHook postBuild;
   '';
 }))
