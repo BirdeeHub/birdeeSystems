@@ -1,23 +1,52 @@
 local uv = vim and (vim.uv or vim.loop) or require("luv")
 
 --- vim.system modified slightly
+--- namely, write can take a function for a stream
+--- and write_many exists
 
 --- @class Shelua.SystemOpts
+---
+--- If `true`, then a pipe to stdin is opened and can be written to via the `write()` method to
+--- SystemObj. If `string` or `string[]` then will be written to stdin and closed.
 --- @field stdin? string|string[]|true
+---
+--- Handle output from stdout.
+--- (Default: `true`)
 --- @field stdout? fun(err:string?, data: string?)|false
+---
+--- Handle output from stderr.
+--- (Default: `true`)
 --- @field stderr? fun(err:string?, data: string?)|false
+---
+--- Set the current working directory for the sub-process.
 --- @field cwd? string
+---
+--- Set environment variables for the new process. Inherits the current environment with `NVIM` set
+--- to |v:servername|.
 --- @field env? table<string,string|number>
+---
+--- If `true`, then a pipe to stdin is opened and can be written to via the `write()` method to
+--- SystemObj. If `string` or `string[]` then will be written to stdin and closed.
 --- @field clear_env? boolean
+---
+--- Handle stdout and stderr as text. Normalizes line endings by replacing `\r\n` with `\n`.
 --- @field text? boolean
+---
+--- Run the command with a time limit in ms. Upon timeout the process is sent the TERM signal (15)
+--- and the exit code is set to 124.
 --- @field timeout? integer Timeout in ms
+---
+--- Spawn the child process in a detached state - this will make it a process group leader, and will
+--- effectively enable the child to keep running after the parent exits. Note that the child process
+--- will still keep the parent's event loop alive unless the parent process calls [uv.unref()] on
+--- the child's process handle.
 --- @field detach? boolean
 
 --- @class Shelua.SystemCompleted
 --- @field code integer
 --- @field signal integer
---- @field stdout? string
---- @field stderr? string
+--- @field stdout? string `nil` if stdout is disabled or has a custom handler.
+--- @field stderr? string `nil` if stderr is disabled or has a custom handler.
 --- @field cwd? string
 
 --- @class Shelua.SystemState
@@ -72,6 +101,15 @@ local function new_systemobj(state)
   }, { __index = SystemObj })
 end
 
+--- Sends a signal to the process.
+---
+--- The signal can be specified as an integer or as a string.
+---
+--- Example:
+--- ```lua
+--- local obj = vim.system({'sleep', '10'})
+--- obj:kill('TERM') -- sends SIGTERM to the process
+---
 --- @param signal integer|string
 function SystemObj:kill(signal)
   self._state.handle:kill(signal)
@@ -84,12 +122,13 @@ function SystemObj:_timeout(signal)
   self:kill(signal or SIG.TERM)
 end
 --- Waits for a condition to be true or timeout.
+--- vim.wait polyfill
 --- @param timeout integer: maximum time to wait (in ms)
 --- @param callback fun(): boolean function
 --- @param interval? integer: how often to poll (in ms)
 --- @param fast_return? boolean: run check immediately first
 --- @return boolean: true if condition met, false if timed out
-local function wait_loop(timeout, callback, interval, fast_return)
+local wait_loop = (vim or {}).wait or function(timeout, callback, interval, fast_return)
   interval = interval or 1
   local start = uv.now()
   local done = false
@@ -120,12 +159,29 @@ end
 -- Use max 32-bit signed int value to avoid overflow on 32-bit systems. #31633
 local MAX_TIMEOUT = 2 ^ 31 - 1
 
+--- Waits for the process to complete or until the specified timeout elapses.
+---
+--- This method blocks execution until the associated process has exited or
+--- the optional `timeout` (in milliseconds) has been reached. If the process
+--- does not exit before the timeout, it is forcefully terminated with SIGKILL
+--- (signal 9), and the exit code is set to 124.
+---
+--- If no `timeout` is provided, the method will wait indefinitely (or use the
+--- timeout specified in the options when the process was started).
+---
+--- Example:
+--- ```lua
+--- local obj = vim.system({'echo', 'hello'}, { text = true })
+--- local result = obj:wait(1000) -- waits up to 1000ms
+--- print(result.code, result.signal, result.stdout, result.stderr)
+--- ```
+---
 --- @param timeout? integer
 --- @return Shelua.SystemCompleted
 function SystemObj:wait(timeout)
   local state = self._state
 
-  local done = ((vim or {}).wait or wait_loop)(timeout or state.timeout or MAX_TIMEOUT, function()
+  local done = wait_loop(timeout or state.timeout or MAX_TIMEOUT, function()
     return state.result ~= nil
   end, nil, true)
 
@@ -140,6 +196,23 @@ function SystemObj:wait(timeout)
   return state.result
 end
 
+--- Writes data to the stdin of the process or closes stdin.
+---
+--- If `data` is a list of strings, each string is written followed by a
+--- newline.
+---
+--- If `data` is a string, it is written as-is.
+---
+--- If `data` is `nil`, the write side of the stream is shut down and the pipe
+--- is closed.
+---
+--- Example:
+--- ```lua
+--- local obj = vim.system({'cat'}, { stdin = true })
+--- obj:write({'hello', 'world'}) -- writes 'hello\nworld\n' to stdin
+--- obj:write(nil) -- closes stdin
+--- ```
+---
 --- @param data string[]|string|fun()|nil
 function SystemObj:write(data)
   local stdin = self._state.stdin
@@ -201,6 +274,12 @@ function SystemObj:write_many(data)
   process_next(1)
 end
 
+--- Checks if the process handle is closing or already closed.
+---
+--- This method returns `true` if the underlying process handle is either
+--- `nil` or is in the process of closing. It is useful for determining
+--- whether it is safe to perform operations on the process handle.
+---
 --- @return boolean
 function SystemObj:is_closing()
   local handle = self._state.handle
@@ -296,8 +375,6 @@ local function setup_env(env, clear_env)
   return renv
 end
 
-local M = {}
-
 --- @param cmd string
 --- @param opts uv.spawn.options
 --- @param on_exit fun(code: integer, signal: integer)
@@ -392,6 +469,8 @@ local function checkarg(name, val, val_type, optional)
   end
 end
 
+local M = {}
+
 --- Run a system command
 ---
 --- @param cmd string[]
@@ -467,5 +546,4 @@ function M.run(cmd, opts, on_exit)
 
   return obj
 end
-
 return M
