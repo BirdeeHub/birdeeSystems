@@ -9,7 +9,7 @@ return function(sh, sherun)
         while s:find(marker, 1, true) do
             marker = marker .. "_"
         end
-        return ("cat <<'%s'\n%s\n%s"):format(marker, s, marker)
+        return ("{\ncat <<'%s'\n%s\n%s\n}"):format(marker, s, marker)
     end
 
     ---@type Shelua.Repr
