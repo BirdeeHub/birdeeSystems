@@ -85,6 +85,7 @@ in {
     config.wrapperVariants.antifennel = {
       config.package = pkgs.antifennel;
       config.mirror = false;
+      config.wrapperImplementation = "binary";
     };
     config.overrides = [
       {
