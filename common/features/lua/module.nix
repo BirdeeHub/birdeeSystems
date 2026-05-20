@@ -68,7 +68,7 @@ in {
     };
     config.wrapperImplementation = "binary";
     config.wrapperVariants.lua-repl = {
-      exePath = config.exePath;
+      inherit (config) exePath;
       flags."-e" = ''require("birdee.repl-init").initRepl()'';
     };
     config.overrides = [
