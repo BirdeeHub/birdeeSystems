@@ -65,11 +65,11 @@ end
 
 function M.initRepl()
 	conf.syntaxColors.identifier = M.colorToEscapeCode("cyan")
-	_G.sh = require("birdee.shelua").add_all_reprs(require("sh")({
+	_G.sh = require("birdee.shelua").add_all_reprs(require("sh") {
 		proper_pipes = true,
 		escape_args = true,
 		shell = "posix_plus",
-	}))
+	})
 	os.env = require("osenv")
 	_G.uv = require("luv")
 	require("croissant.repl")()
