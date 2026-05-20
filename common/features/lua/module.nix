@@ -82,6 +82,8 @@ in {
       inherit (config) exePath;
       flags."-e" = ''require("birdee.repl-init").initRepl()'';
     };
+    config.passthru.interpreter = config.package.interpreter;
+    config.passthru.lua = config.package;
     config.wrapperVariants.antifennel = {
       package = pkgs.antifennel;
       mirror = false;
