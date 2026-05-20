@@ -1,7 +1,7 @@
 { moduleNamespace, util, inputs, ... }: { lib, ... }: let
   mkLuaStuff = import ./mkLuaStuff.nix util;
   generated = let
-    files = lib.pipe ./luarocks [
+    files = lib.pipe ./generated [
       lib.filesystem.listFilesRecursive
       (builtins.filter (lib.hasSuffix ".nix"))
       (map (v: { name = lib.removeSuffix ".nix" (baseNameOf v); value = v; }))

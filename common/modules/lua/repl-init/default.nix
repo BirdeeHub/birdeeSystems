@@ -8,10 +8,10 @@ in {
   env.LUA_PATH_DIR = util.getLuaLoc luafinal.LuaPathSearchPaths;
   buildPhase = ''
     runHook preBuild;
-    mkdir -p $out/$LUA_PATH_DIR/birdee
+    mkdir -p $out/$LUA_PATH_DIR
     mkdir -p $out/birdee
-    cp $src/birdee/chaining.fnlm $out/birdee/chaining.fnlm
-    cp $src/birdee/repl-init.lua $out/$LUA_PATH_DIR/birdee/repl-init.lua
+    cp $src/chaining.fnlm $out/birdee/chaining.fnlm
+    cp -r $src/birdee $out/$LUA_PATH_DIR/
     runHook postBuild;
   '';
 }))

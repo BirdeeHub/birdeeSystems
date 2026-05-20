@@ -35,9 +35,36 @@ function M.renderReplKeybinds(keybinds)
     return res
 end
 
+string.relpath = function(str, sub, n)
+    local result = {}
+    n = type(sub) == "string" and n or sub
+    if type(n) == "number" and n > 0 then
+        for match in (str .. "."):gmatch("(.-)%.") do
+            table.insert(result, match)
+        end
+        while n > 0 do
+            table.remove(result)
+            n = n - 1
+        end
+    else
+        table.insert(result, str)
+    end
+    if type(sub) == "string" then
+        table.insert(result, sub)
+    end
+    return #result == 1 and result[1] or table.concat(result, ".")
+end
+
+if not table.pack then
+  table.pack = function(...)
+    return { n = select("#", ...), ... }
+  end
+end
+
 function M.initRepl()
     conf.syntaxColors.identifier = M.colorToEscapeCode 'cyan'
-    _G.sh = require('sh') { proper_pipes = true }
+    _G.sh = require('birdee.shelua').add_all_reprs(require('sh') { proper_pipes = true })
+    sh.shell = "posix_plus"
     os.env = require('osenv')
     _G.uv = require('luv')
     require('croissant.repl')()
