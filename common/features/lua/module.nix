@@ -1,15 +1,17 @@
 { moduleNamespace, util, inputs, ... }: { lib, ... }: let
   mkLuaStuff = import ./mkLuaStuff.nix util;
-  generated = let
-    files = lib.pipe ./generated [
-      lib.filesystem.listFilesRecursive
-      (builtins.filter (lib.hasSuffix ".nix"))
-      (map (v: { name = lib.removeSuffix ".nix" (baseNameOf v); value = v; }))
-      builtins.listToAttrs
-    ];
-  in files;
 in {
-  overlays = {
+  flake.util.mkLuaStuff = mkLuaStuff;
+  overlays = let
+    generated = let
+      files = lib.pipe ./generated [
+        lib.filesystem.listFilesRecursive
+        (builtins.filter (lib.hasSuffix ".nix"))
+        (map (v: { name = lib.removeSuffix ".nix" (baseNameOf v); value = v; }))
+        builtins.listToAttrs
+      ];
+    in files;
+  in {
     antifennel = final: prev: { antifennel = final.callPackage ./antifennel.nix { inherit inputs; }; };
     shelua = inputs.shelua.overlays.default;
     tomlua = inputs.tomlua.overlays.default;
