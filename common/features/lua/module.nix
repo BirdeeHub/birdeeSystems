@@ -8,20 +8,6 @@
       builtins.listToAttrs
     ];
   in files;
-  module = { config, pkgs, lib, _class, ... }: let
-    packages = with pkgs; [
-      inputs.self.packages.${system}.birdeeLua
-      gcc
-      antifennel
-    ];
-    cfg = config.${moduleNamespace}.birdeeLua;
-  in {
-    options.${moduleNamespace}.birdeeLua.enable = lib.mkEnableOption "birdee lua env";
-    config = lib.mkIf cfg.enable {
-      homeManager.home.packages = packages;
-      nixos.environment.systemPackages = packages;
-    }.${_class};
-  };
 in {
   overlays = {
     antifennel = final: prev: { antifennel = final.callPackage ./antifennel.nix { inherit inputs; }; };
@@ -54,7 +40,30 @@ in {
       };
     };
   };
-  flake.wrappers.birdeeLua = { pkgs, config, wlib, lib, ... }: {
+  # NOTE: without the above overlays applied to the pkgs this won't work.
+  flake.wrappers.birdeeLua = { pkgs, config, wlib, lib, ... }@top: let
+    module = { config, pkgs, lib, _class, ... }: let
+      cfg = top.config.install.getWrapperConfig config;
+    in {
+      config = lib.mkMerge [
+        (
+          lib.mkIf cfg.enableCompanionPackages {
+            homeManager.home.packages = cfg.companionPackages;
+            nixos.environment.systemPackages = cfg.companionPackages;
+          }.${_class}
+        )
+        (top.config.install.mkWrapperExtension "birdee lua wrapper" {
+          options.enableCompanionPackages = lib.mkEnableOption "a selection of packages to install alongside the lua env" // { default = true; };
+          config.companionPackages = [ pkgs.gcc ];
+          options.companionPackages = lib.mkOption {
+            type = lib.types.listOf wlib.types.linkable;
+          };
+        })
+      ];
+    };
+  in {
+    config.install.modules.nixos = module;
+    config.install.modules.homeManager = module;
     imports = [ wlib.modules.default ];
     options.withPackages = lib.mkOption {
       type = wlib.types.withPackagesType;
@@ -70,6 +79,10 @@ in {
     config.wrapperVariants.lua-repl = {
       inherit (config) exePath;
       flags."-e" = ''require("birdee.repl-init").initRepl()'';
+    };
+    config.wrapperVariants.antifennel = {
+      config.package = pkgs.antifennel;
+      config.mirror = false;
     };
     config.overrides = [
       {
@@ -102,6 +115,4 @@ in {
       }
     ];
   };
-  flake.modules.homeManager.birdeeLua = module;
-  flake.modules.nixos.birdeeLua = module;
 }

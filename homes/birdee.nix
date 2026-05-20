@@ -8,9 +8,9 @@ in {
     i3.updateDbusEnvironment = true;
     i3MonMemory.enable = true;
     nixconfig.enable = true;
-    birdeeLua.enable = true;
   };
   wrappers = {
+    birdeeLua.enable = true;
     neovim.enable = true;
     wezterm.enable = true;
     fish.enable = true;
@@ -75,7 +75,6 @@ in {
     nops # manix fzf alias
     dep-tree
     minesweeper
-    antifennel
     gac
     nix-inspect
     #
