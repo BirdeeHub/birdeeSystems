@@ -35,7 +35,7 @@ function M.renderReplKeybinds(keybinds)
 end
 
 local default_colors = {
-    identifier = "cyan",
+	identifier = "cyan",
 }
 
 function M.init(self)
@@ -46,4 +46,4 @@ function M.init(self)
 	require("croissant.repl")()
 end
 
-return setmetatable(M, { __call = M.init, })
+return setmetatable(M, { __call = M.init })
