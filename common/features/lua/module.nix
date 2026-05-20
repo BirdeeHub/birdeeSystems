@@ -83,9 +83,9 @@ in {
       flags."-e" = ''require("birdee.repl-init").initRepl()'';
     };
     config.wrapperVariants.antifennel = {
-      config.package = pkgs.antifennel;
-      config.mirror = false;
-      config.wrapperImplementation = "binary";
+      package = pkgs.antifennel;
+      mirror = false;
+      wrapperImplementation = "binary";
     };
     config.overrides = [
       {
