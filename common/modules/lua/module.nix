@@ -68,8 +68,10 @@ in {
             after = lib.mkDefault [ "SetupWithPackages" ];
           });
         };
-        config.wrapperVariants.lua-repl-init.exePath = config.exePath;
-        config.wrapperVariants.lua-repl-init.flags."-e" = ''require("birdee.repl-init").initRepl()'';
+        config.wrapperVariants.lua-repl = {
+          exePath = config.exePath;
+          flags."-e" = ''require("birdee.repl-init").initRepl()'';
+        };
         config.overrides = [
           {
             name = "SetupWithPackages";
