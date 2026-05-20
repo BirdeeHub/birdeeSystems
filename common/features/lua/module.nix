@@ -80,7 +80,7 @@ in {
     config.wrapperImplementation = "binary";
     config.wrapperVariants.lua-repl = {
       inherit (config) exePath;
-      flags."-e" = ''require("birdee.repl-init").initRepl()'';
+      flags."-e" = ''require("birdee").initRepl()'';
     };
     config.passthru.interpreter = config.package.interpreter;
     config.passthru.lua = config.package;
