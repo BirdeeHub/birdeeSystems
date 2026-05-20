@@ -91,7 +91,7 @@ in {
         name = "SetupWithPackages";
         type = null;
         data = package:
-          (util.wlib.makeCustomizable "withPackages" { mergeArgs = og: new: lp: og lp ++ new lp; } package.withPackages (
+          (wlib.makeCustomizable "withPackages" { mergeArgs = og: new: lp: og lp ++ new lp; } package.withPackages (
             lp: with lp; [
               luv
               shelua
