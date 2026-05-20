@@ -61,6 +61,8 @@ if not table.pack then
   end
 end
 
+-- TODO: add fn_finder and your chaining macros
+
 function M.initRepl()
     conf.syntaxColors.identifier = M.colorToEscapeCode 'cyan'
     _G.sh = require('birdee.shelua').add_all_reprs(require('sh') { proper_pipes = true })
