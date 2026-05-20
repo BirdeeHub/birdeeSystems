@@ -66,6 +66,7 @@ in {
         after = lib.mkDefault [ "SetupWithPackages" ];
       });
     };
+    config.wrapperImplementation = "binary";
     config.wrapperVariants.lua-repl = {
       exePath = config.exePath;
       flags."-e" = ''require("birdee.repl-init").initRepl()'';
