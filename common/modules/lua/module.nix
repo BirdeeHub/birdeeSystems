@@ -38,46 +38,70 @@ in {
     croissant = {
       data = null;
       lua = lself: lprev: {
-        croissant = lself.callPackage generated.croissant { };
+        croissant = lself.callPackage generated.croissant {};
         repl-init = lself.callPackage ./repl-init { inherit util; };
-        sirocco = (lself.callPackage generated.sirocco { }).overrideAttrs (oa: {
+        sirocco = (lself.callPackage generated.sirocco {}).overrideAttrs (oa: {
           # fetchFromGitHub absolutely refuses to fetch submodules
-          src = (lself.callPackage ({ fetchgit }: fetchgit) {}) {
+          src = (lself.callPackage ({ fetchgit, }: fetchgit) {}) {
             url = "https://github.com/giann/sirocco";
             rev = "b2af2d336e808e763b424d2ea42e6a2c2b4aa24d";
             hash = "sha256-LcdHV+STHNZzRaw/aoIWi71Gx1t4+7uHVoP9w6Rrc9Y=";
             fetchSubmodules = true;
           };
         });
-        hump = lself.callPackage generated.hump { };
-        wcwidth = lself.callPackage generated.wcwidth { };
+        hump = lself.callPackage generated.hump {};
+        wcwidth = lself.callPackage generated.wcwidth {};
       };
     };
   };
   perSystem = { pkgs, ... }: let
-    luaEnv = pkgs.luajit.withPackages (
-      lp: with lp; [
-        luv
-        shelua
-        tomlua
-        osenv
-        cjson
-        inspect
-        lyaml
-        luarocks-nix
-        lpeg
-        luaossl
-        luazip
-        lua-zlib
-        luafilesystem
-        luasocket
-        fennel
-        fn_finder
-        repl-init
-        embed
-        croissant
-      ]
-    );
+    luaEnv = util.wlib.wrapPackage [
+      { inherit pkgs; }
+      ({ pkgs, config, wlib, lib, ... }: {
+        options.withPackages = lib.mkOption {
+          type = wlib.types.withPackagesType;
+          default = lp: [];
+        };
+        config.package = pkgs.luajit;
+        options.overrides = lib.mkOption {
+          type = wlib.types.seriesOf (wlib.types.spec {
+            after = lib.mkDefault [ "SetupWithPackages" ];
+          });
+        };
+        config.wrapperVariants.lua-repl-init.exePath = config.exePath;
+        config.wrapperVariants.lua-repl-init.flags."-e" = ''require("birdee.repl-init").initRepl()'';
+        config.overrides = [
+          {
+            name = "SetupWithPackages";
+            type = null;
+            data = package:
+              (util.wlib.makeCustomizable "withPackages" { mergeArgs = og: new: lp: og lp ++ new lp; } package.withPackages (
+                lp: with lp; [
+                  luv
+                  shelua
+                  tomlua
+                  osenv
+                  cjson
+                  inspect
+                  lyaml
+                  luarocks-nix
+                  lpeg
+                  luaossl
+                  luazip
+                  lua-zlib
+                  luafilesystem
+                  luasocket
+                  fennel
+                  fn_finder
+                  repl-init
+                  embed
+                  croissant
+                ]
+              )).withPackages config.withPackages;
+          }
+        ];
+      })
+    ];
   in {
     packages.birdeeLua = luaEnv;
   };
