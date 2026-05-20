@@ -10,7 +10,7 @@ in {
     runHook preBuild;
     mkdir -p $out/$LUA_PATH_DIR
     mkdir -p $out/birdee
-    cp $src/chaining.fnlm $out/birdee/chaining.fnlm
+    cp $src/chaining.fnlm $out/fnl/birdee/chaining.fnlm
     cp -r $src/birdee $out/$LUA_PATH_DIR/
     runHook postBuild;
   '';
