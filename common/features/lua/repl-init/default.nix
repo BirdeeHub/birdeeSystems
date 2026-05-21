@@ -10,8 +10,8 @@ in {
     runHook preBuild;
     mkdir -p $out/$LUA_PATH_DIR
     mkdir -p $out/fnl
-    cp -r $src/fnl/birdee $out/fnl
-    cp -r $src/lua/birdee $out/$LUA_PATH_DIR/
+    cp -r $src/fnl/. $out/fnl
+    cp -r $src/lua/. $out/$LUA_PATH_DIR/
     runHook postBuild;
   '';
 }))

@@ -26,8 +26,8 @@ in {
     croissant = {
       data = null;
       lua = lself: lprev: {
-        croissant = lself.callPackage generated.croissant {};
         repl-init = lself.callPackage ./repl-init { inherit util; };
+        croissant = lself.callPackage generated.croissant {};
         sirocco = (lself.callPackage generated.sirocco {}).overrideAttrs (oa: {
           # fetchFromGitHub absolutely refuses to fetch submodules
           src = (lself.callPackage ({ fetchgit, }: fetchgit) {}) {
@@ -115,6 +115,9 @@ in {
               repl-init
               embed
               croissant
+
+              luarepl
+              linenoise
             ]
           )).withPackages config.withPackages;
       }

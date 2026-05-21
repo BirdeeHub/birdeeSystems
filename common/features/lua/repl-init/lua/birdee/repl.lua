@@ -38,7 +38,7 @@ local default_colors = {
 	identifier = "cyan",
 }
 
-function M.init(self)
+local function croissant(self)
 	local conf = require("croissant.conf")
 	for k, v in pairs(self.colors or default_colors) do
 		conf.syntaxColors[k] = M.colorToEscapeCode(v)
@@ -46,4 +46,38 @@ function M.init(self)
 	require("croissant.repl")()
 end
 
-return setmetatable(M, { __call = M.init })
+local function init(self)
+	local repl = require("repl.console")
+	if not self.rlwrap then
+		repl:loadplugin("linenoise")
+	else
+		pcall(repl.loadplugin, repl, "rlwrap")
+	end
+	repl:loadplugin("history")
+	repl:loadplugin("completion")
+	repl:loadplugin("filename_completion")
+	repl:loadplugin("autoreturn")
+	if self.pretty_print then
+		repl:loadplugin("inspect")
+	end
+	print("Lua REPL " .. tostring(repl.VERSION))
+	repl:run()
+end
+
+M.pretty_print = true
+
+return setmetatable(M, {
+	__call = init,
+	__index = function(self, k)
+		if k == "init" then
+			return function()
+				return init(self)
+			end
+		end
+		if k == "croissant" then
+			return function()
+				return croissant(self)
+			end
+		end
+	end,
+})
