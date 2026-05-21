@@ -4,7 +4,7 @@ function override:displayresults(result)
         if type((getmetatable(v) or {}).__tostring) == "function" or v.__input then
             io.stdout:write(tostring(v) .. "\n")
         else
-            io.stderr:write(inspect(v) .. "\n")
+            io.stdout:write(inspect(v) .. "\n")
         end
     end
 end
