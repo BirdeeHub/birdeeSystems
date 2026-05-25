@@ -6,6 +6,7 @@
   makeCustomizable,
   ...
 }: drvAttrs: let
+
   inherit (rec {
     # this is from the nix-wrapper-modules test lib
     toSanitizedJSON = value:
@@ -52,6 +53,7 @@
       ${toSanitizedJSON sorted}
     '');
   }) topoSort normalizeDag;
+
 in lib.fix (final: let
   args = if lib.isFunction drvAttrs then drvAttrs final else drvAttrs;
   lua-stdenv = import ./builder { lua = final.LUA or lua; inherit shelua; };
