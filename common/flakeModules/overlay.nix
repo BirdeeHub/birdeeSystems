@@ -20,6 +20,7 @@
         lib.composeManyExtensions
       ];
   };
+  overlayTypes = [ "lua" "data" ];
 in {
   _file = file;
   key = file;
@@ -29,14 +30,22 @@ in {
         modules = [
           (let
             mappedSpecs = lib.pipe config.overlays [
-              (lib.filterAttrs (_: v: v.enable && (v.data != null || v.lua != null)))
-              (builtins.mapAttrs (_: v: v // {
-                lua = if v.lua == null then [] else [ (util.mkLuaOverlay v.lua) ];
-                data = if v.data == null then [] else [ v.data ];
-              }))
-              (builtins.mapAttrs (_: v: v // {
-                data = lib.composeManyExtensions (v.lua ++ v.data);
-              }))
+              (lib.filterAttrs (_: v: v.enable && builtins.any (n: v.${n} or null != null) overlayTypes))
+              (builtins.mapAttrs (
+                _: v: let
+                  vals = {
+                    lua = if v.lua == null then [] else [ (util.mkLuaOverlay v.lua) ];
+                    data = if v.data == null then [] else [ v.data ];
+                  };
+                in v // {
+                  data = builtins.concatMap (n: vals.${n}) (v.order or []) ++ builtins.concatLists (builtins.attrValues (removeAttrs vals (v.order or [])));
+                }
+              ))
+              (builtins.mapAttrs (
+                _: v: v // {
+                  data = lib.composeManyExtensions (v.data or []);
+                }
+              ))
             ];
           in {
             _file = file;
@@ -69,6 +78,11 @@ in {
               enable = mkOption {
                 default = true;
                 type = types.bool;
+              };
+              order = mkOption {
+                type = types.listOf (types.enum overlayTypes);
+                default = overlayTypes;
+                description = "choose which order the different overlay types should be combined in";
               };
               lua = mkOption {
                 default = null;

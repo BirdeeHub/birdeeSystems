@@ -1,7 +1,7 @@
-{ moduleNamespace, util, inputs, ... }: { lib, ... }: let
-  mkLuaStuff = import ./mkLuaStuff.nix util;
-in {
-  flake.util.mkLuaStuff = mkLuaStuff;
+{ moduleNamespace, util, inputs, ... }: { lib, ... }: {
+  perSystem = { pkgs, ... }: {
+    legacyPackages = { inherit (pkgs.luajit.pkgs) mkLuaDrv runLuaCommand; };
+  };
   overlays = let
     generated = let
       files = lib.pipe ./generated [
@@ -13,10 +13,31 @@ in {
     in files;
   in {
     antifennel = final: prev: { antifennel = final.callPackage ./antifennel.nix { inherit inputs; }; };
-    shelua = inputs.shelua.overlays.default;
     tomlua = inputs.tomlua.overlays.default;
     lua-osenv = inputs.osenv.overlays.default;
     fn_finder = inputs.fn_finder.overlays.default;
+    mkLuaDrv = {
+      data = inputs.shelua.overlays.default;
+      order = [ "data" "lua" ];
+      lua = lself: lprev: {
+        mkLuaDrv = lself.callPackage ./mkLuaDrv { };
+        runLuaCommand = name: args: text: lself.mkLuaDrv (
+          final: {
+            inherit name;
+          } // args // {
+            env = {
+              PATH = lib.pipe (final.LUA.stdenv.minimal-bootstrap or {}) [
+                builtins.attrValues
+                (builtins.filter lib.isStringLike)
+                lib.makeBinPath
+              ];
+              LUA_PATH = "${final.LUA.pkgs.getLuaPath final.LUA.pkgs.inspect}";
+            } // (args.env or {});
+            buildCommand = text;
+          }
+        );
+      };
+    };
     lua-embed = {
       data = null;
       lua = lself: lprev: {
@@ -25,6 +46,7 @@ in {
     };
     croissant = {
       data = null;
+      after = [ "mkLuaDrv" ];
       lua = lself: lprev: {
         repl-init = lself.callPackage ./repl-init { inherit util; };
         croissant = lself.callPackage generated.croissant {};
