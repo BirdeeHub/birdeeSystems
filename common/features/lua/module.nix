@@ -20,7 +20,7 @@
       data = inputs.shelua.overlays.default;
       order = [ "data" "lua" ];
       lua = lself: lprev: {
-        mkLuaDrv = lself.callPackage ./mkLuaDrv { };
+        mkLuaDrv = lself.callPackage ./mkLuaDrv { inherit (util.wlib) makeCustomizable; };
         runLuaCommand = name: args: text: lself.mkLuaDrv (
           final: {
             inherit name;
