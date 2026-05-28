@@ -32,8 +32,41 @@ in {
 
   services.asusd.enable = false;
   nix.settings.experimental-features = [ "pipe-operators" ];
+  services.asusd.fanCurvesConfig = ''
+    (
+        balanced: (
+            cpu: [
+                (temp: 40, pwm: 0),
+                (temp: 50, pwm: 10),
+                (temp: 60, pwm: 20),
+                (temp: 70, pwm: 35),
+                (temp: 80, pwm: 55),
+                (temp: 90, pwm: 75),
+                (temp: 95, pwm: 100),
+            ],
+            gpu: [
+                (temp: 40, pwm: 0),
+                (temp: 50, pwm: 10),
+                (temp: 60, pwm: 20),
+                (temp: 70, pwm: 35),
+                (temp: 80, pwm: 55),
+                (temp: 90, pwm: 75),
+                (temp: 95, pwm: 100),
+            ],
+        ),
+    )
+  '';
 
-  environment.systemPackages = with pkgs; [ vulkan-tools mesa clinfo vulkan-headers radeontools mesa-demos rocmPackages.rocminfo ];
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    asusctl
+    mesa
+    clinfo
+    vulkan-headers
+    radeontools
+    mesa-demos
+    rocmPackages.rocminfo
+  ];
   hardware.graphics = {
     enable = true;
     # driSupport = true;
