@@ -96,8 +96,8 @@
       flake = false;
     };
 
-    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
-    # wrappers.url = "github:BirdeeHub/nix-wrapper-modules/makeWrapper";
+    # wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules/systemd";
     # wrappers.url = "git+file:/home/birdee/Projects/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
 

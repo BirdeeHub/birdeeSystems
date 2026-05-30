@@ -1849,15 +1849,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1779230126,
-        "narHash": "sha256-4XXww17gSEQys+RFe2nlFS6eFl6KIChdW7hy5MlZyYE=",
+        "lastModified": 1781613894,
+        "narHash": "sha256-XBPFg23Can8DZv7oNvH2uLNGEljHlxDzrbbyvZL+5Lc=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "c2b76d39f5db070fe947e78dfc7d034874bcaf03",
+        "rev": "f27e9d6bdfa410c379e04fde826ffe8c8152cd21",
         "type": "github"
       },
       "original": {
         "owner": "BirdeeHub",
+        "ref": "systemd",
         "repo": "nix-wrapper-modules",
         "type": "github"
       }
