@@ -30,29 +30,28 @@ in {
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
-  services.asusd.enable = false;
   nix.settings.experimental-features = [ "pipe-operators" ];
-  services.asusd.fanCurvesConfig = ''
+  services.asusd.enable = true;
+  services.asusd.fanCurvesConfig.text = ''
     (
-        balanced: (
-            cpu: [
-                (temp: 40, pwm: 0),
-                (temp: 50, pwm: 10),
-                (temp: 60, pwm: 20),
-                (temp: 70, pwm: 35),
-                (temp: 80, pwm: 55),
-                (temp: 90, pwm: 75),
-                (temp: 95, pwm: 100),
+        profiles: (
+            balanced: [
+                (
+                    fan: CPU,
+                    pwm: (0, 0, 0, 20, 35, 60, 110, 160),
+                    temp: (40, 50, 55, 60, 65, 70, 80, 90),
+                    enabled: true,
+                ),
+                (
+                    fan: GPU,
+                    pwm: (0, 0, 0, 20, 35, 60, 110, 160),
+                    temp: (40, 50, 55, 60, 65, 70, 80, 90),
+                    enabled: true,
+                ),
             ],
-            gpu: [
-                (temp: 40, pwm: 0),
-                (temp: 50, pwm: 10),
-                (temp: 60, pwm: 20),
-                (temp: 70, pwm: 35),
-                (temp: 80, pwm: 55),
-                (temp: 90, pwm: 75),
-                (temp: 95, pwm: 100),
-            ],
+            performance: [],
+            quiet: [],
+            custom: [],
         ),
     )
   '';
