@@ -32,19 +32,22 @@ in {
 
   nix.settings.experimental-features = [ "pipe-operators" ];
   services.asusd.enable = true;
+  systemd.services.asusd.wantedBy = [ "graphical.target" ];
+  # TODO: figure out what to do about this shutdown thing
+  # systemd.services.asus-shutdown.wantedBy = [ "graphical.target" ];
   services.asusd.fanCurvesConfig.text = ''
     (
         profiles: (
             balanced: [
                 (
                     fan: CPU,
-                    pwm: (0, 0, 0, 20, 35, 60, 110, 160),
+                    pwm: (0, 0, 0, 50, 60, 80, 150, 200),
                     temp: (40, 50, 55, 60, 65, 70, 80, 90),
                     enabled: true,
                 ),
                 (
                     fan: GPU,
-                    pwm: (0, 0, 0, 20, 35, 60, 110, 160),
+                    pwm: (0, 0, 0, 50, 60, 80, 150, 200),
                     temp: (40, 50, 55, 60, 65, 70, 80, 90),
                     enabled: true,
                 ),
