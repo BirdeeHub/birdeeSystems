@@ -15,6 +15,44 @@ in {
     neovim.settings.minimal = true;
     zsh.enable = true;
     zsh.asSystemDefault = true;
+    zsh.zshAliases = {
+      birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
+        output=$1
+        username=''${2:-"birdee"}
+        repo=''${3:-"birdeeSystems"}
+        sudo nix run github:BirdeeHub/$repo#diskoConfigurations.$output
+        sudo nixos-install -v --show-trace --flake github:BirdeeHub/$repo#$output
+        echo "please set password for user $username"
+        sudo passwd --root /mnt $username
+        mkdir -p /mnt/home/$username/$repo
+        git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
+        sudo chmod -R go-rwx /mnt/home/$username/$repo
+        sudo chown -R $username:users /mnt/home/$username/$repo
+        if [[ -d /secrets ]]; then
+          cp -r /secrets/. /mnt/home/$username/
+        fi
+      ''}";
+      birdeeOS-disko = "${pkgs.writeShellScript "birdeeOS-disko" ''
+        output=$1
+        repo=''${2:-"birdeeSystems"}
+        sudo nix run github:BirdeeHub/$repo#diskoConfigurations.$output
+      ''}";
+      birdeeOS-install = "${pkgs.writeShellScript "birdeeOS-install" ''
+        output=$1
+        username=''${2:-"birdee"}
+        repo=''${3:-"birdeeSystems"}
+        sudo nixos-install -v --show-trace --flake github:BirdeeHub/$repo#$output
+        echo "please set password for user $username"
+        sudo passwd --root /mnt $username
+        mkdir -p /mnt/home/$username/$repo
+        git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
+        sudo chmod -R go-rwx /mnt/home/$username/$repo
+        sudo chown -R $username:users /mnt/home/$username/$repo
+        if [[ -d /secrets ]]; then
+          cp -r /secrets/. /mnt/home/$username/
+        fi
+      ''}";
+    };
     tmux.enable = true;
     tmux.terminal = if use_alacritty then "alacritty" else "xterm-256color";
     git.enable = true;
@@ -45,49 +83,6 @@ in {
   isoImage.contents = lib.mkIf (builtins.isPath "${inputs.self}/secrets") [
     { source = "${inputs.self}/secrets"; target = "/secrets";}
   ];
-
-  environment.shellAliases = {
-    birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
-      output=$1
-      username=$2
-      repo=''${3:-"birdeeSystems"}
-      sudo nix run github:BirdeeHub/$repo#diskoConfigurations.$output
-      sudo nixos-install -v --show-trace --flake github:BirdeeHub/$repo#$output
-      echo "please set password for user $username"
-      sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username/$repo
-      git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
-      sudo chmod -R go-rwx /mnt/home/$username/$repo
-      sudo chown -R $username:users /mnt/home/$username/$repo
-      if [[ -d /secrets ]]; then
-        cp -r /secrets/. /mnt/home/$username/
-      fi
-    ''}";
-    birdeeOS-disko = "${pkgs.writeShellScript "birdeeOS-disko" ''
-      output=$1
-      repo=''${2:-"birdeeSystems"}
-      sudo nix run github:BirdeeHub/$repo#diskoConfigurations.$output
-    ''}";
-    birdeeOS-install = "${pkgs.writeShellScript "birdeeOS-install" ''
-      output=$1
-      username=$2
-      repo=''${3:-"birdeeSystems"}
-      sudo nixos-install -v --show-trace --flake github:BirdeeHub/$repo#$output
-      echo "please set password for user $username"
-      sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username/$repo
-      git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
-      sudo chmod -R go-rwx /mnt/home/$username/$repo
-      sudo chown -R $username:users /mnt/home/$username/$repo
-      if [[ -d /secrets ]]; then
-        cp -r /secrets/. /mnt/home/$username/
-      fi
-    ''}";
-    lsnc = "ls --color=never";
-    la = "ls -a";
-    ll = "ls -l";
-    l  = "ls -alh";
-  };
 
   # boot.kernelModules = [ "wl" ];
   # boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
