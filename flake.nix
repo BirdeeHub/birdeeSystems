@@ -102,8 +102,8 @@
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
 
     # neovim
-    # birdeevim.url = "github:BirdeeHub/birdeevim";
-    birdeevim.url = "git+file:/home/birdee/.birdeevim";
+    birdeevim.url = "github:BirdeeHub/birdeevim";
+    # birdeevim.url = "git+file:/home/birdee/.birdeevim";
     birdeevim.inputs.wrappers.follows = "wrappers";
     birdeevim.inputs.nixpkgs.follows = "nixpkgs";
     birdeevim.inputs.flake-parts.follows = "flake-parts";

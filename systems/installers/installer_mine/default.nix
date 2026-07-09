@@ -41,7 +41,7 @@ in {
     xclip
   ];
 
-  isoImage.isoBaseName = "birdeeOS_installer";
+  image.baseName = lib.mkForce "birdeeOS_installer";
   isoImage.contents = lib.mkIf (builtins.isPath "${inputs.self}/secrets") [
     { source = "${inputs.self}/secrets"; target = "/secrets";}
   ];
@@ -59,11 +59,14 @@ in {
       git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
       sudo chmod -R go-rwx /mnt/home/$username/$repo
       sudo chown -R $username:users /mnt/home/$username/$repo
+      if [[ -d /secrets ]]; then
+        cp -r /secrets/. /mnt/home/$username/
+      fi
     ''}";
     birdeeOS-disko = "${pkgs.writeShellScript "birdeeOS-disko" ''
       output=$1
       repo=''${2:-"birdeeSystems"}
-      sudo disko --mode disko --flake github:BirdeeHub/$repo#$output
+      sudo disko --mode disko --flake github:BirdeeHub/$repo#diskoConfigurations.$output
     ''}";
     birdeeOS-install = "${pkgs.writeShellScript "birdeeOS-install" ''
       output=$1
@@ -76,6 +79,9 @@ in {
       git clone https://github.com/BirdeeHub/$repo /mnt/home/$username/$repo
       sudo chmod -R go-rwx /mnt/home/$username/$repo
       sudo chown -R $username:users /mnt/home/$username/$repo
+      if [[ -d /secrets ]]; then
+        cp -r /secrets/. /mnt/home/$username/
+      fi
     ''}";
     lsnc = "ls --color=never";
     la = "ls -a";
@@ -83,8 +89,8 @@ in {
     l  = "ls -alh";
   };
 
-  boot.kernelModules = [ "wl" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  # boot.kernelModules = [ "wl" ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
   nix.settings.show-trace = true;
@@ -108,6 +114,7 @@ in {
   };
   fonts.fontDir.enable = true;
 
+  networking.networkmanager.enable = true;
   services.xserver.enable = true;
   services.displayManager.defaultSession = if use_alacritty then "alacritty" else "xterm-installer";
   services.xserver.desktopManager.session = let

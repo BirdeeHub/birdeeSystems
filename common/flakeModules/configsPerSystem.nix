@@ -72,6 +72,10 @@ in
                             {
                               imports = [ wlib.modules.default ];
                               config.pkgs = nixpkgs.legacyPackages.${system} or (import nixpkgs { inherit system; });
+                              options.mode = mkOption {
+                                type = lib.types.str;
+                                default = "disko";
+                              };
                               options.diskoModule = mkOption {
                                 type = types.nullOr (lib.types.either wlib.types.stringable (pkgs.formats.json {}).type);
                                 default = null;
@@ -92,6 +96,11 @@ in
                                 ''} > ${lib.escapeShellArg "${diskoflakedir}/flake.nix"}
                               '';
                               config.appendFlag = [
+                                {
+                                  name = "Mode";
+                                  before = [ "CallMod" ];
+                                  data = [ "--mode" config.mode ];
+                                }
                                 {
                                   name = "CallMod";
                                   data = if wlib.types.stringable.check config.diskoModule then config.diskoModule else [ "--flake" "${diskoflakedir}#${name}" ];
