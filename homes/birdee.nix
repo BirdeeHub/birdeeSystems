@@ -95,6 +95,7 @@ in {
     ghidra
     nth
     xh
+    gh
 
     jimtcl
 

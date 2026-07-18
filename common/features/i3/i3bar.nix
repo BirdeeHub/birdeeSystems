@@ -18,7 +18,7 @@
     order += "cpu_temperature 0"
     order += "memory"
     order += "disk /"
-    order += "disk /mnt/win-sdb"
+    order += "disk /home"
     order += "run_watch DHCP"
     order += "run_watch VPNC"
     # order += "path_exists VPN"
@@ -32,8 +32,8 @@
     disk "/" {
         format = "Nix: %avail/%total"
     }
-    disk /mnt/win-sdb {
-        format = "Win: %avail/%total"
+    disk "/home" {
+        format = "Home: %avail/%total"
     }
     cpu_usage {
         format = "CPU: %usage"
