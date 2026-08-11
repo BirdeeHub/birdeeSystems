@@ -5,7 +5,6 @@
 { modulesPath, config, lib, pkgs, inputs, stateVersion, hostname, output-name, ... }: let
 in {
   birdeeMods = {
-    i3.enable = true;
     bash.enable = true;
     flatpak.enable = true;
     i3MonMemory.enable = true;
@@ -16,6 +15,7 @@ in {
   wrappers = {
     neovim.enable = true;
     fish.enable = true;
+    i3.enable = true;
     zsh.enable = true;
     zsh.asSystemDefault = true;
     zsh.output-name = output-name;

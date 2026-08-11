@@ -7,6 +7,6 @@ in {
   imports = [
     ../nestOS
   ];
-  birdeeMods.i3.enable = lib.mkForce false;
+  wrappers.i3.enable = lib.mkForce false;
   wrappers.awesomeWM.enable = true;
 }

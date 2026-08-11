@@ -21,7 +21,7 @@ in
 # https://flake.parts/options/flake-parts
 # https://devenv.sh/reference/options
 flake-parts.lib.mkFlake { inherit inputs; } (
-  { config, ... }@top:
+  { ... }@top:
   {
     systems = nixpkgs.lib.platforms.all;
     imports = util.recImport {
@@ -36,11 +36,11 @@ flake-parts.lib.mkFlake { inherit inputs; } (
     perSystem =
       {
         config,
-        self',
-        inputs',
         lib,
         pkgs,
         system,
+        # self',
+        # inputs',
         # final, # Only with easyOverlay imported
         ...
       }:
@@ -82,6 +82,21 @@ flake-parts.lib.mkFlake { inherit inputs; } (
 
         # NOTE: outputs to legacyPackages.${system}.homeConfigurations.<name>
         homeConfigurations = {
+          "birdee@nestOS" = {
+            inherit home-manager;
+            extraSpecialArgs = defaultSpecialArgs;
+            modules = [
+              ./homes/main.nix
+              (
+                { pkgs, ... }:
+                {
+                  nix.package = pkgs.nix;
+                  ${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
+                }
+              )
+            ]
+            ++ builtins.attrValues self.modules.homeManager;
+          };
           "birdee@dustbook" = {
             inherit home-manager;
             extraSpecialArgs = defaultSpecialArgs;
@@ -91,7 +106,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
-                  birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
+                  ${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
                 }
               )
             ]
@@ -107,7 +122,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
-                  birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
+                  ${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
                 }
               )
             ]
@@ -165,7 +180,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
-                homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
+                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 # module.nix.package = pkgs.lixPackageSets.stable.lix;
                 # module.nixpkgs.overlays = top.config.flake.overlist ++ [
@@ -178,8 +193,8 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 #       ;
                 #   })
                 # ];
-                # module.birdeeMods.manuals.disable = true;
-                # homeModule.birdeeMods.manuals.disable = true;
+                # module.${util.moduleNamespace}.manuals.disable = true;
+                # homeModule.${util.moduleNamespace}.manuals.disable = true;
                 modules = [
                   inputs.determinate.nixosModules.default
                   ./systems/PCs/${config.hostname}
@@ -192,6 +207,21 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 # }
                 # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };
+            "nestOS" =
+              { name, ... }:
+              {
+                nixpkgs = inputs.nixpkgs;
+                disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
+                specialArgs = defaultSpecialArgs;
+                username = "birdee";
+                module.nixpkgs.overlays = top.config.flake.overlist;
+                modules = [
+                  usermod
+                  inputs.determinate.nixosModules.default
+                  ./systems/PCs/${name}
+                ]
+                ++ builtins.attrValues self.modules.nixos;
+              };
             "birdee@testOS" =
               { config, ... }:
               {
@@ -199,7 +229,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
-                homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
+                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 # module.nix.package = pkgs.lixPackageSets.stable.lix;
                 # module.nixpkgs.overlays = top.config.flake.overlist ++ [
@@ -212,8 +242,8 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 #       ;
                 #   })
                 # ];
-                # module.birdeeMods.manuals.disable = true;
-                # homeModule.birdeeMods.manuals.disable = true;
+                # module.${util.moduleNamespace}.manuals.disable = true;
+                # homeModule.${util.moduleNamespace}.manuals.disable = true;
                 modules = [
                   inputs.determinate.nixosModules.default
                   ./systems/PCs/${config.hostname}
@@ -233,7 +263,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 specialArgs = defaultSpecialArgs;
-                homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
+                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [
                   ./systems/PCs/${config.hostname}
@@ -249,7 +279,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 inherit home-manager;
                 specialArgs = defaultSpecialArgs;
-                homeModule.birdeeMods.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
+                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [
                   ./systems/PCs/${config.hostname}

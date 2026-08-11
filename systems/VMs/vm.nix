@@ -5,7 +5,6 @@
 { config, pkgs, inputs, stateVersion, hostname, output-name, username, ... }: let
 in {
   birdeeMods = {
-    i3.enable = true;
     bash.enable = true;
     lightdm.enable = true;
     i3MonMemory.enable = true;
@@ -14,6 +13,7 @@ in {
   };
   wrappers = {
     neovim.enable = true;
+    i3.enable = true;
     zsh.enable = true;
     zsh.asSystemDefault = true;
     zsh.output-name = output-name;
