@@ -5,7 +5,7 @@
 }: {
   flake.wrappers.i3 = { pkgs, lib, wlib, config, ... }@top: let
   in {
-    imports = [ wlib.modules.default wlib.modules.systemd ];
+    imports = [ wlib.modules.default wlib.modules.systemd ./i3Monager ];
     options = let
       inherit (lib.types) nullOr str bool path listOf raw;
     in {

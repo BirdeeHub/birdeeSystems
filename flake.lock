@@ -909,21 +909,6 @@
         "type": "github"
       }
     },
-    "nixToLua": {
-      "locked": {
-        "lastModified": 1748756411,
-        "narHash": "sha256-jmfRRsxCVV+/2KnDVrMG/RBKFOARDpSrYICqQ6vnSjw=",
-        "owner": "BirdeeHub",
-        "repo": "nixtoLua",
-        "rev": "a701038ccfe76833f678e3c643a2b0f4291c1cea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "nixtoLua",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1779099457,
@@ -1550,7 +1535,6 @@
         "maximizer": "maximizer",
         "minesweeper": "minesweeper",
         "nix-appimage": "nix-appimage",
-        "nixToLua": "nixToLua",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_10",
         "nixpkgsLocked": "nixpkgsLocked",

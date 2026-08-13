@@ -4,12 +4,12 @@ in {
     bash.enable = true;
     flatpak.enable = true;
     firefox.enable = true;
-    i3MonMemory.enable = true;
     nixconfig.enable = true;
   };
   wrappers = {
     i3.enable = true;
     i3.updateDbusEnvironment = true;
+    i3.i3Monager.enable = true;
     birdeeLua.enable = true;
     neovim.enable = true;
     wezterm.enable = true;

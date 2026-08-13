@@ -7,13 +7,13 @@ in {
   birdeeMods = {
     bash.enable = true;
     lightdm.enable = true;
-    i3MonMemory.enable = true;
     LD.enable = true;
     nixconfig.enable = true;
   };
   wrappers = {
     neovim.enable = true;
     i3.enable = true;
+    i3.i3Monager.enable = true;
     zsh.enable = true;
     zsh.asSystemDefault = true;
     zsh.output-name = output-name;

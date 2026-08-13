@@ -91,7 +91,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
-                  ${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
                 }
               )
             ]
@@ -106,7 +105,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
-                  ${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
                 }
               )
             ]
@@ -122,7 +120,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 { pkgs, ... }:
                 {
                   nix.package = pkgs.nix;
-                  ${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
                 }
               )
             ]
@@ -180,7 +177,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
-                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 # module.nix.package = pkgs.lixPackageSets.stable.lix;
                 # module.nixpkgs.overlays = top.config.flake.overlist ++ [
@@ -203,7 +199,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 ]
                 ++ builtins.attrValues self.modules.nixos;
                 # ++ builtins.attrValues {
-                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3MonMemory lightdm nixconfig;
+                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3Monager lightdm nixconfig;
                 # }
                 # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };
@@ -229,7 +225,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
-                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/nestOS;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 # module.nix.package = pkgs.lixPackageSets.stable.lix;
                 # module.nixpkgs.overlays = top.config.flake.overlist ++ [
@@ -252,7 +247,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 ]
                 ++ builtins.attrValues self.modules.nixos;
                 # ++ builtins.attrValues {
-                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3MonMemory lightdm nixconfig;
+                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3Monager lightdm nixconfig;
                 # }
                 # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };
@@ -263,7 +258,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 specialArgs = defaultSpecialArgs;
-                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/aSUS;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [
                   ./systems/PCs/${config.hostname}
@@ -279,7 +273,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 inherit home-manager;
                 specialArgs = defaultSpecialArgs;
-                homeModule.${util.moduleNamespace}.i3MonMemory.monitorScriptDir = ./homes/monitors_by_hostname/dustbook;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [
                   ./systems/PCs/${config.hostname}

@@ -12,21 +12,6 @@ All packages wrapped in this manner may be reconfigured via calling `.wrap` on t
 
 ---
 
-monitor management:
-
-  So I made this module for that at [./common/modules/i3MonMemory](./common/modules/i3MonMemory)
-
-  Its an expression that returns a module, true for home manager false for system.
-
-  System module has only an enable option.
-  It creates a udev rule that echoes $RANDOM to a temp file on monitor hotplug.
-
-  It is necessary for the user service to work.
-
-  Home module specifies service using inotify to trigger when that temp file is written to and then run your xrandr scripts, and handle putting your i3 workspaces back from whence they came when you plug the monitor back in.
-
----
-
 Dendritic common directory heavily utilizing flake parts.
 
 The common directory creates the stuff, and the configs consume it.

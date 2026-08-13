@@ -53,7 +53,6 @@
     minesweeper.inputs.nixpkgs.follows = "nixpkgs";
     maximizer.url = "github:BirdeeHub/maximizer";
     maximizer.inputs.nixpkgs.follows = "nixpkgs";
-    nixToLua.url = "github:BirdeeHub/nixtoLua";
     # shelua.url = "git+file:/home/birdee/Projects/shelua";
     shelua.url = "github:BirdeeHub/shelua";
     shelua.inputs.nixpkgs.follows = "nixpkgs";

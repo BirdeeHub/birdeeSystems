@@ -7,7 +7,6 @@ in {
   birdeeMods = {
     bash.enable = true;
     flatpak.enable = true;
-    i3MonMemory.enable = true;
     lightdm.enable = true;
     LD.enable = true;
     nixconfig.enable = true;
@@ -16,6 +15,7 @@ in {
     neovim.enable = true;
     fish.enable = true;
     i3.enable = true;
+    i3.i3Monager.enable = true;
     zsh.enable = true;
     zsh.asSystemDefault = true;
     zsh.output-name = output-name;
