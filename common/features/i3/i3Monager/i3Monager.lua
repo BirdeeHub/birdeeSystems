@@ -3,7 +3,7 @@ os.sh = require "sh"
 os.lfs = require "lfs"
 local cjson = require "cjson.safe"
 -- local inspect = require "inspect"
-local utils = require "i3MonagerUtils"
+local watch_dir = require "filewatcher"
 
 -- get config values and cache path
 local nixinfo = require "nixinfo"
@@ -13,7 +13,6 @@ local userJsonCacheDir = basecachepath .. os.getenv('USER')
 local userJsonCache = userJsonCacheDir.."/userJsonCache.json"
 local trigger_file_dir = nixinfo.trigger_file_dir
 local trigger_file_name = nixinfo.trigger_file_name
-local isBoot = arg[1] == "boot"
 local ipccmd = nixinfo.ipc_cmd or "i3-msg"
 
 function os.mkdir_recursive(path)
@@ -22,16 +21,6 @@ function os.mkdir_recursive(path)
     current_path = current_path .. dir .. "/"
     os.lfs.mkdir(current_path)
   end
-end
-function os.capture(cmd, trim)
-  local f = assert(io.popen(cmd, 'r'), "unable to execute: " .. cmd)
-  local s = assert(f:read('*a'), "unable to read output of: " .. cmd)
-  f:close()
-  if not trim then return s end
-  s = string.gsub(s, '^%s+', "")
-  s = string.gsub(s, '%s+$', "")
-  s = string.gsub(s, '[\n\r]+', ' ')
-  return s
 end
 function table.remove_values(OG, rmv)
   local result = {}
@@ -59,10 +48,10 @@ end
 
 local function getMonitors()
   if ipccmd == "i3-msg" then
-    return awkFourth(os.capture([[xrandr --listmonitors]]))
+    return awkFourth(tostring(os.sh.xrandr "--listmonitors"))
   else
     -- TODO: check that this branch works
-    local str = os.capture([[swaymsg -rt get_outputs]])
+    local str = tostring(os.sh.swaymsg("-rt", "get_outputs"))
     local outputs = assert(cjson.decode(str))
     local mons = {}
     for _, output in ipairs(outputs) do
@@ -74,52 +63,32 @@ local function getMonitors()
   end
 end
 
-local function getInitialWorkspaces(maxRetries)
-  maxRetries = maxRetries or 1
-  local baseDelay = 0.5 -- 500ms
-  for attempt = 1, maxRetries do
-    local i3msgOut = os.capture(ipccmd .. [[ -t get_workspaces]], true)
-    local i3wkspcInfo, err = cjson.decode(i3msgOut)
-    if i3wkspcInfo ~= nil then
-      return i3wkspcInfo
-    end
-    io.stderr:write(
-      "failed to get initial workspaces (attempt "
-        .. attempt .. "/"
-        .. maxRetries .. "): "
-        .. tostring(err)
-        .. "\n"
-    )
-    if attempt < maxRetries then
-      local delay = baseDelay * (2 ^ (attempt - 1))
-      utils.sleep(delay)
-    end
+local function getWorkspaces()
+  local i3msgOut = tostring(os.sh[ipccmd]("-t", "get_workspaces"))
+  local i3wkspcInfo, err = cjson.decode(i3msgOut)
+  if i3wkspcInfo ~= nil then
+    return i3wkspcInfo
   end
-  error("unable to get initial i3 workspace information")
+  error("failed to get workspaces: " .. tostring(err) .. "\n")
 end
 
-local watcher
-if not isBoot then
-  os.mkdir_recursive(trigger_file_dir)
-  watcher = utils.watch_dir(trigger_file_dir)
-end
+os.mkdir_recursive(trigger_file_dir)
+local watcher = watch_dir(trigger_file_dir)
 
+local isBoot = true
 while true do
-
-  -- TODO: I think sway might need you to do this in a different place?
-  -- But we need to read initial workspaces before they are changed, but not forever before, like, right before
-  -- this script might actually not be able to work for both, or need major changes.
+  local byMon = {}
   if not isBoot then
+    -- TODO: I think sway might need you to do this in a different place?
+    -- And we might be able to subscribe to swaymsg to trigger us here instead of relying on an external one with a trigger file?
+    -- But we need to read initial workspaces before they are changed, but not forever before, like, right before
+    -- this script might actually not be able to work for both, or need major changes.
     io.stdout:write("waiting for trigger file to be written to...\n")
     if not pcall(watcher.wait, watcher, trigger_file_name) then
       break
     end
-  end
-
-  local byMon = {}
-  if not isBoot then
-    -- get initial i3 info
-    local i3wkspcInfo = getInitialWorkspaces()
+    -- get initial i3 info (on boot, i3 probably isnt even started yet, so we don't run it)
+    local i3wkspcInfo = getWorkspaces()
     for _, v in ipairs(i3wkspcInfo) do
       if byMon[v.output] == nil then
         byMon[v.output] = { v.num }
@@ -191,44 +160,47 @@ while true do
     io.stderr:write("error loading monitor config script: " .. err .. "\n")
   end
 
-  if isBoot then break end
-
-  -- create i3-msg or swaymsg commands to move workspaces after monitor setup script was ran
-  local workspaceCommands = {}
-  local focusedWorkspaces = {}
-  local deferredCommand = nil
-  local newi3msgOut = cjson.decode(os.capture(ipccmd .. [[ -t get_workspaces]], true))
-  for _, v in pairs(newi3msgOut) do
-    if v.focused == true then
-      table.insert(focusedWorkspaces, v.num)
-    end
-  end
-  local function mkWkspcCMD(wkspc, mon)
-    return ipccmd .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
-  end
-  for i, mon in ipairs(newmon) do
-    for j, wkspc in ipairs(newCache[mon]) do
-      if i == 1 and j == 1 then
-        for _, v in ipairs(focusedWorkspaces) do
-          if v == wkspc then
-            -- if the first workspace is focused, we will put it off until last
-            -- because you cant move a focused workspace to another output
-            deferredCommand = mkWkspcCMD(wkspc, mon)
-            break
-          else
-            table.insert(workspaceCommands, mkWkspcCMD(wkspc, mon))
-            break
-          end
-        end
-      else
-        table.insert(workspaceCommands, mkWkspcCMD(wkspc, mon))
+  if isBoot then
+    isBoot = false
+  else
+    -- create i3-msg or swaymsg commands to move workspaces after monitor setup script was ran
+    local workspaceCommands = {}
+    local focusedWorkspaces = {}
+    local deferredCommand = nil
+    local newi3msgOut = getWorkspaces()
+    for _, v in pairs(newi3msgOut) do
+      if v.focused == true then
+        table.insert(focusedWorkspaces, v.num)
       end
     end
+    local function mkWkspcCMD(wkspc, mon)
+      return ipccmd .. [[ "workspace number ]] .. wkspc .. [[, move workspace to output ]] .. mon .. [[";]]
+    end
+    for i, mon in ipairs(newmon) do
+      for j, wkspc in ipairs(newCache[mon]) do
+        if i == 1 and j == 1 then
+          for _, v in ipairs(focusedWorkspaces) do
+            if v == wkspc then
+              -- if the first workspace is focused, we will put it off until last
+              -- because you cant move a focused workspace to another output
+              deferredCommand = mkWkspcCMD(wkspc, mon)
+              break
+            else
+              table.insert(workspaceCommands, mkWkspcCMD(wkspc, mon))
+              break
+            end
+          end
+        else
+          table.insert(workspaceCommands, mkWkspcCMD(wkspc, mon))
+        end
+      end
+    end
+    for _, v in ipairs(focusedWorkspaces) do
+      deferredCommand = (deferredCommand or "") .. " " .. ipccmd .. [[ workspace ]] .. tostring(v)
+    end
+    -- run all the moves last after the xrandring is completed.
+    os.execute(table.concat(workspaceCommands, " ") .. (deferredCommand or ""))
   end
-  -- run all the moves last after the xrandring is completed.
-  os.execute(table.concat(workspaceCommands, " ") .. (deferredCommand or ""))
 end
 
-if not isBoot then
-  watcher:close()
-end
+watcher:close()

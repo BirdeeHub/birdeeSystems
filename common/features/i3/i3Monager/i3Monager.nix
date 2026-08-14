@@ -12,23 +12,24 @@
   phases = [ "buildPhase" ];
   buildPhase = let
     luaEnv = lua.withPackages extraLuaPackages;
-    nixinfo = "package.preload[ [[nixinfo]] ] = function() return ${lib.generators.toLua { } (toPass // { extra_path = lib.makeBinPath toPass.extra_path; })} end";
-    cUtils = stdenv.mkDerivation {
-      name = "i3Monager";
-      src = ./i3MonagerUtils.c;
+    filewatcher = stdenv.mkDerivation {
+      name = "filewatcher";
+      src = ./filewatcher.c;
       phases = [ "buildPhase" ];
       env.LUA_INC = "${luaEnv}/include";
       buildPhase = ''
         $CC -x c -O2 -fPIC -shared -I$LUA_INC -o $out $src
       '';
     };
+    addwatcher = "package.preload[ [[filewatcher]] ] = assert(package.loadlib(${builtins.toJSON filewatcher}, [[luaopen_filewatcher]]))";
+    nixinfo = "package.preload[ [[nixinfo]] ] = function() return ${lib.generators.toLua { } (toPass // { extra_path = lib.makeBinPath toPass.extra_path; })} end";
   in /*bash*/''
     TEMPFILE=$(mktemp) TEMPOUTFILE=$(mktemp)
     cleanup() {
       rm -f "$TEMPFILE" "$TEMPOUTFILE" || true
     }
     trap cleanup EXIT
-    echo 'package.preload[ [[i3MonagerUtils]] ] = assert(package.loadlib(${builtins.toJSON cUtils}, "luaopen_i3MonagerUtils"))' > "$TEMPFILE"
+    echo ${lib.escapeShellArg addwatcher} > "$TEMPFILE";
     echo ${lib.escapeShellArg nixinfo} >> "$TEMPFILE";
     cat $src >> "$TEMPFILE"
     if [ -e "${luaEnv}/bin/luajit" ]; then

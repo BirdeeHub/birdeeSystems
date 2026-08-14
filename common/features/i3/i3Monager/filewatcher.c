@@ -75,32 +75,7 @@ static int l_watch(lua_State *L) {
     return 1;
 }
 
-#include <time.h>
-
-static int l_sleep(lua_State *L) {
-    lua_Number seconds = luaL_checknumber(L, 1);
-
-    if (seconds < 0) return luaL_error(L, "sleep duration must be non-negative");
-
-    time_t sec = (time_t)seconds;
-    long nsec = (long)((seconds - (lua_Number)sec) * 1000000000.0);
-
-    struct timespec req = {
-        .tv_sec = sec,
-        .tv_nsec = nsec
-    };
-
-    while (nanosleep(&req, &req) == -1) {
-        if (errno != EINTR) {
-            return luaL_error(L, "nanosleep: %s", strerror(errno));
-        }
-    }
-
-    return 0;
-}
-
-
-int luaopen_i3MonagerUtils(lua_State *L) {
+int luaopen_filewatcher(lua_State *L) {
     // Create watcher metatable.
     luaL_newmetatable(L, WATCHER_MT_NAME);
     lua_pushcfunction(L, l_watcher_close);
@@ -112,11 +87,7 @@ int luaopen_i3MonagerUtils(lua_State *L) {
     lua_setfield(L, -2, "wait");
     lua_setfield(L, -2, "__index");
     lua_pop(L, 1);
-    // return module
-    lua_newtable(L);
+
     lua_pushcfunction(L, l_watch);
-    lua_setfield(L, -2, "watch_dir");
-    lua_pushcfunction(L, l_sleep);
-    lua_setfield(L, -2, "sleep");
     return 1;
 }

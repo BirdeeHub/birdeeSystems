@@ -41,10 +41,10 @@ in {
       };
     };
   };
-  config.systemd.user.service.i3MonagerMain = lib.mkIf config.i3Monager.enable {
+  config.systemd.user.service.i3Monager = lib.mkIf config.i3Monager.enable {
     Unit = {
-      Description = "i3MonagerMainService";
-      After = [ "graphical-session.target" "i3MonagerBoot.service" ];
+      Description = "i3Monager";
+      After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
@@ -53,17 +53,6 @@ in {
       # Restart = "on-failure";
       # RestartSec = "5";
       X-ReloadIfChanged = false;
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-  config.systemd.user.service.i3MonagerBoot = lib.mkIf config.i3Monager.enable {
-    Unit = {
-      Description = "i3MonagerBootService";
-      After = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${inotifyScript config.i3Monager.triggerFileDir config.i3Monager.triggerFileName config.i3Monager.configScript} boot";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
