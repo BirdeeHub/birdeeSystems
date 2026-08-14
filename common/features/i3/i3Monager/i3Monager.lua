@@ -108,6 +108,7 @@ while true do
 
   -- TODO: I think sway might need you to do this in a different place?
   -- But we need to read initial workspaces before they are changed, but not forever before, like, right before
+  -- this script might actually not be able to work for both, or need major changes.
   if not isBoot then
     io.stdout:write("waiting for trigger file to be written to...\n")
     if not pcall(watcher.wait, watcher, trigger_file_name) then
