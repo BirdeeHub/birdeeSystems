@@ -2,7 +2,7 @@ os.env = require "osenv"
 os.sh = require "sh"
 os.lfs = require "lfs"
 local cjson = require "cjson.safe"
-local inspect = require "inspect"
+-- local inspect = require "inspect"
 local utils = require "i3MonagerUtils"
 
 -- get config values and cache path
