@@ -101,7 +101,7 @@ while true do
   local initial_mons = getMonitors()
   -- get xrandr to detect the new monitors
   if ipccmd == "i3-msg" then
-    os.execute([[xrandr --auto]])
+    os.sh.xrandr "--auto"
   end
   -- get final active mons
   local final_mons = getMonitors()
