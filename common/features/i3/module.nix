@@ -112,8 +112,8 @@
       xfce4-notifyd
       xfce4-screenshooter
       xfce4-taskmanager
-      libsForQt5.qt5.qtquickcontrols2
-      libsForQt5.qt5.qtgraphicaleffects
+      qt5.qtquickcontrols2
+      qt5.qtgraphicaleffects
       # libXinerama
       # dex
       # hicolor-icon-theme

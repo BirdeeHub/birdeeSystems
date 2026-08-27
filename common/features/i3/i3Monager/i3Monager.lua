@@ -13,6 +13,7 @@ local userJsonCacheDir = basecachepath .. os.getenv('USER')
 local userJsonCache = userJsonCacheDir.."/userJsonCache.json"
 local trigger_file_dir = nixinfo.trigger_file_dir
 local trigger_file_name = nixinfo.trigger_file_name
+
 local ipccmd = nixinfo.ipc_cmd or "i3-msg"
 
 function os.mkdir_recursive(path)
@@ -195,11 +196,9 @@ while true do
         end
       end
     end
-    for _, v in ipairs(focusedWorkspaces) do
-      deferredCommand = (deferredCommand or "") .. " " .. ipccmd .. [[ workspace ]] .. tostring(v)
-    end
+    table.insert(workspaceCommands, deferredCommand or "")
     -- run all the moves last after the xrandring is completed.
-    os.execute(table.concat(workspaceCommands, " ") .. (deferredCommand or ""))
+    os.execute(table.concat(workspaceCommands, " "))
   end
 end
 

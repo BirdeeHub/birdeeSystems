@@ -75,7 +75,6 @@
           xdg.portal.extraPortals = with pkgs; [
             xdg-desktop-portal
             xdg-desktop-portal-gtk
-            # libsForQt5.xdg-desktop-portal-kde
             # xdg-desktop-portal-gnome
             xdg-dbus-proxy
           ];

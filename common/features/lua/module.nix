@@ -125,7 +125,6 @@
               cjson
               inspect
               lyaml
-              luarocks-nix
               lpeg
               luaossl
               luazip
