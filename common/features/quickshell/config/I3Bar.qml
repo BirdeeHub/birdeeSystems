@@ -96,7 +96,7 @@ Scope {
                                 height: 14
 
                                 visible: modelData.monitor === I3.monitorFor(screen)
-                                color: modelData.focused ? "#BA02F2" : modelData.active ? "#047180" : "#1a1b26"
+                                color: modelData.focused ? "#BA02F2" : modelData.active ? "#047180" : "#5c6370"
 
                                 Text {
                                     anchors.centerIn: parent
