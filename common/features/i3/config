@@ -38,9 +38,10 @@ font pango:FiraMono Nerd Font Mono 8
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-exec --no-startup-id nm-applet
+exec --no-startup-id $quickshell
+exec --no-startup-id $pasystray
+exec --no-startup-id nm-applet --indicator
 exec --no-startup-id blueman-applet
-exec --no-startup-id pa-applet
 exec --no-startup-id xfce4-power-manager
 
 # exec --no-startup-id dbus-launch --exit-with-session i3
@@ -223,6 +224,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 for_window [class="Pavucontrol"] floating enable
 for_window [class=".blueman-manager-wrapped"] floating enable
+for_window [class="blueman-manager"] floating enable
 for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="zoom"] floating enable border normal
@@ -330,36 +332,36 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-    i3bar_command i3bar 
-    status_command i3status
-    position bottom
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-    tray_output primary
-    # tray_output eDP-1-1
-    
-    bindsym button4 nop
-    bindsym button5 nop
-    #   font xft:URWGothic-Book 11
-    strip_workspace_numbers yes
-
-    colors {
-        background #000000
-        statusline #F9FAF9
-        separator  #454947
-
-    #                      border  backgr. text
-        focused_workspace  #292F34 #BA02F2 #292F34
-        active_workspace   #595B5B #047180 #FDF6E3
-        inactive_workspace #595B5B #222D31 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
-}
-# hide/unhide i3status bar
-bindsym $mod+Ctrl+m bar mode toggle
+# # Start i3bar to display a workspace bar (plus the system information i3status if available)
+# bar {
+#     i3bar_command i3bar 
+#     status_command i3status
+#     position bottom
+#
+# ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+#     tray_output primary
+#     # tray_output eDP-1-1
+#
+#     bindsym button4 nop
+#     bindsym button5 nop
+#     #   font xft:URWGothic-Book 11
+#     strip_workspace_numbers yes
+#
+#     colors {
+#         background #000000
+#         statusline #F9FAF9
+#         separator  #454947
+#
+#     #                      border  backgr. text
+#         focused_workspace  #292F34 #BA02F2 #292F34
+#         active_workspace   #595B5B #047180 #FDF6E3
+#         inactive_workspace #595B5B #222D31 #EEE8D5
+#         binding_mode       #16a085 #2C2C2C #F9FAF9
+#         urgent_workspace   #16a085 #FDF6E3 #E5201D
+#     }
+# }
+# # hide/unhide i3status bar
+# bindsym $mod+Ctrl+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border

@@ -70,11 +70,6 @@
       };
     };
     config.globalPackages = let
-      i3status = util.wlib.evalPackage {
-        imports = [ ./i3bar.nix ];
-        inherit pkgs;
-        inherit (config) cputemppath;
-      };
       i3lock = util.wlib.wrapPackage {
         inherit pkgs;
         package = pkgs.i3lock;
@@ -91,10 +86,8 @@
       pkgs.xss-lock
       i3lock # default i3 screen locker
     ] ++ (with pkgs; [
-      i3status # default i3 status bar
       libnotify
       (inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; })
-      pa_applet
       pavucontrol
       networkmanagerapplet
       xfce4-volumed-pulse
@@ -177,6 +170,8 @@
         set $fehBG ${fehBG}
         set $termCMD ${config.tmuxTerminalStr}
         set $termSTR ${config.tmuxlessTerm}
+        set $quickshell ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
+        set $pasystray ${lib.getExe pkgs.pasystray} --key-grabbing
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
         if config.defaultLockerEnabled then
