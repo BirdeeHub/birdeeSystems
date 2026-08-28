@@ -146,12 +146,7 @@
       relPath = "nix-generated-i3-config";
       content = let
         monMover = (pkgs.writeShellScript "monWkspcCycle.sh" ''
-          jq() {
-            ${pkgs.jq}/bin/jq "$@"
-          }
-          xrandr() {
-            ${pkgs.xrandr}/bin/xrandr "$@"
-          }
+          export PATH="${lib.makeBinPath [ pkgs.jq pkgs.xrandr ]}:$PATH"
           ${builtins.readFile ./monWkspcCycle.sh}
         '');
         fehBG = (

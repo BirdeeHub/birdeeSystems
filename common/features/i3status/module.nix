@@ -5,12 +5,40 @@ _: {
       # default = "/sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input";
       default = "/sys/class/thermal/thermal_zone0/temp";
     };
+    options.general.output_format = lib.mkOption {
+      type = lib.types.enum [ "i3bar" "dzen2" "xmobar" "lemonbar" "term" "none" null ];
+      default = null;
+    };
+    options.general.interval = lib.mkOption {
+      type = lib.types.nullOr lib.types.number;
+      default = null;
+    };
+    options.general.color = lib.mkOption {
+      type = lib.types.nullOr lib.types.bool;
+      default = null;
+    };
+    options.general.color_good = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+    };
+    options.general.color_degraded = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+    };
+    options.general.color_bad = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+    };
     imports = [ wlib.modules.default ];
     config.flags."--config" = config.constructFiles.i3barcfg.path;
     config.package = lib.mkDefault pkgs.i3status;
     config.constructFiles.i3barcfg = {
       relPath = "${config.binName}-rc";
-      content = ''
+      content = lib.optionalString (builtins.any (v: v != null) (builtins.attrValues config.general)) (lib.pipe config.general [
+        (lib.mapAttrsToList (n: v: if v == null then "" else "${n} = ${builtins.toJSON v}"))
+        (builtins.concatStringsSep "\n")
+        (s: "general {\n${s}\n}\n")
+      ]) + ''
         order += "load"
         order += "cpu_usage"
         order += "cpu_temperature 0"
