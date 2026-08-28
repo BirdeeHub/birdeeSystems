@@ -47,11 +47,11 @@
         type = str;
       };
       background = lib.mkOption {
-        default = ./misc/rooftophang.png;
+        default = ./assets/rooftophang.png;
         type = nullOr path;
       };
       lockerBackground = lib.mkOption {
-        default = ./misc/DogAteHomework.png;
+        default = ./assets/DogAteHomework.png;
         type = nullOr path;
       };
       cputemppath = lib.mkOption {

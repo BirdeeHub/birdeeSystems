@@ -57,7 +57,7 @@
         terminalSTR = lib.getExe (inputs.self.wrappers.wezterm.wrap { inherit pkgs; });
         flake_svg = ./nix-flake.svg;
         editor = inputs.self.wrappers.neovim.wrap { inherit pkgs; };
-        wallpaper = ../../modules/i3/misc/rooftophang.png;
+        wallpaper = ../../modules/i3/assets/rooftophang.png;
         left = "h";
         down = "j";
         up = "k";
@@ -78,7 +78,7 @@
               [
                 "-t"
                 "-i"
-                ../../modules/i3/misc/DogAteHomework.png
+                ../../modules/i3/assets/DogAteHomework.png
               ]
             ];
           };
