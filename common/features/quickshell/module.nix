@@ -6,6 +6,7 @@
       type = wlib.types.subWrapperModule {
         imports = [ inputs.self.wrapperModules.i3status ];
         config.pkgs = pkgs;
+        config.general.output_format = "i3bar";
       };
     };
     config.configFile = ''

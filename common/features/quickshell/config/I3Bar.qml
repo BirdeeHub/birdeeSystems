@@ -10,14 +10,18 @@ Scope {
     required property bool isSway
     id: root
 
-    property string statusInfo: ""
+    property var statusInfo: []
     Process {
         id: statusCmd
         command: [i3status]
         running: true
         stdout: SplitParser {
             onRead: data => {
-                root.statusInfo = data
+                try {
+                    root.statusInfo = JSON.parse(data.slice(1))
+                } catch (e) {
+                    root.statusInfo = []
+                }
             }
         }
     }
@@ -112,21 +116,42 @@ Scope {
                     }
 
                     // MIDDLE
-                    Text {
+                    Item {
                         id: status
                         anchors {
                             left: leftSection.right
                             right: rightSection.left
                             verticalCenter: parent.verticalCenter
                         }
-                        horizontalAlignment: Text.AlignHCenter
-                        elide: Text.ElideMiddle
-                        leftPadding: 8
-                        rightPadding: 8
+                        Text {
+                            visible: root.i3Mode !== "default"
+                            anchors.centerIn: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            elide: Text.ElideMiddle
+                            leftPadding: 8
+                            rightPadding: 8
+                            color: "white"
+                            font.pixelSize: 11
+                            text: root.i3Mode
+                        }
+                        Row {
+                            visible: root.i3Mode === "default"
+                            anchors.centerIn: parent
+                            Repeater {
+                                model: root.statusInfo
+                                Text {
+                                    required property var modelData
+                                    horizontalAlignment: Text.AlignHCenter
+                                    elide: Text.ElideMiddle
+                                    leftPadding: 8
+                                    rightPadding: 8
 
-                        color: "white"
-                        font.pixelSize: 11
-                        text: root.i3Mode === "default" ? root.statusInfo : root.i3Mode
+                                    color: modelData.color ?? "white"
+                                    font.pixelSize: 11
+                                    text: modelData.full_text
+                                }
+                            }
+                        }
                     }
 
                     // RIGHT
