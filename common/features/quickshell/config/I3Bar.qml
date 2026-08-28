@@ -66,7 +66,6 @@ Scope {
             PanelWindow {
                 id: bar
                 required property var modelData
-                exclusionMode: ExclusionMode.Ignore
                 screen: modelData
                 implicitHeight: 15
                 color: "#1a1b26"
@@ -252,24 +251,17 @@ Scope {
                             height: parent.height
 
                             color: batRatio > 0.7 ? "#9ECE6A" : batRatio > 0.3 ? "#F2D674" : "#BA02F2"
-
-                            Text {
-                                anchors.centerIn: batteryDisplay
-                                font.pixelSize: 11
-                                color: "black"
-                                text: {
-                                    let time = UPower.displayDevice.timeToEmpty
-
-                                    if (time > 0)
-                                        return formatTime(time)
-
-                                    let chargeTime = UPower.displayDevice.timeToFull
-
-                                    if (chargeTime > 0)
-                                        return "⚡" + formatTime(chargeTime)
-
-                                    return "⚡"
-                                }
+                        }
+                        Text {
+                            anchors.centerIn: parent
+                            font.pixelSize: 11
+                            color: "black"
+                            text: {
+                                let time = UPower.displayDevice.timeToEmpty
+                                if (time > 0) return formatTime(time)
+                                let chargeTime = UPower.displayDevice.timeToFull
+                                if (chargeTime > 0) return "⚡" + formatTime(chargeTime)
+                                return "⚡"
                             }
                         }
                     }
