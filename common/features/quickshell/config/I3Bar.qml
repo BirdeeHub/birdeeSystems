@@ -157,7 +157,6 @@ Scope {
                                 QsMenuAnchor {
                                     id: menuAnchor
                                     menu: modelData.menu
-
                                     anchor {
                                         window: bar
                                         item: parent
