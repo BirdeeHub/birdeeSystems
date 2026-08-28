@@ -192,6 +192,7 @@ in {
     xcp
     xsel
     xev
+    psmisc
     xmodmap
     libreoffice
     wireshark

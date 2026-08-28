@@ -87,7 +87,6 @@
       i3lock # default i3 screen locker
     ] ++ (with pkgs; [
       libnotify
-      (inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; })
       pavucontrol
       networkmanagerapplet
       xfce4-volumed-pulse
@@ -172,6 +171,7 @@
         set $termSTR ${config.tmuxlessTerm}
         set $quickshell ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
         set $pasystray ${lib.getExe pkgs.pasystray} --key-grabbing
+        set $bemenu ${lib.getExe (inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; })}
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
         if config.defaultLockerEnabled then

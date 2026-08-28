@@ -72,7 +72,7 @@ bindsym $mod+Shift+Return exec $termSTR
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id bemenu-recency
+bindsym $mod+d exec --no-startup-id $bemenu
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
