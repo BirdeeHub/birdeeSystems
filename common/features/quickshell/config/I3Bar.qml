@@ -47,6 +47,7 @@ Scope {
         return minutes + "m"
     }
 
+    // // NOTE: does not subscribe to mode events T.T
     // Connections {
     //     target: I3
     //     function onRawEvent(event) {
