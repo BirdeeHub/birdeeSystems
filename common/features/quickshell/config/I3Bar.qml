@@ -67,7 +67,7 @@ Scope {
                 required property var modelData
                 exclusionMode: ExclusionMode.Ignore
                 screen: modelData
-                implicitHeight: 14
+                implicitHeight: 15
                 color: "#1a1b26"
                 anchors {
                     top: false
