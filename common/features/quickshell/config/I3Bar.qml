@@ -227,6 +227,7 @@ Scope {
                         }
                     }
 
+                    // BATTERY
                     Rectangle {
                         id: batteryDisplay
                         width: 50
@@ -252,7 +253,7 @@ Scope {
                             color: batRatio > 0.7 ? "#9ECE6A" : batRatio > 0.3 ? "#F2D674" : "#BA02F2"
 
                             Text {
-                                anchors.centerIn: parent
+                                anchors.centerIn: batteryDisplay
                                 font.pixelSize: 11
                                 color: "black"
                                 text: {
