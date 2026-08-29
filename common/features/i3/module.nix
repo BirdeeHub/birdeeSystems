@@ -138,7 +138,7 @@
           ];
         };
       in ''
-        exec --no-startup-id ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
+        exec --no-startup-id quickshell
         exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
         exec --no-startup-id ${lib.getExe pkgs.pasystray}
         exec --no-startup-id ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
@@ -163,6 +163,7 @@
     config.runtimePkgs = with pkgs; [
       libnotify
       pavucontrol
+      (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })
     ];
     config.runShell = let
       xresources = pkgs.writeText "Xresources" ''
