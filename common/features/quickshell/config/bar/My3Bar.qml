@@ -28,7 +28,7 @@ Scope {
                 required property var modelData
                 screen: modelData
                 implicitHeight: Config.bar.height
-                color: Config.colors.darkest
+                color: Config.colors.darker
                 anchors {
                     top: false
                     bottom: true

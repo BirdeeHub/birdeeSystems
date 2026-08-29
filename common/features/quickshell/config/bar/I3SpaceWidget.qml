@@ -24,7 +24,7 @@ Row {
                 anchors.centerIn: parent
                 text: modelData.number
                 // text: modelData.name
-                color: modelData.focused ? Config.colors.dark : Config.colors.white
+                color: modelData.focused ? Config.colors.dark : Config.colors.lightest
                 font.pixelSize: Config.bar.fontSize
             }
             MouseArea {

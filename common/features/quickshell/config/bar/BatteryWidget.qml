@@ -30,7 +30,7 @@ Rectangle {
     Text {
         anchors.centerIn: parent
         font.pixelSize: Config.bar.fontSize
-        color: Config.colors.black
+        color: Config.colors.darkest
         text: {
             let time = UPower.displayDevice.timeToEmpty
             if (time > 0) return formatTime(time)

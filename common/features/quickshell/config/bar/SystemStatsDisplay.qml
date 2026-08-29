@@ -12,7 +12,7 @@ Item {
         elide: Text.ElideMiddle
         leftPadding: Config.bar.stats.leftPadding
         rightPadding: Config.bar.stats.rightPadding
-        color: Config.colors.white
+        color: Config.colors.lightest
         font.pixelSize: Config.bar.fontSize
         text: overrideText
     }
@@ -28,7 +28,7 @@ Item {
                 leftPadding: Config.bar.stats.leftPadding
                 rightPadding: Config.bar.stats.rightPadding
 
-                color: modelData.color ?? Config.colors.white
+                color: modelData.color ?? Config.colors.lightest
                 font.pixelSize: Config.bar.fontSize
                 text: modelData.full_text
             }
