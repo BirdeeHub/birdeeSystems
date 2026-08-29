@@ -7,7 +7,7 @@ Scope {
     property var statusInfo: []
     SystemStatsSource {
         i3status: Config.bar.stats.i3status
-        onRead: data => { root.statusInfo = data }
+        onRead: data => root.statusInfo = data
     }
     property string i3Mode: "default"
     I3ModeSource {
