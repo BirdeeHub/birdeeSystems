@@ -73,7 +73,6 @@
       libnotify
       pavucontrol
       networkmanagerapplet
-      xfce4-volumed-pulse
       lm_sensors
       glib # for gsettings
       gtk3.out # gtk-update-icon-cache
@@ -136,6 +135,10 @@
           export PATH="${lib.makeBinPath [ pkgs.jq pkgs.xrandr ]}:$PATH"
           ${builtins.readFile ./monWkspcCycle.sh}
         '');
+        persistify = (pkgs.writeShellScript "persistify.sh" ''
+          export PATH="${lib.makeBinPath [ pkgs.libnotify pkgs.coreutils ]}:$PATH"
+          ${builtins.readFile ./persistify.sh}
+        '');
         i3lock = util.wlib.wrapPackage {
           inherit pkgs;
           package = pkgs.i3lock;
@@ -150,8 +153,9 @@
       in ''
         exec --no-startup-id ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
         exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
-        exec --no-startup-id ${lib.getExe pkgs.pasystray} --key-grabbing
+        exec --no-startup-id ${lib.getExe pkgs.pasystray}
         set $monMover ${monMover}
+        set $persistify ${persistify}
         set $termCMD ${config.tmuxTerminalStr}
         set $termSTR ${config.tmuxlessTerm}
         set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
