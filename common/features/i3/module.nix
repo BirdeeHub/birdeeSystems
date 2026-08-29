@@ -136,16 +136,6 @@
           export PATH="${lib.makeBinPath [ pkgs.jq pkgs.xrandr ]}:$PATH"
           ${builtins.readFile ./monWkspcCycle.sh}
         '');
-        fehBG = (
-          pkgs.writeShellScript "fehBG" (
-            if config.background != null then
-              ''
-                exec ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ${config.background} "$@"
-              ''
-            else
-              "exit 0"
-          )
-        );
         i3lock = util.wlib.wrapPackage {
           inherit pkgs;
           package = pkgs.i3lock;
@@ -158,12 +148,12 @@
           ];
         };
       in ''
+        exec --no-startup-id ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
+        exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
+        exec --no-startup-id ${lib.getExe pkgs.pasystray} --key-grabbing
         set $monMover ${monMover}
-        set $fehBG ${fehBG}
         set $termCMD ${config.tmuxTerminalStr}
         set $termSTR ${config.tmuxlessTerm}
-        set $quickshell ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
-        set $pasystray ${lib.getExe pkgs.pasystray} --key-grabbing
         set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (

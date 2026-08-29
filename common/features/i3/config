@@ -38,8 +38,6 @@ font pango:FiraMono Nerd Font Mono 8
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-exec --no-startup-id $quickshell
-exec --no-startup-id $pasystray
 exec --no-startup-id nm-applet --indicator
 exec --no-startup-id blueman-applet
 
@@ -50,11 +48,10 @@ exec --no-startup-id blueman-applet
 
 # exec --no-startup-id volumeicon
 # Use pactl to adjust volume in PulseAudio.
-# set $refresh_i3status killall -SIGUSR1 i3status
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-# bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-sink-volume @DEFAULT_SINK@ +10%
+# bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-sink-volume @DEFAULT_SINK@ -10%
+# bindsym XF86AudioMute exec --no-startup-id wpctl set-sink-mute @DEFAULT_SINK@ toggle
+# bindsym XF86AudioMicMute exec --no-startup-id wpctl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -87,7 +84,6 @@ bindsym $mod+Shift+Print --release exec --no-startup-id peek
 bindsym $mod+Shift+p --release exec --no-startup-id xfce4-screenshooter
 bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-exec --no-startup-id $fehBG;
 # NOTE: maybe replace for wayland
 bindsym $mod+m exec pavucontrol
 
