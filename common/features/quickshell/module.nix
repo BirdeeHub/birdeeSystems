@@ -50,26 +50,26 @@
       fontSize = 11;
       height = 15;
       battery = {
-          width = 50;
-          heightPercent = 90;
-          warnPercent = 60;
-          critPercent = 30;
+        width = 50;
+        heightPercent = 90;
+        warnPercent = 60;
+        critPercent = 30;
       };
       workspaces = {
-          width = 20;
-          spacing = 4;
-          heightPercent = 90;
+        width = 20;
+        spacing = 4;
+        heightPercent = 90;
       };
       tray = {
-          iconPercentOfHeight = 90;
-          spacing = 8;
-          rightMargin = 4;
+        iconPercentOfHeight = 90;
+        spacing = 8;
+        rightMargin = 4;
       };
       stats = {
-          isSway = false;
-          i3status = lib.getExe config.i3status.wrapper;
-          leftPadding = 8;
-          rightPadding = 8;
+        isSway = false;
+        i3status = lib.getExe config.i3status.wrapper;
+        leftPadding = 8;
+        rightPadding = 8;
       };
     };
     config.constructFiles.configJS = {
