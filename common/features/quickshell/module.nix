@@ -12,6 +12,7 @@
     config.configFile = ''
       //@ pragma UseQApplication
       import Quickshell
+      import "bar"
       Scope {
         My3Bar {
           i3status: "${lib.getExe config.i3status.wrapper}"
