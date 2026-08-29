@@ -136,7 +136,7 @@ in {
     bitwarden-cli
     discord
     docker-compose
-    peek
+    libnotify
     obs-studio
     obs-do
     obs-cli

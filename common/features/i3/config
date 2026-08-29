@@ -79,11 +79,11 @@ bindsym $mod+d exec --no-startup-id $bemenu
 
 # NOTE: replace for wayland
 exec --no-startup-id xfce4-power-manager
-bindsym Print --release exec --no-startup-id xfce4-screenshooter
-bindsym $mod+Print --release exec --no-startup-id xfce4-screenshooter -r
-bindsym $mod+Shift+Print --release exec --no-startup-id peek
-bindsym $mod+Shift+p --release exec --no-startup-id xfce4-screenshooter
-bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
+bindsym Print --release exec --no-startup-id $xfce4-screenshooter
+bindsym $mod+Print --release exec --no-startup-id $xfce4-screenshooter -r
+bindsym $mod+Shift+Print --release exec --no-startup-id $peek
+bindsym $mod+Shift+p --release exec --no-startup-id $xfce4-screenshooter
+bindsym $mod+Ctrl+Print --release exec --no-startup-id $xfce4-screenshooter -r -c
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 # NOTE: maybe replace for wayland
 bindsym $mod+m exec pavucontrol

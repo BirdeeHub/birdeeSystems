@@ -70,8 +70,6 @@
       };
     };
     config.globalPackages = with pkgs; [
-      libnotify
-      pavucontrol
       lm_sensors
       glib # for gsettings
       gtk3.out # gtk-update-icon-cache
@@ -83,18 +81,8 @@
       garcon
       libxfce4ui
       xfce4-power-manager
-      # xfce4-notifyd
-      xfce4-screenshooter
-      xfce4-taskmanager
       qt5.qtquickcontrols2
       qt5.qtgraphicaleffects
-      # libXinerama
-      # dex
-      # hicolor-icon-theme
-      # tango-icon-theme
-      # xfce4-icon-theme
-      # gnome.gnome-themes-extra
-      # gnome.adwaita-icon-theme
     ];
     config.package = pkgs.i3;
     config.install.modules.nixos = { pkgs, config, ... }: let
@@ -159,6 +147,8 @@
         set $termCMD ${config.tmuxTerminalStr}
         set $termSTR ${config.tmuxlessTerm}
         set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
+        set $peek ${lib.getExe pkgs.peek}
+        set $xfce4-screenshooter ${lib.getExe pkgs.xfce4-screenshooter}
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
         if config.defaultLockerEnabled then
@@ -170,6 +160,10 @@
       ) + config.appendedConfig;
     };
     config.flags."-c" = config.constructFiles.i3Config.path;
+    config.runtimePkgs = with pkgs; [
+      libnotify
+      pavucontrol
+    ];
     config.runShell = let
       xresources = pkgs.writeText "Xresources" ''
         XTerm*termName: xterm-256color
