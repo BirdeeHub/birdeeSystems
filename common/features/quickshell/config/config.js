@@ -15,3 +15,28 @@ const colors = {
     warn: "#F2D674",
     alert: "#BA02F2"
 }
+
+const bar = {
+    fontSize: 11,
+    height: 15,
+    battery: {
+        width: 50,
+        heightPercent: 90,
+        warnPercent: 60,
+        critPercent: 30,
+    },
+    workspaces: {
+        width: 20,
+        spacing: 4,
+        heightPercent: 90,
+    },
+    tray: {
+        iconPercentOfHeight: 90,
+        spacing: 8,
+        rightMargin: 4
+    },
+    stats: {
+        leftPadding: 8,
+        rightPadding: 8
+    }
+}

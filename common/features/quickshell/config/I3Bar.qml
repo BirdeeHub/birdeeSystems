@@ -68,7 +68,7 @@ Scope {
                 id: bar
                 required property var modelData
                 screen: modelData
-                implicitHeight: 15
+                implicitHeight: Config.bar.height
                 color: Config.colors.darkest
                 anchors {
                     top: false
@@ -80,7 +80,7 @@ Scope {
                 Item {
                     anchors.fill: parent
 
-                    // LEFT
+                    // WORKSPACES
                     Row {
                         id: leftSection
 
@@ -89,14 +89,14 @@ Scope {
                             verticalCenter: parent.verticalCenter
                         }
 
-                        spacing: 4
+                        spacing: Config.bar.workspaces.spacing
 
                         Repeater {
                             model: I3.workspaces
 
                             Rectangle {
-                                width: 20
-                                height: 14
+                                width: Config.bar.workspaces.width
+                                height: Config.bar.height * (Config.bar.workspaces.heightPercent / 100)
 
                                 visible: modelData.monitor === I3.monitorFor(screen)
                                 color: modelData.focused ? Config.colors.alert : modelData.active ? Config.colors.light : Config.colors.medium
@@ -106,7 +106,7 @@ Scope {
                                     text: modelData.number
                                     // text: modelData.name
                                     color: modelData.focused ? Config.colors.dark : Config.colors.white
-                                    font.pixelSize: 11
+                                    font.pixelSize: Config.bar.fontSize
                                 }
                                 MouseArea {
                                     anchors.fill: parent
@@ -116,7 +116,7 @@ Scope {
                         }
                     }
 
-                    // MIDDLE
+                    // STATS
                     Item {
                         id: status
                         anchors {
@@ -129,10 +129,10 @@ Scope {
                             anchors.centerIn: parent
                             horizontalAlignment: Text.AlignHCenter
                             elide: Text.ElideMiddle
-                            leftPadding: 8
-                            rightPadding: 8
+                            leftPadding: Config.bar.stats.leftPadding
+                            rightPadding: Config.bar.stats.rightPadding
                             color: Config.colors.white
-                            font.pixelSize: 11
+                            font.pixelSize: Config.bar.fontSize
                             text: root.i3Mode
                         }
                         Row {
@@ -144,36 +144,36 @@ Scope {
                                     required property var modelData
                                     horizontalAlignment: Text.AlignHCenter
                                     elide: Text.ElideMiddle
-                                    leftPadding: 8
-                                    rightPadding: 8
+                                    leftPadding: Config.bar.stats.leftPadding
+                                    rightPadding: Config.bar.stats.rightPadding
 
                                     color: modelData.color ?? Config.colors.white
-                                    font.pixelSize: 11
+                                    font.pixelSize: Config.bar.fontSize
                                     text: modelData.full_text
                                 }
                             }
                         }
                     }
 
-                    // RIGHT
+                    // TRAY
                     Row {
                         id: rightSection
 
                         anchors {
                             right: batteryDisplay.left
                             verticalCenter: parent.verticalCenter
-                            rightMargin: 4
+                            rightMargin: Config.bar.tray.rightMargin
                         }
 
-                        spacing: 8
+                        spacing: Config.bar.tray.spacing
 
                         Repeater {
                             model: SystemTray.items
 
                             delegate: Item {
                                 required property var modelData
-                                width: 14
-                                height: 14
+                                width: Config.bar.height * (Config.bar.tray.iconPercentOfHeight / 100)
+                                height: Config.bar.height * (Config.bar.tray.iconPercentOfHeight / 100)
                                 Image {
                                     anchors.fill: parent
                                     source: modelData.icon
@@ -231,8 +231,8 @@ Scope {
                     // BATTERY
                     Rectangle {
                         id: batteryDisplay
-                        width: 50
-                        height: 14
+                        width: Config.bar.battery.width
+                        height: Config.bar.height * (Config.bar.battery.heightPercent / 100)
                         anchors {
                             right: parent.right
                             verticalCenter: parent.verticalCenter
@@ -251,11 +251,11 @@ Scope {
                             width: parent.width * batRatio
                             height: parent.height
 
-                            color: batRatio > 0.7 ? Config.colors.good : batRatio > 0.3 ? Config.colors.warn : Config.colors.alert
+                            color: batRatio > (Config.bar.battery.warnPercent / 100) ? Config.colors.good : batRatio > (Config.bar.battery.critPercent / 100) ? Config.colors.warn : Config.colors.alert
                         }
                         Text {
                             anchors.centerIn: parent
-                            font.pixelSize: 11
+                            font.pixelSize: Config.bar.fontSize
                             color: Config.colors.black
                             text: {
                                 let time = UPower.displayDevice.timeToEmpty
