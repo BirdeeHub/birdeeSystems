@@ -110,7 +110,8 @@ Scope {
                                         color: Config.colors.bright
                                         font.pixelSize: Config.notify.fontSize
                                         font.bold: true
-                                        elide: Text.ElideRight
+                                        // elide: Text.ElideRight
+                                        wrapMode: Text.WordWrap
                                     }
                                     Text {
                                         Layout.fillWidth: true
