@@ -69,23 +69,7 @@
         description = "install globalPackages";
       };
     };
-    config.globalPackages = let
-      i3lock = util.wlib.wrapPackage {
-        inherit pkgs;
-        package = pkgs.i3lock;
-        addFlag = [
-          [
-            "-t"
-            "-i"
-            config.lockerBackground
-          ]
-        ];
-      };
-    in
-    lib.optionals config.defaultLockerEnabled [
-      pkgs.xss-lock
-      i3lock # default i3 screen locker
-    ] ++ (with pkgs; [
+    config.globalPackages = with pkgs; [
       libnotify
       pavucontrol
       networkmanagerapplet
@@ -113,7 +97,7 @@
       # xfce4-icon-theme
       # gnome.gnome-themes-extra
       # gnome.adwaita-icon-theme
-    ]);
+    ];
     config.package = pkgs.i3;
     config.install.modules.nixos = { pkgs, config, ... }: let
       cfg = top.config.install.getWrapperConfig config;
@@ -162,6 +146,17 @@
               "exit 0"
           )
         );
+        i3lock = util.wlib.wrapPackage {
+          inherit pkgs;
+          package = pkgs.i3lock;
+          addFlag = [
+            [
+              "-t"
+              "-i"
+              config.lockerBackground
+            ]
+          ];
+        };
       in ''
         set $monMover ${monMover}
         set $fehBG ${fehBG}
@@ -174,7 +169,7 @@
       '' + builtins.readFile ./config + (
         if config.defaultLockerEnabled then
           ''
-            exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+            exec --no-startup-id ${lib.getExe pkgs.xss-lock} --transfer-sleep-lock -- ${lib.getExe i3lock} --nofork
           ''
         else
             ""
