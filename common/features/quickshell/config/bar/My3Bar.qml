@@ -52,7 +52,6 @@ Scope {
                         }
                     }
 
-                    // STATS
                     SystemStatsDisplay {
                         anchors {
                             left: leftSection.right
@@ -63,7 +62,6 @@ Scope {
                         statusInfo: root.statusInfo
                     }
 
-                    // TRAY
                     SystemTrayWidget {
                         id: rightSection
                         anchors {
@@ -73,7 +71,6 @@ Scope {
                         }
                     }
 
-                    // BATTERY
                     BatteryWidget {
                         id: batteryDisplay
                         anchors {
