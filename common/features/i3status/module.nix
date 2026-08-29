@@ -35,7 +35,7 @@ _: {
     config.constructFiles.i3barcfg = {
       relPath = "${config.binName}-rc";
       content = lib.optionalString (builtins.any (v: v != null) (builtins.attrValues config.general)) (lib.pipe config.general [
-        (lib.mapAttrsToList (n: v: if v == null then "" else "${n} = ${builtins.toJSON v}"))
+        (lib.mapAttrsToList (n: v: if v == null then "" else "  ${n} = ${builtins.toJSON v}"))
         (builtins.concatStringsSep "\n")
         (s: "general {\n${s}\n}\n")
       ]) + ''
@@ -53,52 +53,52 @@ _: {
         order += "time"
 
         time {
-            format = "%Y-%m-%d, %a, %H:%M:%S"
+          format = "%Y-%m-%d, %a, %H:%M:%S"
         }
         disk "/" {
-            format = "Nix: %avail/%total"
+          format = "Nix: %avail/%total"
         }
         disk "/home" {
-            format = "Home: %avail/%total"
+          format = "Home: %avail/%total"
         }
         cpu_usage {
-            format = "CPU: %usage"
+          format = "CPU: %usage"
         }
         load {
-                format = "%1min"
-                max_threshold = "2"
-                format_above_threshold = "%1min %5min"
+          format = "%1min"
+          max_threshold = "2"
+          format_above_threshold = "%1min %5min"
         }
         memory {
-            format = "RAM: %used/%total"
+          format = "RAM: %used/%total"
         }
 
         run_watch DHCP {
-                pidfile = "/var/run/dhclient*.pid"
+          pidfile = "/var/run/dhclient*.pid"
         }
 
         run_watch VPNC {
-                # file containing the PID of a vpnc process
-                pidfile = "/var/run/vpnc/pid"
+          # file containing the PID of a vpnc process
+          pidfile = "/var/run/vpnc/pid"
         }
 
         path_exists VPN {
-                # path exists when a VPN tunnel launched by nmcli/nm-applet is active
-                path = "/proc/sys/net/ipv4/conf/tun0"
+          # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+          path = "/proc/sys/net/ipv4/conf/tun0"
         }
 
         ethernet enp2s0 {
-            format_up = "LAN: %ip (%speed)"
-            format_down = ""
+          format_up = "LAN: %ip (%speed)"
+          format_down = ""
         }
 
         wireless wlo1 {
-            format_up = "%essid %ip (%quality at %bitrate)"
-            format_down = ""
+          format_up = "%essid %ip (%quality at %bitrate)"
+          format_down = ""
         }
         cpu_temperature 0 {
-                format = "%degrees °C"
-                path = "${config.cputemppath}"
+          format = "%degrees °C"
+          path = "${config.cputemppath}"
         }
       '';
     };
