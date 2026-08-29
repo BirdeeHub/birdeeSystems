@@ -42,7 +42,6 @@ exec --no-startup-id $quickshell
 exec --no-startup-id $pasystray
 exec --no-startup-id nm-applet --indicator
 exec --no-startup-id blueman-applet
-exec --no-startup-id xfce4-power-manager
 
 # exec --no-startup-id dbus-launch --exit-with-session i3
 
@@ -81,6 +80,7 @@ bindsym $mod+d exec --no-startup-id $bemenu
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # NOTE: replace for wayland
+exec --no-startup-id xfce4-power-manager
 bindsym Print --release exec --no-startup-id xfce4-screenshooter
 bindsym $mod+Print --release exec --no-startup-id xfce4-screenshooter -r
 bindsym $mod+Shift+Print --release exec --no-startup-id peek
