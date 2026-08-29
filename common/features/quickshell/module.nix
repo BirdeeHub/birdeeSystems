@@ -20,15 +20,12 @@
     '';
     options.colors = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
-      default = {};
     };
     options.notifyConfig = lib.mkOption {
       type = wlib.types.attrsRecursive;
-      default = {};
     };
     options.barConfig = lib.mkOption {
       type = wlib.types.attrsRecursive;
-      default = {};
     };
     config.notifyConfig = {
       fontSize = 14;
