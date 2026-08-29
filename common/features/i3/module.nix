@@ -101,7 +101,7 @@
       garcon
       libxfce4ui
       xfce4-power-manager
-      xfce4-notifyd
+      # xfce4-notifyd
       xfce4-screenshooter
       xfce4-taskmanager
       qt5.qtquickcontrols2
@@ -166,7 +166,7 @@
         set $termSTR ${config.tmuxlessTerm}
         set $quickshell ${lib.getExe (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })}
         set $pasystray ${lib.getExe pkgs.pasystray} --key-grabbing
-        set $bemenu ${lib.getExe (inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; })}
+        set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
         if config.defaultLockerEnabled then

@@ -4,6 +4,7 @@ import Quickshell.Io
 import Quickshell.Services.SystemTray
 import QtQuick
 import Quickshell.I3
+import "config.js" as Config
 
 Scope {
     required property var i3status
@@ -68,7 +69,7 @@ Scope {
                 required property var modelData
                 screen: modelData
                 implicitHeight: 15
-                color: "#1a1b26"
+                color: Config.colors.darkest
                 anchors {
                     top: false
                     bottom: true
@@ -98,13 +99,13 @@ Scope {
                                 height: 14
 
                                 visible: modelData.monitor === I3.monitorFor(screen)
-                                color: modelData.focused ? "#BA02F2" : modelData.active ? "#047180" : "#3e4452"
+                                color: modelData.focused ? Config.colors.alert : modelData.active ? Config.colors.light : Config.colors.medium
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: modelData.number
                                     // text: modelData.name
-                                    color: modelData.focused ? "#292F34" : "white"
+                                    color: modelData.focused ? Config.colors.dark : Config.colors.white
                                     font.pixelSize: 11
                                 }
                                 MouseArea {
@@ -130,7 +131,7 @@ Scope {
                             elide: Text.ElideMiddle
                             leftPadding: 8
                             rightPadding: 8
-                            color: "white"
+                            color: Config.colors.white
                             font.pixelSize: 11
                             text: root.i3Mode
                         }
@@ -146,7 +147,7 @@ Scope {
                                     leftPadding: 8
                                     rightPadding: 8
 
-                                    color: modelData.color ?? "white"
+                                    color: modelData.color ?? Config.colors.white
                                     font.pixelSize: 11
                                     text: modelData.full_text
                                 }
@@ -236,7 +237,7 @@ Scope {
                             right: parent.right
                             verticalCenter: parent.verticalCenter
                         }
-                        color: "#80a0ff"
+                        color: Config.colors.bright
                         Rectangle {
                             id: batteryFill
 
@@ -250,12 +251,12 @@ Scope {
                             width: parent.width * batRatio
                             height: parent.height
 
-                            color: batRatio > 0.7 ? "#9ECE6A" : batRatio > 0.3 ? "#F2D674" : "#BA02F2"
+                            color: batRatio > 0.7 ? Config.colors.good : batRatio > 0.3 ? Config.colors.warn : Config.colors.alert
                         }
                         Text {
                             anchors.centerIn: parent
                             font.pixelSize: 11
-                            color: "black"
+                            color: Config.colors.black
                             text: {
                                 let time = UPower.displayDevice.timeToEmpty
                                 if (time > 0) return formatTime(time)

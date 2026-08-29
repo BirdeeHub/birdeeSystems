@@ -12,9 +12,12 @@
     config.configFile = ''
       //@ pragma UseQApplication
       import Quickshell
-      I3Bar {
-        i3status: "${lib.getExe config.i3status.wrapper}"
-        isSway: false
+      Scope {
+        I3Bar {
+          i3status: "${lib.getExe config.i3status.wrapper}"
+          isSway: false
+        }
+        NotifyDeez {}
       }
     '';
     config.buildCommand.mkCfg = ''
