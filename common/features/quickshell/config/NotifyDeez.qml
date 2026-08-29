@@ -22,10 +22,7 @@ Scope {
                 id: notificationAnchor
                 required property var modelData
                 screen: modelData
-                anchors {
-                    top: true
-                    right: true
-                }
+                anchors.top: true
                 exclusionMode: ExclusionMode.Ignore
                 color: "transparent"
                 aboveWindows: false
