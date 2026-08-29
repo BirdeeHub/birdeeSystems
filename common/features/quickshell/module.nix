@@ -12,10 +12,17 @@
     config.configFile = ''
       //@ pragma UseQApplication
       import Quickshell
+      import Quickshell.Io
       import "bar"
       Scope {
         My3Bar {}
         NotifyDeez {}
+        IpcHandler {
+          target: "top"
+          function quit(): void {
+              Qt.quit()
+          }
+        }
       }
     '';
     options.notifyConfig = lib.mkOption {
@@ -75,6 +82,18 @@
         const notify = ${builtins.toJSON config.notifyConfig}
         const colors = ${builtins.toJSON config.colors}
         const bar = ${builtins.toJSON config.barConfig}
+      '';
+    };
+    config.constructFiles.reload = {
+      relPath = "bin/quickshell-config-reload";
+      content = ''
+        #!${pkgs.bash}/bin/bash
+        ${config.wrapperPaths.placeholder} ipc call top quit
+        ${config.wrapperPaths.placeholder}
+      '';
+      builder = ''
+        cp "$1" "$2"
+        chmod +x "$2"
       '';
     };
     config.buildCommand.mkCfg = ''

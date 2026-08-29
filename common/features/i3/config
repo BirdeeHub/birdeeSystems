@@ -52,10 +52,23 @@ exec --no-startup-id blueman-applet
 # bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 # bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ 10%+ && $persistify volume "$(wpctl get-volume @DEFAULT_SINK@)"
-bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ 10%- && $persistify volume "$(wpctl get-volume @DEFAULT_SINK@)"
-bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_SINK@ toggle && $persistify volume "$(wpctl get-volume @DEFAULT_SINK@)"
-bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_SOURCE@ toggle && $persistify mic "Mic $(wpctl get-volume @DEFAULT_SOURCE@)"
+# NOTE: audio icons for notify-send
+# audio-volume-muted
+# audio-volume-low
+# audio-volume-medium
+# audio-volume-high
+# audio-volume-full
+# microphone-sensitivity-low
+# microphone-sensitivity-medium
+# microphone-sensitivity-high
+# microphone-sensitivity-muted
+# microphone
+# microphone-muted
+# TODO: make a script so your icons are better for these
+bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ 10%+ && $persistify volume -i audio-volume-full "$(wpctl get-volume @DEFAULT_SINK@)"
+bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ 10%- && $persistify volume -i audio-volume-full "$(wpctl get-volume @DEFAULT_SINK@)"
+bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_SINK@ toggle && $persistify volume -i audio-volume-full "$(wpctl get-volume @DEFAULT_SINK@)"
+bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_SOURCE@ toggle && $persistify mic -i microphone "Mic $(wpctl get-volume @DEFAULT_SOURCE@)"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -235,15 +248,9 @@ for_window [class="GParted"] floating enable border normal
 # switch to workspace with urgent window automatically
 # for_window [urgent=latest] focus
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-# NOTE: this may not work on wayland
-bindsym $mod+Shift+r restart
-
 # Set shut down, restart and locking features
 bindsym $mod+Shift+e mode "$mode_system"
-set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (f)ast logout, switch (u)ser, (r)eboot, (Shift+s)hutdown, exit i3 (Shift+i)
+set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (f)ast logout, switch (u)ser, (r)eboot, (Shift+s)hutdown, (i)3 reload, (Shift+i)3 restart
 mode "$mode_system" {
     # bindsym s exec --no-startup-id xfce4-session-logout --suspend, mode "default"
     # bindsym u exec --no-startup-id xfce4-session-logout --switch-user, mode "default"
@@ -261,9 +268,8 @@ mode "$mode_system" {
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+h exec --no-startup-id systemctl hibernate, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
-    # exit i3 (logs you out of your X session)
-    # NOTE: i3 nagbar isnt a thing on wayland
-    bindsym Shift+i exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+    bindsym i exec --no-startup-id quickshell-config-reload, reload
+    bindsym Shift+i exec --no-startup-id quickshell-config-reload, restart
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
