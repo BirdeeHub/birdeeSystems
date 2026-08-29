@@ -47,4 +47,6 @@ with home-manager to install a home-manager config without booting, you wont hav
 
 If you use disko to reformat your drives and lose all your data, I am not responsible.
 
+I do not guarantee that if you grab something from my config, that it will work.
+
 ---
