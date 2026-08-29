@@ -3,7 +3,6 @@ import Quickshell.Services.UPower
 import QtQuick
 import "../config.js" as Config
 
-// BATTERY
 Rectangle {
     function formatTime(seconds) {
         if (seconds <= 0) return ""
