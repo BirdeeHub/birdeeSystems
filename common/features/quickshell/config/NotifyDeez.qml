@@ -97,7 +97,7 @@ Scope {
                                     Layout.alignment: Qt.AlignTop
                                     fillMode: Image.PreserveAspectFit
                                     visible: source.toString() !== ""
-                                    source: popup.modelData.image || popup.modelData.appIcon || ""
+                                    source: popup.modelData.image ?? popup.modelData.appIcon ?? ""
                                 }
                                 ColumnLayout {
                                     id: content
