@@ -7,19 +7,15 @@ import Quickshell.I3
 import "../config.js" as Config
 
 Scope {
-    required property string i3status
-    required property bool isSway
     id: root
-
     property var statusInfo: []
     SystemStatsSource {
-        i3status: root.i3status
+        i3status: Config.bar.stats.i3status
         onRead: data => root.statusInfo = data
     }
-
     property string i3Mode: "default"
     I3ModeSource {
-        isSway: root.isSway
+        isSway: Config.bar.stats.isSway
         onRead: data => root.i3Mode = data
     }
 
