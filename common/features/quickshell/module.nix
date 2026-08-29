@@ -13,7 +13,7 @@
       //@ pragma UseQApplication
       import Quickshell
       Scope {
-        I3Bar {
+        My3Bar {
           i3status: "${lib.getExe config.i3status.wrapper}"
           isSway: false
         }

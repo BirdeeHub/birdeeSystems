@@ -80,39 +80,12 @@ Scope {
                 Item {
                     anchors.fill: parent
 
-                    // WORKSPACES
-                    Row {
+                    I3SpaceWidget {
+                        screen: bar.screen
                         id: leftSection
-
                         anchors {
                             left: parent.left
                             verticalCenter: parent.verticalCenter
-                        }
-
-                        spacing: Config.bar.workspaces.spacing
-
-                        Repeater {
-                            model: I3.workspaces
-
-                            Rectangle {
-                                width: Config.bar.workspaces.width
-                                height: Config.bar.height * (Config.bar.workspaces.heightPercent / 100)
-
-                                visible: modelData.monitor === I3.monitorFor(screen)
-                                color: modelData.focused ? Config.colors.alert : modelData.active ? Config.colors.light : Config.colors.medium
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: modelData.number
-                                    // text: modelData.name
-                                    color: modelData.focused ? Config.colors.dark : Config.colors.white
-                                    font.pixelSize: Config.bar.fontSize
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: modelData.activate()
-                                }
-                            }
                         }
                     }
 
