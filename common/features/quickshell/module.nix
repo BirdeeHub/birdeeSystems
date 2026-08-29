@@ -18,18 +18,15 @@
         NotifyDeez {}
       }
     '';
-    options.colors = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-    };
     options.notifyConfig = lib.mkOption {
-      type = wlib.types.attrsRecursive;
-    };
-    options.barConfig = lib.mkOption {
       type = wlib.types.attrsRecursive;
     };
     config.notifyConfig = {
       fontSize = 14;
       timeout = 5000;
+    };
+    options.colors = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
     };
     config.colors = {
       darkest = "black";
@@ -42,6 +39,9 @@
       good = "#9ECE6A";
       warn = "#F2D674";
       alert = "#BA02F2";
+    };
+    options.barConfig = lib.mkOption {
+      type = wlib.types.attrsRecursive;
     };
     config.barConfig = {
       fontSize = 11;
