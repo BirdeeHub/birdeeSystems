@@ -119,10 +119,16 @@
       cfg = top.config.install.getWrapperConfig config;
     in {
       security.pam.services.i3lock.enable = cfg.defaultLockerEnabled && cfg.enable;
-      services.xserver.windowManager.i3 = lib.optionalAttrs (cfg.enable && cfg.setInstallOption) {
-        enable = true;
-        package = cfg.wrapper;
-      };
+      services.xserver.windowManager.session = lib.optionals (cfg.enable && cfg.setInstallOption) [
+        {
+          name = "i3";
+          start = ''
+            ${lib.getExe cfg.wrapper} &
+            waitPIT=$!
+          '';
+        }
+      ];
+      services.displayManager.defaultSession = lib.mkIf (cfg.enable && cfg.setInstallOption) (lib.mkOverride 1001 "none+i3");
       environment.systemPackages = lib.optionals (cfg.enable && cfg.installGlobalPackages) cfg.globalPackages;
     };
     config.install.modules.homeManager = { pkgs, config, ... }: let
@@ -136,10 +142,7 @@
       # };
       xsession.enable = (cfg.enable && cfg.setInstallOption);
       xsession.scriptPath = lib.optionalString (cfg.enable && cfg.setInstallOption) ".xsession";
-      xsession.windowManager.i3 = lib.optionalAttrs (cfg.enable && cfg.setInstallOption) {
-        enable = true;
-        package = cfg.wrapper;
-      };
+      xsession.windowManager.command = lib.optionalAttrs (cfg.enable && cfg.setInstallOption) (lib.getExe cfg.wrapper);
       home.packages = lib.optionals (cfg.enable && cfg.installGlobalPackages) cfg.globalPackages;
     };
     config.constructFiles.i3Config = {
@@ -191,6 +194,7 @@
     in [
       ''
         ${lib.optionalString config.updateDbusEnvironment ''
+          systemctl --user import-environment PATH DISPLAY XAUTHORITY DESKTOP_SESSION XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_RUNTIME_DIR XDG_SESSION_ID DBUS_SESSION_BUS_ADDRESS || true
           ${lib.getBin pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all || true
         ''}
         ${pkgs.xrdb}/bin/xrdb -merge ${xresources}
