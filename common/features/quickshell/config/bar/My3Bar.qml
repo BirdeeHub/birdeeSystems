@@ -1,9 +1,5 @@
 import Quickshell
-import Quickshell.Io
-import Quickshell.Services.UPower
-import Quickshell.Services.SystemTray
 import QtQuick
-import Quickshell.I3
 import "../config.js" as Config
 
 Scope {
