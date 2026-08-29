@@ -38,7 +38,6 @@ font pango:FiraMono Nerd Font Mono 8
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
-exec --no-startup-id nm-applet --indicator
 exec --no-startup-id blueman-applet
 
 # exec --no-startup-id dbus-launch --exit-with-session i3
