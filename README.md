@@ -4,10 +4,6 @@ I configure everything I have gotten around to converting so far via:
 
 [website introduction and documentation](https://birdeehub.github.io/nix-wrapper-modules/)
 
-Currently Im doing that in this directory although that may change and I might forget to update this.
-
-[./common/wrappers](./common/wrappers)
-
 All packages wrapped in this manner may be reconfigured via calling `.wrap` on them, which takes a module as an argument. `.override` and `.overrideAttrs` will pass through to the actual package.
 
 ---
@@ -32,19 +28,19 @@ And the recursive import function is here
 
 ---
 
-- [display manager:](./common/modules/lightdm/module.nix) lightdm which loads ~/.xsession
-- [window manager:](./common/modules/i3/module.nix) i3 loaded via home manager from .xsession
-- desktop manager: none but I have like half of xfce including the power manager
+- [display manager:](./common/features/lightdm/module.nix) lightdm which loads ~/.xsession
+- [window manager:](./common/features/i3/module.nix) i3 loaded via home manager from .xsession
+- [bars and notifications:](./common/features/quickshell/module.nix)
 - [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nix-wrapper-modules.
-- [browser:](./common/modules/firefox) firefox
-- [file manager:](./common/wrappers/xplr/module.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
-- [terminal:](./common/wrappers/wezterm/module.nix) wezterm
-- [shell:](./common/wrappers/zsh) zsh with vi mode plugin, themer is [starship](./common/wrappers/starship/module.nix)
-- [tmux:](./common/wrappers/tmux/module.nix) with some keybinds and onedark theme
+- [browser:](./common/features/firefox) firefox
+- [file manager:](./common/features/xplr/module.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
+- [terminal:](./common/features/wezterm/module.nix) wezterm
+- [shell:](./common/features/zsh) zsh with vi mode plugin, themer is [starship](./common/features/starship/module.nix)
+- [tmux:](./common/features/tmux/module.nix) with some keybinds and onedark theme
 
 ---
 
-Just cherry pick stuff or import modules if you want to copy something. Its my computer get your own XD
+Cherry-pick stuff or import modules if you want to copy something. Its my computer get your own XD
 
 Dont install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
 with home-manager to install a home-manager config without booting, you wont have a user environment to boot into.
@@ -52,5 +48,3 @@ with home-manager to install a home-manager config without booting, you wont hav
 If you use disko to reformat your drives and lose all your data, I am not responsible.
 
 ---
-
-to do: change firefox config to use autoconf instead of copying prefs.js raw so that I dont have to reaccept terms and conditions every time I provision firefox from scratch.
