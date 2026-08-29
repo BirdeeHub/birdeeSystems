@@ -12,7 +12,7 @@ Dendritic common directory heavily utilizing flake parts.
 
 The common directory creates the stuff, and the configs consume it.
 
-The configs are in [./homes](./systems) and [./systems](./systems) and they are organized by base config, with several entry points which import it to be imported from [./default.nix](./default.nix)
+The configs are in [./homes](./homes) and [./systems](./systems) and they are organized by base config, with several entry points which import it to be imported from [./default.nix](./default.nix)
 
 My configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
 
