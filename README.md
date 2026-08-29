@@ -40,13 +40,13 @@ And the recursive import function is here
 
 ---
 
-Cherry-pick stuff or import modules if you want to copy something. Its my computer get your own XD
+Cherry-pick stuff or import modules if you want to copy something. It's my computer get your own 🤣
 
-Dont install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
+Don't install the nixos-only configs on a fresh install, because unless you know how to use nixos-enter
 with home-manager to install a home-manager config without booting, you wont have a user environment to boot into.
 
 If you use disko to reformat your drives and lose all your data, I am not responsible.
 
-I do not guarantee that if you grab something from my config, that it will work.
+If you grab something from my config, I do not guarantee that it will work.
 
 ---
