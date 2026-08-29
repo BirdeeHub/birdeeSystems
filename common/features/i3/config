@@ -87,9 +87,9 @@ bindsym $mod+Shift+Print --release exec --no-startup-id peek
 bindsym $mod+Shift+p --release exec --no-startup-id xfce4-screenshooter
 bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+exec --no-startup-id $fehBG;
 # NOTE: maybe replace for wayland
 bindsym $mod+m exec pavucontrol
-exec --no-startup-id $fehBG;
 
 # Start Applications
 # bindsym $mod+Ctrl+m exec $termCMD -T 'alsamixer' -e 'alsamixer'
