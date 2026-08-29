@@ -30,7 +30,7 @@ And the recursive import function is here
 
 - [display manager:](./common/features/lightdm/module.nix) lightdm which loads ~/.xsession
 - [window manager:](./common/features/i3/module.nix) i3 loaded via home manager from .xsession
-- [bars and notifications:](./common/features/quickshell/module.nix)
+- [bars and notifications:](./common/features/quickshell/module.nix) made via quickshell
 - [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nix-wrapper-modules.
 - [browser:](./common/features/firefox) firefox
 - [file manager:](./common/features/xplr/module.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
