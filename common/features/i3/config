@@ -62,6 +62,7 @@ floating_modifier $mod
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
+# NOTE: this might not work on wayland
 tiling_drag modifier titlebar
 
 # start a terminal
@@ -79,10 +80,20 @@ bindsym $mod+d exec --no-startup-id $bemenu
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
+# NOTE: replace for wayland
+bindsym Print --release exec --no-startup-id xfce4-screenshooter
+bindsym $mod+Print --release exec --no-startup-id xfce4-screenshooter -r
+bindsym $mod+Shift+Print --release exec --no-startup-id peek
+bindsym $mod+Shift+p --release exec --no-startup-id xfce4-screenshooter
+bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
+bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+# NOTE: maybe replace for wayland
+bindsym $mod+m exec pavucontrol
+exec --no-startup-id $fehBG;
+
 # Start Applications
 # bindsym $mod+Ctrl+m exec $termCMD -T 'alsamixer' -e 'alsamixer'
 bindsym $mod+Shift+m exec blueman-manager
-bindsym $mod+m exec pavucontrol
 bindsym $mod+F1 exec bitwarden
 bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec $termSTR -e xplr
@@ -94,13 +105,6 @@ bindsym $mod+F8 exec galculator
 bindsym $mod+Shift+F8 exec qalculate-qt
 bindsym $mod+F9 exec slack
 bindsym $mod+F10 exec slack
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-# bindsym $mod+Shift+d --release exec "dunstctl close-all"
-bindsym Print --release exec --no-startup-id xfce4-screenshooter
-bindsym $mod+Shift+p --release exec --no-startup-id xfce4-screenshooter
-bindsym $mod+Print --release exec --no-startup-id xfce4-screenshooter -r
-bindsym $mod+Shift+Print --release exec --no-startup-id peek
-bindsym $mod+Ctrl+Print --release exec --no-startup-id xfce4-screenshooter -r -c
 
 bindsym $mod+minus exec $monMover
 focus_follows_mouse no
@@ -222,6 +226,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
 
+# NOTE: may need updating or extra entries for wayland
 for_window [class="Pavucontrol"] floating enable
 for_window [class=".blueman-manager-wrapped"] floating enable
 for_window [class="blueman-manager"] floating enable
@@ -236,6 +241,7 @@ for_window [class="GParted"] floating enable border normal
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# NOTE: this may not work on wayland
 bindsym $mod+Shift+r restart
 
 # Set shut down, restart and locking features
@@ -259,6 +265,7 @@ mode "$mode_system" {
     bindsym Shift+h exec --no-startup-id systemctl hibernate, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
     # exit i3 (logs you out of your X session)
+    # NOTE: i3 nagbar isnt a thing on wayland
     bindsym Shift+i exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
     # exit system mode: "Enter" or "Escape"
@@ -293,7 +300,6 @@ mode "resize" {
 # Autostart applications
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id $bootUpMonScript;
-exec --no-startup-id $fehBG;
 #exec --no-startup-id manjaro-hello
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
@@ -313,6 +319,7 @@ exec --no-startup-id $fehBG;
 # to:
 # background $term_background
 # Same logic applied to everything else.
+# NOTE: this will not work on wayland
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
 set_from_resource $term_color0     color0
