@@ -106,7 +106,7 @@ Scope {
 
                                     Text {
                                         Layout.fillWidth: true
-                                        text: popup.modelData.summary
+                                        text: popup.modelData.summary ?? ""
                                         color: Config.colors.bright
                                         font.pixelSize: Config.notify.fontSize
                                         font.bold: true
@@ -115,7 +115,7 @@ Scope {
                                     Text {
                                         Layout.fillWidth: true
                                         visible: text !== ""
-                                        text: popup.modelData.body
+                                        text: popup.modelData.body ?? ""
                                         color: Config.colors.bright
                                         font.pixelSize: Config.notify.fontSize - 1
                                         wrapMode: Text.WordWrap
