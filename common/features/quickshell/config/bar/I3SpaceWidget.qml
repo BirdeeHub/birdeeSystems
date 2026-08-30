@@ -11,6 +11,7 @@ Row {
         model: I3.workspaces
 
         Rectangle {
+            required property var modelData
             width: Config.bar.workspaces.width
             height: Config.bar.height * (Config.bar.workspaces.heightPercent / 100)
 
