@@ -52,7 +52,6 @@ in {
       ExecStart = "${inotifyScript config.i3Monager.triggerFileDir config.i3Monager.triggerFileName config.i3Monager.configScript}";
       # Restart = "on-failure";
       # RestartSec = "5";
-      X-ReloadIfChanged = false;
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
