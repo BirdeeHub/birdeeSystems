@@ -87,7 +87,7 @@
     config.constructFiles.reload = {
       relPath = "bin/quickshell-config-reload";
       content = ''
-        #!${pkgs.bash}/bin/bash
+        #!${pkgs.bash}${pkgs.bash.shellPath}
         ${config.wrapperPaths.placeholder} ipc call top quit
         ${config.wrapperPaths.placeholder}
       '';
