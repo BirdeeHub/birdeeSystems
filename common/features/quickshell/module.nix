@@ -25,17 +25,14 @@
         }
       }
     '';
-    options.notifyConfig = lib.mkOption {
+    options.settings = lib.mkOption {
       type = wlib.types.attrsRecursive;
     };
-    config.notifyConfig = {
+    config.settings.notify = {
       fontSize = 14;
       timeout = 5000;
     };
-    options.colors = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-    };
-    config.colors = {
+    config.settings.colors = {
       darkest = "black";
       darker = "#1a1b26";
       dark = "#292F34";
@@ -47,10 +44,7 @@
       warn = "#F2D674";
       alert = "#BA02F2";
     };
-    options.barConfig = lib.mkOption {
-      type = wlib.types.attrsRecursive;
-    };
-    config.barConfig = {
+    config.settings.bar = {
       fontSize = 11;
       height = 15;
       battery = {
@@ -78,11 +72,10 @@
     };
     config.constructFiles.configJS = {
       relPath = dirOf config.constructFiles.generatedConfig.relPath + "/config.js";
-      content = ''
-        const notify = ${builtins.toJSON config.notifyConfig}
-        const colors = ${builtins.toJSON config.colors}
-        const bar = ${builtins.toJSON config.barConfig}
-      '';
+      content = lib.pipe config.settings [
+        (lib.mapAttrsToList (n: v: "const ${n} = ${builtins.toJSON v};"))
+        (builtins.concatStringsSep "\n")
+      ];
     };
     config.constructFiles.reload = {
       relPath = "bin/quickshell-config-reload";
