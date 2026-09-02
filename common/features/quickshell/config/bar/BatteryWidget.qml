@@ -97,50 +97,6 @@ Rectangle {
                     opacity: 0.2
                 }
 
-                // Text {
-                //     text: "Start charging: " +
-                //           battery.startThreshold + "%"
-                //
-                //     color: Config.colors.bright
-                // }
-                //
-                // Slider {
-                //     id: startSlider
-                //
-                //     width: parent.width
-                //
-                //     from: 1
-                //     to: battery.endThreshold - 1
-                //     value: battery.startThreshold
-                //     stepSize: 1
-                //
-                //     onMoved: {
-                //         battery.startThreshold = Math.round(value)
-                //     }
-                // }
-                //
-                // Text {
-                //     text: "Stop charging: " +
-                //           battery.endThreshold + "%"
-                //
-                //     color: Config.colors.bright
-                // }
-                //
-                // Slider {
-                //     id: endSlider
-                //
-                //     width: parent.width
-                //
-                //     from: battery.startThreshold + 1
-                //     to: 100
-                //     value: battery.endThreshold
-                //     stepSize: 1
-                //
-                //     onMoved: {
-                //         battery.endThreshold = Math.round(value)
-                //     }
-                // }
-
                 Row {
                     spacing: 8
                     Text {
