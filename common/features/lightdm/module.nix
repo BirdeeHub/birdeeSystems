@@ -77,6 +77,7 @@
           ];
           xdg.portal.config.common.default = "*";
 
+          security.polkit.enable = true;
           services.dbus.enable = true;
           services.upower.enable = true;
           services.power-profiles-daemon.enable = true;

@@ -142,7 +142,6 @@
           $brightnessctl set $step%$sign && ${persistify} brightness -i "$icon" "$($brightnessctl -m | cut -d, -f4)"
         '';
       in ''
-        exec --no-startup-id ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
         exec --no-startup-id quickshell
         exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
         exec --no-startup-id ${lib.getExe pkgs.pasystray}
@@ -172,6 +171,12 @@
       pavucontrol
       (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })
     ];
+
+    config.systemd.user.service.polkit-gnome-authentication-agent = {
+      Unit.Description = "Polkit GNOME Authentication Agent";
+      Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
     config.runShell = let
       xresources = pkgs.writeText "Xresources" ''
         XTerm*termName: xterm-256color
