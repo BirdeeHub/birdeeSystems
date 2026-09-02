@@ -153,8 +153,8 @@
         set $termSTR ${config.tmuxlessTerm}
         set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
         set $brightnesscmd ${brightness}
-        set $peek ${lib.getExe pkgs.peek}
         set $xfce4-screenshooter ${lib.getExe pkgs.xfce4-screenshooter}
+        set $peek ${lib.getExe pkgs.peek}
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
         # NOTE: this will have to change for wayland, as will the screenshot utilities above
