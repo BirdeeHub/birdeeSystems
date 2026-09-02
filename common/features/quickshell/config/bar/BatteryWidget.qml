@@ -157,7 +157,7 @@ Rectangle {
             ]
             stdout: SplitParser {
                 onRead: data => {
-                    // Expected output: "d 80" (or similar)
+                    // Expected output: "u 80" (or similar)
                     battery.chargeEndThreshold =
                         parseInt(data.trim().split(" ")[1])
                 }
@@ -175,7 +175,7 @@ Rectangle {
             ]
             stdout: SplitParser {
                 onRead: data => {
-                    // Expected output: "d 80" (or similar)
+                    // Expected output: "u 80" (or similar)
                     battery.chargeStartThreshold =
                         parseInt(data.trim().split(" ")[1])
                 }
