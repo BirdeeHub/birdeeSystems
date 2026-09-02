@@ -82,19 +82,65 @@ Rectangle {
                 }
                 spacing: 12
 
-                Text {
-                    text: "Battery " +
-                          Math.round(battery.batRatio * 100) + "%"
+                Row {
+                    spacing: 20
+                    Text {
+                        text: "Battery " +
+                              Math.round(battery.batRatio * 100) + "%"
 
-                    color: Config.colors.bright
-                    font.bold: true
-                }
+                        color: Config.colors.bright
+                        font.bold: true
+                    }
 
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: Config.colors.bright
-                    opacity: 0.2
+                    Rectangle {
+                        width: 150
+                        height: 36
+                        color: Config.colors.dark
+                        border.color: Config.colors.bright
+                        border.width: 2
+                        radius: 8
+
+                        Text {
+                            anchors.centerIn: parent
+                            color: Config.colors.bright
+
+                            text: {
+                                switch (PowerProfiles.profile) {
+                                case PowerProfile.PowerSaver:
+                                    return "Power Saver"
+                                case PowerProfile.Balanced:
+                                    return "Balanced"
+                                case PowerProfile.Performance:
+                                    return "Performance"
+                                default:
+                                    return "Unknown"
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            onClicked: {
+                                switch (PowerProfiles.profile) {
+                                case PowerProfile.PowerSaver:
+                                    PowerProfiles.profile = PowerProfile.Balanced
+                                    break
+
+                                case PowerProfile.Balanced:
+                                    if (PowerProfiles.hasPerformanceProfile)
+                                        PowerProfiles.profile = PowerProfile.Performance
+                                    else
+                                        PowerProfiles.profile = PowerProfile.PowerSaver
+                                    break
+
+                                case PowerProfile.Performance:
+                                    PowerProfiles.profile = PowerProfile.PowerSaver
+                                    break
+                                }
+                            }
+                        }
+                    }
                 }
 
                 Row {
