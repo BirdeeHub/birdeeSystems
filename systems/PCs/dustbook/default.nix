@@ -36,7 +36,7 @@ in {
     mesa
   ];
 
-  services.auto-cpufreq.enable = true;
+  # services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_5_10;

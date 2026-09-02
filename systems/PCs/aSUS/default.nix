@@ -49,7 +49,7 @@ in {
   #   mks.vk.allowUnsupportedDevices = "TRUE"
   # '';
 
-  services.auto-cpufreq.enable = true;
+  # services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 
   services.asusd.enable = true;

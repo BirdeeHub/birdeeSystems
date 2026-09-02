@@ -77,7 +77,6 @@ in {
   };
 
   # services.auto-cpufreq.enable = true;
-  services.power-profiles-daemon.enable = true;
 
   # virtualisation.vmware.host.enable = true;
 }

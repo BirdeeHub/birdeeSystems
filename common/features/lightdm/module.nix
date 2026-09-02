@@ -79,6 +79,7 @@
 
           services.dbus.enable = true;
           services.upower.enable = true;
+          services.power-profiles-daemon.enable = true;
           services.logind.enable = true;
           services.logind.settings.Login = {
             HandleLidSwitch = "hibernate";
