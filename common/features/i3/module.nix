@@ -152,12 +152,12 @@
         set $termCMD ${config.tmuxTerminalStr}
         set $termSTR ${config.tmuxlessTerm}
         set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
+        set $brightnesscmd ${brightness}
         set $peek ${lib.getExe pkgs.peek}
         set $xfce4-screenshooter ${lib.getExe pkgs.xfce4-screenshooter}
-        set $brightnesscmd ${brightness}
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
-        # NOTE: this will have to change for wayland
+        # NOTE: this will have to change for wayland, as will the screenshot utilities above
         if config.defaultLockerEnabled then
           ''
             exec --no-startup-id ${lib.getExe pkgs.xss-lock} --transfer-sleep-lock -- ${lib.getExe i3lock} --nofork
