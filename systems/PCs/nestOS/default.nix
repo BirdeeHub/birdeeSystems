@@ -34,26 +34,33 @@ in {
   services.asusd.enable = true;
   systemd.services.asusd.wantedBy = [ "graphical.target" ];
   systemd.services.asus-shutdown.wantedBy = [ "shutdown.target" ];
-  services.asusd.fanCurvesConfig.text = ''
+  services.asusd.fanCurvesConfig.text = let
+    curves = ''
+        (
+            fan: CPU,
+            pwm: (20, 40, 80, 100, 125, 150, 200, 250),
+            temp: (40, 50, 55, 60, 65, 70, 80, 90),
+            enabled: true,
+        ),
+        (
+            fan: GPU,
+            pwm: (20, 40, 80, 100, 125, 150, 200, 250),
+            temp: (40, 50, 55, 60, 65, 70, 80, 90),
+            enabled: true,
+        ),
+    '';
+  in ''
     (
         profiles: (
             balanced: [
-                (
-                    fan: CPU,
-                    pwm: (0, 0, 0, 0, 100, 150, 200, 250),
-                    temp: (40, 50, 55, 60, 65, 70, 80, 90),
-                    enabled: true,
-                ),
-                (
-                    fan: GPU,
-                    pwm: (0, 0, 0, 0, 100, 150, 200, 250),
-                    temp: (40, 50, 55, 60, 65, 70, 80, 90),
-                    enabled: true,
-                ),
+                ${curves}
             ],
-            performance: [],
-            quiet: [],
-            custom: [],
+            performance: [
+                ${curves}
+            ],
+            quiet: [
+                ${curves}
+            ],
         ),
     )
   '';
