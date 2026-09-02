@@ -9,7 +9,7 @@
         config.general.output_format = "i3bar";
       };
     };
-    config.configFile = ''
+    config.configFile = /*qml*/ ''
       //@ pragma UseQApplication
       import Quickshell
       import Quickshell.Io
