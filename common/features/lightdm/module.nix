@@ -69,20 +69,34 @@
           services.dbus.packages = [
           ];
 
-          qt.platformTheme = "gtk2";
-
           xdg.portal.enable = true;
           xdg.portal.extraPortals = with pkgs; [
             xdg-desktop-portal
             xdg-desktop-portal-gtk
-            # xdg-desktop-portal-gnome
             xdg-dbus-proxy
           ];
           xdg.portal.config.common.default = "*";
 
-          programs.xfconf.enable = true;
-
           services.dbus.enable = true;
+          services.upower.enable = true;
+          services.logind.enable = true;
+          services.logind.settings.Login = {
+            HandleLidSwitch = "hibernate";
+            HandleLidSwitchExternalPower = "suspend";
+            HandleLidSwitchDocked = "ignore";
+            HandlePowerKey =  "poweroff";
+            HandleRebootKey = "reboot";
+            HandleSuspendKey = "suspend";
+            HandleHibernateKey = "hibernate";
+            HandlePowerKeyLongPress = "poweroff";
+            HandleRebootKeyLongPress = "poweroff";
+            HandleSuspendKeyLongPress = "hibernate";
+            HandleHibernateKeyLongPress = "ignore";
+            HandleSecureAttentionKey = "secure-attention-key";
+            IdleAction = "suspend-then-hibernate";
+            IdleActionSec = "1h";
+          };
+          systemd.sleep.settings.Sleep.HibernateDelaySec = "10min";
           services.xserver.updateDbusEnvironment = true;
           programs.gdk-pixbuf.modulePackages = with pkgs; [
             gdk-pixbuf
@@ -90,12 +104,9 @@
           ];
 
           programs.dconf.enable = true;
-          services.upower.enable = true;
           services.udisks2.enable = true;
           services.gnome.glib-networking.enable = true;
           services.gvfs.enable = true;
-          services.tumbler.enable = true;
-          services.system-config-printer.enable = true;
 
           environment.pathsToLink = [
             "/share/xfce4"

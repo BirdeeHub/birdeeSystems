@@ -70,6 +70,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK
 bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_SINK@ toggle && $persistify volume -i audio-volume-full "$(wpctl get-volume @DEFAULT_SINK@)"
 bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_SOURCE@ toggle && $persistify mic -i microphone "Mic $(wpctl get-volume @DEFAULT_SOURCE@)"
 
+bindsym XF86MonBrightnessUp exec --no-startup-id $brightnesscmd 5 +
+bindsym XF86MonBrightnessDown exec --no-startup-id $brightnesscmd 5 -
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -91,7 +94,6 @@ bindsym $mod+d exec --no-startup-id $bemenu
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 
 # NOTE: replace for wayland
-exec --no-startup-id xfce4-power-manager
 bindsym Print --release exec --no-startup-id $xfce4-screenshooter
 bindsym $mod+Print --release exec --no-startup-id $xfce4-screenshooter -r
 bindsym $mod+Shift+Print --release exec --no-startup-id $peek
@@ -250,26 +252,16 @@ for_window [class="GParted"] floating enable border normal
 
 # Set shut down, restart and locking features
 bindsym $mod+Shift+e mode "$mode_system"
-set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (f)ast logout, switch (u)ser, (r)eboot, (Shift+s)hutdown, (i)3 reload, (Shift+i)3 restart
+set $mode_system (q)uit user, (e)xit to lockscreen, (s)uspend, (h)ibernate, hy(b)rid sleep, (r)eboot, (Shift+s)hutdown, (i)3 reload
 mode "$mode_system" {
-    # bindsym s exec --no-startup-id xfce4-session-logout --suspend, mode "default"
-    # bindsym u exec --no-startup-id xfce4-session-logout --switch-user, mode "default"
-    # bindsym q exec --no-startup-id xfce4-session-logout --logout, mode "default"
-    # bindsym h exec --no-startup-id xfce4-session-logout --hibernate, mode "default"
-    # bindsym b exec --no-startup-id xfce4-session-logout --hybrid-sleep, mode "default"
-    # bindsym f exec --no-startup-id xfce4-session-logout --fast, mode "default"
-    # bindsym r exec --no-startup-id xfce4-session-logout --reboot, mode "default"
-    # bindsym Shift+s exec --no-startup-id xfce4-session-logout -h, mode "default"
     bindsym e exec --no-startup-id "loginctl lock-session $XDG_SESSION_ID", mode "default"
     bindsym b exec --no-startup-id systemctl hybrid-sleep, mode "default"
     bindsym q exec --no-startup-id "loginctl terminate-session $XDG_SESSION_ID", mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id systemctl suspend-then-hibernate, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+h exec --no-startup-id systemctl hibernate, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
     bindsym i exec --no-startup-id quickshell-config-reload; reload
-    bindsym Shift+i exec --no-startup-id quickshell-config-reload; restart
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"

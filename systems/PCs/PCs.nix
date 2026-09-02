@@ -48,6 +48,8 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  qt.platformTheme = "gtk2";
+
   networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -94,6 +96,8 @@ in {
   };
 
   # Enable CUPS to print documents.
+  services.system-config-printer.enable = true;
+  programs.system-config-printer.enable = true;
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
   services.printing.webInterface = false;

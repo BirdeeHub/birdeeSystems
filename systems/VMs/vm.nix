@@ -35,6 +35,8 @@ in {
   services.clamav.updater.enable = true;
   services.clamav.updater.interval = "weekly";
 
+  qt.platformTheme = "gtk2";
+
   environment.variables = {
   };
   environment.interactiveShellInit = ''

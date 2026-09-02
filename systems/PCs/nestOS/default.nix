@@ -76,9 +76,8 @@ in {
     extraPackages = with pkgs; [ rocmPackages.clr.icd rocmPackages.clr vulkan-tools mesa libGL ];
   };
 
-  services.thermald.enable = true;
-
-  services.auto-cpufreq.enable = true;
+  # services.auto-cpufreq.enable = true;
+  services.power-profiles-daemon.enable = true;
 
   # virtualisation.vmware.host.enable = true;
 }

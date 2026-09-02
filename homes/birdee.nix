@@ -107,11 +107,13 @@ in {
     noto-fonts-color-emoji
     nerd-fonts.go-mono
 
+    ristretto
+    tumbler
+
     # dislocker
     ueberzugpp
     vlc
     nix-tree
-    ristretto
     grex
     qbittorrent
     # galculator
@@ -212,6 +214,11 @@ in {
     visualvm
   ];
   fonts.fontconfig.enable = true;
+
+  dbus.packages = [
+    # needed by ristretto
+    pkgs.tumbler
+  ];
 
   home.pointerCursor.package = pkgs.phinger-cursors;
   home.pointerCursor.name = "phinger-cursors";

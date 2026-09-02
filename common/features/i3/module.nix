@@ -78,11 +78,11 @@
       polkit_gnome
       xdg-utils
       xdg-user-dirs
-      garcon
-      libxfce4ui
-      xfce4-power-manager
-      qt5.qtquickcontrols2
-      qt5.qtgraphicaleffects
+      # garcon
+      # libxfceui
+      # xfce4-power-manager
+      # qt5.qtquickcontrols2
+      # qt5.qtgraphicaleffects
     ];
     config.package = pkgs.i3;
     config.install.modules.nixos = { pkgs, config, ... }: let
@@ -137,6 +137,16 @@
             ]
           ];
         };
+        brightness = pkgs.writeShellScript "brightness.sh" ''
+          brightnessctl=${lib.escapeShellArg (lib.getExe pkgs.brightnessctl)}
+          step=$1
+          sign=$2
+          icon=${./assets/brightness-up.svg}
+          if [[ "$sign" == "-" ]]; then
+            icon=${./assets/brightness-down.svg}
+          fi
+          $brightnessctl set $step%$sign && ${persistify} brightness -i "$icon" "$($brightnessctl -m | cut -d, -f4)"
+        '';
       in ''
         exec --no-startup-id quickshell
         exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
@@ -149,6 +159,7 @@
         set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
         set $peek ${lib.getExe pkgs.peek}
         set $xfce4-screenshooter ${lib.getExe pkgs.xfce4-screenshooter}
+        set $brightnesscmd ${brightness}
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
         if config.defaultLockerEnabled then
