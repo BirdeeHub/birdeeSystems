@@ -63,12 +63,6 @@
           # services.displayManager.defaultSession = lib.mkOverride 1000 "none+fake";
           services.displayManager.defaultSession = lib.mkOverride 1002 "none+fake";
 
-          environment.systemPackages = [
-          ];
-
-          services.dbus.packages = [
-          ];
-
           xdg.portal.enable = true;
           xdg.portal.extraPortals = with pkgs; [
             xdg-desktop-portal
