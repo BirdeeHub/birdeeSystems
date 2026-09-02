@@ -75,7 +75,6 @@
       gtk3.out # gtk-update-icon-cache
       desktop-file-utils
       shared-mime-info # for update-mime-database
-      polkit_gnome
       xdg-utils
       xdg-user-dirs
     ];
@@ -143,6 +142,7 @@
           $brightnessctl set $step%$sign && ${persistify} brightness -i "$icon" "$($brightnessctl -m | cut -d, -f4)"
         '';
       in ''
+        exec --no-startup-id ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
         exec --no-startup-id quickshell
         exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
         exec --no-startup-id ${lib.getExe pkgs.pasystray}
