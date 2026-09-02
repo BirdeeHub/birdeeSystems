@@ -175,7 +175,7 @@ Rectangle {
             ]
             stdout: SplitParser {
                 onRead: data => {
-                    // Expected output: "u 80" (or similar)
+                    // Expected output: "u 75" (or similar)
                     battery.chargeStartThreshold =
                         parseInt(data.trim().split(" ")[1])
                 }
