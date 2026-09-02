@@ -32,7 +32,7 @@ static int l_watcher_wait(lua_State *L) {
         while (offset < (size_t)n) {
             struct inotify_event *event = (struct inotify_event *)(buf + offset);
 
-            if ((event->mask & IN_CLOSE_WRITE)
+            if ((event->mask & (IN_CLOSE_WRITE | IN_MODIFY))
                 && event->len > 0
                 && strcmp(event->name, filename) == 0
             ) {
