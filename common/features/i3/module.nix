@@ -157,6 +157,7 @@
         set $brightnesscmd ${brightness}
         ${config.prependedConfig}
       '' + builtins.readFile ./config + (
+        # NOTE: this will have to change for wayland
         if config.defaultLockerEnabled then
           ''
             exec --no-startup-id ${lib.getExe pkgs.xss-lock} --transfer-sleep-lock -- ${lib.getExe i3lock} --nofork
