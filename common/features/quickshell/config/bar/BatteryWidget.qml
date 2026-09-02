@@ -43,6 +43,19 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: UPower
+        function onOnBatteryChanged() {
+            if (UPower.onBattery) {
+                PowerProfiles.profile = PowerProfile.PowerSaver
+            } else if (PowerProfiles.hasPerformanceProfile) {
+                PowerProfiles.profile = PowerProfile.Performance
+            } else {
+                PowerProfiles.profile = PowerProfile.Balanced
+            }
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         onClicked: {
@@ -85,7 +98,7 @@ Rectangle {
                 Row {
                     spacing: 20
                     Text {
-                        text: "Battery " +
+                        text: (UPower.onBattery ? "" : "⚡ ") + "Battery " +
                               Math.round(battery.batRatio * 100) + "%"
 
                         color: Config.colors.bright
