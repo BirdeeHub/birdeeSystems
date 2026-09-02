@@ -78,11 +78,6 @@
       polkit_gnome
       xdg-utils
       xdg-user-dirs
-      # garcon
-      # libxfceui
-      # xfce4-power-manager
-      # qt5.qtquickcontrols2
-      # qt5.qtgraphicaleffects
     ];
     config.package = pkgs.i3;
     config.install.modules.nixos = { pkgs, config, ... }: let
