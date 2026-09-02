@@ -50,8 +50,8 @@
       battery = {
         width = 50;
         heightPercent = 90;
-        warnPercent = 60;
-        critPercent = 30;
+        warnPercent = 50;
+        critPercent = 25;
       };
       workspaces = {
         width = 20;
