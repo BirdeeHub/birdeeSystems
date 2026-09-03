@@ -29,6 +29,8 @@ Row {
                 anchors.fill: parent
                 onClicked: modelData.activate()
             }
+            // workaround for when they don't appear on the new monitor when I unplug the old one even though they were moved.
+            Component.onDestruction: I3.refreshWorkspaces()
         }
     }
 }
