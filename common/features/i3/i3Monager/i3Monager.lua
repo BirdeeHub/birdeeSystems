@@ -85,6 +85,7 @@ while true do
     -- But we need to read initial workspaces before they are changed, but not forever before, like, right before
     -- this script might actually not be able to work for both, or need major changes.
     io.stdout:write("waiting for trigger file to be written to...\n")
+    io.stdout:flush()
     if not pcall(watcher.wait, watcher, trigger_file_name) then
       break
     end

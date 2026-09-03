@@ -1,36 +1,16 @@
-{ config, pkgs, lib, wlib, ... }@top: let
-  triggerAction = dir: name: writeShellScript: writeShellScript "i3MonagerTrigger.sh" ''
-    mkdir -p ${lib.escapeShellArg dir}
-    echo "$RANDOM" > ${lib.escapeShellArg "${dir}/${name}"}
-  '';
-  inotifyScript = dir: name: config_script: import ./i3Monager.nix {
-    inherit pkgs;
-    toPass = {
-      extra_path = with pkgs; [ coreutils-full xrandr i3 ];
-      trigger_file_dir = dir;
-      trigger_file_name = name;
-      json_cache = null;
-      config_script = config_script;
-    };
-  };
-in {
+{ config, pkgs, lib, wlib, ... }@top: {
   options = {
     i3Monager = {
       enable = lib.mkEnableOption "an auto-run workspace switcher on monitor hotplug";
-      triggerFileDir = lib.mkOption {
-        type = lib.types.str;
-        default = "/tmp/i3monsMemory";
-      };
-      triggerFileName = lib.mkOption {
-        type = lib.types.str;
-        default = "i3xrandrTriggerFile";
+      triggerFile = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ "tmp" "i3monsMemory" "i3xrandrTriggerFile" ];
       };
       triggerType = lib.mkOption {
         default = "udev";
         type = lib.types.enum [
           null
           "udev"
-          "Xlog"
         ];
         description = "type of system level trigger";
       };
@@ -49,48 +29,39 @@ in {
     };
     Service = {
       Type = "simple";
-      ExecStart = "${inotifyScript config.i3Monager.triggerFileDir config.i3Monager.triggerFileName config.i3Monager.configScript}";
+      ExecStart = "${import ./i3Monager.nix {
+        inherit pkgs;
+        toPass = {
+          extra_path = with pkgs; [ coreutils-full xrandr i3 ];
+          trigger_file_dir = "/" + builtins.concatStringsSep "/" (lib.init config.i3Monager.triggerFile);
+          trigger_file_name = lib.last config.i3Monager.triggerFile;
+          json_cache = null;
+          config_script = config.i3Monager.configScript;
+        };
+      }}";
       # Restart = "on-failure";
       # RestartSec = "5";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
-  config.systemd.user.service.i3MonagerXlog= lib.mkIf (config.i3Monager.enable && config.i3Monager.triggerType == "Xlog") (let
-  in {
-    XlogNotify = pkgs.writeShellScript "i3xrandrMemoryXlog.sh" ''
-      export PATH="${
-        pkgs.lib.makeBinPath (
-          with pkgs;
-          [
-            bash
-            coreutils
-            inotify-tools
-          ]
-        )
-      }:$PATH"
-      LAST_LINES=$(wc -l < /var/log/X.0.log)
-      inotifywait -e modify -m /var/log |
-      while read -r directory events filename; do
-        if [ "$filename" = "X.0.log" ]; then
-          NEW_CONTENT="$(tail -n +"$((LAST_LINES+1))" /var/log/X.0.log)"
-          LAST_LINES=$(wc -l < /var/log/X.0.log)
-          if echo "$NEW_CONTENT" | grep -E "GPU-[0-9].*: (connected|disconnected)"; then
-            ${triggerAction config.i3Monager.triggerFileDir config.i3Monager.triggerFileName pkgs.writeShellScript}
-          fi
-        fi
-      done
-    '';
-  });
-  config.install.modules.nixos = { config, pkgs, ... }: let
-    cfg = top.config.install.getWrapperConfig config;
-    udevAction = triggerAction cfg.i3Monager.triggerFileDir cfg.i3Monager.triggerFileName pkgs.writeShellScript;
-    enabled = cfg.i3Monager.enable && cfg.i3Monager.triggerType == "udev";
-  in {
-    services.udev = lib.mkIf enabled {
-      enable = true;
-      extraRules = ''
-        ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="${udevAction}"
-      '';
+  config.systemd.user.service.i3MonagerHotplugWatcher = lib.mkIf (config.i3Monager.enable && config.i3Monager.triggerType == "udev") (let
+    monmon = pkgs.stdenv.mkDerivation {
+      name = "udev-monitor";
+      src = ./udev.c;
+      buildInputs = [ pkgs.udev ];
+      dontUnpack = true;
+      buildPhase = "$CC -o $out -ludev  $src";
     };
-  };
+  in {
+    Unit = {
+      Description = "i3Monager udev Hotplug Watcher";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${monmon} ${builtins.concatStringsSep " " config.i3Monager.triggerFile}";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  });
 }
