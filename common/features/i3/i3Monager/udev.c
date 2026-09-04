@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include <stddef.h>
-#include <string.h>
-#include <errno.h>
-#include <poll.h>
 #include <stdlib.h>
-#include <errno.h>
+#include <string.h>
+#include <unistd.h>
 #include <sys/stat.h>
-#include <libudev.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <linux/netlink.h>
 
 int mkdir_p(const char **path, int last, char *buf, int current, size_t len);
 int mkdir_p(const char **path, int last, char *buf, int current, size_t len) {
@@ -44,155 +43,58 @@ int main(int argc, const char **argv)
     }
 
     size_t len = 1 + argc;
-    for (int i = 1; i < argc; i++)
-        len += strlen(argv[i]);
+    for (int i = 1; i < argc; i++) len += strlen(argv[i]);
     char filename[len];
 
-    struct udev *udev = udev_new();
-    if (!udev) {
-        fprintf(stderr, "udev_new() failed\n");
-        return 1;
-    }
-
-    struct udev_monitor *monitor =
-        udev_monitor_new_from_netlink(udev, "kernel");
-
-    if (!monitor) {
-        fprintf(stderr, "udev_monitor_new_from_netlink() failed\n");
-        udev_unref(udev);
-        return 1;
-    }
-
-    /*
-     * Match:
-     *
-     *     SUBSYSTEM=="drm"
-     *     DEVTYPE=="drm_minor"
-     */
-    int r = udev_monitor_filter_add_match_subsystem_devtype(
-        monitor, "drm", "drm_minor");
-
-    if (r < 0) {
-        fprintf(stderr, "filter failed: %d\n", r);
-        udev_monitor_unref(monitor);
-        udev_unref(udev);
-        return 1;
-    }
-
-    udev_monitor_set_receive_buffer_size(monitor, 16 * 1024 * 1024);
-
-    /*
-     * Start receiving events.
-     */
-    r = udev_monitor_enable_receiving(monitor);
-
-    if (r < 0) {
-        fprintf(stderr, "enable_receiving failed: %d\n", r);
-        udev_monitor_unref(monitor);
-        udev_unref(udev);
-        return 1;
-    }
-
-    /*
-     * Get the monitor's file descriptor.
-     */
-    int fd = udev_monitor_get_fd(monitor);
-
+    int fd = socket(AF_NETLINK, SOCK_RAW, NETLINK_KOBJECT_UEVENT);
     if (fd < 0) {
-        fprintf(stderr, "udev_monitor_get_fd() failed\n");
-        udev_monitor_unref(monitor);
-        udev_unref(udev);
+        perror("socket");
         return 1;
     }
 
-    struct pollfd pfd = {
-        .fd = fd,
-        .events = POLLIN,
-        .revents = 0,
+    struct sockaddr_nl addr = {
+        .nl_family = AF_NETLINK,
+        .nl_pid = getpid(),
+        .nl_groups = 1,  // receive kernel uevents
     };
 
+    if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+        perror("unable to bind file descriptor to NETLINK_KOBJECT_UEVENT");
+        return 1;
+    }
+
+    // This buffer need only be big enough for the kinds of uevents WE care about.
+    // If we receive a larger one, recv will discard the rest.
+    // If we were using a different method, maybe we would check to see if it got truncated and handle that.
+    // However, we are looking for a specific kind of uevent, and that kind of uevent always fits in this buffer.
+    char buf[1024];
+
     for (;;) {
-
-        printf("Waiting for DRM events...\n");
-        fflush(stdout);
-        /*
-         * Block indefinitely.
-         *
-         * -1 means:
-         *   do not wake up until the fd has something to read.
-         */
-        int ret = poll(&pfd, 1, -1);
-
-        if (ret < 0) {
-            /*
-             * Signals can interrupt poll().
-             * Just go back to waiting.
-             */
-            if (errno == EINTR)
-                continue;
-
-            perror("poll");
+        ssize_t len = recv(fd, buf, sizeof(buf), 0);
+        if (len < 0) {
+            perror("recv read failure, unable to read from NETLINK_KOBJECT_UEVENT");
             break;
         }
 
-        /*
-         * Something other than normal input happened.
-         */
-        if (pfd.revents & (POLLERR | POLLHUP | POLLNVAL)) {
-            fprintf(stderr, "udev monitor fd error: 0x%x\n",
-                    pfd.revents);
-            break;
+        int action = 0; // ACTION=change
+        int subsystem = 0; // SUBSYSTEM=drm
+        int devtype = 0; // DEVTYPE=drm_minor
+        int hotplug = 0; // HOTPLUG=1
+        // A uevent is a sequence of NUL-terminated strings.
+        for (char *p = buf; p < buf + len; ) {
+            char *end = memchr(p, '\0', buf + len - p);
+            if (!end) break;
+            if (end == p) break;
+            size_t n = end - p;
+
+            if (n == 0) break;
+            if (strcmp("SUBSYSTEM=drm", p) == 0) subsystem=1;
+            if (strcmp("DEVTYPE=drm_minor", p) == 0) devtype=1;
+            if (strcmp("ACTION=change", p) == 0) action=1;
+            if (strcmp("HOTPLUG=1", p) == 0) hotplug=1;
+            p += n + 1;
         }
-
-        /*
-         * The monitor has an event waiting.
-         */
-        if (!(pfd.revents & POLLIN))
-            continue;
-
-        struct udev_device *device =
-            udev_monitor_receive_device(monitor);
-
-        if (!device) {
-            /*
-             * This should be unusual after poll() reported POLLIN,
-             * but don't spin if it happens.
-             */
-            continue;
-        }
-
-        const char *action =
-            udev_device_get_action(device);
-
-        const char *subsystem =
-            udev_device_get_subsystem(device);
-
-        const char *devtype =
-            udev_device_get_devtype(device);
-
-        const char *hotplug =
-            udev_device_get_property_value(device, "HOTPLUG");
-
-        printf(
-            "EVENT: action=%s subsystem=%s devtype=%s HOTPLUG=%s\n",
-            action ? action : "(null)",
-            subsystem ? subsystem : "(null)",
-            devtype ? devtype : "(null)",
-            hotplug ? hotplug : "(null)"
-        );
-
-        /*
-         * Equivalent to:
-         *
-         *     ACTION=="change"
-         *     SUBSYSTEM=="drm"
-         *     DEVTYPE=="drm_minor"
-         *     ENV{HOTPLUG}=="1"
-         */
-        if (action &&
-            strcmp(action, "change") == 0 &&
-            hotplug &&
-            strcmp(hotplug, "1") == 0) {
+        if (action && subsystem && devtype && hotplug) {
             mkdir_p(argv, argc - 1, filename, 1, 0);
             FILE *f = fopen(filename, "w");
             if (!f) {
@@ -202,13 +104,8 @@ int main(int argc, const char **argv)
             fprintf(f, "display changed\n");
             fflush(f);
             fclose(f);
+            printf("wrote to %s\n", filename);
         }
-
-        udev_device_unref(device);
     }
-
-    udev_monitor_unref(monitor);
-    udev_unref(udev);
-
-    return 0;
+    close(fd);
 }
