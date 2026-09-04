@@ -72,7 +72,8 @@ in {
 
     # 
     (config.wrappers.neovim.wrap { settings.test_mode = true; })
-    nops # manix fzf alias
+    # nops # manix fzf alias
+    # manix
     dep-tree
     minesweeper
     gac
@@ -125,7 +126,6 @@ in {
     graphviz-nox
     nix-output-monitor
     nh
-    manix
     inputs.nsearch.packages.${stdenv.hostPlatform.system}.default
     nix-info
     direnv

@@ -97,9 +97,13 @@ in {
 
   # Enable CUPS to print documents.
   services.system-config-printer.enable = true;
-  programs.system-config-printer.enable = true;
+  # programs.system-config-printer.enable = true;
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
+  services.printing.drivers = with pkgs; [
+    gutenprint
+    # hplip
+    splix
+  ];
   services.printing.webInterface = false;
 
   # Enable sound with pipewire.
@@ -151,7 +155,7 @@ in {
   environment.systemPackages = (let
   in
   with pkgs; [
-    hplip
+    # hplip
     qemu
     fuse
     fuse3

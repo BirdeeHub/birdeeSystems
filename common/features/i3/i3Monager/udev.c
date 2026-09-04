@@ -79,6 +79,8 @@ int main(int argc, const char **argv)
         return 1;
     }
 
+    udev_monitor_set_receive_buffer_size(monitor, 16 * 1024 * 1024);
+
     /*
      * Start receiving events.
      */
@@ -184,6 +186,7 @@ int main(int argc, const char **argv)
          *
          *     ACTION=="change"
          *     SUBSYSTEM=="drm"
+         *     DEVTYPE=="drm_minor"
          *     ENV{HOTPLUG}=="1"
          */
         if (action &&
