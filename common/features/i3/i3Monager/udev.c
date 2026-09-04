@@ -91,7 +91,7 @@ int main(int argc, const char **argv)
             if (strcmp("ACTION=change", p) == 0) action=1;
             if (strcmp("HOTPLUG=1", p) == 0) hotplug=1;
             if (action && subsystem && devtype && hotplug) break;
-            p += end - p + 1;
+            p = end + 1;
         }
         if (action && subsystem && devtype && hotplug) {
             mkdir_p(argv, argc - 1, filename, 1, 0);
