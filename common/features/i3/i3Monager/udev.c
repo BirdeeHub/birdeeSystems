@@ -85,14 +85,12 @@ int main(int argc, const char **argv)
             char *end = memchr(p, '\0', buf + len - p);
             if (!end) break;
             if (end == p) break;
-            size_t n = end - p;
-
-            if (n == 0) break;
             if (strcmp("SUBSYSTEM=drm", p) == 0) subsystem=1;
             if (strcmp("DEVTYPE=drm_minor", p) == 0) devtype=1;
             if (strcmp("ACTION=change", p) == 0) action=1;
             if (strcmp("HOTPLUG=1", p) == 0) hotplug=1;
-            p += n + 1;
+            if (action && subsystem && devtype && hotplug) break;
+            p += end - p + 1;
         }
         if (action && subsystem && devtype && hotplug) {
             mkdir_p(argv, argc - 1, filename, 1, 0);
