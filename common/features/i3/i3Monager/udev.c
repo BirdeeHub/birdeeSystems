@@ -86,6 +86,7 @@ int main(int argc, const char **argv)
             char *end = memchr(p, '\0', buf + len - p);
             if (!end) break;
             if (end == p) break;
+            // printf("%s\n", p);
             if (strcmp("SUBSYSTEM=drm", p) == 0) subsystem=1;
             if (strcmp("DEVTYPE=drm_minor", p) == 0) devtype=1;
             if (strcmp("ACTION=change", p) == 0) action=1;
@@ -93,6 +94,8 @@ int main(int argc, const char **argv)
             if (action && subsystem && devtype && hotplug) break;
             p = end + 1;
         }
+        // printf("--- %zd ---\n", len);
+        // fflush(stdout);
         if (action && subsystem && devtype && hotplug) {
             mkdir_p(argv, argc - 1, filename, 1, 0);
             FILE *f = fopen(filename, "w");
