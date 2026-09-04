@@ -5,13 +5,11 @@ import "../config.js" as Config
 Scope {
     id: root
     property var statusInfo: []
-    SystemStatsSource {
-        i3status: Config.bar.stats.i3status
+    SystemStats.StatsSource {
         onRead: data => root.statusInfo = data
     }
     property string i3Mode: "default"
-    I3ModeSource {
-        isSway: Config.bar.stats.isSway
+    SystemStats.I3ModeSource {
         onRead: data => root.i3Mode = data
     }
 
@@ -44,7 +42,7 @@ Scope {
                         }
                     }
 
-                    SystemStatsDisplay {
+                    SystemStats {
                         anchors {
                             left: leftSection.right
                             right: rightSection.left
