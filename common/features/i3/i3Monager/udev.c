@@ -67,6 +67,7 @@ int main(int argc, const char **argv)
     // If we receive a larger one, recv will discard the rest.
     // If we were using a different method, maybe we would check to see if it got truncated and handle that.
     // However, we are looking for a specific kind of uevent, and that kind of uevent always fits in this buffer.
+    // Keeping it small thus means we at most have to search this many bytes to reject an event.
     char buf[1024];
 
     for (;;) {
