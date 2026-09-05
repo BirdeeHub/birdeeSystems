@@ -3,7 +3,7 @@ import Quickshell.Io
 import Quickshell.Services.UPower
 import QtQuick
 import QtQuick.Controls
-import "../config.js" as Config
+import NixInfo
 
 Rectangle {
     id: battery
@@ -15,9 +15,9 @@ Rectangle {
         if (hours > 0) return hours + "h " + minutes + "m"
         return minutes + "m"
     }
-    width: Config.bar.battery.width
-    height: Config.bar.height * (Config.bar.battery.heightPercent / 100)
-    color: Config.colors.bright
+    width: NixInfo.bar.battery.width
+    height: NixInfo.bar.height * (NixInfo.bar.battery.heightPercent / 100)
+    color: NixInfo.colors.bright
     property real batRatio: UPower.displayDevice.energy / UPower.displayDevice.energyCapacity
     property int chargeEndThreshold: 0
     property int chargeStartThreshold: 0
@@ -28,12 +28,12 @@ Rectangle {
         }
         width: parent.width * parent.batRatio
         height: parent.height
-        color: parent.batRatio > (Config.bar.battery.warnPercent / 100) ? Config.colors.good : parent.batRatio > (Config.bar.battery.critPercent / 100) ? Config.colors.warn : Config.colors.alert
+        color: parent.batRatio > (NixInfo.bar.battery.warnPercent / 100) ? NixInfo.colors.good : parent.batRatio > (NixInfo.bar.battery.critPercent / 100) ? NixInfo.colors.warn : NixInfo.colors.alert
     }
     Text {
         anchors.centerIn: parent
-        font.pixelSize: Config.bar.fontSize
-        color: Config.colors.darkest
+        font.pixelSize: NixInfo.bar.fontSize
+        color: NixInfo.colors.darkest
         text: {
             let time = UPower.displayDevice.timeToEmpty
             if (time > 0) return formatTime(time)
@@ -82,8 +82,8 @@ Rectangle {
         Rectangle {
             anchors.fill: parent
 
-            color: Config.colors.dark
-            border.color: Config.colors.bright
+            color: NixInfo.colors.dark
+            border.color: NixInfo.colors.bright
             border.width: 2
 
             Column {
@@ -101,21 +101,21 @@ Rectangle {
                         text: (UPower.onBattery ? "" : "⚡ ") + "Battery " +
                               Math.round(battery.batRatio * 100) + "%"
 
-                        color: Config.colors.bright
+                        color: NixInfo.colors.bright
                         font.bold: true
                     }
 
                     Rectangle {
                         width: 150
                         height: 36
-                        color: Config.colors.dark
-                        border.color: Config.colors.bright
+                        color: NixInfo.colors.dark
+                        border.color: NixInfo.colors.bright
                         border.width: 2
                         radius: 8
 
                         Text {
                             anchors.centerIn: parent
-                            color: Config.colors.bright
+                            color: NixInfo.colors.bright
 
                             text: {
                                 switch (PowerProfiles.profile) {
@@ -161,7 +161,7 @@ Rectangle {
                     Text {
                         width: 220
                         wrapMode: Text.WordWrap
-                        color: Config.colors.bright
+                        color: NixInfo.colors.bright
                         text: "Enable charge threshold (Start: " + chargeStartThreshold + "%, End: " + chargeEndThreshold + "%)"
                     }
                     Switch {

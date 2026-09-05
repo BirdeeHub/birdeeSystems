@@ -2,8 +2,7 @@ import Quickshell
 import Quickshell.Services.Notifications
 import QtQuick
 import QtQuick.Layouts
-
-import "config.js" as Config
+import NixInfo
 
 Scope {
     id: root
@@ -73,7 +72,7 @@ Scope {
                         }
                         Timer {
                             running: popup.modelData.urgency !== NotificationUrgency.Critical
-                            interval: Config.notify.timeout
+                            interval: NixInfo.notify.timeout
                             onTriggered: popup.modelData.dismiss()
                         }
 
@@ -81,9 +80,9 @@ Scope {
                             id: card
                             anchors.fill: parent
                             radius: 8
-                            color: Config.colors.dark
+                            color: NixInfo.colors.dark
                             border.width: 2
-                            border.color: popup.modelData.urgency === NotificationUrgency.Critical ? Config.colors.alert : Config.colors.bright
+                            border.color: popup.modelData.urgency === NotificationUrgency.Critical ? NixInfo.colors.alert : NixInfo.colors.bright
 
                             RowLayout {
                                 id: layout
@@ -107,8 +106,8 @@ Scope {
                                     Text {
                                         Layout.fillWidth: true
                                         text: popup.modelData.summary ?? ""
-                                        color: Config.colors.bright
-                                        font.pixelSize: Config.notify.fontSize
+                                        color: NixInfo.colors.bright
+                                        font.pixelSize: NixInfo.notify.fontSize
                                         font.bold: true
                                         // elide: Text.ElideRight
                                         wrapMode: Text.WordWrap
@@ -117,8 +116,8 @@ Scope {
                                         Layout.fillWidth: true
                                         visible: text !== ""
                                         text: popup.modelData.body ?? ""
-                                        color: Config.colors.bright
-                                        font.pixelSize: Config.notify.fontSize - 1
+                                        color: NixInfo.colors.bright
+                                        font.pixelSize: NixInfo.notify.fontSize - 1
                                         wrapMode: Text.WordWrap
                                     }
                                 }

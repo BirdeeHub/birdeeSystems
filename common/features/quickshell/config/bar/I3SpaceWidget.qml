@@ -1,29 +1,29 @@
 import Quickshell
 import QtQuick
 import Quickshell.I3
-import "../config.js" as Config
+import NixInfo
 
 Row {
     required property var screen
-    spacing: Config.bar.workspaces.spacing
+    spacing: NixInfo.bar.workspaces.spacing
 
     Repeater {
         model: I3.workspaces
 
         Rectangle {
             required property var modelData
-            width: Config.bar.workspaces.width
-            height: Config.bar.height * (Config.bar.workspaces.heightPercent / 100)
+            width: NixInfo.bar.workspaces.width
+            height: NixInfo.bar.height * (NixInfo.bar.workspaces.heightPercent / 100)
 
             visible: modelData.monitor === I3.monitorFor(screen)
-            color: modelData.focused ? Config.colors.alert : modelData.active ? Config.colors.light : Config.colors.medium
+            color: modelData.focused ? NixInfo.colors.alert : modelData.active ? NixInfo.colors.light : NixInfo.colors.medium
 
             Text {
                 anchors.centerIn: parent
                 text: modelData.number
                 // text: modelData.name
-                color: modelData.focused ? Config.colors.dark : Config.colors.lightest
-                font.pixelSize: Config.bar.fontSize
+                color: modelData.focused ? NixInfo.colors.dark : NixInfo.colors.lightest
+                font.pixelSize: NixInfo.bar.fontSize
             }
             MouseArea {
                 anchors.fill: parent

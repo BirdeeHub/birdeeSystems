@@ -1,17 +1,17 @@
 import Quickshell
 import Quickshell.Services.SystemTray
 import QtQuick
-import "../config.js" as Config
+import NixInfo
 
 Row {
-    spacing: Config.bar.tray.spacing
+    spacing: NixInfo.bar.tray.spacing
     Repeater {
         model: SystemTray.items
 
         delegate: Item {
             required property var modelData
-            width: Config.bar.height * (Config.bar.tray.iconPercentOfHeight / 100)
-            height: Config.bar.height * (Config.bar.tray.iconPercentOfHeight / 100)
+            width: NixInfo.bar.height * (NixInfo.bar.tray.iconPercentOfHeight / 100)
+            height: NixInfo.bar.height * (NixInfo.bar.tray.iconPercentOfHeight / 100)
             Image {
                 anchors.fill: parent
                 source: modelData.icon

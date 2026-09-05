@@ -1,6 +1,6 @@
 import Quickshell
 import QtQuick
-import "../config.js" as Config
+import NixInfo
 
 Scope {
     id: root
@@ -21,8 +21,8 @@ Scope {
                 id: bar
                 required property var modelData
                 screen: modelData
-                implicitHeight: Config.bar.height
-                color: Config.colors.darker
+                implicitHeight: NixInfo.bar.height
+                color: NixInfo.colors.darker
                 anchors {
                     top: false
                     bottom: true
@@ -57,7 +57,7 @@ Scope {
                         anchors {
                             right: batteryDisplay.left
                             verticalCenter: parent.verticalCenter
-                            rightMargin: Config.bar.tray.rightMargin
+                            rightMargin: NixInfo.bar.tray.rightMargin
                         }
                     }
 

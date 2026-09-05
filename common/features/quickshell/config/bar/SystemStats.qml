@@ -1,12 +1,12 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
-import "../config.js" as Config
+import NixInfo
 
 Item {
     component I3ModeSource: Process {
         id: modeEvents
-        command: [ Config.bar.stats.isSway ? "swaymsg" : "i3-msg", "-t", "subscribe", "-m", "[\"mode\"]" ]
+        command: [ NixInfo.bar.stats.isSway ? "swaymsg" : "i3-msg", "-t", "subscribe", "-m", "[\"mode\"]" ]
         running: true
         signal read(var data)
         stdout: SplitParser {
@@ -18,7 +18,7 @@ Item {
     component StatsSource: Process {
         id: i3statusSource
         signal read(var data)
-        command: [Config.bar.stats.i3status]
+        command: [NixInfo.bar.stats.i3status]
         running: true
         stdout: SplitParser {
             onRead: data => {
@@ -39,10 +39,10 @@ Item {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideMiddle
-        leftPadding: Config.bar.stats.leftPadding
-        rightPadding: Config.bar.stats.rightPadding
-        color: Config.colors.lightest
-        font.pixelSize: Config.bar.fontSize
+        leftPadding: NixInfo.bar.stats.leftPadding
+        rightPadding: NixInfo.bar.stats.rightPadding
+        color: NixInfo.colors.lightest
+        font.pixelSize: NixInfo.bar.fontSize
         text: overrideText
     }
     Row {
@@ -54,11 +54,11 @@ Item {
                 required property var modelData
                 horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideMiddle
-                leftPadding: Config.bar.stats.leftPadding
-                rightPadding: Config.bar.stats.rightPadding
+                leftPadding: NixInfo.bar.stats.leftPadding
+                rightPadding: NixInfo.bar.stats.rightPadding
 
-                color: modelData.color ?? Config.colors.lightest
-                font.pixelSize: Config.bar.fontSize
+                color: modelData.color ?? NixInfo.colors.lightest
+                font.pixelSize: NixInfo.bar.fontSize
                 text: modelData.full_text
             }
         }
