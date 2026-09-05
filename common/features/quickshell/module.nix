@@ -9,7 +9,7 @@
       //@ pragma UseQApplication
       import Quickshell
       import Quickshell.Io
-      import "bar"
+      import qs.bar
       Scope {
         My3Bar {}
         NotifyDeez {}
