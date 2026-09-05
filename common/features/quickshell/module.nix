@@ -1,7 +1,7 @@
 {inputs, ...}:
 {
   flake.wrappers.quickshell = { config, lib, wlib, pkgs, ... }: {
-    imports = [ wlib.wrapperModules.quickshell ./extension.nix ];
+    imports = [ ./quickshell.nix ];
     config.buildCommand.mkCfg = ''
       ${lib.getExe pkgs.lndir} ${./config} ${config.generated.placeholder}
     '';

@@ -1,4 +1,5 @@
 {config, pkgs, lib, wlib, ...}: {
+  imports = [ wlib.wrapperModules.quickshell ];
   options.settings = lib.mkOption {
     type = wlib.types.attrsRecursive;
     default = {};
