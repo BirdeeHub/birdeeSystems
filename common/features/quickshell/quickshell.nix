@@ -8,6 +8,7 @@
   };
   config.constructFiles.nixInfoQmlDir = {
     relPath = dirOf config.constructFiles.nixInfo.relPath + "/qmldir";
+    output = config.constructFiles.nixInfo.output;
     content = ''
       module NixInfo
       singleton NixInfo 1.0 NixInfo.qml
