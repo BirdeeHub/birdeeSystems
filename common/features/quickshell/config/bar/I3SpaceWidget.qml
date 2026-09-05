@@ -16,13 +16,13 @@ Row {
             height: NixInfo.bar.height * (NixInfo.bar.workspaces.heightPercent / 100)
 
             visible: modelData.monitor === I3.monitorFor(screen)
-            color: modelData.focused ? NixInfo.colors.alert : modelData.active ? NixInfo.colors.light : NixInfo.colors.medium
+            color: modelData.urgent ? NixInfo.colors.warn : modelData.focused ? NixInfo.colors.alert : modelData.active ? NixInfo.colors.light : NixInfo.colors.medium
 
             Text {
                 anchors.centerIn: parent
                 text: modelData.number
                 // text: modelData.name
-                color: modelData.focused ? NixInfo.colors.dark : NixInfo.colors.lightest
+                color: modelData.focused || modelData.urgent ? NixInfo.colors.dark : NixInfo.colors.lightest
                 font.pixelSize: NixInfo.bar.fontSize
             }
             MouseArea {
