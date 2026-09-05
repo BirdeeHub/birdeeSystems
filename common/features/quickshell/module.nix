@@ -37,7 +37,6 @@
       warn = "#F2D674";
       alert = "#BA02F2";
     };
-    config.settings."stinky key" = 1;
     config.settings.bar = {
       fontSize = 11;
       height = 15;
