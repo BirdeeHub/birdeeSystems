@@ -21,7 +21,6 @@
     content = ''
       pragma Singleton
       import QtQml
-
       QtObject {
         ${lib.pipe config.settings [
           (lib.mapAttrsToList (n: v:
