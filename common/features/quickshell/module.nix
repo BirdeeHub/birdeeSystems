@@ -89,7 +89,7 @@
         QtObject {
           ${lib.pipe config.settings [
             (lib.mapAttrsToList (n: v:
-              "readonly property var ${n}: ${builtins.toJSON v}"
+              "readonly property var ${n}: (${builtins.toJSON v})"
             ))
             (builtins.concatStringsSep "\n  ")
           ]}
