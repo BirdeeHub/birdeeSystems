@@ -29,4 +29,17 @@
       }
     '';
   };
+  # NOTE: this doesnt work.
+  config.constructFiles.reload = {
+    relPath = "bin/quickshell-config-reload";
+    content = ''
+      #!${pkgs.bash}${pkgs.bash.shellPath}
+      ${config.wrapperPaths.placeholder} ipc call top quit
+      ${config.wrapperPaths.placeholder}
+    '';
+    builder = ''
+      cp "$1" "$2"
+      chmod +x "$2"
+    '';
+  };
 }

@@ -2,13 +2,9 @@
 {
   flake.wrappers.quickshell = { config, lib, wlib, pkgs, ... }: {
     imports = [ wlib.wrapperModules.quickshell ./extension.nix ];
-    options.i3status = lib.mkOption {
-      type = wlib.types.subWrapperModule {
-        imports = [ inputs.self.wrapperModules.i3status ];
-        config.pkgs = pkgs;
-        config.general.output_format = "i3bar";
-      };
-    };
+    config.buildCommand.mkCfg = ''
+      ${lib.getExe pkgs.lndir} ${./config} ${config.generated.placeholder}
+    '';
     config.configFile = /*qml*/ ''
       //@ pragma UseQApplication
       import Quickshell
@@ -67,21 +63,12 @@
         rightPadding = 8;
       };
     };
-    # NOTE: this doesnt work.
-    config.constructFiles.reload = {
-      relPath = "bin/quickshell-config-reload";
-      content = ''
-        #!${pkgs.bash}${pkgs.bash.shellPath}
-        ${config.wrapperPaths.placeholder} ipc call top quit
-        ${config.wrapperPaths.placeholder}
-      '';
-      builder = ''
-        cp "$1" "$2"
-        chmod +x "$2"
-      '';
+    options.i3status = lib.mkOption {
+      type = wlib.types.subWrapperModule {
+        imports = [ inputs.self.wrapperModules.i3status ];
+        config.pkgs = pkgs;
+        config.general.output_format = "i3bar";
+      };
     };
-    config.buildCommand.mkCfg = ''
-      ${lib.getExe pkgs.lndir} ${./config} ${config.generated.placeholder}
-    '';
   };
 }
