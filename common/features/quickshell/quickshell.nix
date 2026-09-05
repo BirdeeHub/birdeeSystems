@@ -1,7 +1,7 @@
 {config, pkgs, lib, wlib, ...}: {
   imports = [ wlib.wrapperModules.quickshell ];
   options.settings = lib.mkOption {
-    type = wlib.types.attrsRecursive;
+    type = lib.types.addCheck wlib.types.attrsRecursive (x: builtins.all (n: builtins.match "^[a-zA-Z_][a-zA-Z0-9_]*$" n != null) (builtins.attrNames x));
     default = {};
   };
   config.constructFiles.nixInfoQmlDir = {
