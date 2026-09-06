@@ -30,6 +30,9 @@ in {
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
+  # This didnt fix the "not sending hotplug events in power saver mode" problem
+  # boot.kernelParams = [ "amdgpu.dcfeaturemask=0x2" ];
+
   nix.settings.experimental-features = [ "pipe-operators" ];
   services.asusd.enable = true;
   systemd.services.asusd.wantedBy = [ "graphical.target" ];
