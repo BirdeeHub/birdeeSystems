@@ -1,8 +1,8 @@
 I configure everything I have gotten around to converting so far via:
 
-[nix-wrapper-modules](https://github.com/BirdeeHub/nix-wrapper-modules)
+[nix-wrapper-modules](https://github.com/nix-community/nix-wrapper-modules)
 
-[website introduction and documentation](https://birdeehub.github.io/nix-wrapper-modules/)
+[website introduction and documentation](https://nix-community.github.io/nix-wrapper-modules/)
 
 All packages wrapped in this manner may be reconfigured via calling `.wrap` on them, which takes a module as an argument. `.override` and `.overrideAttrs` will pass through to the actual package.
 
