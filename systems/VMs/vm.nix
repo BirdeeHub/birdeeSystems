@@ -9,6 +9,8 @@ in {
     lightdm.enable = true;
     LD.enable = true;
     nixconfig.enable = true;
+    power.enable = true;
+    theme.enable = true;
   };
   wrappers = {
     neovim.enable = true;
@@ -34,8 +36,6 @@ in {
   services.clamav.daemon.enable = true;
   services.clamav.updater.enable = true;
   services.clamav.updater.interval = "weekly";
-
-  qt.platformTheme = "gtk2";
 
   environment.variables = {
   };
@@ -123,23 +123,6 @@ in {
   services.libinput.touchpad.disableWhileTyping = true;
   # services.xserver.synaptics.enable = true;
   # services.xserver.synaptics.palmDetect = true;
-  fonts.packages = with pkgs; [
-    fira-code
-    openmoji-color
-    noto-fonts-color-emoji
-    nerd-fonts.fira-mono
-    nerd-fonts.go-mono
-  ];
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      serif = [ "GoMono Nerd Font Mono" ];
-      sansSerif = [ "FiraCode Nerd Font Mono" "FiraCode" ];
-      monospace = [ "FiraCode Nerd Font Mono" ];
-      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
-    };
-  };
-  fonts.fontDir.enable = true;
 
   virtualisation.docker.enable = true;
 
