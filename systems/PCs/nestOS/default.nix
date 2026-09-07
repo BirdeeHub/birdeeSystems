@@ -30,8 +30,11 @@ in {
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
-  # This didnt fix the "not sending hotplug events in power saver mode" problem
-  # boot.kernelParams = [ "amdgpu.dcfeaturemask=0x2" ];
+  # Prevent AMD pci devices from turning all the way off during power saver mode.
+  # Makes it so kernel doesn't stop sending monitor hotplug uevents.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="pci", ATTRS{vendor}=="0x1002", ATTR{power/control}="on"
+  '';
 
   nix.settings.experimental-features = [ "pipe-operators" ];
   services.asusd.enable = true;
