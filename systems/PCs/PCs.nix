@@ -10,6 +10,8 @@ in {
     lightdm.enable = true;
     LD.enable = true;
     nixconfig.enable = true;
+    power.enable = true;
+    theme.enable = true;
   };
   wrappers = {
     neovim.enable = true;
@@ -48,8 +50,6 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  qt.platformTheme = "gtk2";
-
   networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -78,13 +78,6 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "-d";
-    persistent = true;
-  };
-
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
@@ -97,11 +90,11 @@ in {
 
   # Enable CUPS to print documents.
   services.system-config-printer.enable = true;
-  # programs.system-config-printer.enable = true;
+  programs.system-config-printer.enable = true;
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
     gutenprint
-    # hplip
+    hplip
     splix
   ];
   services.printing.webInterface = false;
@@ -129,23 +122,6 @@ in {
   services.libinput.touchpad.disableWhileTyping = true;
   # services.xserver.synaptics.enable = true;
   # services.xserver.synaptics.palmDetect = true;
-  fonts.packages = with pkgs; [
-    fira-code
-    openmoji-color
-    noto-fonts-color-emoji
-    nerd-fonts.fira-mono
-    nerd-fonts.go-mono
-  ];
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      serif = [ "GoMono Nerd Font Mono" "FiraCode" ];
-      sansSerif = [ "FiraCode Nerd Font Mono" "FiraCode" ];
-      monospace = [ "FiraCode Nerd Font Mono"  "FiraCode" ];
-      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
-    };
-  };
-  fonts.fontDir.enable = true;
   documentation.dev.enable = true;
 
   virtualisation.docker.enable = true;
@@ -155,7 +131,7 @@ in {
   environment.systemPackages = (let
   in
   with pkgs; [
-    # hplip
+    hplip
     qemu
     fuse
     fuse3

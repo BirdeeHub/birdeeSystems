@@ -8,5 +8,4 @@
     i3.updateDbusEnvironment = lib.mkForce false;
     i3.i3Monager.enable = lib.mkForce false;
   };
-  nix.settings.experimental-features = [ "pipe-operators" ];
 }

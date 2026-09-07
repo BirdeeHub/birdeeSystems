@@ -11,9 +11,7 @@
       cfg = config.${moduleNamespace}.lightdm;
     in
     {
-      _file = ./default.nix;
-      imports = [
-      ];
+      _file = ./module.nix;
       options = {
         ${moduleNamespace}.lightdm = with lib.types; {
           enable = lib.mkEnableOption "birdee's lightdm module";
@@ -59,6 +57,7 @@
         # services.displayManager.defaultSession = lib.mkDefault "none+fake";
         # services.displayManager.defaultSession = lib.mkOverride 1000 "none+fake";
         services.displayManager.defaultSession = lib.mkOverride 1002 "none+fake";
+        services.xserver.updateDbusEnvironment = true;
 
         xdg.portal.enable = true;
         xdg.portal.extraPortals = with pkgs; [
@@ -69,41 +68,16 @@
         xdg.portal.config.common.default = "*";
 
         security.polkit.enable = true;
-        services.dbus.enable = true;
-        services.upower.enable = true;
-        services.power-profiles-daemon.enable = true;
-        services.logind.enable = true;
-        services.logind.settings.Login = {
-          HandleLidSwitch = "suspend-then-hibernate";
-          HandleLidSwitchExternalPower = "suspend";
-          HandleLidSwitchDocked = "ignore";
-          HandlePowerKey =  "poweroff";
-          HandleRebootKey = "reboot";
-          HandleSuspendKey = "suspend";
-          HandleHibernateKey = "hibernate";
-          HandlePowerKeyLongPress = "poweroff";
-          HandleRebootKeyLongPress = "poweroff";
-          HandleSuspendKeyLongPress = "hibernate";
-          HandleHibernateKeyLongPress = "ignore";
-          HandleSecureAttentionKey = "secure-attention-key";
-          IdleAction = "suspend-then-hibernate";
-          IdleActionSec = "1h";
-        };
-        systemd.sleep.settings.Sleep.HibernateDelaySec = "10min";
-        services.xserver.updateDbusEnvironment = true;
         programs.gdk-pixbuf.modulePackages = with pkgs; [
           gdk-pixbuf
           librsvg
         ];
 
-        programs.dconf.enable = true;
         services.udisks2.enable = true;
         services.gnome.glib-networking.enable = true;
         services.gvfs.enable = true;
 
         environment.pathsToLink = [
-          "/share/xfce4"
-          "/lib/xfce4"
           "/share/gtksourceview-3.0"
           "/share/gtksourceview-4.0"
         ];

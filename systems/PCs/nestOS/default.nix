@@ -26,17 +26,12 @@ in {
     loadModels = [ "qwen2.5-coder:7b" "gpt-oss:20b" "qwen3:14b" "qwen3:8b" ];
   };
 
+  birdeeMods.power.fixAMDpowerSave = true;
+
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
-  # Prevent AMD pci devices from turning all the way off during power saver mode.
-  # Makes it so kernel doesn't stop sending monitor hotplug uevents.
-  services.udev.extraRules = ''
-    SUBSYSTEM=="pci", ATTRS{vendor}=="0x1002", ATTR{power/control}="on"
-  '';
-
-  nix.settings.experimental-features = [ "pipe-operators" ];
   services.asusd.enable = true;
   systemd.services.asusd.wantedBy = [ "graphical.target" ];
   systemd.services.asus-shutdown.wantedBy = [ "shutdown.target" ];

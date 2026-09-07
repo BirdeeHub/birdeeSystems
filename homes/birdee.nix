@@ -5,6 +5,7 @@ in {
     flatpak.enable = true;
     firefox.enable = true;
     nixconfig.enable = true;
+    theme.enable = true;
   };
   wrappers = {
     i3.enable = true;
@@ -48,29 +49,8 @@ in {
     "inode/directory" = [ "xplr.desktop" ];
     "application/pdf" = [ "firefox.desktop" "draw.desktop" "gimp.desktop" ];
   };
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = stateVersion; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # 
     (config.wrappers.neovim.wrap { settings.test_mode = true; })
     # nops # manix fzf alias
     # manix
@@ -99,17 +79,6 @@ in {
     gh
 
     jimtcl
-
-    fira-code
-    nerd-fonts.fira-mono
-    open-fonts
-    xkcd-font
-    openmoji-color
-    noto-fonts-color-emoji
-    nerd-fonts.go-mono
-
-    ristretto
-    tumbler
 
     # dislocker
     ueberzugpp
@@ -204,49 +173,22 @@ in {
     remmina
     # ventoy-full
 
-    # stinky
     jdk
     gradle
     kotlin
     kotlin-native
     # jetbrains.idea-community
-    android-studio
+    # android-studio
     visualvm
+
+    ristretto
+    tumbler
   ];
-  fonts.fontconfig.enable = true;
 
   dbus.packages = [
     # needed by ristretto
     pkgs.tumbler
   ];
-
-  home.pointerCursor.package = pkgs.phinger-cursors;
-  home.pointerCursor.name = "phinger-cursors";
-  home.pointerCursor.enable = true;
-  home.pointerCursor.gtk.enable = true;
-  home.pointerCursor.x11.enable = true;
-  home.pointerCursor.x11.defaultCursor = "phinger-cursors";
-  home.pointerCursor.dotIcons.enable = true;
-
-  gtk.theme.package = pkgs.adw-gtk3;
-  gtk.gtk4.theme = config.gtk.theme;
-  gtk.theme.name = "adw-gtk3-dark";
-  gtk.font.name = "Sans";
-  gtk.font.size = 11;
-  gtk.enable = true;
-
-  qt.enable = true;
-  qt.platformTheme.name = "gtk3";
-  qt.style.package = pkgs.adwaita-qt;
-  qt.style.name = "adwaita-qt";
-
-  # gtk.gtk3.extraCss = '''';
-  # gtk.gtk3.extraConfig = {};
-  # gtk.gtk4.extraCss = '''';
-  # gtk.gtk4.extraConfig = {};
-
-  gtk.iconTheme.package = pkgs.beauty-line-icon-theme;
-  gtk.iconTheme.name = "BeautyLine";
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -275,6 +217,6 @@ in {
   #  /etc/profiles/per-user/birdee/etc/profile.d/hm-session-vars.sh
   #
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  home.stateVersion = stateVersion;
 }
