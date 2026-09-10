@@ -27,7 +27,7 @@ in
           ];
           show-trace = true;
           auto-optimise-store = true;
-          flake-registry = "";
+          # flake-registry = "";
           extra-trusted-public-keys = [
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           ];
@@ -71,7 +71,7 @@ in
             "pipe-operators"
           ];
           auto-optimise-store = true;
-          flake-registry = "";
+          # flake-registry = "";
           show-trace = true;
           extra-trusted-substituters = [
             "https://nix-community.cachix.org"
