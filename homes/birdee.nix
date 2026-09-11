@@ -84,6 +84,7 @@ in {
     ueberzugpp
     vlc
     nix-tree
+    inputs.nix-graph.packages.${stdenv.hostPlatform.system}.default
     grex
     qbittorrent
     # galculator

@@ -33,6 +33,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-graph.url = "github:AlexAntonik/nix-graph";
+    nix-graph.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     manix.url = "github:nix-community/manix";
     manix.inputs.nixpkgs.follows = "nixpkgs";
