@@ -68,6 +68,13 @@
         default = true;
         description = "install globalPackages";
       };
+      quickshell = lib.mkOption {
+        type = wlib.types.subWrapperModule {
+          imports = [ inputs.self.wrapperModules.quickshell ];
+          config.pkgs = lib.mkDefault pkgs;
+          config.i3status.cputemppath = config.cputemppath;
+        };
+      };
     };
     config.globalPackages = with pkgs; [
       lm_sensors
@@ -104,6 +111,7 @@
       #       ${builtins.toPath ./link-me-directly} $HOME
       #   '';
       # };
+      systemd.user.packages = [ (top.config.quickshell.wrap { inherit pkgs; }) ];
       xsession.enable = (cfg.enable && cfg.setInstallOption);
       xsession.scriptPath = lib.optionalString (cfg.enable && cfg.setInstallOption) ".xsession";
       xsession.windowManager.command = lib.optionalAttrs (cfg.enable && cfg.setInstallOption) (lib.getExe cfg.wrapper);
@@ -142,7 +150,8 @@
           $brightnessctl set $step%$sign && ${persistify} brightness -i "$icon" "$($brightnessctl -m | cut -d, -f4)"
         '';
       in ''
-        exec --no-startup-id quickshell
+        exec --no-startup-id systemctl --user import-environment I3SOCK SWAYSOCK
+        exec --no-startup-id systemctl --user start quickshell-config
         exec --no-startup-id ${lib.getExe pkgs.feh} --no-fehbg --bg-scale ${config.background}
         exec --no-startup-id ${lib.getExe pkgs.pasystray}
         exec --no-startup-id ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
@@ -169,7 +178,6 @@
     config.runtimePkgs = with pkgs; [
       libnotify
       pavucontrol
-      (inputs.self.outputs.wrappers.quickshell.wrap { inherit pkgs; i3status.cputemppath = config.cputemppath; })
     ];
 
     config.systemd.user.service.polkit-gnome-authentication-agent = {

@@ -70,5 +70,12 @@
         config.general.output_format = "i3bar";
       };
     };
+    config.systemd.user.service.quickshell-config = {
+      Service = {
+        Type = "exec";
+        ExecStart = "${config.wrapperPaths.placeholder}";
+        ExecStop = "${config.wrapperPaths.placeholder} ipc call top quit";
+      };
+    };
   };
 }
