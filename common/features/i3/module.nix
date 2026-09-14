@@ -71,7 +71,7 @@
       quickshell = lib.mkOption {
         type = wlib.types.subWrapperModule {
           imports = [ inputs.self.wrapperModules.quickshell ];
-          config.pkgs = lib.mkDefault pkgs;
+          config.pkgs = pkgs;
           config.i3status.cputemppath = config.cputemppath;
         };
       };
@@ -111,7 +111,7 @@
       #       ${builtins.toPath ./link-me-directly} $HOME
       #   '';
       # };
-      systemd.user.packages = [ (top.config.quickshell.wrap { inherit pkgs; }) ];
+      systemd.user.packages = [ cfg.quickshell.wrapper ];
       xsession.enable = (cfg.enable && cfg.setInstallOption);
       xsession.scriptPath = lib.optionalString (cfg.enable && cfg.setInstallOption) ".xsession";
       xsession.windowManager.command = lib.optionalAttrs (cfg.enable && cfg.setInstallOption) (lib.getExe cfg.wrapper);
