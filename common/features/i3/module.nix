@@ -68,12 +68,20 @@
         default = true;
         description = "install globalPackages";
       };
+      bemenu = lib.mkOption {
+        type = wlib.types.subWrapperModule {
+          imports = [ inputs.self.wrapperModules.bemenu ];
+          config.pkgs = pkgs;
+        };
+        default = {};
+      };
       quickshell = lib.mkOption {
         type = wlib.types.subWrapperModule {
           imports = [ inputs.self.wrapperModules.quickshell ];
           config.pkgs = pkgs;
           config.i3status.cputemppath = config.cputemppath;
         };
+        default = {};
       };
     };
     config.globalPackages = with pkgs; [
@@ -159,7 +167,7 @@
         set $persistify ${persistify}
         set $termCMD ${config.tmuxTerminalStr}
         set $termSTR ${config.tmuxlessTerm}
-        set $bemenu ${inputs.self.outputs.wrappers.bemenu.wrap { inherit pkgs; }}/bin/bemenu-recency
+        set $bemenu ${config.bemenu.wrapper}/bin/bemenu-recency
         set $brightnesscmd ${brightness}
         set $xfce4-screenshooter ${lib.getExe pkgs.xfce4-screenshooter}
         set $peek ${lib.getExe pkgs.peek}
