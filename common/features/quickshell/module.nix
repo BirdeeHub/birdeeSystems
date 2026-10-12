@@ -21,11 +21,11 @@
         }
       }
     '';
-    config.settings.notify = {
+    config.info.notify = {
       fontSize = 14;
       timeout = 5000;
     };
-    config.settings.colors = {
+    config.info.colors = {
       darkest = "black";
       darker = "#1a1b26";
       dark = "#292F34";
@@ -37,7 +37,7 @@
       warn = "#F2D674";
       alert = "#BA02F2";
     };
-    config.settings.bar = {
+    config.info.bar = {
       fontSize = 11;
       height = 15;
       battery = {

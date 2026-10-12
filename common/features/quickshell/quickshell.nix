@@ -1,6 +1,6 @@
 {config, pkgs, lib, wlib, ...}: {
   imports = [ wlib.wrapperModules.quickshell wlib.modules.systemd ];
-  options.settings = lib.mkOption {
+  options.info = lib.mkOption {
     type = lib.types.addCheck wlib.types.attrsRecursive (x: builtins.all (n: builtins.match "^[a-zA-Z_][a-zA-Z0-9_]*$" n != null) (builtins.attrNames x)) // {
       description = "qml property with json content";
     };
@@ -27,7 +27,7 @@
       pragma Singleton
       import QtQml
       QtObject {
-        ${lib.pipe config.settings [
+        ${lib.pipe config.info [
           (lib.mapAttrsToList (n: v:
             "readonly property var ${n}: (${builtins.toJSON v})"
           ))
