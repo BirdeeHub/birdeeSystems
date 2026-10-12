@@ -1,5 +1,5 @@
 {config, pkgs, lib, wlib, ...}: {
-  imports = [ wlib.wrapperModules.quickshell wlib.modules.systemd ];
+  imports = [ wlib.wrapperModules.quickshell ];
   options.info = lib.mkOption {
     type = lib.types.addCheck wlib.types.attrsRecursive (x: builtins.all (n: builtins.match "^[a-zA-Z_][a-zA-Z0-9_]*$" n != null) (builtins.attrNames x)) // {
       description = "qml property with json content";

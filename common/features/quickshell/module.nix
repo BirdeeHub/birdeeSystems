@@ -1,26 +1,8 @@
 {inputs, ...}:
 {
   flake.wrappers.quickshell = { config, lib, wlib, pkgs, ... }: {
-    imports = [ ./quickshell.nix ];
-    config.buildCommand.mkCfg = ''
-      ${lib.getExe pkgs.lndir} ${./config} ${config.generated.placeholder}
-    '';
-    config.configFile = /*qml*/ ''
-      //@ pragma UseQApplication
-      import Quickshell
-      import Quickshell.Io
-      import qs.bar
-      Scope {
-        My3Bar {}
-        NotifyDeez {}
-        IpcHandler {
-          target: "top"
-          function quit(): void {
-              Qt.quit()
-          }
-        }
-      }
-    '';
+    imports = [ ./quickshell.nix wlib.modules.systemd ];
+    config.configDir = ./config;
     config.info.notify = {
       fontSize = 14;
       timeout = 5000;
