@@ -1,7 +1,7 @@
 {inputs, ...}:
 {
   flake.wrappers.quickshell = { config, lib, wlib, pkgs, ... }: {
-    imports = [ ./quickshell.nix wlib.modules.systemd ];
+    imports = [ wlib.wrapperModules.quickshell wlib.modules.systemd ];
     config.configDir = ./config;
     config.info.notify = {
       fontSize = 14;
