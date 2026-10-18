@@ -39,7 +39,7 @@ in {
   # services.auto-cpufreq.enable = true;
   services.thermald.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_5_10;
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.nvidia.modesetting.enable = true;
   services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
@@ -49,6 +49,10 @@ in {
     intelBusId = "PCI:00:02:0";   # Found with lspci | grep VGA
   };
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-63-6.6.156"
+  ];
 
   # Enable OpenGL
   hardware.graphics = {
