@@ -50,10 +50,6 @@ in {
   };
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-63-6.6.156"
-  ];
-
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
