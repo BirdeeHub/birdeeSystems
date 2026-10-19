@@ -32,7 +32,6 @@ Scope {
                     model: server.trackedNotifications
                     onObjectAdded: (idx, obj) => obj.stackIndex = idx
                     onObjectRemoved: (idx, obj) => {
-                        // Re-index the remaining popups
                         for (let i = 0; i < count; ++i) {
                             let popup = objectAt(i)
                             if (popup) popup.stackIndex = i
