@@ -49,7 +49,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
           inherit
             inputs
             ;
-          inherit (util) stateVersion;
           inherit (top.config.flake) util;
         };
       in
@@ -84,6 +83,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
         homeConfigurations = {
           "birdee@nestOS" = {
             inherit home-manager;
+            inherit (util) stateVersion;
             extraSpecialArgs = defaultSpecialArgs;
             modules = [
               ./homes/main.nix
@@ -98,6 +98,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
           };
           "birdee@dustbook" = {
             inherit home-manager;
+            inherit (util) stateVersion;
             extraSpecialArgs = defaultSpecialArgs;
             modules = [
               ./homes/birdee.nix
@@ -112,6 +113,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
           };
           "birdee@aSUS" = {
             inherit home-manager;
+            inherit (util) stateVersion;
             extraSpecialArgs = defaultSpecialArgs;
 
             modules = [
@@ -163,8 +165,6 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                       "docker"
                       "vboxusers"
                     ];
-                    # this is packages for nixOS user config.
-                    # packages = []; # empty because that is managed by home-manager
                   };
                 };
               };
@@ -175,6 +175,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               {
                 nixpkgs = inputs.nixpkgs;
                 inherit home-manager;
+                inherit (util) stateVersion;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
                 module.nixpkgs.overlays = top.config.flake.overlist;
@@ -198,15 +199,12 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                   (HMasModule ./homes/main.nix)
                 ]
                 ++ builtins.attrValues self.modules.nixos;
-                # ++ builtins.attrValues {
-                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3Monager lightdm nixconfig;
-                # }
-                # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
               };
             "nestOS" =
               { name, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
                 username = "birdee";
@@ -218,43 +216,11 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 ]
                 ++ builtins.attrValues self.modules.nixos;
               };
-            "birdee@testOS" =
-              { config, ... }:
-              {
-                nixpkgs = inputs.nixpkgs;
-                inherit home-manager;
-                disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
-                specialArgs = defaultSpecialArgs;
-                module.nixpkgs.overlays = top.config.flake.overlist;
-                # module.nix.package = pkgs.lixPackageSets.stable.lix;
-                # module.nixpkgs.overlays = top.config.flake.overlist ++ [
-                #   (final: prev: {
-                #     inherit (prev.lixPackageSets.stable)
-                #       nixpkgs-review
-                #       nix-eval-jobs
-                #       nix-fast-build
-                #       colmena
-                #       ;
-                #   })
-                # ];
-                # module.${util.moduleNamespace}.manuals.disable = true;
-                # homeModule.${util.moduleNamespace}.manuals.disable = true;
-                modules = [
-                  inputs.determinate.nixosModules.default
-                  ./systems/PCs/${config.hostname}
-                  usermod
-                  (HMasModule ./homes/test.nix)
-                ]
-                ++ builtins.attrValues self.modules.nixos;
-                # ++ builtins.attrValues {
-                #   inherit (self.modules.nixos) LD aliasNetwork bash flatpak i3 i3Monager lightdm nixconfig;
-                # }
-                # ++ lib.mapAttrsToList (n: v: v.install) self.legacyPackages.${system}.nixosConfigurations."birdee@aSUS".config.wrappers;
-              };
             "birdee@aSUS" =
               { config, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 inherit home-manager;
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 specialArgs = defaultSpecialArgs;
@@ -271,6 +237,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               {
                 nixpkgs = inputs.nixpkgs;
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
+                inherit (util) stateVersion;
                 inherit home-manager;
                 specialArgs = defaultSpecialArgs;
                 module.nixpkgs.overlays = top.config.flake.overlist;
@@ -285,6 +252,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               { name, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 specialArgs = defaultSpecialArgs;
                 username = "birdee";
@@ -299,6 +267,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               { name, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 disko.diskoModule = top.config.flake.diskoConfigurations.sda_swap;
                 specialArgs = defaultSpecialArgs;
                 username = "birdee";
@@ -313,6 +282,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               { name, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 username = "birdee";
                 disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
                 specialArgs = defaultSpecialArgs;
@@ -328,6 +298,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               {
                 nixpkgs = inputs.nixpkgs;
                 inherit home-manager;
+                inherit (util) stateVersion;
                 hostname = "virtbird";
                 disko.diskoModule = top.config.flake.diskoConfigurations.noswap_bios;
                 username = "birdee";
@@ -344,6 +315,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               { name, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 specialArgs = defaultSpecialArgs // {
                   is_minimal = true;
                   use_alacritty = false;
@@ -360,6 +332,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               { name, ... }:
               {
                 nixpkgs = inputs.nixpkgs;
+                inherit (util) stateVersion;
                 specialArgs = defaultSpecialArgs;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [

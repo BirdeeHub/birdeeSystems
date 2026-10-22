@@ -15,9 +15,10 @@
           Makes it so kernel doesn't stop sending monitor hotplug uevents.
         '';
       };
+      thermald = lib.mkEnableOption "thermal daemon (intel)";
     };
     config = lib.mkIf cfg.enable {
-
+      services.thermald.enable = lib.mkIf cfg.thermald true;
       services.udev.extraRules = lib.mkIf cfg.fixAMDpowerSave ''
         SUBSYSTEM=="pci", ATTRS{vendor}=="0x1002", ATTR{power/control}="on"
       '';

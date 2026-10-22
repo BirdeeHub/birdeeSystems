@@ -1,4 +1,4 @@
-{ config, util, pkgs, lib, inputs, users, username, output-name, stateVersion, osConfig ? null, ...  }@args: let
+{ config, util, pkgs, lib, inputs, users, username, output-name, osConfig ? null, ...  }@args: let
 in {
   birdeeMods = {
     bash.enable = true;
@@ -217,7 +217,4 @@ in {
   #
   #  /etc/profiles/per-user/birdee/etc/profile.d/hm-session-vars.sh
   #
-
-  programs.home-manager.enable = true;
-  home.stateVersion = stateVersion;
 }

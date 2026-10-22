@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, stateVersion, hostname, username, ... }: let
+{ config, pkgs, lib, inputs, hostname, username, ... }: let
 in {
   imports = [
     inputs.nixos-hardware.nixosModules.common-pc-laptop
@@ -12,10 +12,9 @@ in {
     ../PCs.nix
   ];
 
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-  };
+  birdeeMods.ollama.enable = true;
+  birdeeMods.ollama.acceleration = "cuda";
+  birdeeMods.power.thermald = true;
 
   boot.kernelModules = [ "kvm-intel" ];
 
@@ -48,9 +47,6 @@ in {
   #   mks.gl.allowUnsupportedDrivers = "TRUE"
   #   mks.vk.allowUnsupportedDevices = "TRUE"
   # '';
-
-  # services.auto-cpufreq.enable = true;
-  services.thermald.enable = true;
 
   services.asusd.enable = true;
   services.asusd.enableUserService = true;

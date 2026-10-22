@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, stateVersion, hostname, ... }: let
+{ config, pkgs, lib, inputs, hostname, ... }: let
 in {
   imports = [
     ../PCs.nix
@@ -12,12 +12,6 @@ in {
     ./hardware-configuration.nix
   ];
 
-  # virtualisation.virtualbox.host = {
-  #   enable = true;
-  #   enableExtensionPack = true;
-  #   # users.extraGroups.vboxusers.members = [ "birdee" ];
-  # };
-
   birdeeMods = {
     lightdm.sessionCommands = ''
       ${pkgs.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
@@ -25,6 +19,7 @@ in {
       ''}
     '';
   };
+  birdeeMods.power.thermald = true;
 
   boot.kernelModules = [ "kvm-intel" ];
 
@@ -35,9 +30,6 @@ in {
     pciutils
     mesa
   ];
-
-  # services.auto-cpufreq.enable = true;
-  services.thermald.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_6_6;
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -59,7 +51,7 @@ in {
     ];
   };
 
-  # virtualisation.docker.enableNvidia = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
+  # hardware.nvidia-container-toolkit.enable = pkgs.lib.mkIf (config.virtualisation.docker.enable == true) true;
 
   boot.kernelParams = [
     "hid_apple.iso_layout=0"

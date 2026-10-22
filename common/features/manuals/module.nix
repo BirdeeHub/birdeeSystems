@@ -19,7 +19,7 @@ in
         documentation.man.cache.enable = lib.mkIf cfg.disable false;
         documentation.man.enable = lib.mkIf cfg.disable false;
         documentation.doc.enable = lib.mkIf cfg.disable false;
-        documentation.dev.enable = lib.mkIf cfg.disable false;
+        documentation.dev.enable = if cfg.disable then false else true;
         documentation.info.enable = lib.mkIf cfg.disable false;
         # disable man pages for nixos options
         documentation.nixos.enable = false;

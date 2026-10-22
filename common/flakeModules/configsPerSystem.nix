@@ -145,6 +145,18 @@ in
                     type = types.deferredModule;
                     default = { };
                   };
+                  stateVersion = mkOption {
+                    type = types.nullOr types.str;
+                    default = null;
+                    description = ''
+                      This value determines the NixOS release from which the default
+                      settings for stateful data, like file locations and database versions
+                      on your system were taken. It‘s perfectly fine and recommended to leave
+                      this value at the release version of the first install of this system.
+                      Before changing this value read the documentation for this option
+                      (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+                    '';
+                  };
                   modules = mkOption {
                     type = types.listOf types.raw;
                     default = [ ];
@@ -163,19 +175,28 @@ in
                             imports = [ config.homeModule ];
                             home.username = config.username;
                             home.homeDirectory = lib.mkDefault (util.mkHMdir pkgs config.username);
+                            home.stateVersion = lib.mkIf (config.stateVersion != null) config.stateVersion;
+                            programs.home-manager.enable = true;
                           };
                       }
                       ++ lib.optionals (config.disko.diskoModule != null) [
                         (inputs.disko.nixosModules.disko or args.inputs.disko.nixosModules.disko or { })
                         config.disko.diskoModule
                       ]
-                      ++ [ config.module ]
+                      ++ [
+                        config.module
+                        {
+                          networking.hostName = config.hostname;
+                          system.stateVersion = lib.mkIf (config.stateVersion != null) config.stateVersion;
+                        }
+                      ]
                       ++ x;
                   };
                 };
               }
             )
           );
+                          # networking.hostName = hostname
           default = { };
           description = ''
             `perSystem.nixosConfigurations.<name> = flake.legacyPackages.$${system}.nixosConfigurations.<name>`
@@ -205,6 +226,16 @@ in
                     type = types.pkgs;
                     default = pkgs;
                   };
+                  stateVersion = mkOption {
+                    type = types.nullOr types.str;
+                    default = null;
+                    description = ''
+                      This value determines the home-manager release from which the default
+                      settings for stateful data, like file locations and database versions
+                      on your system were taken. It‘s perfectly fine and recommended to leave
+                      this value at the release version of the first install of this system.
+                    '';
+                  };
                   extraSpecialArgs = mkOption {
                     type = types.lazyAttrsOf types.raw;
                     default = { };
@@ -232,6 +263,8 @@ in
                           {
                             home.username = config.username;
                             home.homeDirectory = lib.mkDefault (util.mkHMdir pkgs config.username);
+                            home.stateVersion = lib.mkIf (config.stateVersion != null) config.stateVersion;
+                            programs.home-manager.enable = true;
                           }
                         )
                         config.module
@@ -262,6 +295,7 @@ in
             "username"
             "module"
             "homeModule"
+            "stateVersion"
           ]
         )
       ) (config.perSystem system).homeConfigurations;
@@ -277,6 +311,7 @@ in
             "hostname"
             "username"
             "home-manager"
+            "stateVersion"
           ]
         )
       ) (config.perSystem system).nixosConfigurations;
