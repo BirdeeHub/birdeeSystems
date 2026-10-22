@@ -196,7 +196,6 @@ in
               }
             )
           );
-                          # networking.hostName = hostname
           default = { };
           description = ''
             `perSystem.nixosConfigurations.<name> = flake.legacyPackages.$${system}.nixosConfigurations.<name>`
