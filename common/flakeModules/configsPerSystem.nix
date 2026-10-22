@@ -157,6 +157,13 @@ in
                       (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
                     '';
                   };
+                  setHostName = mkOption {
+                    type = types.bool;
+                    default = true;
+                    description = ''
+                      set networking.hostName automatically
+                    '';
+                  };
                   modules = mkOption {
                     type = types.listOf types.raw;
                     default = [ ];
@@ -186,7 +193,7 @@ in
                       ++ [
                         config.module
                         {
-                          networking.hostName = config.hostname;
+                          networking.hostName = lib.mkIf config.setHostName config.hostname;
                           system.stateVersion = lib.mkIf (config.stateVersion != null) config.stateVersion;
                         }
                       ]
@@ -311,6 +318,7 @@ in
             "username"
             "home-manager"
             "stateVersion"
+            "setHostName"
           ]
         )
       ) (config.perSystem system).nixosConfigurations;
