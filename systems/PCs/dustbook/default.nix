@@ -21,11 +21,7 @@ in {
   };
   birdeeMods.power.thermald = true;
 
-  boot.kernelModules = [ "kvm-intel" ];
-
-  environment.systemPackages = let
-  in
-  with pkgs; [
+  environment.systemPackages = with pkgs; [
     mesa-demos
     pciutils
     mesa
