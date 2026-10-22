@@ -8,10 +8,14 @@ in
   in {
     options.${moduleNamespace}.${name} = {
       enable = lib.mkEnableOption name;
+      timeZone = lib.mkOption {
+        type = lib.types.str;
+        default = "America/Los_Angeles";
+      };
     };
     config = lib.mkIf cfg.enable {
       # Set your time zone.
-      time.timeZone = "America/Los_Angeles";
+      time.timeZone = cfg.timeZone;
 
       # Select internationalisation properties.
       i18n.defaultLocale = "en_US.UTF-8";
