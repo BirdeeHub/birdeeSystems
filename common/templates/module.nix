@@ -9,6 +9,10 @@
       path = ./flakeParts;
       description = "an empty flake with flake parts";
     };
+    feature = {
+      path = ./feature;
+      description = "a boilerplate module.nix file for a directory in common/features (delete what you don't use obviously, it does all the plate boiling)";
+    };
     json = {
       path = ./json;
       description = "json drv";
