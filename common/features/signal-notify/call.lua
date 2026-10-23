@@ -171,6 +171,7 @@ return function(luv, notify_send, nixInfo)
       {
         -- This is kinda lazy, but doing better is hard without making a whole client
         { "open", "Open Signal Desktop" },
+        -- I might add hangup and silence, but I am not bothering with picking up the call
       },
       function(action)
         if action == "open" then
