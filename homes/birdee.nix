@@ -25,6 +25,7 @@ in {
     git.enable = true;
     nushell.enable = true;
     luakit.enable = true;
+    signal-notify.enable = true;
   };
 
   home.sessionVariables.JAVA_HOME = "${pkgs.jdk}";

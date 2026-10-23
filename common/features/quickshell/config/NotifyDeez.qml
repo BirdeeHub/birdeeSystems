@@ -119,6 +119,44 @@ Scope {
                                         font.pixelSize: NixInfo.notify.fontSize - 1
                                         wrapMode: Text.WordWrap
                                     }
+                                    // --- Dynamic Action Buttons ---
+                                    RowLayout {
+                                        id: actionsLayout
+                                        Layout.fillWidth: true
+                                        spacing: 6
+                                        visible: popup.modelData.actions.length > 0 // Only visible if notification has buttons
+
+                                        Repeater {
+                                            model: popup.modelData.actions
+
+                                            delegate: Rectangle {
+                                                id: button
+                                                required property var modelData
+                                                Layout.preferredHeight: 24
+                                                Layout.fillWidth: true
+                                                radius: 4
+                                                color: mouseArea.containsMouse ? NixInfo.colors.bright : "transparent"
+                                                border.width: 1
+                                                border.color: NixInfo.colors.bright
+
+                                                Text {
+                                                    anchors.centerIn: parent
+                                                    text: modelData.text // This displays the button label (e.g., "Show Details")
+                                                    color: mouseArea.containsMouse ? NixInfo.colors.dark : NixInfo.colors.bright
+                                                    font.pixelSize: NixInfo.notify.fontSize - 2
+                                                }
+
+                                                MouseArea {
+                                                    id: mouseArea
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    onClicked: {
+                                                        modelData.invoke()
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

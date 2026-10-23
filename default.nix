@@ -85,8 +85,9 @@ flake-parts.lib.mkFlake { inherit inputs; } (
             inherit home-manager;
             inherit (util) stateVersion;
             extraSpecialArgs = defaultSpecialArgs;
+            module.wrappers.i3.cputemppath = "/sys/class/thermal/thermal_zone0/temp";
             modules = [
-              ./homes/main.nix
+              ./homes/birdee.nix
               (
                 { pkgs, ... }:
                 {
@@ -178,6 +179,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 inherit (util) stateVersion;
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
+                homeModule.wrappers.i3.cputemppath = "/sys/class/thermal/thermal_zone0/temp";
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 # module.nix.package = pkgs.lixPackageSets.stable.lix;
                 # module.nixpkgs.overlays = top.config.flake.overlist ++ [
@@ -196,7 +198,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                   inputs.determinate.nixosModules.default
                   ./systems/PCs/${config.hostname}
                   usermod
-                  (HMasModule ./homes/main.nix)
+                  (HMasModule ./homes/birdee.nix)
                 ]
                 ++ builtins.attrValues self.modules.nixos;
               };
