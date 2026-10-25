@@ -12,6 +12,10 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
   nix.settings.show-trace = true;
 
+  # isoImage.storeContents = [
+  #   # inputs.self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nixosConfigurations.${output-name-here}.config.system.build.toplevel
+  # ];
+
   environment.shellAliases = {
     birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
       hostname=$1
