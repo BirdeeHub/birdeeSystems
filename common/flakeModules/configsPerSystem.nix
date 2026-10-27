@@ -66,8 +66,10 @@ in
                         in
                         [
                           (
-                            { config, wlib, ... }: let
-                              diskoflakedir = "${placeholder "out"}/${config.binName}-${name}";
+                            { config, wlib, lib, pkgs, ... }: let
+                              diskoflakedirname = "${config.binName}-${name}";
+                              diskoflakedir = "${placeholder config.outputName}/${diskoflakedirname}";
+                              pathmod = wlib.types.stringable.check config.diskoModule;
                             in
                             {
                               imports = [ wlib.modules.default ];
@@ -77,15 +79,25 @@ in
                                 default = "disko";
                               };
                               options.diskoModule = mkOption {
-                                type = types.nullOr (lib.types.either wlib.types.stringable (pkgs.formats.json {}).type);
+                                type = lib.types.nullOr (lib.types.either wlib.types.stringable (pkgs.formats.json {}).type);
                                 default = null;
                                 apply = x: if x == null then (top.config.flake.diskoConfigurations or { }).${name} or null else x; 
                               };
+                              options.appendFlag = lib.mkOption {
+                                type = lib.types.listOf (wlib.types.spec ({config, ...}: {
+                                  config.before = lib.mkIf (config.name != "CallMod" && config.name != "Mode") [ "Mode" ];
+                                }));
+                              };
                               config.flags."--no-deps" = lib.mkDefault true;
-                              config.drv.preBuild = lib.mkIf (!wlib.types.stringable.check config.diskoModule) ''
-                                mkdir -p ${lib.escapeShellArg diskoflakedir}
-                                echo ${lib.escapeShellArg (builtins.toJSON config.diskoModule)} > ${lib.escapeShellArg "${diskoflakedir}/disko.json"}
-                                echo ${lib.escapeShellArg ''
+                              config.constructFiles.diskoJson = lib.mkIf (!pathmod) {
+                                relPath = "${diskoflakedirname}/disko.json";
+                                output = lib.mkOverride 0 config.outputName;
+                                content = builtins.toJSON config.diskoModule;
+                              };
+                              config.constructFiles.dummyFlake = lib.mkIf (!pathmod) {
+                                relPath = "${diskoflakedirname}/flake.nix";
+                                output = lib.mkOverride 0 config.constructFiles.diskoJson.output;
+                                content = ''
                                   {
                                     outputs = _: {
                                       diskoConfigurations = {
@@ -93,8 +105,8 @@ in
                                       };
                                     };
                                   }
-                                ''} > ${lib.escapeShellArg "${diskoflakedir}/flake.nix"}
-                              '';
+                                '';
+                              };
                               config.appendFlag = [
                                 {
                                   name = "Mode";
@@ -103,11 +115,11 @@ in
                                 }
                                 {
                                   name = "CallMod";
-                                  data = if wlib.types.stringable.check config.diskoModule then config.diskoModule else [ "--flake" "${diskoflakedir}#${name}" ];
+                                  data = if pathmod then config.diskoModule else [ "--flake" "${diskoflakedir}#${name}" ];
                                 }
                               ];
                               config.package = lib.mkDefault (
-                                inputs.disko.packages.${system}.disko or args.inputs.disko.packages.${system}.disko or null
+                                inputs.disko.packages.${system}.disko or pkgs.disko or null
                               );
                             }
                           )
