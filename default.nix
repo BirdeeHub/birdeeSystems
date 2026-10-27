@@ -180,6 +180,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 disko.diskoModule = top.config.flake.diskoConfigurations.nvme0n1_swap;
                 specialArgs = defaultSpecialArgs;
                 homeModule.wrappers.i3.cputemppath = "/sys/class/thermal/thermal_zone0/temp";
+                homeModule.${util.moduleNamespace}.games.enable = true;
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 # module.nix.package = pkgs.lixPackageSets.stable.lix;
                 # module.nixpkgs.overlays = top.config.flake.overlist ++ [

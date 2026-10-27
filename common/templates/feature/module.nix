@@ -1,4 +1,4 @@
-{ inputs, moduleNamespace, ... }:
+{ inputs, util, moduleNamespace, ... }:
 let
   name = "REPLACE_ME";
 in
