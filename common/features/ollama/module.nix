@@ -27,6 +27,9 @@ in
         acceleration = lib.mkIf (cfg.acceleration == "cuda") "cuda";
         rocmOverrideGfx = lib.mkIf (cfg.acceleration == "rocm") cfg.rocmVersion;
         package = pkgs.ollama;
+        environmentVariables = lib.mkIf (cfg.acceleration == "rocm") {
+          DRI_PRIME = toString 1;
+        };
         # package = (import inputs.nixpkgs-ollama { inherit (pkgs) overlays; inherit (pkgs.stdenv.hostPlatform) system; }).ollama.overrideAttrs {
         #   src = inputs.ollama;
         #   version = "0.11.3";

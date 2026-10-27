@@ -51,7 +51,12 @@ in {
     "application/pdf" = [ "firefox.desktop" "draw.desktop" "gimp.desktop" ];
   };
 
-  home.packages = with pkgs; [
+  home.packages = let
+    withDGPU = fpkg: util.wlib.wrapPackage [
+      { inherit pkgs; }
+      ({pkgs, ... }:{ package = fpkg pkgs; env.DRI_PRIME = toString 1; })
+    ];
+  in with pkgs; [
     (config.wrappers.neovim.wrap { settings.test_mode = true; })
     # nops # manix fzf alias
     # manix
@@ -129,8 +134,8 @@ in {
     man-pages-posix
     _7zz
     # gnome.gnome-software
-    steam
-    heroic
+    (withDGPU (p: p.steam))
+    (withDGPU (p: p.heroic))
     # lutris
     wineWow64Packages.stable
     winetricks

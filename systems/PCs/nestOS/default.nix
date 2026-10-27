@@ -13,6 +13,8 @@ in {
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   birdeeMods.power.fixAMDpowerSave = true;
   birdeeMods.ollama.enable = true;
   birdeeMods.ollama.acceleration = "rocm";
