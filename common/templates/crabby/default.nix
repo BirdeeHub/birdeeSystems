@@ -8,10 +8,8 @@ APPDRV = rustPlatform.buildRustPackage {
   version = "0.0.0";
   src = ./.;
 
-  cargoLock = let
-    fixupLockFile = path: (builtins.readFile path);
-  in {
-    lockFileContents = fixupLockFile ./Cargo.lock;
+  cargoLock = {
+    cargoLock.lockFile = ./Cargo.lock;
   };
 
 };
