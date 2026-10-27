@@ -57,6 +57,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     vulkan-tools
+    radeontop
     asusctl
     mesa
     clinfo
