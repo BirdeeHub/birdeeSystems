@@ -116,6 +116,7 @@ in {
     obs-cmd
     gnumake
     cmake
+    cdecl
     # gccgo just have a dev shell for c....
     # gccgo
     gotools
