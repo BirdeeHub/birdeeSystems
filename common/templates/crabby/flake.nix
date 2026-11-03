@@ -16,12 +16,12 @@
     in foldl' op { } nixpkgs.lib.platforms.all;
 
     APPNAME = "crabby";
-    appOverlay = final: prev: let
-      rustPlatform = final.makeRustPlatform inputs.fenix.packages.${final.stdenv.hostPlatform.system}.latest;
-    in {
-      # any pkgs overrides made here will be inherited in the arguments of default.nix
-      # because we used final.callPackage instead of prev.callPackage
-      ${APPNAME} = final.callPackage ./. { inherit APPNAME rustPlatform; };
+    fenix = system: inputs.fenix.packages.${system}.latest;
+    appOverlay = final: prev: {
+      ${APPNAME} = final.callPackage ./. {
+        inherit APPNAME;
+        rustPlatform = final.makeRustPlatform (fenix final.stdenv.hostPlatform.system);
+      };
     };
   in {
     overlays.default = appOverlay;
@@ -31,7 +31,22 @@
     in{
       packages = {
         default = pkgs.${APPNAME};
+        ${APPNAME} = pkgs.${APPNAME};
       };
+      devShells.default = pkgs.mkShell (let
+        toolchain = (fenix system).withComponents [
+          "rustc"
+          "cargo"
+          "rustfmt"
+          "clippy"
+          "rust-src"
+          "rust-analyzer"
+        ];
+      in {
+        name = "${APPNAME}-dev";
+        inputsFrom = [ pkgs.${APPNAME} ];
+        packages = [ toolchain ];
+      });
     })
   );
 }
