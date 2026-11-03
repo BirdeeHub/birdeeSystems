@@ -1,15 +1,16 @@
 { APPNAME
 , rustPlatform
 , ...
-# override overrides these args
 }: let
 APPDRV = rustPlatform.buildRustPackage {
   pname = APPNAME;
   version = "0.0.0";
   src = ./.;
+  # needed to use 2024 edition due to outdated cargo-auditable dependency in toolchain
+  auditable = false;
 
   cargoLock = {
-    cargoLock.lockFile = ./Cargo.lock;
+    lockFile = ./Cargo.lock;
   };
 
 };
