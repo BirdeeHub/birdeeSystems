@@ -1,10 +1,15 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+    ../installer.nix
   ];
 
-  boot.kernelModules = [ "kvm-intel" "wl" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  # boot.kernelModules = [ "wl" ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  # boot.kernelPackages = pkgs.linuxPackages_6_6;
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "broadcom-sta-6.30.223.271-63-6.6.156"
+  # ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -12,44 +17,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
   nix.settings.show-trace = true;
 
-  # isoImage.storeContents = [
-  #   # inputs.self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nixosConfigurations.${output-name-here}.config.system.build.toplevel
-  # ];
-
-  environment.shellAliases = {
-    birdeeOS = "${pkgs.writeShellScript "birdeeOS" ''
-      hostname=$1
-      username=$2
-      sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$hostname
-      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
-      echo "please set password for user $username"
-      sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
-    ''}";
-    disko-birdee = "${pkgs.writeShellScript "disko-birdee" ''
-      sudo nix run github:nix-community/disko -- --mode disko --flake github:BirdeeHub/birdeeSystems#$1
-    ''}";
-    install-birdeeOS = "${pkgs.writeShellScript "install-birdeeOS" ''
-      hostname=$1
-      username=$2
-      sudo nixos-install --flake github:BirdeeHub/birdeeSystems#$hostname
-      echo "please set password for user $username"
-      sudo passwd --root /mnt $username
-      mkdir -p /mnt/home/$username
-      git clone https://github.com/BirdeeHub/birdeeSystems /mnt/home/$username/birdeeSystems
-    ''}";
-    lsnc = "lsd --color=never";
-    la = "ls -a";
-    ll = "ls -l";
-    l  = "ls -alh";
-  };
-
-  isoImage.contents = lib.mkIf (builtins.isPath "${inputs.self}/secrets") [
-    { source = "${inputs.self}/secrets"; target = "/secrets";}
-  ];
-
-  isoImage.isoBaseName = "birdeeSystems_installer";
+  isoImage.contents = [ ];
 
   wrappers = {
     neovim.enable = true;
@@ -88,7 +56,6 @@
     findutils
     exfat
     clamav
-    chkrootkit
     lynis
     exfatprogs
     _7zz

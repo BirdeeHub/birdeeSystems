@@ -323,8 +323,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                   is_minimal = true;
                   use_alacritty = false;
                 };
-                extraSpecialArgs = {
-                };
+                # module.${util.moduleNamespace}.installer.prebakedConfigs = [ "birdee@nestOS" ];
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [
                   ./systems/installers/${name}
@@ -337,6 +336,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 nixpkgs = inputs.nixpkgs;
                 inherit (util) stateVersion;
                 specialArgs = defaultSpecialArgs;
+                # module.${util.moduleNamespace}.installer.prebakedConfigs = [ "birdee@nestOS" ];
                 module.nixpkgs.overlays = top.config.flake.overlist;
                 modules = [
                   ./systems/installers/${name}

@@ -308,30 +308,32 @@ in
       homeConfigurations = builtins.mapAttrs (
         n: v:
         v.home-manager.lib.homeManagerConfiguration (
-          removeAttrs v [
-            "home-manager"
-            "username"
-            "module"
-            "homeModule"
-            "stateVersion"
-          ]
+          builtins.intersectAttrs {
+            # https://github.com/nix-community/home-manager/blob/master/lib/eval-config.nix
+            check = null;
+            extraSpecialArgs = null;
+            lib = null;
+            modules = null;
+            pkgs = null;
+            minimal = null;
+          } v
         )
       ) (config.perSystem system).homeConfigurations;
       nixosConfigurations = builtins.mapAttrs (
         n: v:
         v.nixpkgs.lib.nixosSystem (
-          removeAttrs v [
-            "nixpkgs"
-            "module"
-            "homeModule"
-            "disko"
-            "extraSpecialArgs"
-            "hostname"
-            "username"
-            "home-manager"
-            "stateVersion"
-            "setHostName"
-          ]
+          builtins.intersectAttrs {
+            # https://github.com/NixOS/nixpkgs/blob/master/nixos/lib/eval-config.nix
+            system = null;
+            pkgs = null;
+            baseModules = null;
+            specialArgs = null;
+            modules = null;
+            modulesLocation = null;
+            prefix = null;
+            lib = null;
+            extraModules = null;
+          } v
         )
       ) (config.perSystem system).nixosConfigurations;
       diskoConfigurations = lib.filterAttrs (n: v: v != null) (

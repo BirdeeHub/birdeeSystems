@@ -12,6 +12,13 @@ in {
     ./hardware-configuration.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  boot.kernelModules = [ "wl" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-63-6.6.156"
+  ];
+
   birdeeMods = {
     lightdm.sessionCommands = ''
       ${pkgs.xrdb}/bin/xrdb -merge <${pkgs.writeText "Xresources" ''
@@ -27,7 +34,6 @@ in {
     mesa
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.nvidia.modesetting.enable = true;
   services.xserver.videoDrivers = [ "modesetting" "nvidia" "intel" ];
