@@ -72,7 +72,6 @@
     nix-appimage.inputs.flake-utils.follows = "flake-utils";
     templ.url = "github:a-h/templ";
     templ.inputs.nixpkgs.follows = "nixpkgs";
-    templ.inputs.nixpkgs-unstable.follows = "nixpkgs";
     antifennel = {
       url = "sourcehut:~technomancy/antifennel";
       flake = false;
