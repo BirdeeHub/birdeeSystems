@@ -1,4 +1,4 @@
-I configure everything I have gotten around to converting so far via:
+I configure everything I have gotten around to converting so far via my biggest nix project so far:
 
 [nix-wrapper-modules](https://github.com/nix-community/nix-wrapper-modules)
 
@@ -10,33 +10,33 @@ All packages wrapped in this manner may be reconfigured via calling `.wrap` on t
 
 Dendritic common directory heavily utilizing flake parts.
 
-The common directory creates the stuff, and the configs consume it.
+The recursive import function is here at [util/import.nix](./util/import.nix), the util directory is basically just for that function and some random things I don't use.
 
-The configs are in [./homes](./homes) and [./systems](./systems) and they are organized by base config, with several entry points which import it to be imported from [./default.nix](./default.nix)
+There are 2 recursively imported directories:
+
+[flake/ modules directory](./flake) has flake-parts modules, overlays, and other things which control the rest of the flake or really just get exported
+
+[features/ modules directory has nixos, home-manager, wrappers, packages, etc](./features/)
+
+The configs are in [homes](./homes) and [systems](./systems) and they are organized by base config, with several entry points which import it to be imported from [./default.nix](./default.nix)
+
+[default.nix](./default.nix) imports stuff and sets up the system and home configuration outputs using [a custom flake parts module](./flake/flakeModules/configsPerSystem.nix) to set up the outputs.
 
 My configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
 
-The mapping of that too is also done via flake-parts
-
-The modules that do the mappings are here:
-
-[./common/flakeModules](./common/flakeModules/)
-
-And the recursive import function is here
-
-[./util/import.nix](./util/import.nix)
+[flake.nix](./flake.nix) is just inputs.
 
 ---
 
-- [display manager:](./common/features/lightdm/module.nix) lightdm which loads ~/.xsession
-- [window manager:](./common/features/i3/module.nix) i3 loaded via home manager from .xsession
-- [bars and notifications:](./common/features/quickshell) made via quickshell
+- [display manager:](./features/lightdm/module.nix) lightdm which loads ~/.xsession
+- [window manager:](./features/i3/module.nix) i3 loaded via home manager from .xsession
+- [bars and notifications:](./features/quickshell) made via quickshell
 - [text editor:](https://github.com/BirdeeHub/birdeevim) neovim-nightly via my personal configuration of nvim via nix-wrapper-modules.
-- [browser:](./common/features/firefox) firefox
-- [file manager:](./common/features/xplr/module.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
-- [terminal:](./common/features/wezterm/module.nix) wezterm
-- [shell:](./common/features/zsh) zsh with vi mode plugin, themer is [starship](./common/features/starship/module.nix)
-- [tmux:](./common/features/tmux/module.nix) with some keybinds and onedark theme
+- [browser:](./features/firefox) firefox
+- [file manager:](./features/xplr/module.nix) xplr, but dolphin when launched from firefox because im already using the mouse when it pops up from firefox
+- [terminal:](./features/wezterm/module.nix) wezterm
+- [shell:](./features/zsh) zsh with vi mode plugin, themer is [starship](./features/starship/module.nix)
+- [tmux:](./features/tmux/module.nix) with some keybinds and onedark theme
 
 ---
 

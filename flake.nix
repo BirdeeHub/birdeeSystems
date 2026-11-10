@@ -1,12 +1,5 @@
 {
-  description = ''
-    birdee's system. common/default.nix handles passing modules
-    to home-manager and nixos config files in home and system
-    and userdata is passed to them as well.
-
-    flake.nix contains only inputs,
-    the outputs function is at ./default.nix
-  '';
+  description = "birdee's configuration";
 
   nixConfig = {
     extra-substituters = [

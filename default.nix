@@ -24,14 +24,16 @@ flake-parts.lib.mkFlake { inherit inputs; } (
   { ... }@top:
   {
     systems = nixpkgs.lib.platforms.all;
-    imports = util.recImport {
-      name = "module.nix";
-      dir = ./common;
-      args = {
-        inherit inputs util;
-        inherit (util) moduleNamespace;
+    imports = let
+      importDir = dir: util.recImport {
+        name = "module.nix";
+        inherit dir;
+        args = {
+          inherit inputs util;
+          inherit (util) moduleNamespace;
+        };
       };
-    };
+    in importDir ./flake ++ importDir ./features;
     flake.wrappers.neovim = inputs.birdeevim.wrapperModules.neovim;
     perSystem =
       {
