@@ -9,20 +9,40 @@
 
   inherit (rec {
     # this is from the nix-wrapper-modules test lib
-    toSanitizedJSON = value:
-      if builtins.isAttrs value then
-        builtins.toJSON (
-          lib.mapAttrsRecursive (
-            path: v: if builtins.isFunction v then
-              let
-                res = builtins.unsafeGetAttrPos (lib.last path) (lib.getAttrFromPath (lib.sublist 0 (builtins.length path - 1) path) value);
-              in "<lambda${if builtins.isAttrs res then ":${res.file or ""}:${toString (res.line or "")}:${toString (res.column or "")}" else ""}>"
-            else
-              v
-          ) value
-        )
-      else
-        builtins.toJSON value;
+    toSanitizedJSON =
+      value:
+      let
+        sanitize =
+          in_list: parentAttrs: name: v:
+          # intentionally ignores and recurses into functors
+          if builtins.isFunction v then
+            let
+              res =
+                if parentAttrs == null || name == null then null else builtins.unsafeGetAttrPos name parentAttrs;
+              args = builtins.functionArgs v;
+            in
+            "<lambda${
+              lib.optionalString (builtins.isAttrs res) "${
+                if in_list then " in list at " else ":"
+              }${res.file or ""}:${toString (res.line or "")}:${toString (res.column or "")}"
+              +
+                lib.optionalString (args != { })
+                  "; with arguments ${
+                    lib.pipe args [
+                      (lib.mapAttrsToList (n: v: "`${n}${lib.optionalString v "?"}`"))
+                      (builtins.concatStringsSep ", ")
+                    ]
+                  }"
+            }>"
+          else if builtins.isList v then
+            map (sanitize true parentAttrs name) v
+          # lets builtins.toJSON handle derivations
+          else if builtins.isAttrs v && !lib.isStringLike v then
+            lib.mapAttrs (sanitize false v) v
+          else
+            v;
+      in
+      builtins.toJSON (sanitize false null null value);
     # these are close but not quite identical to their nix-wrapper-modules wlib.dag counterparts
     normalizeDag = name: dag:
       assert builtins.isAttrs dag || throw "topoSort: expected `build` derivation attribute provided to `${name}` to be an attribute set, but got a `${builtins.typeOf dag}` instead";
