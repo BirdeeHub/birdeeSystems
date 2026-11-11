@@ -16,11 +16,12 @@ There are 2 recursively imported directories:
 
 [flake/ modules directory](./flake) has flake-parts modules, overlays, and other things which control the rest of the flake or really just get exported
 
-[features/ modules directory has nixos, home-manager, wrappers, packages, etc](./features/)
+[features/ modules directory](./features/) has wrapper modules, nixos modules, home-manager modules, etc.
 
-The configs are in [homes](./homes) and [systems](./systems) and they are organized by base config, with several entry points which import it to be imported from [./default.nix](./default.nix)
+[homes](./homes) and [systems](./systems) receive those and enable the features they want or set machine specific options for them,
+and they are organized by base machine configuration type, with several entry points in child directories which import them.
 
-[default.nix](./default.nix) imports stuff and sets up the system and home configuration outputs using [a custom flake parts module](./flake/flakeModules/configsPerSystem.nix) to set up the outputs.
+[default.nix](./default.nix) imports those entry points and sets up the system and home configuration outputs using [a custom flake parts module](./flake/flakeModules/configsPerSystem.nix)
 
 My configs are output under `legacyPackages.${system}.{nixosConfigurations,homeConfigurations}` and there is also a `legacyPackages.${system}.diskoConfigurations` which contains wrapped disko packages with the disk configs of those configurations preloaded.
 
