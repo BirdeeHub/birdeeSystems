@@ -56,6 +56,6 @@ Ever wanted to write derivations with a DAG instead of `____Phase` and write you
 
 [No? Here it is anyway. A lua stdenv.mkDerivation](./features/lua/mkLuaDrv/)
 
-Oh, you thought I was joking, but no I didn't cheat, it uses `builtins.derivation,` it has its own lua stdenv with no bash used to build it, and it supports `.overrideAttrs`. Don't use it probably. No I won't write documentation for it any time soon.
+Oh, you thought I was joking, but no I didn't cheat, it uses `builtins.derivation,` it has its own lua stdenv with no bash used to build it, and it supports `.overrideAttrs`. Don't use it probably. No I won't write documentation for it any time soon. (Ok, so I did cheat a little bit, because I used the existing lua derivation from nixpkgs, but that COULD be built without bash too, OK?)
 
 ---
