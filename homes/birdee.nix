@@ -123,6 +123,7 @@ in {
     go-tools
     sqlite-interactive
     evcxr
+    jq
 
     clisp
 
