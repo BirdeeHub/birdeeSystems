@@ -1,6 +1,11 @@
+-- This probably won't be a viable method because when you disconnect an output,
+-- sway outputs the moves before the output event, and i3 doesn't output any moves at all.
+-- So using the socket to determine where stuff was before the output isn't as simple as,
+-- keep track of moves and snapshot on output events, something else must be done
+
 local uv = require("luv")
 local inspect = require("inspect")
-local json = require("cjson") -- or dkjson / vim.json
+local json = require("cjson")
 local _, ffi = pcall(require, "ffi")
 
 local sock_path = os.getenv("I3SOCK")
