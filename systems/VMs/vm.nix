@@ -26,6 +26,7 @@ in {
   wrappers = {
     neovim.enable = true;
     i3.enable = true;
+    i3.setInstallOption = true;
     i3.i3Monager.enable = true;
     zsh.enable = true;
     zsh.asSystemDefault = true;

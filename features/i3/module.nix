@@ -30,7 +30,7 @@
       };
       setInstallOption = lib.mkOption {
         type = bool;
-        default = true;
+        default = false;
         description = "set install option to make this wrapper used for the session";
       };
       defaultLockerEnabled = lib.mkOption {
@@ -83,6 +83,10 @@
         };
         default = {};
       };
+      sessionName = lib.mkOption {
+        type = lib.types.str;
+        default = "i3-wrapped";
+      };
     };
     config.globalPackages = with pkgs; [
       lm_sensors
@@ -94,23 +98,29 @@
       xdg-user-dirs
     ];
     config.package = pkgs.i3;
-    config.install.modules.nixos = { pkgs, config, ... }: let
+    config.constructFiles.session = {
+      relPath = "share/xsessions/${config.sessionName}.desktop";
+      content = ''
+        [Desktop Entry]
+        Name=${config.sessionName}
+        Comment=My custom i3 session
+        Type=XSession
+        X-LightDM-DesktopName=${config.sessionName}
+        DesktopNames=${config.sessionName};
+        Exec=${config.wrapperPaths.placeholder}
+        TryExec=${config.wrapperPaths.placeholder}
+      '';
+    };
+    config.passthru.providedSessions = [ config.sessionName ];
+    config.install.modules.nixos = { config, ... }: let
       cfg = top.config.install.getWrapperConfig config;
     in {
       security.pam.services.i3lock.enable = cfg.defaultLockerEnabled && cfg.enable;
-      services.xserver.windowManager.session = lib.optionals (cfg.enable && cfg.setInstallOption) [
-        {
-          name = "i3";
-          start = ''
-            ${lib.getExe cfg.wrapper} &
-            waitPIT=$!
-          '';
-        }
-      ];
-      services.displayManager.defaultSession = lib.mkIf (cfg.enable && cfg.setInstallOption) (lib.mkOverride 1001 "none+i3");
+      services.displayManager.defaultSession = lib.mkIf (cfg.enable && cfg.setInstallOption) (lib.mkOverride 1001 cfg.sessionName);
+      services.displayManager.sessionPackages = lib.mkIf cfg.enable [ cfg.wrapper ];
       environment.systemPackages = lib.optionals (cfg.enable && cfg.installGlobalPackages) cfg.globalPackages;
     };
-    config.install.modules.homeManager = { pkgs, config, ... }: let
+    config.install.modules.homeManager = { config, ... }: let
       cfg = top.config.install.getWrapperConfig config;
     in {
       # home.activation = {

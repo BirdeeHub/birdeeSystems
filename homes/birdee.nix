@@ -9,6 +9,7 @@ in {
   };
   wrappers = {
     i3.enable = true;
+    i3.setInstallOption = true;
     i3.updateDbusEnvironment = true;
     i3.i3Monager.enable = true;
     birdeeLua.enable = true;
