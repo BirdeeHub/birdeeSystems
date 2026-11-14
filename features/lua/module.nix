@@ -73,6 +73,7 @@
         (
           lib.mkIf cfg.enableCompanionPackages {
             homeManager.home.packages = cfg.companionPackages;
+            hjem.packages = cfg.companionPackages;
             nixos.environment.systemPackages = cfg.companionPackages;
           }.${_class}
         )
