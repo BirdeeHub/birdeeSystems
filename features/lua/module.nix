@@ -89,6 +89,7 @@
   in {
     config.install.modules.nixos = module;
     config.install.modules.homeManager = module;
+    config.install.modules.hjem = module;
     imports = [ wlib.modules.default ];
     options.withPackages = lib.mkOption {
       type = wlib.types.withPackagesType;

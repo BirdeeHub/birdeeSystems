@@ -1,6 +1,11 @@
 { inputs, moduleNamespace, ... }:
 let
   name = "signal-notify";
+  # this whole thing is replacing these 3 lines
+  # because it opens 5 copies of electron
+  # wrappers.i3.appendedConfig = ''
+  #   exec --no-startup-id ${pkgs.signal-desktop}/bin/signal-desktop --start-in-tray &
+  # '';
 in
 {
   flake.wrappers.${name} = { pkgs, config, lib, wlib, ... }@top: {
@@ -39,20 +44,5 @@ in
         WantedBy = [ "graphical-session.target" ];
       };
     };
-    install.modules.nixos = lib.mkForce ({ pkgs, lib, config, ... }: let
-      cfg = top.config.install.getWrapperConfig config;
-    in {
-      systemd.packages = [ cfg.wrapper ];
-    });
-    install.modules.homeManager = lib.mkForce ({ pkgs, lib, config, ... }: let
-      cfg = top.config.install.getWrapperConfig config;
-    in {
-      systemd.user.packages = [ cfg.wrapper ];
-      # this whole thing is replacing these 3 lines
-      # because it opens 5 copies of electron
-      # wrappers.i3.appendedConfig = ''
-      #   exec --no-startup-id ${pkgs.signal-desktop}/bin/signal-desktop --start-in-tray &
-      # '';
-    });
   };
 }
