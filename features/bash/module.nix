@@ -19,17 +19,25 @@ let
       fzfinit = pkgs.runCommand "fzfinit" { } "${pkgs.fzf}/bin/fzf --bash > $out";
       init = ''
         . ${config.wrappers.starship.wrap { shell = "bash"; }}/bin/starship
+        export "PATH=${pkgs.carapace}/bin:$PATH"
         export CARAPACE_BRIDGES='bash,inshellisense' # optional
         source <(${pkgs.carapace}/bin/carapace _carapace bash)
         source ${fzfinit}
       '';
     in
     {
+      hjem = {
+        inherit _file options;
+        config = lib.mkIf cfg.enable {
+          files.".bashrc".text = init;
+        };
+      };
       homeManager = {
         inherit _file options;
         config = lib.mkIf cfg.enable {
           home.packages = [ pkgs.carapace ];
           programs.bash = {
+            enable = true;
             enableVteIntegration = true;
             initExtra = init;
           };
@@ -40,6 +48,7 @@ let
         config = lib.mkIf cfg.enable {
           environment.systemPackages = [ pkgs.carapace ];
           programs.bash = {
+            enable = true;
             promptInit = init;
           };
         };
@@ -50,4 +59,5 @@ in
 {
   flake.modules.nixos.bash = module;
   flake.modules.homeManager.bash = module;
+  flake.modules.hjem.bash = module;
 }
