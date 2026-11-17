@@ -16,8 +16,13 @@ in {
   boot.kernelModules = [ "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-63-6.6.156"
+    "broadcom-sta-6.30.223.271-63-6.6.161"
   ];
+  # TODO: figure out if there is any way you can use different network drivers
+  # b43 when installed in this manner however does not.
+  # nixpkgs.config.allowUnfree = true;
+  # hardware.enableRedistributableFirmware = true;
+  # boot.kernelModules = [ "b43" ];
 
   birdeeMods = {
     lightdm.sessionCommands = ''
@@ -33,6 +38,9 @@ in {
     pciutils
     mesa
   ];
+  nixpkgs.config.problems.handlers = {
+    "gtk+".broken = "warn"; # or "ignore"
+  };
 
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.nvidia.modesetting.enable = true;
