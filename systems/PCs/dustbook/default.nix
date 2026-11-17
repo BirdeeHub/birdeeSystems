@@ -15,6 +15,7 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.kernelModules = [ "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  # boot.blacklistedKernelModules = [ "b43" "bcma" "ssb" ];
   nixpkgs.config.permittedInsecurePackages = [
     "broadcom-sta-6.30.223.271-63-6.6.161"
   ];
